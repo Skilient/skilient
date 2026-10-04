@@ -478,6 +478,9 @@ commit; each goes where the line says.
       Actions as repo secret `K6_CLOUD_TOKEN` and note the project id as `K6_CLOUD_PROJECT_ID`. Confirm on the stack-limits
       page that one test may run 300 users.
 - [ ] **UptimeRobot** (slice 2): see "Before phase 13".
+- [ ] **Restore drill** (slice 4): create the scratch project and its two secrets as below, then follow
+      `docs/restore-drill.md` (Actions → Restore drill). Record the result in that file and delete the scratch project
+      afterwards.
 - [ ] **Scratch Supabase project** (slices 4 and 5): a second project in Mumbai (`ap-south-1`), same plan and compute size
       as production, named `skilient-scratch`. Repo secrets: `SCRATCH_SUPABASE_PROJECT_REF`, `SCRATCH_SUPABASE_DB_PASSWORD`.
       For the load test also `SCRATCH_SUPABASE_URL`, `SCRATCH_SUPABASE_PUBLISHABLE_KEY` and `SCRATCH_SUPABASE_SECRET_KEY`.

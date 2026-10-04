@@ -1917,3 +1917,9 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   fail on CSP errors. `tests/unit/csp-sweep.test.ts` fails when a new page isn't in the sweep.
 - **2026-10-04 — `security.txt` contact is `security@skilient.com`** (the mailbox on the setup checklist), expiring
   2027-09-30; a unit test fails 60 days before, so it's renewed in an ordinary pull request.
+- **2026-10-04 — Restore drill (phase 13 slice 4) on question 16's default, still unanswered:** a logical dump
+  (Supabase CLI, roles + schema + data) restored into a freshly created scratch project by a manual workflow, because
+  the Free plan has no backups; repeated from a daily backup once on Pro. The workflow refuses a scratch database that
+  already has tables rather than wiping it, so it can never empty the wrong project. Vault secrets don't decrypt in
+  another project, so the drill recreates the operational ones and rotates in a new CV key (old CVs still verify);
+  GitHub tokens are lost in a cross-project restore and students reconnect. The dump never leaves the runner.

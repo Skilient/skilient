@@ -19,23 +19,44 @@ const ROUTES: Partial<Record<EmailOtpType, { ok: string; failed: string }>> = {
   email_change: { ok: "/feed", failed: "/signin?error=link_expired" },
 };
 
+const TOKEN_HASH = /^[A-Za-z0-9_-]{8,200}$/;
+
 /**
  * Email links (confirmation, sign-in code, password reset, email change) carry a token_hash, so they
  * work in any browser or device, not just the one that started the flow (PKCE).
- * Scanners that prefetch the link only spend the token; nothing else happens on GET.
+ *
+ * Opening the link (GET) spends nothing: it shows /auth/link, whose Continue button POSTs back here.
+ * Mail scanners (Microsoft 365 Safe Links, university gateways, Gmail) open every link in a message
+ * before the person does; when GET verified the token, the scanner used it up and the real click
+ * read "already used" (decisions 2026-10-04).
  */
 export async function GET(request: NextRequest) {
+  const tokenHash = request.nextUrl.searchParams.get("token_hash");
+  const type = request.nextUrl.searchParams.get("type") as EmailOtpType | null;
+  const origin = originFrom(request.headers);
+  if (!tokenHash || !type || !ROUTES[type] || !TOKEN_HASH.test(tokenHash)) {
+    return NextResponse.redirect(new URL("/signin?error=link_expired", origin), 303);
+  }
+  const to = new URL("/auth/link", origin);
+  to.searchParams.set("token_hash", tokenHash);
+  to.searchParams.set("type", type);
+  return NextResponse.redirect(to, 303);
+}
+
+/** The Continue button on /auth/link: verify the token, then go where the link leads. */
+export async function POST(request: NextRequest) {
   const started = performance.now();
   const requestId = requestIdFrom(request.headers) ?? newRequestId();
   const origin = originFrom(request.headers);
-  const tokenHash = request.nextUrl.searchParams.get("token_hash");
-  const type = request.nextUrl.searchParams.get("type") as EmailOtpType | null;
+  const form = await request.formData().catch(() => null);
+  const tokenHash = typeof form?.get("token_hash") === "string" ? (form.get("token_hash") as string) : null;
+  const type = (typeof form?.get("type") === "string" ? form.get("type") : null) as EmailOtpType | null;
   const route = type ? ROUTES[type] : undefined;
 
   const finish = (outcome: "ok" | "refused", to: string, errorCode?: string, userId?: string) => {
     logger[outcome === "ok" ? "info" : "warn"]("auth.confirm", {
       request_id: requestId,
-      action: "GET /auth/confirm",
+      action: "POST /auth/confirm",
       duration_ms: Math.round(performance.now() - started),
       outcome,
       error_code: errorCode,
@@ -45,7 +66,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(new URL(to, origin), 303);
   };
 
-  if (!tokenHash || !type || !route || !/^[A-Za-z0-9_-]{8,200}$/.test(tokenHash)) {
+  // Only our own page may submit a token (no signing someone into another account from elsewhere).
+  if (!sameOrigin(request.headers, origin)) return finish("refused", "/signin?error=link_expired", "cross_origin");
+  if (!tokenHash || !type || !route || !TOKEN_HASH.test(tokenHash)) {
     return finish("refused", "/signin?error=link_expired", "bad_link");
   }
 
@@ -62,4 +85,10 @@ export async function GET(request: NextRequest) {
     );
   }
   return finish("ok", route.ok, undefined, data.user.id);
+}
+
+function sameOrigin(headers: Headers, origin: string): boolean {
+  const sent = headers.get("origin");
+  if (sent) return sent === origin;
+  return headers.get("sec-fetch-site") === "same-origin";
 }

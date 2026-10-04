@@ -1864,3 +1864,8 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   listener, so they stay server components.
 - 2026-10-03 (phase 13, slice 1): posthog-js is a lazily loaded chunk of about 100 KB gzip (after the page is idle), never in
   first-load JS. The size-limit total of all chunks was already over its report-only 450 KB line.
+- 2026-10-04 (fix, reported by Ahmed): Password-reset links answered "already used". Mail scanners (Microsoft 365 Safe Links,
+  university gateways, Gmail) open every link in a message before the person does, and `/auth/confirm` verified the token on
+  GET, so the scanner spent it. Every email link (reset, confirm, magic link, email change) now opens `/auth/link`, whose
+  button POSTs the token back to `/auth/confirm` (same-origin only); scanners don't submit forms. Same rule as the
+  university-request unsubscribe (2026-10-02). The E2E reset test opens the link with a plain GET first to prove it.

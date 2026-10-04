@@ -94,6 +94,7 @@ test.describe("auth", () => {
     const mail = await latestEmail(email, started - 1000);
     const second = await context.newPage();
     await second.goto(linkFrom(mail.html, "email"));
+    await second.getByRole("button", { name: "Confirm my email" }).click();
     await expect(second.getByRole("heading", { name: "You're confirmed" })).toBeVisible();
 
     // The first tab notices on its own.
@@ -110,8 +111,15 @@ test.describe("auth", () => {
     await expect(page.getByRole("status")).toContainText("we've sent a reset link");
 
     const mail = await latestEmail(student.email, started - 1000);
-    await page.goto(linkFrom(mail.html, "recovery"));
+    const link = linkFrom(mail.html, "recovery");
+    // A mail scanner opening the link first (following redirects, as Safe Links does) spends nothing.
+    const scanned = await page.request.get(link);
+    expect(scanned.ok()).toBe(true);
+    await page.goto(link);
+    await expect(page.getByRole("heading", { name: "Reset your password" })).toBeVisible();
+    await page.getByRole("button", { name: "Continue" }).click();
     await expect(page).toHaveURL(/\/reset-password$/);
+    await expect(page.getByRole("heading", { name: "Choose a new password" })).toBeVisible();
     const fresh = "Brand-new-Passw0rd-2026";
     await page.getByLabel("New password", { exact: true }).fill(fresh);
     await page.getByLabel("Type it again", { exact: true }).fill(fresh);

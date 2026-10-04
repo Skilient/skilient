@@ -17,8 +17,18 @@ export interface DumpNode {
   border?: { color: string; width: number };
   radius?: number;
   shadow?: string;
-  font?: { family: string; size: number; weight: number; line: number };
+  font?: { family: string; size: number; weight: number; line: number; align?: string; upper?: boolean };
+  /** Mixed content in DOM order: strings are text, numbers index into the element children. */
+  runs?: (string | number)[];
+  /** Index among the parent's element children (resolves `runs`). */
+  ei?: number;
+  /** Input showing its placeholder (no value). */
+  ph?: boolean;
   src?: string;
+  /** First Tailwind classes, as a hint for mapping to components (button/input variants). */
+  cls?: string;
+  /** Start of an svg's first path: identifies the Phosphor icon. */
+  d?: string;
   children?: DumpNode[];
 }
 
@@ -90,7 +100,15 @@ export function dumpLayout(): { tokens: Record<string, string>; root: DumpNode |
     if (radius) node.radius = radius;
     if (cs.boxShadow !== "none") node.shadow = cs.boxShadow;
     if (el instanceof HTMLImageElement) node.src = el.currentSrc || el.src;
-    if (el.tagName === "svg") return node; // icons: the box is enough, the build places a Phosphor icon
+    const cls = typeof el.className === "string" ? el.className : "";
+    if (cls && /^(button|a|input|textarea|select|label|span|div)$/i.test(el.tagName)) node.cls = cls.slice(0, 160);
+    if (el.tagName === "svg") {
+      // Icons inherit currentColor: keep it so the build colours the Phosphor icon with the right token.
+      node.color = paint(cs.color);
+      const d = el.querySelector("path")?.getAttribute("d");
+      if (d) node.d = d.slice(0, 160);
+      return node;
+    }
     // Direct text, with its typography.
     const text = Array.from(el.childNodes)
       .filter((n) => n.nodeType === Node.TEXT_NODE)
@@ -100,12 +118,26 @@ export function dumpLayout(): { tokens: Record<string, string>; root: DumpNode |
       .trim();
     if (text || el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
       node.text = text || (el as HTMLInputElement).value || (el as HTMLInputElement).placeholder || "";
+      // An empty field shows its placeholder: record it so the build doesn't draw a typed value.
+      if ((el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) && !el.value) node.ph = true;
       node.color = paint(cs.color);
       node.font = { family: cs.fontFamily.split(",")[0].replace(/["']/g, ""), size: px(cs.fontSize), weight: Number(cs.fontWeight), line: px(cs.lineHeight) || Math.round(px(cs.fontSize) * 1.4) };
+      if (cs.textAlign && cs.textAlign !== "start" && cs.textAlign !== "left") node.font.align = cs.textAlign;
+      if (cs.textTransform === "uppercase") node.font.upper = true;
+      if (el.children.length) {
+        const elems = Array.from(el.children);
+        node.runs = Array.from(el.childNodes)
+          .map((c) => (c.nodeType === Node.TEXT_NODE ? (c.textContent ?? "").replace(/\s+/g, " ") : c.nodeType === Node.ELEMENT_NODE ? elems.indexOf(c as Element) : ""))
+          .filter((r) => r !== "");
+      }
     }
     if (depth < 40) {
       const kids = Array.from(el.children)
-        .map((c) => walk(c, depth + 1))
+        .map((c, i) => {
+          const k = walk(c, depth + 1);
+          if (k && node.runs) k.ei = i;
+          return k;
+        })
         .filter((c): c is DumpNode => c !== null);
       if (kids.length) node.children = kids;
     }

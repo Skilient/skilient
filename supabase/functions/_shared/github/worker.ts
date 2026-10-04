@@ -83,18 +83,26 @@ export async function runWorker(deps: WorkerDeps): Promise<WorkerResult> {
   const ctx: Ctx = { ...deps, now, github: new GitHub(deps.cfg, deps.fetch ?? fetch, now), fetchImpl: deps.fetch ?? fetch };
   const result: WorkerResult = { processed: 0, deferred: 0, failed: 0 };
 
-  while (now() - started < budget) {
-    const batch = await deps.db.query<QueueRow>(
-      "select msg_id, read_ct, message from pgmq.read('github_jobs', $1, $2)",
-      [deps.visibilitySeconds ?? 120, deps.batchSize ?? 10],
-    );
-    if (!batch.length) break;
-    for (const row of batch) {
-      if (now() - started >= budget) return result; // unread ones reappear after the timeout
-      await handle(ctx, row, result);
+  try {
+    while (now() - started < budget) {
+      const batch = await deps.db.query<QueueRow>(
+        "select msg_id, read_ct, message from pgmq.read('github_jobs', $1, $2)",
+        [deps.visibilitySeconds ?? 120, deps.batchSize ?? 10],
+      );
+      if (!batch.length) break;
+      for (const row of batch) {
+        if (now() - started >= budget) return result; // unread ones reappear after the timeout
+        await handle(ctx, row, result);
+      }
+    }
+    return result;
+  } finally {
+    // The rate-limit headroom this run saw, for the "GitHub headroom below 20%" alert (job-watchdog).
+    const headroom = ctx.github.lowestHeadroom();
+    if (headroom !== null) {
+      await deps.db.query("select private.record_service_signal('github_headroom', $1::numeric)", [String(headroom)]).catch(() => undefined);
     }
   }
-  return result;
 }
 
 interface Ctx extends WorkerDeps {

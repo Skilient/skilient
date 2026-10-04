@@ -4784,11 +4784,17 @@ isOneToOne: false
 "record_github_webhook":
 { Args: { "p_action"?: string,"p_delivery_id": string,"p_event": string,"p_installation_id"?: number,"p_payload": Json }; Returns: boolean
                            },
+"record_service_signal":
+{ Args: { "p_kind": string,"p_value"?: number }; Returns: undefined
+                           },
 "record_sign_in":
 { Args: { "p_device_hash": string,"p_ip_hash": string,"p_method": string,"p_user_agent": string }; Returns: Json
                            },
 "record_views":
 { Args: { "p_ids": (string)[] }; Returns: number
+                           },
+"record_web_vitals":
+{ Args: { "p_metrics": Json,"p_route": string }; Returns: undefined
                            },
 "recruit_candidate":
 { Args: { "p_student": string }; Returns: Json

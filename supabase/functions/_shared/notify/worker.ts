@@ -11,7 +11,7 @@
  */
 import type { Db, Fetch, Log } from "../github/types.ts";
 import { describeNotification } from "./describe.ts";
-import { digestEmail, instantEmail, teacherDigestEmail, universityLaunchEmail, type EmailMessage } from "./email.ts";
+import { digestEmail, instantEmail, opsAlertEmail, teacherDigestEmail, universityLaunchEmail, type EmailMessage } from "./email.ts";
 
 export interface NotifyConfig {
   resendApiKey: string;
@@ -131,18 +131,38 @@ export async function runNotifyWorker(opts: {
     const midnight = new Date(now());
     midnight.setUTCHours(24, 5, 0, 0);
     const wait = (midnight.getTime() - now().getTime()) / 1000;
-    await db.query("select pgmq.set_vt('notification_emails', msg_id, $1::integer) from pgmq.q_notification_emails", [Math.ceil(wait)]);
+    // Operational alerts are never held back by the notification cap (they don't count toward it either).
+    await db.query(
+      "select pgmq.set_vt('notification_emails', msg_id, $1::integer) from pgmq.q_notification_emails where message ->> 'kind' is distinct from 'ops_alert'",
+      [Math.ceil(wait)],
+    );
   };
 
   let first = true;
+  let capped = false;
   for (const row of rows) {
     const kind = row.message?.kind;
+    if (kind === "ops_alert") {
+      const sent = await sendOpsAlert(db, cfg, opts.fetch, row, log);
+      if (sent === "retry" && row.read_ct < MAX_ATTEMPTS) {
+        await deferUntil(row.msg_id, 30 * row.read_ct);
+        result.deferred++;
+      } else {
+        await archive(row.msg_id);
+        if (sent === "sent") result.sent++;
+        else if (sent === "skipped") result.skipped++;
+        else result.failed++;
+      }
+      continue;
+    }
+    if (capped) continue; // already parked until tomorrow
     const today = await sentToday();
     if (today >= DAILY_CAP) {
       await parkUntilTomorrow();
+      capped = true;
       result.deferred++;
       log("notify.daily_cap", { level: "warn", outcome: "refused", daily_count: today, cap: DAILY_CAP });
-      break;
+      continue;
     }
     let email: EmailMessage | null = null;
     let key = "";
@@ -345,4 +365,34 @@ async function buildTeacherDigest(db: Db, cfg: NotifyConfig, userId: string): Pr
   const total = Object.values(counts).reduce((n, v) => n + Number(v), 0);
   if (total === 0) return { skip: "empty" };
   return { email: teacherDigestEmail(who.email, cfg.appUrl, counts) };
+}
+
+/** One alert to every address in alerts.recipients. Nobody set up yet: skipped (state stays in private.alert_state). */
+async function sendOpsAlert(db: Db, cfg: NotifyConfig, fetchImpl: Fetch, row: QueueRow, log: Log): Promise<"sent" | "skipped" | "retry" | "failed"> {
+  const m = row.message as { key?: string; state?: string; title?: string; detail?: string; since?: string };
+  if (!m.key || !m.title || !m.detail || (m.state !== "firing" && m.state !== "resolved")) {
+    log("notify.skipped", { outcome: "refused", reason: "bad_message", kind: "ops_alert" });
+    return "skipped";
+  }
+  const [cfgRow] = await db.query<{ recipients: unknown }>("select private.config('alerts.recipients') as recipients");
+  const recipients = Array.isArray(cfgRow?.recipients) ? (cfgRow.recipients as unknown[]).filter((r): r is string => typeof r === "string") : [];
+  if (!recipients.length) {
+    log("notify.skipped", { level: "warn", outcome: "refused", reason: "no_recipients", kind: "ops_alert", alert: m.key });
+    return "skipped";
+  }
+  let worst: "sent" | "retry" | "failed" = "sent";
+  for (const [i, to] of recipients.entries()) {
+    const email = opsAlertEmail(to, cfg.appUrl, { state: m.state, title: m.title, detail: m.detail, since: m.since ?? "" });
+    const sent = await sendViaResend(cfg, fetchImpl, email, `ops-alert-${row.msg_id}-${i}`);
+    if (!sent.ok) worst = sent.retry === "later" ? "retry" : "failed";
+  }
+  log(worst === "sent" ? "notify.sent" : "notify.failed", {
+    level: worst === "sent" ? "info" : "error",
+    outcome: worst === "sent" ? "ok" : "error",
+    kind: "ops_alert",
+    alert: m.key,
+    state: m.state,
+    recipients: recipients.length,
+  });
+  return worst;
 }

@@ -114,3 +114,25 @@ export function universityLaunchEmail(to: string, appUrl: string, university: st
     text: `${subject}\n\nYou can now join with your university email: build with classmates, prove your skills with real work, and get a CV recruiters can check.\n\nJoin Skilient: ${join}\n\n${footer}\n`,
   };
 }
+
+/** An operational alert for staff (PRD 10 "Alerts — email only"), queued by private.job_watchdog. */
+export function opsAlertEmail(
+  to: string,
+  appUrl: string,
+  alert: { state: "firing" | "resolved"; title: string; detail: string; since: string },
+): EmailMessage {
+  const subject = alert.state === "firing" ? `[Skilient alert] ${alert.title}` : `[Skilient resolved] ${alert.title}`;
+  const since = new Date(alert.since);
+  const when = Number.isNaN(since.getTime()) ? "" : since.toISOString().replace("T", " ").slice(0, 16) + " UTC";
+  const lead = alert.state === "firing" ? `Since ${when}.` : `This has cleared (it started ${when}).`;
+  const footer = "You get this because your address is in alerts.recipients (/ops/config). What each alert means: docs/alerts.md.";
+  const body =
+    `<p style="margin:0 0 12px 0;font-size:15px;line-height:24px;">${escapeHtml(alert.detail)}</p>` +
+    `<p style="margin:0 0 16px 0;font-size:13px;line-height:20px;color:#5C5A55;">${escapeHtml(lead)}</p>`;
+  return {
+    to,
+    subject,
+    html: layout(subject, body + button(`${appUrl}/ops/metrics`, "Open /ops"), footer),
+    text: `${subject}\n\n${alert.detail}\n${lead}\n\nOpen /ops: ${appUrl}/ops/metrics\n\n${footer}\n`,
+  };
+}

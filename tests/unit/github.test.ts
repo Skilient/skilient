@@ -92,6 +92,18 @@ describe("GitHub client", () => {
     await expect(new GitHub(cfg, limited).request("t", "/user")).rejects.toMatchObject({ name: "RateLimited", seconds: 30 });
   });
 
+  it("reports the lowest share of a core budget left, for the headroom alert", async () => {
+    let remaining = "4000";
+    const fake = (async () =>
+      new Response("{}", { headers: { "x-ratelimit-limit": "5000", "x-ratelimit-remaining": remaining, "x-ratelimit-reset": reset } })) as typeof fetch;
+    const gh = new GitHub(cfg, fake);
+    expect(gh.lowestHeadroom()).toBeNull();
+    await gh.request("a", "/user");
+    remaining = "500";
+    await gh.request("b", "/user");
+    expect(gh.lowestHeadroom()).toBe(0.1);
+  });
+
   it("keeps search's own small budget out of the core budget", async () => {
     const fake = (async () =>
       new Response("{}", { headers: { "x-ratelimit-resource": "search", "x-ratelimit-remaining": "29", "x-ratelimit-reset": reset } })) as typeof fetch;

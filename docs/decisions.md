@@ -1875,3 +1875,21 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   coming-soon page stays on www.skilient.com for now, so production keeps running at skilient.vercel.app until one
   switch-over (`docs/setup-checklist.md` "Switch to www.skilient.com"); changing settings earlier would send sign-in and
   reset emails to the coming-soon page.
+- **2026-10-04 — Alerts (phase 13 slice 2) built on the question defaults 8–12, still unanswered.** One recipient list in
+  `/ops/config` (`alerts.recipients`, empty until set); our own sampled web-vitals beacon (10% of page loads, 14 days) for
+  the performance alert; Grafana Cloud for database CPU (connections are checked from SQL); the Resend webhook for bounces;
+  an interim Sentry error-volume alert for 5xx until Vercel Pro. Change any of them by answering the question.
+- **2026-10-04 — `job-watchdog` is in the database.** Every 10 minutes `private.alert_conditions()` lists what is wrong;
+  `private.alert_state` emails each alert once, again after a 6-hour cooldown, and once when it clears. Emails go through
+  the notify worker (kind `ops_alert`), skip the 60-a-day cap and are not stored in `email_sends`. Why: the jobs, queues and
+  signals all live in Postgres, and a failure of the app server must not silence job alerts. If the notify worker itself is
+  down, the stuck `notification_emails` queue can't email; UptimeRobot on `/api/health` and Supabase's own emails cover that.
+- **2026-10-04 — Resend webhook at `/api/webhooks/resend`, not `/api/resend/webhook`** (question 11's wording), so it sits
+  under the one folder lint already allows the service-role client in. Svix signature checked by hand (no new dependency).
+- **2026-10-04 — Sentry in Edge Functions deferred.** Workers log JSON lines and their failures reach the watchdog through
+  `job_runs` and stuck queues; adding the Deno Sentry SDK to nine functions is a separate change if the alerts prove blind.
+- **2026-10-04 — `cron.job_run_details` kept 7 days** (`purge-monitoring` nightly); it grows by about 3,000 rows a day.
+- **2026-10-04 — Figma file key allowlisted in `.gitleaksignore`.** gitleaks matched the `file.key` in
+  `docs/figma/state.json` on the Figma branch (commit 71abe40) as a generic API key. A file key only names a file and
+  grants no access. CI scans every branch, so the match failed unrelated pull requests. Only that one fingerprint is
+  ignored; any other value in the file is still scanned.

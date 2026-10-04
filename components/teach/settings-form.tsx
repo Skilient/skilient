@@ -33,7 +33,7 @@ export function TeacherSettingsForm({ settings, skills }: { settings: TeacherSet
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
       {error ? <FormAlert>{error}</FormAlert> : null}
       {saved ? <FormAlert tone="success">Saved.</FormAlert> : null}
       <fieldset className="flex flex-col gap-4 rounded-lg border border-border-default bg-bg-surface p-4">

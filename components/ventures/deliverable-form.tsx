@@ -31,7 +31,7 @@ export function DeliverableForm({ ventureId }: { ventureId: string }) {
   }
 
   return (
-    <form ref={form} onSubmit={onSubmit} noValidate className="flex flex-col gap-4 rounded-lg border border-border-default p-4">
+    <form method="post" ref={form} onSubmit={onSubmit} noValidate className="flex flex-col gap-4 rounded-lg border border-border-default p-4">
       <h2 className="text-h4">Add a deliverable</h2>
       {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       <Field id="deliverable-label" label="Name" error={fields.label}>

@@ -91,7 +91,7 @@ export function IdeaForm({ skills, draft = EMPTY_IDEA }: { skills: SkillOption[]
 
   const err = (k: string) => (fields[k] ? { "aria-invalid": true as const, "aria-describedby": `${k}-error` } : {});
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
       {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       {error && Object.keys(fields).length ? <FormAlert>{error.message}</FormAlert> : null}
       {saved ? <FormAlert tone="success">Saved.</FormAlert> : null}

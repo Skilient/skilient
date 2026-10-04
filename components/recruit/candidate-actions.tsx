@@ -60,7 +60,7 @@ export function ShortlistControl({
           </Button>
         </div>
       ) : null}
-      <form
+      <form method="post"
         noValidate
         className="flex gap-2"
         onSubmit={(e) => {
@@ -115,7 +115,7 @@ export function NotesPanel({ studentId, notes }: { studentId: string; notes: { i
           </li>
         ))}
       </ul>
-      <form onSubmit={onSubmit} noValidate className="flex flex-col gap-2">
+      <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-2">
         {error ? <FormAlert>{error}</FormAlert> : null}
         <Textarea aria-label="Add a note" value={body} onChange={(e) => setBody(e.target.value)} rows={3} maxLength={2000} placeholder="Add a note for your team" data-testid="note-body" />
         <Button type="submit" variant="secondary" loading={pending} disabled={!body.trim()} className="self-start" data-testid="note-add">Add note</Button>
@@ -138,7 +138,7 @@ export function ContactDialog({ studentId, creditsLeft }: { studentId: string; c
         <Button data-testid="contact-open">Contact request</Button>
       </DialogTrigger>
       <DialogContent title="Ask to talk" description={`This costs one contact credit${creditsLeft === null ? "" : ` (${creditsLeft} left this month)`} and isn't refunded if they decline. They see your company, the role and your message first; you see their name only if they accept.`}>
-        <form
+        <form method="post"
           noValidate
           className="flex flex-col gap-4"
           onSubmit={(e) => {

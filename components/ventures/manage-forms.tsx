@@ -80,7 +80,7 @@ export function DetailsForm({ venture, skills }: { venture: VentureDetail; skill
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
       {error ? <FormAlert requestId={Object.keys(fields).length ? undefined : error.requestId}>{error.message}</FormAlert> : null}
       <Field id="title" label="Title" error={fields.title}>
         <Input id="title" name="title" defaultValue={venture.title} required maxLength={80} aria-invalid={fields.title ? true : undefined} aria-describedby={fields.title ? "title-error" : undefined} />
@@ -252,7 +252,7 @@ export function InviteForm({ ventureId }: { ventureId: string }) {
   }
 
   return (
-    <form ref={form} onSubmit={onSubmit} noValidate className="flex flex-col gap-3">
+    <form method="post" ref={form} onSubmit={onSubmit} noValidate className="flex flex-col gap-3">
       {error && !error.fields ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       <div className="flex flex-wrap items-end gap-3">
         <div className="min-w-48 flex-1">

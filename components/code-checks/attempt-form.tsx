@@ -65,7 +65,7 @@ export function AttemptForm({ checkId, secondsLeft, initial }: { checkId: string
 
   const warn = left <= 60;
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-5"
       onSubmit={(e) => {
         e.preventDefault();

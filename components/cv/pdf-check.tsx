@@ -15,7 +15,7 @@ export function PdfCheck({ code }: { code: string }) {
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-3"
       aria-busy={pending || undefined}
       onSubmit={(e) => {

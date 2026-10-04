@@ -102,7 +102,7 @@ export function VentureForm({ skills, defaultType, idea }: { skills: SkillOption
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-8">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-8">
       {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       {error && Object.keys(fields).length ? <FormAlert>{error.message}</FormAlert> : null}
 

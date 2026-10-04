@@ -131,7 +131,7 @@ function CommentForm({ postId, parentId, label, onDone, autoFocus }: { postId: s
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-2"
       onSubmit={(e) => {
         e.preventDefault();

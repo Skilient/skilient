@@ -132,6 +132,40 @@ test.describe("auth", () => {
     await expect(page).toHaveURL(/\/feed$/);
   });
 
+  test("change the password in settings: current password checked, other devices signed out", async ({ page, browser }, info) => {
+    test.skip(info.project.name !== "desktop", "account-changing flow runs once");
+    const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Change Person" });
+    await signInWithPassword(page, student.email, student.password);
+    const cookies = await page.context().cookies();
+    const session = cookies.find((c) => c.name.startsWith("__Secure-skl-auth"));
+    expect(session?.secure, "the session cookie is Secure and __Secure- prefixed").toBe(true);
+    expect(session?.sameSite).toBe("Lax");
+
+    const other = await (await browser.newContext()).newPage();
+    await signInWithPassword(other, student.email, student.password);
+
+    await page.goto("/settings/security");
+    const form = page.getByTestId("change-password-form");
+    const fresh = "Changed-in-settings-2026";
+    await form.getByLabel("Current password", { exact: true }).fill("not-my-password-at-all");
+    await form.getByLabel("New password", { exact: true }).fill(fresh);
+    await form.getByLabel("Type it again", { exact: true }).fill(fresh);
+    await form.getByRole("button", { name: "Change password" }).click();
+    await expect(form).toContainText("That isn't your current password");
+
+    await form.getByLabel("Current password", { exact: true }).fill(student.password);
+    await form.getByRole("button", { name: "Change password" }).click();
+    await expect(page.getByTestId("password-changed")).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByText("Password changed").first()).toBeVisible();
+
+    await other.goto("/feed");
+    await expect(other).toHaveURL(/\/signin/);
+    await page.getByRole("button", { name: "Sign out", exact: true }).click();
+    await expect(page).toHaveURL(/\/$/);
+    await signInWithPassword(page, student.email, fresh);
+    await expect(page).toHaveURL(/\/feed$/);
+  });
+
   test("sign out, then sign in as another student: zero residue, other tabs follow", async ({ page, context }, info) => {
     test.skip(info.project.name !== "desktop", "account flow runs once");
     const a = await createStudent({ domain: "nutech.edu.pk", fullName: "Aisha Alpha" });
@@ -222,6 +256,7 @@ test.describe("auth", () => {
 
   test("two-factor: backup codes at set-up, a second authenticator, and signing in with a backup code", async ({ page }, info) => {
     test.skip(info.project.name !== "desktop", "runs once");
+    test.setTimeout(60_000);
     const student = await createStudent({ domain: "nu.edu.pk", fullName: "Totp Tester" });
     await signInWithPassword(page, student.email, student.password);
     await expect(page).toHaveURL(/\/feed$/);

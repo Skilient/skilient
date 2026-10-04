@@ -155,7 +155,7 @@ function TeammateStep({
   const skillName = (id: string) => teammate.skills.find((s) => s.id === id)?.name ?? id;
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5" aria-labelledby={`${idBase}-name`}>
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5" aria-labelledby={`${idBase}-name`}>
       <div className="flex items-center gap-3">
         <Avatar name={teammate.name} src={teammate.avatarUrl} size="md" />
         <div className="min-w-0">

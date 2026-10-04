@@ -87,7 +87,7 @@ export function ApplyForm({ jobId, unmet }: { jobId: string; unmet: string[] }) 
     });
   }
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-4 rounded-lg border border-border-default bg-bg-surface p-4" data-testid="apply-form">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-4 rounded-lg border border-border-default bg-bg-surface p-4" data-testid="apply-form">
       <h2 className="text-h3">Apply with your live CV</h2>
       {unmet.length > 0 ? (
         <FormAlert>You don&apos;t meet the requirements yet: {unmet.join(", ")}. Build that proof and come back.</FormAlert>
@@ -131,7 +131,7 @@ export function RecruiterPrefsForm({ availability, city, remote, visible }: { av
     });
   }
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-4" data-testid="recruiter-prefs">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-4" data-testid="recruiter-prefs">
       {error ? <FormAlert>{error}</FormAlert> : null}
       {saved ? <FormAlert tone="success">Saved.</FormAlert> : null}
       {!visible ? <p className="text-body-sm text-text-muted">Recruiters only see these while recruiter visibility is on.</p> : null}
@@ -163,7 +163,7 @@ export function CreateTeamForm({ competitionId }: { competitionId: string }) {
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       noValidate
       className="flex flex-col gap-3"
       onSubmit={(e) => {
@@ -191,7 +191,7 @@ export function InviteTeammateForm({ competitionId, teamId }: { competitionId: s
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       noValidate
       className="flex flex-col gap-3"
       onSubmit={(e) => {
@@ -230,7 +230,7 @@ export function SubmitRepoForm({ competitionId, teamId, current }: { competition
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       noValidate
       className="flex flex-col gap-3"
       onSubmit={(e) => {

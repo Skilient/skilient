@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { decideRoute, isPublicPath, type GateState } from "@/lib/auth/gate";
-import { buildCsp, newNonce, NONCE_HEADER } from "@/lib/security/headers";
+import { CSP_REPORT_PATH } from "@/lib/security/csp-report";
+import { buildCsp, newNonce, NONCE_HEADER, reportingEndpoints } from "@/lib/security/headers";
 import { hasVerifiedFactor, redirectWithCookies, refreshSession } from "@/lib/supabase/proxy";
 import { newRequestId, REQUEST_ID_HEADER } from "@/lib/request-id";
 
@@ -22,6 +23,7 @@ export async function proxy(request: NextRequest) {
     supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
     sentryDsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     dev: process.env.NODE_ENV === "development",
+    reportPath: CSP_REPORT_PATH,
   });
 
   // Rebuilt on every call so refreshed auth cookies (set on request.cookies) reach the render.
@@ -34,6 +36,7 @@ export async function proxy(request: NextRequest) {
     const res = NextResponse.next({ request: { headers } });
     res.headers.set(REQUEST_ID_HEADER, requestId);
     res.headers.set("content-security-policy", csp);
+    res.headers.set("reporting-endpoints", reportingEndpoints(CSP_REPORT_PATH));
     return res;
   };
 

@@ -45,7 +45,7 @@ export function CvSettingsForm({
   }
 
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-5"
       aria-busy={pending || undefined}
       onSubmit={(e) => {

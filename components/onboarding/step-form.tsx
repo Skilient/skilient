@@ -36,7 +36,7 @@ export function StepForm({
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
       {error && !error.fields ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       {children(error?.fields ?? {})}
       <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">

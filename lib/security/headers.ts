@@ -22,6 +22,13 @@ export interface CspOptions {
   supabaseUrl?: string;
   sentryDsn?: string;
   dev?: boolean;
+  /** Same-origin path for violation reports (report-uri, and report-to via the Reporting-Endpoints header). */
+  reportPath?: string;
+}
+
+/** Reporting-Endpoints header naming the `report-to` group in the CSP. */
+export function reportingEndpoints(reportPath: string, group = "csp"): string {
+  return `${group}="${reportPath}"`;
 }
 
 function originOf(url: string | undefined): string | null {
@@ -38,7 +45,7 @@ function originOf(url: string | undefined): string | null {
  * they load, via 'strict-dynamic'), Turnstile's frame, Supabase (REST, Realtime, Storage
  * images) and Sentry. Styles allow inline attributes, which Radix and motion set.
  */
-export function buildCsp({ nonce, supabaseUrl, sentryDsn, dev = false }: CspOptions): string {
+export function buildCsp({ nonce, supabaseUrl, sentryDsn, dev = false, reportPath }: CspOptions): string {
   const supabase = originOf(supabaseUrl);
   const supabaseWs = supabase ? supabase.replace(/^http/, "ws") : null;
   const sentry = originOf(sentryDsn);
@@ -66,6 +73,8 @@ export function buildCsp({ nonce, supabaseUrl, sentryDsn, dev = false }: CspOpti
   );
   // Only when the backend is on https: local stacks run on plain http://127.0.0.1.
   if (https && !dev) parts.push("upgrade-insecure-requests");
+  // report-uri for browsers without the Reporting API (Firefox, older Safari); report-to for the rest.
+  if (reportPath) parts.push(`report-uri ${reportPath}`, "report-to csp");
   return parts.join("; ");
 }
 

@@ -33,7 +33,7 @@ export function ShareLinks({ links, canShare, paused }: { links: CvShareLink[]; 
           Share links open at Spark tier. You reach Spark with 100 points and one peer-verified contribution.
         </p>
       ) : (
-        <form
+        <form method="post"
           className="flex flex-col gap-3"
           onSubmit={(e) => {
             e.preventDefault();

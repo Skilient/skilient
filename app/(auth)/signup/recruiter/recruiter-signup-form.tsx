@@ -37,7 +37,7 @@ export function RecruiterSignupForm({ siteKey, agreement, defaultEmail }: { site
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
       {error && !Object.keys(fields).length ? (
         <FormAlert requestId={error.requestId}>
           {error.message}{" "}

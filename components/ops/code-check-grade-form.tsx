@@ -32,7 +32,7 @@ export function CodeCheckGradeForm({
   const set = (key: RubricKey, patch: Partial<Part>) => setParts((p) => ({ ...p, [key]: { ...p[key], ...patch } }));
 
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-4"
       onSubmit={(e) => {
         e.preventDefault();

@@ -89,7 +89,7 @@ export function ProfileSettingsForm({
         <ImageUpload kind="cover" name={values.fullName} currentUrl={coverUrl} />
       </Section>
 
-      <form
+      <form method="post"
         onSubmit={onSubmit}
         onChange={() => {
           setDirty(true);

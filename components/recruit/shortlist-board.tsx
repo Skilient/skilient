@@ -17,7 +17,7 @@ export function NewShortlistForm() {
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       noValidate
       className="flex flex-col gap-2"
       onSubmit={(e) => {
@@ -70,7 +70,7 @@ export function ShortlistBoard({ listId, name, items, jobs }: { listId: string; 
   return (
     <div className="flex flex-col gap-4">
       {msg ? <FormAlert tone={msg.tone}>{msg.text}</FormAlert> : null}
-      <form
+      <form method="post"
         noValidate
         className="flex flex-wrap items-end gap-2"
         onSubmit={(e) => {

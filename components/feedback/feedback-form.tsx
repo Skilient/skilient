@@ -67,7 +67,7 @@ export function FeedbackForm({ from }: { from?: string }) {
   }
 
   return (
-    <form ref={form} onSubmit={onSubmit} noValidate className="flex flex-col gap-5 rounded-lg border border-border-default bg-bg-surface p-5" aria-labelledby={`${id}-h`}>
+    <form method="post" ref={form} onSubmit={onSubmit} noValidate className="flex flex-col gap-5 rounded-lg border border-border-default bg-bg-surface p-5" aria-labelledby={`${id}-h`}>
       <h2 id={`${id}-h`} className="text-h3">
         Send feedback
       </h2>

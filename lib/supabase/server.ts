@@ -4,6 +4,7 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Database } from "@/types/database";
 import { publicEnv } from "@/lib/env";
+import { authCookieOptions } from "./cookie-options";
 
 /**
  * Session client for RSC, route handlers and server actions. RLS always applies.
@@ -13,6 +14,7 @@ export async function createClient() {
   const env = publicEnv();
   const cookieStore = await cookies();
   return createServerClient<Database>(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, {
+    cookieOptions: authCookieOptions(),
     cookies: {
       getAll: () => cookieStore.getAll(),
       setAll(cookiesToSet) {

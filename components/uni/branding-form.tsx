@@ -40,7 +40,7 @@ export function BrandingForm({ primary, accent, welcome }: { primary?: Pair; acc
     </fieldset>
   );
   return (
-    <form className="flex flex-col gap-4" data-testid="branding-form" onSubmit={(e) => {
+    <form method="post" className="flex flex-col gap-4" data-testid="branding-form" onSubmit={(e) => {
       e.preventDefault();
       const w = String(new FormData(e.currentTarget).get("welcome") ?? "");
       startTransition(async () => {

@@ -29,7 +29,7 @@ export function RankingFlagReviewForm({ id, kind }: { id: string; kind: "ring" |
           uphold: "The gain doesn't stand: a negative adjustment of the same size cancels it.",
         };
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-3"
       onSubmit={(e) => {
         e.preventDefault();
@@ -87,7 +87,7 @@ export function ExamPeriodForm({ universities }: { universities: { id: string; n
   const [saved, setSaved] = useState(false);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-3"
       onSubmit={(e) => {
         e.preventDefault();

@@ -192,7 +192,7 @@ function ApplySheet({
         <Button>{openSlots ? "Apply to a role" : "Apply to join"}</Button>
       </DialogTrigger>
       <SheetContent title={`Apply to ${title}`} description="The owner sees your message, your answers and your profile card.">
-        <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+        <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
           {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
           {roles.length ? (
             <fieldset className="flex flex-col gap-2">

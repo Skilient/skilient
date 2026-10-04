@@ -26,7 +26,7 @@ export function ConfigEditor({ configKey, current, version, applies }: { configK
   }, [text]);
   const changes = parsed.ok ? configDiff(current, parsed.value) : [];
   return (
-    <form
+    <form method="post"
       aria-labelledby={`${uid}-h`}
       className="flex flex-col gap-3 rounded-lg border border-border-default bg-bg-surface p-4"
       onSubmit={(e) => {
@@ -175,7 +175,7 @@ export function AddSkillForm() {
   const [done, setDone] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       aria-labelledby={`${uid}-h`}
       className="flex flex-col gap-3 rounded-lg border border-border-default bg-bg-surface p-4"
       onSubmit={(e) => {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ChangePasswordForm } from "./change-password-form";
 import Link from "next/link";
 import { FormAlert } from "@/components/auth/form-alert";
 import { describeDevice } from "@/lib/security/request-meta";
@@ -58,6 +59,18 @@ export default async function SecurityPage({ searchParams }: PageProps<"/setting
           up again below.
         </FormAlert>
       ) : null}
+
+      <section aria-labelledby="password" className="rounded-lg border border-border-default bg-bg-surface p-5 sm:p-6">
+        <h2 id="password" className="text-h3">
+          Password
+        </h2>
+        <p className="mt-1 text-body text-text-secondary">
+          At least 10 characters, and not one that has appeared in a data breach. Changing it signs out every other device.
+        </p>
+        <div className="mt-5">
+          <ChangePasswordForm />
+        </div>
+      </section>
 
       <section aria-labelledby="two-factor" className="rounded-lg border border-border-default bg-bg-surface p-5 sm:p-6">
         <h2 id="two-factor" className="text-h3">

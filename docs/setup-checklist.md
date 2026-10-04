@@ -484,7 +484,12 @@ commit; each goes where the line says.
       Delete or pause it after the load test.
 - [ ] **Vercel preview for the load test** (slice 5): point the Preview environment's Supabase variables at the scratch
       project for the run, then back.
-- [ ] **security@ mailbox** (slice 3): see "Before phase 13".
+- [ ] **security@ mailbox** (slice 3): `security@skilient.com` must receive mail; it's the contact in
+      `/.well-known/security.txt`. See "Before phase 13".
+- [ ] **ZAP against production** (slice 3, before launch): Actions → ZAP baseline → Run workflow with `target` = the
+      production URL; add the result to `docs/security/zap.md`.
+- [ ] **Everyone signs in again** once slice 3 deploys (the session cookie is renamed `__Secure-skl-auth`); nothing to
+      do, just expect it.
 
 ## Before the closed beta ⏳
 

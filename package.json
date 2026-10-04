@@ -14,6 +14,8 @@
     "test:ats": "vitest run --config vitest.ats.config.mts",
     "test:e2e": "playwright test",
     "marketing:captures": "playwright test -c playwright.captures.config.ts",
+    "figma:inventory": "node scripts/figma-inventory.mjs --write",
+    "figma:captures": "playwright test -c playwright.figma.config.ts",
     "db:start": "supabase start",
     "db:reset": "supabase db reset",
     "db:test": "supabase test db",

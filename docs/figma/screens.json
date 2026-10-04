@@ -1,0 +1,3935 @@
+{
+  "generatedBy": "scripts/figma-inventory.mjs",
+  "screens": 180,
+  "frames": 1600,
+  "entries": [
+    {
+      "route": "/agreement",
+      "file": "app/(app)/agreement/page.tsx",
+      "portal": "onboarding",
+      "role": "new_student",
+      "tabs": null,
+      "sections": [
+        "AgreementText"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/appeals",
+      "file": "app/(app)/appeals/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "AppealButton"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/billing/checkout/[session]",
+      "file": "app/(app)/billing/checkout/[session]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "SimulatedCheckout"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/billing/return/[session]",
+      "file": "app/(app)/billing/return/[session]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ReturnStatus"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/chat/[threadId]",
+      "file": "app/(app)/chat/[threadId]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "Conversation"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/chat",
+      "file": "app/(app)/chat/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/companies/[slug]",
+      "file": "app/(app)/companies/[slug]/page.tsx",
+      "portal": "recruiter",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "BlockCompanyButton"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/competitions/[id]",
+      "file": "app/(app)/competitions/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "CreateTeamForm",
+        "InviteTeammateForm",
+        "SubmitRepoForm",
+        "TeamInviteResponse"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/events/[id]/attend",
+      "file": "app/(app)/events/[id]/attend/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "PageTitle"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/events/[id]/check-in",
+      "file": "app/(app)/events/[id]/check-in/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "CheckinScreen",
+        "PageTitle"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/events/[id]",
+      "file": "app/(app)/events/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "EventCard"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/events",
+      "file": "app/(app)/events/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "upcoming",
+          "mine",
+          "past"
+        ]
+      },
+      "sections": [
+        "EventCard",
+        "PageTitle"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/explore",
+      "file": "app/(app)/explore/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "people",
+          "projects",
+          "startups",
+          "ideas"
+        ]
+      },
+      "sections": [
+        "AddFriendButton",
+        "ExploreControls",
+        "VentureCard"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/fairs/[id]",
+      "file": "app/(app)/fairs/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "FairLive",
+        "Card",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/fairs/invite",
+      "file": "app/(app)/fairs/invite/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "Card",
+        "PageTitle"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/feed",
+      "file": "app/(app)/feed/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "university",
+          "global"
+        ]
+      },
+      "sections": [
+        "ProgressCard",
+        "Composer",
+        "FeedList",
+        "FollowedUpdates",
+        "NewPostsPill",
+        "PostCard",
+        "QuestionsCard"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/feedback",
+      "file": "app/(app)/feedback/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "FeedbackForm"
+      ],
+      "states": [
+        "default",
+        "empty",
+        "loading"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/friends",
+      "file": "app/(app)/friends/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "friends",
+          "received",
+          "sent",
+          "blocked"
+        ]
+      },
+      "sections": [
+        "AddByUsername",
+        "FriendRow",
+        "ConfirmAction"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ideas/[id]",
+      "file": "app/(app)/ideas/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/leaderboard",
+      "file": "app/(app)/leaderboard/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default",
+        "empty",
+        "loading"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/me/code-checks/[id]",
+      "file": "app/(app)/me/code-checks/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "AttemptForm",
+        "SnippetView",
+        "StartCodeCheck"
+      ],
+      "states": [
+        "default",
+        "empty",
+        "loading"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/me/credentials",
+      "file": "app/(app)/me/credentials/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "CredentialForm",
+        "DeleteCredential"
+      ],
+      "states": [
+        "default",
+        "empty",
+        "loading"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/me/cv",
+      "file": "app/(app)/me/cv/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "FirstVisitTip",
+        "CvExport",
+        "CvPaper",
+        "CvSettingsForm",
+        "CvVersions",
+        "ShareLinks"
+      ],
+      "states": [
+        "default",
+        "empty",
+        "loading",
+        "error"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/me",
+      "file": "app/(app)/me/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "SignOutButton"
+      ],
+      "states": [
+        "default",
+        "loading"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/me/score",
+      "file": "app/(app)/me/score/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "FirstVisitTip"
+      ],
+      "states": [
+        "default",
+        "empty",
+        "loading"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/me/skills",
+      "file": "app/(app)/me/skills/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "HeldNotice",
+        "SkillList"
+      ],
+      "states": [
+        "default",
+        "empty",
+        "loading"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/me/work",
+      "file": "app/(app)/me/work/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "ventures",
+          "contributions",
+          "reviews",
+          "endorsements",
+          "credentials"
+        ]
+      },
+      "sections": [
+        "EndorsementList",
+        "ProfileCredentials",
+        "VentureStatusBadge"
+      ],
+      "states": [
+        "default",
+        "empty",
+        "loading"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/moderation/[id]",
+      "file": "app/(app)/moderation/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/notifications",
+      "file": "app/(app)/notifications/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "NotificationRow",
+        "ConfirmAction"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/onboarding/[step]",
+      "file": "app/(app)/onboarding/[step]/page.tsx",
+      "portal": "onboarding",
+      "role": "new_student",
+      "tabs": {
+        "kind": "segment",
+        "values": [
+          "university",
+          "profile",
+          "github",
+          "skills",
+          "looking-for",
+          "people"
+        ]
+      },
+      "sections": [
+        "WizardFrame"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/onboarding/done",
+      "file": "app/(app)/onboarding/done/page.tsx",
+      "portal": "onboarding",
+      "role": "new_student",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/onboarding",
+      "file": "app/(app)/onboarding/page.tsx",
+      "portal": "onboarding",
+      "role": "new_student",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/opportunities/[tab]",
+      "file": "app/(app)/opportunities/[tab]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": {
+        "kind": "segment",
+        "values": [
+          "for_you",
+          "jobs",
+          "contact_requests",
+          "applications",
+          "competitions",
+          "job_fairs",
+          "ideas"
+        ]
+      },
+      "sections": [
+        "FirstVisitTip"
+      ],
+      "states": [
+        "default",
+        "empty",
+        "loading"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/opportunities/applications/[id]",
+      "file": "app/(app)/opportunities/applications/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "WithdrawButton"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/opportunities/contact-requests/[id]",
+      "file": "app/(app)/opportunities/contact-requests/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ContactResponse"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/opportunities/jobs/[id]",
+      "file": "app/(app)/opportunities/jobs/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ApplyForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/opportunities",
+      "file": "app/(app)/opportunities/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/appeals/[id]",
+      "file": "app/(app)/ops/appeals/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "AppealClaimButton",
+        "DecideAppealForm",
+        "AuditDiff"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/appeals",
+      "file": "app/(app)/ops/appeals/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "query",
+        "param": "status",
+        "values": [
+          "decided"
+        ]
+      },
+      "sections": [
+        "FileAppealForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/audit",
+      "file": "app/(app)/ops/audit/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "AuditDiff"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/billing/[type]/[id]",
+      "file": "app/(app)/ops/billing/[type]/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "PaymentTable",
+        "QuotaList",
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/billing",
+      "file": "app/(app)/ops/billing/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "accounts",
+          "revenue",
+          "gateways"
+        ]
+      },
+      "sections": [
+        "Card",
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/config/[key]",
+      "file": "app/(app)/ops/config/[key]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "AuditDiff",
+        "ConfigEditor"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/config",
+      "file": "app/(app)/ops/config/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "ConfigTabs"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/config/plans",
+      "file": "app/(app)/ops/config/plans/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "ConfigTabs",
+        "PlanPriceForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/config/skills",
+      "file": "app/(app)/ops/config/skills/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "ConfigTabs",
+        "AddSkillForm",
+        "SkillAction"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/evidence/code-checks/[id]",
+      "file": "app/(app)/ops/evidence/code-checks/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "SnippetView",
+        "CodeCheckGradeForm",
+        "TrustClaimButton"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/evidence/credentials/[id]",
+      "file": "app/(app)/ops/evidence/credentials/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "CredentialReviewForm",
+        "TrustClaimButton"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/evidence/flags/[id]",
+      "file": "app/(app)/ops/evidence/flags/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "FlagResolveForm",
+        "TrustClaimButton"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/evidence",
+      "file": "app/(app)/ops/evidence/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "credentials",
+          "reviewed",
+          "checks",
+          "graded",
+          "flags",
+          "ranking",
+          "ranking_reviewed",
+          "cvs"
+        ]
+      },
+      "sections": [
+        "OpsCvRevoke"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/evidence/ranking/[id]",
+      "file": "app/(app)/ops/evidence/ranking/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "RankingFlagReviewForm",
+        "TrustClaimButton"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/exam-periods",
+      "file": "app/(app)/ops/exam-periods/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "ExamPeriodForm",
+        "RemoveExamPeriod"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/feedback/[id]",
+      "file": "app/(app)/ops/feedback/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "FeedbackClaimButton",
+        "FeedbackRespondForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/feedback",
+      "file": "app/(app)/ops/feedback/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "open",
+          "closed"
+        ]
+      },
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/graduation",
+      "file": "app/(app)/ops/graduation/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "BatchAdd",
+        "BatchForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/leads",
+      "file": "app/(app)/ops/leads/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/metrics",
+      "file": "app/(app)/ops/metrics/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "ChartCard",
+        "RankedBars",
+        "Sparkline",
+        "StackedBars",
+        "TrendChart"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/orgs/[id]",
+      "file": "app/(app)/ops/orgs/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "OrgDecisionForm",
+        "OrgSanctionForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/orgs/competitions",
+      "file": "app/(app)/ops/orgs/competitions/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "CompetitionReviewForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/orgs",
+      "file": "app/(app)/ops/orgs/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "query",
+        "param": "status",
+        "values": [
+          "pending",
+          "verified",
+          "suspended",
+          "rejected"
+        ]
+      },
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/orgs/spam",
+      "file": "app/(app)/ops/orgs/spam/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "SpamReviewForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops",
+      "file": "app/(app)/ops/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "InboxClaim"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/reports/[id]",
+      "file": "app/(app)/ops/reports/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "ClaimButton",
+        "ResolveForm",
+        "SanctionUserForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/reports",
+      "file": "app/(app)/ops/reports/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "query",
+        "param": "status",
+        "values": [
+          "resolved"
+        ]
+      },
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/sanctions",
+      "file": "app/(app)/ops/sanctions/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "recent",
+          "active"
+        ]
+      },
+      "sections": [
+        "LiftSanctionButton",
+        "SanctionUserForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/staff",
+      "file": "app/(app)/ops/staff/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "GrantRoleForm",
+        "RevokeRoleButton"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/teachers",
+      "file": "app/(app)/ops/teachers/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "decided",
+          "pending"
+        ]
+      },
+      "sections": [
+        "ApproveTeacherButton",
+        "FacultyCsvForm",
+        "RevokeTeacherForm",
+        "TeacherFlagForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/universities/[id]",
+      "file": "app/(app)/ops/universities/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "overview",
+          "ecosphere",
+          "exams",
+          "invoices"
+        ]
+      },
+      "sections": [
+        "DataTable",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/universities/claims/[id]",
+      "file": "app/(app)/ops/universities/claims/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "Card",
+        "PageTitle",
+        "RpcForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/universities",
+      "file": "app/(app)/ops/universities/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/users/[id]",
+      "file": "app/(app)/ops/users/[id]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "overview",
+          "evidence",
+          "cvs",
+          "sanctions"
+        ]
+      },
+      "sections": [
+        "SanctionUserForm",
+        "ReasonAction",
+        "ResetTwoFactorForm",
+        "StartViewAsForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/users/[id]/view/[page]",
+      "file": "app/(app)/ops/users/[id]/view/[page]/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": {
+        "kind": "segment",
+        "values": [
+          "profile",
+          "me",
+          "cv",
+          "opportunities",
+          "privacy",
+          "notifications"
+        ]
+      },
+      "sections": [
+        "StartViewAsForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ops/users",
+      "file": "app/(app)/ops/users/page.tsx",
+      "portal": "ops",
+      "role": "super_admin",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/org/billing",
+      "file": "app/(app)/org/(portal)/billing/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "CreditsForm",
+        "InvoiceCheckoutButton",
+        "PlanCheckoutButton",
+        "SponsorPostButton",
+        "InvoiceTable",
+        "PaymentTable",
+        "PlanSummary",
+        "QuotaList",
+        "TestModeBanner",
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/org/members",
+      "file": "app/(app)/org/(portal)/members/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "InviteForm",
+        "MemberRow",
+        "RevokeInviteButton"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/org/plan",
+      "file": "app/(app)/org/(portal)/plan/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/org/settings/api",
+      "file": "app/(app)/org/(portal)/settings/api/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "DeleteWebhookButton",
+        "RevokeTokenButton",
+        "TokenForm",
+        "WebhookForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/org/settings",
+      "file": "app/(app)/org/(portal)/settings/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "OrgDocumentForm",
+        "CompanyPageForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/org/join",
+      "file": "app/(app)/org/join/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "AcceptInviteButton",
+        "OrgJoinForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/post/[id]",
+      "file": "app/(app)/post/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "Comments",
+        "PostCard"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/profile/[username]/activity",
+      "file": "app/(app)/profile/[username]/activity/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "FeedList"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/profile/[username]",
+      "file": "app/(app)/profile/[username]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ProfileCredentials",
+        "EndorsementList",
+        "SkillList"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/profile/[username]/skills",
+      "file": "app/(app)/profile/[username]/skills/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "HeldNotice",
+        "SkillList"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/profile/[username]/ventures",
+      "file": "app/(app)/profile/[username]/ventures/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "VentureStatusBadge"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/analytics",
+      "file": "app/(app)/recruit/analytics/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/candidates/[id]",
+      "file": "app/(app)/recruit/candidates/[id]/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "ContactDialog",
+        "InviteToApplyControl",
+        "NotesPanel",
+        "ShortlistControl"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/competitions/[id]",
+      "file": "app/(app)/recruit/competitions/[id]/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "CompetitionForm",
+        "FinishButton",
+        "ScoreForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/competitions/new",
+      "file": "app/(app)/recruit/competitions/new/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "CompetitionForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/competitions",
+      "file": "app/(app)/recruit/competitions/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/contacts",
+      "file": "app/(app)/recruit/contacts/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/jobs/[id]/applicants",
+      "file": "app/(app)/recruit/jobs/[id]/applicants/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "ApplicantBoard"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/jobs/[id]",
+      "file": "app/(app)/recruit/jobs/[id]/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "JobForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/jobs/new",
+      "file": "app/(app)/recruit/jobs/new/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "JobForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/jobs",
+      "file": "app/(app)/recruit/jobs/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit",
+      "file": "app/(app)/recruit/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "OutcomeButtons"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/search",
+      "file": "app/(app)/recruit/search/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "DeleteSavedSearchButton",
+        "SaveSearchForm",
+        "TalentFilterForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/shortlists/[id]",
+      "file": "app/(app)/recruit/shortlists/[id]/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "ShortlistBoard"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruit/shortlists",
+      "file": "app/(app)/recruit/shortlists/page.tsx",
+      "portal": "recruiter",
+      "role": "recruiter",
+      "tabs": null,
+      "sections": [
+        "NewShortlistForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/requests",
+      "file": "app/(app)/requests/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "received",
+          "sent",
+          "invites"
+        ]
+      },
+      "sections": [
+        "ApplicationCard",
+        "ConfirmAction"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/settings/account/delete",
+      "file": "app/(app)/settings/account/delete/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "CancelDeletionButton",
+        "RequestDeletionForm",
+        "SignOutButton"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/settings/billing",
+      "file": "app/(app)/settings/billing/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "PlanCheckoutButton",
+        "InvoiceTable",
+        "PaymentTable",
+        "PlanSummary",
+        "QuotaList",
+        "TestModeBanner",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/settings/chat",
+      "file": "app/(app)/settings/chat/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ReadReceiptsToggle"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/settings/github",
+      "file": "app/(app)/settings/github/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "FormAlert",
+        "AccountActions",
+        "ConnectGithubButton",
+        "RepoList",
+        "SyncStatus",
+        "HeldNotice"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/settings/notifications",
+      "file": "app/(app)/settings/notifications/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ChannelPicker"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/settings",
+      "file": "app/(app)/settings/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ReplayTourButton"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/settings/privacy",
+      "file": "app/(app)/settings/privacy/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "FirstVisitTip",
+        "LeaderboardToggle",
+        "RecruiterPrefsForm",
+        "ConfirmAction"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/settings/profile",
+      "file": "app/(app)/settings/profile/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/settings/security",
+      "file": "app/(app)/settings/security/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "FormAlert"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/code-checks/[id]",
+      "file": "app/(app)/teach/(portal)/code-checks/[id]/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [
+        "SnippetView",
+        "CodeCheckGradeForm",
+        "ActionButton"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/code-checks",
+      "file": "app/(app)/teach/(portal)/code-checks/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "graded",
+          "open"
+        ]
+      },
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/ideas/[id]",
+      "file": "app/(app)/teach/(portal)/ideas/[id]/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "IdeaForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/ideas/new",
+      "file": "app/(app)/teach/(portal)/ideas/new/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [
+        "IdeaForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/ideas",
+      "file": "app/(app)/teach/(portal)/ideas/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/judging/[id]",
+      "file": "app/(app)/teach/(portal)/judging/[id]/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [
+        "Card",
+        "PageTitle",
+        "RpcForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/judging",
+      "file": "app/(app)/teach/(portal)/judging/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [
+        "DataTable",
+        "PageTitle"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach",
+      "file": "app/(app)/teach/(portal)/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [
+        "ActionButton"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/reviews/[requestId]",
+      "file": "app/(app)/teach/(portal)/reviews/[requestId]/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "ReviewForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/reviews",
+      "file": "app/(app)/teach/(portal)/reviews/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": {
+        "kind": "query",
+        "param": "tab",
+        "values": [
+          "done",
+          "open"
+        ]
+      },
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/settings",
+      "file": "app/(app)/teach/(portal)/settings/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [
+        "TeacherSettingsForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/ventures/[id]",
+      "file": "app/(app)/teach/(portal)/ventures/[id]/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "TeacherEndorseForm",
+        "SupervisorThreadView"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/teach/apply",
+      "file": "app/(app)/teach/apply/page.tsx",
+      "portal": "teacher",
+      "role": "teacher",
+      "tabs": null,
+      "sections": [
+        "ApplyForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/u/[slug]/[[...page]]",
+      "file": "app/(app)/u/[slug]/[[...page]]/page.tsx",
+      "portal": "university",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "Blocks",
+        "EcosphereFrame",
+        "DataTable",
+        "Section"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/announcements",
+      "file": "app/(app)/uni/(portal)/announcements/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "Card",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/billing",
+      "file": "app/(app)/uni/(portal)/billing/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "InvoiceCheckoutButton",
+        "InvoiceTable",
+        "PaymentTable",
+        "PlanSummary",
+        "QuotaList",
+        "TestModeBanner",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/dashboard/[area]",
+      "file": "app/(app)/uni/(portal)/dashboard/[area]/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": {
+        "kind": "segment",
+        "values": [
+          "adoption",
+          "activity",
+          "skills",
+          "skills_gap",
+          "tiers",
+          "outcomes",
+          "faculty",
+          "benchmark"
+        ]
+      },
+      "sections": [
+        "BarList",
+        "Card",
+        "DataTable",
+        "Locked",
+        "PageTitle",
+        "Section"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/events",
+      "file": "app/(app)/uni/(portal)/events/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/fairs/[id]",
+      "file": "app/(app)/uni/(portal)/fairs/[id]/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "BarList",
+        "Card",
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/fairs",
+      "file": "app/(app)/uni/(portal)/fairs/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "DataTable",
+        "Locked",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/hackathons",
+      "file": "app/(app)/uni/(portal)/hackathons/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "DataTable",
+        "Locked",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/moderation",
+      "file": "app/(app)/uni/(portal)/moderation/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni",
+      "file": "app/(app)/uni/(portal)/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "Card",
+        "PageTitle",
+        "Section"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/people/awards",
+      "file": "app/(app)/uni/(portal)/people/awards/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "Card",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/people",
+      "file": "app/(app)/uni/(portal)/people/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/reports",
+      "file": "app/(app)/uni/(portal)/reports/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "Card",
+        "Locked",
+        "PageTitle"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/settings/admins",
+      "file": "app/(app)/uni/(portal)/settings/admins/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm",
+        "SettingsTabs"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/settings/branding",
+      "file": "app/(app)/uni/(portal)/settings/branding/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "BrandingForm",
+        "ImageUpload",
+        "PageTitle",
+        "Section",
+        "RpcForm",
+        "SettingsTabs"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/settings/calendar",
+      "file": "app/(app)/uni/(portal)/settings/calendar/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm",
+        "SettingsTabs"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/settings/domains",
+      "file": "app/(app)/uni/(portal)/settings/domains/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm",
+        "SettingsTabs"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/settings/ecosphere",
+      "file": "app/(app)/uni/(portal)/settings/ecosphere/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "Card",
+        "PageTitle",
+        "Section",
+        "PageEditor",
+        "RpcForm",
+        "SettingsTabs"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/settings",
+      "file": "app/(app)/uni/(portal)/settings/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/sponsorship",
+      "file": "app/(app)/uni/(portal)/sponsorship/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "Card",
+        "DataTable",
+        "PageTitle",
+        "Section",
+        "RpcForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/students/[id]",
+      "file": "app/(app)/uni/(portal)/students/[id]/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "Card",
+        "DataTable",
+        "Locked",
+        "PageTitle",
+        "Section"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/students",
+      "file": "app/(app)/uni/(portal)/students/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "DataTable",
+        "Locked",
+        "PageTitle"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/claim",
+      "file": "app/(app)/uni/claim/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "ClaimForm",
+        "Card",
+        "PageTitle",
+        "Section"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/uni/join",
+      "file": "app/(app)/uni/join/page.tsx",
+      "portal": "university",
+      "role": "university_owner",
+      "tabs": null,
+      "sections": [
+        "PageTitle"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ventures/[id]/chat",
+      "file": "app/(app)/ventures/[id]/chat/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ventures/[id]/contributions",
+      "file": "app/(app)/ventures/[id]/contributions/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ConfirmAction",
+        "ContributionSheet"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ventures/[id]/deliverables",
+      "file": "app/(app)/ventures/[id]/deliverables/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ConfirmAction",
+        "DeliverableForm"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ventures/[id]/manage",
+      "file": "app/(app)/ventures/[id]/manage/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ConfirmAction",
+        "DetailsForm",
+        "InviteForm",
+        "QuestionsEditor",
+        "RepoForm",
+        "RolesEditor"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ventures/[id]",
+      "file": "app/(app)/ventures/[id]/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ventures/[id]/reviews",
+      "file": "app/(app)/ventures/[id]/reviews/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ActionButton",
+        "FacultyControls",
+        "SupervisorThreadView"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ventures/[id]/team",
+      "file": "app/(app)/ventures/[id]/team/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "EndorseSheet",
+        "TeamControls"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ventures/[id]/updates",
+      "file": "app/(app)/ventures/[id]/updates/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "ConfirmAction",
+        "UpdateComposer"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ventures/new",
+      "file": "app/(app)/ventures/new/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "VentureForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ventures",
+      "file": "app/(app)/ventures/page.tsx",
+      "portal": "student",
+      "role": "student",
+      "tabs": null,
+      "sections": [
+        "VentureCard"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/forgot-password",
+      "file": "app/(auth)/forgot-password/page.tsx",
+      "portal": "auth",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AuthFrame"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/reset-password",
+      "file": "app/(auth)/reset-password/page.tsx",
+      "portal": "auth",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AuthFrame"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/signin/code",
+      "file": "app/(auth)/signin/code/page.tsx",
+      "portal": "auth",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AuthFrame"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/signin/mfa",
+      "file": "app/(auth)/signin/mfa/page.tsx",
+      "portal": "auth",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AuthFrame"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/signin",
+      "file": "app/(auth)/signin/page.tsx",
+      "portal": "auth",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AuthFrame"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/signup",
+      "file": "app/(auth)/signup/page.tsx",
+      "portal": "auth",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AuthFrame"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/signup/recruiter",
+      "file": "app/(auth)/signup/recruiter/page.tsx",
+      "portal": "auth",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AuthFrame"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/signup/verify",
+      "file": "app/(auth)/signup/verify/page.tsx",
+      "portal": "auth",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AuthFrame"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/ui",
+      "file": "app/(dev)/ui/page.tsx",
+      "portal": "dev",
+      "role": "anyone",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/about",
+      "file": "app/(marketing)/about/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "ArtImage",
+        "CtaLink"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/faculty",
+      "file": "app/(marketing)/faculty/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "CtaLink",
+        "OrgHero",
+        "Section",
+        "SectionHeading"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/",
+      "file": "app/(marketing)/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "Hero",
+        "LiveAt",
+        "CvPreview",
+        "Faq",
+        "FeedBlock",
+        "FinalCta",
+        "ForOrgs",
+        "HowItWorks",
+        "OpportunitiesBlock",
+        "OurRules",
+        "PricingTeaser",
+        "TierLadder",
+        "TrustGap",
+        "VenturesBlock"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/pricing",
+      "file": "app/(marketing)/pricing/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "CtaLink",
+        "PlanTable",
+        "Section",
+        "SectionHeading"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/privacy",
+      "file": "app/(marketing)/privacy/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/recruiters",
+      "file": "app/(marketing)/recruiters/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "CaptureImage",
+        "CtaLink",
+        "OrgHero",
+        "PlanTable",
+        "Section",
+        "SectionHeading"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/request-university/confirm",
+      "file": "app/(marketing)/request-university/confirm/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/request-university",
+      "file": "app/(marketing)/request-university/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "UniversityRequestForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/request-university/unsubscribe",
+      "file": "app/(marketing)/request-university/unsubscribe/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "UnsubscribeForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/terms",
+      "file": "app/(marketing)/terms/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AgreementText"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/universities",
+      "file": "app/(marketing)/universities/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "CtaLink",
+        "OrgHero",
+        "PlanTable",
+        "Section",
+        "SectionHeading",
+        "TalkToUsForm"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/verify/[code]",
+      "file": "app/(marketing)/verify/[code]/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "CvPaper",
+        "PdfCheck",
+        "VerifyColumn"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/verify",
+      "file": "app/(marketing)/verify/page.tsx",
+      "portal": "marketing",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "VerifyColumn"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/auth/confirmed",
+      "file": "app/auth/confirmed/page.tsx",
+      "portal": "auth",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AuthFrame"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/auth/not-me",
+      "file": "app/auth/not-me/page.tsx",
+      "portal": "auth",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "AuthFrame"
+      ],
+      "states": [
+        "default"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    },
+    {
+      "route": "/cv/[username]",
+      "file": "app/cv/[username]/page.tsx",
+      "portal": "public",
+      "role": "anonymous",
+      "tabs": null,
+      "sections": [
+        "CvPaper",
+        "PublicFrame"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "variants": [
+        "desktop-light",
+        "desktop-dark",
+        "phone-light",
+        "phone-dark"
+      ]
+    }
+  ]
+}

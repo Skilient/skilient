@@ -1864,3 +1864,7 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   listener, so they stay server components.
 - 2026-10-03 (phase 13, slice 1): posthog-js is a lazily loaded chunk of about 100 KB gzip (after the page is idle), never in
   first-load JS. The size-limit total of all chunks was already over its report-only 450 KB line.
+- 2026-10-04 (Figma): the product goes into Figma as editable layers (not screenshots), desktop 1440 and phone 390, light
+  and dark. Dark frames are the light frames with the variable mode switched, so every fill binds a token. Frames are
+  rebuilt from captured layout trees (`pnpm figma:captures`), not guessed from source; inventory in
+  `docs/figma/screens.json`. Built one portal per session once the Figma connector is authorised.

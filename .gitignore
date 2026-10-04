@@ -49,3 +49,6 @@ size-limit.txt
 
 # impeccable review captures (local only)
 .impeccable/review/
+
+# figma reference captures (local only; docs/figma/README.md)
+/docs/figma/reference/

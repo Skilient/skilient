@@ -2,3 +2,6 @@
 # commit, matched by the generic-api-key rule. The fixtures now use plain ids; the old commit stays in history.
 a0c22d981ac8676f23635e529353c6ac348f94aa:tests/fixtures/billing/safepay/refund.created.json:generic-api-key:1
 a0c22d981ac8676f23635e529353c6ac348f94aa:tests/fixtures/billing/safepay/payment.created.json:generic-api-key:1
+# False positive (decisions.md 2026-10-04): a Figma file key (the id in the file's URL, not a credential) in the Figma
+# work's state file on another branch; CI scans every branch, so it failed unrelated pull requests.
+71abe4049f3de391db0f894b68dc2c8ec5ab3509:docs/figma/state.json:generic-api-key:3

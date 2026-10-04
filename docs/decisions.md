@@ -1889,3 +1889,7 @@ Append-only. One dated entry per product decision, with the reason. Carried over
 - **2026-10-04 — Sentry in Edge Functions deferred.** Workers log JSON lines and their failures reach the watchdog through
   `job_runs` and stuck queues; adding the Deno Sentry SDK to nine functions is a separate change if the alerts prove blind.
 - **2026-10-04 — `cron.job_run_details` kept 7 days** (`purge-monitoring` nightly); it grows by about 3,000 rows a day.
+- **2026-10-04 — Figma file key allowlisted in `.gitleaksignore`.** gitleaks matched the `file.key` in
+  `docs/figma/state.json` on the Figma branch (commit 71abe40) as a generic API key. A file key only names a file and
+  grants no access. CI scans every branch, so the match failed unrelated pull requests. Only that one fingerprint is
+  ignored; any other value in the file is still scanned.

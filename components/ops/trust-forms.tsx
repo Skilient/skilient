@@ -56,7 +56,7 @@ export function CredentialReviewForm({
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-3"
       onSubmit={(e) => {
         e.preventDefault();
@@ -125,7 +125,7 @@ export function FlagResolveForm({ id }: { id: number }) {
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-3"
       onSubmit={(e) => {
         e.preventDefault();

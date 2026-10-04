@@ -40,7 +40,7 @@ export function DecideAppealForm({ id }: { id: string }) {
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       aria-labelledby={`${uid}-h`}
       className="flex flex-col gap-3"
       onSubmit={(e) => {
@@ -105,7 +105,7 @@ export function FileAppealForm() {
   const [done, setDone] = useState(false);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       aria-labelledby={`${uid}-h`}
       className="flex flex-col gap-3 rounded-lg border border-border-default bg-bg-surface p-4"
       onSubmit={(e) => {

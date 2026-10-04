@@ -2,13 +2,14 @@ import "server-only";
 
 import { randomBytes } from "node:crypto";
 import { cookies } from "next/headers";
+import { secureCookieName } from "@/lib/security/cookie-name";
 
 /**
  * OAuth `state` for the GitHub App round trip (PRD 5.5: verified against the signed-in
  * user). The cookie is HttpOnly and scoped to the callback; it names the user who started
  * the flow, so a callback in another account's session is refused.
  */
-const COOKIE = "sk_gh";
+const COOKIE = secureCookieName("sk_gh");
 const RETURN_TO = ["onboarding", "settings"] as const;
 export type GithubReturnTo = (typeof RETURN_TO)[number];
 

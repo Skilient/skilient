@@ -14,7 +14,7 @@ export function AddByUsername() {
   const [busy, startTransition] = useTransition();
 
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-2"
       onSubmit={(e) => {
         e.preventDefault();

@@ -40,7 +40,7 @@ export function OrgJoinForm({ domain }: { domain: string }) {
 
   const bind = (id: string) => ({ "aria-invalid": fields[id] ? (true as const) : undefined, "aria-describedby": fields[id] ? `${id}-error` : undefined });
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5 rounded-lg border border-border-default bg-bg-surface p-5" data-testid="org-join-form">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5 rounded-lg border border-border-default bg-bg-surface p-5" data-testid="org-join-form">
       {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       <Field id="name" label="Company name" error={fields.name}>
         <Input id="name" name="name" required maxLength={80} {...bind("name")} />
@@ -125,7 +125,7 @@ export function CompanyPageForm({
     });
   }
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
       {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       {saved ? <FormAlert tone="success">Saved.</FormAlert> : null}
       <Field id="about" label="About the company" error={fields.about} helper="Students read this before they answer a contact request. Up to 1,500 characters.">
@@ -187,7 +187,7 @@ export function InviteForm({ seatsFree }: { seatsFree: boolean }) {
     });
   }
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-4 rounded-lg border border-border-default bg-bg-surface p-4">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-4 rounded-lg border border-border-default bg-bg-surface p-4">
       <h2 className="text-h4">Invite a teammate</h2>
       {error ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       {link ? (

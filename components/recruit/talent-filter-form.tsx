@@ -66,7 +66,7 @@ export function TalentFilterForm({ facets, initial }: { facets: TalentFacets; in
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-5" aria-label="Talent filters" data-testid="talent-filters">
+    <form method="post" onSubmit={onSubmit} className="flex flex-col gap-5" aria-label="Talent filters" data-testid="talent-filters">
       <fieldset className="flex flex-col gap-2">
         <legend className="mb-1 text-label text-text-secondary uppercase">Skills</legend>
         <div className="flex flex-wrap gap-2" data-testid="picked-skills">

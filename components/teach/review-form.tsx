@@ -37,7 +37,7 @@ export function ReviewForm({ requestId }: { requestId: string }) {
   };
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
       {error ? <FormAlert>{error}</FormAlert> : null}
       {REVIEW_RUBRIC.map((r) => (
         <fieldset key={r.key} className="flex flex-col gap-2 rounded-lg border border-border-default bg-bg-surface p-4">

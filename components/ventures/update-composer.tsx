@@ -56,7 +56,7 @@ export function UpdateComposer({ ventureId }: { ventureId: string }) {
   }
 
   return (
-    <form ref={form} onSubmit={onSubmit} noValidate className="flex flex-col gap-3 rounded-lg border border-border-default p-4">
+    <form method="post" ref={form} onSubmit={onSubmit} noValidate className="flex flex-col gap-3 rounded-lg border border-border-default p-4">
       {error && !error.fields ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       <Field id="update-body" label="Post an update" error={error?.fields?.body} helper="What the team shipped, learned or needs. Everyone who can see the venture reads it.">
         <Textarea

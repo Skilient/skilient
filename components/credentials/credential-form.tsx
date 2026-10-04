@@ -88,7 +88,7 @@ export function CredentialForm() {
   const described = (name: string, helper = false) => (fields[name] ? `${id}-${name}-error` : helper ? `${id}-${name}-helper` : undefined);
 
   return (
-    <form ref={form} onSubmit={onSubmit} noValidate className="flex flex-col gap-5" aria-labelledby={`${id}-title`}>
+    <form method="post" ref={form} onSubmit={onSubmit} noValidate className="flex flex-col gap-5" aria-labelledby={`${id}-title`}>
       <h2 id={`${id}-title`} className="text-h3">
         Add a credential
       </h2>

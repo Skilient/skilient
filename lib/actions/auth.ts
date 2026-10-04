@@ -26,6 +26,7 @@ import { isBreachedPassword } from "@/lib/security/hibp";
 import { rateLimit } from "@/lib/security/rate-limit";
 import { isLoopback } from "@/lib/security/request-meta";
 import { verifyTurnstile } from "@/lib/security/turnstile";
+import { createPublicClient } from "@/lib/supabase/public";
 import { createClient } from "@/lib/supabase/server";
 
 type Supabase = Awaited<ReturnType<typeof createClient>>;
@@ -752,6 +753,62 @@ export async function resetPassword(formData: FormData): Promise<ActionResult> {
   await supabase.rpc("log_security_event", { p_kind: "password_changed", p_ip_hash: ctx.ipHash ?? "", p_user_agent: ctx.userAgent });
   ctx.done("ok", { user_id: user.id });
   redirect((await destinationAfterSignIn(supabase, null)) as Route);
+}
+
+// ---------------------------------------------------------------------------
+// Change password while signed in (Settings → Security; ASVS V6.2.2/V6.2.3): the current password is
+// checked on a separate, cookie-less client so the session in use is untouched, then every other session ends.
+// ---------------------------------------------------------------------------
+
+const changeSchema = z
+  .object({ current: z.string().min(1, "Enter your current password.").max(128), password: passwordSchema, confirm: z.string() })
+  .refine((v) => v.password === v.confirm, { path: ["confirm"], message: "The two passwords don't match." })
+  .refine((v) => v.password !== v.current, { path: ["password"], message: "Choose a password you haven't used here before." });
+
+export async function changePassword(formData: FormData): Promise<ActionResult> {
+  const ctx = await actionContext("auth.password_change");
+  const parsed = changeSchema.safeParse(formValues(formData, ["current", "password", "confirm"]));
+  if (!parsed.success) {
+    ctx.done("refused", { error_code: "invalid_input" });
+    return fail("invalid_input", "Check the highlighted fields.", { fields: fieldErrors(parsed.error.issues) });
+  }
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user?.email) {
+    ctx.done("refused", { error_code: "no_session" });
+    return fail("unauthenticated", "Sign in again to change your password.");
+  }
+  if (!(await rateLimit(supabase, "password_change", user.id, 5, 900))) {
+    ctx.done("refused", { error_code: "rate_limited", user_id: user.id });
+    return fail("rate_limited", "Too many tries. Wait 15 minutes and try again.");
+  }
+  const check = createPublicClient();
+  const { error: wrong } = await check.auth.signInWithPassword({ email: user.email, password: parsed.data.current });
+  if (wrong) {
+    ctx.done("refused", { error_code: "wrong_password", user_id: user.id });
+    const message = "That isn't your current password. Signed up with Google? Use \"Forgot password\" on the sign-in page to set one.";
+    return fail("wrong_password", message, { fields: { current: message } });
+  }
+  await check.auth.signOut({ scope: "local" });
+  if (await isBreachedPassword(parsed.data.password)) {
+    ctx.done("refused", { error_code: "breached_password", user_id: user.id });
+    return fail("breached_password", BREACHED, { fields: { password: BREACHED } });
+  }
+  const { error } = await supabase.auth.updateUser({ password: parsed.data.password });
+  if (error) {
+    const code = authCode(error);
+    ctx.done("refused", { error_code: code, user_id: user.id });
+    if (code === "same_password") return fail(code, "Choose a password you haven't used here before.", { fields: { password: "Choose a new password." } });
+    if (code === "weak_password") return fail(code, BREACHED, { fields: { password: BREACHED } });
+    return fail("unavailable", UNAVAILABLE, { requestId: ctx.requestId });
+  }
+  // PRD 10: a password change ends every other session.
+  await supabase.auth.signOut({ scope: "others" });
+  await supabase.rpc("log_security_event", { p_kind: "password_changed", p_ip_hash: ctx.ipHash ?? "", p_user_agent: ctx.userAgent });
+  ctx.done("ok", { user_id: user.id });
+  return ok(null);
 }
 
 // ---------------------------------------------------------------------------

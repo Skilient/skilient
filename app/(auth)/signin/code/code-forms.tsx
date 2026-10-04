@@ -34,7 +34,7 @@ export function CodeRequestForm({ siteKey, next }: { siteKey: string | null; nex
 
   const fields = error?.fields ?? {};
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
       {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       <Field id="email" label="University email" error={fields.email}>
         <Input
@@ -101,7 +101,7 @@ export function CodeVerifyForm({ next }: { next: string | null }) {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
       {error && !error.fields ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       {notice ? <FormAlert tone="success">{notice}</FormAlert> : null}
       <CodeInput id="code" label="6-digit code" value={code} onChange={setCode} error={error?.fields?.code} autoFocus />

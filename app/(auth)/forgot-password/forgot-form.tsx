@@ -33,7 +33,7 @@ export function ForgotForm({ expired }: { expired: boolean }) {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
       {expired && !error ? <FormAlert>That reset link has expired or was already used. Ask for a new one.</FormAlert> : null}
       {error && !error.fields ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       <Field id="email" label="University email" error={error?.fields?.email}>

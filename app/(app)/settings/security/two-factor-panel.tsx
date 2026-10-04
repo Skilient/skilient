@@ -283,7 +283,7 @@ function EnrollForm({
   }
 
   return (
-    <form onSubmit={onConfirm} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onConfirm} noValidate className="flex flex-col gap-5">
       <input type="hidden" name="factorId" value={enrollment.factorId} />
       <ol className="flex list-decimal flex-col gap-4 pl-5 text-body text-text-secondary">
         <li>

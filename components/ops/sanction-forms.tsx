@@ -26,7 +26,7 @@ export function SanctionUserForm({ userId, name, caseId = null, superAdmin }: { 
   const kinds = superAdmin ? (["warn", "suspend", "ban"] as const) : (["warn", "suspend"] as const);
   const labels = { warn: "Warn", suspend: "Suspend", ban: "Ban" };
   return (
-    <form
+    <form method="post"
       aria-labelledby={`${uid}-h`}
       className="flex flex-col gap-3 rounded-lg border border-border-default bg-bg-surface p-4"
       onSubmit={(e) => {
@@ -101,7 +101,7 @@ export function OrgSanctionForm({ orgId, name }: { orgId: string; name: string }
   const [pending, startTransition] = useTransition();
   const labels = { warn: "Warn", throttle: "Throttle contact requests", suspend: "Suspend" };
   return (
-    <form
+    <form method="post"
       aria-labelledby={`${uid}-h`}
       className="flex flex-col gap-3 rounded-lg border border-border-default bg-bg-surface p-4"
       onSubmit={(e) => {

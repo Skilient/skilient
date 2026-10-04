@@ -214,7 +214,11 @@ Legend: 📖 = PRD files to read (in `docs/prd/`), ✅ = done-when checks.
 ✅ Every technical item of the launch gate is green
 
 *Status 2026-10-03: plan in `docs/hardening-plan.md` (eight slices), questions in `docs/phase-13-questions.md`. Slice 1
-(PostHog events, masked replays, heatmaps, deletion) built; its box waits for slice 2 (alerts).*
+(PostHog events, masked replays, heatmaps, deletion) built; its box waits for slice 2 (alerts).
+2026-10-04: slice 2 (alerts) merged; that box waits on the outside alerts being tested with Ahmed's accounts
+(`docs/alerts.md`). Slice 3: ASVS L1 filed (`docs/security/asvs-l1.md`), ZAP baseline with no High findings on the
+local build (`docs/security/zap.md`; the run against production is a pre-launch step), CSP clean on every page for
+every role (`tests/e2e/csp-sweep.spec.ts`). The first box also needs the design gates (slices 6–8).*
 
 ---
 

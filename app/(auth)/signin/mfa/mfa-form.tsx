@@ -35,7 +35,7 @@ export function MfaForm({ next }: { next: string | null }) {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
       {error && !error.fields ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       {mode === "app" ? (
         <CodeInput id="code" label="Authenticator code" value={code} onChange={setCode} error={error?.fields?.code} autoFocus />

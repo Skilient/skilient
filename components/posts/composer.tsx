@@ -164,7 +164,7 @@ function ComposerForm({ userId, defaultAudience, ventures, isStaff, graduate = f
   const fieldError = (name: string) => error?.fields?.[name];
 
   return (
-    <form onSubmit={submit} noValidate className="flex flex-col gap-4 rounded-lg border border-border-default bg-bg-surface p-4" aria-label="New post" data-testid="composer">
+    <form method="post" onSubmit={submit} noValidate className="flex flex-col gap-4 rounded-lg border border-border-default bg-bg-surface p-4" aria-label="New post" data-testid="composer">
       <div role="radiogroup" aria-label="Post type" className="flex flex-wrap gap-2">
         {kinds.map((k) => (
           <button

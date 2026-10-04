@@ -18,7 +18,7 @@ export function GrantRoleForm() {
   const [done, setDone] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       aria-labelledby={`${uid}-h`}
       className="flex flex-col gap-3 rounded-lg border border-border-default bg-bg-surface p-4"
       onSubmit={(e) => {

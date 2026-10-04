@@ -62,7 +62,7 @@ export function JobForm({ job, skills }: { job: JobDoc | null; skills: SkillOpti
 
   const bind = (id: string) => ({ "aria-invalid": fields[id] ? (true as const) : undefined, "aria-describedby": fields[id] ? `${id}-error` : undefined });
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5" data-testid="job-form">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5" data-testid="job-form">
       {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       <Field id="title" label="Title" error={fields.title}>
         <Input id="title" name="title" required maxLength={100} defaultValue={job?.title} disabled={locked} {...bind("title")} />

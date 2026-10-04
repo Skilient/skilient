@@ -64,7 +64,7 @@ export function StartViewAsForm({ userId, name }: { userId: string; name: string
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       aria-labelledby={`${uid}-h`}
       className="flex flex-col gap-3 rounded-lg border border-border-default bg-bg-surface p-4"
       onSubmit={(e) => {
@@ -102,7 +102,7 @@ export function ResetTwoFactorForm({ userId, name }: { userId: string; name: str
   const [done, setDone] = useState(false);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       aria-labelledby={`${uid}-h`}
       className="flex flex-col gap-3 rounded-lg border border-border-default bg-bg-surface p-4"
       onSubmit={(e) => {

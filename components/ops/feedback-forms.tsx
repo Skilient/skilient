@@ -41,7 +41,7 @@ export function FeedbackRespondForm({ id, status: initial, reply: initialReply }
   const [saved, setSaved] = useState(false);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-3"
       onSubmit={(e) => {
         e.preventDefault();
@@ -88,7 +88,7 @@ export function BatchForm({ universityId, batch, name }: { universityId: string;
   const [saved, setSaved] = useState(false);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       className="flex flex-wrap items-end gap-2"
       onSubmit={(e) => {
         e.preventDefault();

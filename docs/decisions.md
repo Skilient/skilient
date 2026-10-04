@@ -1893,3 +1893,27 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   `docs/figma/state.json` on the Figma branch (commit 71abe40) as a generic API key. A file key only names a file and
   grants no access. CI scans every branch, so the match failed unrelated pull requests. Only that one fingerprint is
   ignored; any other value in the file is still scanned.
+- **2026-10-04 — Security verification (phase 13 slice 3) on the question 13–15 defaults, still unanswered.** ZAP
+  baseline against the production build on the CI runner's local stack (weekly, manual, and on pull requests touching
+  headers or the proxy), plus one manual run against production before launch; ASVS checklist in
+  `docs/security/asvs-l1.md`, postmortems in `docs/incidents/`; CSP reports to `/api/csp-report` (logged, 10% to
+  Sentry, 30 a minute per browser address per server instance, always 204).
+- **2026-10-04 — ASVS 5.0.0, not 4.0.3.** 5.0 is the current version (May 2025); its Level 1 has 70 requirements.
+- **2026-10-04 — Every form has `method="post"`, enforced by lint.** A form handled only by `onSubmit` submits as GET if
+  used before hydration, putting passwords and messages in the URL, history and logs (ZAP 10024). A POST to a page just
+  re-renders it.
+- **2026-10-04 — Cookies get the `__Secure-` prefix in production builds** (ASVS V3.3.1). The Supabase session cookie
+  was neither Secure nor prefixed; it is now `__Secure-skl-auth`, and the app's `sk_*` cookies are `__Secure-sk_*`.
+  Everyone is signed out once when this deploys, and each device sends one "new device" email at its next sign-in
+  (the device cookie is renamed too). The session cookie stays readable by JavaScript: the browser client needs it for
+  Realtime (@supabase/ssr's design), so it isn't HttpOnly as PRD 10 lists; XSS is covered by the nonce CSP instead.
+- **2026-10-04 — "Change password" added to Settings → Security** (ASVS V6.2.2/V6.2.3). Before, the only way was the
+  emailed reset. The current password is checked on a separate cookie-less client, 5 tries per 15 minutes; the change
+  ends every other session, as a reset does.
+- **2026-10-04 — Dependency remediation time frames** (ASVS V15.1.1): critical within 7 days (CI already blocks
+  them), high within 30 days, the rest through the weekly Dependabot pull requests within 90 days.
+- **2026-10-04 — The CSP sweep visits every page, dynamic ones with a made-up id when real data is costly.** Those
+  render their not-found state inside the real layout; their full content is covered by the feature specs, which also
+  fail on CSP errors. `tests/unit/csp-sweep.test.ts` fails when a new page isn't in the sweep.
+- **2026-10-04 — `security.txt` contact is `security@skilient.com`** (the mailbox on the setup checklist), expiring
+  2027-09-30; a unit test fails 60 days before, so it's renewed in an ordinary pull request.

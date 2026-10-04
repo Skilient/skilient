@@ -32,7 +32,7 @@ export default async function StudentsPage({ searchParams }: PageProps<"/uni/stu
       <PageTitle title="Students">
         Opening a record is logged with your name and the time. Students on Student Pro can see who viewed their record. There is no bulk export.
       </PageTitle>
-      <form className="flex flex-wrap items-end gap-3" role="search">
+      <form method="post" className="flex flex-wrap items-end gap-3" role="search">
         <div className="flex flex-col gap-1">
           <Label htmlFor="q">Name or username</Label>
           <Input id="q" name="q" defaultValue={q} />

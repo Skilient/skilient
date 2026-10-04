@@ -48,7 +48,7 @@ export function PageEditor({ page, options }: { page: Page; options: Options }) 
   });
 
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-3"
       data-testid="page-editor"
       onSubmit={(e) => {

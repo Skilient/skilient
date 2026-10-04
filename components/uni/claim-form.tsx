@@ -17,7 +17,7 @@ export function ClaimForm() {
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-4"
       data-testid="claim-form"
       onSubmit={(e) => {

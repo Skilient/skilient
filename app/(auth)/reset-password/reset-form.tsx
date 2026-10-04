@@ -24,7 +24,7 @@ export function ResetForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
       {error && !error.fields ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       <PasswordField id="password" label="New password" value={password} onChange={setPassword} autoComplete="new-password" meter error={error?.fields?.password} />
       <PasswordField id="confirm" name="confirm" label="Type it again" value={confirm} onChange={setConfirm} autoComplete="new-password" error={error?.fields?.confirm} />

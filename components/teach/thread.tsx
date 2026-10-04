@@ -46,7 +46,7 @@ export function SupervisorThreadView({ ventureId, thread, canPost }: { ventureId
         </ol>
       )}
       {canPost ? (
-        <form onSubmit={onSubmit} className="flex flex-col gap-2">
+        <form method="post" onSubmit={onSubmit} className="flex flex-col gap-2">
           {error ? <FormAlert>{error}</FormAlert> : null}
           <label htmlFor="thread-body" className="text-body-sm font-semibold">Add a comment</label>
           <Textarea id="thread-body" name="body" rows={3} maxLength={2000} required />

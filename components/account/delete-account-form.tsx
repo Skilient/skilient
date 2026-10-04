@@ -27,7 +27,7 @@ export function RequestDeletionForm({ username }: { username: string }) {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-4 rounded-lg border border-error p-5" aria-labelledby={`${id}-h`}>
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-4 rounded-lg border border-error p-5" aria-labelledby={`${id}-h`}>
       <h2 id={`${id}-h`} className="text-h3">
         Delete my account
       </h2>

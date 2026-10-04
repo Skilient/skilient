@@ -51,7 +51,7 @@ export function RevokeTeacherForm({ userId }: { userId: string }) {
     );
   }
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-2"
       onSubmit={(e) => {
         e.preventDefault();
@@ -83,7 +83,7 @@ export function FacultyCsvForm({ universities }: { universities: { id: string; n
   const [message, setMessage] = useState<{ tone: "error" | "success"; text: string } | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-3 rounded-lg border border-border-default bg-bg-surface p-4"
       onSubmit={(e) => {
         e.preventDefault();

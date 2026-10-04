@@ -77,7 +77,7 @@ export function ContributionSheet({
             : "What you did for the team. A teammate's confirmation makes it peer-verified. Entries can't be deleted; you can correct one for 24 hours."
         }
       >
-        <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+        <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
           {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
           <fieldset className="flex flex-col gap-2">
             <legend className="mb-1 text-label text-text-secondary uppercase">Kind of work</legend>

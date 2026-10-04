@@ -63,6 +63,15 @@ const rawHtmlSelectors = [
   },
 ];
 
+// A form without method/action submits as GET before hydration, putting its fields (passwords, messages) in the
+// URL, history and server logs (ZAP 10024, phase 13 slice 3). method="post" re-renders the page instead.
+const formMethodSelectors = [
+  {
+    selector: "JSXOpeningElement[name.name='form']:not(:has(JSXAttribute[name.name='method'])):not(:has(JSXAttribute[name.name='action']))",
+    message: 'Give every <form> method="post" (or an action), so a submit before hydration never puts its fields in the URL.',
+  },
+];
+
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
@@ -83,7 +92,7 @@ const eslintConfig = defineConfig([
     files: ["**/*.{ts,tsx,js,mjs}"],
     rules: {
       "no-restricted-imports": ["error", { patterns: [serviceRoleImport] }],
-      "no-restricted-syntax": ["error", ...serviceRoleEnvSelectors, ...getSessionSelectors, ...rawSupabaseRestSelectors, ...rawHtmlSelectors],
+      "no-restricted-syntax": ["error", ...serviceRoleEnvSelectors, ...getSessionSelectors, ...rawSupabaseRestSelectors, ...rawHtmlSelectors, ...formMethodSelectors],
       "react/no-danger": "error",
     },
   },

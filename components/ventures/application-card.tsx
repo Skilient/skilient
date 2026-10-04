@@ -107,7 +107,7 @@ export function ApplicationCard({ item, side }: { item: ApplicationItem; side: "
 
       {open ? (
         <>
-          <form ref={form} onSubmit={onMessage} noValidate className="flex flex-col gap-2">
+          <form method="post" ref={form} onSubmit={onMessage} noValidate className="flex flex-col gap-2">
             <label htmlFor={`reply-${item.id}`} className="text-body-sm font-semibold">
               Message
             </label>

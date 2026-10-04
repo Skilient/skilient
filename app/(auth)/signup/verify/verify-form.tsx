@@ -91,7 +91,7 @@ export function VerifyForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
       {error && !error.fields ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       {notice ? <FormAlert tone="success">{notice}</FormAlert> : null}
       <CodeInput id="code" label="6-digit code" value={code} onChange={setCode} error={error?.fields?.code} autoFocus />

@@ -1,0 +1,87 @@
+name: ZAP baseline
+
+# OWASP ZAP passive baseline (PRD 10; phase 13 question 13). There is no staging, so it scans the production
+# build against the local Supabase stack: weekly, by hand, and on pull requests that change headers or the
+# proxy. A manual run can target the live site instead. Fails on any High finding; accepted Medium and Low
+# findings are explained in docs/security/zap.md.
+
+on:
+  schedule:
+    - cron: "17 2 * * 1"
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "URL to scan (blank = the production build on the runner)"
+        required: false
+        default: ""
+  pull_request:
+    paths:
+      - proxy.ts
+      - next.config.ts
+      - lib/security/**
+      - .zap/**
+      - .github/workflows/zap.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zap-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+  ZAP_IMAGE: ghcr.io/zaproxy/zaproxy:2.17.0
+
+jobs:
+  baseline:
+    name: ZAP baseline (fail on High)
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        if: inputs.target == ''
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: ${{ inputs.target == '' && 'pnpm' || '' }}
+
+      - name: Start local Supabase and build
+        if: inputs.target == ''
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm exec supabase start -x studio,imgproxy,logflare,vector,supavisor,edge-runtime
+          eval "$(pnpm exec supabase status -o env)"
+          {
+            echo "NEXT_PUBLIC_SUPABASE_URL=$API_URL"
+            echo "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$PUBLISHABLE_KEY"
+            echo "SUPABASE_SERVICE_ROLE_KEY=$SECRET_KEY"
+            echo "NEXT_PUBLIC_SITE_URL=http://127.0.0.1:3100"
+          } >> "$GITHUB_ENV"
+      - name: Build and start
+        if: inputs.target == ''
+        run: |
+          pnpm build
+          PORT=3100 nohup pnpm start > server.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf -o /dev/null http://127.0.0.1:3100/api/health && break; sleep 2; done
+          curl -sf -o /dev/null http://127.0.0.1:3100/ || (tail -50 server.log && exit 1)
+
+      - name: ZAP baseline
+        env:
+          TARGET: ${{ inputs.target != '' && inputs.target || 'http://127.0.0.1:3100' }}
+        run: |
+          mkdir -p zap && chmod 777 zap && cp .zap/rules.tsv zap/
+          docker run --rm --network host -v "$PWD/zap:/zap/wrk:rw" "$ZAP_IMAGE" \
+            zap-baseline.py -t "$TARGET" -m 3 -c rules.tsv -J report.json -r report.html -I
+      - name: Fail on High findings
+        run: node scripts/zap-gate.mjs zap/report.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: zap-report
+          path: |
+            zap/report.json
+            zap/report.html
+            server.log
+          retention-days: 30

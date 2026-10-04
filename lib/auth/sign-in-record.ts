@@ -11,9 +11,10 @@ import { newDeviceEmail } from "@/lib/email/templates";
 import { logger } from "@/lib/log";
 import { sha256Hex } from "@/lib/security/hash";
 import { approximateLocation, describeDevice } from "@/lib/security/request-meta";
+import { secureCookieName } from "@/lib/security/cookie-name";
 
 /** Random per-browser id; only its hash reaches the database (user_devices). */
-export const DEVICE_COOKIE = "sk_did";
+export const DEVICE_COOKIE = secureCookieName("sk_did");
 const DEVICE_MAX_AGE = 400 * 24 * 60 * 60;
 
 export type SignInMethod = "password" | "otp" | "magic_link" | "google" | "recovery";

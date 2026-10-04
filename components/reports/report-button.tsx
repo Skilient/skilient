@@ -94,7 +94,7 @@ export function ReportButton({
             </DialogFooter>
           </>
         ) : (
-          <form
+          <form method="post"
             className="flex flex-col gap-4"
             onSubmit={(e) => {
               e.preventDefault();

@@ -614,7 +614,7 @@ function MessageBubble({
           <img src={m.imageUrl} alt="" width={m.imageWidth ?? undefined} height={m.imageHeight ?? undefined} className="mb-1 max-h-72 w-auto rounded-md object-contain" />
         ) : null}
         {editing ? (
-          <form
+          <form method="post"
             className="flex flex-col gap-2"
             onSubmit={(e) => {
               e.preventDefault();
@@ -809,7 +809,7 @@ function Composer({
   };
 
   return (
-    <form
+    <form method="post"
       className="flex flex-col gap-2 border-t border-border-default p-3"
       onSubmit={(e) => {
         e.preventDefault();

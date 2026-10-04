@@ -26,7 +26,7 @@ export function ApplyForm({ defaultDepartment = "", defaultTitle = "", update = 
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5 rounded-lg border border-border-default bg-bg-surface p-5">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5 rounded-lg border border-border-default bg-bg-surface p-5">
       {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       <Field id="department" label="Department" error={fields.department}>
         <Input id="department" name="department" required maxLength={80} defaultValue={defaultDepartment} aria-invalid={fields.department ? true : undefined} aria-describedby={fields.department ? "department-error" : undefined} />

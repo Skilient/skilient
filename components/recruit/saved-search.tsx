@@ -16,7 +16,7 @@ export function SaveSearchForm({ filters }: { filters: TalentFilters }) {
   const [saved, setSaved] = useState(false);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       noValidate
       className="flex flex-col gap-2"
       onSubmit={(e) => {

@@ -30,7 +30,7 @@ export function TokenForm() {
     });
   }
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-3">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-3">
       {error ? <FormAlert>{error}</FormAlert> : null}
       {token ? (
         <FormAlert tone="success">
@@ -78,7 +78,7 @@ export function WebhookForm() {
     });
   }
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-3">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-3">
       {error ? <FormAlert>{error}</FormAlert> : null}
       {secret ? (
         <FormAlert tone="success">

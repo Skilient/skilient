@@ -71,7 +71,7 @@ export function RpcForm({
   }
 
   return (
-    <form
+    <form method="post"
       className={cn("flex flex-col gap-4", className)}
       data-testid={testId}
       noValidate

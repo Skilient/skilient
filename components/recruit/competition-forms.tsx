@@ -61,7 +61,7 @@ export function CompetitionForm({ existing, skills, universities }: { existing: 
   const bind = (id: string) => ({ "aria-invalid": fields[id] ? (true as const) : undefined, "aria-describedby": fields[id] ? `${id}-error` : undefined });
   const total = rubric.reduce((n, r) => n + (Number.isFinite(r.weight) ? r.weight : 0), 0);
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5" data-testid="competition-form">
+    <form method="post" onSubmit={onSubmit} noValidate className="flex flex-col gap-5" data-testid="competition-form">
       {error && !Object.keys(fields).length ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="title" label="Title" error={fields.title}>
@@ -174,7 +174,7 @@ export function ScoreForm({ competitionId, teamId, rubric, current }: { competit
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   return (
-    <form
+    <form method="post"
       noValidate
       className="flex flex-col gap-3"
       onSubmit={(e) => {

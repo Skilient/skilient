@@ -19,3 +19,12 @@ export const recordWithServiceRole: RecordEvent = async (gateway, e) => {
   if (error) throw Object.assign(new Error(error.message), { code: error.code });
   return { duplicate: Boolean((data as { duplicate?: boolean } | null)?.duplicate) };
 };
+
+/** A refused or failed gateway webhook, counted for the "Payments" alert (docs/alerts.md). Never throws. */
+export async function recordWebhookFailure(kind: "billing_webhook_rejected" | "billing_webhook_error"): Promise<void> {
+  try {
+    await createServiceClient().rpc("record_service_signal", { p_kind: kind });
+  } catch {
+    // The log line is the fallback record.
+  }
+}

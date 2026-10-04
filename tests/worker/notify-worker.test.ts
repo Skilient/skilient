@@ -274,4 +274,42 @@ describe("notify-worker", () => {
       await sql`delete from public.universities where id = ${uni}`;
     }
   });
+
+  it("sends operational alerts to every recipient, even past the daily notification cap", async () => {
+    const alert = (key: string) =>
+      sql`select pgmq.send('notification_emails', ${sql.json({
+        kind: "ops_alert", key, state: "firing", title: "Queue not draining: github_jobs",
+        detail: "A message has waited since 10:00 PKT.", since: new Date().toISOString(),
+      })})`;
+    // Nobody set up: skipped, not retried.
+    await alert("queue_stuck:github_jobs");
+    let resend = fakeResend();
+    expect(await runNotifyWorker({ db, cfg, fetch: resend.impl, log })).toMatchObject({ sent: 0, skipped: 1 });
+    expect(resend.sent).toHaveLength(0);
+    expect(logs.find((l) => l.fields?.reason === "no_recipients")).toBeTruthy();
+
+    await sql`insert into public.platform_config (key, version, value, reason)
+              select 'alerts.recipients', max(version) + 1, '["oncall@example.test", "second@example.test"]', 'worker test'
+                from public.platform_config where key = 'alerts.recipients'`;
+    try {
+      // The notification cap is spent for today; alerts still go out and don't count toward it.
+      await sql`delete from private.email_sends where sent_at >= date_trunc('day', now() at time zone 'utc') at time zone 'utc'`;
+      await sql`insert into private.email_sends (kind, user_id) select 'instant', ${users.a} from generate_series(1, ${DAILY_CAP})`;
+      await alert("queue_stuck:github_jobs");
+      resend = fakeResend();
+      expect(await runNotifyWorker({ db, cfg, fetch: resend.impl, log })).toMatchObject({ sent: 1, deferred: 0 });
+      expect(resend.sent.map((s) => s.body.to[0]).sort()).toEqual(["oncall@example.test", "second@example.test"]);
+      expect(resend.sent[0].body.subject).toBe("[Skilient alert] Queue not draining: github_jobs");
+      expect(resend.sent[0].body.text).toContain("A message has waited since 10:00 PKT.");
+      expect(resend.sent[0].headers["idempotency-key"]).toMatch(/^ops-alert-/);
+      const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from private.email_sends
+        where sent_at >= date_trunc('day', now() at time zone 'utc') at time zone 'utc'`;
+      expect(n).toBe(DAILY_CAP);
+    } finally {
+      await sql`insert into public.platform_config (key, version, value, reason)
+                select 'alerts.recipients', max(version) + 1, '[]', 'worker test'
+                  from public.platform_config where key = 'alerts.recipients'`;
+      await sql`delete from private.email_sends where sent_at >= date_trunc('day', now() at time zone 'utc') at time zone 'utc'`;
+    }
+  });
 });

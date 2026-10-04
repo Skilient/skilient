@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { gateways } from "@/lib/billing/gateways";
-import { recordWithServiceRole } from "@/lib/billing/record";
+import { recordWebhookFailure, recordWithServiceRole } from "@/lib/billing/record";
 import { handleBillingWebhook } from "@/lib/billing/webhook";
 import { logger, requestIdFrom } from "@/lib/log";
 import { newRequestId } from "@/lib/request-id";
@@ -29,5 +29,10 @@ export async function POST(request: NextRequest, ctx: RouteContext<"/api/billing
     stored: result.stored,
     duplicates: result.duplicates,
   });
+  // Signature, timestamp and storage failures feed the payments alert; unknown or disabled gateways are just noise.
+  if (result.outcome === "error") await recordWebhookFailure("billing_webhook_error");
+  else if (result.outcome === "refused" && result.errorCode !== "unknown_gateway" && result.errorCode !== "gateway_disabled") {
+    await recordWebhookFailure("billing_webhook_rejected");
+  }
   return NextResponse.json({ ok: result.status === 200 }, { status: result.status });
 }

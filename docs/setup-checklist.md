@@ -466,8 +466,10 @@ commit; each goes where the line says.
 **Later slices** (listed now so they can be set up in one go)
 
 - [ ] **Alert recipient** (slice 2): the email address that receives alerts; set it in `/ops/config` → `alerts.recipients`.
-- [ ] **Resend webhook** (slice 2): Resend → Webhooks → add `https://<domain>/api/resend/webhook` for `email.delivered` and
-      `email.bounced`; put its signing secret in Vercel as `RESEND_WEBHOOK_SECRET`.
+- [ ] **Resend webhook** (slice 2): Resend → Webhooks → add `https://<domain>/api/webhooks/resend` for `email.delivered` and
+      `email.bounced`; put its signing secret (`whsec_…`) in Vercel (Production) as `RESEND_WEBHOOK_SECRET`. Until it is
+      set the route answers 404. Then "Send test event" → the row appears in `private.service_signals`.
+- [ ] **Alert pipe test** (slice 2): after the recipient is set, run the test line in `docs/alerts.md` "After deploy".
 - [ ] **Sentry alert rules** (slice 2): "A new issue is created" (production) → email; an error-volume alert as the interim
       5xx alert until Axiom.
 - [ ] **Grafana Cloud** (free; slices 2 and 5): a stack in the closest region. (a) Supabase metrics: create a dedicated

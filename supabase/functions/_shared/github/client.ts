@@ -24,6 +24,7 @@ export const LOW_BUDGET = 200;
 
 interface Budget {
   remaining: number;
+  limit: number;
   resetAt: number; // epoch seconds
 }
 
@@ -40,6 +41,16 @@ export class GitHub {
     private readonly fetchImpl: Fetch = fetch,
     private readonly now: () => number = Date.now,
   ) {}
+
+  /** The smallest share of an hourly budget left on any token this run used (PRD 10 GitHub alert), or null. */
+  lowestHeadroom(): number | null {
+    let lowest: number | null = null;
+    for (const b of this.budgets.values()) {
+      const share = Math.max(0, Math.min(1, b.remaining / b.limit));
+      if (lowest === null || share < lowest) lowest = share;
+    }
+    return lowest;
+  }
 
   ensureBudget(token: string): void {
     const budget = this.budgets.get(token);
@@ -113,8 +124,9 @@ export class GitHub {
     if (resource && resource !== "core") return;
     const remaining = headers.get("x-ratelimit-remaining");
     const reset = headers.get("x-ratelimit-reset");
+    const limit = headers.get("x-ratelimit-limit");
     if (remaining !== null && reset !== null) {
-      this.budgets.set(token, { remaining: Number(remaining), resetAt: Number(reset) });
+      this.budgets.set(token, { remaining: Number(remaining), limit: Number(limit ?? 5000) || 5000, resetAt: Number(reset) });
     }
   }
 }

@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AnalyticsLoader } from "@/components/analytics/analytics-loader";
+import { WebVitalsReporter } from "@/components/analytics/web-vitals";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { posthogProjectKey } from "@/lib/analytics/config";
 import { siteUrl } from "@/lib/cv/site";
@@ -44,6 +45,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-dvh bg-bg-page font-sans text-body text-text-primary">
         <ThemeProvider nonce={nonce}>{children}</ThemeProvider>
         <AnalyticsLoader projectKey={posthogProjectKey()} nonce={nonce} />
+        <WebVitalsReporter />
         {/* /_vercel/* only exists on Vercel; elsewhere (local, CI) these script URLs fall through to the app. */}
         {process.env.VERCEL ? (
           <>

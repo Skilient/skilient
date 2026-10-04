@@ -1869,3 +1869,9 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   GET, so the scanner spent it. Every email link (reset, confirm, magic link, email change) now opens `/auth/link`, whose
   button POSTs the token back to `/auth/confirm` (same-origin only); scanners don't submit forms. Same rule as the
   university-request unsubscribe (2026-10-02). The E2E reset test opens the link with a plain GET first to prove it.
+- 2026-10-04 (Ahmed): The app's address is **https://www.skilient.com** (www, not the bare domain; `skilient.com` redirects
+  to it). Replaces the 2026-10-01 "https://skilient.com" line. The code reads the origin from settings
+  (`NEXT_PUBLIC_SITE_URL`, `APP_URL`, `SITE_URL`); only the billing worker's fallback and the docs named a domain. The
+  coming-soon page stays on www.skilient.com for now, so production keeps running at skilient.vercel.app until one
+  switch-over (`docs/setup-checklist.md` "Switch to www.skilient.com"); changing settings earlier would send sign-in and
+  reset emails to the coming-soon page.

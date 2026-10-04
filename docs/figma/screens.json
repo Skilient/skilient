@@ -1,7 +1,7 @@
 {
   "generatedBy": "scripts/figma-inventory.mjs",
   "screens": 180,
-  "frames": 1600,
+  "frames": 1588,
   "entries": [
     {
       "route": "/agreement",
@@ -655,7 +655,7 @@
       "route": "/onboarding/[step]",
       "file": "app/(app)/onboarding/[step]/page.tsx",
       "portal": "onboarding",
-      "role": "new_student",
+      "role": "onboarding_student",
       "tabs": {
         "kind": "segment",
         "values": [
@@ -685,7 +685,7 @@
       "route": "/onboarding/done",
       "file": "app/(app)/onboarding/done/page.tsx",
       "portal": "onboarding",
-      "role": "new_student",
+      "role": "student",
       "tabs": null,
       "sections": [],
       "states": [
@@ -702,7 +702,8 @@
       "route": "/onboarding",
       "file": "app/(app)/onboarding/page.tsx",
       "portal": "onboarding",
-      "role": "new_student",
+      "role": "onboarding_student",
+      "redirectOnly": true,
       "tabs": null,
       "sections": [],
       "states": [
@@ -809,6 +810,7 @@
       "file": "app/(app)/opportunities/page.tsx",
       "portal": "student",
       "role": "student",
+      "redirectOnly": true,
       "tabs": null,
       "sections": [],
       "states": [
@@ -3101,6 +3103,7 @@
       "file": "app/(app)/uni/(portal)/settings/page.tsx",
       "portal": "university",
       "role": "university_owner",
+      "redirectOnly": true,
       "tabs": null,
       "sections": [],
       "states": [
@@ -3489,7 +3492,7 @@
       "route": "/signin/mfa",
       "file": "app/(auth)/signin/mfa/page.tsx",
       "portal": "auth",
-      "role": "anonymous",
+      "role": "mfa_pending",
       "tabs": null,
       "sections": [
         "AuthFrame"

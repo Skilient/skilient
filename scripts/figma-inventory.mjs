@@ -24,6 +24,12 @@ const SEGMENT_TABS = {
   "/ops/users/[id]/view/[page]": ["lib/data/ops-users.ts", "VIEW_PAGES"],
 };
 
+/** Routes whose screen needs a different account than their portal's default. */
+const ROLE_OVERRIDES = {
+  "/onboarding/done": "student", // only after the wizard is finished
+  "/signin/mfa": "mfa_pending", // two-factor on, password step done
+};
+
 /** Tabs the page builds in a way the extractor can't read (a template-literal href). */
 const EXTRA_TABS = {
   "/ops/feedback": { param: "tab", values: ["open", "closed"] },
@@ -44,7 +50,7 @@ const PORTALS = [
   ["/forgot-password", "auth", "anonymous"],
   ["/reset-password", "auth", "anonymous"],
   ["/auth", "auth", "anonymous"],
-  ["/onboarding", "onboarding", "new_student"],
+  ["/onboarding", "onboarding", "onboarding_student"],
   ["/agreement", "onboarding", "new_student"],
   ["/cv/", "public", "anonymous"],
 ];
@@ -148,17 +154,22 @@ export function buildInventory() {
     if (/\bEmptyState\b|empty/i.test(src)) states.push("empty");
     if (has("loading.tsx")) states.push("loading");
     if (has("error.tsx") || /\bErrorState\b/.test(src)) states.push("error");
+    // A page whose default export only calls redirect() is not a screen.
+    const redirectOnly = /export default (?:async )?function \w*\([^)]*\)\s*\{\s*redirect\(/.test(src.replace(/\/\/[^\n]*\n|\/\*[\s\S]*?\*\//g, ""));
+    const { portal, role } = portalOf(route);
     return {
       route,
       file: relative(ROOT, file),
-      ...portalOf(route),
+      portal,
+      role: ROLE_OVERRIDES[route] ?? role,
+      ...(redirectOnly ? { redirectOnly: true } : {}),
       tabs: tabsOf(route, src),
       sections: sectionsOf(src),
       states,
       variants: ["desktop-light", "desktop-dark", "phone-light", "phone-dark"],
     };
   });
-  const frames = screens.reduce((n, s) => n + (s.tabs?.values.length || 1) * s.states.length * s.variants.length, 0);
+  const frames = screens.filter((s) => !s.redirectOnly).reduce((n, s) => n + (s.tabs?.values.length || 1) * s.states.length * s.variants.length, 0);
   return { generatedBy: "scripts/figma-inventory.mjs", screens: screens.length, frames, entries: screens };
 }
 

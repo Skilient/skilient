@@ -20,11 +20,12 @@ const INVENTORY = path.join(process.cwd(), "docs/figma/screens.json");
 const DB_URL = process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 const ONLY = process.env.FIGMA_PORTAL;
 
-type Role = "anonymous" | "student" | "new_student" | "teacher" | "recruiter" | "university_owner" | "super_admin" | "anyone";
+type Role = "anonymous" | "student" | "new_student" | "onboarding_student" | "mfa_pending" | "teacher" | "recruiter" | "university_owner" | "super_admin" | "anyone";
 interface Entry {
   route: string;
   portal: string;
   role: Role;
+  redirectOnly?: boolean;
   tabs: { kind: "query" | "segment"; param?: string; values: string[] } | null;
   states: string[];
 }
@@ -96,6 +97,8 @@ function one(query: string) {
 interface Accounts {
   student: TestStudent;
   newStudent: TestStudent;
+  onboardingStudent: TestStudent;
+  mfaStudent: TestStudent;
   teacher: TestStudent;
   recruiter: TestStudent;
   uniOwner: TestStudent;
@@ -116,6 +119,10 @@ async function setupAccounts(sql: Sql): Promise<Accounts> {
   const tag = Math.random().toString(36).slice(2, 8);
   const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Ayesha Siddiqui" });
   const newStudent = await createStudent({ domain: "nutech.edu.pk", fullName: "Bilal Ahmed", onboarded: false, agreement: false });
+  // Agreement accepted, wizard not finished, furthest step 6: every step of /onboarding opens.
+  const onboardingStudent = await createStudent({ domain: "nutech.edu.pk", fullName: "Mariam Javed", onboarded: false });
+  await sql`update public.onboarding_state set step = 6 where user_id = ${onboardingStudent.id}`;
+  const mfaStudent = await createStudent({ domain: "nutech.edu.pk", fullName: "Hamza Khan" });
   const admin = await createStudent({ domain: "nutech.edu.pk", fullName: "Sana Superadmin" });
   await sql`insert into public.staff_roles (user_id, role, granted_by) values (${admin.id}, 'super_admin', ${admin.id})`;
 
@@ -136,11 +143,11 @@ async function setupAccounts(sql: Sql): Promise<Accounts> {
   const uniOwner = await account(`registrar-${tag}@${uniDomain}`, "Rida Registrar", { role: "university_admin", university_id: uniId });
   await sql`update public.universities set owner_id = ${uniOwner.id} where id = ${uniId} and owner_id is null`;
   await sql`insert into public.university_admins (user_id, university_id, role) values (${uniOwner.id}, ${uniId}, 'owner') on conflict do nothing`;
-  return { student, newStudent, teacher, recruiter, uniOwner, admin, uniId };
+  return { student, newStudent, onboardingStudent, mfaStudent, teacher, recruiter, uniOwner, admin, uniId };
 }
 
 /** Signed in, with two-factor on where the portal needs aal2. Returns the storage state. */
-async function signedInState(browser: Browser, who: TestStudent, twoFactor: boolean) {
+async function signedInState(browser: Browser, who: TestStudent, twoFactor: boolean, passwordOnlyAfter = false) {
   const ctx = await browser.newContext();
   const page = await ctx.newPage();
   await signInWithPassword(page, who.email, who.password);
@@ -152,6 +159,15 @@ async function signedInState(browser: Browser, who: TestStudent, twoFactor: bool
     await page.getByRole("button", { name: "Confirm" }).click();
     await page.getByRole("checkbox", { name: "I've saved these codes" }).check();
     await page.getByRole("button", { name: "Done" }).click();
+  }
+  if (passwordOnlyAfter) {
+    // Two-factor is on; a fresh password sign-in stops at /signin/mfa (aal1).
+    await ctx.close();
+    const fresh = await browser.newContext();
+    await signInWithPassword(await fresh.newPage(), who.email, who.password);
+    const pending = await fresh.storageState();
+    await fresh.close();
+    return pending;
   }
   const state = await ctx.storageState();
   await ctx.close();
@@ -192,11 +208,13 @@ test("figma reference captures", async ({ browser }) => {
   const manifest: { route: string; tab: string; url: string; files?: Record<string, string>; skipped?: string }[] = [];
   try {
     const who = await setupAccounts(sql);
-    const roles: Record<Role, { user: TestStudent | null; twoFactor: boolean }> = {
+    const roles: Record<Role, { user: TestStudent | null; twoFactor: boolean; passwordOnlyAfter?: boolean }> = {
       anonymous: { user: null, twoFactor: false },
       anyone: { user: null, twoFactor: false },
       student: { user: who.student, twoFactor: false },
       new_student: { user: who.newStudent, twoFactor: false },
+      onboarding_student: { user: who.onboardingStudent, twoFactor: false },
+      mfa_pending: { user: who.mfaStudent, twoFactor: true, passwordOnlyAfter: true },
       teacher: { user: who.teacher, twoFactor: false },
       recruiter: { user: who.recruiter, twoFactor: true },
       university_owner: { user: who.uniOwner, twoFactor: true },
@@ -205,6 +223,10 @@ test("figma reference captures", async ({ browser }) => {
     const states = new Map<Role, Awaited<ReturnType<typeof signedInState>> | undefined>();
 
     for (const e of entries) {
+      if (e.redirectOnly) {
+        manifest.push({ route: e.route, tab: "default", url: e.route, skipped: "redirect-only route (not a screen)" });
+        continue;
+      }
       let params: Record<string, string> = {};
       const resolve = PARAMS[e.route] as (typeof PARAMS)[string] | undefined;
       if (e.route.includes("[") && e.tabs?.kind !== "segment") {
@@ -219,7 +241,7 @@ test("figma reference captures", async ({ browser }) => {
         params = (await resolve(sql, who).catch(() => null)) ?? {};
       }
       const role = roles[e.role];
-      if (role.user && !states.has(e.role)) states.set(e.role, await signedInState(browser, role.user, role.twoFactor));
+      if (role.user && !states.has(e.role)) states.set(e.role, await signedInState(browser, role.user, role.twoFactor, role.passwordOnlyAfter));
       for (const { tab, url } of urls(e, params)) {
         const files: Record<string, string> = {};
         for (const [vp, size] of Object.entries(VIEWPORTS)) {
@@ -228,6 +250,9 @@ test("figma reference captures", async ({ browser }) => {
           try {
             const res = await page.goto(url, { waitUntil: "networkidle" });
             if (res && res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
+            // A gate redirect would capture the wrong page under this route's name.
+            const want = new URL(url, page.url()).pathname, got = new URL(page.url()).pathname;
+            if (got !== want) throw new Error(`redirected to ${got}`);
             const dir = path.join(OUT, e.portal);
             await mkdir(dir, { recursive: true });
             for (const theme of THEMES) {

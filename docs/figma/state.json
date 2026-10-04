@@ -1,0 +1,140 @@
+{
+  "file": {
+    "key": "9D9DDtTpYC8MPRsSGL7vHK",
+    "url": "https://www.figma.com/design/9D9DDtTpYC8MPRsSGL7vHK",
+    "plan": "team::1323868646165208824"
+  },
+  "collections": {
+    "Primitives": {
+      "id": "VariableCollectionId:2:2",
+      "modes": {
+        "Value": "2:0"
+      },
+      "variables": 109
+    },
+    "Color": {
+      "id": "VariableCollectionId:2:112",
+      "modes": {
+        "Light": "2:1",
+        "Dark": "2:2"
+      },
+      "variables": 47
+    },
+    "Spacing": {
+      "id": "VariableCollectionId:2:160"
+    },
+    "Radius": {
+      "id": "VariableCollectionId:2:178"
+    },
+    "Layout": {
+      "id": "VariableCollectionId:2:185"
+    }
+  },
+  "textStyles": [
+    "Display/Desktop",
+    "Display/Phone",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "Body LG",
+    "Body",
+    "Body Strong",
+    "Body SM",
+    "Body SM Strong",
+    "Label",
+    "Caption",
+    "Code",
+    "Code SM",
+    "Body LG Strong",
+    "Body Medium",
+    "Caption Strong"
+  ],
+  "effectStyles": [
+    "Elevation/1",
+    "Elevation/2",
+    "Elevation/3",
+    "Elevation/4",
+    "Elevation/Inset",
+    "Elevation Dark/3",
+    "Elevation Dark/4",
+    "Elevation Dark/Inset"
+  ],
+  "pages": {
+    "Cover": "0:1",
+    "Foundations": "2:214",
+    "Brand": "2:215",
+    "Button": "2:217",
+    "Form controls": "2:218",
+    "Tabs": "2:219",
+    "Badges and chips": "2:220",
+    "Avatar": "2:221",
+    "Overlays": "2:222",
+    "Feedback": "2:223",
+    "Shell": "2:224",
+    "Domain cards": "2:225",
+    "Marketing": "2:227",
+    "Auth and onboarding": "2:228",
+    "Student": "2:229",
+    "Teacher": "2:230",
+    "Recruiter and org": "2:231",
+    "University": "2:232",
+    "Ops": "2:233",
+    "Scratch": "2:235",
+    "Icons": "4:2"
+  },
+  "components": {
+    "Logo/Horizontal": "3:16",
+    "Logo/Mark": "3:27",
+    "Icon library (120 Icon/* components)": "4:3",
+    "Button": "6:243",
+    "Input": "7:22",
+    "Textarea": "7:43",
+    "Select": "7:84",
+    "Checkbox": "8:26",
+    "Switch": "8:35",
+    "Select item": "8:52",
+    "Select menu": "8:53",
+    "Field": "8:195",
+    "Tab": "8:205",
+    "Tabs list": "8:206",
+    "Badge": "9:29",
+    "Skill chip": "9:89",
+    "Tier badge": "9:108",
+    "Verified stamp": "10:13",
+    "Avatar": "10:37",
+    "Tooltip": "11:2",
+    "Toast": "11:30",
+    "Dialog": "11:31",
+    "Sheet": "11:61",
+    "Side sheet": "11:89",
+    "Empty state": "12:37",
+    "Skeleton/Lines": "12:38",
+    "Skeleton/Block": "12:42",
+    "Theme toggle": "12:43",
+    "Badge pill": "14:47",
+    "Nav item": "14:69",
+    "Tab bar item": "14:82",
+    "Sidebar": "15:8",
+    "Sidebar rail": "15:129",
+    "Bottom tabs": "15:211",
+    "Top bar": "15:249"
+  },
+  "completed": [
+    "P0",
+    "P1",
+    "P2",
+    "P3.a",
+    "P3.b",
+    "P3.c",
+    "P3.d",
+    "P3.e",
+    "P3.f",
+    "P3.g",
+    "P3.h",
+    "P4 unbound-paint audit"
+  ],
+  "deferred": [
+    "Domain cards (post card, venture card, notification row, CV paper, ops sidebar): built in the slice whose screens first use them"
+  ]
+}

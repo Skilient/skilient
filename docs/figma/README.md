@@ -3,6 +3,8 @@
 Every screen, tab and section of the built product as an editable Figma file: desktop 1440 and
 phone 390, light and dark. Decisions 2026-10-04.
 
+File: https://www.figma.com/design/9D9DDtTpYC8MPRsSGL7vHK (node ids and progress in `state.json`).
+
 ## Pieces
 
 - `screens.json`: the inventory, generated from `app/**/page.tsx` by `pnpm figma:inventory`
@@ -30,3 +32,12 @@ phone 390, light and dark. Decisions 2026-10-04.
    a raw colour.
 3. Check per slice: frames on the page match `screens.json` for that portal, and a scan for unbound
    paints finds none.
+
+## Lessons from slice 1 (Plugin API)
+
+- `resize()` resets sizing modes to fixed: set `primaryAxisSizingMode`/`counterAxisSizingMode` after it.
+- Fractional spacing variables are named with an underscore: `spacing/1_5`, `spacing/2_5`.
+- Swapping an icon instance resets its fill override: re-bind the colour after the swap.
+- A text property on a variant set has one default for every variant; set per-instance text on instances.
+- Icons are Phosphor regular weight; where code uses `bold` or `fill`, the Figma icon is an approximation.
+- Effect styles can't follow a variable mode: use `Elevation Dark/*` on dark frames (levels 1–2 have no shadow in dark).

@@ -1868,3 +1868,7 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   and dark. Dark frames are the light frames with the variable mode switched, so every fill binds a token. Frames are
   rebuilt from captured layout trees (`pnpm figma:captures`), not guessed from source; inventory in
   `docs/figma/screens.json`. Built one portal per session once the Figma connector is authorised.
+- 2026-10-04 (Figma slice 1): 42 colour values in `tokens.css` are not on the Figma-frame ramps (tiers, status, several dark
+  tweaks); the code wins, so they are named primitives (`tier/*`, `status/*`, `adjusted/*`) rather than snapped to a ramp step.
+  Dark shadows are separate `Elevation Dark/*` styles because effect styles can't follow a variable mode. Domain cards move
+  to the screen slices that first use them, built from captured layout trees.

@@ -4,7 +4,8 @@ One box per screen (route). A box is ticked when every tab of that screen has al
 (desktop light/dark, phone light/dark) built as editable layers bound to the "Skilient"
 variables, plus its empty/error frames where `screens.json` lists those states.
 
-- [ ] Slice 1: foundations (variables Light/Dark, text styles, effects) and the component library
+- [x] Slice 1: foundations (variables Light/Dark, text styles, effects), brand, 120 icons and the component library (ids in `state.json`)
+- [ ] Domain cards (post card, venture card, notification row, CV paper, ops sidebar): built in the slice whose screens first use them, from captured layout trees
 
 ## marketing (13 screens, slice 2)
 

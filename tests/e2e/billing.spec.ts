@@ -84,9 +84,13 @@ test.describe("Billing", () => {
     await expect(page.getByTestId("invoice-table")).toContainText(/TEST-\d{4}-\d{6}/);
     await expect(page.getByTestId("payment-table")).toContainText("PKR 399 (test)");
     const href = await page.getByTestId("invoice-table").getByRole("link").first().getAttribute("href");
-    const pdf = await page.request.get(href!);
-    expect(pdf.status()).toBe(200);
-    expect(pdf.headers()["content-type"]).toBe("application/pdf");
+    // Fetched by the page, as a browser would: Playwright's request client won't send the __Secure- session
+    // cookie over the test server's plain http.
+    const pdf = await page.evaluate(async (url) => {
+      const res = await fetch(url);
+      return { status: res.status, type: res.headers.get("content-type") };
+    }, href!);
+    expect(pdf).toEqual({ status: 200, type: "application/pdf" });
 
     const db = adminClient();
     const { data: sub } = await db.from("subscriptions").select("status, live, payment_method").eq("subject_id", student.id).eq("status", "active").single();

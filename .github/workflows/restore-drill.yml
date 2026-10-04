@@ -1,0 +1,141 @@
+name: Restore drill
+
+# PRD 10 "Backups"; phase 13 slice 4 (question 16). Dumps production with the Supabase CLI and restores it into the
+# scratch project, then checks migrations, RLS, policies, row counts, Vault and cron, copies Storage files, and builds
+# the app against the restore to check /api/health. Manual only. The scratch project must be freshly created (empty):
+# the restore refuses to write into a database that already has tables. Runbook: docs/restore-drill.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "restore into scratch" to run'
+        required: true
+      copy_storage:
+        description: "Copy Storage files too"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: restore-drill
+  cancel-in-progress: false
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  drill:
+    name: Production → scratch
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    # Same environment as the migrate job, so the same secrets are visible.
+    environment: production
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SCRATCH_SUPABASE_PROJECT_REF: ${{ secrets.SCRATCH_SUPABASE_PROJECT_REF }}
+      SCRATCH_SUPABASE_DB_PASSWORD: ${{ secrets.SCRATCH_SUPABASE_DB_PASSWORD }}
+    steps:
+      - name: Check the request and the secrets
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          [ "$CONFIRM" = "restore into scratch" ] || { echo "::error::Type exactly: restore into scratch"; exit 1; }
+          for v in SUPABASE_ACCESS_TOKEN SUPABASE_PROJECT_REF SUPABASE_DB_PASSWORD SCRATCH_SUPABASE_PROJECT_REF SCRATCH_SUPABASE_DB_PASSWORD; do
+            [ -n "${!v}" ] || { echo "::error::Secret $v is not set (docs/setup-checklist.md Phase 13)"; exit 1; }
+          done
+          [ "$SCRATCH_SUPABASE_PROJECT_REF" != "$SUPABASE_PROJECT_REF" ] || { echo "::error::The scratch project is production"; exit 1; }
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Postgres client
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client > /dev/null
+
+      - name: Connection strings and keys
+        run: |
+          prod_db=$(node scripts/restore/db-url.mjs "$SUPABASE_PROJECT_REF" SUPABASE_DB_PASSWORD)
+          scratch_db=$(node scripts/restore/db-url.mjs "$SCRATCH_SUPABASE_PROJECT_REF" SCRATCH_SUPABASE_DB_PASSWORD)
+          prod_key=$(node scripts/restore/keys.mjs "$SUPABASE_PROJECT_REF" secret)
+          scratch_key=$(node scripts/restore/keys.mjs "$SCRATCH_SUPABASE_PROJECT_REF" secret)
+          scratch_pub=$(node scripts/restore/keys.mjs "$SCRATCH_SUPABASE_PROJECT_REF" publishable)
+          for s in "$prod_db" "$scratch_db" "$prod_key" "$scratch_key" "$scratch_pub"; do echo "::add-mask::$s"; done
+          {
+            echo "PROD_DB_URL=$prod_db"
+            echo "SCRATCH_DB_URL=$scratch_db"
+            echo "PROD_URL=https://$SUPABASE_PROJECT_REF.supabase.co"
+            echo "PROD_KEY=$prod_key"
+            echo "SCRATCH_URL=https://$SCRATCH_SUPABASE_PROJECT_REF.supabase.co"
+            echo "SCRATCH_KEY=$scratch_key"
+            echo "SCRATCH_PUBLISHABLE_KEY=$scratch_pub"
+          } >> "$GITHUB_ENV"
+
+      - name: The scratch project is empty
+        run: |
+          n=$(psql "$SCRATCH_DB_URL" -Atc "select count(*) from pg_tables where schemaname in ('public', 'private')")
+          [ "$n" = 0 ] || { echo "::error::Scratch already has $n tables. Create a fresh scratch project first (docs/restore-drill.md)."; exit 1; }
+
+      - name: Dump production (roles, schema, data)
+        run: |
+          mkdir -p dump
+          start=$(date +%s)
+          pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/roles.sql --role-only
+          pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/schema.sql
+          pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/data.sql --use-copy --data-only
+          echo "DUMP_SECONDS=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"
+          ls -la dump
+
+      - name: Restore into scratch
+        run: |
+          start=$(date +%s)
+          psql --single-transaction --variable ON_ERROR_STOP=1 \
+            --file dump/roles.sql --file dump/schema.sql \
+            --command 'SET session_replication_role = replica' \
+            --file dump/data.sql --dbname "$SCRATCH_DB_URL"
+          echo "RESTORE_SECONDS=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"
+
+      - name: Re-create Vault secrets and deploy Edge Functions on scratch
+        run: |
+          psql "$SCRATCH_DB_URL" -v ON_ERROR_STOP=1 -v project_url="$SCRATCH_URL" -f scripts/restore/reseed-vault.sql
+          pnpm exec supabase functions deploy --project-ref "$SCRATCH_SUPABASE_PROJECT_REF" --use-api
+
+      - name: New CV signing key on scratch (old CVs still verify with the restored public keys)
+        run: psql "$SCRATCH_DB_URL" -Atc "select private.cv_rotate_key()"
+
+      - name: Copy Storage files
+        if: inputs.copy_storage
+        run: node scripts/restore/copy-storage.mjs
+
+      - name: Compare production and the restore
+        run: node scripts/restore/verify.mjs
+
+      - name: Build the app against the restore and check /api/health
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ env.SCRATCH_URL }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ env.SCRATCH_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_SITE_URL: http://127.0.0.1:3100
+        run: |
+          pnpm build > build.log 2>&1 || { tail -40 build.log; exit 1; }
+          PORT=3100 nohup pnpm start > server.log 2>&1 &
+          for i in $(seq 1 60); do curl -s -o /dev/null http://127.0.0.1:3100/ && break; sleep 2; done
+          code=$(curl -s -o health.json -w '%{http_code}' http://127.0.0.1:3100/api/health)
+          cat health.json; echo
+          printf '\nApp health against the restore: HTTP %s\n\nDump %ss, restore %ss.\n' "$code" "$DUMP_SECONDS" "$RESTORE_SECONDS" >> "$GITHUB_STEP_SUMMARY"
+          [ "$code" = 200 ]
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: restore-drill-report
+          path: |
+            restore-report.json
+            health.json
+          retention-days: 90

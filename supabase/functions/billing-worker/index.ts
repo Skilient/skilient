@@ -16,6 +16,6 @@ Deno.serve(async (req) => {
   if (!row || !safeEqual(auth, `Bearer ${row.secret}`)) {
     return new Response(null, { status: 401 });
   }
-  const gateways = billingGateways(env, { appUrl: env("SITE_URL") ?? "https://skilient.com", production: env("BILLING_PRODUCTION") === "1" });
+  const gateways = billingGateways(env, { appUrl: env("SITE_URL") ?? "https://www.skilient.com", production: env("BILLING_PRODUCTION") === "1" });
   return Response.json(await runBillingWorker({ db, gateways, log: jsonLog }));
 });

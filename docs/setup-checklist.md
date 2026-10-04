@@ -64,7 +64,7 @@ Claude Code can't create these accounts or keys. Do them before (or alongside) p
 ## Phase 5
 
 - [x] **`NEXT_PUBLIC_SITE_URL`** in Vercel (Production and Preview): `https://skilient.vercel.app` until
-  skilient.com serves the app, then `https://skilient.com`. It is the origin printed in CV verify links
+  www.skilient.com serves the app, then `https://www.skilient.com` (see "Switch to www.skilient.com"). It is the origin printed in CV verify links
   and QR codes (decisions.md 2026-10-01). *Done by Ahmed.*
 - [x] **First CV signing key** (*done 2026-09-30; backed up as `docs/signing-keys/2026-09-30.json`*) (after the slice 1 PR is merged and CI has deployed the migration and
   the `cv-sign` Edge Function): in the Supabase SQL editor run
@@ -86,7 +86,7 @@ Claude Code can't create these accounts or keys. Do them before (or alongside) p
   git add docs/signing-keys && git commit -m "Back up CV signing keys" && git push
   ```
 
-  (Use `https://skilient.com/...` once the domain serves the app.) Rotate only for an emergency
+  (Use `https://www.skilient.com/...` once the domain serves the app.) Rotate only for an emergency
   (leaked key) or a test: there is no automatic rotation.
 - [ ] **`CV_EXPORT_SECRET`** (after the phase 5 slices 2-3 PR is merged and CI has deployed its
   migration): the migration generates this key into Vault; copy it to Vercel so the PDF route can
@@ -294,8 +294,8 @@ Paddle takes USD from organisations. Nothing in the lifecycle changes: only env 
      In the **sandbox** (sandbox-vendors.paddle.com): Developer tools → Authentication → **API key**; Checkout → Checkout settings →
      set a **default payment link** (your site); Developer tools → Notifications → **New destination** (below) gives the **secret key**.
 2. **Register the webhook URLs** (the gateways call these; replace the host for previews):
-   - Safepay: `https://skilient.com/api/billing/webhook/safepay`
-   - Paddle: `https://skilient.com/api/billing/webhook/paddle`, events `transaction.completed`, `transaction.payment_failed`,
+   - Safepay: `https://www.skilient.com/api/billing/webhook/safepay`
+   - Paddle: `https://www.skilient.com/api/billing/webhook/paddle`, events `transaction.completed`, `transaction.payment_failed`,
      `adjustment.created`, `adjustment.updated`.
 3. **Set the env vars** (sandbox values first), as **Sensitive**:
    - Vercel (Production and Preview): `SAFEPAY_ENVIRONMENT=sandbox`, `SAFEPAY_API_KEY`, `SAFEPAY_SECRET_KEY`,
@@ -415,7 +415,7 @@ Marketing site (`docs/marketing-design-plan.md`, decisions.md "phase 12"). Later
 - [x] **About page content** (slice 3, done 2026-10-03). The team and the NEIC incubation are on `/about`; portraits are two-colour
       traces in `public/marketing/team/`. Send new photos to replace one, or an award line to add.
 - [ ] **Domain and public URL** (slice 4). Set `NEXT_PUBLIC_SITE_URL` on Vercel to the production origin (for example
-      `https://skilient.com`). Canonical links, the sitemap, robots.txt, Open Graph cards and CV verify links all use it.
+      `https://www.skilient.com`). Canonical links, the sitemap, robots.txt, Open Graph cards and CV verify links all use it.
 - [ ] **Search Console** (slice 4). Verify the domain in Google Search Console and submit `https://<domain>/sitemap.xml`.
 - [ ] **Share previews** (slice 4). Paste `/`, `/recruiters` and `/universities` into the LinkedIn Post Inspector and the Facebook
       Sharing Debugger once the domain is live, so they fetch the new cards.
@@ -490,11 +490,36 @@ commit; each goes where the line says.
       Axiom (above) right after upgrading.
 - [ ] **Resend paid plan**: the free plan's ~100 emails a day is shared by Supabase Auth (verification codes, magic links), security and notification emails; notification emails stop at 60 a day until then (decisions.md 2026-09-30).
 
-- [ ] **Move skilient.com to the app project** (Vercel → the Skilient project → Domains; DNS at your
-  provider), then set `NEXT_PUBLIC_SITE_URL=https://skilient.com` in Vercel and redeploy. CV PDFs
-  exported before this point print skilient.vercel.app links and are test-only (decisions.md 2026-10-01).
+- [ ] **Switch to www.skilient.com**: the steps in "Switch to www.skilient.com" below, all in one sitting.
 - [ ] Final **user agreement** and **privacy notice** text (the app ships headings-only templates).
 - [ ] **NUTECH** partnership (beta university), plus 2 more partner universities; 10+ teachers per partner.
 - [ ] At least **1 paying recruiter** signed.
 - [ ] **Trademark** and social handles for "Skilient".
 - [ ] Recheck the landing page's three trust-gap stats against their primary reports (PRD 5.1).
+
+## Switch to www.skilient.com
+
+The app's address becomes **https://www.skilient.com** (decisions.md 2026-10-04). Today www.skilient.com shows the
+coming-soon page from a separate Vercel project, and the app runs at skilient.vercel.app. Do every step below **in one
+sitting, when the coming-soon page comes down**. Changing any of them earlier sends people (sign-in emails, reset links,
+GitHub, payments) to the coming-soon page.
+
+1. **Vercel domains.** Remove `www.skilient.com` and `skilient.com` from the coming-soon project. Add both to the Skilient
+   app project, with `skilient.com` redirecting (308) to `www.skilient.com`. Keep `skilient.vercel.app` working.
+2. **Vercel env.** `NEXT_PUBLIC_SITE_URL=https://www.skilient.com` (Production), then **Redeploy** the latest production
+   deployment.
+3. **Supabase Auth** → URL Configuration: Site URL `https://www.skilient.com`; Redirect URLs add `https://www.skilient.com/**`
+   (keep the vercel.app entry for a week, then remove it). Email links then point at www.
+4. **Supabase Edge Function secrets:** `APP_URL=https://www.skilient.com` (notification emails) and
+   `SITE_URL=https://www.skilient.com` (billing return links).
+5. **GitHub App** (GitHub → Settings → Developer settings → GitHub Apps → Skilient): homepage `https://www.skilient.com`,
+   callback URL `https://www.skilient.com/api/github/callback`, webhook URL `https://www.skilient.com/api/github/webhook`.
+6. **Google sign-in** (Google Cloud → APIs & Services → Credentials → the OAuth client): add `https://www.skilient.com` to
+   Authorized JavaScript origins. The redirect URI is Supabase's and doesn't change.
+7. **Cloudflare Turnstile** (the widget's Hostname management): add `www.skilient.com` and `skilient.com`.
+8. **PostHog** → Project settings → Authorized URLs: `https://www.skilient.com`.
+9. **Payment gateways**, once their accounts exist: the webhook URLs in Phase 10 (already written for www).
+10. **Check:** `https://www.skilient.com/api/health` answers 200; sign in; ask for a password reset and confirm the email's
+    link starts with `https://www.skilient.com`; open a CV verify link; `https://skilient.com` lands on www.
+11. **Afterwards:** Search Console and share previews (Phase 12 slice 4), and back up the CV key file from the new address
+    (Phase 5). CV PDFs exported before the switch print skilient.vercel.app links and are test-only (decisions.md 2026-10-01).

@@ -6,13 +6,14 @@
  *
  *   node scripts/figma-plan-calls.mjs auth onboarding marketing public
  *   node scripts/figma-plan-calls.mjs --stored student   # data-only calls for the stored converter
+ *   node scripts/figma-plan-calls.mjs --packed student   # compressed calls for the stored runner
  *   FIGMA_ROUTES='^/(feed|chat)' ...                      # only routes matching this pattern
  */
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { compact } from "./figma-compact.mjs";
-import { buildCall, buildStoredCall } from "./figma-build-call.mjs";
+import { buildCall, buildPackedCall, buildStoredCall } from "./figma-build-call.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const REF = join(ROOT, "docs/figma/reference");
@@ -22,8 +23,11 @@ const PAGES = { marketing: "2:227", public: "2:227", auth: "2:228", onboarding: 
 const X = { desktop: 0, phone: 1540 };
 
 const STORED = process.argv.includes("--stored");
+const PACKED = process.argv.includes("--packed");
+/** A packed call builds at most this many frames: more runs past use_figma's 60 s timeout. */
+const PACKED_JOBS = 8;
 const ROUTES = process.env.FIGMA_ROUTES ? new RegExp(process.env.FIGMA_ROUTES) : null;
-const make = STORED ? buildStoredCall : buildCall;
+const make = PACKED ? buildPackedCall : STORED ? buildStoredCall : buildCall;
 const portals = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const out = join(REF, "calls");
 rmSync(out, { recursive: true, force: true });
@@ -53,7 +57,7 @@ for (const portal of portals) {
         const opts = { page, name: `${title} · ${vp} · light`, x: X[vp] };
         if (vp === "phone") opts.row = `${title} · desktop · light`;
         const job = { chunk: c.file, opts, part: i };
-        if (batch.length && make([...batch, job]).length > LIMIT) flush();
+        if (batch.length && ((PACKED && i === 0 && batch.length >= PACKED_JOBS) || make([...batch, job]).length > LIMIT)) flush();
         batch.push(job);
       });
     }

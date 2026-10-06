@@ -106,6 +106,8 @@ async function build(n, parent) {
     if (n.li && ICONS[n.li]) { props[propKey(set, "Leading icon")] = true; props[propKey(set, "Leading icon swap")] = ICONS[n.li].id; }
     if (n.ti && ICONS[n.ti]) { props[propKey(set, "Trailing icon")] = true; props[propKey(set, "Trailing icon swap")] = ICONS[n.ti].id; }
     node.setProperties(props);
+    // Icon-only button: hide the label text, not just leave the default "Button".
+    if (!n.l) for (const t of node.findAll((c) => c.type === "TEXT" && c.characters === "Button")) t.visible = false;
     node.resize(w, h);
   } else if (n.k === "input" || n.k === "textarea" || n.k === "select") {
     const set = SETS[n.k];

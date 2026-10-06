@@ -52,41 +52,41 @@ variables, plus its empty/error frames where `screens.json` lists those states.
 - [ ] `/appeals`
 - [ ] `/billing/checkout/[session]`
 - [ ] `/billing/return/[session]`
-- [ ] `/chat/[threadId]`
-- [ ] `/chat`
+- [x] `/chat/[threadId]`
+- [x] `/chat`
 - [ ] `/competitions/[id]`
 - [ ] `/events/[id]/attend`
 - [ ] `/events/[id]/check-in`
 - [ ] `/events/[id]`
 - [ ] `/events` — tabs: upcoming, mine, past
-- [ ] `/explore` — tabs: people, projects, startups, ideas
+- [x] `/explore` — tabs: people, projects, startups, ideas
 - [ ] `/fairs/[id]`
 - [ ] `/fairs/invite`
-- [ ] `/feed` — tabs: university, global
+- [x] `/feed` — tabs: university, global
 - [ ] `/feedback`
-- [ ] `/friends` — tabs: friends, received, sent, blocked
+- [x] `/friends` — tabs: friends, received, sent, blocked
 - [ ] `/ideas/[id]`
-- [ ] `/leaderboard`
-- [ ] `/me/code-checks/[id]`
-- [ ] `/me/credentials`
-- [ ] `/me/cv`
-- [ ] `/me`
-- [ ] `/me/score`
-- [ ] `/me/skills`
-- [ ] `/me/work` — tabs: ventures, contributions, reviews, endorsements, credentials
+- [x] `/leaderboard`
+- [ ] `/me/code-checks/[id]` (deferred to slice 4: needs a seeded code check)
+- [x] `/me/credentials`
+- [x] `/me/cv`
+- [x] `/me`
+- [x] `/me/score`
+- [x] `/me/skills`
+- [x] `/me/work` — tabs: ventures, contributions, reviews, endorsements, credentials
 - [ ] `/moderation/[id]`
-- [ ] `/notifications`
+- [x] `/notifications`
 - [ ] `/opportunities/[tab]` — tabs: for_you, jobs, contact_requests, applications, competitions, job_fairs, ideas
 - [ ] `/opportunities/applications/[id]`
 - [ ] `/opportunities/contact-requests/[id]`
 - [ ] `/opportunities/jobs/[id]`
 - [ ] `/opportunities`
-- [ ] `/post/[id]`
-- [ ] `/profile/[username]/activity`
-- [ ] `/profile/[username]`
-- [ ] `/profile/[username]/skills`
-- [ ] `/profile/[username]/ventures`
-- [ ] `/requests` — tabs: received, sent, invites
+- [x] `/post/[id]`
+- [x] `/profile/[username]/activity`
+- [x] `/profile/[username]`
+- [x] `/profile/[username]/skills`
+- [x] `/profile/[username]/ventures`
+- [x] `/requests` — tabs: received, sent, invites
 - [ ] `/settings/account/delete`
 - [ ] `/settings/billing`
 - [ ] `/settings/chat`
@@ -96,16 +96,16 @@ variables, plus its empty/error frames where `screens.json` lists those states.
 - [ ] `/settings/privacy`
 - [ ] `/settings/profile`
 - [ ] `/settings/security`
-- [ ] `/ventures/[id]/chat`
-- [ ] `/ventures/[id]/contributions`
-- [ ] `/ventures/[id]/deliverables`
-- [ ] `/ventures/[id]/manage`
-- [ ] `/ventures/[id]`
-- [ ] `/ventures/[id]/reviews`
-- [ ] `/ventures/[id]/team`
-- [ ] `/ventures/[id]/updates`
-- [ ] `/ventures/new`
-- [ ] `/ventures`
+- [x] `/ventures/[id]/chat` (redirects to `/chat/[threadId]`; same screen)
+- [x] `/ventures/[id]/contributions`
+- [x] `/ventures/[id]/deliverables`
+- [x] `/ventures/[id]/manage`
+- [x] `/ventures/[id]`
+- [x] `/ventures/[id]/reviews`
+- [x] `/ventures/[id]/team`
+- [x] `/ventures/[id]/updates`
+- [x] `/ventures/new`
+- [x] `/ventures`
 
 ## teacher (13 screens, slice 5)
 

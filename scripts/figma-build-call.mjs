@@ -8,6 +8,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { deflateRawSync } from "node:zlib";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -30,6 +31,17 @@ export function buildCall(jobs) {
 export function buildStoredCall(jobs) {
   const list = jobs.map((j) => `{"o":${JSON.stringify(j.opts)},"d":${readFileSync(j.chunk, "utf8")}}`).join(",\n");
   return `const JOBS = [\n${list}\n];\nconst CONV = new Function("return " + figma.root.getSharedPluginData("skilient", "converter"))();\nreturn await CONV(JOBS);\n`;
+}
+
+/**
+ * The data-only call compressed: deflate-raw + base64 JOBS, run by the stored runner
+ * (shared plugin data `skilient/run`, written from docs/figma/runner.js), which inflates them,
+ * runs the stored converter and applies the app-shell post-fix. About 7× smaller than JSON.
+ */
+export function buildPackedCall(jobs) {
+  const list = jobs.map((j) => `{"o":${JSON.stringify(j.opts)},"d":${readFileSync(j.chunk, "utf8")}}`).join(",");
+  const data = deflateRawSync(`[${list}]`, { level: 9 }).toString("base64");
+  return `return await new Function("return " + figma.root.getSharedPluginData("skilient", "run"))()("${data}");\n`;
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {

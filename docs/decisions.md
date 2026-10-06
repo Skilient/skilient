@@ -1886,3 +1886,7 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   (fictional NUTECH classmates, friends, posts, a venture with team and chat, skills, an endorsement), so frames show
   real-looking screens rather than empty states. The portal is split: slice 3 covers feed, post, explore, friends,
   requests, notifications, chat, profile, me, leaderboard and ventures; slice 4 the rest.
+- 2026-10-06 (Figma slice 3): build calls are compressed (deflate-raw + base64, decoded by the runner stored in the file)
+  so a whole portal fits in a handful of calls; 8 frames per call stays under use_figma's 60 s limit. Icon-only
+  buttons hide the component's default label. `/ventures/[id]/chat` redirects to the chat thread, so it shares that
+  frame; `/me/code-checks/[id]` moves to slice 4 with the rest of the seeded content.

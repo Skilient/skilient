@@ -106,6 +106,8 @@ function convert(n, px, py, icons) {
     return { k: "button", b, v: variant, sz: size, l: textOf(n), li: lead && iconName(icons, lead.d), ti: trail && iconName(icons, trail.d), dis: disabled };
   }
   if (n.tag === "input" && /checkbox|radio/.test(cls)) return { k: "checkbox", b };
+  // A native checkbox reports its value "on" and a square box no bigger than a line of text.
+  if (n.tag === "input" && n.text === "on" && b[2] <= 24 && Math.abs(b[2] - b[3]) <= 2) return { k: "checkbox", b, on: true };
   if (/peer inline-flex size-5/.test(cls)) return { k: "checkbox", b, on: n.fill === "--interactive-primary" };
   if (/h-6 w-10 shrink-0 items-center rounded-full/.test(cls)) return { k: "switch", b, on: n.fill === "--interactive-primary" };
   if ((n.tag === "input" || n.tag === "textarea" || /justify-between gap-2 text-left/.test(cls)) && /bg-bg-subtle px-3/.test(cls)) {

@@ -33,6 +33,20 @@ File: https://www.figma.com/design/9D9DDtTpYC8MPRsSGL7vHK (node ids and progress
 3. Check per slice: frames on the page match `screens.json` for that portal, and a scan for unbound
    paints finds none.
 
+## Slice 2 onwards: the converter
+
+1. Capture: `pnpm db:start`, `pnpm build`, `FIGMA_PORTAL=<portal> pnpm figma:captures`.
+2. Plan: `node scripts/figma-plan-calls.mjs <portal> ...` compacts every captured layout tree
+   (`scripts/figma-compact.mjs`: token names, text styles, component kinds, Phosphor names from
+   `icons.json`) and packs the chunks into `reference/calls/NNN.js`, each under the `use_figma` limit.
+3. Build: paste each call into `use_figma`. The converter is also stored in the file
+   (`figma.root` shared plugin data `skilient/converter`), so a call can send only its `JOBS` and run
+   `new Function("return " + figma.root.getSharedPluginData("skilient", "converter"))()(JOBS)`.
+   Marketing header/footer chunks live in `skilient/marketing-chrome`.
+4. Check a screenshot per page against `reference/*.png`, then clone each `· light` frame to `· dark`
+   (desktop x 2030, phone x 3570), set the Color mode to Dark and drop level 1–2 shadows.
+5. Audit: no unbound solid paints outside instances (the CV specimen's print ink is the only exception).
+
 ## Lessons from slice 1 (Plugin API)
 
 - `resize()` resets sizing modes to fixed: set `primaryAxisSizingMode`/`counterAxisSizingMode` after it.
@@ -40,4 +54,7 @@ File: https://www.figma.com/design/9D9DDtTpYC8MPRsSGL7vHK (node ids and progress
 - Swapping an icon instance resets its fill override: re-bind the colour after the swap.
 - A text property on a variant set has one default for every variant; set per-instance text on instances.
 - Icons are Phosphor regular weight; where code uses `bold` or `fill`, the Figma icon is an approximation.
+- Text centring: one-line text in a padded link, button or chip is centred like flexbox; a trailing icon far from the
+  text (a FAQ caret) leaves the text at the start. `align-items: center` is vertical only.
+- Closed `<details>` keep their answer in the tree: clip them. Clip `cv-paper` and `hero-capture` parents too.
 - Effect styles can't follow a variable mode: use `Elevation Dark/*` on dark frames (levels 1–2 have no shadow in dark).

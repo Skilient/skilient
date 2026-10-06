@@ -1872,3 +1872,13 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   tweaks); the code wins, so they are named primitives (`tier/*`, `status/*`, `adjusted/*`) rather than snapped to a ramp step.
   Dark shadows are separate `Elevation Dark/*` styles because effect styles can't follow a variable mode. Domain cards move
   to the screen slices that first use them, built from captured layout trees.
+- 2026-10-06 (Figma slice 2): screen frames are built by a converter from the captured layout trees
+  (`docs/figma/converter.js`), not by hand. Children keep their captured positions (absolute, not auto-layout) so each
+  frame matches the browser to the pixel; paints, text styles, radii and the Skilient components (Button, inputs,
+  checkbox, switch, logo, icons) are still bound, so frames stay editable and theme with the Color mode.
+- 2026-10-06 (Figma slice 2): the app's root font is 15px, so Tailwind spacing is 3.75px per step; the Spacing variables and
+  every fixed size from slice 1 were rescaled by 15/16 to match.
+- 2026-10-06 (Figma slice 2): photos, art and product captures are `bg/subtle` placeholder rectangles named after the image
+  path; real images can be uploaded later. Icons are matched to Phosphor by the start of their SVG path, preferring the
+  120 library icons. `/verify/[code]` is deferred until a signed CV exists on the local stack. The CV specimen keeps its
+  print ink colours (unbound), as the CV document does in code.

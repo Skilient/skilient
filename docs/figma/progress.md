@@ -9,43 +9,43 @@ variables, plus its empty/error frames where `screens.json` lists those states.
 
 ## marketing (13 screens, slice 2)
 
-- [ ] `/about`
-- [ ] `/faculty`
-- [ ] `/`
-- [ ] `/pricing`
-- [ ] `/privacy`
-- [ ] `/recruiters`
-- [ ] `/request-university/confirm`
-- [ ] `/request-university`
-- [ ] `/request-university/unsubscribe`
-- [ ] `/terms`
-- [ ] `/universities`
-- [ ] `/verify/[code]`
-- [ ] `/verify`
+- [x] `/about`
+- [x] `/faculty`
+- [x] `/`
+- [x] `/pricing`
+- [x] `/privacy`
+- [x] `/recruiters`
+- [x] `/request-university/confirm`
+- [x] `/request-university`
+- [x] `/request-university/unsubscribe`
+- [x] `/terms`
+- [x] `/universities`
+- [ ] `/verify/[code]` (deferred: needs a signed CV on the local stack)
+- [x] `/verify`
 
 ## auth (10 screens, slice 2)
 
-- [ ] `/forgot-password`
-- [ ] `/reset-password`
-- [ ] `/signin/code`
-- [ ] `/signin/mfa`
-- [ ] `/signin`
-- [ ] `/signup`
-- [ ] `/signup/recruiter`
-- [ ] `/signup/verify`
-- [ ] `/auth/confirmed`
-- [ ] `/auth/not-me`
+- [x] `/forgot-password`
+- [x] `/reset-password`
+- [x] `/signin/code`
+- [x] `/signin/mfa`
+- [x] `/signin`
+- [x] `/signup`
+- [x] `/signup/recruiter`
+- [x] `/signup/verify`
+- [x] `/auth/confirmed`
+- [x] `/auth/not-me`
 
 ## onboarding (4 screens, slice 2)
 
-- [ ] `/agreement`
-- [ ] `/onboarding/[step]` — tabs: university, profile, github, skills, looking-for, people
-- [ ] `/onboarding/done`
-- [ ] `/onboarding`
+- [x] `/agreement`
+- [x] `/onboarding/[step]` — tabs: university, profile, github, skills, looking-for, people
+- [x] `/onboarding/done`
+- [x] `/onboarding` (redirects to the current step; no frame of its own)
 
 ## public (1 screens, slice 2)
 
-- [ ] `/cv/[username]`
+- [x] `/cv/[username]`
 
 ## student (57 screens, slice 3–4)
 

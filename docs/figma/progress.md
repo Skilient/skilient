@@ -49,53 +49,53 @@ variables, plus its empty/error frames where `screens.json` lists those states.
 
 ## student (57 screens, slice 3–4)
 
-- [ ] `/appeals`
-- [ ] `/billing/checkout/[session]`
-- [ ] `/billing/return/[session]`
+- [x] `/appeals`
+- [x] `/billing/checkout/[session]`
+- [x] `/billing/return/[session]`
 - [x] `/chat/[threadId]`
 - [x] `/chat`
-- [ ] `/competitions/[id]`
-- [ ] `/events/[id]/attend`
-- [ ] `/events/[id]/check-in`
-- [ ] `/events/[id]`
-- [ ] `/events` — tabs: upcoming, mine, past
+- [x] `/competitions/[id]`
+- [x] `/events/[id]/attend`
+- [x] `/events/[id]/check-in`
+- [x] `/events/[id]`
+- [x] `/events` — tabs: upcoming, mine, past
 - [x] `/explore` — tabs: people, projects, startups, ideas
-- [ ] `/fairs/[id]`
-- [ ] `/fairs/invite`
+- [x] `/fairs/[id]`
+- [x] `/fairs/invite`
 - [x] `/feed` — tabs: university, global
-- [ ] `/feedback`
+- [x] `/feedback`
 - [x] `/friends` — tabs: friends, received, sent, blocked
-- [ ] `/ideas/[id]`
+- [x] `/ideas/[id]`
 - [x] `/leaderboard`
-- [ ] `/me/code-checks/[id]` (deferred to slice 4: needs a seeded code check)
+- [x] `/me/code-checks/[id]`
 - [x] `/me/credentials`
 - [x] `/me/cv`
 - [x] `/me`
 - [x] `/me/score`
 - [x] `/me/skills`
 - [x] `/me/work` — tabs: ventures, contributions, reviews, endorsements, credentials
-- [ ] `/moderation/[id]`
+- [x] `/moderation/[id]`
 - [x] `/notifications`
-- [ ] `/opportunities/[tab]` — tabs: for_you, jobs, contact_requests, applications, competitions, job_fairs, ideas
-- [ ] `/opportunities/applications/[id]`
-- [ ] `/opportunities/contact-requests/[id]`
-- [ ] `/opportunities/jobs/[id]`
-- [ ] `/opportunities`
+- [x] `/opportunities/[tab]` — tabs: for_you, jobs, contact_requests, applications, competitions, job_fairs, ideas
+- [x] `/opportunities/applications/[id]`
+- [x] `/opportunities/contact-requests/[id]`
+- [x] `/opportunities/jobs/[id]`
+- [x] `/opportunities` (redirects to `/opportunities/for_you`; same screen)
 - [x] `/post/[id]`
 - [x] `/profile/[username]/activity`
 - [x] `/profile/[username]`
 - [x] `/profile/[username]/skills`
 - [x] `/profile/[username]/ventures`
 - [x] `/requests` — tabs: received, sent, invites
-- [ ] `/settings/account/delete`
-- [ ] `/settings/billing`
-- [ ] `/settings/chat`
-- [ ] `/settings/github`
-- [ ] `/settings/notifications`
-- [ ] `/settings`
-- [ ] `/settings/privacy`
-- [ ] `/settings/profile`
-- [ ] `/settings/security`
+- [x] `/settings/account/delete`
+- [x] `/settings/billing`
+- [x] `/settings/chat`
+- [x] `/settings/github`
+- [x] `/settings/notifications`
+- [x] `/settings`
+- [x] `/settings/privacy`
+- [x] `/settings/profile`
+- [x] `/settings/security`
 - [x] `/ventures/[id]/chat` (redirects to `/chat/[threadId]`; same screen)
 - [x] `/ventures/[id]/contributions`
 - [x] `/ventures/[id]/deliverables`

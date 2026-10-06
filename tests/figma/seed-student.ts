@@ -290,7 +290,10 @@ export async function seedStudentOpportunities(sql: Sql, me: TestStudent, o: Oth
 
   // A post of the student's that was reported and removed, with an appeal.
   await step("moderation", async () => {
-    const post = await rpc<string>(api, "create_post", { p: { type: "general", audience: "university", body: "Selling my old Casio fx-991 calculator, DM me. Also have notes for every CS course for sale." , media: [] } });
+    // Written directly: create_post allows one post every 30 seconds.
+    const [{ id: post }] = await sql`insert into public.posts (author_id, university_id, audience, type, body)
+      select ${me.id}, university_id, 'university', 'general', 'Selling my old Casio fx-991 calculator, DM me. Also have notes for every CS course for sale.'
+      from public.profiles where user_id = ${me.id} returning id::text`;
     const bApi = await as(bilal);
     await rpc(bApi, "submit_report", { p_type: "post", p_target: post, p_reason: "spam", p_detail: "Selling things in the course feed." });
     const [c] = await sql`select id::text from public.report_cases where target_id = ${post}`;

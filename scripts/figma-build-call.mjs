@@ -34,14 +34,26 @@ export function buildStoredCall(jobs) {
 }
 
 /**
- * The data-only call compressed: deflate-raw + base64 JOBS, run by the stored runner
- * (shared plugin data `skilient/run`, written from docs/figma/runner.js), which inflates them,
- * runs the stored converter and applies the app-shell post-fix. About 7× smaller than JSON.
+ * The data-only call compressed: each screen's jobs as deflate-raw + base64, run one at a time by
+ * the runner stored in the file (shared plugin data `skilient/run`, written from
+ * docs/figma/runner.js), which inflates them, runs the stored converter and applies the app-shell
+ * post-fix. About 7x smaller than JSON. Each screen has its own try/catch, so a copy slip in one
+ * blob only fails that screen; the result names it, and it can be re-sent alone.
  */
 export function buildPackedCall(jobs) {
-  const list = jobs.map((j) => `{"o":${JSON.stringify(j.opts)},"d":${readFileSync(j.chunk, "utf8")}}`).join(",");
-  const data = deflateRawSync(`[${list}]`, { level: 9 }).toString("base64");
-  return `return await new Function("return " + figma.root.getSharedPluginData("skilient", "run"))()("${data}");\n`;
+  const screens = [];
+  for (const j of jobs) {
+    const key = j.opts.row ?? j.opts.name;
+    const last = screens[screens.length - 1];
+    if (last && last.key === key) last.jobs.push(j);
+    else screens.push({ key, jobs: [j] });
+  }
+  const lines = screens.map((s, i) => {
+    const list = s.jobs.map((j) => `{"o":${JSON.stringify(j.opts)},"d":${readFileSync(j.chunk, "utf8")}}`).join(",");
+    const data = deflateRawSync(`[${list}]`, { level: 9 }).toString("base64");
+    return `try { out[${i}] = await R("${data}"); } catch (e) { out[${i}] = ${JSON.stringify(s.key)} + ": " + String(e).slice(0, 80); }`;
+  });
+  return `const R = new Function("return " + figma.root.getSharedPluginData("skilient", "run"))();\nconst out = {};\n${lines.join("\n")}\nreturn out;\n`;
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {

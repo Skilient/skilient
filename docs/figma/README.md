@@ -45,9 +45,10 @@ File: https://www.figma.com/design/9D9DDtTpYC8MPRsSGL7vHK (node ids and progress
    Marketing header/footer chunks live in `skilient/marketing-chrome`.
    Cheapest (slice 3 onwards): `--packed` writes calls that carry deflate-raw + base64 data for the
    stored runner (`skilient/run`, from `docs/figma/runner.js`), at most 8 frames per call (more
-   times out at 60 s). The runner also applies the app-shell post-fix: sidebar to full frame
-   height, phone tab bar to the frame bottom. A copy slip in the base64 fails the whole call
-   (JSON parse error), never builds a broken frame; re-run it split in two.
+   times out at 60 s), one blob per screen, each in its own try/catch. The runner also applies the
+   app-shell post-fix: sidebar to full frame height, phone tab bar to the frame bottom. A copy slip
+   in a blob fails only that screen (a parse error named in the result) and never builds a broken
+   frame; re-send that screen alone, or its desktop and phone jobs separately.
    After editing `converter.js` or `runner.js`, store the new source in the file again.
 4. Check a screenshot per page against `reference/*.png`, then clone each `· light` frame to `· dark`
    (desktop x 2030, phone x 3570), set the Color mode to Dark and drop level 1–2 shadows.

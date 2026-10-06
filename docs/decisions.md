@@ -1895,3 +1895,6 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   a passed React code check, a removed post with an appeal, answered feedback and an open Student Pro checkout, so
   the rest of the student portal is captured with content. Rows go in directly where the RPC needs GitHub or staff
   two-factor; everything else goes through the same RPCs the app uses.
+- 2026-10-06 (Figma slice 4): packed calls carry one compressed blob per screen, each run in its own try/catch, so a
+  copy slip costs one screen rather than a whole call. `/opportunities` redirects to `/opportunities/for_you` and
+  shares that frame. The student portal is complete: 57 routes, 304 frames.

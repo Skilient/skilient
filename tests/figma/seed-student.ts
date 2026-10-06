@@ -92,7 +92,10 @@ export async function seedStudentWorld(sql: Sql, me: TestStudent, tag: string) {
   // Posts and comments in the university feed.
   const posts: string[] = [];
   await step("posts", async () => {
-    await adminClient().from("posts").delete().in("author_id", [me.id, ...people.map((p) => p.id)]);
+    // Earlier runs' sample posts would show up twice.
+    for (const start of ["Our React build took", "Shipped: our lab booking app", "Looking for one designer for a campus", "Wrote up how we model lab slots", "Anyone else preparing for the systems design"]) {
+      await adminClient().from("posts").delete().like("body", `${start}%`);
+    }
     const write = async (u: TestStudent, body: string, audience = "university") =>
       posts.push(await rpc<string>(await client(u), "create_post", { p: { type: "general", audience, body, media: [] } }));
     await write(hira, "Our React build took 4 minutes. Caching dependencies in CI and splitting out the admin pages got it to 40 seconds. Config diff is in our repo.");
@@ -116,6 +119,7 @@ export async function seedStudentWorld(sql: Sql, me: TestStudent, tag: string) {
   let myCode = "";
   await step("venture", async () => {
     const [{ university_id }] = await sql`select university_id from public.profiles where user_id = ${me.id}`;
+    await sql`delete from public.ventures where title = 'Lab booking for CS students'`;
     const [v] = await sql`
       insert into public.ventures (type, owner_id, university_id, title, description, status, skill_ids, team_size)
       values ('project', ${me.id}, ${university_id}, 'Lab booking for CS students',

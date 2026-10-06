@@ -1898,3 +1898,4 @@ Append-only. One dated entry per product decision, with the reason. Carried over
 - 2026-10-06 (Figma slice 4): packed calls carry one compressed blob per screen, each run in its own try/catch, so a
   copy slip costs one screen rather than a whole call. `/opportunities` redirects to `/opportunities/for_you` and
   shares that frame. The student portal is complete: 57 routes, 304 frames.
+- 2026-10-06 — Figma slice 5: the teacher captures use a seeded teacher world (`seedTeacherWorld` in `tests/figma/seed-student.ts`: supervision, review requests, a claimed code check, a judged hackathon). `/teach/apply` is captured by setting the teacher back to pending for that one route (`AROUND` hook in `figma.capture.ts`), because an approved teacher is redirected to `/teach`.

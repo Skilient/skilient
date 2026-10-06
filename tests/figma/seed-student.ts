@@ -309,3 +309,86 @@ export async function seedStudentOpportunities(sql: Sql, me: TestStudent, o: Oth
 
   await step("checkout", () => rpc(api, "create_checkout", { p_subject: "user", p_plan: "student_pro_monthly", p_currency: "PKR", p_gateway: "simulated", p_key: `figma-${me.id}` }));
 }
+
+/**
+ * Slice 5 (decisions 2026-10-06): the teacher's world. Dr Farah Naqvi supervises the lab booking
+ * venture, has an open and a finished review, grades React and TypeScript code checks, judges a
+ * university hackathon and has three project ideas. Same best-effort rule.
+ */
+export async function seedTeacherWorld(sql: Sql, me: TestStudent, o: Others, people: TestStudent[], ventureId: string) {
+  const [bilal, mariam, hamza] = people;
+  const t = o.teacher;
+
+  await step("teacher settings", () =>
+    sql`insert into public.teacher_settings (user_id, grading_opt_in, weekly_grading_cap, grading_skills, digest)
+        values (${t.id}, true, 5, array['react', 'typescript'], true)
+        on conflict (user_id) do update set grading_opt_in = true, grading_skills = array['react', 'typescript']`,
+  );
+
+  await step("more ideas", async () => {
+    for (const [title, brief, skills, difficulty, status] of [
+      ["Attendance from QR codes", "Lecturers waste the first ten minutes on attendance. Build a QR check-in that rotates every 30 seconds and exports to the university portal.", ["react", "nodejs"], "intro", "open"],
+      ["Past paper search", "A searchable archive of past exam papers by course and topic, with a moderation step before anything is published.", ["python", "postgresql"], "advanced", "closed"],
+    ] as const) {
+      await sql`insert into public.project_ideas (teacher_id, university_id, title, brief, skills, difficulty, team_size, duration_weeks, deliverables, max_teams, status, created_at)
+        values (${t.id}, ${o.uniId}, ${title}, ${brief}, ${skills as unknown as string[]}, ${difficulty}, 3, 6, 'Working app and a short report.', 3, ${status}, now() - interval '20 days')`;
+    }
+  });
+
+  // Supervision of the student's venture, with comments.
+  await step("supervision", async () => {
+    if (!ventureId) return;
+    await sql`insert into public.venture_supervisors (venture_id, teacher_id, status, invited_by, started_at)
+      values (${ventureId}, ${t.id}, 'active', ${me.id}, now() - interval '25 days')`;
+    for (const [who, body] of [
+      [t, "Good progress on the overlap check. Before the TA dashboard, please add a short test plan to the deliverables."],
+      [me, "Thanks, Dr Naqvi. Test plan is up; we'll start the dashboard next week."],
+    ] as const) await sql`insert into public.supervisor_comments (venture_id, author_id, body) values (${ventureId}, ${who.id}, ${body})`;
+  });
+
+  // A second venture with a finished review, then the open request on the student's venture.
+  await step("reviews", async () => {
+    const [{ university_id }] = await sql`select university_id from public.profiles where user_id = ${mariam.id}`;
+    const [v] = await sql`insert into public.ventures (type, owner_id, university_id, title, description, status, skill_ids, team_size, created_at)
+      values ('project', ${mariam.id}, ${university_id}, 'Campus food ordering', 'Order from the campus cafes ahead of time and pick up between classes.',
+              'in_progress', array['react', 'nodejs'], 4, now() - interval '60 days') returning id::text`;
+    for (const [u, role] of [[mariam, "lead"], [hamza, "developer"]] as const)
+      await sql`insert into public.venture_members (venture_id, user_id, team_role) values (${v.id}, ${u.id}, ${role}) on conflict do nothing`;
+    const [done] = await sql`insert into public.review_requests (venture_id, teacher_id, requested_by, status, due_at, closed_at, created_at)
+      values (${v.id}, ${t.id}, ${mariam.id}, 'submitted', now() - interval '10 days', now() - interval '12 days', now() - interval '20 days') returning id::text`;
+    await sql`insert into public.venture_reviews (request_id, venture_id, teacher_id, rubric, comments, average, created_at)
+      values (${done.id}, ${v.id}, ${t.id}, ${sql.json({ scope: 4, technical: 4, collaboration: 5, documentation: 3, outcome: 4 })},
+              'Solid scope and a working pickup flow. The README needs setup steps before anyone else can run it.', 4.0, now() - interval '12 days')`;
+    if (ventureId)
+      await sql`insert into public.review_requests (venture_id, teacher_id, requested_by, status, due_at)
+        values (${ventureId}, ${t.id}, ${me.id}, 'open', now() + interval '9 days')`;
+  });
+
+  // A TypeScript check waiting for this teacher, and the student's React check graded by them.
+  await step("code checks to grade", async () => {
+    await sql`update public.code_checks set grader_id = ${t.id} where user_id = ${me.id} and status = 'passed'`;
+    await sql`insert into public.code_checks (user_id, skill_id, status, path, start_line, end_line, answers, requested_at, started_at, submitted_at, due_at, claimed_by, claimed_at)
+      values (${bilal.id}, 'typescript', 'submitted', 'src/admin/BookingTable.tsx', 12, 64,
+              ${sql.json({ what: "It sorts the booking table by any column and keeps the sort in the URL.", why: "Keeping the sort in the URL means the TA can share a sorted view; the alternative was component state.", change: "Add a lab filter next to the sort and read both from the query string." })},
+              now() - interval '2 days', now() - interval '2 days', now() - interval '1 day', now() + interval '2 days', ${t.id}, now() - interval '3 hours')`;
+  });
+
+  // A university hackathon this teacher judges, with two submitted teams.
+  await step("judging", async () => {
+    const [c] = await sql`insert into public.competitions (host_type, university_id, created_by, title, role, skills, brief, starts_at, ends_at, team_size, prize, rubric, status)
+      values ('university', ${o.uniId}, ${o.uniOwner.id}, 'NUTECH Spring Hackathon', 'Full-stack developer', '[{"skill":"react","min_level":1}]',
+              ${"Build something that makes campus life easier in 48 hours: queues, bookings, lost and found, anything students complain about. Teams of up to three; submit a public GitHub repo."},
+              now() - interval '4 days', now() - interval '2 days', 3, 'PKR 50,000 and a featured spot on the university page',
+              '[{"criterion":"Usefulness","weight":40},{"criterion":"Technical quality","weight":40},{"criterion":"Presentation","weight":20}]', 'frozen') returning id::text`;
+    await sql`insert into public.competition_judges (competition_id, teacher_id) values (${c.id}, ${t.id})`;
+    for (const [name, lead, mates, repo] of [
+      ["Queue Busters", me, [bilal], "https://github.com/queue-busters/cafe-queue"],
+      ["Lost & Found", mariam, [hamza], "https://github.com/lostfound-nutech/finder"],
+    ] as const) {
+      const [team] = await sql`insert into public.competition_teams (competition_id, name, lead_id, repo_url, submitted_at)
+        values (${c.id}, ${name}, ${lead.id}, ${repo}, now() - interval '2 days 2 hours') returning id::text`;
+      for (const s of [lead, ...mates])
+        await sql`insert into public.competition_team_members (team_id, competition_id, student_id, status) values (${team.id}, ${c.id}, ${s.id}, 'joined')`;
+    }
+  });
+}

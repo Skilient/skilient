@@ -4,7 +4,7 @@ import { test, type Browser, type BrowserContext, type Page } from "@playwright/
 import postgres from "postgres";
 import { adminClient, createStudent, PASSWORD, signInWithPassword, totp, type TestStudent } from "../e2e/support";
 import { dumpLayout } from "./layout-dump";
-import { seedStudentOpportunities, seedStudentWorld } from "./seed-student";
+import { seedStudentOpportunities, seedStudentWorld, seedTeacherWorld } from "./seed-student";
 
 /**
  * Figma reference captures (docs/figma/README.md). For every entry in docs/figma/screens.json,
@@ -90,6 +90,15 @@ const PARAMS: Record<string, (sql: Sql, who: Accounts) => Promise<Record<string,
 for (const sub of ["chat", "contributions", "deliverables", "manage", "reviews", "team", "updates"]) PARAMS[`/ventures/[id]/${sub}`] = PARAMS["/ventures/[id]"];
 for (const sub of ["activity", "skills", "ventures"]) PARAMS[`/profile/[username]/${sub}`] = PARAMS["/profile/[username]"];
 for (const sub of ["attend", "check-in"]) PARAMS[`/events/[id]/${sub}`] = PARAMS["/events/[id]"];
+
+/** State a screen needs that the shared accounts don't have, set just before it and undone after. */
+const AROUND: Record<string, { before: (sql: Sql, who: Accounts) => Promise<unknown>; after: (sql: Sql, who: Accounts) => Promise<unknown> }> = {
+  // The application form shows only while the faculty account is still pending.
+  "/teach/apply": {
+    before: (s, a) => s`update public.teacher_profiles set status = 'pending', approved_at = null where user_id = ${a.teacher.id}`,
+    after: (s, a) => s`update public.teacher_profiles set status = 'approved', approved_at = now() where user_id = ${a.teacher.id}`,
+  },
+};
 
 function one(query: string) {
   return async (sql: Sql) => {
@@ -212,9 +221,10 @@ test("figma reference captures", async ({ browser }) => {
   const manifest: { route: string; tab: string; url: string; files?: Record<string, string>; skipped?: string }[] = [];
   try {
     const who = await setupAccounts(sql);
-    if (entries.some((e) => e.role === "student")) {
-      const { people } = await seedStudentWorld(sql, who.student, Math.random().toString(36).slice(2, 6));
+    if (entries.some((e) => e.role === "student" || e.role === "teacher")) {
+      const { people, ventureId } = await seedStudentWorld(sql, who.student, Math.random().toString(36).slice(2, 6));
       await seedStudentOpportunities(sql, who.student, who, people);
+      if (entries.some((e) => e.role === "teacher")) await seedTeacherWorld(sql, who.student, who, people, ventureId);
     }
     const roles: Record<Role, { user: TestStudent | null; twoFactor: boolean; passwordOnlyAfter?: boolean }> = {
       anonymous: { user: null, twoFactor: false },
@@ -250,6 +260,7 @@ test("figma reference captures", async ({ browser }) => {
       }
       const role = roles[e.role];
       if (role.user && !states.has(e.role)) states.set(e.role, await signedInState(browser, role.user, role.twoFactor, role.passwordOnlyAfter));
+      await AROUND[e.route]?.before(sql, who);
       for (const { tab, url } of urls(e, params)) {
         const files: Record<string, string> = {};
         for (const [vp, size] of Object.entries(VIEWPORTS)) {
@@ -278,6 +289,7 @@ test("figma reference captures", async ({ browser }) => {
         }
         if (Object.keys(files).length) manifest.push({ route: e.route, tab, url, files });
       }
+      await AROUND[e.route]?.after(sql, who);
     }
   } finally {
     await sql.end();

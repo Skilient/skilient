@@ -92,7 +92,7 @@ function place(t, n, w, h, ox = 0, oy = 0) {
   t.y = oy + Math.round((h - t.height) / 2);
   const icons = (n.ch ?? []).filter((c) => c.k === "icon");
   // A trailing icon far from the text (justify-between, like a FAQ caret) leaves the text at the start.
-  if (icons.length === 1) { const [ix, , iw] = icons[0].b; const trailing = ix > w / 2; if (!trailing) t.x = ox + ix + iw + 7; else if (w <= t.width + iw + 40) t.x = ox + Math.round(ix - 7 - t.width); else t.x = ox; }
+  if (icons.length === 1) { const [ix, , iw] = icons[0].b; const trailing = ix > w / 2; if (!trailing) t.x = ox + ix + iw + 7; else if (n.f || n.r || w <= t.width + iw + 40) t.x = ox + Math.round(ix - 7 - t.width); else t.x = ox; }
   else if (n.al === "center" || n.f || n.r || n.tag === "a" || n.tag === "button") t.x = ox + Math.round((w - t.width) / 2);
 }
 

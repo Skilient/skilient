@@ -1,0 +1,3635 @@
+{
+ "version": "1.0.0",
+ "project": {
+  "name": "skilient",
+  "languages": [
+   "typescript",
+   "sql",
+   "css"
+  ],
+  "frameworks": [
+   "Next.js",
+   "React",
+   "Supabase",
+   "Tailwind CSS"
+  ],
+  "description": "University-gated platform where Pakistani students prove skills through project work and turn it into a signed, verifiable CV for recruiters, faculty and universities.",
+  "analyzedAt": "2026-10-06T23:29:21.797Z",
+  "gitCommitHash": "2b4daf6f4f9f26d0eafea0ff9ae6bc3ca179e61c"
+ },
+ "nodes": [
+  {
+   "id": "domain:identity-onboarding",
+   "type": "domain",
+   "name": "Identity and Onboarding",
+   "summary": "University-gated signup, sign-in with two-factor, agreements and the onboarding steps that bring a student to a working profile. Signup is limited to live universities by email domain.",
+   "tags": [
+    "identity",
+    "auth",
+    "onboarding"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entities": [
+     "Profile",
+     "University",
+     "Email domain",
+     "Agreement",
+     "Onboarding state"
+    ],
+    "businessRules": [
+     "Signup requires a live university email domain",
+     "No account lockout; Turnstile after failed passwords",
+     "Gate decision table keeps users on the right page"
+    ],
+    "crossDomainInteractions": [
+     "Feeds Student Portal and Marketing",
+     "Recruiters, faculty and officials sign up through the same hook"
+    ]
+   }
+  },
+  {
+   "id": "domain:skill-proof",
+   "type": "domain",
+   "name": "Skill Proof and Ventures",
+   "summary": "Students connect GitHub, import commits and pull requests, and earn skill levels L1 to L4 from evidence. Ventures, contributions, endorsements, credentials and code checks add peer and staff verification.",
+   "tags": [
+    "skills",
+    "github",
+    "ventures",
+    "trust"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entities": [
+     "GitHub account",
+     "Repository",
+     "Skill",
+     "Venture",
+     "Contribution",
+     "Endorsement",
+     "Credential",
+     "Code check"
+    ],
+    "businessRules": [
+     "Skill levels come from evidence, never client claims",
+     "A venture completes only with peer-verified contributions from at least two members",
+     "Endorsement limits are enforced in SQL",
+     "Code checks store only where a snippet lives"
+    ],
+    "crossDomainInteractions": [
+     "Feeds Ranking and Verified CV",
+     "Credentials and code checks are reviewed in Ops"
+    ]
+   }
+  },
+  {
+   "id": "domain:social-network",
+   "type": "domain",
+   "name": "Social Network and Chat",
+   "summary": "Friends, blocks, posts, comments, polls, the ranked feed, chat and Explore search. There are no likes or reactions on posts and no video.",
+   "tags": [
+    "social",
+    "feed",
+    "chat"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entities": [
+     "Friend request",
+     "Post",
+     "Comment",
+     "Chat thread",
+     "Notification"
+    ],
+    "businessRules": [
+     "Blocks are honoured by every read",
+     "Notifications are written only by triggers",
+     "Emails capped at 60 a day"
+    ],
+    "crossDomainInteractions": [
+     "Reports go to Moderation",
+     "Venture group chats follow venture membership"
+    ]
+   }
+  },
+  {
+   "id": "domain:ranking-leaderboard",
+   "type": "domain",
+   "name": "Ranking and Leaderboard",
+   "summary": "A nightly state machine scores each student from work, skills, endorsements, credentials and momentum using a versioned formula, with anti-gaming flags and published tiers.",
+   "tags": [
+    "ranking",
+    "leaderboard"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entities": [
+     "Ranking score",
+     "Snapshot",
+     "Anti-gaming flag",
+     "Adjustment",
+     "Tier"
+    ],
+    "businessRules": [
+     "Formula lives in platform_config and its version is the formula version",
+     "Rank is never sold",
+     "Students can opt out of the leaderboard"
+    ],
+    "crossDomainInteractions": [
+     "Reads evidence from Skill Proof",
+     "Penalties come from Moderation",
+     "Badges awarded by universities are never read by ranking"
+    ]
+   }
+  },
+  {
+   "id": "domain:verified-cv",
+   "type": "domain",
+   "name": "Verified CV",
+   "summary": "A signed, verifiable CV built from a SQL snapshot, signed with Ed25519 by an Edge Function, shared by link or PDF and checked by a public verifier.",
+   "tags": [
+    "cv",
+    "signing",
+    "verification"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entities": [
+     "CV snapshot",
+     "CV record",
+     "Signing key",
+     "Share link",
+     "PDF export"
+    ],
+    "businessRules": [
+     "Private keys live in Vault",
+     "Revoked CVs expose only code and dates",
+     "Shared links open the newest version only"
+    ],
+    "crossDomainInteractions": [
+     "Snapshot reads skills, endorsements and badges",
+     "Share links need Spark+ entitlement"
+    ]
+   }
+  },
+  {
+   "id": "domain:recruiting",
+   "type": "domain",
+   "name": "Recruiter Hiring",
+   "summary": "Verified organisations search anonymised talent, send contact requests, post jobs, move applications through a pipeline, record hires and run competitions.",
+   "tags": [
+    "recruiter",
+    "hiring",
+    "jobs"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entities": [
+     "Organisation",
+     "Talent index",
+     "Contact request",
+     "Job",
+     "Application",
+     "Hire",
+     "Competition"
+    ],
+    "businessRules": [
+     "Organisations need ops verification and two-factor",
+     "Talent search is anonymised until full-profile entitlement",
+     "Students can block companies"
+    ],
+    "crossDomainInteractions": [
+     "Quotas come from Billing",
+     "Verification handled in Ops",
+     "Chat DM labelled with the company"
+    ]
+   }
+  },
+  {
+   "id": "domain:faculty-university",
+   "type": "domain",
+   "name": "Faculty and University Portals",
+   "summary": "Approved teachers publish project ideas, supervise ventures and review work. University officials claim a university, brand an ecosphere, run announcements, events, fairs and view student records.",
+   "tags": [
+    "teacher",
+    "university",
+    "admin"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entities": [
+     "Teacher profile",
+     "Project idea",
+     "Review request",
+     "University admin",
+     "Ecosphere",
+     "Event",
+     "Job fair"
+    ],
+    "businessRules": [
+     "Teachers need approval",
+     "Officials need two-factor",
+     "Student records are logged and small groups suppressed"
+    ],
+    "crossDomainInteractions": [
+     "Plans gate university features",
+     "Announcements enter the feed",
+     "Moderation of university content"
+    ]
+   }
+  },
+  {
+   "id": "domain:billing-entitlements",
+   "type": "domain",
+   "name": "Billing and Entitlements",
+   "summary": "Plans, entitlement grants and quotas enforced in SQL, checkout through gateway adapters, webhook-verified subscription lifecycle and immutable gapless invoices.",
+   "tags": [
+    "billing",
+    "plans",
+    "entitlements"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entities": [
+     "Plan",
+     "Entitlement grant",
+     "Checkout session",
+     "Subscription",
+     "Invoice",
+     "Add-on"
+    ],
+    "businessRules": [
+     "Prices are computed in SQL, never from the client",
+     "Webhook events are unique per gateway and event id",
+     "Invoices are immutable and numbered without gaps"
+    ],
+    "crossDomainInteractions": [
+     "Gates paid actions in Recruiting, University and CV",
+     "Staff tools live in Ops"
+    ]
+   }
+  },
+  {
+   "id": "domain:trust-moderation-ops",
+   "type": "domain",
+   "name": "Moderation, Appeals and Ops",
+   "summary": "Reports, sanctions, appeals and the staff shell: inbox, audit log, user lookup, view-as, platform config and metrics. Every staff write is audited before and after.",
+   "tags": [
+    "moderation",
+    "ops",
+    "appeals"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entities": [
+     "Report case",
+     "Sanction",
+     "Appeal",
+     "Audit log entry",
+     "Platform config"
+    ],
+    "businessRules": [
+     "Moderators can sanction up to 7 days; bans are super admin only",
+     "An appeal is never decided by the original staff member",
+     "View-as sessions last one hour and never show chats"
+    ],
+    "crossDomainInteractions": [
+     "Penalties feed Ranking",
+     "Appeal overturns reverse CV, credential and code-check decisions"
+    ]
+   }
+  },
+  {
+   "id": "domain:platform-marketing-ops",
+   "type": "domain",
+   "name": "Marketing and Platform Operations",
+   "summary": "Public marketing pages, university requests and sales leads, plus analytics, alerting and background workers that keep the platform running.",
+   "tags": [
+    "marketing",
+    "analytics",
+    "monitoring"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entities": [
+     "University request",
+     "Sales lead",
+     "Analytics event",
+     "Alert state"
+    ],
+    "businessRules": [
+     "Landing numbers hidden below a minimum count",
+     "Analytics goes through a pgmq outbox",
+     "Alerts fire once with cooldown"
+    ],
+    "crossDomainInteractions": [
+     "University go-live opens signup",
+     "Leads are worked in Ops"
+    ]
+   }
+  },
+  {
+   "id": "flow:student-signup",
+   "type": "flow",
+   "name": "Student Signup and Verification",
+   "summary": "A student signs up with a university email; a database hook validates the domain and creates profile, onboarding state and agreement acceptance.",
+   "tags": [
+    "identity",
+    "signup"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/signup",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:sign-in-mfa",
+   "type": "flow",
+   "name": "Sign-in with Two-factor",
+   "summary": "Password or code sign-in with growing delays, then TOTP verification where required and the page gate.",
+   "tags": [
+    "identity",
+    "mfa"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/sign-in",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:student-onboarding",
+   "type": "flow",
+   "name": "Student Onboarding",
+   "summary": "Steps for university, profile, GitHub, skills and looking-for, then finishing onboarding.",
+   "tags": [
+    "onboarding"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/onboarding",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:github-connect-import",
+   "type": "flow",
+   "name": "Connect GitHub and Import Evidence",
+   "summary": "A student installs the GitHub App; a ticket binds the identity; a queue worker harvests repositories, extracts commits and pull requests and recomputes skills.",
+   "tags": [
+    "github",
+    "skills"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/api/github/callback",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:venture-lifecycle",
+   "type": "flow",
+   "name": "Venture Lifecycle",
+   "summary": "Students create ventures, take roles, apply or get invited, log contributions and complete once peers verify them.",
+   "tags": [
+    "ventures"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/ventures/new",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:peer-endorsement",
+   "type": "flow",
+   "name": "Peer Endorsement",
+   "summary": "A teammate endorses another member on a skill within limits enforced in SQL.",
+   "tags": [
+    "endorsements"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "Endorse sheet on venture Team tab",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:credential-review",
+   "type": "flow",
+   "name": "Credential Submission and Review",
+   "summary": "A student uploads a certificate; a trust reviewer claims it and decides.",
+   "tags": [
+    "credentials",
+    "review"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/me/credentials",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:code-check",
+   "type": "flow",
+   "name": "Code Check to L4",
+   "summary": "A student requests a code check; the snippet is served by an Edge Function; a reviewer grades the answer.",
+   "tags": [
+    "code-check"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/me/code-checks/[id]",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:friend-requests",
+   "type": "flow",
+   "name": "Friend Requests and Blocks",
+   "summary": "Students send, accept and block with SQL helpers that all reads honour.",
+   "tags": [
+    "friends"
+   ],
+   "complexity": "simple",
+   "domainMeta": {
+    "entryPoint": "/friends",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:post-and-feed",
+   "type": "flow",
+   "name": "Publish a Post and Read the Ranked Feed",
+   "summary": "Posts are created through server actions and shown through a per-reader ranked feed.",
+   "tags": [
+    "posts",
+    "feed"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/feed",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:chat-messaging",
+   "type": "flow",
+   "name": "Chat Messaging",
+   "summary": "DMs and venture group threads; writes only through SQL functions; Realtime delivers.",
+   "tags": [
+    "chat"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/chat",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:notification-delivery",
+   "type": "flow",
+   "name": "Notification Delivery",
+   "summary": "Triggers write notifications; a worker emails within preferences and the daily cap.",
+   "tags": [
+    "notifications"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "pg trigger and cron",
+    "entryType": "event"
+   }
+  },
+  {
+   "id": "flow:nightly-ranking-run",
+   "type": "flow",
+   "name": "Nightly Ranking Run",
+   "summary": "A state machine starts nightly and does one committed step per minute.",
+   "tags": [
+    "ranking"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "cron ranking-nightly",
+    "entryType": "cron"
+   }
+  },
+  {
+   "id": "flow:leaderboard-score",
+   "type": "flow",
+   "name": "View Leaderboard and Score",
+   "summary": "Boards by scope and the student's own score with evidence names and next tier.",
+   "tags": [
+    "leaderboard"
+   ],
+   "complexity": "simple",
+   "domainMeta": {
+    "entryPoint": "/leaderboard",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:issue-signed-cv",
+   "type": "flow",
+   "name": "Issue a Signed CV",
+   "summary": "Snapshot built in SQL, signed in an Edge Function, committed as a record.",
+   "tags": [
+    "cv",
+    "signing"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/me/cv",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:share-and-verify-cv",
+   "type": "flow",
+   "name": "Share and Verify a CV",
+   "summary": "Students share links or PDFs; anyone verifies a code.",
+   "tags": [
+    "cv",
+    "share"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/cv/[username]",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:revoke-cv",
+   "type": "flow",
+   "name": "Revoke a CV",
+   "summary": "Student or staff revokes versions; revoked CVs show only code and dates.",
+   "tags": [
+    "cv",
+    "revoke"
+   ],
+   "complexity": "simple",
+   "domainMeta": {
+    "entryPoint": "/me/cv",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:org-verification",
+   "type": "flow",
+   "name": "Organisation Signup and Verification",
+   "summary": "Recruiter signs up with a company email, creates an organisation and staff verify it.",
+   "tags": [
+    "recruiter",
+    "verification"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/signup/recruiter",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:talent-search-contact",
+   "type": "flow",
+   "name": "Talent Search and Contact",
+   "summary": "Recruiters search anonymised talent, shortlist and send contact requests that students answer.",
+   "tags": [
+    "recruiter",
+    "talent"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/recruit",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:job-application-hire",
+   "type": "flow",
+   "name": "Job Posting to Hire",
+   "summary": "Jobs, applications, pipeline moves and hires with 90-day outcomes.",
+   "tags": [
+    "jobs",
+    "hiring"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/recruit/jobs",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:recruiter-api-webhooks",
+   "type": "flow",
+   "name": "Recruiter API and Webhooks",
+   "summary": "Hashed token API and HMAC-signed webhook delivery.",
+   "tags": [
+    "api",
+    "webhooks"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/api/v1",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:teacher-approval-review",
+   "type": "flow",
+   "name": "Teacher Approval and Venture Review",
+   "summary": "Faculty apply, ops approve, then teachers supervise ventures and answer review requests.",
+   "tags": [
+    "teacher"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/teach/apply",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:university-claim-ecosphere",
+   "type": "flow",
+   "name": "University Claim and Ecosphere",
+   "summary": "An official claims a university, then configures branding and pages.",
+   "tags": [
+    "university"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/uni/claim",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:university-events-fairs",
+   "type": "flow",
+   "name": "University Events and Job Fairs",
+   "summary": "Announcements, events with HMAC check-in and fairs with per-booth queues.",
+   "tags": [
+    "events",
+    "fairs"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/uni/events",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:student-records",
+   "type": "flow",
+   "name": "University Student Records",
+   "summary": "Gated record lookup is logged and small groups are suppressed.",
+   "tags": [
+    "records"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/uni/students",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:entitlement-check",
+   "type": "flow",
+   "name": "Entitlement and Quota Check",
+   "summary": "Every paid action resolves its key in SQL and consumes quota under a row lock.",
+   "tags": [
+    "entitlements"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "paid server action",
+    "entryType": "manual"
+   }
+  },
+  {
+   "id": "flow:checkout-subscription",
+   "type": "flow",
+   "name": "Checkout and Subscription",
+   "summary": "Prices are set in SQL, gateway verified webhooks apply events.",
+   "tags": [
+    "checkout",
+    "subscription"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/settings/billing",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:billing-lifecycle-tick",
+   "type": "flow",
+   "name": "Billing Lifecycle Tick",
+   "summary": "Five-minute tick handles trials, renewals, retries and reminders.",
+   "tags": [
+    "lifecycle"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "cron billing-tick",
+    "entryType": "cron"
+   }
+  },
+  {
+   "id": "flow:report-moderation",
+   "type": "flow",
+   "name": "Report and Moderation",
+   "summary": "Users report; moderators claim and resolve; penalties follow.",
+   "tags": [
+    "moderation"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "Report button",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:sanction-and-appeal",
+   "type": "flow",
+   "name": "Sanction and Appeal",
+   "summary": "Staff sanction within role limits; targets appeal; a different staff member decides.",
+   "tags": [
+    "sanctions",
+    "appeals"
+   ],
+   "complexity": "complex",
+   "domainMeta": {
+    "entryPoint": "/ops/sanctions",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:staff-view-as",
+   "type": "flow",
+   "name": "Staff User Lookup and View-as",
+   "summary": "Staff search users and start logged read-only sessions.",
+   "tags": [
+    "ops",
+    "view-as"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/ops/users",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:platform-config-edit",
+   "type": "flow",
+   "name": "Edit Platform Config",
+   "summary": "Super admins edit schema-checked config with optimistic versioning.",
+   "tags": [
+    "config"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/ops/config",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:university-request-golive",
+   "type": "flow",
+   "name": "University Request and Go-live",
+   "summary": "Visitors request an uncovered university; staff open it and requesters are emailed.",
+   "tags": [
+    "marketing"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "/request-university",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:sales-lead",
+   "type": "flow",
+   "name": "Sales Lead Capture",
+   "summary": "Talk to us creates a lead worked in Ops.",
+   "tags": [
+    "marketing",
+    "leads"
+   ],
+   "complexity": "simple",
+   "domainMeta": {
+    "entryPoint": "/pricing",
+    "entryType": "http"
+   }
+  },
+  {
+   "id": "flow:analytics-pipeline",
+   "type": "flow",
+   "name": "Analytics Pipeline",
+   "summary": "Triggers write an outbox; a worker sends to PostHog EU.",
+   "tags": [
+    "analytics"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "cron analytics-worker",
+    "entryType": "cron"
+   }
+  },
+  {
+   "id": "flow:job-watchdog-alerts",
+   "type": "flow",
+   "name": "Watchdog Alerts",
+   "summary": "Every 10 minutes alert conditions are checked and emailed with cooldown.",
+   "tags": [
+    "alerts"
+   ],
+   "complexity": "moderate",
+   "domainMeta": {
+    "entryPoint": "cron job-watchdog",
+    "entryType": "cron"
+   }
+  },
+  {
+   "id": "step:student-signup:detect-domain",
+   "type": "step",
+   "name": "Detect university from email",
+   "summary": "Matches the email domain to a live university or reports a not-live state.",
+   "tags": [
+    "identity",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/auth/email-domain.ts"
+  },
+  {
+   "id": "step:student-signup:screen-request",
+   "type": "step",
+   "name": "Screen request",
+   "summary": "Server action validates input, Turnstile and breach checks and rate limits.",
+   "tags": [
+    "identity",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "lib/actions/auth.ts"
+  },
+  {
+   "id": "step:student-signup:validate-signup",
+   "type": "step",
+   "name": "Validate signup in database",
+   "summary": "The before-user-created hook rejects non-live universities and bad roles.",
+   "tags": [
+    "identity",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20260927210238_identity.sql"
+  },
+  {
+   "id": "step:student-signup:create-account",
+   "type": "step",
+   "name": "Create profile and onboarding state",
+   "summary": "handle_new_user creates the profile, onboarding state and acceptance.",
+   "tags": [
+    "identity",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20260927210238_identity.sql"
+  },
+  {
+   "id": "step:student-signup:verify-email",
+   "type": "step",
+   "name": "Verify email via callback",
+   "summary": "The callback exchanges the code and applies the gate decision.",
+   "tags": [
+    "identity",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/auth/gate.ts"
+  },
+  {
+   "id": "step:sign-in-mfa:password-check",
+   "type": "step",
+   "name": "Check password and rate limit",
+   "summary": "Records attempts and requires Turnstile after failures.",
+   "tags": [
+    "identity",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/auth.ts"
+  },
+  {
+   "id": "step:sign-in-mfa:decisions",
+   "type": "step",
+   "name": "Apply sign-in decisions",
+   "summary": "No lockout; delays grow.",
+   "tags": [
+    "identity",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20260928123000_auth_decisions.sql"
+  },
+  {
+   "id": "step:sign-in-mfa:verify-totp",
+   "type": "step",
+   "name": "Verify TOTP factor",
+   "summary": "Verifies or enrolls the second factor and backup codes.",
+   "tags": [
+    "identity",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/mfa.ts"
+  },
+  {
+   "id": "step:sign-in-mfa:gate",
+   "type": "step",
+   "name": "Decide allowed pages",
+   "summary": "Pure decision table sends the user to the right page.",
+   "tags": [
+    "identity",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/auth/gate.ts"
+  },
+  {
+   "id": "step:student-onboarding:agreement",
+   "type": "step",
+   "name": "Accept agreement",
+   "summary": "Records acceptance of the current agreement version.",
+   "tags": [
+    "onboarding",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/agreement.ts"
+  },
+  {
+   "id": "step:student-onboarding:profile",
+   "type": "step",
+   "name": "Set profile",
+   "summary": "Updates profile fields and avatar through server actions.",
+   "tags": [
+    "onboarding",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/profile.ts"
+  },
+  {
+   "id": "step:student-onboarding:steps",
+   "type": "step",
+   "name": "Complete onboarding steps",
+   "summary": "Each onboarding step is saved through its own action.",
+   "tags": [
+    "onboarding",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/onboarding.ts"
+  },
+  {
+   "id": "step:student-onboarding:finish",
+   "type": "step",
+   "name": "Finish onboarding",
+   "summary": "Marks the student ready for the app shell.",
+   "tags": [
+    "onboarding",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/onboarding.ts"
+  },
+  {
+   "id": "step:github-connect-import:start",
+   "type": "step",
+   "name": "Start connection",
+   "summary": "Server action starts the GitHub App install.",
+   "tags": [
+    "github",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/github.ts"
+  },
+  {
+   "id": "step:github-connect-import:bind",
+   "type": "step",
+   "name": "Bind identity from ticket",
+   "summary": "github-link binds the student to the GitHub account from a one-time ticket.",
+   "tags": [
+    "github",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/functions/github-link/index.ts"
+  },
+  {
+   "id": "step:github-connect-import:queue",
+   "type": "step",
+   "name": "Queue sync jobs",
+   "summary": "Accounts, repos and sync jobs feed the pgmq github_jobs queue.",
+   "tags": [
+    "github",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20260927224500_github_connect.sql"
+  },
+  {
+   "id": "step:github-connect-import:harvest",
+   "type": "step",
+   "name": "Harvest and extract commits",
+   "summary": "The worker drains stages idempotently, importing commits.",
+   "tags": [
+    "github",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/functions/_shared/github/worker.ts"
+  },
+  {
+   "id": "step:github-connect-import:levels",
+   "type": "step",
+   "name": "Compute L1 to L4 skill levels",
+   "summary": "Evidence becomes skill levels with anti-gaming holds.",
+   "tags": [
+    "github",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20260928150000_github_evidence.sql"
+  },
+  {
+   "id": "step:github-connect-import:prs",
+   "type": "step",
+   "name": "Record merged pull requests",
+   "summary": "PR stages attribute skills for L3 and L4.",
+   "tags": [
+    "github",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261002000000_skill_levels.sql"
+  },
+  {
+   "id": "step:venture-lifecycle:create",
+   "type": "step",
+   "name": "Create venture",
+   "summary": "Server action creates a venture and its team.",
+   "tags": [
+    "ventures",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ventures.ts"
+  },
+  {
+   "id": "step:venture-lifecycle:join",
+   "type": "step",
+   "name": "Apply or invite",
+   "summary": "Join flows run through security-definer functions with role checks.",
+   "tags": [
+    "ventures",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20260928190000_ventures.sql"
+  },
+  {
+   "id": "step:venture-lifecycle:contribute",
+   "type": "step",
+   "name": "Log contributions",
+   "summary": "Insert-only contribution log with peer confirmation.",
+   "tags": [
+    "ventures",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20260928210000_contributions.sql"
+  },
+  {
+   "id": "step:venture-lifecycle:complete",
+   "type": "step",
+   "name": "Complete venture",
+   "summary": "Completion requires peer-verified contributions from two members.",
+   "tags": [
+    "ventures",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20260928210000_contributions.sql"
+  },
+  {
+   "id": "step:peer-endorsement:options",
+   "type": "step",
+   "name": "Load endorse options",
+   "summary": "Lists eligible teammates and skills.",
+   "tags": [
+    "endorsements",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/data/endorsements.ts"
+  },
+  {
+   "id": "step:peer-endorsement:endorse",
+   "type": "step",
+   "name": "Submit endorsement",
+   "summary": "Action delegates to endorse() which checks every limit.",
+   "tags": [
+    "endorsements",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/endorsements.ts"
+  },
+  {
+   "id": "step:peer-endorsement:limits",
+   "type": "step",
+   "name": "Enforce limits in SQL",
+   "summary": "No self, cross-block or over-limit endorsements.",
+   "tags": [
+    "endorsements",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261001000000_endorsements.sql"
+  },
+  {
+   "id": "step:peer-endorsement:verified",
+   "type": "step",
+   "name": "Mark skill peer verified",
+   "summary": "Triggers update user_skills.peer_verified.",
+   "tags": [
+    "endorsements",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261001000000_endorsements.sql"
+  },
+  {
+   "id": "step:credential-review:upload",
+   "type": "step",
+   "name": "Upload credential file",
+   "summary": "Image or PDF stored in a private bucket.",
+   "tags": [
+    "credentials",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/credentials.ts"
+  },
+  {
+   "id": "step:credential-review:submit",
+   "type": "step",
+   "name": "Submit credential",
+   "summary": "submit_credential checks the stored object.",
+   "tags": [
+    "credentials",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261003000000_credentials.sql"
+  },
+  {
+   "id": "step:credential-review:claim",
+   "type": "step",
+   "name": "Reviewer claims case",
+   "summary": "Staff queue claim function.",
+   "tags": [
+    "credentials",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/trust.ts"
+  },
+  {
+   "id": "step:credential-review:decide",
+   "type": "step",
+   "name": "Review credential",
+   "summary": "Decision is audited and can be appealed.",
+   "tags": [
+    "credentials",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/trust.ts"
+  },
+  {
+   "id": "step:code-check:request",
+   "type": "step",
+   "name": "Request code check",
+   "summary": "Student requests a check for a skill.",
+   "tags": [
+    "code-check",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/code-checks.ts"
+  },
+  {
+   "id": "step:code-check:prepare",
+   "type": "step",
+   "name": "Prepare snippet location",
+   "summary": "Worker records where the snippet lives, never the code.",
+   "tags": [
+    "code-check",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261004000000_code_checks.sql"
+  },
+  {
+   "id": "step:code-check:serve",
+   "type": "step",
+   "name": "Serve snippet",
+   "summary": "code-check function serves it with the user's session.",
+   "tags": [
+    "code-check",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/functions/_shared/codecheck/serve.ts"
+  },
+  {
+   "id": "step:code-check:grade",
+   "type": "step",
+   "name": "Grade check",
+   "summary": "Staff grade through audited SQL.",
+   "tags": [
+    "code-check",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/trust.ts"
+  },
+  {
+   "id": "step:friend-requests:send",
+   "type": "step",
+   "name": "Send friend request",
+   "summary": "Validated action calls SQL.",
+   "tags": [
+    "friends",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/friends.ts"
+  },
+  {
+   "id": "step:friend-requests:accept",
+   "type": "step",
+   "name": "Accept to friendship",
+   "summary": "Creates a friendship row.",
+   "tags": [
+    "friends",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20260928230000_friends_blocks.sql"
+  },
+  {
+   "id": "step:friend-requests:block",
+   "type": "step",
+   "name": "Block user",
+   "summary": "Blocks hide content both ways.",
+   "tags": [
+    "friends",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/friends.ts"
+  },
+  {
+   "id": "step:post-and-feed:create",
+   "type": "step",
+   "name": "Create post",
+   "summary": "Action validates and writes post, media, poll or event.",
+   "tags": [
+    "posts",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "lib/actions/posts.ts"
+  },
+  {
+   "id": "step:post-and-feed:visibility",
+   "type": "step",
+   "name": "Check visibility",
+   "summary": "can_view_post honours blocks and audience.",
+   "tags": [
+    "posts",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20260929010000_posts.sql"
+  },
+  {
+   "id": "step:post-and-feed:stage",
+   "type": "step",
+   "name": "Compute feed stage",
+   "summary": "Cron job computes the stage and scores.",
+   "tags": [
+    "posts",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20260929040000_feed_ranking.sql"
+  },
+  {
+   "id": "step:post-and-feed:page",
+   "type": "step",
+   "name": "Build feed page",
+   "summary": "feed_page returns stable sessions with diversity.",
+   "tags": [
+    "posts",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20260929040000_feed_ranking.sql"
+  },
+  {
+   "id": "step:post-and-feed:survey",
+   "type": "step",
+   "name": "Micro-survey strip",
+   "summary": "Survey assignments and answers.",
+   "tags": [
+    "posts",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20260929030000_micro_survey.sql"
+  },
+  {
+   "id": "step:chat-messaging:open",
+   "type": "step",
+   "name": "Open DM",
+   "summary": "get_or_create_dm.",
+   "tags": [
+    "chat",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/chat.ts"
+  },
+  {
+   "id": "step:chat-messaging:send",
+   "type": "step",
+   "name": "Send message",
+   "summary": "send_message checks membership and blocks.",
+   "tags": [
+    "chat",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20260929050000_chat.sql"
+  },
+  {
+   "id": "step:chat-messaging:extras",
+   "type": "step",
+   "name": "Replies, reactions and pins",
+   "summary": "Extras and search.",
+   "tags": [
+    "chat",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20260929060000_chat_extras_explore.sql"
+  },
+  {
+   "id": "step:chat-messaging:read",
+   "type": "step",
+   "name": "Read state and receipts",
+   "summary": "Updates last_read_at.",
+   "tags": [
+    "chat",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/data/chat.ts"
+  },
+  {
+   "id": "step:notification-delivery:write",
+   "type": "step",
+   "name": "Write notification by trigger",
+   "summary": "Only private.notify writes rows.",
+   "tags": [
+    "notifications",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20260929000000_notifications.sql"
+  },
+  {
+   "id": "step:notification-delivery:queue",
+   "type": "step",
+   "name": "Queue email",
+   "summary": "pgmq notification_emails.",
+   "tags": [
+    "notifications",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20260929000000_notifications.sql"
+  },
+  {
+   "id": "step:notification-delivery:send",
+   "type": "step",
+   "name": "Send via Resend",
+   "summary": "Worker applies caps and category prefs.",
+   "tags": [
+    "notifications",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/functions/_shared/notify/worker.ts"
+  },
+  {
+   "id": "step:nightly-ranking-run:start",
+   "type": "step",
+   "name": "Start run",
+   "summary": "ranking-nightly creates a run.",
+   "tags": [
+    "ranking",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261005000000_ranking.sql"
+  },
+  {
+   "id": "step:nightly-ranking-run:score",
+   "type": "step",
+   "name": "Score components",
+   "summary": "Work, skills, endorsements, credentials, momentum.",
+   "tags": [
+    "ranking",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261005000000_ranking.sql"
+  },
+  {
+   "id": "step:nightly-ranking-run:flags",
+   "type": "step",
+   "name": "Detect anti-gaming",
+   "summary": "Rings and rapid gains flagged for review.",
+   "tags": [
+    "ranking",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/ranking.ts"
+  },
+  {
+   "id": "step:nightly-ranking-run:publish",
+   "type": "step",
+   "name": "Publish scores and tiers",
+   "summary": "Owner-readable scores; Sunday snapshots.",
+   "tags": [
+    "ranking",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261005000000_ranking.sql"
+  },
+  {
+   "id": "step:leaderboard-score:board",
+   "type": "step",
+   "name": "Rank a board",
+   "summary": "private.board ranks respecting opt-out.",
+   "tags": [
+    "leaderboard",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261006000000_leaderboard.sql"
+  },
+  {
+   "id": "step:leaderboard-score:read",
+   "type": "step",
+   "name": "Read leaderboard",
+   "summary": "Server data module.",
+   "tags": [
+    "leaderboard",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/data/ranking.ts"
+  },
+  {
+   "id": "step:leaderboard-score:optout",
+   "type": "step",
+   "name": "Toggle opt-out",
+   "summary": "Action toggles opt-out.",
+   "tags": [
+    "leaderboard",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ranking.ts"
+  },
+  {
+   "id": "step:issue-signed-cv:snapshot",
+   "type": "step",
+   "name": "Build snapshot",
+   "summary": "private.cv_snapshot builds CvSnapshotV1.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261008000000_verified_cv.sql"
+  },
+  {
+   "id": "step:issue-signed-cv:prepare",
+   "type": "step",
+   "name": "Prepare issue",
+   "summary": "cv_issue_prepare.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261008000000_verified_cv.sql"
+  },
+  {
+   "id": "step:issue-signed-cv:canonical",
+   "type": "step",
+   "name": "Canonicalise JSON",
+   "summary": "RFC 8785 canonical form.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/functions/_shared/cv/canonical.ts"
+  },
+  {
+   "id": "step:issue-signed-cv:sign",
+   "type": "step",
+   "name": "Sign with Ed25519",
+   "summary": "Key from Vault.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/functions/_shared/cv/sign.ts"
+  },
+  {
+   "id": "step:issue-signed-cv:commit",
+   "type": "step",
+   "name": "Commit record",
+   "summary": "cv_issue_commit.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/functions/_shared/cv/issue.ts"
+  },
+  {
+   "id": "step:share-and-verify-cv:settings",
+   "type": "step",
+   "name": "Save CV settings",
+   "summary": "Actions for settings, links and revoke.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/cv.ts"
+  },
+  {
+   "id": "step:share-and-verify-cv:link",
+   "type": "step",
+   "name": "Create share link",
+   "summary": "Token hash only, Spark+.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261009000000_cv_control.sql"
+  },
+  {
+   "id": "step:share-and-verify-cv:pdf",
+   "type": "step",
+   "name": "Render PDF",
+   "summary": "Chromium prints the document.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "lib/cv/pdf.ts"
+  },
+  {
+   "id": "step:share-and-verify-cv:verify",
+   "type": "step",
+   "name": "Verify code",
+   "summary": "verify_cv returns validity.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261009000000_cv_control.sql"
+  },
+  {
+   "id": "step:revoke-cv:revoke",
+   "type": "step",
+   "name": "Revoke version",
+   "summary": "Student revokes via action.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/cv.ts"
+  },
+  {
+   "id": "step:revoke-cv:staff",
+   "type": "step",
+   "name": "Staff revoke",
+   "summary": "Audited staff revoke.",
+   "tags": [
+    "cv",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/cv.ts"
+  },
+  {
+   "id": "step:org-verification:org",
+   "type": "step",
+   "name": "Create organisation and members",
+   "summary": "Org, members and invites.",
+   "tags": [
+    "recruiter",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261013000000_recruiter_orgs.sql"
+  },
+  {
+   "id": "step:org-verification:doc",
+   "type": "step",
+   "name": "Submit registration document",
+   "summary": "Private bucket upload.",
+   "tags": [
+    "recruiter",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/org-document.ts"
+  },
+  {
+   "id": "step:org-verification:decide",
+   "type": "step",
+   "name": "Staff decide verification",
+   "summary": "Audited decision.",
+   "tags": [
+    "recruiter",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/orgs.ts"
+  },
+  {
+   "id": "step:talent-search-contact:search",
+   "type": "step",
+   "name": "Search talent",
+   "summary": "search_talent with allow-listed filters, quota consumed.",
+   "tags": [
+    "recruiter",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261014000000_recruiter_talent.sql"
+  },
+  {
+   "id": "step:talent-search-contact:shortlist",
+   "type": "step",
+   "name": "Shortlist and notes",
+   "summary": "Shortlists and notes.",
+   "tags": [
+    "recruiter",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/recruit.ts"
+  },
+  {
+   "id": "step:talent-search-contact:contact",
+   "type": "step",
+   "name": "Send contact request",
+   "summary": "Opens request and company-labelled DM.",
+   "tags": [
+    "recruiter",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261014000000_recruiter_talent.sql"
+  },
+  {
+   "id": "step:talent-search-contact:respond",
+   "type": "step",
+   "name": "Student responds",
+   "summary": "Accept, decline or block company.",
+   "tags": [
+    "recruiter",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/opportunities.ts"
+  },
+  {
+   "id": "step:job-application-hire:post",
+   "type": "step",
+   "name": "Post job",
+   "summary": "Job creation.",
+   "tags": [
+    "jobs",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261015000000_recruiter_jobs.sql"
+  },
+  {
+   "id": "step:job-application-hire:apply",
+   "type": "step",
+   "name": "Student applies",
+   "summary": "Application.",
+   "tags": [
+    "jobs",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/opportunities.ts"
+  },
+  {
+   "id": "step:job-application-hire:move",
+   "type": "step",
+   "name": "Move application",
+   "summary": "move_application.",
+   "tags": [
+    "jobs",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261015000000_recruiter_jobs.sql"
+  },
+  {
+   "id": "step:job-application-hire:hire",
+   "type": "step",
+   "name": "Record hire",
+   "summary": "Hire and outcome; hire fee trigger.",
+   "tags": [
+    "jobs",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261015000000_recruiter_jobs.sql"
+  },
+  {
+   "id": "step:recruiter-api-webhooks:token",
+   "type": "step",
+   "name": "Authenticate token",
+   "summary": "Token hashed in SQL, 60 per minute.",
+   "tags": [
+    "api",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/api/v1.ts"
+  },
+  {
+   "id": "step:recruiter-api-webhooks:deliver",
+   "type": "step",
+   "name": "Deliver webhook",
+   "summary": "SSRF-checked HMAC delivery.",
+   "tags": [
+    "api",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/functions/_shared/webhooks/worker.ts"
+  },
+  {
+   "id": "step:teacher-approval-review:apply",
+   "type": "step",
+   "name": "Request teacher role",
+   "summary": "Role request.",
+   "tags": [
+    "teacher",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/teach.ts"
+  },
+  {
+   "id": "step:teacher-approval-review:approve",
+   "type": "step",
+   "name": "Staff approve",
+   "summary": "Audited decision.",
+   "tags": [
+    "teacher",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/teachers.ts"
+  },
+  {
+   "id": "step:teacher-approval-review:idea",
+   "type": "step",
+   "name": "Publish project idea",
+   "summary": "Idea linked to ventures.",
+   "tags": [
+    "teacher",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261012000000_teacher_portal.sql"
+  },
+  {
+   "id": "step:teacher-approval-review:review",
+   "type": "step",
+   "name": "Review venture",
+   "summary": "Review requests and confirmations.",
+   "tags": [
+    "teacher",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261012000000_teacher_portal.sql"
+  },
+  {
+   "id": "step:university-claim-ecosphere:claim",
+   "type": "step",
+   "name": "Submit claim",
+   "summary": "Claim with document.",
+   "tags": [
+    "university",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261017000000_uni_core.sql"
+  },
+  {
+   "id": "step:university-claim-ecosphere:owner",
+   "type": "step",
+   "name": "Staff assign owner",
+   "summary": "Ops universities action.",
+   "tags": [
+    "university",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/universities.ts"
+  },
+  {
+   "id": "step:university-claim-ecosphere:brand",
+   "type": "step",
+   "name": "Configure branding",
+   "summary": "Contrast-checked colours.",
+   "tags": [
+    "university",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261018000000_uni_ecosphere.sql"
+  },
+  {
+   "id": "step:university-claim-ecosphere:pages",
+   "type": "step",
+   "name": "Publish pages",
+   "summary": "Block-based pages.",
+   "tags": [
+    "university",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/uni.ts"
+  },
+  {
+   "id": "step:university-events-fairs:announce",
+   "type": "step",
+   "name": "Announce",
+   "summary": "Targeted announcements.",
+   "tags": [
+    "events",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261019000000_uni_comms.sql"
+  },
+  {
+   "id": "step:university-events-fairs:register",
+   "type": "step",
+   "name": "Register for event",
+   "summary": "Registration and check-in codes.",
+   "tags": [
+    "events",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261019000000_uni_comms.sql"
+  },
+  {
+   "id": "step:university-events-fairs:queue",
+   "type": "step",
+   "name": "Join booth queue",
+   "summary": "Per-booth lock.",
+   "tags": [
+    "events",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261020000000_uni_fairs.sql"
+  },
+  {
+   "id": "step:student-records:lookup",
+   "type": "step",
+   "name": "Look up record",
+   "summary": "Logged, rate-limited.",
+   "tags": [
+    "records",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261021000000_uni_records.sql"
+  },
+  {
+   "id": "step:student-records:viewers",
+   "type": "step",
+   "name": "Student sees viewers",
+   "summary": "my_record_viewers.",
+   "tags": [
+    "records",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261021000000_uni_records.sql"
+  },
+  {
+   "id": "step:entitlement-check:registry",
+   "type": "step",
+   "name": "Declare paid action",
+   "summary": "PAID_ACTIONS registry.",
+   "tags": [
+    "entitlements",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/billing/registry.ts"
+  },
+  {
+   "id": "step:entitlement-check:resolve",
+   "type": "step",
+   "name": "Resolve entitlement",
+   "summary": "Grants and plans merged.",
+   "tags": [
+    "entitlements",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261023000000_billing_core.sql"
+  },
+  {
+   "id": "step:entitlement-check:consume",
+   "type": "step",
+   "name": "Consume quota",
+   "summary": "Row lock with add-on top-ups.",
+   "tags": [
+    "entitlements",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261023000000_billing_core.sql"
+  },
+  {
+   "id": "step:entitlement-check:upgrade",
+   "type": "step",
+   "name": "Raise payment required",
+   "summary": "PT402 shows upgrade sheet.",
+   "tags": [
+    "entitlements",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/rpc.ts"
+  },
+  {
+   "id": "step:checkout-subscription:create",
+   "type": "step",
+   "name": "Create checkout",
+   "summary": "Priced in SQL.",
+   "tags": [
+    "checkout",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/billing.ts"
+  },
+  {
+   "id": "step:checkout-subscription:webhook",
+   "type": "step",
+   "name": "Record verified webhook",
+   "summary": "Service role stores event once.",
+   "tags": [
+    "checkout",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "lib/billing/webhook.ts"
+  },
+  {
+   "id": "step:checkout-subscription:apply",
+   "type": "step",
+   "name": "Apply billing event",
+   "summary": "billing_apply_event via cron.",
+   "tags": [
+    "checkout",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261024000000_billing_lifecycle.sql"
+  },
+  {
+   "id": "step:checkout-subscription:invoice",
+   "type": "step",
+   "name": "Issue invoice",
+   "summary": "Immutable gapless.",
+   "tags": [
+    "checkout",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/billing/invoices.ts"
+  },
+  {
+   "id": "step:billing-lifecycle-tick:tick",
+   "type": "step",
+   "name": "Run billing tick",
+   "summary": "Trials, periods, retries, grace.",
+   "tags": [
+    "lifecycle",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261024000000_billing_lifecycle.sql"
+  },
+  {
+   "id": "step:billing-lifecycle-tick:charge",
+   "type": "step",
+   "name": "Charge saved method",
+   "summary": "Worker calls adapter.",
+   "tags": [
+    "lifecycle",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/functions/_shared/billing/worker.ts"
+  },
+  {
+   "id": "step:report-moderation:submit",
+   "type": "step",
+   "name": "Submit report",
+   "summary": "Validated submit_report.",
+   "tags": [
+    "moderation",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/reports.ts"
+  },
+  {
+   "id": "step:report-moderation:claim",
+   "type": "step",
+   "name": "Claim case",
+   "summary": "Moderator claims.",
+   "tags": [
+    "moderation",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/moderation.ts"
+  },
+  {
+   "id": "step:report-moderation:resolve",
+   "type": "step",
+   "name": "Resolve case",
+   "summary": "Dismiss, remove, warn; audited.",
+   "tags": [
+    "moderation",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20260929070000_reports.sql"
+  },
+  {
+   "id": "step:report-moderation:penalty",
+   "type": "step",
+   "name": "Apply penalty rules",
+   "summary": "Severity feeds ranking.",
+   "tags": [
+    "moderation",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261007000000_penalty_rules.sql"
+  },
+  {
+   "id": "step:sanction-and-appeal:sanction",
+   "type": "step",
+   "name": "Sanction user or organisation",
+   "summary": "Role limits by trigger.",
+   "tags": [
+    "sanctions",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "lib/actions/ops/sanctions.ts"
+  },
+  {
+   "id": "step:sanction-and-appeal:restrict",
+   "type": "step",
+   "name": "Refuse restricted writes",
+   "summary": "refuse_if_restricted trigger.",
+   "tags": [
+    "sanctions",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261027000000_sanctions_appeals.sql"
+  },
+  {
+   "id": "step:sanction-and-appeal:file",
+   "type": "step",
+   "name": "File appeal",
+   "summary": "Student files within 30 days.",
+   "tags": [
+    "sanctions",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/appeals.ts"
+  },
+  {
+   "id": "step:sanction-and-appeal:decide",
+   "type": "step",
+   "name": "Decide appeal",
+   "summary": "Overturn reverses decision.",
+   "tags": [
+    "sanctions",
+    "step"
+   ],
+   "complexity": "complex",
+   "filePath": "supabase/migrations/20261027000000_sanctions_appeals.sql"
+  },
+  {
+   "id": "step:staff-view-as:search",
+   "type": "step",
+   "name": "Search user",
+   "summary": "ops_user_search.",
+   "tags": [
+    "ops",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/users.ts"
+  },
+  {
+   "id": "step:staff-view-as:start",
+   "type": "step",
+   "name": "Start view-as session",
+   "summary": "Reason, audit and notice.",
+   "tags": [
+    "ops",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261028000000_users_view_as.sql"
+  },
+  {
+   "id": "step:staff-view-as:pages",
+   "type": "step",
+   "name": "Read allowed pages",
+   "summary": "Never chats.",
+   "tags": [
+    "ops",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261028000000_users_view_as.sql"
+  },
+  {
+   "id": "step:platform-config-edit:edit",
+   "type": "step",
+   "name": "Save config",
+   "summary": "Action with version.",
+   "tags": [
+    "config",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/config.ts"
+  },
+  {
+   "id": "step:platform-config-edit:check",
+   "type": "step",
+   "name": "Validate against schema",
+   "summary": "pg_jsonschema.",
+   "tags": [
+    "config",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261029000000_config_metrics.sql"
+  },
+  {
+   "id": "step:platform-config-edit:audit",
+   "type": "step",
+   "name": "Audit change",
+   "summary": "Before and after.",
+   "tags": [
+    "config",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261029000000_config_metrics.sql"
+  },
+  {
+   "id": "step:university-request-golive:request",
+   "type": "step",
+   "name": "Request university",
+   "summary": "Anon request.",
+   "tags": [
+    "marketing",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/marketing.ts"
+  },
+  {
+   "id": "step:university-request-golive:live",
+   "type": "step",
+   "name": "Set university live",
+   "summary": "Ops sets live_at.",
+   "tags": [
+    "marketing",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/universities.ts"
+  },
+  {
+   "id": "step:university-request-golive:email",
+   "type": "step",
+   "name": "Queue launch email",
+   "summary": "Trigger queues pgmq.",
+   "tags": [
+    "marketing",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261102000000_university_launch.sql"
+  },
+  {
+   "id": "step:sales-lead:submit",
+   "type": "step",
+   "name": "Submit lead",
+   "summary": "Anon submit.",
+   "tags": [
+    "marketing",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/marketing.ts"
+  },
+  {
+   "id": "step:sales-lead:work",
+   "type": "step",
+   "name": "Staff update lead",
+   "summary": "Claim and audit.",
+   "tags": [
+    "marketing",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "lib/actions/ops/leads.ts"
+  },
+  {
+   "id": "step:analytics-pipeline:track",
+   "type": "step",
+   "name": "Write event",
+   "summary": "private.track in same transaction.",
+   "tags": [
+    "analytics",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/migrations/20261104000000_analytics.sql"
+  },
+  {
+   "id": "step:analytics-pipeline:drain",
+   "type": "step",
+   "name": "Drain to PostHog",
+   "summary": "Batch capture.",
+   "tags": [
+    "analytics",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/functions/_shared/analytics/worker.ts"
+  },
+  {
+   "id": "step:job-watchdog-alerts:conditions",
+   "type": "step",
+   "name": "Evaluate conditions",
+   "summary": "alert_conditions().",
+   "tags": [
+    "alerts",
+    "step"
+   ],
+   "complexity": "moderate",
+   "filePath": "supabase/migrations/20261105000000_alerts.sql"
+  },
+  {
+   "id": "step:job-watchdog-alerts:email",
+   "type": "step",
+   "name": "Send ops alert",
+   "summary": "Notify worker kind ops_alert.",
+   "tags": [
+    "alerts",
+    "step"
+   ],
+   "complexity": "simple",
+   "filePath": "supabase/functions/_shared/notify/worker.ts"
+  }
+ ],
+ "edges": [
+  {
+   "source": "domain:identity-onboarding",
+   "target": "flow:student-signup",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:student-signup",
+   "target": "step:student-signup:detect-domain",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.2
+  },
+  {
+   "source": "flow:student-signup",
+   "target": "step:student-signup:screen-request",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.4
+  },
+  {
+   "source": "flow:student-signup",
+   "target": "step:student-signup:validate-signup",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "flow:student-signup",
+   "target": "step:student-signup:create-account",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:student-signup",
+   "target": "step:student-signup:verify-email",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:identity-onboarding",
+   "target": "flow:sign-in-mfa",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:sign-in-mfa",
+   "target": "step:sign-in-mfa:password-check",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:sign-in-mfa",
+   "target": "step:sign-in-mfa:decisions",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:sign-in-mfa",
+   "target": "step:sign-in-mfa:verify-totp",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:sign-in-mfa",
+   "target": "step:sign-in-mfa:gate",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:identity-onboarding",
+   "target": "flow:student-onboarding",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:student-onboarding",
+   "target": "step:student-onboarding:agreement",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:student-onboarding",
+   "target": "step:student-onboarding:profile",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:student-onboarding",
+   "target": "step:student-onboarding:steps",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:student-onboarding",
+   "target": "step:student-onboarding:finish",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:skill-proof",
+   "target": "flow:github-connect-import",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:github-connect-import",
+   "target": "step:github-connect-import:start",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.2
+  },
+  {
+   "source": "flow:github-connect-import",
+   "target": "step:github-connect-import:bind",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:github-connect-import",
+   "target": "step:github-connect-import:queue",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:github-connect-import",
+   "target": "step:github-connect-import:harvest",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "flow:github-connect-import",
+   "target": "step:github-connect-import:levels",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:github-connect-import",
+   "target": "step:github-connect-import:prs",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:skill-proof",
+   "target": "flow:venture-lifecycle",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:venture-lifecycle",
+   "target": "step:venture-lifecycle:create",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:venture-lifecycle",
+   "target": "step:venture-lifecycle:join",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:venture-lifecycle",
+   "target": "step:venture-lifecycle:contribute",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:venture-lifecycle",
+   "target": "step:venture-lifecycle:complete",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:skill-proof",
+   "target": "flow:peer-endorsement",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:peer-endorsement",
+   "target": "step:peer-endorsement:options",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:peer-endorsement",
+   "target": "step:peer-endorsement:endorse",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:peer-endorsement",
+   "target": "step:peer-endorsement:limits",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:peer-endorsement",
+   "target": "step:peer-endorsement:verified",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:skill-proof",
+   "target": "flow:credential-review",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:credential-review",
+   "target": "step:credential-review:upload",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:credential-review",
+   "target": "step:credential-review:submit",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:credential-review",
+   "target": "step:credential-review:claim",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:credential-review",
+   "target": "step:credential-review:decide",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:skill-proof",
+   "target": "flow:code-check",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:code-check",
+   "target": "step:code-check:request",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:code-check",
+   "target": "step:code-check:prepare",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:code-check",
+   "target": "step:code-check:serve",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:code-check",
+   "target": "step:code-check:grade",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:social-network",
+   "target": "flow:friend-requests",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:friend-requests",
+   "target": "step:friend-requests:send",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:friend-requests",
+   "target": "step:friend-requests:accept",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "flow:friend-requests",
+   "target": "step:friend-requests:block",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:social-network",
+   "target": "flow:post-and-feed",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:post-and-feed",
+   "target": "step:post-and-feed:create",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.2
+  },
+  {
+   "source": "flow:post-and-feed",
+   "target": "step:post-and-feed:visibility",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.4
+  },
+  {
+   "source": "flow:post-and-feed",
+   "target": "step:post-and-feed:stage",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "flow:post-and-feed",
+   "target": "step:post-and-feed:page",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:post-and-feed",
+   "target": "step:post-and-feed:survey",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:social-network",
+   "target": "flow:chat-messaging",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:chat-messaging",
+   "target": "step:chat-messaging:open",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:chat-messaging",
+   "target": "step:chat-messaging:send",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:chat-messaging",
+   "target": "step:chat-messaging:extras",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:chat-messaging",
+   "target": "step:chat-messaging:read",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:social-network",
+   "target": "flow:notification-delivery",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:notification-delivery",
+   "target": "step:notification-delivery:write",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:notification-delivery",
+   "target": "step:notification-delivery:queue",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "flow:notification-delivery",
+   "target": "step:notification-delivery:send",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:ranking-leaderboard",
+   "target": "flow:nightly-ranking-run",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:nightly-ranking-run",
+   "target": "step:nightly-ranking-run:start",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:nightly-ranking-run",
+   "target": "step:nightly-ranking-run:score",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:nightly-ranking-run",
+   "target": "step:nightly-ranking-run:flags",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:nightly-ranking-run",
+   "target": "step:nightly-ranking-run:publish",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:ranking-leaderboard",
+   "target": "flow:leaderboard-score",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:leaderboard-score",
+   "target": "step:leaderboard-score:board",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:leaderboard-score",
+   "target": "step:leaderboard-score:read",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "flow:leaderboard-score",
+   "target": "step:leaderboard-score:optout",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:verified-cv",
+   "target": "flow:issue-signed-cv",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:issue-signed-cv",
+   "target": "step:issue-signed-cv:snapshot",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.2
+  },
+  {
+   "source": "flow:issue-signed-cv",
+   "target": "step:issue-signed-cv:prepare",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.4
+  },
+  {
+   "source": "flow:issue-signed-cv",
+   "target": "step:issue-signed-cv:canonical",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "flow:issue-signed-cv",
+   "target": "step:issue-signed-cv:sign",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:issue-signed-cv",
+   "target": "step:issue-signed-cv:commit",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:verified-cv",
+   "target": "flow:share-and-verify-cv",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:share-and-verify-cv",
+   "target": "step:share-and-verify-cv:settings",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:share-and-verify-cv",
+   "target": "step:share-and-verify-cv:link",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:share-and-verify-cv",
+   "target": "step:share-and-verify-cv:pdf",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:share-and-verify-cv",
+   "target": "step:share-and-verify-cv:verify",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:verified-cv",
+   "target": "flow:revoke-cv",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:revoke-cv",
+   "target": "step:revoke-cv:revoke",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:revoke-cv",
+   "target": "step:revoke-cv:staff",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:recruiting",
+   "target": "flow:org-verification",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:org-verification",
+   "target": "step:org-verification:org",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:org-verification",
+   "target": "step:org-verification:doc",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "flow:org-verification",
+   "target": "step:org-verification:decide",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:recruiting",
+   "target": "flow:talent-search-contact",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:talent-search-contact",
+   "target": "step:talent-search-contact:search",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:talent-search-contact",
+   "target": "step:talent-search-contact:shortlist",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:talent-search-contact",
+   "target": "step:talent-search-contact:contact",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:talent-search-contact",
+   "target": "step:talent-search-contact:respond",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:recruiting",
+   "target": "flow:job-application-hire",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:job-application-hire",
+   "target": "step:job-application-hire:post",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:job-application-hire",
+   "target": "step:job-application-hire:apply",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:job-application-hire",
+   "target": "step:job-application-hire:move",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:job-application-hire",
+   "target": "step:job-application-hire:hire",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:recruiting",
+   "target": "flow:recruiter-api-webhooks",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:recruiter-api-webhooks",
+   "target": "step:recruiter-api-webhooks:token",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:recruiter-api-webhooks",
+   "target": "step:recruiter-api-webhooks:deliver",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:faculty-university",
+   "target": "flow:teacher-approval-review",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:teacher-approval-review",
+   "target": "step:teacher-approval-review:apply",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:teacher-approval-review",
+   "target": "step:teacher-approval-review:approve",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:teacher-approval-review",
+   "target": "step:teacher-approval-review:idea",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:teacher-approval-review",
+   "target": "step:teacher-approval-review:review",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:faculty-university",
+   "target": "flow:university-claim-ecosphere",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:university-claim-ecosphere",
+   "target": "step:university-claim-ecosphere:claim",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:university-claim-ecosphere",
+   "target": "step:university-claim-ecosphere:owner",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:university-claim-ecosphere",
+   "target": "step:university-claim-ecosphere:brand",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:university-claim-ecosphere",
+   "target": "step:university-claim-ecosphere:pages",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:faculty-university",
+   "target": "flow:university-events-fairs",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:university-events-fairs",
+   "target": "step:university-events-fairs:announce",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:university-events-fairs",
+   "target": "step:university-events-fairs:register",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "flow:university-events-fairs",
+   "target": "step:university-events-fairs:queue",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:faculty-university",
+   "target": "flow:student-records",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:student-records",
+   "target": "step:student-records:lookup",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:student-records",
+   "target": "step:student-records:viewers",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:billing-entitlements",
+   "target": "flow:entitlement-check",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:entitlement-check",
+   "target": "step:entitlement-check:registry",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:entitlement-check",
+   "target": "step:entitlement-check:resolve",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:entitlement-check",
+   "target": "step:entitlement-check:consume",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:entitlement-check",
+   "target": "step:entitlement-check:upgrade",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:billing-entitlements",
+   "target": "flow:checkout-subscription",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:checkout-subscription",
+   "target": "step:checkout-subscription:create",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:checkout-subscription",
+   "target": "step:checkout-subscription:webhook",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:checkout-subscription",
+   "target": "step:checkout-subscription:apply",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:checkout-subscription",
+   "target": "step:checkout-subscription:invoice",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:billing-entitlements",
+   "target": "flow:billing-lifecycle-tick",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:billing-lifecycle-tick",
+   "target": "step:billing-lifecycle-tick:tick",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:billing-lifecycle-tick",
+   "target": "step:billing-lifecycle-tick:charge",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:trust-moderation-ops",
+   "target": "flow:report-moderation",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:report-moderation",
+   "target": "step:report-moderation:submit",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:report-moderation",
+   "target": "step:report-moderation:claim",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:report-moderation",
+   "target": "step:report-moderation:resolve",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:report-moderation",
+   "target": "step:report-moderation:penalty",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:trust-moderation-ops",
+   "target": "flow:sanction-and-appeal",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:sanction-and-appeal",
+   "target": "step:sanction-and-appeal:sanction",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:sanction-and-appeal",
+   "target": "step:sanction-and-appeal:restrict",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:sanction-and-appeal",
+   "target": "step:sanction-and-appeal:file",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "flow:sanction-and-appeal",
+   "target": "step:sanction-and-appeal:decide",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:trust-moderation-ops",
+   "target": "flow:staff-view-as",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:staff-view-as",
+   "target": "step:staff-view-as:search",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:staff-view-as",
+   "target": "step:staff-view-as:start",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "flow:staff-view-as",
+   "target": "step:staff-view-as:pages",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:trust-moderation-ops",
+   "target": "flow:platform-config-edit",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:platform-config-edit",
+   "target": "step:platform-config-edit:edit",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:platform-config-edit",
+   "target": "step:platform-config-edit:check",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "flow:platform-config-edit",
+   "target": "step:platform-config-edit:audit",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:platform-marketing-ops",
+   "target": "flow:university-request-golive",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:university-request-golive",
+   "target": "step:university-request-golive:request",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.3
+  },
+  {
+   "source": "flow:university-request-golive",
+   "target": "step:university-request-golive:live",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "flow:university-request-golive",
+   "target": "step:university-request-golive:email",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:platform-marketing-ops",
+   "target": "flow:sales-lead",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:sales-lead",
+   "target": "step:sales-lead:submit",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:sales-lead",
+   "target": "step:sales-lead:work",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:platform-marketing-ops",
+   "target": "flow:analytics-pipeline",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:analytics-pipeline",
+   "target": "step:analytics-pipeline:track",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:analytics-pipeline",
+   "target": "step:analytics-pipeline:drain",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:platform-marketing-ops",
+   "target": "flow:job-watchdog-alerts",
+   "type": "contains_flow",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "flow:job-watchdog-alerts",
+   "target": "step:job-watchdog-alerts:conditions",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "flow:job-watchdog-alerts",
+   "target": "step:job-watchdog-alerts:email",
+   "type": "flow_step",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "domain:identity-onboarding",
+   "target": "domain:skill-proof",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Onboarding connects GitHub and skills",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:skill-proof",
+   "target": "domain:ranking-leaderboard",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Evidence feeds nightly scoring",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:skill-proof",
+   "target": "domain:verified-cv",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Skills, endorsements and credentials enter the CV snapshot",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:trust-moderation-ops",
+   "target": "domain:ranking-leaderboard",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Upheld reports create score penalties",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:social-network",
+   "target": "domain:trust-moderation-ops",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Posts, comments and chats can be reported",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:recruiting",
+   "target": "domain:billing-entitlements",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Quotas and plans gate recruiter features",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:faculty-university",
+   "target": "domain:billing-entitlements",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "University plan gates features",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:verified-cv",
+   "target": "domain:billing-entitlements",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Share links need entitlement",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:recruiting",
+   "target": "domain:social-network",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Contact requests open a labelled DM",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:faculty-university",
+   "target": "domain:skill-proof",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Teachers review ventures and endorse",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:faculty-university",
+   "target": "domain:social-network",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Announcements enter the feed",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:platform-marketing-ops",
+   "target": "domain:identity-onboarding",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Go-live opens signup",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:trust-moderation-ops",
+   "target": "domain:recruiting",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Staff verify organisations",
+   "weight": 0.6
+  },
+  {
+   "source": "domain:recruiting",
+   "target": "domain:identity-onboarding",
+   "type": "cross_domain",
+   "direction": "forward",
+   "description": "Recruiters sign up through same hook",
+   "weight": 0.6
+  }
+ ],
+ "layers": [],
+ "tour": []
+}

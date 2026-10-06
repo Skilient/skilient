@@ -1890,3 +1890,8 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   so a whole portal fits in a handful of calls; 8 frames per call stays under use_figma's 60 s limit. Icon-only
   buttons hide the component's default label. `/ventures/[id]/chat` redirects to the chat thread, so it shares that
   frame; `/me/code-checks/[id]` moves to slice 4 with the rest of the seeded content.
+- 2026-10-06 (Figma slice 4): `seedStudentOpportunities` adds Northwind Labs jobs (one applied to, at interview), a contact
+  request, a live competition, three university events, a published job fair with a booth, a teacher's project idea,
+  a passed React code check, a removed post with an appeal, answered feedback and an open Student Pro checkout, so
+  the rest of the student portal is captured with content. Rows go in directly where the RPC needs GitHub or staff
+  two-factor; everything else goes through the same RPCs the app uses.

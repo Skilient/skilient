@@ -191,3 +191,118 @@ export async function seedStudentWorld(sql: Sql, me: TestStudent, tag: string) {
   await step("ranking", () => sql`select private.ranking_run_all(now())`);
   return { people, ventureId };
 }
+
+interface Others {
+  recruiter: TestStudent;
+  teacher: TestStudent;
+  admin: TestStudent;
+  uniOwner: TestStudent;
+  uniId: string;
+}
+
+/**
+ * Slice 4 (decisions 2026-10-06): what the student's Opportunities, Events, Fairs, Competitions,
+ * Ideas, code check, moderation, appeals, feedback and billing pages show. Same best-effort rule.
+ */
+export async function seedStudentOpportunities(sql: Sql, me: TestStudent, o: Others, people: TestStudent[]) {
+  const [bilal] = people;
+  const api = await as(me);
+  const [{ org_id: org }] = await sql`select org_id::text from public.org_members where user_id = ${o.recruiter.id}`;
+  const desc = (s: string) => `${s} You will work with a small product team, ship to real users every week and get a mentor for your first three months.`;
+
+  // Jobs from the recruiter's organisation, one applied to.
+  const jobs: string[] = [];
+  await step("jobs", async () => {
+    for (const [title, type, min, max, loc, remote] of [
+      ["Frontend Engineering Intern", "internship", 60000, 80000, "Lahore", false],
+      ["Junior Backend Developer (Node.js)", "full_time", 150000, 220000, "Islamabad", true],
+      ["Data Analyst, Part-time", "part_time", 70000, 90000, "Lahore", false],
+    ] as const) {
+      const [j] = await sql`insert into public.job_posts (org_id, created_by, title, type, location, remote, salary_min, salary_max, currency, pay_period, min_skill_levels, openings, deadline, description, status, published_at)
+        values (${org}, ${o.recruiter.id}, ${title}, ${type}, ${loc}, ${remote}, ${min}, ${max}, 'PKR', 'month', '[]', 2, current_date + 21,
+                ${desc(`Northwind Labs is hiring a ${title.toLowerCase()} to build tools used by clinics across Punjab.`)}, 'live', now() - interval '2 days')
+        returning id::text`;
+      jobs.push(j.id);
+    }
+  });
+  await step("application", async () => {
+    if (!jobs[0]) return;
+    await rpc(api, "apply_to_job", { p_job: jobs[0], p_note: "I built the booking calendar for our lab app in React and would love to do more frontend work." }).catch(() =>
+      sql`insert into public.job_applications (job_id, student_id, note) values (${jobs[0]}, ${me.id}, 'I built the booking calendar for our lab app in React.')`,
+    );
+    await sql`update public.job_applications set stage = 'interview', stage_changed_at = now() where job_id = ${jobs[0]} and student_id = ${me.id}`;
+  });
+  await step("contact request", async () => {
+    await sql`insert into public.contact_requests (org_id, recruiter_id, student_id, role_title, message, expires_at)
+      values (${org}, ${o.recruiter.id}, ${me.id}, 'Frontend Engineer',
+              'Hi Ayesha, we saw your lab booking work and your React proofs. We are hiring for our clinic scheduling team and would like to talk.',
+              now() + interval '7 days')`;
+  });
+
+  // A live competition from the organisation.
+  await step("competition", async () => {
+    await sql`insert into public.competitions (org_id, created_by, title, role, skills, brief, starts_at, ends_at, team_size, prize, rubric, status)
+      values (${org}, ${o.recruiter.id}, 'Clinic queue challenge', 'Frontend Developer', '[{"skill":"react","min_level":2}]',
+              ${"Build a patient queue screen for a small clinic: patients check in on a tablet, staff call the next patient, and the waiting room display updates without a refresh. Judged on usability, code quality and how well it works offline."},
+              now() - interval '2 days', now() + interval '12 days', 2, 'PKR 100,000 and an internship interview',
+              '[{"criterion":"Usability","weight":40},{"criterion":"Code quality","weight":35},{"criterion":"Offline behaviour","weight":25}]', 'live')`;
+  });
+
+  // University events: one the student registered for, one open, one past.
+  await step("events", async () => {
+    const rows = [
+      ["Intro to system design", "talk", "4 days", "CS Auditorium, NUTECH"],
+      ["React performance workshop", "workshop", "9 days", "Lab 3, Block B"],
+      ["Spring hackathon kickoff", "hackathon", "-12 days", "Main hall"],
+    ] as const;
+    for (const [title, type, at, loc] of rows) {
+      const [e] = await sql`insert into public.events (university_id, created_by, type, title, description, starts_at, ends_at, location, capacity)
+        values (${o.uniId}, ${o.uniOwner.id}, ${type}, ${title}, ${`${title} for NUTECH students. Bring a laptop; seats are limited.`},
+                now() + ${at}::interval, now() + ${at}::interval + interval '2 hours', ${loc}, 120) returning id::text`;
+      if (type !== "workshop") await sql`insert into public.event_registrations (event_id, user_id, checked_in_at) values (${e.id}, ${me.id}, ${type === "hackathon" ? sql`now() - interval '12 days'` : null}) on conflict do nothing`;
+    }
+  });
+
+  // A job fair with the organisation's booth.
+  await step("job fair", async () => {
+    const [f] = await sql`insert into public.job_fairs (university_id, title, description, starts_at, ends_at, status, created_by)
+      values (${o.uniId}, 'NUTECH Spring Career Fair', 'Meet 20 companies hiring interns and graduates. Join a booth queue from your phone.',
+              now() + interval '6 days', now() + interval '6 days 6 hours', 'published', ${o.uniOwner.id}) returning id::text`;
+    await sql`insert into public.job_fair_booths (fair_id, org_id, roles, about) values (${f.id}, ${org}, array['Frontend intern', 'Backend developer'], 'Clinic software used in 40 hospitals.')`;
+  });
+
+  // A project idea from the teacher.
+  await step("project idea", async () => {
+    await sql`insert into public.project_ideas (teacher_id, university_id, title, brief, skills, difficulty, team_size, duration_weeks, deliverables, max_teams, deadline, course_label)
+      values (${o.teacher.id}, ${o.uniId}, 'Library seat finder',
+              'Students waste time looking for free seats in the library. Build a small app that shows free seats from a door counter and lets students hold a seat for 15 minutes.',
+              array['react', 'nodejs', 'postgresql'], 'intermediate', 3, 8, 'Working app, a short demo video script and a one-page report.', 4, current_date + 30, 'CS-341 Web Engineering')`;
+  });
+
+  // A graded code check.
+  await step("code check", async () => {
+    await sql`insert into public.code_checks (user_id, skill_id, status, path, start_line, end_line, answers, rubric, feedback, requested_at, started_at, submitted_at, graded_at, grader_id)
+      values (${me.id}, 'react', 'passed', 'src/components/SlotCalendar.tsx', 42, 88,
+              ${sql.json({ what: "It renders the week's lab slots and greys out the ones already booked.", why: "Booked slots come from one query keyed by week, so switching weeks doesn't refetch every slot.", change: "Pass the lab id into the query key and filter the slots by lab before rendering." })},
+              ${sql.json({ behaviour: { pass: true }, design: { pass: true, comment: "Good reason for the query key." }, change: { pass: true }, accuracy: { pass: true } })},
+              'Clear answers that match the code. Well done.', now() - interval '6 days', now() - interval '6 days', now() - interval '6 days', now() - interval '3 days', ${o.admin.id})`;
+  });
+
+  // A post of the student's that was reported and removed, with an appeal.
+  await step("moderation", async () => {
+    const post = await rpc<string>(api, "create_post", { p: { type: "general", audience: "university", body: "Selling my old Casio fx-991 calculator, DM me. Also have notes for every CS course for sale." , media: [] } });
+    const bApi = await as(bilal);
+    await rpc(bApi, "submit_report", { p_type: "post", p_target: post, p_reason: "spam", p_detail: "Selling things in the course feed." });
+    const [c] = await sql`select id::text from public.report_cases where target_id = ${post}`;
+    await sql`update public.report_cases set status = 'removed', resolved_by = ${o.admin.id}, resolved_at = now(), resolution_reason = 'Buying and selling isn''t allowed in the university feed.' where id = ${c.id}`;
+    await sql`update public.posts set removed_at = now() where id = ${post}`;
+    await rpc(api, "submit_appeal", { p_type: "report_case", p_id: c.id, p_body: "The calculator was for a classmate who asked in our group. I didn't know selling wasn't allowed; I'd like the notes part restored." });
+  });
+
+  await step("feedback", async () => {
+    await rpc(api, "submit_feedback", { p_type: "idea", p_body: "It would help to see which labs are free right now from the Explore page.", p_screenshot: null, p_page: "/explore", p_device: "desktop", p_version: "1.0" });
+    await sql`update public.feedback set status = 'planned', staff_reply = 'Thanks Ayesha, this is on our list for the next release.', replied_at = now() where user_id = ${me.id}`;
+  });
+
+  await step("checkout", () => rpc(api, "create_checkout", { p_subject: "user", p_plan: "student_pro_monthly", p_currency: "PKR", p_gateway: "simulated", p_key: `figma-${me.id}` }));
+}

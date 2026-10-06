@@ -4,7 +4,7 @@ import { test, type Browser, type BrowserContext, type Page } from "@playwright/
 import postgres from "postgres";
 import { adminClient, createStudent, PASSWORD, signInWithPassword, totp, type TestStudent } from "../e2e/support";
 import { dumpLayout } from "./layout-dump";
-import { seedStudentWorld } from "./seed-student";
+import { seedStudentOpportunities, seedStudentWorld } from "./seed-student";
 
 /**
  * Figma reference captures (docs/figma/README.md). For every entry in docs/figma/screens.json,
@@ -212,7 +212,10 @@ test("figma reference captures", async ({ browser }) => {
   const manifest: { route: string; tab: string; url: string; files?: Record<string, string>; skipped?: string }[] = [];
   try {
     const who = await setupAccounts(sql);
-    if (entries.some((e) => e.role === "student")) await seedStudentWorld(sql, who.student, Math.random().toString(36).slice(2, 6));
+    if (entries.some((e) => e.role === "student")) {
+      const { people } = await seedStudentWorld(sql, who.student, Math.random().toString(36).slice(2, 6));
+      await seedStudentOpportunities(sql, who.student, who, people);
+    }
     const roles: Record<Role, { user: TestStudent | null; twoFactor: boolean; passwordOnlyAfter?: boolean }> = {
       anonymous: { user: null, twoFactor: false },
       anyone: { user: null, twoFactor: false },

@@ -4,6 +4,7 @@ import { test, type Browser, type BrowserContext, type Page } from "@playwright/
 import postgres from "postgres";
 import { adminClient, createStudent, PASSWORD, signInWithPassword, totp, type TestStudent } from "../e2e/support";
 import { dumpLayout } from "./layout-dump";
+import { seedStudentWorld } from "./seed-student";
 
 /**
  * Figma reference captures (docs/figma/README.md). For every entry in docs/figma/screens.json,
@@ -13,12 +14,15 @@ import { dumpLayout } from "./layout-dump";
  * Routes whose ids can't be resolved from the local data are listed as skipped in the manifest.
  *
  *   FIGMA_PORTAL=student pnpm figma:captures   # one portal; omit for all
+ *   FIGMA_ROUTES='^/(feed|chat)' ...           # only routes matching this pattern
+ * The student portal gets sample content first (tests/figma/seed-student.ts).
  */
 
 const OUT = path.join(process.cwd(), "docs/figma/reference");
 const INVENTORY = path.join(process.cwd(), "docs/figma/screens.json");
 const DB_URL = process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 const ONLY = process.env.FIGMA_PORTAL;
+const ROUTES = process.env.FIGMA_ROUTES ? new RegExp(process.env.FIGMA_ROUTES) : null;
 
 type Role = "anonymous" | "student" | "new_student" | "onboarding_student" | "mfa_pending" | "teacher" | "recruiter" | "university_owner" | "super_admin" | "anyone";
 interface Entry {
@@ -203,11 +207,12 @@ const slug = (s: string) => s.replace(/^\//, "").replace(/[[\]().]/g, "").replac
 test("figma reference captures", async ({ browser }) => {
   test.setTimeout(3 * 60 * 60_000);
   const inventory = JSON.parse(await readFile(INVENTORY, "utf8")) as { entries: Entry[] };
-  const entries = inventory.entries.filter((e) => !ONLY || e.portal === ONLY);
+  const entries = inventory.entries.filter((e) => (!ONLY || e.portal === ONLY) && (!ROUTES || ROUTES.test(e.route)));
   const sql = postgres(DB_URL, { max: 1, onnotice: () => undefined });
   const manifest: { route: string; tab: string; url: string; files?: Record<string, string>; skipped?: string }[] = [];
   try {
     const who = await setupAccounts(sql);
+    if (entries.some((e) => e.role === "student")) await seedStudentWorld(sql, who.student, Math.random().toString(36).slice(2, 6));
     const roles: Record<Role, { user: TestStudent | null; twoFactor: boolean; passwordOnlyAfter?: boolean }> = {
       anonymous: { user: null, twoFactor: false },
       anyone: { user: null, twoFactor: false },

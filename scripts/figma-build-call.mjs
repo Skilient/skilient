@@ -22,6 +22,16 @@ export function buildCall(jobs) {
   return src.replace("__JOBS__", `[\n${list}\n]`);
 }
 
+/**
+ * The same call without the converter body: it runs the copy stored in the Figma file
+ * (shared plugin data `skilient/converter`, written from docs/figma/converter.js), so a call
+ * carries only its data.
+ */
+export function buildStoredCall(jobs) {
+  const list = jobs.map((j) => `{"o":${JSON.stringify(j.opts)},"d":${readFileSync(j.chunk, "utf8")}}`).join(",\n");
+  return `const JOBS = [\n${list}\n];\nconst CONV = new Function("return " + figma.root.getSharedPluginData("skilient", "converter"))();\nreturn await CONV(JOBS);\n`;
+}
+
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const [page, ...specs] = process.argv.slice(2);
   const jobs = specs.map((s) => {

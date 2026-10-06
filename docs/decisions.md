@@ -1882,3 +1882,7 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   path; real images can be uploaded later. Icons are matched to Phosphor by the start of their SVG path, preferring the
   120 library icons. `/verify/[code]` is deferred until a signed CV exists on the local stack. The CV specimen keeps its
   print ink colours (unbound), as the CV document does in code.
+- 2026-10-06 (Figma slice 3): the student portal captures run against sample content from `tests/figma/seed-student.ts`
+  (fictional NUTECH classmates, friends, posts, a venture with team and chat, skills, an endorsement), so frames show
+  real-looking screens rather than empty states. The portal is split: slice 3 covers feed, post, explore, friends,
+  requests, notifications, chat, profile, me, leaderboard and ventures; slice 4 the rest.

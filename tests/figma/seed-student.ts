@@ -392,3 +392,59 @@ export async function seedTeacherWorld(sql: Sql, me: TestStudent, o: Others, peo
     }
   });
 }
+
+/**
+ * Sample recruiter portal data (slice 6). One org with open jobs, applications,
+ * talent index entries, shortlists and saved searches.
+ */
+export async function seedRecruiterWorld(sql: Sql, recruiter: TestStudent, students: TestStudent[]) {
+  // Org and members
+  await step("recruiter org", async () => {
+    const [org] = await sql`insert into public.organizations (name, industry, headquarters, plan)
+      values ('TechCorp Solutions', 'Software', 'Karachi', 'growth') returning id::text`;
+    await sql`insert into public.org_members (org_id, user_id, role) values (${org.id}, ${recruiter.id}, 'admin')`;
+    if (students.length > 0) {
+      const [c1] = students;
+      await sql`insert into public.org_members (org_id, user_id, role) values (${org.id}, ${c1.id}, 'recruiter') on conflict do nothing`;
+    }
+  });
+
+  // Jobs
+  await step("jobs", async () => {
+    const [org] = await sql`select id from public.organizations where name = 'TechCorp Solutions'`;
+    for (const [title, level] of [["Senior React Engineer", "L3"], ["Backend Architect", "L4"], ["Full-Stack Developer", "L2"]] as const) {
+      const [job] = await sql`insert into public.jobs (org_id, title, location, level, posted_at, closes_at, description, skills)
+        values (${org.id}, ${title}, 'Karachi, Remote', ${level}, now() - interval '5 days', now() + interval '10 days',
+                ${"Join our fast-growing team building scalable products."}, ${"['react','nodejs','typescript']"}::text[]) returning id::text`;
+
+      // Applications
+      if (students.length > 0) {
+        const [s1, s2] = students;
+        await sql`insert into public.applications (job_id, student_id, status, created_at)
+          values (${job.id}, ${s1.id}, 'interview', now() - interval '2 days')`;
+        if (students.length > 1)
+          await sql`insert into public.applications (job_id, student_id, status, created_at)
+            values (${job.id}, ${s2.id}, 'applied', now() - interval '1 day')`;
+      }
+    }
+  });
+
+  // Talent index and saved search
+  await step("talent index", async () => {
+    const [org] = await sql`select id from public.organizations where name = 'TechCorp Solutions'`;
+    for (const s of students.slice(0, 3)) {
+      await sql`insert into public.talent_index (user_id, score, tags) values (${s.id}, 750, ${"['react','quick_learner']"}::text[]) on conflict do nothing`;
+    }
+    await sql`insert into public.saved_searches (org_id, name, filters, created_at)
+      values (${org.id}, 'L3+ React Engineers', ${sql.json({ skills: ['react'], minLevel: 3 })}, now() - interval '20 days')`;
+  });
+
+  // Shortlist
+  await step("shortlist", async () => {
+    const [org] = await sql`select id from public.organizations where name = 'TechCorp Solutions'`;
+    if (students.length > 0) {
+      const [s] = students;
+      await sql`insert into public.shortlists (org_id, student_id, created_at) values (${org.id}, ${s.id}, now() - interval '3 days')`;
+    }
+  });
+}

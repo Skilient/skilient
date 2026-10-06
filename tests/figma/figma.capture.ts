@@ -4,7 +4,7 @@ import { test, type Browser, type BrowserContext, type Page } from "@playwright/
 import postgres from "postgres";
 import { adminClient, createStudent, PASSWORD, signInWithPassword, totp, type TestStudent } from "../e2e/support";
 import { dumpLayout } from "./layout-dump";
-import { seedStudentOpportunities, seedStudentWorld, seedTeacherWorld } from "./seed-student";
+import { seedRecruiterWorld, seedStudentOpportunities, seedStudentWorld, seedTeacherWorld } from "./seed-student";
 
 /**
  * Figma reference captures (docs/figma/README.md). For every entry in docs/figma/screens.json,
@@ -221,10 +221,17 @@ test("figma reference captures", async ({ browser }) => {
   const manifest: { route: string; tab: string; url: string; files?: Record<string, string>; skipped?: string }[] = [];
   try {
     const who = await setupAccounts(sql);
+    let people: any[] = [];
+    let ventureId: string | undefined;
     if (entries.some((e) => e.role === "student" || e.role === "teacher")) {
-      const { people, ventureId } = await seedStudentWorld(sql, who.student, Math.random().toString(36).slice(2, 6));
+      const result = await seedStudentWorld(sql, who.student, Math.random().toString(36).slice(2, 6));
+      people = result.people;
+      ventureId = result.ventureId;
       await seedStudentOpportunities(sql, who.student, who, people);
       if (entries.some((e) => e.role === "teacher")) await seedTeacherWorld(sql, who.student, who, people, ventureId);
+    }
+    if (entries.some((e) => e.role === "recruiter")) {
+      await seedRecruiterWorld(sql, who.recruiter, people);
     }
     const roles: Record<Role, { user: TestStudent | null; twoFactor: boolean; passwordOnlyAfter?: boolean }> = {
       anonymous: { user: null, twoFactor: false },

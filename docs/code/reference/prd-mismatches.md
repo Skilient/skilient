@@ -1,0 +1,13 @@
+Commit: dee328c
+Covers: places where the code and `docs/prd/` or `docs/decisions.md` disagree (CONVENTIONS, "Mismatches with the spec")
+
+# PRD mismatches
+
+Each row documents the code as built; neither side is fixed here. Stages 4 to 6 append rows; the last stage 7 session de-duplicates and sorts them.
+
+| # | Area | The spec says | The code does | Found by |
+|---|---|---|---|---|
+| 1 | Error reference shown to users | `docs/prd/10-non-functional-requirements.md` line 75: the `request_id` is returned to the browser and shown in error toasts ("Ref: 7f3a…") so a user report maps to a log line | Only `unavailable` refusals (and the captcha refusal in sign-in and sign-up) carry the request id [src: lib/actions/rpc.ts#requestId: ctx.requestId] [src: lib/actions/auth.ts#fail("captcha"]. Page error boundaries show Next's error `digest`, which is not the proxy's request id [src: components/app/route-error.tsx#requestId={error.digest}] | stage 4, architecture/request-lifecycle |
+| 2 | Server-side analytics | `docs/prd/10-non-functional-requirements.md` line 127: `lib/analytics.ts` wraps `posthog-node` with a typed event map | `posthog-node` is not a dependency; only `posthog-js` is [src: package.json#"posthog-js"]. Server events are written by database triggers through `private.track` to the `analytics` queue and sent by the `analytics-worker` Edge Function [src: supabase/migrations/20261104000000_analytics.sql#perform pgmq.send('analytics', jsonb_strip_nulls] [src: supabase/functions/_shared/analytics/worker.ts#export async function runAnalyticsWorker] | stage 4, architecture/overview |
+| 3 | PostHog host variable | `docs/prd/10-non-functional-requirements.md` line 128 lists `NEXT_PUBLIC_POSTHOG_HOST` (EU) as an env var | `.env.example` lists it [src: .env.example#NEXT_PUBLIC_POSTHOG_HOST=], but no code reads it; the browser reaches PostHog through fixed `/ingest` rewrites to the EU hosts [src: next.config.ts#destination: "https://eu.i.posthog.com/:path*"] | stage 4, architecture/environments-and-deploy |
+| 4 | Job log lines | `docs/prd/10-non-functional-requirements.md` line 75: every server action and job writes one JSON log line with `request_id` | Edge Function workers write JSON lines through `jsonLog` [src: supabase/functions/_shared/github/types.ts#export const jsonLog]; pg_cron jobs that run SQL write no log line: some record a `job_runs` row, the rest leave only pg_cron's own run log [src: supabase/migrations/20260927000000_foundations.sql#create table public.job_runs] [src: supabase/migrations/20261015000000_recruiter_jobs.sql#create function private.close_expired_jobs] | stage 4, architecture/background-jobs |

@@ -1,0 +1,12 @@
+.claude/
+.impeccable/
+.zap/
+types/database.ts
+public/
+brand/
+design/
+docs/reference/
+docs/signing-keys/
+pnpm-lock.yaml
+.agents/
+.codex/

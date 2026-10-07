@@ -9,7 +9,7 @@ This is the stage 3 map for `docs/code/`. It says which docs exist, what each mu
 
 - Method: the skill's Phase 1 (inventory) and Phase 1.5 (analysis planning), with the CONVENTIONS deviations. The skill's "threads" became execution contexts, its "data flow stages" became the cross-subsystem pipelines below, and its "every inventory item gets a Phase 4 document" became "every inventory item has a home doc and appears in that doc's questions". No length estimates, no line quotas.
 - Ground truth for what exists: `git ls-files` at commit 7d26258, filtered exactly as `scripts/docs/coverage.mjs` filters it: 789 source files (`.ts .tsx .mts .cts .js .mjs .cjs .sql`, tests excluded).
-- Leads: the `.ua/` knowledge graph (10 layers) and domain graph (10 domains, 36 flows), the CLAUDE.md code maps, `docs/prd/README.md`, and the stage 2 schema reference. Stage 2 lives on branch `codex/docs-stage-2` (commit da73a5b) and is not merged into `docs/code` yet; its `cron-jobs.md`, `queues.md` and `buckets.md` gave the job, queue and bucket lists below.
+- Leads: the `.ua/` knowledge graph (10 layers) and domain graph (10 domains, 36 flows), the CLAUDE.md code maps, `docs/prd/README.md`, and the stage 2 schema reference. Stage 2 (commit da73a5b, merged through PR 72) is in `docs/code/reference/`; its `cron-jobs.md`, `queues.md` and `buckets.md` gave the job, queue and bucket lists below.
 - The subsystem split follows the code: one doc per group of migrations that were written together and the `lib/`, `components/`, route and Edge Function folders that sit on top of them. Where a PRD domain was too large for one session (recruiters, universities), it became two docs along its migration seams.
 
 ### Rules for this file
@@ -463,7 +463,7 @@ Questions:
 6. How do Resend webhooks become signals?
 7. How is monitoring data purged?
 
-### Reference and how-to docs (stage 8)
+### Reference and how-to docs (stage 7)
 
 These cover the codebase across subsystems; they own no rows in the coverage map.
 
@@ -473,7 +473,7 @@ These cover the codebase across subsystems; they own no rows in the coverage map
 - `reference/api/edge-functions.md`: each Edge Function: trigger, auth, inputs, outputs, environment variables, shared module.
 - `reference/rpc.md`: every `public` function the app calls: arguments, return shape, caller files, owning doc.
 - `reference/env.md`: every environment variable and Vault secret: runtime, required or optional, who reads it. Never values.
-- `reference/prd-mismatches.md` and `reference/verification-log.md`: appended by stages 5 to 7; stage 8 de-duplicates and sorts them.
+- `reference/prd-mismatches.md` and `reference/verification-log.md`: appended by stages 4 to 6; the last stage 7 session de-duplicates and sorts them.
 - `howto/debug.md`: symptom → where to look (logs, Sentry, job_runs, queues, pgTAP), per pipeline above.
 - `howto/add-a-feature.md`: the end-to-end checklist (migration, RLS, pgTAP, wrapper, action, page, nav, sweep routes, analytics, config keys, paid action registry).
 - `howto/change-the-schema.md`: migration rules, redefining functions safely, types, advisors, deploy.
@@ -970,67 +970,81 @@ One row per source file or folder (trailing slash). Every tracked source file ou
 
 ## 4. Session slices
 
-Line counts are the doc's own coverage-map files at 7d26258 (SQL in brackets). A session reads its own files in full plus the "Also reads" and "SQL objects elsewhere" of its docs, by grep and line offsets. The budget is about 9,000 lines of reading per session; no session below goes over it.
+Stages, as Ahmed set them (2026-10-07): 4 = architecture, 5 = the five deep dives, 6 = the other subsystem docs, 7 = API reference, 8 = verification, 10 = file comments, 11 = CLAUDE.md and CI (on `main`, no slicing). Stage 9 removes `.claude/skills/codebase-analysis/` (CONVENTIONS) and needs no slicing.
 
-Stage meaning assumed here (see question 1): 5 = architecture docs, 6 = the five deep dives, 7 = the other subsystem docs, 8 = reference and how-to docs plus the README, 10 = file comments. Stage 4 and stage 9 need no slicing.
+Line counts are the doc's own coverage-map files at 7d26258. "Core" is SQL, `lib/`, scripts and Edge Functions; "UI" is `app/` and `components/`. A session reads its own files plus the "Also reads" and "SQL objects elsewhere" of its docs, by grep and line offsets. The budget is about 9,000 lines of reading per session.
 
 Rules for every writing session:
 
 - Start from this plan's entry for the doc, its rows in the coverage map, and CONVENTIONS.
-- A SQL function can be redefined by a later migration. Before describing one, run `grep -l "function private.<name>\|function public.<name>" supabase/migrations/*.sql` and read the last definition. The stage 2 `live-inventory.md` and `drift.md` show where production differs.
+- A SQL function can be redefined by a later migration. Before describing one, run `grep -l "function private.<name>\|function public.<name>" supabase/migrations/*.sql` and read the last definition. `reference/schema/`, `reference/live-inventory.md` and `reference/drift.md` (stage 2) are leads for finding objects and where production differs.
 - Append to `reference/prd-mismatches.md` and `reference/verification-log.md` as you go; never rewrite another session's rows.
 - Run `pnpm docs:check` on the doc before pushing.
 
-### Stage 5: architecture (2 sessions)
+### Stage 4: architecture (2 sessions)
 
 | Session | Docs | Own lines | Extra reading |
 |---|---|---|---|
-| 5.1 | architecture/overview, architecture/request-lifecycle | 1,976 + 686 | Route group layouts; gate.ts; supabase/server and proxy clients; one server action and one data read from each of three subsystems; next.config.ts headers |
-| 5.2 | architecture/background-jobs, architecture/environments-and-deploy | 571 (475) + 953 (36) | Every cron.schedule and pgmq.create block (grep); the 11 Edge Function index files (270 lines); supabase/config.toml; the three workflows; package.json; vercel.json; .env.example |
+| 4.1 | architecture/overview, architecture/request-lifecycle | 1,976 + 686 | Route group layouts; gate.ts; supabase server and proxy clients; one server action and one data read from each of three subsystems; next.config.ts headers |
+| 4.2 | architecture/background-jobs, architecture/environments-and-deploy | 571 + 953 | Every cron.schedule and pgmq.create block (grep, 47 jobs, 8 queues); the 11 Edge Function index files (270 lines); supabase/config.toml; the three workflows; package.json; vercel.json; .env.example |
 
-### Stage 6: deep dives (5 sessions, in this order)
+### Stage 5: deep dives (5 sessions, in this order)
 
-| Session | Doc | Own lines | Extra reading |
-|---|---|---|---|
-| 6.1 | subsystems/auth-and-rls | 7,241 (2,038) | Later validate_signup and handle_new_user definitions; require_org, require_uni, require_super_admin; pgTAP 00 |
-| 6.2 | subsystems/github-skills | 7,848 (3,870) | sync_venture_commits; l3_skills and l4_skills redefinitions; review flag functions; worker tests as evidence |
-| 6.3 | subsystems/ranking | 3,823 (2,125) | resolve_case in penalty_rules and sanctions_appeals; ranking redefinitions in teacher_portal; venture completion functions; overturn_decision; pgTAP 32 |
-| 6.4 | subsystems/cv-signing | 4,229 (1,381) | cv_snapshot redefinitions (teacher_portal, uni_ecosphere, ai_assisted_commits); has_entitlement; auth.users triggers |
-| 6.5 | subsystems/billing | 7,593 (4,244) | Entitlement callers (grep require_entitlement and rpcAction with entitlement); hire fee trigger source; config_keys rows for billing |
+Each session reads every file its doc covers before writing.
+
+| Session | Doc | Own lines (core + UI) | Start paths | Extra reading |
+|---|---|---|---|---|
+| 5.1 | subsystems/auth-and-rls | 4,483 + 2,758 | proxy.ts, lib/auth/gate.ts, supabase/migrations/20260927210238_identity.sql, lib/actions/auth.ts | Later validate_signup and handle_new_user definitions; require_org, require_uni, require_super_admin; pgTAP 00 |
+| 5.2 | subsystems/github-skills | 6,740 + 1,108 | app/api/github/callback/route.ts, supabase/functions/_shared/github/worker.ts, supabase/migrations/20260928150000_github_evidence.sql | sync_venture_commits; l3_skills and l4_skills redefinitions; review flag functions; worker tests as evidence |
+| 5.3 | subsystems/ranking | 2,845 + 978 | supabase/migrations/20261005000000_ranking.sql, supabase/migrations/20261006000000_leaderboard.sql, lib/data/ranking.ts | resolve_case in penalty_rules and sanctions_appeals; ranking redefinitions in teacher_portal; venture completion functions; overturn_decision; pgTAP 32 |
+| 5.4 | subsystems/cv-signing | 2,842 + 1,387 | supabase/migrations/20261008000000_verified_cv.sql, supabase/functions/_shared/cv/sign.ts, lib/actions/cv.ts | cv_snapshot redefinitions (teacher_portal, uni_ecosphere, ai_assisted_commits); has_entitlement; auth.users triggers |
+| 5.5 | subsystems/billing | 6,266 + 1,327 | supabase/migrations/20261023000000_billing_core.sql, app/api/billing/webhook/[gateway]/route.ts, lib/billing/registry.ts | Entitlement callers (grep require_entitlement and rpcAction with entitlement); hire fee trigger source; config_keys rows for billing |
 
 Auth goes first because every other doc leans on its RLS model; github-skills, ranking and cv-signing follow the evidence pipeline in order.
 
-### Stage 7: other subsystems (12 sessions, in this order)
+### Stage 6: other subsystems (7 sessions, in this order)
 
-| Session | Docs | Own lines |
-|---|---|---|
-| 7.1 | subsystems/people-and-profiles, subsystems/chat | 4,362 (630) + 2,896 (1,129) |
-| 7.2 | subsystems/ventures | 5,882 (2,058) |
-| 7.3 | subsystems/trust-evidence | 5,248 (2,075) |
-| 7.4 | subsystems/feed-and-posts | 5,180 (2,370) |
-| 7.5 | subsystems/notifications-and-email, subsystems/moderation-and-appeals | 2,315 (616) + 3,973 (1,821) |
-| 7.6 | subsystems/student-portal, subsystems/observability | 4,126 (1,174) + 1,983 (903) |
-| 7.7 | subsystems/faculty | 5,975 (2,983) |
-| 7.8 | subsystems/recruiting | 7,182 (3,261) |
-| 7.9 | subsystems/university-portal | 7,091 (3,779) |
-| 7.10 | subsystems/jobs-and-competitions, subsystems/university-events-and-fairs | 3,431 (1,648) + 3,077 (2,306) |
-| 7.11 | subsystems/ops-console | 5,037 (1,779) |
-| 7.12 | subsystems/marketing-site | 4,390 (679) |
+Standard depth: core files are read in full; pages and components are read for what they call and render (exports, data reads, actions, test ids), not line by line.
 
-Pairs share code: people and chat share the Explore migration; notifications and moderation share the notice emails; jobs and university events share competitions and the Opportunities tabs. Recruiting and university-portal come before 7.10 because it builds on both. Ops-console comes late because it links to every queue's own doc.
+| Session | Docs | Core lines | UI lines |
+|---|---|---|---|
+| 6.1 | subsystems/people-and-profiles, subsystems/chat, subsystems/notifications-and-email | 5,263 | 4,310 |
+| 6.2 | subsystems/ventures, subsystems/trust-evidence | 6,424 | 4,706 |
+| 6.3 | subsystems/feed-and-posts, subsystems/moderation-and-appeals | 5,963 | 3,190 |
+| 6.4 | subsystems/student-portal, subsystems/faculty | 6,132 | 3,969 |
+| 6.5 | subsystems/recruiting, subsystems/jobs-and-competitions | 6,553 | 4,060 |
+| 6.6 | subsystems/university-portal, subsystems/university-events-and-fairs | 7,165 | 3,003 |
+| 6.7 | subsystems/ops-console, subsystems/marketing-site, subsystems/observability | 6,304 | 5,106 |
 
-### Stage 8: reference and how-to (4 sessions)
+Groups share code: people, chat and notifications share the Explore migration and friend and message notices; ventures and trust-evidence share contributions and endorsement options; feed and moderation share post removal; student-portal and faculty share the shell and the teacher's student side; recruiting and jobs share `lib/actions/recruit.ts`; the two university docs share `lib/actions/uni.ts` and `lib/data/uni.ts`. Ops-console comes last because it links to every queue's own doc.
 
-| Session | Docs | Reading |
-|---|---|---|
-| 8.1 | reference/api/openapi.v1.yaml, reference/api/routes.md, reference/api/edge-functions.md | All route handlers under app (1,112 lines); lib/api/v1.ts; the api_* SQL functions in recruiter_api; the 11 Edge Function index files and each shared worker's exported entry; gate.ts and both nav configs. Pages are listed from git ls-files, not read |
-| 8.2 | reference/api/server-actions.md | lib/actions, all 49 files (7,163 lines) |
-| 8.3 | reference/rpc.md, reference/env.md | Call sites of .rpc, rpcJson and rpcAction (grep); signatures from the last migration that defines each function; process.env and Deno.env.get call sites; .env.example; scripts/restore/reseed-vault.sql |
-| 8.4 | howto/debug.md, howto/add-a-feature.md, howto/change-the-schema.md, README.md; final pass on prd-mismatches.md and verification-log.md | The finished docs from stages 5 to 7 (docs are read here, code only to confirm a step) |
+### Stage 7: API reference (4 sessions)
+
+The lists come from scripts in `scripts/docs/` (the first session writes them); sessions write only descriptions. A script's output is checked in, and the session reruns it before writing so nothing is missed.
+
+| Session | Docs | Script lists | Reading for descriptions |
+|---|---|---|---|
+| 7.1 | reference/api/openapi.v1.yaml, reference/api/routes.md, reference/api/edge-functions.md | Every page and route handler with its method; every Edge Function with its env reads | Route handlers under app (1,112 lines); lib/api/v1.ts; the api_* SQL functions in recruiter_api; the 11 Edge Function index files and each shared worker's exported entry; gate.ts and both nav configs |
+| 7.2 | reference/api/server-actions.md | Every exported action in lib/actions with its Zod schema name and the RPC it calls | lib/actions, all 49 files (7,163 lines) |
+| 7.3 | reference/rpc.md, reference/env.md | Every public function: arguments, defining migration (last definition), caller files; every process.env and Deno.env.get read and Vault secret name | Signatures in the last defining migration; .env.example; scripts/restore/reseed-vault.sql |
+| 7.4 | howto/debug.md, howto/add-a-feature.md, howto/change-the-schema.md, README.md; final pass on prd-mismatches.md and verification-log.md | none | The finished docs from stages 4 to 6 (code only to confirm a step) |
+
+### Stage 8: verification (6 sessions)
+
+A fresh session re-checks every claim against the code: it runs `pnpm docs:check`, then opens each cited symbol and confirms the sentence. It reads cited regions, not whole files, so its budget is citations rather than lines. Ahmed's suggested slices are kept; the standard-subsystem slice is split in three because sixteen docs are too many citations for one session.
+
+| Session | Docs |
+|---|---|
+| 8.1 | the four architecture docs, subsystems/auth-and-rls |
+| 8.2 | subsystems/github-skills, subsystems/ranking, subsystems/cv-signing, subsystems/billing |
+| 8.3 | stage 6 sessions 6.1 and 6.2 (five docs) |
+| 8.4 | stage 6 sessions 6.3, 6.4 and 6.5 (six docs) |
+| 8.5 | stage 6 sessions 6.6 and 6.7 (five docs) |
+| 8.6 | reference/api/*, reference/rpc.md, reference/env.md, the how-to docs and README |
 
 ### Stage 10: file comments (9 sessions)
 
-Scope is the `--headers` set of `coverage.mjs`: 711 `.ts`/`.tsx` files, 62,022 lines. Groups are prefix-based; each file is in the first group whose prefix matches. JSDoc is required only in `lib/`, route handlers and Edge Functions, so those groups are smaller.
+Scope is the `--headers` set of `coverage.mjs`: 711 `.ts`/`.tsx` files, 62,022 lines at 7d26258. Groups are prefix-based; each file is in the first group whose prefix matches. JSDoc is required only in `lib/`, route handlers and Edge Functions, so those groups are smaller.
 
 | Session | Prefixes | Files | Lines |
 |---|---|---|---|
@@ -1046,12 +1060,14 @@ Scope is the `--headers` set of `coverage.mjs`: 711 `.ts`/`.tsx` files, 62,022 l
 
 Each session ends with `node scripts/docs/assert-comment-only.mjs <base-ref>` and `node scripts/docs/coverage.mjs --headers` (the count must drop by the session's file count).
 
-## 5. Questions for Ahmed
+## 5. Decisions (Ahmed, 2026-10-07)
 
-1. Stage numbers. I assumed 5 = architecture, 6 = the five deep dives, 7 = the other subsystems, 8 = reference, how-to and README, 10 = comments. **Default: as assumed.** If the stages mean something else, only section 4 changes.
-2. Number of subsystem docs. You expected 10 to 14; this plan has 16. Recruiters and universities each have more code than one session can read (about 10,600 and 10,200 lines), so each is split in two along its migrations. **Default: keep 16.** The alternative is 14 docs, with two of them written over two sessions each.
-3. Stage 2 is on `codex/docs-stage-2` (da73a5b) and not merged into `docs/code`. Stage 5 needs `reference/schema/`, `live-inventory.md` and `drift.md`. **Default: you merge it into `docs/code` before stage 5 starts.** I did not touch that branch.
-4. Files that serve two docs, such as `lib/actions/uni.ts`, `lib/actions/recruit.ts` and `phase3_answers.sql`. The comment rule wants one `Docs:` line per file. **Default: one `Docs:` line naming the main doc (the doc in the coverage map); the other doc names the file under "Also reads".**
-5. Tests. CONVENTIONS forbids documenting tests one by one, and coverage skips them. **Default: environments-and-deploy gets one "Tests" section (suites, folders, how pgTAP is numbered, which command runs what), and howto/debug points to the suite for each pipeline.**
-6. `reference/rpc.md` will list several hundred `public` functions. **Default: stage 8.3 writes a small generator in `scripts/docs/` that lists name, arguments, defining migration and caller files, and the session writes only the prose on top.** The alternative is to write it all by hand, which is about two sessions.
-7. Non-source files (CSS tokens, `supabase/config.toml`, email templates, `skills.yaml`, the HEC CSV, workflows) are not checked by `coverage.mjs`. I named them under each doc's "Covers". **Default: leave the script as it is.**
+1. Stage numbers: as listed at the top of section 4.
+2. Sixteen subsystem docs are kept; recruiters and universities each stay split in two.
+3. Stage 2 is merged into `main` (PR 72) and from there into `docs/code`.
+4. A file that serves two docs carries one `Docs:` line naming the doc it is mapped to in the coverage map; the other doc names it under "Also reads".
+5. Tests: architecture/environments-and-deploy has one "Tests" section (suites, folders, pgTAP numbering, which command runs what); howto/debug points to the suite for each pipeline. No test is documented on its own.
+6. `reference/rpc.md` and the other stage 7 lists come from generator scripts in `scripts/docs/`; sessions write only the prose.
+7. Non-source files stay outside `coverage.mjs`; each doc names them under "Covers".
+
+Defaults taken in this revision (not asked): `reference/env.md` goes in stage 7 with rpc.md because both are script-listed tables; the how-to docs and README go in a last stage 7 session so that stage 8 verifies them; stage 8's standard-subsystem slice is split in three.

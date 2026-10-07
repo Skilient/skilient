@@ -1,0 +1,2956 @@
+{
+  "checked_on": "2026-10-07",
+  "newest_production_migration": "20261104000000",
+  "objects": [
+    {
+      "kind": "cron",
+      "schema": "cron",
+      "name": "job-watchdog",
+      "local_md5": "c1aa4d82785190a9854f6778b5d0b90b",
+      "production_md5": null,
+      "local": {
+        "active": true,
+        "command": "select private.job_watchdog()",
+        "schedule": "*/10 * * * *"
+      },
+      "production": null
+    },
+    {
+      "kind": "cron",
+      "schema": "cron",
+      "name": "purge-monitoring",
+      "local_md5": "fcd060493efd1cfaab05413670d8e7dc",
+      "production_md5": null,
+      "local": {
+        "active": true,
+        "command": "select private.purge_monitoring()",
+        "schedule": "43 3 * * *"
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "extensions",
+      "name": "grant_pg_cron_access()",
+      "local_md5": "975505ee3ec6d467f7a677b7d4fd05a0",
+      "production_md5": "295b8eab75c96bfc73ddb76fb404fda9",
+      "local": {
+        "config": null,
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.grant_pg_cron_access()\n RETURNS event_trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  IF EXISTS (\n    SELECT\n    FROM pg_event_trigger_ddl_commands() AS ev\n    JOIN pg_extension AS ext\n    ON ev.objid = ext.oid\n    WHERE ext.extname = 'pg_cron'\n  )\n  THEN\n    grant usage on schema cron to postgres with grant option;\n\n    alter default privileges in schema cron grant all on tables to postgres with grant option;\n    alter default privileges in schema cron grant all on functions to postgres with grant option;\n    alter default privileges in schema cron grant all on sequences to postgres with grant option;\n\n    alter default privileges for user supabase_admin in schema cron grant all\n        on sequences to postgres with grant option;\n    alter default privileges for user supabase_admin in schema cron grant all\n        on tables to postgres with grant option;\n    alter default privileges for user supabase_admin in schema cron grant all\n        on functions to postgres with grant option;\n\n    grant all privileges on all tables in schema cron to postgres with grant option;\n    revoke all on table cron.job from postgres;\n    grant select on table cron.job to postgres with grant option;\n    revoke trigger on cron.job_run_details from postgres cascade;\n  END IF;\nEND;\n$function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "dashboard_user"
+        ],
+        "security_definer": false
+      },
+      "production": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.grant_pg_cron_access()\n RETURNS event_trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nBEGIN\n  IF EXISTS (\n    SELECT\n    FROM pg_event_trigger_ddl_commands() AS ev\n    JOIN pg_extension AS ext\n    ON ev.objid = ext.oid\n    WHERE ext.extname = 'pg_cron'\n  )\n  THEN\n    grant usage on schema cron to postgres with grant option;\n\n    alter default privileges in schema cron grant all on tables to postgres with grant option;\n    alter default privileges in schema cron grant all on functions to postgres with grant option;\n    alter default privileges in schema cron grant all on sequences to postgres with grant option;\n\n    alter default privileges for user supabase_admin in schema cron grant all\n        on sequences to postgres with grant option;\n    alter default privileges for user supabase_admin in schema cron grant all\n        on tables to postgres with grant option;\n    alter default privileges for user supabase_admin in schema cron grant all\n        on functions to postgres with grant option;\n\n    grant all privileges on all tables in schema cron to postgres with grant option;\n    revoke all on table cron.job from postgres;\n    grant select on table cron.job to postgres with grant option;\n    revoke trigger on cron.job_run_details from postgres;\n  END IF;\nEND;\n$function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "dashboard_user"
+        ],
+        "security_definer": false
+      }
+    },
+    {
+      "kind": "function",
+      "schema": "extensions",
+      "name": "grant_pg_graphql_access()",
+      "local_md5": "c1cf0cd484e4f679790da92227ba3cc3",
+      "production_md5": "9b77cd7417242029de388d7866b5ab76",
+      "local": {
+        "config": null,
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.grant_pg_graphql_access()\n RETURNS event_trigger\n LANGUAGE plpgsql\nAS $function$\nbegin\n    if not exists (\n        select 1\n        from pg_event_trigger_ddl_commands() ev\n        join pg_catalog.pg_extension e on ev.objid = e.oid\n        where e.extname = 'pg_graphql'\n    ) then\n        return;\n    end if;\n\n    drop function if exists graphql_public.graphql;\n    create or replace function graphql_public.graphql(\n        \"operationName\" text default null,\n        query text default null,\n        variables jsonb default null,\n        extensions jsonb default null\n    )\n        returns jsonb\n        language sql\n    as $$\n        select graphql.resolve(\n            query := query,\n            variables := coalesce(variables, '{}'),\n            \"operationName\" := \"operationName\",\n            extensions := extensions\n        );\n    $$;\n\n    -- Attach the wrapper to the extension so DROP EXTENSION cascades to it,\n    -- which in turn triggers set_graphql_placeholder to reinstall the \"not enabled\" stub.\n    alter extension pg_graphql add function graphql_public.graphql(text, text, jsonb, jsonb);\n\n    grant usage on schema graphql to postgres, anon, authenticated, service_role;\n    grant execute on function graphql.resolve to postgres, anon, authenticated, service_role;\n    grant usage on schema graphql to postgres with grant option;\n    grant usage on schema graphql_public to postgres with grant option;\nend;\n$function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "postgres"
+        ],
+        "security_definer": false
+      },
+      "production": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.grant_pg_graphql_access()\n RETURNS event_trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nbegin\n    if not exists (\n        select 1\n        from pg_catalog.pg_event_trigger_ddl_commands() ev\n        join pg_catalog.pg_extension e on ev.objid = e.oid\n        where e.extname = 'pg_graphql'\n    ) then\n        return;\n    end if;\n\n    drop function if exists graphql_public.graphql;\n    create or replace function graphql_public.graphql(\n        \"operationName\" text default null,\n        query text default null,\n        variables jsonb default null,\n        extensions jsonb default null\n    )\n        returns jsonb\n        language sql\n    as $$\n        select graphql.resolve(\n            query := query,\n            variables := coalesce(variables, '{}'),\n            \"operationName\" := \"operationName\",\n            extensions := extensions\n        );\n    $$;\n\n    -- Attach the wrapper to the extension so DROP EXTENSION cascades to it,\n    -- which in turn triggers set_graphql_placeholder to reinstall the \"not enabled\" stub.\n    alter extension pg_graphql add function graphql_public.graphql(text, text, jsonb, jsonb);\n\n    grant usage on schema graphql to postgres, anon, authenticated, service_role;\n    grant execute on function graphql.resolve to postgres, anon, authenticated, service_role;\n    grant usage on schema graphql to postgres with grant option;\n    grant usage on schema graphql_public to postgres with grant option;\nend;\n$function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "postgres"
+        ],
+        "security_definer": false
+      }
+    },
+    {
+      "kind": "function",
+      "schema": "extensions",
+      "name": "grant_pg_net_access()",
+      "local_md5": "26bdc598758e55fbbd2ea2cffafff38f",
+      "production_md5": "5c0322f39cfe9dd8c44531295f0b570f",
+      "local": {
+        "config": null,
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.grant_pg_net_access()\n RETURNS event_trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n  IF EXISTS (\n    SELECT 1\n    FROM pg_event_trigger_ddl_commands() AS ev\n    JOIN pg_extension AS ext\n    ON ev.objid = ext.oid\n    WHERE ext.extname = 'pg_net'\n  )\n  THEN\n    GRANT USAGE ON SCHEMA net TO supabase_functions_admin, postgres, anon, authenticated, service_role;\n\n    ALTER function net.http_get(url text, params jsonb, headers jsonb, timeout_milliseconds integer) SECURITY DEFINER;\n    ALTER function net.http_post(url text, body jsonb, params jsonb, headers jsonb, timeout_milliseconds integer) SECURITY DEFINER;\n\n    ALTER function net.http_get(url text, params jsonb, headers jsonb, timeout_milliseconds integer) SET search_path = net;\n    ALTER function net.http_post(url text, body jsonb, params jsonb, headers jsonb, timeout_milliseconds integer) SET search_path = net;\n\n    REVOKE ALL ON FUNCTION net.http_get(url text, params jsonb, headers jsonb, timeout_milliseconds integer) FROM PUBLIC;\n    REVOKE ALL ON FUNCTION net.http_post(url text, body jsonb, params jsonb, headers jsonb, timeout_milliseconds integer) FROM PUBLIC;\n\n    GRANT EXECUTE ON FUNCTION net.http_get(url text, params jsonb, headers jsonb, timeout_milliseconds integer) TO supabase_functions_admin, postgres, anon, authenticated, service_role;\n    GRANT EXECUTE ON FUNCTION net.http_post(url text, body jsonb, params jsonb, headers jsonb, timeout_milliseconds integer) TO supabase_functions_admin, postgres, anon, authenticated, service_role;\n  END IF;\nEND;\n$function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "dashboard_user"
+        ],
+        "security_definer": false
+      },
+      "production": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.grant_pg_net_access()\n RETURNS event_trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nBEGIN\n  IF EXISTS (\n    SELECT 1\n    FROM pg_event_trigger_ddl_commands() AS ev\n    JOIN pg_extension AS ext\n    ON ev.objid = ext.oid\n    WHERE ext.extname = 'pg_net'\n  )\n  THEN\n    IF NOT EXISTS (\n      SELECT 1\n      FROM pg_roles\n      WHERE rolname = 'supabase_functions_admin'\n    )\n    THEN\n      CREATE USER supabase_functions_admin NOINHERIT CREATEROLE LOGIN NOREPLICATION;\n    END IF;\n\n    GRANT USAGE ON SCHEMA net TO supabase_functions_admin, postgres, anon, authenticated, service_role;\n\n    IF EXISTS (\n      SELECT FROM pg_extension\n      WHERE extname = 'pg_net'\n      -- all versions in use on existing projects as of 2025-02-20\n      -- version 0.12.0 onwards don't need these applied\n      AND extversion IN ('0.2', '0.6', '0.7', '0.7.1', '0.8.0', '0.10.0', '0.11.0')\n    ) THEN\n      ALTER function net.http_get(url text, params jsonb, headers jsonb, timeout_milliseconds integer) SECURITY DEFINER;\n      ALTER function net.http_post(url text, body jsonb, params jsonb, headers jsonb, timeout_milliseconds integer) SECURITY DEFINER;\n\n      ALTER function net.http_get(url text, params jsonb, headers jsonb, timeout_milliseconds integer) SET search_path = net;\n      ALTER function net.http_post(url text, body jsonb, params jsonb, headers jsonb, timeout_milliseconds integer) SET search_path = net;\n\n      REVOKE ALL ON FUNCTION net.http_get(url text, params jsonb, headers jsonb, timeout_milliseconds integer) FROM PUBLIC;\n      REVOKE ALL ON FUNCTION net.http_post(url text, body jsonb, params jsonb, headers jsonb, timeout_milliseconds integer) FROM PUBLIC;\n\n      GRANT EXECUTE ON FUNCTION net.http_get(url text, params jsonb, headers jsonb, timeout_milliseconds integer) TO supabase_functions_admin, postgres, anon, authenticated, service_role;\n      GRANT EXECUTE ON FUNCTION net.http_post(url text, body jsonb, params jsonb, headers jsonb, timeout_milliseconds integer) TO supabase_functions_admin, postgres, anon, authenticated, service_role;\n    END IF;\n  END IF;\nEND;\n$function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "dashboard_user"
+        ],
+        "security_definer": false
+      }
+    },
+    {
+      "kind": "function",
+      "schema": "extensions",
+      "name": "pgrst_ddl_watch()",
+      "local_md5": "85bc31757dc5e7782e146a8da2bfb195",
+      "production_md5": "629ff31441f7869734b068e786be3b60",
+      "local": {
+        "config": null,
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.pgrst_ddl_watch()\n RETURNS event_trigger\n LANGUAGE plpgsql\nAS $function$\nDECLARE\n  cmd record;\nBEGIN\n  FOR cmd IN SELECT * FROM pg_event_trigger_ddl_commands()\n  LOOP\n    IF cmd.command_tag IN (\n      'CREATE SCHEMA', 'ALTER SCHEMA'\n    , 'CREATE TABLE', 'CREATE TABLE AS', 'SELECT INTO', 'ALTER TABLE'\n    , 'CREATE FOREIGN TABLE', 'ALTER FOREIGN TABLE'\n    , 'CREATE VIEW', 'ALTER VIEW'\n    , 'CREATE MATERIALIZED VIEW', 'ALTER MATERIALIZED VIEW'\n    , 'CREATE FUNCTION', 'ALTER FUNCTION'\n    , 'CREATE TRIGGER'\n    , 'CREATE TYPE', 'ALTER TYPE'\n    , 'CREATE RULE'\n    , 'COMMENT'\n    )\n    -- don't notify in case of CREATE TEMP table or other objects created on pg_temp\n    AND cmd.schema_name is distinct from 'pg_temp'\n    THEN\n      NOTIFY pgrst, 'reload schema';\n    END IF;\n  END LOOP;\nEND; $function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "postgres"
+        ],
+        "security_definer": false
+      },
+      "production": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.pgrst_ddl_watch()\n RETURNS event_trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nDECLARE\n  cmd record;\nBEGIN\n  FOR cmd IN SELECT * FROM pg_event_trigger_ddl_commands()\n  LOOP\n    IF cmd.command_tag IN (\n      'CREATE SCHEMA', 'ALTER SCHEMA'\n    , 'CREATE TABLE', 'CREATE TABLE AS', 'SELECT INTO', 'ALTER TABLE'\n    , 'CREATE FOREIGN TABLE', 'ALTER FOREIGN TABLE'\n    , 'CREATE VIEW', 'ALTER VIEW'\n    , 'CREATE MATERIALIZED VIEW', 'ALTER MATERIALIZED VIEW'\n    , 'CREATE FUNCTION', 'ALTER FUNCTION'\n    , 'CREATE TRIGGER'\n    , 'CREATE TYPE', 'ALTER TYPE'\n    , 'CREATE RULE'\n    , 'COMMENT'\n    )\n    -- don't notify in case of CREATE TEMP table or other objects created on pg_temp\n    AND cmd.schema_name is distinct from 'pg_temp'\n    THEN\n      NOTIFY pgrst, 'reload schema';\n    END IF;\n  END LOOP;\nEND; $function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "postgres"
+        ],
+        "security_definer": false
+      }
+    },
+    {
+      "kind": "function",
+      "schema": "extensions",
+      "name": "pgrst_drop_watch()",
+      "local_md5": "1b961fe64d139cb3a4f74a50a8ee126d",
+      "production_md5": "55b754cc01636d6cfbb9499bd478fc9e",
+      "local": {
+        "config": null,
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.pgrst_drop_watch()\n RETURNS event_trigger\n LANGUAGE plpgsql\nAS $function$\nDECLARE\n  obj record;\nBEGIN\n  FOR obj IN SELECT * FROM pg_event_trigger_dropped_objects()\n  LOOP\n    IF obj.object_type IN (\n      'schema'\n    , 'table'\n    , 'foreign table'\n    , 'view'\n    , 'materialized view'\n    , 'function'\n    , 'trigger'\n    , 'type'\n    , 'rule'\n    )\n    AND obj.is_temporary IS false -- no pg_temp objects\n    THEN\n      NOTIFY pgrst, 'reload schema';\n    END IF;\n  END LOOP;\nEND; $function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "postgres"
+        ],
+        "security_definer": false
+      },
+      "production": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.pgrst_drop_watch()\n RETURNS event_trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nDECLARE\n  obj record;\nBEGIN\n  FOR obj IN SELECT * FROM pg_event_trigger_dropped_objects()\n  LOOP\n    IF obj.object_type IN (\n      'schema'\n    , 'table'\n    , 'foreign table'\n    , 'view'\n    , 'materialized view'\n    , 'function'\n    , 'trigger'\n    , 'type'\n    , 'rule'\n    )\n    AND obj.is_temporary IS false -- no pg_temp objects\n    THEN\n      NOTIFY pgrst, 'reload schema';\n    END IF;\n  END LOOP;\nEND; $function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "postgres"
+        ],
+        "security_definer": false
+      }
+    },
+    {
+      "kind": "function",
+      "schema": "extensions",
+      "name": "set_graphql_placeholder()",
+      "local_md5": "913acbc8054e04aef95c01f581d1e66e",
+      "production_md5": "94c5917dad30cc08b15a73da5b3f2341",
+      "local": {
+        "config": null,
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.set_graphql_placeholder()\n RETURNS event_trigger\n LANGUAGE plpgsql\nAS $function$\n    DECLARE\n    graphql_is_dropped bool;\n    BEGIN\n    graphql_is_dropped = (\n        SELECT ev.schema_name = 'graphql_public'\n        FROM pg_event_trigger_dropped_objects() AS ev\n        WHERE ev.schema_name = 'graphql_public'\n    );\n\n    IF graphql_is_dropped\n    THEN\n        create or replace function graphql_public.graphql(\n            \"operationName\" text default null,\n            query text default null,\n            variables jsonb default null,\n            extensions jsonb default null\n        )\n            returns jsonb\n            language plpgsql\n        as $$\n            DECLARE\n                server_version float;\n            BEGIN\n                server_version = (SELECT (SPLIT_PART((select version()), ' ', 2))::float);\n\n                IF server_version >= 14 THEN\n                    RETURN jsonb_build_object(\n                        'errors', jsonb_build_array(\n                            jsonb_build_object(\n                                'message', 'pg_graphql extension is not enabled.'\n                            )\n                        )\n                    );\n                ELSE\n                    RETURN jsonb_build_object(\n                        'errors', jsonb_build_array(\n                            jsonb_build_object(\n                                'message', 'pg_graphql is only available on projects running Postgres 14 onwards.'\n                            )\n                        )\n                    );\n                END IF;\n            END;\n        $$;\n    END IF;\n\n    END;\n$function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "postgres"
+        ],
+        "security_definer": false
+      },
+      "production": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION extensions.set_graphql_placeholder()\n RETURNS event_trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\n    DECLARE\n    graphql_is_dropped bool;\n    BEGIN\n    graphql_is_dropped = (\n        SELECT ev.schema_name = 'graphql_public'\n        FROM pg_event_trigger_dropped_objects() AS ev\n        WHERE ev.schema_name = 'graphql_public'\n    );\n\n    IF graphql_is_dropped\n    THEN\n        create or replace function graphql_public.graphql(\n            \"operationName\" text default null,\n            query text default null,\n            variables jsonb default null,\n            extensions jsonb default null\n        )\n            returns jsonb\n            language plpgsql\n            set search_path to ''\n        as $$\n            DECLARE\n                server_version float;\n            BEGIN\n                server_version = (SELECT (SPLIT_PART((select version()), ' ', 2))::float);\n\n                IF server_version >= 14 THEN\n                    RETURN jsonb_build_object(\n                        'errors', jsonb_build_array(\n                            jsonb_build_object(\n                                'message', 'pg_graphql extension is not enabled.'\n                            )\n                        )\n                    );\n                ELSE\n                    RETURN jsonb_build_object(\n                        'errors', jsonb_build_array(\n                            jsonb_build_object(\n                                'message', 'pg_graphql is only available on projects running Postgres 14 onwards.'\n                            )\n                        )\n                    );\n                END IF;\n            END;\n        $$;\n    END IF;\n\n    END;\n$function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "postgres"
+        ],
+        "security_definer": false
+      }
+    },
+    {
+      "kind": "function",
+      "schema": "net",
+      "name": "http_get(url text, params jsonb, headers jsonb, timeout_milliseconds integer)",
+      "local_md5": "0ad4e2d799b3af175034896362442a0e",
+      "production_md5": "775047b746a115af975f5461b13121ce",
+      "local": {
+        "config": [
+          "search_path=net"
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION net.http_get(url text, params jsonb DEFAULT '{}'::jsonb, headers jsonb DEFAULT '{}'::jsonb, timeout_milliseconds integer DEFAULT 5000)\n RETURNS bigint\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'net'\nAS $function$\ndeclare\n    request_id bigint;\n    params_array text[];\nbegin\n    select coalesce(array_agg(net._urlencode_string(key) || '=' || net._urlencode_string(value)), '{}')\n    into params_array\n    from jsonb_each_text(params);\n\n    -- Add to the request queue\n    insert into net.http_request_queue(method, url, headers, timeout_milliseconds)\n    values (\n        'GET',\n        net._encode_url_with_params_array(url, params_array),\n        headers,\n        timeout_milliseconds\n    )\n    returning id\n    into request_id;\n\n    perform net.wake();\n\n    return request_id;\nend\n$function$\n",
+        "execute_grants": [
+          "anon",
+          "authenticated",
+          "postgres",
+          "service_role",
+          "supabase_functions_admin"
+        ],
+        "security_definer": true
+      },
+      "production": {
+        "config": null,
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION net.http_get(url text, params jsonb DEFAULT '{}'::jsonb, headers jsonb DEFAULT '{}'::jsonb, timeout_milliseconds integer DEFAULT 5000)\n RETURNS bigint\n LANGUAGE plpgsql\nAS $function$\ndeclare\n    request_id bigint;\n    params_array text[];\nbegin\n    select coalesce(array_agg(net._urlencode_string(key) || '=' || net._urlencode_string(value)), '{}')\n    into params_array\n    from jsonb_each_text(params);\n\n    -- Add to the request queue\n    insert into net.http_request_queue(method, url, headers, timeout_milliseconds)\n    values (\n        'GET',\n        net._encode_url_with_params_array(url, params_array),\n        headers,\n        timeout_milliseconds\n    )\n    returning id\n    into request_id;\n\n    perform net.wake();\n\n    return request_id;\nend\n$function$\n",
+        "execute_grants": [
+          "PUBLIC"
+        ],
+        "security_definer": false
+      }
+    },
+    {
+      "kind": "function",
+      "schema": "net",
+      "name": "http_post(url text, body jsonb, params jsonb, headers jsonb, timeout_milliseconds integer)",
+      "local_md5": "3ae3ec9ad25875f60eb6c8afc1d665e0",
+      "production_md5": "c6355f6c586a08e1be473f24932f24ca",
+      "local": {
+        "config": [
+          "search_path=net"
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION net.http_post(url text, body jsonb DEFAULT '{}'::jsonb, params jsonb DEFAULT '{}'::jsonb, headers jsonb DEFAULT '{\"Content-Type\": \"application/json\"}'::jsonb, timeout_milliseconds integer DEFAULT 5000)\n RETURNS bigint\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'net'\nAS $function$\ndeclare\n    request_id bigint;\n    params_array text[];\n    content_type text;\nbegin\n\n    -- Exctract the content_type from headers\n    select\n        header_value into content_type\n    from\n        jsonb_each_text(coalesce(headers, '{}'::jsonb)) r(header_name, header_value)\n    where\n        lower(header_name) = 'content-type'\n    limit\n        1;\n\n    -- If the user provided new headers and omitted the content type\n    -- add it back in automatically\n    if content_type is null then\n        select headers || '{\"Content-Type\": \"application/json\"}'::jsonb into headers;\n    end if;\n\n    -- Confirm that the content-type is set as \"application/json\"\n    if content_type <> 'application/json' then\n        raise exception 'Content-Type header must be \"application/json\"';\n    end if;\n\n    select\n        coalesce(array_agg(net._urlencode_string(key) || '=' || net._urlencode_string(value)), '{}')\n    into\n        params_array\n    from\n        jsonb_each_text(params);\n\n    -- Add to the request queue\n    insert into net.http_request_queue(method, url, headers, body, timeout_milliseconds)\n    values (\n        'POST',\n        net._encode_url_with_params_array(url, params_array),\n        headers,\n        convert_to(body::text, 'UTF8'),\n        timeout_milliseconds\n    )\n    returning id\n    into request_id;\n\n    perform net.wake();\n\n    return request_id;\nend\n$function$\n",
+        "execute_grants": [
+          "anon",
+          "authenticated",
+          "postgres",
+          "service_role",
+          "supabase_functions_admin"
+        ],
+        "security_definer": true
+      },
+      "production": {
+        "config": null,
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION net.http_post(url text, body jsonb DEFAULT '{}'::jsonb, params jsonb DEFAULT '{}'::jsonb, headers jsonb DEFAULT '{\"Content-Type\": \"application/json\"}'::jsonb, timeout_milliseconds integer DEFAULT 5000)\n RETURNS bigint\n LANGUAGE plpgsql\nAS $function$\ndeclare\n    request_id bigint;\n    params_array text[];\n    content_type text;\nbegin\n\n    -- Exctract the content_type from headers\n    select\n        header_value into content_type\n    from\n        jsonb_each_text(coalesce(headers, '{}'::jsonb)) r(header_name, header_value)\n    where\n        lower(header_name) = 'content-type'\n    limit\n        1;\n\n    -- If the user provided new headers and omitted the content type\n    -- add it back in automatically\n    if content_type is null then\n        select headers || '{\"Content-Type\": \"application/json\"}'::jsonb into headers;\n    end if;\n\n    -- Confirm that the content-type is set as \"application/json\"\n    if content_type <> 'application/json' then\n        raise exception 'Content-Type header must be \"application/json\"';\n    end if;\n\n    select\n        coalesce(array_agg(net._urlencode_string(key) || '=' || net._urlencode_string(value)), '{}')\n    into\n        params_array\n    from\n        jsonb_each_text(params);\n\n    -- Add to the request queue\n    insert into net.http_request_queue(method, url, headers, body, timeout_milliseconds)\n    values (\n        'POST',\n        net._encode_url_with_params_array(url, params_array),\n        headers,\n        convert_to(body::text, 'UTF8'),\n        timeout_milliseconds\n    )\n    returning id\n    into request_id;\n\n    perform net.wake();\n\n    return request_id;\nend\n$function$\n",
+        "execute_grants": [
+          "PUBLIC"
+        ],
+        "security_definer": false
+      }
+    },
+    {
+      "kind": "function",
+      "schema": "pgbouncer",
+      "name": "get_auth(p_usename text)",
+      "local_md5": "dfbfc2147338cdfb9f230294ba93b268",
+      "production_md5": "77bb4383a58e84d859cea122f3b48765",
+      "local": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION pgbouncer.get_auth(p_usename text)\n RETURNS TABLE(username text, password text)\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\nbegin\n    raise debug 'PgBouncer auth request: %', p_usename;\n\n    return query\n    select \n        rolname::text, \n        case when rolvaliduntil < now() \n            then null \n            else rolpassword::text \n        end \n    from pg_authid \n    where rolname=$1 and rolcanlogin;\nend;\n$function$\n",
+        "execute_grants": [
+          "pgbouncer"
+        ],
+        "security_definer": true
+      },
+      "production": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION pgbouncer.get_auth(p_usename text)\n RETURNS TABLE(username text, password text)\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\n  BEGIN\n      RAISE DEBUG 'PgBouncer auth request: %', p_usename;\n\n      RETURN QUERY\n      SELECT\n          rolname::text,\n          CASE WHEN rolvaliduntil < now()\n              THEN null\n              ELSE rolpassword::text\n          END\n      FROM pg_authid\n      WHERE rolname=$1 and rolcanlogin;\n  END;\n  $function$\n",
+        "execute_grants": [
+          "pgbouncer"
+        ],
+        "security_definer": true
+      }
+    },
+    {
+      "kind": "function",
+      "schema": "private",
+      "name": "alert_conditions()",
+      "local_md5": "7c7747d607ba671315792c8df0c04ffd",
+      "production_md5": null,
+      "local": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION private.alert_conditions()\n RETURNS TABLE(key text, title text, detail text)\n LANGUAGE plpgsql\n STABLE SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare\n  v_queue record;\n  v_oldest timestamptz;\n  v_total numeric;\n  v_bounced numeric;\n  v_p75 numeric;\n  v_n integer;\n  v_ratio numeric;\nbegin\n  -- Scheduled jobs that failed in the last 15 minutes (pg_cron's own log, and job_runs for jobs that catch their errors).\n  return query\n  select distinct on (j.jobname) 'job_failed:' || j.jobname, 'Scheduled job failed: ' || j.jobname,\n         'pg_cron reported: ' || left(coalesce(d.return_message, 'no message'), 300)\n    from cron.job_run_details d join cron.job j on j.jobid = d.jobid\n   where d.status = 'failed' and d.end_time > now() - interval '15 minutes'\n   order by j.jobname, d.end_time desc;\n\n  return query\n  select distinct on (r.job) 'job_failed:' || r.job, 'Scheduled job failed: ' || r.job,\n         'job_runs: ' || left(coalesce(r.error, 'no error text'), 300)\n    from public.job_runs r\n   where r.status = 'failed' and r.finished_at > now() - interval '15 minutes'\n   order by r.job, r.finished_at desc;\n\n  -- Runs longer than twice their usual length (and at least job_slow_minutes).\n  return query\n  select 'job_slow:' || r.job, 'Scheduled job running long: ' || r.job,\n         'Started ' || to_char(r.started_at at time zone 'Asia/Karachi', 'YYYY-MM-DD HH24:MI') || ' PKT, usually takes '\n           || coalesce(to_char(m.median, 'HH24:MI:SS'), 'unknown') || '.'\n    from public.job_runs r\n    left join lateral (\n      select percentile_cont(0.5) within group (order by x.finished_at - x.started_at) as median\n        from (select finished_at, started_at from public.job_runs\n               where job = r.job and status = 'succeeded' order by started_at desc limit 20) x\n    ) m on true\n   where r.status = 'running'\n     and now() - r.started_at > greatest(make_interval(mins => private.alert_limit('job_slow_minutes')::integer),\n                                          2 * coalesce(m.median, interval '0'));\n\n  -- Missed schedules: no start for more than twice the job's usual gap (and at least 15 minutes).\n  return query\n  with runs as (\n    select d.jobid, d.start_time,\n           d.start_time - lag(d.start_time) over (partition by d.jobid order by d.start_time) as gap\n      from cron.job_run_details d\n     where d.start_time > now() - interval '3 days'\n  ), stats as (\n    select jobid, percentile_cont(0.5) within group (order by gap) as median_gap, max(start_time) as last_start, count(*) as n\n      from runs group by jobid\n  )\n  select 'job_missed:' || j.jobname, 'Scheduled job missed its schedule: ' || j.jobname,\n         'Last started ' || to_char(s.last_start at time zone 'Asia/Karachi', 'YYYY-MM-DD HH24:MI') || ' PKT; it usually runs every '\n           || to_char(s.median_gap, 'HH24:MI:SS') || '.'\n    from stats s join cron.job j on j.jobid = s.jobid\n   where j.active and s.n >= 4 and s.median_gap is not null\n     and now() - s.last_start > greatest(interval '15 minutes', 2 * s.median_gap);\n\n  -- Queues nobody is draining: a message visible for longer than queue_stuck_minutes.\n  for v_queue in select queue_name from pgmq.list_queues() loop\n    execute format('select min(vt) from pgmq.%I where vt < now() - make_interval(mins => $1)', 'q_' || v_queue.queue_name)\n      into v_oldest using private.alert_limit('queue_stuck_minutes')::integer;\n    if v_oldest is not null then\n      return query select 'queue_stuck:' || v_queue.queue_name::text, 'Queue not draining: ' || v_queue.queue_name::text,\n        'A message has waited since ' || to_char(v_oldest at time zone 'Asia/Karachi', 'YYYY-MM-DD HH24:MI')\n          || ' PKT. Is its Edge Function deployed and configured?';\n    end if;\n  end loop;\n\n  -- Payments: webhook signature or storage failures, and stored events not applied.\n  select count(*) into v_n from private.service_signals\n   where kind in ('billing_webhook_rejected', 'billing_webhook_error') and created_at > now() - interval '15 minutes';\n  if v_n > 0 then\n    return query select 'payments_webhook'::text, 'Payment webhooks failing'::text,\n      v_n || ' gateway webhook(s) refused or failed in the last 15 minutes (bad signature, old timestamp or storage error).';\n  end if;\n  select count(*) into v_n from public.billing_webhook_events\n   where processed_at is null and received_at < now() - interval '15 minutes';\n  if v_n > 0 then\n    return query select 'payments_processing'::text, 'Payment events not applied'::text,\n      v_n || ' stored gateway event(s) have waited more than 15 minutes. See /ops/billing.';\n  end if;\n\n  -- Database connections and size.\n  select count(*)::numeric / current_setting('max_connections')::numeric into v_ratio from pg_catalog.pg_stat_activity;\n  if v_ratio > private.alert_limit('connections_ratio') then\n    return query select 'db_connections'::text, 'Database connections high'::text,\n      round(v_ratio * 100) || '% of max_connections in use.';\n  end if;\n  v_ratio := pg_catalog.pg_database_size(current_database())::numeric / private.alert_limit('database_bytes');\n  if v_ratio > private.alert_limit('storage_ratio') then\n    return query select 'db_size'::text, 'Database near its size limit'::text,\n      round(v_ratio * 100) || '% of the plan''s database size (alerts.limits.database_bytes).';\n  end if;\n\n  -- File storage against the plan quota.\n  select coalesce(sum((o.metadata ->> 'size')::numeric), 0) / nullif((private.config('storage.quota_bytes') #>> '{}')::numeric, 0)\n    into v_ratio from storage.objects o;\n  if v_ratio > private.alert_limit('storage_ratio') then\n    return query select 'storage_quota'::text, 'File storage near its quota'::text,\n      round(v_ratio * 100) || '% of storage.quota_bytes used.';\n  end if;\n\n  -- Email bounce rate over the last day (Resend webhook).\n  select count(*) filter (where kind = 'email_bounced'), count(*) into v_bounced, v_total\n    from private.service_signals where kind in ('email_delivered', 'email_bounced') and created_at > now() - interval '1 day';\n  if v_total >= private.alert_limit('bounce_min_sample') and v_bounced / v_total > private.alert_limit('bounce_rate') then\n    return query select 'email_bounce'::text, 'Email bounce rate high'::text,\n      round(v_bounced / v_total * 100, 1) || '% of ' || v_total || ' emails bounced in the last day.';\n  end if;\n\n  -- GitHub rate-limit headroom, lowest sample in the last 15 minutes.\n  select min(value) into v_ratio from private.service_signals where kind = 'github_headroom' and created_at > now() - interval '15 minutes';\n  if v_ratio is not null and v_ratio < private.alert_limit('github_headroom') then\n    return query select 'github_headroom'::text, 'GitHub rate limit nearly used'::text,\n      round(v_ratio * 100) || '% of a GitHub token''s hourly budget left. Imports slow down until it resets.';\n  end if;\n\n  -- Real-user performance: p75 over the last 24 hours.\n  select percentile_cont(0.75) within group (order by value), count(*) into v_p75, v_n\n    from private.web_vitals where metric = 'LCP' and created_at > now() - interval '1 day';\n  if v_n >= private.alert_limit('vitals_min_sample') and v_p75 > private.alert_limit('lcp_ms') then\n    return query select 'perf_lcp'::text, 'Pages loading slowly (LCP)'::text,\n      'p75 Largest Contentful Paint ' || round(v_p75) || ' ms over the last day (' || v_n || ' samples); target '\n        || private.alert_limit('lcp_ms') || ' ms.';\n  end if;\n  select percentile_cont(0.75) within group (order by value), count(*) into v_p75, v_n\n    from private.web_vitals where metric = 'INP' and created_at > now() - interval '1 day';\n  if v_n >= private.alert_limit('vitals_min_sample') and v_p75 > private.alert_limit('inp_ms') then\n    return query select 'perf_inp'::text, 'Pages responding slowly (INP)'::text,\n      'p75 Interaction to Next Paint ' || round(v_p75) || ' ms over the last day (' || v_n || ' samples); target '\n        || private.alert_limit('inp_ms') || ' ms.';\n  end if;\nend;\n$function$\n",
+        "execute_grants": [],
+        "security_definer": true
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "private",
+      "name": "alert_limit(p_name text)",
+      "local_md5": "2f96393f00d464508cc51f6d7078660a",
+      "production_md5": null,
+      "local": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "sql",
+        "definition": "CREATE OR REPLACE FUNCTION private.alert_limit(p_name text)\n RETURNS numeric\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO ''\nAS $function$\n  select (private.config('alerts.limits') ->> p_name)::numeric;\n$function$\n",
+        "execute_grants": [],
+        "security_definer": true
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "private",
+      "name": "job_watchdog()",
+      "local_md5": "cc33d832ef55b9578a31bfc4bee00bd3",
+      "production_md5": null,
+      "local": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION private.job_watchdog()\n RETURNS integer\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare\n  v_run uuid := public.job_run_start('job-watchdog');\n  v_started timestamptz := now(); -- rows touched in this run carry this transaction's now()\n  v_cooldown interval := make_interval(hours => private.alert_limit('cooldown_hours')::integer);\n  v_condition record;\n  v_state private.alert_state;\n  v_sent integer := 0;\nbegin\n  for v_condition in select distinct on (c.key) c.key, c.title, c.detail from private.alert_conditions() c order by c.key loop\n    insert into private.alert_state as s (key, title, detail)\n    values (v_condition.key, v_condition.title, v_condition.detail)\n    on conflict (key) do update\n      set title = excluded.title,\n          detail = excluded.detail,\n          last_seen_at = now(),\n          first_seen_at = case when s.resolved_at is not null then now() else s.first_seen_at end,\n          last_sent_at = case when s.resolved_at is not null then null else s.last_sent_at end,\n          resolved_at = null\n    returning * into v_state;\n    if v_state.last_sent_at is null or v_state.last_sent_at < now() - v_cooldown then\n      perform private.queue_alert_email(v_state.key, 'firing', v_state.title, v_state.detail, v_state.first_seen_at);\n      update private.alert_state set last_sent_at = now() where key = v_state.key;\n      v_sent := v_sent + 1;\n    end if;\n  end loop;\n\n  -- Anything not seen in this run has cleared.\n  for v_state in\n    update private.alert_state set resolved_at = now()\n     where resolved_at is null and last_seen_at < v_started\n    returning *\n  loop\n    if v_state.last_sent_at is not null then\n      perform private.queue_alert_email(v_state.key, 'resolved', v_state.title, v_state.detail, v_state.first_seen_at);\n      v_sent := v_sent + 1;\n    end if;\n  end loop;\n\n  -- A failure rolls this run back; pg_cron's log keeps the error, and the next run reports it as job_failed.\n  perform public.job_run_finish(v_run, 'succeeded', v_sent);\n  return v_sent;\nend;\n$function$\n",
+        "execute_grants": [],
+        "security_definer": true
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "private",
+      "name": "purge_monitoring()",
+      "local_md5": "bf7929fd3abf427fe5d88b8d6fd461d6",
+      "production_md5": null,
+      "local": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "sql",
+        "definition": "CREATE OR REPLACE FUNCTION private.purge_monitoring()\n RETURNS void\n LANGUAGE sql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\n  delete from private.service_signals where created_at < now() - interval '30 days';\n  delete from private.web_vitals where created_at < now() - interval '14 days';\n  delete from private.alert_state where resolved_at < now() - interval '90 days';\n  delete from cron.job_run_details where end_time < now() - interval '7 days';\n$function$\n",
+        "execute_grants": [],
+        "security_definer": true
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "private",
+      "name": "queue_alert_email(p_key text, p_state text, p_title text, p_detail text, p_since timestamp with time zone)",
+      "local_md5": "4eb1601793cec3a6fcd0ea32e029d935",
+      "production_md5": null,
+      "local": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "sql",
+        "definition": "CREATE OR REPLACE FUNCTION private.queue_alert_email(p_key text, p_state text, p_title text, p_detail text, p_since timestamp with time zone)\n RETURNS void\n LANGUAGE sql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\n  select pgmq.send('notification_emails', jsonb_build_object(\n    'kind', 'ops_alert', 'key', p_key, 'state', p_state, 'title', p_title, 'detail', p_detail, 'since', p_since));\n$function$\n",
+        "execute_grants": [],
+        "security_definer": true
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "private",
+      "name": "record_service_signal(p_kind text, p_value numeric)",
+      "local_md5": "e8d8d79e1b1cc84276c5febcca55002c",
+      "production_md5": null,
+      "local": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "sql",
+        "definition": "CREATE OR REPLACE FUNCTION private.record_service_signal(p_kind text, p_value numeric DEFAULT 1)\n RETURNS void\n LANGUAGE sql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\n  insert into private.service_signals (kind, value) values (p_kind, coalesce(p_value, 1));\n$function$\n",
+        "execute_grants": [
+          "service_role"
+        ],
+        "security_definer": true
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "private",
+      "name": "record_web_vitals(p_route text, p_metrics jsonb)",
+      "local_md5": "8e63f79ba36d3d6f97bbce83bb37b448",
+      "production_md5": null,
+      "local": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION private.record_web_vitals(p_route text, p_metrics jsonb)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare\n  v_metric text;\n  v_value numeric;\nbegin\n  if p_route is null or p_route !~ '^/[A-Za-z0-9/:_.-]{0,120}$' or jsonb_typeof(p_metrics) is distinct from 'object' then\n    raise exception 'bad vitals' using errcode = '22023';\n  end if;\n  if (select count(*) from private.web_vitals where created_at > now() - interval '1 day')\n     >= private.alert_limit('vitals_daily_cap') then\n    return;\n  end if;\n  for v_metric in select k from jsonb_object_keys(p_metrics) k loop\n    if v_metric not in ('LCP', 'INP', 'CLS') or jsonb_typeof(p_metrics -> v_metric) <> 'number' then\n      raise exception 'bad vitals' using errcode = '22023';\n    end if;\n    v_value := (p_metrics ->> v_metric)::numeric;\n    if v_value < 0 or v_value >= 600000 then\n      raise exception 'bad vitals' using errcode = '22023';\n    end if;\n    insert into private.web_vitals (route, metric, value) values (p_route, v_metric, v_value);\n  end loop;\nend;\n$function$\n",
+        "execute_grants": [
+          "anon",
+          "authenticated"
+        ],
+        "security_definer": true
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "public",
+      "name": "record_service_signal(p_kind text, p_value numeric)",
+      "local_md5": "4dc833c1546f43dbbb669af50c821dcc",
+      "production_md5": null,
+      "local": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "sql",
+        "definition": "CREATE OR REPLACE FUNCTION public.record_service_signal(p_kind text, p_value numeric DEFAULT 1)\n RETURNS void\n LANGUAGE sql\n SET search_path TO ''\nAS $function$\n  select private.record_service_signal(p_kind, p_value);\n$function$\n",
+        "execute_grants": [
+          "service_role"
+        ],
+        "security_definer": false
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "public",
+      "name": "record_web_vitals(p_route text, p_metrics jsonb)",
+      "local_md5": "42886dc53397ce67a0dc4297cec3e5a5",
+      "production_md5": null,
+      "local": {
+        "config": [
+          "search_path=\"\""
+        ],
+        "language": "sql",
+        "definition": "CREATE OR REPLACE FUNCTION public.record_web_vitals(p_route text, p_metrics jsonb)\n RETURNS void\n LANGUAGE sql\n SET search_path TO ''\nAS $function$\n  select private.record_web_vitals(p_route, p_metrics);\n$function$\n",
+        "execute_grants": [
+          "anon",
+          "authenticated",
+          "service_role"
+        ],
+        "security_definer": false
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "supabase_functions",
+      "name": "http_request()",
+      "local_md5": "5bf49d57e19696aab114a1285d38e17b",
+      "production_md5": null,
+      "local": {
+        "config": [
+          "search_path=supabase_functions"
+        ],
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION supabase_functions.http_request()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'supabase_functions'\nAS $function$\n  DECLARE\n    request_id bigint;\n    payload jsonb;\n    url text := TG_ARGV[0]::text;\n    method text := TG_ARGV[1]::text;\n    headers jsonb DEFAULT '{}'::jsonb;\n    params jsonb DEFAULT '{}'::jsonb;\n    timeout_ms integer DEFAULT 1000;\n  BEGIN\n    IF url IS NULL OR url = 'null' THEN\n      RAISE EXCEPTION 'url argument is missing';\n    END IF;\n\n    IF method IS NULL OR method = 'null' THEN\n      RAISE EXCEPTION 'method argument is missing';\n    END IF;\n\n    IF TG_ARGV[2] IS NULL OR TG_ARGV[2] = 'null' THEN\n      headers = '{\"Content-Type\": \"application/json\"}'::jsonb;\n    ELSE\n      headers = TG_ARGV[2]::jsonb;\n    END IF;\n\n    IF TG_ARGV[3] IS NULL OR TG_ARGV[3] = 'null' THEN\n      params = '{}'::jsonb;\n    ELSE\n      params = TG_ARGV[3]::jsonb;\n    END IF;\n\n    IF TG_ARGV[4] IS NULL OR TG_ARGV[4] = 'null' THEN\n      timeout_ms = 1000;\n    ELSE\n      timeout_ms = TG_ARGV[4]::integer;\n    END IF;\n\n    CASE\n      WHEN method = 'GET' THEN\n        SELECT http_get INTO request_id FROM net.http_get(\n          url,\n          params,\n          headers,\n          timeout_ms\n        );\n      WHEN method = 'POST' THEN\n        payload = jsonb_build_object(\n          'old_record', OLD,\n          'record', NEW,\n          'type', TG_OP,\n          'table', TG_TABLE_NAME,\n          'schema', TG_TABLE_SCHEMA\n        );\n\n        SELECT http_post INTO request_id FROM net.http_post(\n          url,\n          payload,\n          params,\n          headers,\n          timeout_ms\n        );\n      ELSE\n        RAISE EXCEPTION 'method argument % is invalid', method;\n    END CASE;\n\n    INSERT INTO supabase_functions.hooks\n      (hook_table_id, hook_name, request_id)\n    VALUES\n      (TG_RELID, TG_NAME, request_id);\n\n    RETURN NEW;\n  END\n$function$\n",
+        "execute_grants": [
+          "anon",
+          "authenticated",
+          "postgres",
+          "service_role"
+        ],
+        "security_definer": true
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "_realtime",
+      "name": "extensions",
+      "local_md5": "362754c9191a3836cc2f0014ea28a400",
+      "production_md5": null,
+      "local": {
+        "rls": false,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "type",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "settings",
+            "type": "jsonb",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "tenant_external_id",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "inserted_at",
+            "type": "timestamp(0) without time zone",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(0) without time zone",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "extensions_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX extensions_pkey ON _realtime.extensions USING btree (id)"
+          },
+          {
+            "name": "extensions_tenant_external_id_index",
+            "valid": true,
+            "definition": "CREATE INDEX extensions_tenant_external_id_index ON _realtime.extensions USING btree (tenant_external_id)"
+          },
+          {
+            "name": "extensions_tenant_external_id_type_index",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX extensions_tenant_external_id_type_index ON _realtime.extensions USING btree (tenant_external_id, type)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "extensions_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "extensions_tenant_external_id_fkey",
+            "validated": true,
+            "definition": "FOREIGN KEY (tenant_external_id) REFERENCES _realtime.tenants(external_id) ON DELETE CASCADE"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "_realtime",
+      "name": "feature_flags",
+      "local_md5": "30f4b86a1c5a772633d679229e230958",
+      "production_md5": null,
+      "local": {
+        "rls": false,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "name",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "inserted_at",
+            "type": "timestamp(0) without time zone",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(0) without time zone",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "rollout_percentage",
+            "type": "integer",
+            "default": "100",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "bucket_key",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "feature_flags_name_index",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX feature_flags_name_index ON _realtime.feature_flags USING btree (name)"
+          },
+          {
+            "name": "feature_flags_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX feature_flags_pkey ON _realtime.feature_flags USING btree (id)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "feature_flags_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "rollout_percentage_must_be_between_0_and_100",
+            "validated": true,
+            "definition": "CHECK (rollout_percentage >= 0 AND rollout_percentage <= 100)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "_realtime",
+      "name": "schema_migrations",
+      "local_md5": "3fa4d0432b3abe8fbd9ad3a3e3707a6c",
+      "production_md5": null,
+      "local": {
+        "rls": false,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "version",
+            "type": "bigint",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "inserted_at",
+            "type": "timestamp(0) without time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "schema_migrations_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX schema_migrations_pkey ON _realtime.schema_migrations USING btree (version)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "schema_migrations_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (version)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "_realtime",
+      "name": "tenants",
+      "local_md5": "0e964997c32bcdc29b28edff2501c3a5",
+      "production_md5": null,
+      "local": {
+        "rls": false,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "external_id",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "jwt_secret",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "max_concurrent_users",
+            "type": "integer",
+            "default": "200",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "inserted_at",
+            "type": "timestamp(0) without time zone",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp(0) without time zone",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "max_events_per_second",
+            "type": "integer",
+            "default": "100",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "postgres_cdc_default",
+            "type": "text",
+            "default": "'postgres_cdc_rls'::text",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "max_bytes_per_second",
+            "type": "integer",
+            "default": "100000",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "max_channels_per_client",
+            "type": "integer",
+            "default": "100",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "max_joins_per_second",
+            "type": "integer",
+            "default": "500",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "suspend",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "jwt_jwks",
+            "type": "jsonb",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "notify_private_alpha",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "private_only",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "migrations_ran",
+            "type": "integer",
+            "default": "0",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "broadcast_adapter",
+            "type": "character varying(255)",
+            "default": "'gen_rpc'::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "max_presence_events_per_second",
+            "type": "integer",
+            "default": "1000",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "max_payload_size_in_kb",
+            "type": "integer",
+            "default": "3000",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "max_client_presence_events_per_window",
+            "type": "integer",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "client_presence_window_ms",
+            "type": "integer",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "presence_enabled",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "feature_flags",
+            "type": "jsonb",
+            "default": "'{}'::jsonb",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "gcm_migrated_at",
+            "type": "timestamp(0) without time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "tenants_external_id_index",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX tenants_external_id_index ON _realtime.tenants USING btree (external_id)"
+          },
+          {
+            "name": "tenants_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX tenants_pkey ON _realtime.tenants USING btree (id)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "jwt_secret_or_jwt_jwks_required",
+            "validated": true,
+            "definition": "CHECK (jwt_secret IS NOT NULL OR jwt_jwks IS NOT NULL)"
+          },
+          {
+            "name": "tenants_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "auth",
+      "name": "users",
+      "local_md5": "684732426fd3e927e788ecee8abc0960",
+      "production_md5": "eddb7a3ca17652f82cd63136847b7bd7",
+      "local": {
+        "rls": true,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "instance_id",
+            "type": "uuid",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "aud",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "role",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "email",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "encrypted_password",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "email_confirmed_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "invited_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "confirmation_token",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "confirmation_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "recovery_token",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "recovery_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "email_change_token_new",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "email_change",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "email_change_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "last_sign_in_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "raw_app_meta_data",
+            "type": "jsonb",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "raw_user_meta_data",
+            "type": "jsonb",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "is_super_admin",
+            "type": "boolean",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "phone",
+            "type": "text",
+            "default": "NULL::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "phone_confirmed_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "phone_change",
+            "type": "text",
+            "default": "''::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "phone_change_token",
+            "type": "character varying(255)",
+            "default": "''::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "phone_change_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "confirmed_at",
+            "type": "timestamp with time zone",
+            "default": "LEAST(email_confirmed_at, phone_confirmed_at)",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": "s"
+          },
+          {
+            "name": "email_change_token_current",
+            "type": "character varying(255)",
+            "default": "''::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "email_change_confirm_status",
+            "type": "smallint",
+            "default": "0",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "banned_until",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "reauthentication_token",
+            "type": "character varying(255)",
+            "default": "''::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "reauthentication_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "is_sso_user",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "deleted_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "is_anonymous",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "confirmation_token_idx",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX confirmation_token_idx ON auth.users USING btree (confirmation_token) WHERE ((confirmation_token)::text !~ '^[0-9 ]*$'::text)"
+          },
+          {
+            "name": "email_change_token_current_idx",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX email_change_token_current_idx ON auth.users USING btree (email_change_token_current) WHERE ((email_change_token_current)::text !~ '^[0-9 ]*$'::text)"
+          },
+          {
+            "name": "email_change_token_new_idx",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX email_change_token_new_idx ON auth.users USING btree (email_change_token_new) WHERE ((email_change_token_new)::text !~ '^[0-9 ]*$'::text)"
+          },
+          {
+            "name": "reauthentication_token_idx",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX reauthentication_token_idx ON auth.users USING btree (reauthentication_token) WHERE ((reauthentication_token)::text !~ '^[0-9 ]*$'::text)"
+          },
+          {
+            "name": "recovery_token_idx",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX recovery_token_idx ON auth.users USING btree (recovery_token) WHERE ((recovery_token)::text !~ '^[0-9 ]*$'::text)"
+          },
+          {
+            "name": "users_email_partial_key",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX users_email_partial_key ON auth.users USING btree (email) WHERE (is_sso_user = false)"
+          },
+          {
+            "name": "users_instance_id_email_idx",
+            "valid": true,
+            "definition": "CREATE INDEX users_instance_id_email_idx ON auth.users USING btree (instance_id, lower((email)::text))"
+          },
+          {
+            "name": "users_instance_id_idx",
+            "valid": true,
+            "definition": "CREATE INDEX users_instance_id_idx ON auth.users USING btree (instance_id)"
+          },
+          {
+            "name": "users_is_anonymous_idx",
+            "valid": true,
+            "definition": "CREATE INDEX users_is_anonymous_idx ON auth.users USING btree (is_anonymous)"
+          },
+          {
+            "name": "users_phone_key",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX users_phone_key ON auth.users USING btree (phone)"
+          },
+          {
+            "name": "users_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX users_pkey ON auth.users USING btree (id)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "users_email_change_confirm_status_check",
+            "validated": true,
+            "definition": "CHECK (email_change_confirm_status >= 0 AND email_change_confirm_status <= 2)"
+          },
+          {
+            "name": "users_phone_key",
+            "validated": true,
+            "definition": "UNIQUE (phone)"
+          },
+          {
+            "name": "users_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "production": {
+        "rls": true,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "instance_id",
+            "type": "uuid",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "aud",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "role",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "email",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "encrypted_password",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "email_confirmed_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "invited_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "confirmation_token",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "confirmation_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "recovery_token",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "recovery_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "email_change_token_new",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "email_change",
+            "type": "character varying(255)",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "email_change_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "last_sign_in_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "raw_app_meta_data",
+            "type": "jsonb",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "raw_user_meta_data",
+            "type": "jsonb",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "is_super_admin",
+            "type": "boolean",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "phone",
+            "type": "text",
+            "default": "NULL::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "phone_confirmed_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "phone_change",
+            "type": "text",
+            "default": "''::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "phone_change_token",
+            "type": "character varying(255)",
+            "default": "''::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "phone_change_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "confirmed_at",
+            "type": "timestamp with time zone",
+            "default": "LEAST(email_confirmed_at, phone_confirmed_at)",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": "s"
+          },
+          {
+            "name": "email_change_token_current",
+            "type": "character varying(255)",
+            "default": "''::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "email_change_confirm_status",
+            "type": "smallint",
+            "default": "0",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "banned_until",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "reauthentication_token",
+            "type": "character varying(255)",
+            "default": "''::character varying",
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "reauthentication_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "is_sso_user",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "deleted_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "is_anonymous",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "confirmation_token_idx",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX confirmation_token_idx ON auth.users USING btree (confirmation_token) WHERE ((confirmation_token)::text !~ '^[0-9 ]*$'::text)"
+          },
+          {
+            "name": "email_change_token_current_idx",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX email_change_token_current_idx ON auth.users USING btree (email_change_token_current) WHERE ((email_change_token_current)::text !~ '^[0-9 ]*$'::text)"
+          },
+          {
+            "name": "email_change_token_new_idx",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX email_change_token_new_idx ON auth.users USING btree (email_change_token_new) WHERE ((email_change_token_new)::text !~ '^[0-9 ]*$'::text)"
+          },
+          {
+            "name": "idx_users_created_at_desc",
+            "valid": true,
+            "definition": "CREATE INDEX idx_users_created_at_desc ON auth.users USING btree (created_at DESC)"
+          },
+          {
+            "name": "idx_users_email",
+            "valid": true,
+            "definition": "CREATE INDEX idx_users_email ON auth.users USING btree (email)"
+          },
+          {
+            "name": "idx_users_last_sign_in_at_desc",
+            "valid": true,
+            "definition": "CREATE INDEX idx_users_last_sign_in_at_desc ON auth.users USING btree (last_sign_in_at DESC)"
+          },
+          {
+            "name": "idx_users_name",
+            "valid": true,
+            "definition": "CREATE INDEX idx_users_name ON auth.users USING btree (((raw_user_meta_data ->> 'name'::text))) WHERE ((raw_user_meta_data ->> 'name'::text) IS NOT NULL)"
+          },
+          {
+            "name": "reauthentication_token_idx",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX reauthentication_token_idx ON auth.users USING btree (reauthentication_token) WHERE ((reauthentication_token)::text !~ '^[0-9 ]*$'::text)"
+          },
+          {
+            "name": "recovery_token_idx",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX recovery_token_idx ON auth.users USING btree (recovery_token) WHERE ((recovery_token)::text !~ '^[0-9 ]*$'::text)"
+          },
+          {
+            "name": "users_email_partial_key",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX users_email_partial_key ON auth.users USING btree (email) WHERE (is_sso_user = false)"
+          },
+          {
+            "name": "users_instance_id_email_idx",
+            "valid": true,
+            "definition": "CREATE INDEX users_instance_id_email_idx ON auth.users USING btree (instance_id, lower((email)::text))"
+          },
+          {
+            "name": "users_instance_id_idx",
+            "valid": true,
+            "definition": "CREATE INDEX users_instance_id_idx ON auth.users USING btree (instance_id)"
+          },
+          {
+            "name": "users_is_anonymous_idx",
+            "valid": true,
+            "definition": "CREATE INDEX users_is_anonymous_idx ON auth.users USING btree (is_anonymous)"
+          },
+          {
+            "name": "users_phone_key",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX users_phone_key ON auth.users USING btree (phone)"
+          },
+          {
+            "name": "users_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX users_pkey ON auth.users USING btree (id)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "users_email_change_confirm_status_check",
+            "validated": true,
+            "definition": "CHECK (email_change_confirm_status >= 0 AND email_change_confirm_status <= 2)"
+          },
+          {
+            "name": "users_phone_key",
+            "validated": true,
+            "definition": "UNIQUE (phone)"
+          },
+          {
+            "name": "users_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "table",
+      "schema": "private",
+      "name": "alert_state",
+      "local_md5": "a34bfbca64b02eac0e2943abf30051f5",
+      "production_md5": null,
+      "local": {
+        "rls": true,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "key",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "title",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "detail",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "first_seen_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "last_seen_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "last_sent_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "resolved_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "alert_state_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX alert_state_pkey ON private.alert_state USING btree (key)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "alert_state_key_check",
+            "validated": true,
+            "definition": "CHECK (key ~ '^[a-z0-9_:.-]{3,120}$'::text)"
+          },
+          {
+            "name": "alert_state_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (key)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "private",
+      "name": "service_signals",
+      "local_md5": "7ddc18b6611588c9a1f6ea2e369ed5aa",
+      "production_md5": null,
+      "local": {
+        "rls": true,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "default": null,
+            "identity": "a",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "kind",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "value",
+            "type": "numeric",
+            "default": "1",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "service_signals_kind_created_idx",
+            "valid": true,
+            "definition": "CREATE INDEX service_signals_kind_created_idx ON private.service_signals USING btree (kind, created_at DESC)"
+          },
+          {
+            "name": "service_signals_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX service_signals_pkey ON private.service_signals USING btree (id)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "service_signals_kind_check",
+            "validated": true,
+            "definition": "CHECK (kind = ANY (ARRAY['billing_webhook_rejected'::text, 'billing_webhook_error'::text, 'email_delivered'::text, 'email_bounced'::text, 'github_headroom'::text]))"
+          },
+          {
+            "name": "service_signals_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "service_signals_value_check",
+            "validated": true,
+            "definition": "CHECK (value >= 0::numeric)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "private",
+      "name": "web_vitals",
+      "local_md5": "0b6c3b907ea44a8d368c74e272dcc3ba",
+      "production_md5": null,
+      "local": {
+        "rls": true,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "default": null,
+            "identity": "a",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "route",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "metric",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "value",
+            "type": "numeric",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "web_vitals_metric_created_idx",
+            "valid": true,
+            "definition": "CREATE INDEX web_vitals_metric_created_idx ON private.web_vitals USING btree (metric, created_at DESC)"
+          },
+          {
+            "name": "web_vitals_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX web_vitals_pkey ON private.web_vitals USING btree (id)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "web_vitals_metric_check",
+            "validated": true,
+            "definition": "CHECK (metric = ANY (ARRAY['LCP'::text, 'INP'::text, 'CLS'::text]))"
+          },
+          {
+            "name": "web_vitals_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "web_vitals_route_check",
+            "validated": true,
+            "definition": "CHECK (route ~ '^/[A-Za-z0-9/:_.-]{0,120}$'::text)"
+          },
+          {
+            "name": "web_vitals_value_check",
+            "validated": true,
+            "definition": "CHECK (value >= 0::numeric AND value < 600000::numeric)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "storage",
+      "name": "iceberg_namespaces",
+      "local_md5": "369ffd0a02ecd5f81d7a0646b5629bd5",
+      "production_md5": null,
+      "local": {
+        "rls": true,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "bucket_name",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"C\"",
+            "generated": ""
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "metadata",
+            "type": "jsonb",
+            "default": "'{}'::jsonb",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "catalog_id",
+            "type": "uuid",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "iceberg_namespaces_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX iceberg_namespaces_pkey ON storage.iceberg_namespaces USING btree (id)"
+          },
+          {
+            "name": "idx_iceberg_namespaces_bucket_id",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX idx_iceberg_namespaces_bucket_id ON storage.iceberg_namespaces USING btree (catalog_id, name)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "iceberg_namespaces_catalog_id_fkey",
+            "validated": true,
+            "definition": "FOREIGN KEY (catalog_id) REFERENCES storage.buckets_analytics(id) ON DELETE CASCADE"
+          },
+          {
+            "name": "iceberg_namespaces_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "storage",
+      "name": "iceberg_tables",
+      "local_md5": "6f153a1249af6a7ac84787cc3b847fa8",
+      "production_md5": null,
+      "local": {
+        "rls": true,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "namespace_id",
+            "type": "uuid",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "bucket_name",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"C\"",
+            "generated": ""
+          },
+          {
+            "name": "location",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "remote_table_id",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "shard_key",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "shard_id",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "catalog_id",
+            "type": "uuid",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "iceberg_tables_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX iceberg_tables_pkey ON storage.iceberg_tables USING btree (id)"
+          },
+          {
+            "name": "idx_iceberg_tables_location",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX idx_iceberg_tables_location ON storage.iceberg_tables USING btree (location)"
+          },
+          {
+            "name": "idx_iceberg_tables_namespace_id",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX idx_iceberg_tables_namespace_id ON storage.iceberg_tables USING btree (catalog_id, namespace_id, name)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "iceberg_tables_catalog_id_fkey",
+            "validated": true,
+            "definition": "FOREIGN KEY (catalog_id) REFERENCES storage.buckets_analytics(id) ON DELETE CASCADE"
+          },
+          {
+            "name": "iceberg_tables_namespace_id_fkey",
+            "validated": true,
+            "definition": "FOREIGN KEY (namespace_id) REFERENCES storage.iceberg_namespaces(id) ON DELETE CASCADE"
+          },
+          {
+            "name": "iceberg_tables_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "supabase_functions",
+      "name": "hooks",
+      "local_md5": "29c7b42faffc5f4b3fa0780309e68609",
+      "production_md5": null,
+      "local": {
+        "rls": false,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "default": "nextval('supabase_functions.hooks_id_seq'::regclass)",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "hook_table_id",
+            "type": "integer",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "hook_name",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "request_id",
+            "type": "bigint",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "hooks_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX hooks_pkey ON supabase_functions.hooks USING btree (id)"
+          },
+          {
+            "name": "supabase_functions_hooks_h_table_id_h_name_idx",
+            "valid": true,
+            "definition": "CREATE INDEX supabase_functions_hooks_h_table_id_h_name_idx ON supabase_functions.hooks USING btree (hook_table_id, hook_name)"
+          },
+          {
+            "name": "supabase_functions_hooks_request_id_idx",
+            "valid": true,
+            "definition": "CREATE INDEX supabase_functions_hooks_request_id_idx ON supabase_functions.hooks USING btree (request_id)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "hooks_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "supabase_functions",
+      "name": "migrations",
+      "local_md5": "f7a4758caac0a8632f024b36105a0c19",
+      "production_md5": null,
+      "local": {
+        "rls": false,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "version",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "inserted_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "migrations_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX migrations_pkey ON supabase_functions.migrations USING btree (version)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "migrations_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (version)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "table",
+      "schema": "supabase_migrations",
+      "name": "seed_files",
+      "local_md5": "fc0f7c1a6726ba7604f0806c9d32f5c1",
+      "production_md5": null,
+      "local": {
+        "rls": false,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "path",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "hash",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "seed_files_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX seed_files_pkey ON supabase_migrations.seed_files USING btree (path)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "seed_files_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (path)"
+          }
+        ]
+      },
+      "production": null
+    },
+    {
+      "kind": "function",
+      "schema": "realtime",
+      "name": "list_changes_sync(publication name, slot_name name, max_changes integer, max_record_bytes integer)",
+      "local_md5": null,
+      "production_md5": "bebef4712cb90bde1b7bd2ce5eb87f21",
+      "local": null,
+      "production": {
+        "config": [
+          "log_min_messages=fatal"
+        ],
+        "language": "sql",
+        "definition": "CREATE OR REPLACE FUNCTION realtime.list_changes_sync(publication name, slot_name name, max_changes integer, max_record_bytes integer)\n RETURNS TABLE(wal jsonb, is_rls_enabled boolean, subscription_ids uuid[], errors text[], slot_changes_count bigint)\n LANGUAGE sql\n SET log_min_messages TO 'fatal'\nAS $function$\n  WITH pub AS (\n    SELECT\n      concat_ws(\n        ',',\n        CASE WHEN bool_or(pubinsert) THEN 'insert' ELSE NULL END,\n        CASE WHEN bool_or(pubupdate) THEN 'update' ELSE NULL END,\n        CASE WHEN bool_or(pubdelete) THEN 'delete' ELSE NULL END\n      ) AS w2j_actions,\n      coalesce(\n        string_agg(\n          realtime.quote_wal2json(format('%I.%I', schemaname, tablename)::regclass),\n          ','\n        ) filter (WHERE ppt.tablename IS NOT NULL),\n        ''\n      ) AS w2j_add_tables\n    FROM pg_publication pp\n    LEFT JOIN pg_publication_tables ppt ON pp.pubname = ppt.pubname\n    WHERE pp.pubname = publication\n    GROUP BY pp.pubname\n    LIMIT 1\n  ),\n  -- MATERIALIZED ensures the slot is read exactly once.\n  consumed AS MATERIALIZED (\n    SELECT x.*, pub.w2j_add_tables\n    FROM pub,\n         realtime.settled_changes(\n           slot_name, max_changes,\n           'include-pk', 'true',\n           'include-transaction', 'false',\n           'include-timestamp', 'true',\n           'include-type-oids', 'true',\n           'format-version', '2',\n           'actions', pub.w2j_actions,\n           'add-tables', pub.w2j_add_tables\n         ) x\n  ),\n  slot_count AS (\n    SELECT count(*)::bigint AS cnt\n    FROM consumed\n    WHERE consumed.w2j_add_tables <> ''\n  ),\n  rls_filtered AS (\n    SELECT xyz.wal, xyz.is_rls_enabled, xyz.subscription_ids, xyz.errors\n    FROM consumed,\n         realtime.apply_rls(\n           wal := consumed.data::jsonb,\n           max_record_bytes := max_record_bytes\n         ) xyz(wal, is_rls_enabled, subscription_ids, errors)\n    WHERE consumed.w2j_add_tables <> ''\n      AND xyz.subscription_ids[1] IS NOT NULL\n  )\n  SELECT rf.wal, rf.is_rls_enabled, rf.subscription_ids, rf.errors, sc.cnt\n  FROM rls_filtered rf, slot_count sc\n\n  UNION ALL\n\n  SELECT null, null, null, null, sc.cnt\n  FROM slot_count sc\n  WHERE NOT EXISTS (SELECT 1 FROM rls_filtered)\n$function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "dashboard_user",
+          "postgres"
+        ],
+        "security_definer": false
+      }
+    },
+    {
+      "kind": "function",
+      "schema": "realtime",
+      "name": "settled_changes(slot_name name, max_changes integer, VARIADIC opts text[])",
+      "local_md5": null,
+      "production_md5": "5e4587a0aef12c1309241e4f2762cb15",
+      "local": null,
+      "production": {
+        "config": null,
+        "language": "plpgsql",
+        "definition": "CREATE OR REPLACE FUNCTION realtime.settled_changes(slot_name name, max_changes integer, VARIADIC opts text[])\n RETURNS TABLE(lsn pg_lsn, xid xid, data text)\n LANGUAGE plpgsql\nAS $function$\ndeclare\n  upto pg_lsn;\n  total bigint;\n  xids xid[];\n  starts bigint[];\n  snapshot pg_snapshot;\n  running_xids xid[];\n  xmax_age int;\n  cut bigint;\nbegin\n  -- Each statement in a volatile function takes its own snapshot, which is what lets the\n  -- check below see a writer that was still in flight when the peek ran. Under REPEATABLE\n  -- READ the snapshot never advances, so a deferred change would never be released.\n  if current_setting('transaction_isolation') <> 'read committed' then\n    raise exception 'realtime.settled_changes requires READ COMMITTED';\n  end if;\n\n  -- The peek and the read below cover the same WAL, so the read cannot reach a commit the\n  -- check never saw.\n  upto := pg_current_wal_flush_lsn();\n\n  -- One entry per transaction, in commit order: its xid and the position of its first\n  -- change. The peek uses the caller's own options, so max_changes counts exactly what the\n  -- read counts. A non-transactional logical message is emitted as soon as it is decoded,\n  -- tagged with the xid of whatever transaction wrote it, so it does not mark where that\n  -- transaction starts.\n  select coalesce(sum(g.n), 0),\n         array_agg(g.x order by g.first) filter (where g.first is not null),\n         array_agg(g.first order by g.first) filter (where g.first is not null)\n    into total, xids, starts\n    from (\n      select p.xid as x, count(*) as n,\n             min(p.ord) filter (where not case\n               when starts_with(p.data, '{\"action\":\"M\"') then (p.data::jsonb->>'transactional')::boolean is false\n               else false\n             end) as first\n      from pg_logical_slot_peek_changes(slot_name, upto, max_changes, variadic opts)\n           with ordinality as p(lsn, xid, data, ord)\n      group by p.xid\n    ) g;\n\n  -- Nothing for the caller, but the slot still has to move past what the peek covered.\n  if total = 0 then\n    perform pg_replication_slot_advance(slot_name, upto);\n    return;\n  end if;\n\n  if xids is not null then\n    -- Taken after the peek is materialized, so a writer that was still in flight during\n    -- decoding is guaranteed to show up here.\n    snapshot := pg_current_snapshot();\n\n    -- A commit record reaches the WAL before the writer leaves the proc array, so a change\n    -- can be decoded while its row is invisible. apply_rls would resolve a policy against a\n    -- row it cannot see and authorize it for nobody, while the read consumed it regardless.\n    --\n    -- xip lists transactions running when the snapshot was taken. It does not cover a writer\n    -- whose xid sits at or beyond xmax, which never appears there, so the horizon is checked\n    -- too. age() counts backwards from the current xid and so compares correctly across\n    -- wraparound.\n    select coalesce(array_agg(running.x::xid), array[]::xid[])\n      into running_xids\n      from pg_snapshot_xip(snapshot) running(x);\n    xmax_age := age(pg_snapshot_xmax(snapshot)::xid);\n\n    select min(u.s) into cut\n      from unnest(xids, starts) as u(x, s)\n      where u.x = any(running_xids) or age(u.x) <= xmax_age;\n  end if;\n\n  -- The read stops right after the commit that brings its count to upto_nchanges, so the\n  -- count of changes in front of the first unsettled transaction stops it just before that\n  -- transaction.\n  if cut is null then\n    return query\n      select p.* from pg_logical_slot_get_changes(slot_name, upto, max_changes, variadic opts) p;\n  elsif cut > 1 then\n    return query\n      select p.* from pg_logical_slot_get_changes(slot_name, upto, (cut - 1)::int, variadic opts) p;\n  end if;\nend;\n$function$\n",
+        "execute_grants": [
+          "PUBLIC",
+          "dashboard_user",
+          "postgres"
+        ],
+        "security_definer": false
+      }
+    },
+    {
+      "kind": "table",
+      "schema": "realtime",
+      "name": "messages_2026_10_03",
+      "local_md5": null,
+      "production_md5": "db91c086968fc24aee4163a5a0a172d9",
+      "local": null,
+      "production": {
+        "rls": false,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "topic",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "extension",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "event",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "private",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp without time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "inserted_at",
+            "type": "timestamp without time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "binary_payload",
+            "type": "bytea",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "skip_broadcast",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "messages_2026_10_03_inserted_at_topic_idx",
+            "valid": true,
+            "definition": "CREATE INDEX messages_2026_10_03_inserted_at_topic_idx ON realtime.messages_2026_10_03 USING btree (inserted_at DESC, topic) WHERE ((extension = 'broadcast'::text) AND (private IS TRUE))"
+          },
+          {
+            "name": "messages_2026_10_03_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX messages_2026_10_03_pkey ON realtime.messages_2026_10_03 USING btree (id, inserted_at)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "messages_2026_10_03_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id, inserted_at)"
+          },
+          {
+            "name": "messages_payload_exclusive",
+            "validated": true,
+            "definition": "CHECK (payload IS NULL OR binary_payload IS NULL)"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "table",
+      "schema": "realtime",
+      "name": "messages_2026_10_04",
+      "local_md5": null,
+      "production_md5": "15813900febc3975375071c8958a53ed",
+      "local": null,
+      "production": {
+        "rls": false,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "topic",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "extension",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "event",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "private",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp without time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "inserted_at",
+            "type": "timestamp without time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "binary_payload",
+            "type": "bytea",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "skip_broadcast",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "messages_2026_10_04_inserted_at_topic_idx",
+            "valid": true,
+            "definition": "CREATE INDEX messages_2026_10_04_inserted_at_topic_idx ON realtime.messages_2026_10_04 USING btree (inserted_at DESC, topic) WHERE ((extension = 'broadcast'::text) AND (private IS TRUE))"
+          },
+          {
+            "name": "messages_2026_10_04_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX messages_2026_10_04_pkey ON realtime.messages_2026_10_04 USING btree (id, inserted_at)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "messages_2026_10_04_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id, inserted_at)"
+          },
+          {
+            "name": "messages_payload_exclusive",
+            "validated": true,
+            "definition": "CHECK (payload IS NULL OR binary_payload IS NULL)"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "table",
+      "schema": "realtime",
+      "name": "messages_2026_10_05",
+      "local_md5": null,
+      "production_md5": "970711b9cbbbfc6dcdd317087112d901",
+      "local": null,
+      "production": {
+        "rls": false,
+        "kind": "r",
+        "columns": [
+          {
+            "name": "topic",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "extension",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": true,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "payload",
+            "type": "jsonb",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "event",
+            "type": "text",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": "\"default\"",
+            "generated": ""
+          },
+          {
+            "name": "private",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp without time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "inserted_at",
+            "type": "timestamp without time zone",
+            "default": "now()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "binary_payload",
+            "type": "bytea",
+            "default": null,
+            "identity": "",
+            "not_null": false,
+            "collation": null,
+            "generated": ""
+          },
+          {
+            "name": "skip_broadcast",
+            "type": "boolean",
+            "default": "false",
+            "identity": "",
+            "not_null": true,
+            "collation": null,
+            "generated": ""
+          }
+        ],
+        "indexes": [
+          {
+            "name": "messages_2026_10_05_inserted_at_topic_idx",
+            "valid": true,
+            "definition": "CREATE INDEX messages_2026_10_05_inserted_at_topic_idx ON realtime.messages_2026_10_05 USING btree (inserted_at DESC, topic) WHERE ((extension = 'broadcast'::text) AND (private IS TRUE))"
+          },
+          {
+            "name": "messages_2026_10_05_pkey",
+            "valid": true,
+            "definition": "CREATE UNIQUE INDEX messages_2026_10_05_pkey ON realtime.messages_2026_10_05 USING btree (id, inserted_at)"
+          }
+        ],
+        "force_rls": false,
+        "partition": null,
+        "constraints": [
+          {
+            "name": "messages_2026_10_05_pkey",
+            "validated": true,
+            "definition": "PRIMARY KEY (id, inserted_at)"
+          },
+          {
+            "name": "messages_payload_exclusive",
+            "validated": true,
+            "definition": "CHECK (payload IS NULL OR binary_payload IS NULL)"
+          }
+        ]
+      }
+    }
+  ]
+}

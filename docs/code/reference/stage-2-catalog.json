@@ -1,0 +1,3901 @@
+{
+  "checked_on": "2026-10-07",
+  "timezone": "Asia/Karachi",
+  "production_changed": false,
+  "per_kind": [
+    {
+      "md5": "8da6679c519475687982c5ef6a5efb9d",
+      "kind": "bucket",
+      "count": 10
+    },
+    {
+      "md5": "024171044a8ab05c0097e323083f361b",
+      "kind": "cron",
+      "count": 45
+    },
+    {
+      "md5": "24eb72fa64a2548921e78e8ff480ae99",
+      "kind": "enum",
+      "count": 80
+    },
+    {
+      "md5": "567059a9a98e06e1b181a286eef3c13d",
+      "kind": "extension",
+      "count": 8
+    },
+    {
+      "md5": "f8cf70075e5578af86fa1ed9dd5c7914",
+      "kind": "function",
+      "count": 1701
+    },
+    {
+      "md5": "a9c11074882a2968e26d368b6cbeff95",
+      "kind": "materialized_view",
+      "count": 3
+    },
+    {
+      "md5": "825e18b441afb1dd0c9ee9c73e541d9b",
+      "kind": "policy",
+      "count": 137
+    },
+    {
+      "md5": "4096c74995895abd774dd52978b8f732",
+      "kind": "queue",
+      "count": 8
+    },
+    {
+      "md5": "297ee8b32c67d92e68b97d6aa4ef6af0",
+      "kind": "table",
+      "count": 272
+    },
+    {
+      "md5": "42a654e668cd8142aabe493fe3cc4428",
+      "kind": "trigger",
+      "count": 157
+    },
+    {
+      "md5": "c76a451a93f162ca8ada3bf5325aff36",
+      "kind": "view",
+      "count": 4
+    }
+  ],
+  "migrations": [
+    {
+      "version": "20260927000000",
+      "name": "foundations"
+    },
+    {
+      "version": "20260927210238",
+      "name": "identity"
+    },
+    {
+      "version": "20260927210824",
+      "name": "sync_hec_universities"
+    },
+    {
+      "version": "20260927224500",
+      "name": "github_connect"
+    },
+    {
+      "version": "20260927225000",
+      "name": "skills"
+    },
+    {
+      "version": "20260927225313",
+      "name": "sync_skills_taxonomy"
+    },
+    {
+      "version": "20260928123000",
+      "name": "auth_decisions"
+    },
+    {
+      "version": "20260928150000",
+      "name": "github_evidence"
+    },
+    {
+      "version": "20260928170000",
+      "name": "skill_visibility"
+    },
+    {
+      "version": "20260928190000",
+      "name": "ventures"
+    },
+    {
+      "version": "20260928200000",
+      "name": "venture_views"
+    },
+    {
+      "version": "20260928210000",
+      "name": "contributions"
+    },
+    {
+      "version": "20260928220000",
+      "name": "venture_decisions"
+    },
+    {
+      "version": "20260928230000",
+      "name": "friends_blocks"
+    },
+    {
+      "version": "20260929000000",
+      "name": "notifications"
+    },
+    {
+      "version": "20260929010000",
+      "name": "posts"
+    },
+    {
+      "version": "20260929020000",
+      "name": "comments_links"
+    },
+    {
+      "version": "20260929030000",
+      "name": "micro_survey"
+    },
+    {
+      "version": "20260929040000",
+      "name": "feed_ranking"
+    },
+    {
+      "version": "20260929050000",
+      "name": "chat"
+    },
+    {
+      "version": "20260929060000",
+      "name": "chat_extras_explore"
+    },
+    {
+      "version": "20260929070000",
+      "name": "reports"
+    },
+    {
+      "version": "20260930000000",
+      "name": "phase3_answers"
+    },
+    {
+      "version": "20261001000000",
+      "name": "endorsements"
+    },
+    {
+      "version": "20261002000000",
+      "name": "skill_levels"
+    },
+    {
+      "version": "20261003000000",
+      "name": "credentials"
+    },
+    {
+      "version": "20261004000000",
+      "name": "code_checks"
+    },
+    {
+      "version": "20261005000000",
+      "name": "ranking"
+    },
+    {
+      "version": "20261006000000",
+      "name": "leaderboard"
+    },
+    {
+      "version": "20261007000000",
+      "name": "penalty_rules"
+    },
+    {
+      "version": "20261008000000",
+      "name": "verified_cv"
+    },
+    {
+      "version": "20261009000000",
+      "name": "cv_control"
+    },
+    {
+      "version": "20261010000000",
+      "name": "student_portal"
+    },
+    {
+      "version": "20261011000000",
+      "name": "graduate_rule"
+    },
+    {
+      "version": "20261012000000",
+      "name": "teacher_portal"
+    },
+    {
+      "version": "20261013000000",
+      "name": "recruiter_orgs"
+    },
+    {
+      "version": "20261014000000",
+      "name": "recruiter_talent"
+    },
+    {
+      "version": "20261015000000",
+      "name": "recruiter_jobs"
+    },
+    {
+      "version": "20261016000000",
+      "name": "recruiter_api"
+    },
+    {
+      "version": "20261017000000",
+      "name": "uni_core"
+    },
+    {
+      "version": "20261018000000",
+      "name": "uni_ecosphere"
+    },
+    {
+      "version": "20261019000000",
+      "name": "uni_comms"
+    },
+    {
+      "version": "20261020000000",
+      "name": "uni_fairs"
+    },
+    {
+      "version": "20261021000000",
+      "name": "uni_records"
+    },
+    {
+      "version": "20261022000000",
+      "name": "billing_enums"
+    },
+    {
+      "version": "20261023000000",
+      "name": "billing_core"
+    },
+    {
+      "version": "20261024000000",
+      "name": "billing_lifecycle"
+    },
+    {
+      "version": "20261025000000",
+      "name": "billing_ops"
+    },
+    {
+      "version": "20261026000000",
+      "name": "ops_shell"
+    },
+    {
+      "version": "20261027000000",
+      "name": "sanctions_appeals"
+    },
+    {
+      "version": "20261028000000",
+      "name": "users_view_as"
+    },
+    {
+      "version": "20261029000000",
+      "name": "config_metrics"
+    },
+    {
+      "version": "20261030000000",
+      "name": "ops_wrapup"
+    },
+    {
+      "version": "20261031000000",
+      "name": "marketing"
+    },
+    {
+      "version": "20261101000000",
+      "name": "marketing_leads"
+    },
+    {
+      "version": "20261102000000",
+      "name": "university_launch"
+    },
+    {
+      "version": "20261103000000",
+      "name": "ai_assisted_commits"
+    },
+    {
+      "version": "20261104000000",
+      "name": "analytics"
+    }
+  ],
+  "edge_functions": [
+    {
+      "name": "github-link",
+      "version": 64,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "github-worker",
+      "version": 64,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "notify-worker",
+      "version": 49,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "link-preview",
+      "version": 47,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "storage-cleanup",
+      "version": 38,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "code-check",
+      "version": 34,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "cv-sign",
+      "version": 30,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "competition-freeze",
+      "version": 24,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "webhook-worker",
+      "version": 24,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "billing-worker",
+      "version": 22,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "analytics-worker",
+      "version": 9,
+      "verify_jwt": false,
+      "updated_at": "2026-10-04T13:44:06.600Z",
+      "status": "ACTIVE"
+    }
+  ],
+  "vault_secret_names": [
+    "analytics_worker_secret",
+    "billing_worker_secret",
+    "competition_freeze_secret",
+    "cv_export_secret",
+    "cv_signing_key:cv-20260930-6ec51b99",
+    "cv_worker_secret",
+    "github_worker_secret",
+    "link_preview_worker_secret",
+    "notify_worker_secret",
+    "project_url",
+    "storage_cleanup_worker_secret",
+    "webhook_worker_secret",
+    null,
+    null
+  ],
+  "function_secret_names": {
+    "status": "unverified",
+    "reason": "Supabase MCP exposes no list-secrets tool; no alternate production access used."
+  },
+  "advisors": [
+    {
+      "type": "security",
+      "name": "rls_enabled_no_policy",
+      "title": "RLS Enabled No Policy",
+      "level": "INFO",
+      "count": 96,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy",
+      "findings": [
+        {
+          "detail": "Table \\`private.analytics_once\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "analytics_once",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.auth_failures\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "auth_failures",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.email_sends\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "email_sends",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.github_commit_blobs\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "github_commit_blobs",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.github_link_tickets\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "github_link_tickets",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.github_revocations\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "github_revocations",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.github_tokens\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "github_tokens",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.github_upstream_blobs\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "github_upstream_blobs",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.github_webhook_events\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "github_webhook_events",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.mfa_backup_codes\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "mfa_backup_codes",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.ops_metric_snapshots\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "ops_metric_snapshots",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.rate_limit_events\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "rate_limit_events",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.review_flag_commits\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "review_flag_commits",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.security_alert_tokens\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "security_alert_tokens",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`private.user_activity\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "user_activity",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.add_on_orders\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "add_on_orders",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.announcement_meta\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "announcement_meta",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.announcement_targets\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "announcement_targets",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.anti_gaming_flags\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "anti_gaming_flags",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.api_tokens\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "api_tokens",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.api_webhook_deliveries\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "api_webhook_deliveries",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.api_webhooks\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "api_webhooks",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.application_events\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "application_events",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.badge_awards\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "badge_awards",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.billing_reminders\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "billing_reminders",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.billing_tasks\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "billing_tasks",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.billing_webhook_events\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "billing_webhook_events",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.checkout_sessions\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "checkout_sessions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.code_check_prompts\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "code_check_prompts",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.company_blocks\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "company_blocks",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.competition_awards\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "competition_awards",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.competition_judge_scores\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "competition_judge_scores",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.competition_judges\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "competition_judges",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.competition_team_members\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "competition_team_members",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.competition_teams\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "competition_teams",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.competitions\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "competitions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.contact_requests\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "contact_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.ecosphere_config\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "ecosphere_config",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.ecosphere_pages\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "ecosphere_pages",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.entitlement_grants\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "entitlement_grants",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.events\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "events",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.faculty_csv_entries\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "faculty_csv_entries",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.feed_sessions\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "feed_sessions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.final_year_batch_requests\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "final_year_batch_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.hire_fees\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "hire_fees",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.hire_outcomes\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "hire_outcomes",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.hires\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "hires",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.invoice_counters\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "invoice_counters",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.invoices\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "invoices",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.job_applications\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "job_applications",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.job_fair_booths\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "job_fair_booths",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.job_fair_invites\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "job_fair_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.job_fair_slots\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "job_fair_slots",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.job_fairs\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "job_fairs",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.job_invites\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "job_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.job_posts\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "job_posts",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.ops_view_sessions\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "ops_view_sessions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.org_events\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "org_events",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.org_invites\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "org_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.org_members\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "org_members",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.org_spam_reviews\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "org_spam_reviews",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.organizations\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "organizations",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.payments\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "payments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.post_stats\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "post_stats",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.post_survey_counts\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "post_survey_counts",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.profile_views\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "profile_views",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.profiles_public_card\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "profiles_public_card",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.ranking_adjustments\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "ranking_adjustments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.ranking_runs\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "ranking_runs",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.recruiter_notes\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "recruiter_notes",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.recruiter_shortlists\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "recruiter_shortlists",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.sales_leads\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "sales_leads",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.saved_searches\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "saved_searches",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.search_audit\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "search_audit",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.semesters\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "semesters",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.shortlist_items\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "shortlist_items",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.student_record_access_log\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "student_record_access_log",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.subscriptions\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "subscriptions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.talent_index\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "talent_index",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.tax_rates\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "tax_rates",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.teacher_concentration_flags\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "teacher_concentration_flags",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.trial_claims\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "trial_claims",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.uni_stats\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "uni_stats",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.university_admin_invites\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "university_admin_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.university_audit_log\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "university_audit_log",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.university_badges\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "university_badges",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.university_claims\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "university_claims",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.university_domain_requests\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "university_domain_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.university_hides\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "university_hides",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.university_question_answers\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "university_question_answers",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.university_questions\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "university_questions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.university_requests\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "university_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.university_slug_history\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "university_slug_history",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.usage_counters\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "usage_counters",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.venture_completion_members\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "venture_completion_members",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        },
+        {
+          "detail": "Table \\`public.venture_completions\\` has RLS enabled, but no policies exist",
+          "metadata": {
+            "name": "venture_completions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:44.427Z"
+        }
+      ]
+    },
+    {
+      "type": "security",
+      "name": "auth_leaked_password_protection",
+      "title": "Leaked Password Protection Disabled",
+      "level": "WARN",
+      "count": 1,
+      "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection",
+      "findings": [
+        {
+          "detail": "Supabase Auth prevents the use of compromised passwords by checking against HaveIBeenPwned.org. Enable this feature to enhance security.",
+          "metadata": {
+            "type": "auth",
+            "entity": "Auth"
+          }
+        }
+      ]
+    },
+    {
+      "type": "performance",
+      "name": "unindexed_foreign_keys",
+      "title": "Unindexed foreign keys",
+      "level": "INFO",
+      "count": 38,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0001_unindexed_foreign_keys",
+      "findings": [
+        {
+          "detail": "Table \\`public.api_tokens\\` has a foreign key \\`api_tokens_created_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "api_tokens",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "api_tokens_created_by_fkey",
+            "fkey_columns": [
+              5
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.api_webhooks\\` has a foreign key \\`api_webhooks_created_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "api_webhooks",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "api_webhooks_created_by_fkey",
+            "fkey_columns": [
+              8
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.application_events\\` has a foreign key \\`application_events_actor_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "application_events",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "application_events_actor_id_fkey",
+            "fkey_columns": [
+              5
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.application_messages\\` has a foreign key \\`application_messages_sender_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "application_messages",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "application_messages_sender_id_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.application_threads\\` has a foreign key \\`application_threads_role_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "application_threads",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "application_threads_role_id_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.chat_threads\\` has a foreign key \\`chat_threads_org_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "chat_threads",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "chat_threads_org_id_fkey",
+            "fkey_columns": [
+              7
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.competition_awards\\` has a foreign key \\`competition_awards_competition_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "competition_awards",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "competition_awards_competition_id_fkey",
+            "fkey_columns": [
+              2
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.competition_awards\\` has a foreign key \\`competition_awards_skill_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "competition_awards",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "competition_awards_skill_id_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.competition_team_members\\` has a foreign key \\`competition_team_members_student_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "competition_team_members",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "competition_team_members_student_id_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.competition_teams\\` has a foreign key \\`competition_teams_lead_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "competition_teams",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "competition_teams_lead_id_fkey",
+            "fkey_columns": [
+              4
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.competitions\\` has a foreign key \\`competitions_created_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "competitions",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "competitions_created_by_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.competitions\\` has a foreign key \\`competitions_reviewed_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "competitions",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "competitions_reviewed_by_fkey",
+            "fkey_columns": [
+              18
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.contact_requests\\` has a foreign key \\`contact_requests_thread_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "contact_requests",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "contact_requests_thread_id_fkey",
+            "fkey_columns": [
+              9
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.hire_outcomes\\` has a foreign key \\`hire_outcomes_answered_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "hire_outcomes",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "hire_outcomes_answered_by_fkey",
+            "fkey_columns": [
+              5
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.hires\\` has a foreign key \\`hires_hired_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "hires",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "hires_hired_by_fkey",
+            "fkey_columns": [
+              6
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.hires\\` has a foreign key \\`hires_job_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "hires",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "hires_job_id_fkey",
+            "fkey_columns": [
+              4
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.hires\\` has a foreign key \\`hires_student_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "hires",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "hires_student_id_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.job_invites\\` has a foreign key \\`job_invites_invited_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "job_invites",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "job_invites_invited_by_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.job_invites\\` has a foreign key \\`job_invites_student_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "job_invites",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "job_invites_student_id_fkey",
+            "fkey_columns": [
+              2
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.job_posts\\` has a foreign key \\`job_posts_created_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "job_posts",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "job_posts_created_by_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.org_events\\` has a foreign key \\`org_events_actor_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "org_events",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "org_events_actor_id_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.org_events\\` has a foreign key \\`org_events_student_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "org_events",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "org_events_student_id_fkey",
+            "fkey_columns": [
+              4
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.org_invites\\` has a foreign key \\`org_invites_invited_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "org_invites",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "org_invites_invited_by_fkey",
+            "fkey_columns": [
+              6
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.org_members\\` has a foreign key \\`org_members_invited_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "org_members",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "org_members_invited_by_fkey",
+            "fkey_columns": [
+              5
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.org_spam_reviews\\` has a foreign key \\`org_spam_reviews_resolved_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "org_spam_reviews",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "org_spam_reviews_resolved_by_fkey",
+            "fkey_columns": [
+              8
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.organizations\\` has a foreign key \\`organizations_created_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "organizations",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "organizations_created_by_fkey",
+            "fkey_columns": [
+              18
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.organizations\\` has a foreign key \\`organizations_verified_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "organizations",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "organizations_verified_by_fkey",
+            "fkey_columns": [
+              16
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.platform_config\\` has a foreign key \\`platform_config_staff_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "platform_config",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "platform_config_staff_id_fkey",
+            "fkey_columns": [
+              5
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.poll_votes\\` has a foreign key \\`poll_votes_post_id_position_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "poll_votes",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "poll_votes_post_id_position_fkey",
+            "fkey_columns": [
+              1,
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.recruiter_notes\\` has a foreign key \\`recruiter_notes_author_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "recruiter_notes",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "recruiter_notes_author_id_fkey",
+            "fkey_columns": [
+              4
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.recruiter_notes\\` has a foreign key \\`recruiter_notes_student_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "recruiter_notes",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "recruiter_notes_student_id_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.recruiter_shortlists\\` has a foreign key \\`recruiter_shortlists_created_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "recruiter_shortlists",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "recruiter_shortlists_created_by_fkey",
+            "fkey_columns": [
+              4
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.saved_searches\\` has a foreign key \\`saved_searches_org_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "saved_searches",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "saved_searches_org_id_fkey",
+            "fkey_columns": [
+              2
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.search_audit\\` has a foreign key \\`search_audit_user_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "search_audit",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "search_audit_user_id_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.shortlist_items\\` has a foreign key \\`shortlist_items_added_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "shortlist_items",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "shortlist_items_added_by_fkey",
+            "fkey_columns": [
+              5
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.venture_deliverables\\` has a foreign key \\`venture_deliverables_added_by_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "venture_deliverables",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "venture_deliverables_added_by_fkey",
+            "fkey_columns": [
+              5
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.venture_invites\\` has a foreign key \\`venture_invites_inviter_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "venture_invites",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "venture_invites_inviter_id_fkey",
+            "fkey_columns": [
+              4
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.venture_updates\\` has a foreign key \\`venture_updates_author_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+          "metadata": {
+            "name": "venture_updates",
+            "type": "table",
+            "schema": "public",
+            "fkey_name": "venture_updates_author_id_fkey",
+            "fkey_columns": [
+              3
+            ]
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        }
+      ]
+    },
+    {
+      "type": "performance",
+      "name": "no_primary_key",
+      "title": "No Primary Key",
+      "level": "INFO",
+      "count": 3,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0004_no_primary_key",
+      "findings": [
+        {
+          "detail": "Table \\`private.auth_failures\\` does not have a primary key",
+          "metadata": {
+            "name": "auth_failures",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`private.rate_limit_events\\` does not have a primary key",
+          "metadata": {
+            "name": "rate_limit_events",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Table \\`public.announcement_targets\\` does not have a primary key",
+          "metadata": {
+            "name": "announcement_targets",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        }
+      ]
+    },
+    {
+      "type": "performance",
+      "name": "unused_index",
+      "title": "Unused Index",
+      "level": "INFO",
+      "count": 222,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index",
+      "findings": [
+        {
+          "detail": "Index \\`supervisor_comments_author_idx\\` on table \\`public.supervisor_comments\\` has not been used",
+          "metadata": {
+            "name": "supervisor_comments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`review_requests_teacher_idx\\` on table \\`public.review_requests\\` has not been used",
+          "metadata": {
+            "name": "review_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`review_requests_requested_by_idx\\` on table \\`public.review_requests\\` has not been used",
+          "metadata": {
+            "name": "review_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`chat_messages_sender_idx\\` on table \\`public.chat_messages\\` has not been used",
+          "metadata": {
+            "name": "chat_messages",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`profiles_deleting_idx\\` on table \\`public.profiles\\` has not been used",
+          "metadata": {
+            "name": "profiles",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`code_check_prompts_skill_idx\\` on table \\`public.code_check_prompts\\` has not been used",
+          "metadata": {
+            "name": "code_check_prompts",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`code_check_prompts_category_idx\\` on table \\`public.code_check_prompts\\` has not been used",
+          "metadata": {
+            "name": "code_check_prompts",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`code_check_prompts_author_idx\\` on table \\`public.code_check_prompts\\` has not been used",
+          "metadata": {
+            "name": "code_check_prompts",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`github_link_clashes_user_idx\\` on table \\`public.github_link_clashes\\` has not been used",
+          "metadata": {
+            "name": "github_link_clashes",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`github_link_clashes_linked_user_idx\\` on table \\`public.github_link_clashes\\` has not been used",
+          "metadata": {
+            "name": "github_link_clashes",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`github_link_clashes_resolved_by_idx\\` on table \\`public.github_link_clashes\\` has not been used",
+          "metadata": {
+            "name": "github_link_clashes",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_runs_job_started_at_idx\\` on table \\`public.job_runs\\` has not been used",
+          "metadata": {
+            "name": "job_runs",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`skills_parent_idx\\` on table \\`public.skills\\` has not been used",
+          "metadata": {
+            "name": "skills",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`code_checks_prompt_idx\\` on table \\`public.code_checks\\` has not been used",
+          "metadata": {
+            "name": "code_checks",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`code_checks_claimed_by_idx\\` on table \\`public.code_checks\\` has not been used",
+          "metadata": {
+            "name": "code_checks",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`application_messages_thread_idx\\` on table \\`public.application_messages\\` has not been used",
+          "metadata": {
+            "name": "application_messages",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`code_checks_grader_idx\\` on table \\`public.code_checks\\` has not been used",
+          "metadata": {
+            "name": "code_checks",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`venture_invites_invitee_idx\\` on table \\`public.venture_invites\\` has not been used",
+          "metadata": {
+            "name": "venture_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`profiles_looking_for_idx\\` on table \\`public.profiles\\` has not been used",
+          "metadata": {
+            "name": "profiles",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`exam_periods_created_by_idx\\` on table \\`public.exam_periods\\` has not been used",
+          "metadata": {
+            "name": "exam_periods",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`staff_roles_granted_by_idx\\` on table \\`public.staff_roles\\` has not been used",
+          "metadata": {
+            "name": "staff_roles",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`venture_completions_owner_idx\\` on table \\`public.venture_completions\\` has not been used",
+          "metadata": {
+            "name": "venture_completions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`review_flag_commits_commit_idx\\` on table \\`private.review_flag_commits\\` has not been used",
+          "metadata": {
+            "name": "review_flag_commits",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`security_alert_tokens_user_idx\\` on table \\`private.security_alert_tokens\\` has not been used",
+          "metadata": {
+            "name": "security_alert_tokens",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`anti_gaming_flags_members_idx\\` on table \\`public.anti_gaming_flags\\` has not been used",
+          "metadata": {
+            "name": "anti_gaming_flags",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`agreement_acceptances_version_idx\\` on table \\`public.agreement_acceptances\\` has not been used",
+          "metadata": {
+            "name": "agreement_acceptances",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`anti_gaming_flags_endorsements_idx\\` on table \\`public.anti_gaming_flags\\` has not been used",
+          "metadata": {
+            "name": "anti_gaming_flags",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`anti_gaming_flags_claimed_by_idx\\` on table \\`public.anti_gaming_flags\\` has not been used",
+          "metadata": {
+            "name": "anti_gaming_flags",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`anti_gaming_flags_reviewed_by_idx\\` on table \\`public.anti_gaming_flags\\` has not been used",
+          "metadata": {
+            "name": "anti_gaming_flags",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ranking_adjustments_case_idx\\` on table \\`public.ranking_adjustments\\` has not been used",
+          "metadata": {
+            "name": "ranking_adjustments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ranking_adjustments_flag_idx\\` on table \\`public.ranking_adjustments\\` has not been used",
+          "metadata": {
+            "name": "ranking_adjustments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ops_audit_log_created_idx\\` on table \\`public.ops_audit_log\\` has not been used",
+          "metadata": {
+            "name": "ops_audit_log",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ranking_adjustments_staff_idx\\` on table \\`public.ranking_adjustments\\` has not been used",
+          "metadata": {
+            "name": "ranking_adjustments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`sales_leads_queue_idx\\` on table \\`public.sales_leads\\` has not been used",
+          "metadata": {
+            "name": "sales_leads",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`sales_leads_university_idx\\` on table \\`public.sales_leads\\` has not been used",
+          "metadata": {
+            "name": "sales_leads",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`sales_leads_claimed_by_idx\\` on table \\`public.sales_leads\\` has not been used",
+          "metadata": {
+            "name": "sales_leads",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`chat_messages_reply_idx\\` on table \\`public.chat_messages\\` has not been used",
+          "metadata": {
+            "name": "chat_messages",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`chat_messages_search_idx\\` on table \\`public.chat_messages\\` has not been used",
+          "metadata": {
+            "name": "chat_messages",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ranking_runs_job_run_idx\\` on table \\`public.ranking_runs\\` has not been used",
+          "metadata": {
+            "name": "ranking_runs",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`message_reactions_thread_idx\\` on table \\`public.message_reactions\\` has not been used",
+          "metadata": {
+            "name": "message_reactions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`message_reactions_user_idx\\` on table \\`public.message_reactions\\` has not been used",
+          "metadata": {
+            "name": "message_reactions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`friend_requests_sender_receiver_idx\\` on table \\`public.friend_requests\\` has not been used",
+          "metadata": {
+            "name": "friend_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`friend_requests_receiver_sender_idx\\` on table \\`public.friend_requests\\` has not been used",
+          "metadata": {
+            "name": "friend_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ops_audit_log_staff_idx\\` on table \\`public.ops_audit_log\\` has not been used",
+          "metadata": {
+            "name": "ops_audit_log",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`notification_types_category_idx\\` on table \\`public.notification_types\\` has not been used",
+          "metadata": {
+            "name": "notification_types",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`notifications_actor_idx\\` on table \\`public.notifications\\` has not been used",
+          "metadata": {
+            "name": "notifications",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`notifications_type_idx\\` on table \\`public.notifications\\` has not been used",
+          "metadata": {
+            "name": "notifications",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`notifications_entity_idx\\` on table \\`public.notifications\\` has not been used",
+          "metadata": {
+            "name": "notifications",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`notification_prefs_category_idx\\` on table \\`public.notification_prefs\\` has not been used",
+          "metadata": {
+            "name": "notification_prefs",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`email_sends_user_idx\\` on table \\`private.email_sends\\` has not been used",
+          "metadata": {
+            "name": "email_sends",
+            "type": "table",
+            "schema": "private"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`posts_venture_idx\\` on table \\`public.posts\\` has not been used",
+          "metadata": {
+            "name": "posts",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`event_rsvps_user_idx\\` on table \\`public.event_rsvps\\` has not been used",
+          "metadata": {
+            "name": "event_rsvps",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`org_events_org_idx\\` on table \\`public.org_events\\` has not been used",
+          "metadata": {
+            "name": "org_events",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`feedback_claimed_by_idx\\` on table \\`public.feedback\\` has not been used",
+          "metadata": {
+            "name": "feedback",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`poll_votes_user_idx\\` on table \\`public.poll_votes\\` has not been used",
+          "metadata": {
+            "name": "poll_votes",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`teacher_profiles_approved_by_idx\\` on table \\`public.teacher_profiles\\` has not been used",
+          "metadata": {
+            "name": "teacher_profiles",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`teacher_profiles_revoked_by_idx\\` on table \\`public.teacher_profiles\\` has not been used",
+          "metadata": {
+            "name": "teacher_profiles",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`faculty_csv_entries_imported_by_idx\\` on table \\`public.faculty_csv_entries\\` has not been used",
+          "metadata": {
+            "name": "faculty_csv_entries",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`competition_teams_comp_idx\\` on table \\`public.competition_teams\\` has not been used",
+          "metadata": {
+            "name": "competition_teams",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`post_comments_parent_idx\\` on table \\`public.post_comments\\` has not been used",
+          "metadata": {
+            "name": "post_comments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`post_comments_author_idx\\` on table \\`public.post_comments\\` has not been used",
+          "metadata": {
+            "name": "post_comments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`post_hides_post_idx\\` on table \\`public.post_hides\\` has not been used",
+          "metadata": {
+            "name": "post_hides",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`user_mutes_muted_idx\\` on table \\`public.user_mutes\\` has not been used",
+          "metadata": {
+            "name": "user_mutes",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`project_ideas_teacher_idx\\` on table \\`public.project_ideas\\` has not been used",
+          "metadata": {
+            "name": "project_ideas",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`project_ideas_university_idx\\` on table \\`public.project_ideas\\` has not been used",
+          "metadata": {
+            "name": "project_ideas",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`project_ideas_skills_idx\\` on table \\`public.project_ideas\\` has not been used",
+          "metadata": {
+            "name": "project_ideas",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ventures_idea_idx\\` on table \\`public.ventures\\` has not been used",
+          "metadata": {
+            "name": "ventures",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_claims_queue_idx\\` on table \\`public.university_claims\\` has not been used",
+          "metadata": {
+            "name": "university_claims",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`venture_supervisors_teacher_idx\\` on table \\`public.venture_supervisors\\` has not been used",
+          "metadata": {
+            "name": "venture_supervisors",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`venture_supervisors_invited_by_idx\\` on table \\`public.venture_supervisors\\` has not been used",
+          "metadata": {
+            "name": "venture_supervisors",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`post_views_user_idx\\` on table \\`public.post_views\\` has not been used",
+          "metadata": {
+            "name": "post_views",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`micro_survey_assignments_user_idx\\` on table \\`public.micro_survey_assignments\\` has not been used",
+          "metadata": {
+            "name": "micro_survey_assignments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`micro_survey_assignments_question_idx\\` on table \\`public.micro_survey_assignments\\` has not been used",
+          "metadata": {
+            "name": "micro_survey_assignments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`micro_survey_assignments_dimension_idx\\` on table \\`public.micro_survey_assignments\\` has not been used",
+          "metadata": {
+            "name": "micro_survey_assignments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`micro_survey_responses_question_idx\\` on table \\`public.micro_survey_responses\\` has not been used",
+          "metadata": {
+            "name": "micro_survey_responses",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`micro_survey_responses_dimension_idx\\` on table \\`public.micro_survey_responses\\` has not been used",
+          "metadata": {
+            "name": "micro_survey_responses",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`final_year_batch_requests_queue_idx\\` on table \\`public.final_year_batch_requests\\` has not been used",
+          "metadata": {
+            "name": "final_year_batch_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`post_survey_counts_dimension_idx\\` on table \\`public.post_survey_counts\\` has not been used",
+          "metadata": {
+            "name": "post_survey_counts",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`final_year_batch_requests_requested_by_idx\\` on table \\`public.final_year_batch_requests\\` has not been used",
+          "metadata": {
+            "name": "final_year_batch_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`final_year_batch_requests_reviewed_by_idx\\` on table \\`public.final_year_batch_requests\\` has not been used",
+          "metadata": {
+            "name": "final_year_batch_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`chat_pins_pinned_by_idx\\` on table \\`public.chat_pins\\` has not been used",
+          "metadata": {
+            "name": "chat_pins",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`cv_records_key_idx\\` on table \\`public.cv_records\\` has not been used",
+          "metadata": {
+            "name": "cv_records",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`cv_records_superseded_idx\\` on table \\`public.cv_records\\` has not been used",
+          "metadata": {
+            "name": "cv_records",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`cv_records_revoked_by_idx\\` on table \\`public.cv_records\\` has not been used",
+          "metadata": {
+            "name": "cv_records",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`profiles_public_card_search_idx\\` on table \\`public.profiles_public_card\\` has not been used",
+          "metadata": {
+            "name": "profiles_public_card",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`profiles_public_card_name_trgm_idx\\` on table \\`public.profiles_public_card\\` has not been used",
+          "metadata": {
+            "name": "profiles_public_card",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`profiles_public_card_username_trgm_idx\\` on table \\`public.profiles_public_card\\` has not been used",
+          "metadata": {
+            "name": "profiles_public_card",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ventures_university_idx\\` on table \\`public.ventures\\` has not been used",
+          "metadata": {
+            "name": "ventures",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ventures_skills_idx\\` on table \\`public.ventures\\` has not been used",
+          "metadata": {
+            "name": "ventures",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ventures_search_idx\\` on table \\`public.ventures\\` has not been used",
+          "metadata": {
+            "name": "ventures",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ventures_title_trgm_idx\\` on table \\`public.ventures\\` has not been used",
+          "metadata": {
+            "name": "ventures",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`report_cases_owner_idx\\` on table \\`public.report_cases\\` has not been used",
+          "metadata": {
+            "name": "report_cases",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`report_cases_claimed_by_idx\\` on table \\`public.report_cases\\` has not been used",
+          "metadata": {
+            "name": "report_cases",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`report_cases_resolved_by_idx\\` on table \\`public.report_cases\\` has not been used",
+          "metadata": {
+            "name": "report_cases",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`reports_case_idx\\` on table \\`public.reports\\` has not been used",
+          "metadata": {
+            "name": "reports",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`report_messages_sender_idx\\` on table \\`public.report_messages\\` has not been used",
+          "metadata": {
+            "name": "report_messages",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`sanctions_user_idx\\` on table \\`public.sanctions\\` has not been used",
+          "metadata": {
+            "name": "sanctions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`sanctions_staff_idx\\` on table \\`public.sanctions\\` has not been used",
+          "metadata": {
+            "name": "sanctions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`sanctions_case_idx\\` on table \\`public.sanctions\\` has not been used",
+          "metadata": {
+            "name": "sanctions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`posts_removed_by_idx\\` on table \\`public.posts\\` has not been used",
+          "metadata": {
+            "name": "posts",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`post_comments_removed_by_idx\\` on table \\`public.post_comments\\` has not been used",
+          "metadata": {
+            "name": "post_comments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`chat_messages_removed_by_idx\\` on table \\`public.chat_messages\\` has not been used",
+          "metadata": {
+            "name": "chat_messages",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`endorsements_venture_idx\\` on table \\`public.endorsements\\` has not been used",
+          "metadata": {
+            "name": "endorsements",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`endorsements_skill_idx\\` on table \\`public.endorsements\\` has not been used",
+          "metadata": {
+            "name": "endorsements",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`endorsements_evidence_idx\\` on table \\`public.endorsements\\` has not been used",
+          "metadata": {
+            "name": "endorsements",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`github_pr_skills_skill_idx\\` on table \\`public.github_pr_skills\\` has not been used",
+          "metadata": {
+            "name": "github_pr_skills",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`credentials_issuer_idx\\` on table \\`public.credentials\\` has not been used",
+          "metadata": {
+            "name": "credentials",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`credentials_claimed_by_idx\\` on table \\`public.credentials\\` has not been used",
+          "metadata": {
+            "name": "credentials",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`credentials_reviewer_idx\\` on table \\`public.credentials\\` has not been used",
+          "metadata": {
+            "name": "credentials",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`review_flags_claimed_by_idx\\` on table \\`public.review_flags\\` has not been used",
+          "metadata": {
+            "name": "review_flags",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`review_flags_reviewer_idx\\` on table \\`public.review_flags\\` has not been used",
+          "metadata": {
+            "name": "review_flags",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`cv_views_record_idx\\` on table \\`public.cv_views\\` has not been used",
+          "metadata": {
+            "name": "cv_views",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ecosphere_config_updated_by_idx\\` on table \\`public.ecosphere_config\\` has not been used",
+          "metadata": {
+            "name": "ecosphere_config",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`cv_pdf_exports_record_idx\\` on table \\`public.cv_pdf_exports\\` has not been used",
+          "metadata": {
+            "name": "cv_pdf_exports",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_slug_history_uni_idx\\` on table \\`public.university_slug_history\\` has not been used",
+          "metadata": {
+            "name": "university_slug_history",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`venture_reviews_teacher_idx\\` on table \\`public.venture_reviews\\` has not been used",
+          "metadata": {
+            "name": "venture_reviews",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`teacher_concentration_flags_student_idx\\` on table \\`public.teacher_concentration_flags\\` has not been used",
+          "metadata": {
+            "name": "teacher_concentration_flags",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`teacher_concentration_flags_reviewed_by_idx\\` on table \\`public.teacher_concentration_flags\\` has not been used",
+          "metadata": {
+            "name": "teacher_concentration_flags",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`talent_index_skills_idx\\` on table \\`public.talent_index\\` has not been used",
+          "metadata": {
+            "name": "talent_index",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`company_blocks_org_idx\\` on table \\`public.company_blocks\\` has not been used",
+          "metadata": {
+            "name": "company_blocks",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`talent_index_tier_idx\\` on table \\`public.talent_index\\` has not been used",
+          "metadata": {
+            "name": "talent_index",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`talent_index_active_idx\\` on table \\`public.talent_index\\` has not been used",
+          "metadata": {
+            "name": "talent_index",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`application_events_app_idx\\` on table \\`public.application_events\\` has not been used",
+          "metadata": {
+            "name": "application_events",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`profiles_department_id_idx\\` on table \\`public.profiles\\` has not been used",
+          "metadata": {
+            "name": "profiles",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_admins_university_idx\\` on table \\`public.university_admins\\` has not been used",
+          "metadata": {
+            "name": "university_admins",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_admins_department_idx\\` on table \\`public.university_admins\\` has not been used",
+          "metadata": {
+            "name": "university_admins",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_admins_invited_by_idx\\` on table \\`public.university_admins\\` has not been used",
+          "metadata": {
+            "name": "university_admins",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_audit_log_uni_idx\\` on table \\`public.university_audit_log\\` has not been used",
+          "metadata": {
+            "name": "university_audit_log",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_audit_log_actor_idx\\` on table \\`public.university_audit_log\\` has not been used",
+          "metadata": {
+            "name": "university_audit_log",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_claims_university_idx\\` on table \\`public.university_claims\\` has not been used",
+          "metadata": {
+            "name": "university_claims",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_claims_requester_idx\\` on table \\`public.university_claims\\` has not been used",
+          "metadata": {
+            "name": "university_claims",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_claims_reviewed_by_idx\\` on table \\`public.university_claims\\` has not been used",
+          "metadata": {
+            "name": "university_claims",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_admin_invites_uni_idx\\` on table \\`public.university_admin_invites\\` has not been used",
+          "metadata": {
+            "name": "university_admin_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_admin_invites_email_idx\\` on table \\`public.university_admin_invites\\` has not been used",
+          "metadata": {
+            "name": "university_admin_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_admin_invites_department_idx\\` on table \\`public.university_admin_invites\\` has not been used",
+          "metadata": {
+            "name": "university_admin_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_admin_invites_invited_by_idx\\` on table \\`public.university_admin_invites\\` has not been used",
+          "metadata": {
+            "name": "university_admin_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_domain_requests_uni_idx\\` on table \\`public.university_domain_requests\\` has not been used",
+          "metadata": {
+            "name": "university_domain_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_domain_requests_queue_idx\\` on table \\`public.university_domain_requests\\` has not been used",
+          "metadata": {
+            "name": "university_domain_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_domain_requests_requested_by_idx\\` on table \\`public.university_domain_requests\\` has not been used",
+          "metadata": {
+            "name": "university_domain_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_domain_requests_reviewed_by_idx\\` on table \\`public.university_domain_requests\\` has not been used",
+          "metadata": {
+            "name": "university_domain_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`final_year_batch_requests_uni_idx\\` on table \\`public.final_year_batch_requests\\` has not been used",
+          "metadata": {
+            "name": "final_year_batch_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ecosphere_pages_updated_by_idx\\` on table \\`public.ecosphere_pages\\` has not been used",
+          "metadata": {
+            "name": "ecosphere_pages",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_badges_uni_idx\\` on table \\`public.university_badges\\` has not been used",
+          "metadata": {
+            "name": "university_badges",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_badges_created_by_idx\\` on table \\`public.university_badges\\` has not been used",
+          "metadata": {
+            "name": "university_badges",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`badge_awards_student_idx\\` on table \\`public.badge_awards\\` has not been used",
+          "metadata": {
+            "name": "badge_awards",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`badge_awards_awarded_by_idx\\` on table \\`public.badge_awards\\` has not been used",
+          "metadata": {
+            "name": "badge_awards",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`badge_awards_revoked_by_idx\\` on table \\`public.badge_awards\\` has not been used",
+          "metadata": {
+            "name": "badge_awards",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`entitlement_grants_key_idx\\` on table \\`public.entitlement_grants\\` has not been used",
+          "metadata": {
+            "name": "entitlement_grants",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`entitlement_grants_created_by_idx\\` on table \\`public.entitlement_grants\\` has not been used",
+          "metadata": {
+            "name": "entitlement_grants",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`semesters_uni_idx\\` on table \\`public.semesters\\` has not been used",
+          "metadata": {
+            "name": "semesters",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`semesters_created_by_idx\\` on table \\`public.semesters\\` has not been used",
+          "metadata": {
+            "name": "semesters",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`announcement_meta_uni_idx\\` on table \\`public.announcement_meta\\` has not been used",
+          "metadata": {
+            "name": "announcement_meta",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`announcement_meta_created_by_idx\\` on table \\`public.announcement_meta\\` has not been used",
+          "metadata": {
+            "name": "announcement_meta",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_questions_created_by_idx\\` on table \\`public.university_questions\\` has not been used",
+          "metadata": {
+            "name": "university_questions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_questions_removed_by_idx\\` on table \\`public.university_questions\\` has not been used",
+          "metadata": {
+            "name": "university_questions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_question_answers_user_idx\\` on table \\`public.university_question_answers\\` has not been used",
+          "metadata": {
+            "name": "university_question_answers",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`announcement_targets_post_idx\\` on table \\`public.announcement_targets\\` has not been used",
+          "metadata": {
+            "name": "announcement_targets",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`announcement_targets_department_idx\\` on table \\`public.announcement_targets\\` has not been used",
+          "metadata": {
+            "name": "announcement_targets",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_hides_uni_idx\\` on table \\`public.university_hides\\` has not been used",
+          "metadata": {
+            "name": "university_hides",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_hides_target_idx\\` on table \\`public.university_hides\\` has not been used",
+          "metadata": {
+            "name": "university_hides",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_hides_case_idx\\` on table \\`public.university_hides\\` has not been used",
+          "metadata": {
+            "name": "university_hides",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_hides_author_idx\\` on table \\`public.university_hides\\` has not been used",
+          "metadata": {
+            "name": "university_hides",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_hides_hidden_by_idx\\` on table \\`public.university_hides\\` has not been used",
+          "metadata": {
+            "name": "university_hides",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_hides_decided_by_idx\\` on table \\`public.university_hides\\` has not been used",
+          "metadata": {
+            "name": "university_hides",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`competition_judges_teacher_idx\\` on table \\`public.competition_judges\\` has not been used",
+          "metadata": {
+            "name": "competition_judges",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`events_created_by_idx\\` on table \\`public.events\\` has not been used",
+          "metadata": {
+            "name": "events",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`event_registrations_user_idx\\` on table \\`public.event_registrations\\` has not been used",
+          "metadata": {
+            "name": "event_registrations",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`competitions_university_idx\\` on table \\`public.competitions\\` has not been used",
+          "metadata": {
+            "name": "competitions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`competition_judge_scores_judge_idx\\` on table \\`public.competition_judge_scores\\` has not been used",
+          "metadata": {
+            "name": "competition_judge_scores",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fairs_uni_idx\\` on table \\`public.job_fairs\\` has not been used",
+          "metadata": {
+            "name": "job_fairs",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fairs_created_by_idx\\` on table \\`public.job_fairs\\` has not been used",
+          "metadata": {
+            "name": "job_fairs",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fair_invites_fair_idx\\` on table \\`public.job_fair_invites\\` has not been used",
+          "metadata": {
+            "name": "job_fair_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fair_invites_email_idx\\` on table \\`public.job_fair_invites\\` has not been used",
+          "metadata": {
+            "name": "job_fair_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fair_invites_invited_by_idx\\` on table \\`public.job_fair_invites\\` has not been used",
+          "metadata": {
+            "name": "job_fair_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fair_invites_org_idx\\` on table \\`public.job_fair_invites\\` has not been used",
+          "metadata": {
+            "name": "job_fair_invites",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fair_booths_org_idx\\` on table \\`public.job_fair_booths\\` has not been used",
+          "metadata": {
+            "name": "job_fair_booths",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fair_queue_student_idx\\` on table \\`public.job_fair_queue\\` has not been used",
+          "metadata": {
+            "name": "job_fair_queue",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fair_queue_thread_idx\\` on table \\`public.job_fair_queue\\` has not been used",
+          "metadata": {
+            "name": "job_fair_queue",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fair_slots_booth_idx\\` on table \\`public.job_fair_slots\\` has not been used",
+          "metadata": {
+            "name": "job_fair_slots",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`job_fair_slots_student_idx\\` on table \\`public.job_fair_slots\\` has not been used",
+          "metadata": {
+            "name": "job_fair_slots",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`chat_threads_fair_idx\\` on table \\`public.chat_threads\\` has not been used",
+          "metadata": {
+            "name": "chat_threads",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`student_record_access_log_student_idx\\` on table \\`public.student_record_access_log\\` has not been used",
+          "metadata": {
+            "name": "student_record_access_log",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`student_record_access_log_viewer_idx\\` on table \\`public.student_record_access_log\\` has not been used",
+          "metadata": {
+            "name": "student_record_access_log",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`student_record_access_log_uni_idx\\` on table \\`public.student_record_access_log\\` has not been used",
+          "metadata": {
+            "name": "student_record_access_log",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`entitlement_key_aliases_key_idx\\` on table \\`public.entitlement_key_aliases\\` has not been used",
+          "metadata": {
+            "name": "entitlement_key_aliases",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`usage_counters_key_idx\\` on table \\`public.usage_counters\\` has not been used",
+          "metadata": {
+            "name": "usage_counters",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`tax_rates_entered_by_idx\\` on table \\`public.tax_rates\\` has not been used",
+          "metadata": {
+            "name": "tax_rates",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`checkout_sessions_subject_idx\\` on table \\`public.checkout_sessions\\` has not been used",
+          "metadata": {
+            "name": "checkout_sessions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`checkout_sessions_plan_idx\\` on table \\`public.checkout_sessions\\` has not been used",
+          "metadata": {
+            "name": "checkout_sessions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`subscriptions_subject_idx\\` on table \\`public.subscriptions\\` has not been used",
+          "metadata": {
+            "name": "subscriptions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`subscriptions_plan_idx\\` on table \\`public.subscriptions\\` has not been used",
+          "metadata": {
+            "name": "subscriptions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`subscriptions_next_plan_idx\\` on table \\`public.subscriptions\\` has not been used",
+          "metadata": {
+            "name": "subscriptions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`payments_subscription_idx\\` on table \\`public.payments\\` has not been used",
+          "metadata": {
+            "name": "payments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`payments_session_idx\\` on table \\`public.payments\\` has not been used",
+          "metadata": {
+            "name": "payments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`payments_invoice_idx\\` on table \\`public.payments\\` has not been used",
+          "metadata": {
+            "name": "payments",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`invoices_credits_idx\\` on table \\`public.invoices\\` has not been used",
+          "metadata": {
+            "name": "invoices",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`invoices_payment_idx\\` on table \\`public.invoices\\` has not been used",
+          "metadata": {
+            "name": "invoices",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`invoices_created_by_idx\\` on table \\`public.invoices\\` has not been used",
+          "metadata": {
+            "name": "invoices",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`checkout_sessions_invoice_idx\\` on table \\`public.checkout_sessions\\` has not been used",
+          "metadata": {
+            "name": "checkout_sessions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`checkout_sessions_subscription_idx\\` on table \\`public.checkout_sessions\\` has not been used",
+          "metadata": {
+            "name": "checkout_sessions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`subscriptions_created_by_idx\\` on table \\`public.subscriptions\\` has not been used",
+          "metadata": {
+            "name": "subscriptions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`subscriptions_gateway_ref_idx\\` on table \\`public.subscriptions\\` has not been used",
+          "metadata": {
+            "name": "subscriptions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`add_on_orders_subject_idx\\` on table \\`public.add_on_orders\\` has not been used",
+          "metadata": {
+            "name": "add_on_orders",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`add_on_orders_job_idx\\` on table \\`public.add_on_orders\\` has not been used",
+          "metadata": {
+            "name": "add_on_orders",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`add_on_orders_grant_idx\\` on table \\`public.add_on_orders\\` has not been used",
+          "metadata": {
+            "name": "add_on_orders",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`add_on_orders_created_by_idx\\` on table \\`public.add_on_orders\\` has not been used",
+          "metadata": {
+            "name": "add_on_orders",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`checkout_sessions_add_on_idx\\` on table \\`public.checkout_sessions\\` has not been used",
+          "metadata": {
+            "name": "checkout_sessions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`hire_fees_invoice_idx\\` on table \\`public.hire_fees\\` has not been used",
+          "metadata": {
+            "name": "hire_fees",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`hire_fees_resolved_by_idx\\` on table \\`public.hire_fees\\` has not been used",
+          "metadata": {
+            "name": "hire_fees",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`billing_tasks_done_by_idx\\` on table \\`public.billing_tasks\\` has not been used",
+          "metadata": {
+            "name": "billing_tasks",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`appeals_claimed_by_idx\\` on table \\`public.appeals\\` has not been used",
+          "metadata": {
+            "name": "appeals",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`appeals_decided_by_idx\\` on table \\`public.appeals\\` has not been used",
+          "metadata": {
+            "name": "appeals",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`appeals_filed_by_idx\\` on table \\`public.appeals\\` has not been used",
+          "metadata": {
+            "name": "appeals",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`sanctions_org_idx\\` on table \\`public.sanctions\\` has not been used",
+          "metadata": {
+            "name": "sanctions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`sanctions_lifted_by_idx\\` on table \\`public.sanctions\\` has not been used",
+          "metadata": {
+            "name": "sanctions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ops_view_sessions_staff_idx\\` on table \\`public.ops_view_sessions\\` has not been used",
+          "metadata": {
+            "name": "ops_view_sessions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`ops_view_sessions_user_idx\\` on table \\`public.ops_view_sessions\\` has not been used",
+          "metadata": {
+            "name": "ops_view_sessions",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`appeals_appellant_idx\\` on table \\`public.appeals\\` has not been used",
+          "metadata": {
+            "name": "appeals",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`appeals_org_idx\\` on table \\`public.appeals\\` has not been used",
+          "metadata": {
+            "name": "appeals",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`appeals_original_staff_idx\\` on table \\`public.appeals\\` has not been used",
+          "metadata": {
+            "name": "appeals",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_requests_domain_idx\\` on table \\`public.university_requests\\` has not been used",
+          "metadata": {
+            "name": "university_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        },
+        {
+          "detail": "Index \\`university_requests_university_idx\\` on table \\`public.university_requests\\` has not been used",
+          "metadata": {
+            "name": "university_requests",
+            "type": "table",
+            "schema": "public"
+          },
+          "observed_at": "2026-10-06T23:55:45.689Z"
+        }
+      ]
+    }
+  ],
+  "local_per_kind": [
+    {
+      "kind": "bucket",
+      "md5": "8da6679c519475687982c5ef6a5efb9d",
+      "count": 10
+    },
+    {
+      "kind": "cron",
+      "md5": "8127fd0db65b78f9190a5a68860cb46a",
+      "count": 47
+    },
+    {
+      "kind": "enum",
+      "md5": "24eb72fa64a2548921e78e8ff480ae99",
+      "count": 80
+    },
+    {
+      "kind": "extension",
+      "md5": "567059a9a98e06e1b181a286eef3c13d",
+      "count": 8
+    },
+    {
+      "kind": "function",
+      "md5": "cfd35b955dab7ecec77b7dba542ff6e6",
+      "count": 1709
+    },
+    {
+      "kind": "materialized_view",
+      "md5": "a9c11074882a2968e26d368b6cbeff95",
+      "count": 3
+    },
+    {
+      "kind": "policy",
+      "md5": "825e18b441afb1dd0c9ee9c73e541d9b",
+      "count": 137
+    },
+    {
+      "kind": "queue",
+      "md5": "4096c74995895abd774dd52978b8f732",
+      "count": 8
+    },
+    {
+      "kind": "table",
+      "md5": "9d5d68148045fb176b284159a79dbb1b",
+      "count": 281
+    },
+    {
+      "kind": "trigger",
+      "md5": "42a654e668cd8142aabe493fe3cc4428",
+      "count": 157
+    },
+    {
+      "kind": "view",
+      "md5": "c76a451a93f162ca8ada3bf5325aff36",
+      "count": 4
+    }
+  ],
+  "fingerprint_normalization": {
+    "function_acl": "Owner-dependent EXECUTE ACLs are excluded from hashes; generated pages still list non-owner EXECUTE grantees.",
+    "system_schemas": "pg_* and information_schema excluded",
+    "triggers": "Internal constraint triggers excluded; constraints included in table definitions.",
+    "identity": "OIDs, owners, cron job IDs/host/database/user, queue creation time and bucket timestamps excluded."
+  }
+}

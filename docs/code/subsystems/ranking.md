@@ -263,7 +263,7 @@ Where they come from:
 4. Per group: drop endorsements that a reviewer (or an earlier automatic close) already decided [src: supabase/migrations/20261005000000_ranking.sql#Endorsements a reviewer already decided on stay decided.]. If none is left, skip. If an open ring flag shares a member, it is updated to the group as it is now; otherwise a new flag is inserted [src: supabase/migrations/20261005000000_ranking.sql#An open flag follows the group as it is today.].
 5. Every open ring flag not matched this run is set to `cleared` with no reviewer and a fixed reason [src: supabase/migrations/20261005000000_ranking.sql#reason = 'Closed automatically: these endorsements are no longer a ring on their own'].
 
-Effect: endorsements in an `open` or `upheld` ring flag score 0; in a `cleared` one they count again [src: supabase/migrations/20261012000000_teacher_portal.sql#where f.kind = 'ring' and f.status in ('open', 'upheld') and f.endorsement_ids @> array[n.id]) as ring]. Being in an open ring also cancels the new-completion exemption in the rapid-gain check (section 4.8).
+Effect: endorsements in an `open` or `upheld` ring flag score 0; in a `cleared` one they count again [src: supabase/migrations/20261012000000_teacher_portal.sql#where f.kind = 'ring' and f.status in ('open', 'upheld') and f.endorsement_ids @> array]. Being in an open ring also cancels the new-completion exemption in the rapid-gain check (section 4.8).
 
 ### 4.8 Rapid gain
 

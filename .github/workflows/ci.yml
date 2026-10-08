@@ -36,8 +36,8 @@ jobs:
       - run: pnpm lint
       - run: pnpm test
 
-  database-and-e2e:
-    name: pgTAP, types, E2E + axe
+  database-checks:
+    name: pgTAP, worker test, types
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -48,7 +48,6 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      # Mailpit stays on: the auth E2E tests read signup codes and reset links from it.
       - name: Start local Supabase
         run: pnpm exec supabase start -x studio,imgproxy,logflare,vector,supavisor
       - name: Rebuild the database from migrations + seed
@@ -101,6 +100,30 @@ jobs:
           pnpm db:types
           git diff --exit-code types/database.ts || (echo "types/database.ts is stale: run pnpm db:types" && exit 1)
 
+  e2e:
+    name: E2E + axe (shard ${{ matrix.shard }}/${{ strategy.job-total }})
+    runs-on: ubuntu-latest
+    strategy:
+      # Each shard starts its own local Supabase stack, so shards never share state and a slow
+      # or flaky shard can't starve another's test timeouts (decisions.md 2026-10-08: the single
+      # serial job's growing runtime was itself making late tests flaky).
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # Mailpit stays on: the auth E2E tests read signup codes and reset links from it.
+      - name: Start local Supabase
+        run: pnpm exec supabase start -x studio,imgproxy,logflare,vector,supavisor
+      - name: Rebuild the database from migrations + seed
+        run: pnpm exec supabase db reset
       - name: Point the app at local Supabase
         run: |
           eval "$(pnpm exec supabase status -o env)"
@@ -130,15 +153,17 @@ jobs:
       - name: Chromium for CV PDFs (the app server and the ATS test)
         run: echo "CV_CHROMIUM_PATH=$(node -e 'console.log(require("@playwright/test").chromium.executablePath())')" >> "$GITHUB_ENV"
       - name: ATS text test (every CV template printed and read back)
+        # Independent of the browser shard split; only needs to run once.
+        if: matrix.shard == 1
         run: pnpm test:ats
       - name: E2E (auth flows, gallery in both themes, axe-core, health)
-        run: pnpm test:e2e
+        run: pnpm test:e2e -- --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           E2E_EXPECT_HEALTHY: "1"
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.shard }}
           path: |
             playwright-report/
             test-results/
@@ -201,7 +226,7 @@ jobs:
     name: Apply migrations and functions to Supabase (main only)
     # Runs only after every gate above is green on the merged commit.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [checks, database-and-e2e, gitleaks, audit]
+    needs: [checks, database-checks, e2e, gitleaks, audit]
     runs-on: ubuntu-latest
     environment: production
     concurrency:

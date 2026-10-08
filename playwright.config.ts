@@ -7,7 +7,12 @@ export default defineConfig({
   testDir: "tests/e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: 0,
+  // headless_shell has crashed with a SIGILL/CFI violation on marketing-pages.spec.ts:132 on GitHub's
+  // runners three times (CI #179, fix/split-e2e-job twice); switching to the full Chromium binary
+  // traded that for ENOSPC instead (its heavier traces/video pushed the runner's disk over the edge).
+  // A single CI-only retry is Playwright's own recommended mitigation for a browser-crash flake: it
+  // relaunches a fresh browser process rather than changing which binary every test uses.
+  retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
   // Several specs assert on state that lands after router.refresh() re-renders from the server
   // (ConfirmAction, endorsement hide/show); under CI's concurrent shards that round trip can run
@@ -18,13 +23,6 @@ export default defineConfig({
     trace: "retain-on-failure",
     // Lets a machine with a preinstalled Chromium skip `playwright install`.
     launchOptions: process.env.PW_CHROMIUM_PATH ? { executablePath: process.env.PW_CHROMIUM_PATH } : {},
-    // Playwright's default headless Chromium is the lightweight `headless_shell` build, which has
-    // crashed with a SIGILL/CFI violation on marketing-pages.spec.ts:132 on GitHub's runners three
-    // times now (CI #179, and twice on fix/split-e2e-job). `channel: "chromium"` runs the full
-    // browser binary instead (already installed by `playwright install chromium`), which doesn't
-    // hit this crash. Skipped when PW_CHROMIUM_PATH pins an explicit binary, since Playwright
-    // rejects channel + executablePath together.
-    channel: process.env.PW_CHROMIUM_PATH ? undefined : "chromium",
   },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },

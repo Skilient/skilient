@@ -1923,3 +1923,11 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   already has tables rather than wiping it, so it can never empty the wrong project. Vault secrets don't decrypt in
   another project, so the drill recreates the operational ones and rotates in a new CV key (old CVs still verify);
   GitHub tokens are lost in a cross-project restore and students reconnect. The dump never leaves the runner.
+- **2026-10-08 — CI #177 (main, docs-stage-2 merge) E2E failures are a flake, not a regression:** 3 of 244 E2E tests
+  failed (`endorsements.spec.ts:110` hide/show toggle, `teacher.spec.ts:138` accept-supervision, `ventures.spec.ts:162`
+  confirm-contribution) on both attempts. The merged PR (#72) touched only `docs/`; `git diff` between the prior green
+  run's head (`0581dfd`) and this one (`24d49e2`) has zero changes under `app/`, `components/`, `lib/`, `supabase/`,
+  `tests/`. All three failures share a shape: a client action (`router.refresh()` after a server action) whose
+  result never lands within the assertion's 5s window, on the single 52-minute, mostly-serial `pgTAP, types, E2E`
+  job — consistent with runner contention this late in a long run, not app logic. No code change made; if this
+  recurs on an unrelated commit, worth splitting that job or raising the affected assertions' timeout.

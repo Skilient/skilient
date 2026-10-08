@@ -9,6 +9,10 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: 0,
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
+  // Several specs assert on state that lands after router.refresh() re-renders from the server
+  // (ConfirmAction, endorsement hide/show); under CI's concurrent shards that round trip can run
+  // past Playwright's 5s default, failing a different assertion each time rather than the same one.
+  expect: { timeout: 10_000 },
   use: {
     baseURL,
     trace: "retain-on-failure",

@@ -11,7 +11,7 @@ The contract for every stage of the `docs/code/` work. Read it before writing or
 ## Citations
 
 - Every factual claim about the code carries `[src: <path>#<symbol>]`, optionally `[src: <path>#<symbol>:L<line>]`.
-- `<path>` is relative to the repo root. `<symbol>` is a function, constant, type, class, component, config key or exact string that occurs in that file. For SQL the symbol is the object name (function, table, policy, trigger, view, cron job name).
+- `<path>` is relative to the repo root and may contain Next route segments such as `[id]` and `[[...page]]`. `<symbol>` is a function, constant, type, class, component, config key or exact string that occurs in that file, on one line, and never contains `]`. For SQL the symbol is the object name (function, table, policy, trigger, view, cron job name).
 - The symbol is what gets checked. The line is a hint; `check-citations` warns when it is more than 20 lines off.
 - One citation per bracket. Put several brackets after a sentence when it rests on several places.
 - Run `pnpm docs:check <file>` after writing. Fix or delete every failure.
@@ -75,6 +75,6 @@ docs/code/howto/{debug,add-a-feature,change-the-schema}.md
 
 ## Scripts
 
-- `pnpm docs:check [paths...]`: citation check (default `docs/code/**`).
+- `pnpm docs:check [paths...]`: citation check (default `docs/code/**`). It fails on a `[src:` it can't parse, a missing file or a missing symbol.
 - `node scripts/docs/assert-comment-only.mjs <base-ref>`: comment-only diff check.
 - `node scripts/docs/coverage.mjs [--headers]`: coverage against `PLAN.md`, or header coverage.

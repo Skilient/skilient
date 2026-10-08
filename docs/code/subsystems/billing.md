@@ -462,7 +462,7 @@ Signatures are compared in constant time [src: supabase/functions/_shared/billin
 | `billing.live_mode` | false; hiring-fee and licence invoices are TEST until true | [src: supabase/migrations/20261024000000_billing_lifecycle.sql#('billing.live_mode', 1, 'false',] |
 | `billing.simulated_testers` | `[]` | [src: supabase/migrations/20261024000000_billing_lifecycle.sql#('billing.simulated_testers', 1,] |
 | Webhook tolerance | 5 minutes | [src: supabase/functions/_shared/billing/types.ts#export const WEBHOOK_TOLERANCE_MS = 5 * 60 * 1000;] |
-| Webhook body limit | more than 262,144 characters (`256 * 1024` on the body string) answers 413 | read in `app/api/billing/webhook/[gateway]/route.ts` (see the note under "Tests") |
+| Webhook body limit | more than 262,144 characters (`256 * 1024` on the body string) answers 413 | [src: app/api/billing/webhook/[gateway]/route.ts#rawBody.length > 256 * 1024] |
 | Checkout rate limit | 30 per person per hour | [src: supabase/migrations/20261024000000_billing_lifecycle.sql#private.rate_limit('checkout:'] |
 | Licence request rate limit | 3 per university per day | [src: supabase/migrations/20261024000000_billing_lifecycle.sql#private.rate_limit('licence_request:'] |
 | Queue reads | events: visibility 30 s, 50 per run, archived at the 5th read; jobs: visibility 120 s, 10 per run, archived at the 5th read | [src: supabase/migrations/20261024000000_billing_lifecycle.sql#for m in select * from pgmq.read('billing_events', 30, p_max) loop] [src: supabase/migrations/20261024000000_billing_lifecycle.sql#select m.msg_id, m.read_ct, m.message from pgmq.read('billing_jobs', 120, p_max) m;] [src: supabase/functions/_shared/billing/worker.ts#opts.batch ?? 10] |
@@ -500,13 +500,27 @@ Paid actions in other subsystems are listed in `PAID_ACTIONS` with their key, an
 
 | Path | Guard |
 |---|---|
-| `POST /api/billing/webhook/[gateway]` | Anyone may call; `handleBillingWebhook` answers 404 for an unknown or disabled gateway, 401 for a missing, bad or stale signature, 400 for a malformed body, 500 when storing fails, 200 otherwise [src: lib/billing/webhook.ts#export async function handleBillingWebhook]. The route reads the raw body, answers 413 above 262,144 characters, stores through the service role and writes one `billing.webhook` log line (read in `app/api/billing/webhook/[gateway]/route.ts`). |
-| `GET /api/billing/invoice/[id]` | Signed-in user; `invoice_document` allows the subject's billing readers and accounts staff, and needs two-factor for organisation and university invoices [src: supabase/migrations/20261024000000_billing_lifecycle.sql#if i.id is null or not (v_me in (select private.billing_readers(i.subject_type, i.subject_id)) or private.is_staff('accounts')) then]. Anything else is 404 (read in `app/api/billing/invoice/[id]/route.ts`). |
+| `POST /api/billing/webhook/[gateway]` | Anyone may call; `handleBillingWebhook` answers 404 for an unknown or disabled gateway, 401 for a missing, bad or stale signature, 400 for a malformed body, 500 when storing fails, 200 otherwise [src: lib/billing/webhook.ts#export async function handleBillingWebhook]. The route reads the raw body and answers 413 above 262,144 characters [src: app/api/billing/webhook/[gateway]/route.ts#rawBody.length > 256 * 1024], stores through the service role [src: app/api/billing/webhook/[gateway]/route.ts#record: recordWithServiceRole] and writes one `billing.webhook` log line [src: app/api/billing/webhook/[gateway]/route.ts#("billing.webhook", {]. Errors and refusals become service signals, except an unknown or disabled gateway [src: app/api/billing/webhook/[gateway]/route.ts#result.errorCode !== "unknown_gateway" && result.errorCode !== "gateway_disabled"]. |
+| `GET /api/billing/invoice/[id]` | A malformed id is 404 and no session is 401 [src: app/api/billing/invoice/[id]/route.ts#if (!UUID.test(id)) return NextResponse.json({ error: "not_found" }, { status: 404 });] [src: app/api/billing/invoice/[id]/route.ts#return NextResponse.json({ error: "no_session" }, { status: 401 });]. Then `invoice_document` decides: the subject's billing readers and accounts staff, with two-factor for organisation and university invoices [src: supabase/migrations/20261024000000_billing_lifecycle.sql#if i.id is null or not (v_me in (select private.billing_readers(i.subject_type, i.subject_id)) or private.is_staff('accounts')) then]; any refusal is 404 [src: app/api/billing/invoice/[id]/route.ts#supabase.rpc("invoice_document", { p_id: id })]. The PDF is sent inline as `<number>.pdf` with `private, no-store` caching [src: app/api/billing/invoice/[id]/route.ts#inline; filename=] [src: app/api/billing/invoice/[id]/route.ts#"cache-control": "private, no-store",]. |
 | `/settings/billing` | students only (`notFound` otherwise) [src: app/(app)/settings/billing/page.tsx#if (user?.role !== "student") notFound();] |
 | `/org/billing` | organisation members except the `recruiter` role [src: app/(app)/org/(portal)/billing/page.tsx#org.role === "recruiter") notFound();] |
 | `/uni/billing` | the university owner [src: app/(app)/uni/(portal)/billing/page.tsx#if (!uni?.is_owner) notFound();] |
 | `/ops/billing` | accounts staff [src: app/(app)/ops/billing/page.tsx#if (!roles.has("accounts")) notFound();] |
-| `/ops/billing/[type]/[id]`, `/billing/checkout/[session]`, `/billing/return/[session]` | the same staff check, and `checkout_session` for the two checkout pages (404 on `P0002` or `42501`); the checkout page renders only an open simulated session and sends anything else to the return page (read in those files) |
+| `/ops/billing/[type]/[id]` | accounts staff, a known subject type and a UUID [src: app/(app)/ops/billing/[type]/[id]/page.tsx#if (!roles.has("accounts")) notFound();] [src: app/(app)/ops/billing/[type]/[id]/page.tsx#!UUID.test(id)) notFound();] |
+| `/billing/checkout/[session]`, `/billing/return/[session]` | `checkout_session` decides; its `P0002` or `42501` becomes 404 [src: app/(app)/billing/checkout/[session]/page.tsx#if (isRefusal(e, "P0002", "42501")) notFound();] [src: app/(app)/billing/return/[session]/page.tsx#if (isRefusal(e, "P0002", "42501")) notFound();] |
+
+The checkout page is the simulated gateway's page. It renders only an open simulated session and sends anything else to the return page [src: app/(app)/billing/checkout/[session]/page.tsx#c.status !== "open") redirect(]. It shows a test-mode notice, the quote's lines and tax lines from the database, an upgrade note, and the four simulated outcomes [src: app/(app)/billing/checkout/[session]/page.tsx#Test mode: no real money is charged.] [src: app/(app)/billing/checkout/[session]/page.tsx#c.change === "upgrade"] [src: app/(app)/billing/checkout/[session]/page.tsx#<SimulatedCheckout sessionId={c.id} recurringAllowed={c.recurring_allowed} />]. It prints the tax rate rounded to a whole percent, so a 17.5% rate shows as 18% while the amount is exact [src: app/(app)/billing/checkout/[session]/page.tsx#(Number(t.rate) * 100).toFixed(0)]. The return page shows the title, the amount (marked "test mode" when not live) and the polling status [src: app/(app)/billing/return/[session]/page.tsx#test mode, no real money] [src: app/(app)/billing/return/[session]/page.tsx#<ReturnStatus sessionId={c.id} initial={c.status} returnTo={c.return_to} />].
+
+The staff account page shows the merged entitlements, subscriptions, grants, usage counters, invoices, payments and hiring fees, with these forms:
+
+| Form | Shown when | Source |
+|---|---|---|
+| Test tool, End now | on the running subscription; the test tool only when it isn't live or is `comp` or `none` | [src: app/(app)/ops/billing/[type]/[id]/page.tsx#.includes(x.gateway) ? (] [src: app/(app)/ops/billing/[type]/[id]/page.tsx#submitLabel="End now"] |
+| Give a comp plan | no running subscription, or a trial; recruiter options are the monthly Starter and Growth and yearly Enterprise | [src: app/(app)/ops/billing/[type]/[id]/page.tsx#running.status === "trialing" ? (] [src: app/(app)/ops/billing/[type]/[id]/page.tsx#{ value: "recruiter_starter_monthly", label: "Starter" },] |
+| Add grant; Revoke | always; Revoke only on active `admin` grants | [src: app/(app)/ops/billing/[type]/[id]/page.tsx#g.active && g.source === "admin"] |
+| Set this period's use | for limit keys | [src: app/(app)/ops/billing/[type]/[id]/page.tsx#keys.filter((k) => s.entitlements.quotas] |
+| Mark paid, Void | on unpaid invoices of kind `invoice` | [src: app/(app)/ops/billing/[type]/[id]/page.tsx#i.status === "issued" && i.kind === "invoice" ? (] |
+| Refund | on payments not fully refunded | [src: app/(app)/ops/billing/[type]/[id]/page.tsx#s.payments.filter((p) => p.status !== "refunded")] |
 
 ### RPCs and other callers
 
@@ -573,7 +587,7 @@ Notices: 14 types in category `billing`; `billing_trial_started` and `billing_pl
 | Staff refund of a Safepay payment | Audit says a refund was requested | The adapter always answers `failed`, so the job is retried and archived after 5 reads; no event is recorded [src: supabase/functions/_shared/billing/safepay.ts#return Promise.resolve({ status: "failed", error: "Refund in the Safepay dashboard until its refund API is confirmed" });] |
 | A Paddle renewal Paddle never reports | Plan still shows active; paid features refuse | The worker counted it `deferred` and deleted the job; `charge_pending` stays true, so the tick skips the row [src: supabase/functions/_shared/billing/worker.ts#if (res.status === "deferred") {] |
 | `billing-tick` or `sponsorship-sync` throws | Nothing moves on time | `job_runs` row `failed` with the error (watchdog) [src: supabase/migrations/20261024000000_billing_lifecycle.sql#v_run uuid := public.job_run_start('billing-tick');] |
-| Invoice PDF render fails | 500 `render_failed` | `billing.invoice_pdf` error line (route) |
+| Invoice PDF render fails | 500 `render_failed` [src: app/api/billing/invoice/[id]/route.ts#return NextResponse.json({ error: "render_failed" }, { status: 500 });] | `billing.invoice_pdf` error line [src: app/api/billing/invoice/[id]/route.ts#("billing.invoice_pdf", {] |
 | Overdue hiring fee | Contact requests refused with "pay the overdue hiring-fee invoice…", shown in the upgrade sheet | `PT402` from `consume_quota` |
 
 ## Tests
@@ -590,8 +604,6 @@ Notices: 14 types in category `billing`; `billing_trial_started` and `billing_pl
 | E2E `tests/e2e/billing.spec.ts` | trial, simulated payment and receipt PDF; a failed payment; an organisation meeting the upgrade sheet then buying Starter and credits; staff pages and the university licence page [src: tests/e2e/billing.spec.ts#expect(pdf).toEqual({ status: 200, type: "application/pdf" });] |
 
 Not covered by any test: Safepay events through the full pipeline; the Paddle and Safepay `createSession` and Paddle `refund` HTTP calls; prepaid reminders; a licence renewal through `renewal_invoice_id`; `ops_void_invoice` and `ops_end_subscription` on their own; the webhook route's 413 limit; contact-credit periods on yearly and comp plans; a Paddle renewal that never arrives.
-
-The citation checker can't parse a path containing `]` [src: scripts/docs/check-citations.mjs#const CITATION =], so claims about `app/api/billing/webhook/[gateway]/route.ts`, `app/api/billing/invoice/[id]/route.ts`, `app/(app)/billing/checkout/[session]/page.tsx`, `app/(app)/billing/return/[session]/page.tsx` and `app/(app)/ops/billing/[type]/[id]/page.tsx` name the file instead of citing it.
 
 ## Change guide
 

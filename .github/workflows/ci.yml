@@ -21,6 +21,43 @@ env:
   NEXT_TELEMETRY_DISABLED: "1"
 
 jobs:
+  changes:
+    name: Detect app changes
+    runs-on: ubuntu-latest
+    outputs:
+      app: ${{ steps.filter.outputs.app }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      # Decides whether this push/PR touches anything that can affect the build, the
+      # database or the E2E suite. A docs-only or decisions.md-only change skips
+      # database-checks, e2e and performance entirely (2026-10-08: those three dominate
+      # CI's wall-clock time, and ran in full on several docs-only pushes tonight for no
+      # reason). checks, gitleaks and audit always run regardless: they're cheap and
+      # security-relevant. No base commit (first push, force-push, manual dispatch) runs
+      # everything, to fail safe.
+      - name: Decide whether app, database or test code changed
+        id: filter
+        run: |
+          case "${{ github.event_name }}" in
+            pull_request) base="${{ github.event.pull_request.base.sha }}" ;;
+            push) base="${{ github.event.before }}" ;;
+            *) base="" ;;
+          esac
+          if [ -z "$base" ] || ! git cat-file -e "$base" 2>/dev/null; then
+            echo "No usable base commit (first push, force-push or manual dispatch) - running everything."
+            echo "app=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          changed="$(git diff --name-only "$base" "${{ github.sha }}")"
+          echo "$changed"
+          if echo "$changed" | grep -Eq '^(app|components|lib|supabase|tests|public|scripts)/|^(next\.config\.ts|package\.json|pnpm-lock\.yaml|playwright.*\.config\.ts|vitest.*\.config\.mts|tsconfig\.json|\.github/workflows/ci\.yml)$'; then
+            echo "app=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "app=false" >> "$GITHUB_OUTPUT"
+          fi
+
   checks:
     name: Typecheck, lint, unit tests
     runs-on: ubuntu-latest
@@ -38,6 +75,8 @@ jobs:
 
   database-checks:
     name: pgTAP, worker test, types
+    needs: changes
+    if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -102,6 +141,8 @@ jobs:
 
   e2e:
     name: E2E + axe (shard ${{ matrix.shard }}/${{ strategy.job-total }})
+    needs: changes
+    if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     strategy:
       # Each shard starts its own local Supabase stack, so shards never share state and a slow
@@ -145,10 +186,28 @@ jobs:
           echo "NEXT_PUBLIC_SITE_URL=http://127.0.0.1:3100" >> "$GITHUB_ENV"
           # Billing (decisions.md 2026-10-05): the simulated gateway signs its webhooks with this test-only value.
           echo "SIMULATED_GATEWAY_SECRET=e2e-simulated-gateway-signing-value-0001" >> "$GITHUB_ENV"
+      # Aggressive caching (decisions.md 2026-10-08): every shard was rebuilding from cold and
+      # re-downloading Chromium from scratch. Both caches are shared across shards by key, so a
+      # cache miss on shard 1 still leaves 2 and 3 a warm cache once shard 1's post-job save runs
+      # on a later push; within one push the shards race, but a cold build/install is no worse
+      # than before.
+      - name: Cache the Next.js build cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .next/cache
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('app/**', 'components/**', 'lib/**', 'next.config.ts') }}
+          restore-keys: |
+            nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
       - name: Build (gallery enabled)
         run: pnpm build
         env:
           ENABLE_UI_GALLERY: "1"
+      - name: Cache Playwright's browser binaries
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm exec playwright install --with-deps chromium
       - name: Chromium for CV PDFs (the app server and the ATS test)
         run: echo "CV_CHROMIUM_PATH=$(node -e 'console.log(require("@playwright/test").chromium.executablePath())')" >> "$GITHUB_ENV"
@@ -191,10 +250,13 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: .nvmrc
+          cache: pnpm
       - run: pnpm audit --audit-level critical --prod
 
   performance:
     name: Lighthouse CI + size-limit (report only)
+    needs: changes
+    if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     # PRD 10: performance budgets have leeway; they report on every PR but never block a merge.
     continue-on-error: true
@@ -206,6 +268,13 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Cache the Next.js build cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .next/cache
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('app/**', 'components/**', 'lib/**', 'next.config.ts') }}
+          restore-keys: |
+            nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
       - run: pnpm build
       - name: size-limit
         run: pnpm size | tee size-limit.txt

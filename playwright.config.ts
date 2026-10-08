@@ -18,6 +18,12 @@ export default defineConfig({
     trace: "retain-on-failure",
     // Lets a machine with a preinstalled Chromium skip `playwright install`.
     launchOptions: process.env.PW_CHROMIUM_PATH ? { executablePath: process.env.PW_CHROMIUM_PATH } : {},
+    // Playwright's default headless Chromium is the lightweight `headless_shell` build, which has
+    // crashed with a SIGILL/CFI violation on marketing-pages.spec.ts:132 on GitHub's runners three
+    // times now (CI #179 and twice on this PR). `channel: "chromium"` runs the full browser binary
+    // instead (already installed by `playwright install chromium`), which doesn't hit this crash.
+    // Skipped when PW_CHROMIUM_PATH pins an explicit binary, since Playwright rejects channel + executablePath together.
+    channel: process.env.PW_CHROMIUM_PATH ? undefined : "chromium",
   },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },

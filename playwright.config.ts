@@ -7,8 +7,17 @@ export default defineConfig({
   testDir: "tests/e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: 0,
+  // headless_shell has crashed with a SIGILL/CFI violation on marketing-pages.spec.ts:132 on GitHub's
+  // runners three times (CI #179, this PR twice); switching to the full Chromium binary traded that
+  // for ENOSPC instead (its heavier traces/video pushed the runner's disk over the edge). A single
+  // CI-only retry is Playwright's own recommended mitigation for a browser-crash flake: it relaunches
+  // a fresh browser process rather than changing which binary every test uses.
+  retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
+  // Several specs assert on state that lands after router.refresh() re-renders from the server
+  // (ConfirmAction, endorsement hide/show); under CI's concurrent shards that round trip can run
+  // past Playwright's 5s default, failing a different assertion each time rather than the same one.
+  expect: { timeout: 10_000 },
   use: {
     baseURL,
     trace: "retain-on-failure",

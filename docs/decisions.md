@@ -1931,3 +1931,14 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   result never lands within the assertion's 5s window, on the single 52-minute, mostly-serial `pgTAP, types, E2E`
   job — consistent with runner contention this late in a long run, not app logic. No code change made; if this
   recurs on an unrelated commit, worth splitting that job or raising the affected assertions' timeout.
+- **2026-10-08 — It recurred (CI #181, main, docs-stage-3+4 merge): this is a real, worsening pattern, not a one-off.**
+  4 of 244 E2E tests failed (`endorsements.spec.ts:110`, `posts.spec.ts:52`, `posts.spec.ts:128`,
+  `ventures.spec.ts:162`). The `endorsements.spec.ts:110` and `ventures.spec.ts:162` failures are byte-for-byte
+  identical to #177's (same locator, same stale "Self-reported"/"Hidden from others" text). Again zero app code
+  changed in the merge (#74 was `docs/code/PLAN.md` + the stage 4 architecture docs only). Total E2E runtime is
+  climbing across consecutive runs — 43.6min → 52min → 56.7min — consistent with the single serial `pgTAP, types,
+  E2E` job degrading under sustained load as it runs longer, not a logic bug (the server actions and components
+  behind all four failing assertions were re-checked and are correct). Recommendation, not yet acted on: split
+  the E2E job (e.g. by Playwright project/shard) or raise the 5s default assertion timeout for mutation-then-read
+  checks; worth doing before stage 5 adds more E2E-adjacent work, since the job's growing length is itself part of
+  the problem.

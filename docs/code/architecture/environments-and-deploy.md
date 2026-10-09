@@ -81,7 +81,8 @@ Runs on every pull request, on manual dispatch and on each push to `main` [src: 
 | Job | Steps | Blocks `migrate-production` |
 |---|---|---|
 | `checks` | `pnpm typecheck`, `pnpm lint` (zero warnings), `pnpm test` [src: .github/workflows/ci.yml#- run: pnpm typecheck] | Yes |
-| `database-and-e2e` | Start the local stack; `supabase db reset`; pgTAP (`supabase test db`); `pnpm test:worker`; boot every Edge Function and expect 401 (and `not_configured` from `github-link`); `supabase db advisors --fail-on warn`; regenerate `types/database.ts` and fail on a diff; build with the gallery; `pnpm test:ats`; `pnpm test:e2e` with `E2E_EXPECT_HEALTHY=1`; upload the Playwright report [src: .github/workflows/ci.yml#pnpm exec supabase test db] [src: .github/workflows/ci.yml#--fail-on warn] [src: .github/workflows/ci.yml#types/database.ts is stale: run pnpm db:types] [src: .github/workflows/ci.yml#E2E_EXPECT_HEALTHY: "1"] | Yes |
+| `database-checks` | Start the local stack; `supabase db reset`; pgTAP (`supabase test db`); `pnpm test:worker`; boot every Edge Function and expect 401 (and `not_configured` from `github-link`); `supabase db advisors --fail-on warn`; regenerate `types/database.ts` and fail on a diff [src: .github/workflows/ci.yml#pnpm exec supabase test db] [src: .github/workflows/ci.yml#--fail-on warn] [src: .github/workflows/ci.yml#types/database.ts is stale: run pnpm db:types] | Yes |
+| `e2e` | A 3-way matrix, each shard with its own local stack: build with the gallery, `pnpm test:ats` (shard 1 only), `pnpm test:e2e --shard=N/3` with `E2E_EXPECT_HEALTHY=1`, upload its own Playwright report. Split (2026-10-08) because the single serial job's growing runtime was itself making late tests flaky [src: .github/workflows/ci.yml#shard: [1, 2, 3]] [src: .github/workflows/ci.yml#if: matrix.shard == 1] [src: .github/workflows/ci.yml#E2E_EXPECT_HEALTHY: "1"] | Yes |
 | `gitleaks` | Scans the full history with gitleaks 8.28, redacted [src: .github/workflows/ci.yml#zricethezav/gitleaks:v8.28.0] | Yes |
 | `audit` | `pnpm audit --audit-level critical --prod` [src: .github/workflows/ci.yml#pnpm audit --audit-level critical --prod] | Yes |
 | `performance` | Build, `size-limit`, Lighthouse CI; report only (`continue-on-error`) [src: .github/workflows/ci.yml#continue-on-error: true] | No |
@@ -104,7 +105,7 @@ Weekly update pull requests for npm packages (Radix, Supabase and testing packag
 ## What a merge to `main` does to production
 
 1. **CI runs on the merged commit.** The push to `main` starts `ci.yml`; the five gate jobs run as on a pull request [src: .github/workflows/ci.yml#branches: [main]].
-2. **`migrate-production` waits** for `checks`, `database-and-e2e`, `gitleaks` and `audit` to pass; `performance` is not required [src: .github/workflows/ci.yml#needs: [checks, database-and-e2e, gitleaks, audit]]. It runs in the GitHub `production` environment, one at a time, never cancelled [src: .github/workflows/ci.yml#group: supabase-migrate-production].
+2. **`migrate-production` waits** for `checks`, `database-checks`, every shard of `e2e`, `gitleaks` and `audit` to pass; `performance` is not required [src: .github/workflows/ci.yml#needs: [checks, database-checks, e2e, gitleaks, audit]]. It runs in the GitHub `production` environment, one at a time, never cancelled [src: .github/workflows/ci.yml#group: supabase-migrate-production].
 3. **Secrets check.** It stops with an error unless `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` and `SUPABASE_DB_PASSWORD` are set [src: .github/workflows/ci.yml#Repository secret $v is not set].
 4. **Link and dry run.** `supabase link --project-ref …`, then `supabase db push --linked --dry-run` to list pending migrations [src: .github/workflows/ci.yml#pnpm exec supabase db push --linked --dry-run].
 5. **Apply migrations.** `supabase db push --linked` applies the pending migrations the previous step listed [src: .github/workflows/ci.yml#- name: Apply migrations] [src: .github/workflows/ci.yml#- name: Show pending migrations]. Because cron jobs, queues and worker secrets are created inside migrations, this step is also what schedules a new job, creates a new queue and generates a new bearer secret in production [src: supabase/migrations/20261104000000_analytics.sql#select pgmq.create('analytics')].
@@ -137,4 +138,4 @@ Beyond Next's presets, ESLint (`--max-warnings=0`) refuses [src: package.json#es
 | `pnpm db:test` | pgTAP (`supabase test db`) | `supabase/tests/*.test.sql`, numbered; `00_rls_everywhere` first [src: package.json#"db:test": "supabase test db"] | The local stack |
 | `pnpm marketing:captures` | Playwright | `tests/captures` with its own config [src: package.json#playwright test -c playwright.captures.config.ts] | A build and seeded sample content |
 
-CI runs all of them except the captures, in the `checks` and `database-and-e2e` jobs above.
+CI runs all of them except the captures, in the `checks`, `database-checks` and `e2e` jobs above.

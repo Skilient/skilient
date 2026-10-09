@@ -1,14 +1,15 @@
 // Checks the [src: path#symbol] citations in Markdown docs (docs/code/CONVENTIONS.md).
 // Usage: node scripts/docs/check-citations.mjs [paths...]   (default: every .md under docs/code)
-// Fails when a cited file is missing or the symbol does not occur in it; warns when the
-// :L<line> hint is more than 20 lines from the nearest line holding the symbol.
+// Fails when a citation can't be parsed, a cited file is missing or the symbol does not occur
+// in it; warns when the :L<line> hint is more than 20 lines from the nearest line holding the symbol.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 const ROOT = resolve(import.meta.dirname, "../..");
 const HINT_TOLERANCE = 20;
 // Citations inside code fences or inline code are examples, not claims.
-const CITATION = /\[src:\s*([^\]#\s]+)#([^\]]+?)(?::L(\d+))?\s*\]/g;
+// A path may hold Next.js route segments such as [id] and [[...page]]; a symbol can't hold "]".
+const CITATION = /\[src:\s*((?:[^[\]#\s]|\[\[[^[\]#\s/]*\]\]|\[[^[\]#\s/]*\])+)#([^\]]+?)(?::L(\d+))?\s*\]/g;
 
 function markdownFiles(path) {
   const full = resolve(ROOT, path);
@@ -43,6 +44,12 @@ for (const doc of docs) {
   const rel = relative(ROOT, doc);
   const text = stripCode(readFileSync(doc, "utf8"));
   let n = 0;
+  const parsed = new Set([...text.matchAll(CITATION)].map((m) => m.index));
+  for (let at = text.indexOf("[src:"); at !== -1; at = text.indexOf("[src:", at + 1)) {
+    if (parsed.has(at)) continue;
+    console.error(`FAIL ${rel}:${text.slice(0, at).split("\n").length}: citation not parsed: ${text.slice(at, at + 80).split("\n")[0]}`);
+    failures++;
+  }
   for (const m of text.matchAll(CITATION)) {
     n++;
     const [, path, rawSymbol, hint] = m;

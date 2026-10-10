@@ -9,7 +9,7 @@ import { cancelSubscription, chooseSeats, disputeHireFee, reopenPausedJob, saveB
 import { money, PROVINCES } from "@/lib/billing/constants";
 import { getBillingOverview, paymentOptions } from "@/lib/data/billing";
 import { isRefusal } from "@/lib/data/rpc-json";
-import { getMyOrg } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
 import { dayLabel } from "@/lib/format/time";
 
 export const metadata: Metadata = { title: "Billing" };

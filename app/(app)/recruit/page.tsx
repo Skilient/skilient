@@ -2,7 +2,10 @@ import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { OutcomeButtons } from "@/components/recruit/job-forms";
 import { Badge } from "@/components/ui";
-import { getHires, getMyOrg, getOrgContacts, getOrgJobs } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
+import { getOrgContacts } from "@/lib/features/contact-requests/data";
+import { getHires } from "@/lib/features/hiring/data";
+import { getOrgJobs } from "@/lib/features/job-postings/data";
 import { ageLabel } from "@/lib/format/time";
 
 export const metadata: Metadata = { title: "Home" };

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui";
 import { RecruitNav } from "@/components/recruit/recruit-nav";
-import type { MyOrg } from "@/lib/data/recruit";
+import type { MyOrg } from "@/lib/features/organizations/data";
 import { ORG_STATUS_LABELS } from "@/lib/recruit/constants";
 
 /** Organisation name, verification state and the section nav, shared by /recruit and /org. */

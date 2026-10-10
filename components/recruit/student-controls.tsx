@@ -5,19 +5,10 @@ import { useState, useTransition, type FormEvent } from "react";
 import { FormAlert } from "@/components/auth/form-alert";
 import { ActionButton } from "@/components/teach/action-button";
 import { Button, Field, Input, Switch, Textarea } from "@/components/ui";
-import {
-  applyToJob,
-  blockCompany,
-  closeContactChat,
-  createTeam,
-  inviteTeamMember,
-  respondContactRequest,
-  respondTeamInvite,
-  saveRecruiterPrefs,
-  submitRepo,
-  unblockCompany,
-  withdrawJobApplication,
-} from "@/lib/actions/opportunities";
+import { blockCompany, saveRecruiterPrefs, unblockCompany } from "@/lib/features/privacy/actions";
+import { createTeam, inviteTeamMember, respondTeamInvite, submitRepo } from "@/lib/features/competitions/actions";
+import { closeContactChat, respondContactRequest } from "@/lib/features/contact-requests/actions";
+import { applyToJob, withdrawJobApplication } from "@/lib/features/job-applications/actions";
 import { AVAILABILITY, AVAILABILITY_LABELS, type Availability } from "@/lib/recruit/constants";
 
 export function BlockCompanyButton({ orgId, name, blocked }: { orgId: string; name: string; blocked: boolean }) {

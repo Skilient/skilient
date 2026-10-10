@@ -4,7 +4,7 @@ import type { Route } from "next";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { Button, Field, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui";
-import type { TalentFacets } from "@/lib/data/recruit";
+import type { TalentFacets } from "@/lib/features/talent/data";
 import {
   ACTIVE_DAYS,
   AVAILABILITY,

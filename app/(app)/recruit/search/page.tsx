@@ -5,8 +5,10 @@ import { DeleteSavedSearchButton, SaveSearchForm } from "@/components/recruit/sa
 import { TalentFilterForm } from "@/components/recruit/talent-filter-form";
 import { Avatar, Badge, Button, EmptyState, SkillChip, TierBadge } from "@/components/ui";
 import type { SkillLevel } from "@/components/ui";
-import { getMyOrg, exploreTalent, getOrgPlan, getSavedSearches, getTalentFacets, searchTalent, type TalentRow } from "@/lib/data/recruit";
+import { getMyOrg, getOrgPlan } from "@/lib/features/organizations/data";
+import { exploreTalent, getTalentFacets, searchTalent, type TalentRow } from "@/lib/features/talent/data";
 import { isRefusal } from "@/lib/data/rpc-json";
+import { getSavedSearches } from "@/lib/features/saved-searches/data";
 import { filtersFromParams, filtersToParams } from "@/lib/recruit/constants";
 import { publicImageUrl } from "@/lib/storage";
 

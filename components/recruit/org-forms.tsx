@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition, type FormEvent } from "react";
 import { FormAlert } from "@/components/auth/form-alert";
 import { Button, Field, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from "@/components/ui";
-import { acceptInvite, createOrganization, inviteMember, removeMember, revokeInvite, setMemberRole, updateCompanyPage } from "@/lib/actions/recruit";
+import { acceptInvite, createOrganization, inviteMember, removeMember, revokeInvite, setMemberRole, updateCompanyPage } from "@/lib/features/organizations/actions";
 import type { ActionError } from "@/lib/actions/result";
 import { ORG_ROLE_LABELS, ORG_SIZES, type OrgRole } from "@/lib/recruit/constants";
 import { ActionButton } from "@/components/teach/action-button";

@@ -3,7 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ShortlistBoard } from "@/components/recruit/shortlist-board";
 import { EmptyState } from "@/components/ui";
-import { getMyOrg, getOrgJobs, getShortlist } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
+import { getOrgJobs } from "@/lib/features/job-postings/data";
+import { getShortlist } from "@/lib/features/shortlists/data";
 import { isRefusal } from "@/lib/data/rpc-json";
 
 export const metadata: Metadata = { title: "Shortlist" };

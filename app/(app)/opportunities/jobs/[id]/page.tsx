@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ApplyForm } from "@/components/recruit/student-controls";
 import { Badge } from "@/components/ui";
-import { getPublicJob } from "@/lib/data/opportunities";
+import { getPublicJob } from "@/lib/features/public-opportunities/data";
 import { isRefusal } from "@/lib/data/rpc-json";
 import { dayLabel } from "@/lib/format/time";
 import { JOB_TYPE_LABELS, STAGE_LABELS, TIER_LABELS } from "@/lib/recruit/constants";

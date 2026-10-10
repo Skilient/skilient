@@ -7,9 +7,9 @@ import { useState, useTransition, type FormEvent } from "react";
 import { FormAlert } from "@/components/auth/form-alert";
 import { ActionButton } from "@/components/teach/action-button";
 import { Button, Field, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from "@/components/ui";
-import { finishCompetition, saveCompetition, scoreTeam, submitCompetition, type CompetitionInput } from "@/lib/actions/recruit";
+import { finishCompetition, saveCompetition, scoreTeam, submitCompetition, type CompetitionInput } from "@/lib/features/competitions/actions";
 import type { ActionError } from "@/lib/actions/result";
-import type { CompetitionManage } from "@/lib/data/recruit";
+import type { CompetitionManage } from "@/lib/features/competitions/data";
 import { COMPETITION_TEMPLATES, TIER_LABELS, TIERS } from "@/lib/recruit/constants";
 
 type SkillOption = { id: string; name: string };

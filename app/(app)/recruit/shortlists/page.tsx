@@ -3,7 +3,9 @@ import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { NewShortlistForm } from "@/components/recruit/shortlist-board";
 import { EmptyState } from "@/components/ui";
-import { getMyOrg, getOrgActivity, getShortlists } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
+import { getOrgActivity } from "@/lib/features/talent/data";
+import { getShortlists } from "@/lib/features/shortlists/data";
 import { ageLabel } from "@/lib/format/time";
 
 export const metadata: Metadata = { title: "Shortlists" };

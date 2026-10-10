@@ -9,7 +9,7 @@ export interface PaidAction {
   /** The log name passed to actionContext (also the registry id). */
   name: string;
   /** Module and export, for the tests. */
-  module: "recruit" | "uni" | "cv";
+  module: "uni" | "cv" | "contact-requests" | "shortlists" | "saved-searches" | "competitions" | "recruiter-api";
   exportName: string;
   /** The SQL function the action calls (null for the CV refresh, which goes through cv-sign). */
   sql: string | null;
@@ -18,16 +18,16 @@ export interface PaidAction {
 }
 
 export const PAID_ACTIONS: readonly PaidAction[] = [
-  { name: "recruit.create_shortlist", module: "recruit", exportName: "createShortlist", sql: "create_shortlist", key: "recruit.shortlists", subject: "org" },
-  { name: "recruit.rename_shortlist", module: "recruit", exportName: "renameShortlist", sql: "rename_shortlist", key: "recruit.shortlists", subject: "org" },
-  { name: "recruit.shortlist_add", module: "recruit", exportName: "addToShortlist", sql: "add_to_shortlist", key: "recruit.shortlists", subject: "org" },
-  { name: "recruit.shortlist_reorder", module: "recruit", exportName: "reorderShortlist", sql: "reorder_shortlist", key: "recruit.shortlists", subject: "org" },
-  { name: "recruit.add_note", module: "recruit", exportName: "addNote", sql: "add_note", key: "recruit.shortlists", subject: "org" },
-  { name: "recruit.send_contact", module: "recruit", exportName: "sendContactRequest", sql: "send_contact_request", key: "contact.credits", subject: "org" },
-  { name: "recruit.save_search", module: "recruit", exportName: "saveSearch", sql: "save_search", key: "recruit.saved_searches", subject: "org" },
-  { name: "recruit.save_competition", module: "recruit", exportName: "saveCompetition", sql: "save_competition", key: "competitions.run", subject: "org" },
-  { name: "recruit.create_token", module: "recruit", exportName: "createApiToken", sql: "create_api_token", key: "api.access", subject: "org" },
-  { name: "recruit.create_webhook", module: "recruit", exportName: "createWebhook", sql: "create_webhook", key: "api.access", subject: "org" },
+  { name: "recruit.create_shortlist", module: "shortlists", exportName: "createShortlist", sql: "create_shortlist", key: "recruit.shortlists", subject: "org" },
+  { name: "recruit.rename_shortlist", module: "shortlists", exportName: "renameShortlist", sql: "rename_shortlist", key: "recruit.shortlists", subject: "org" },
+  { name: "recruit.shortlist_add", module: "shortlists", exportName: "addToShortlist", sql: "add_to_shortlist", key: "recruit.shortlists", subject: "org" },
+  { name: "recruit.shortlist_reorder", module: "shortlists", exportName: "reorderShortlist", sql: "reorder_shortlist", key: "recruit.shortlists", subject: "org" },
+  { name: "recruit.add_note", module: "shortlists", exportName: "addNote", sql: "add_note", key: "recruit.shortlists", subject: "org" },
+  { name: "recruit.send_contact", module: "contact-requests", exportName: "sendContactRequest", sql: "send_contact_request", key: "contact.credits", subject: "org" },
+  { name: "recruit.save_search", module: "saved-searches", exportName: "saveSearch", sql: "save_search", key: "recruit.saved_searches", subject: "org" },
+  { name: "recruit.save_competition", module: "competitions", exportName: "saveCompetition", sql: "save_competition", key: "competitions.run", subject: "org" },
+  { name: "recruit.create_token", module: "recruiter-api", exportName: "createApiToken", sql: "create_api_token", key: "api.access", subject: "org" },
+  { name: "recruit.create_webhook", module: "recruiter-api", exportName: "createWebhook", sql: "create_webhook", key: "api.access", subject: "org" },
   { name: "uni.hackathon", module: "uni", exportName: "saveHackathon", sql: "save_hackathon", key: "uni.hackathons", subject: "university" },
   { name: "uni.fair", module: "uni", exportName: "saveFair", sql: "save_job_fair", key: "uni.job_fairs", subject: "university" },
   { name: "cv.refresh", module: "cv", exportName: "refreshCv", sql: null, key: "cv.refresh_on_demand", subject: "user" },

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getOrgPlan } from "@/lib/data/recruit";
+import { getOrgPlan } from "@/lib/features/organizations/data";
 
 export const metadata: Metadata = { title: "Plan and credits" };
 

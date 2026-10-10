@@ -2,7 +2,8 @@ import { Trophy } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { Badge, Button, EmptyState } from "@/components/ui";
-import { getMyOrg, getOrgCompetitions } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
+import { getOrgCompetitions } from "@/lib/features/competitions/data";
 import { dayLabel } from "@/lib/format/time";
 import { COMPETITION_STATUS_LABELS } from "@/lib/recruit/constants";
 

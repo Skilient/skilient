@@ -3,8 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ApplicantBoard } from "@/components/recruit/applicant-board";
 import { EmptyState } from "@/components/ui";
-import { getApplicants, getMyOrg } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
 import { isRefusal } from "@/lib/data/rpc-json";
+import { getApplicants } from "@/lib/features/job-applications/data";
 
 export const metadata: Metadata = { title: "Applicants" };
 

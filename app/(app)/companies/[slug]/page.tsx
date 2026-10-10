@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { BlockCompanyButton } from "@/components/recruit/student-controls";
 import { Badge, EmptyState } from "@/components/ui";
 import { getCurrentUser } from "@/lib/auth/current-user";
-import { getCompanyPage } from "@/lib/data/opportunities";
+import { getCompanyPage } from "@/lib/features/public-opportunities/data";
 import { isRefusal } from "@/lib/data/rpc-json";
 import { dayLabel } from "@/lib/format/time";
 import { JOB_TYPE_LABELS } from "@/lib/recruit/constants";

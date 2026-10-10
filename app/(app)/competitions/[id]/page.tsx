@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CreateTeamForm, InviteTeammateForm, SubmitRepoForm, TeamInviteResponse } from "@/components/recruit/student-controls";
 import { Badge } from "@/components/ui";
-import { getPublicCompetition } from "@/lib/data/opportunities";
+import { getPublicCompetition } from "@/lib/features/competitions/data";
 import { isRefusal } from "@/lib/data/rpc-json";
 import { dayLabel } from "@/lib/format/time";
 import { COMPETITION_STATUS_LABELS, TIER_LABELS } from "@/lib/recruit/constants";

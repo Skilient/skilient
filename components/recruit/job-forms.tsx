@@ -7,9 +7,10 @@ import { useState, useTransition, type FormEvent } from "react";
 import { FormAlert } from "@/components/auth/form-alert";
 import { ActionButton } from "@/components/teach/action-button";
 import { Button, Field, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from "@/components/ui";
-import { answerHireOutcome, closeJob, publishJob, saveJob, type JobInput } from "@/lib/actions/recruit";
 import type { ActionError } from "@/lib/actions/result";
-import type { JobDoc } from "@/lib/data/recruit";
+import { closeJob, publishJob, saveJob, type JobInput } from "@/lib/features/job-postings/actions";
+import type { JobDoc } from "@/lib/features/job-postings/data";
+import { answerHireOutcome } from "@/lib/features/hiring/actions";
 import { DESCRIPTION_LIMITS, JOB_TYPE_LABELS, JOB_TYPES, OUTCOME_ANSWERS, TIER_LABELS, TIERS, type JobType } from "@/lib/recruit/constants";
 
 type SkillOption = { id: string; name: string };

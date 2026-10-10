@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { WithdrawButton } from "@/components/recruit/student-controls";
 import { Badge } from "@/components/ui";
-import { getApplication } from "@/lib/data/opportunities";
+import { getApplication } from "@/lib/features/job-applications/data";
 import { isRefusal } from "@/lib/data/rpc-json";
 import { dayLabel } from "@/lib/format/time";
 import { STAGE_LABELS } from "@/lib/recruit/constants";

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { PortalHeader } from "@/components/recruit/portal-header";
-import { getMyOrg } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
 
 export const metadata: Metadata = { title: { template: "%s · Organisation", default: "Organisation" }, robots: { index: false, follow: false } };
 

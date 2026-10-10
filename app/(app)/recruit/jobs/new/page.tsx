@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { JobForm } from "@/components/recruit/job-forms";
-import { getMyOrg, getTalentFacets } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
+import { getTalentFacets } from "@/lib/features/talent/data";
 
 export const metadata: Metadata = { title: "Post a job" };
 

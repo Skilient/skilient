@@ -2,7 +2,8 @@ import { ChartBar } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { EmptyState } from "@/components/ui";
-import { getAnalytics, getMyOrg } from "@/lib/data/recruit";
+import { getAnalytics } from "@/lib/features/talent/data";
+import { getMyOrg } from "@/lib/features/organizations/data";
 import { cn } from "@/lib/cn";
 
 export const metadata: Metadata = { title: "Analytics" };

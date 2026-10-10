@@ -123,7 +123,17 @@ describe("every registered paid action refuses without its entitlement", () => {
     it(`${action.name} (${action.key})`, async () => {
       const who = subjects[action.subject];
       state.token = jwt(who.id, jwtSecret, who.aal);
-      const mod = (await import(`@/lib/actions/${action.module}.ts`)) as Record<string, (...a: never[]) => Promise<unknown>>;
+      const mod = (action.module === "contact-requests"
+        ? await import("@/lib/features/contact-requests/actions")
+        : action.module === "shortlists"
+          ? await import("@/lib/features/shortlists/actions")
+          : action.module === "saved-searches"
+            ? await import("@/lib/features/saved-searches/actions")
+            : action.module === "competitions"
+              ? await import("@/lib/features/competitions/actions")
+              : action.module === "recruiter-api"
+                ? await import("@/lib/features/recruiter-api/actions")
+          : await import(`@/lib/actions/${action.module}.ts`)) as Record<string, (...a: never[]) => Promise<unknown>>;
       expect(typeof mod[action.exportName]).toBe("function");
       const result = (await SAMPLES[action.name]!(mod)) as { ok: boolean; code?: string; message?: string };
       expect(result, JSON.stringify(result)).toMatchObject({ ok: false, code: "payment_required" });

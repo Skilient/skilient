@@ -2,7 +2,8 @@ import { EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { Badge, EmptyState } from "@/components/ui";
-import { getMyOrg, getOrgContacts, getOrgPlan } from "@/lib/data/recruit";
+import { getMyOrg, getOrgPlan } from "@/lib/features/organizations/data";
+import { getOrgContacts } from "@/lib/features/contact-requests/data";
 import { ageLabel } from "@/lib/format/time";
 import { CONTACT_STATUS_LABELS } from "@/lib/recruit/constants";
 

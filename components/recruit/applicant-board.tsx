@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { FormAlert } from "@/components/auth/form-alert";
 import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, TierBadge } from "@/components/ui";
-import { bulkMoveApplications, moveApplication } from "@/lib/actions/recruit";
-import type { Applicant } from "@/lib/data/recruit";
+import { bulkMoveApplications, moveApplication } from "@/lib/features/job-applications/actions";
+import type { Applicant } from "@/lib/features/job-applications/data";
 import { REJECT_REASONS, STAGE_LABELS, STAGES } from "@/lib/recruit/constants";
 
 type Forward = "screening" | "interview" | "offer" | "hired";

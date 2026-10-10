@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { AcceptInviteButton, OrgJoinForm } from "@/components/recruit/org-forms";
 import { getCurrentUser } from "@/lib/auth/current-user";
-import { getMyOrg, getMyOrgInvites } from "@/lib/data/recruit";
+import { getMyOrg, getMyOrgInvites } from "@/lib/features/organizations/data";
 import { futureTime } from "@/lib/format/time";
 import { ORG_ROLE_LABELS } from "@/lib/recruit/constants";
 

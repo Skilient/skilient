@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ContactResponse } from "@/components/recruit/student-controls";
 import { Badge } from "@/components/ui";
-import { getMyContactRequests } from "@/lib/data/opportunities";
+import { getMyContactRequests } from "@/lib/features/contact-requests/data";
 import { futureTime, ageLabel } from "@/lib/format/time";
 import { CONTACT_STATUS_LABELS } from "@/lib/recruit/constants";
 

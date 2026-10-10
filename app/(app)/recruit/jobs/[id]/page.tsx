@@ -3,7 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { JobForm } from "@/components/recruit/job-forms";
 import { Badge } from "@/components/ui";
-import { getMyOrg, getOrgJob, getTalentFacets } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
+import { getTalentFacets } from "@/lib/features/talent/data";
+import { getOrgJob } from "@/lib/features/job-postings/data";
 import { isRefusal } from "@/lib/data/rpc-json";
 
 export const metadata: Metadata = { title: "Job" };

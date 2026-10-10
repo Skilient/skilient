@@ -5,7 +5,7 @@ import { OrgDocumentForm } from "@/components/recruit/org-document-form";
 import { CompanyPageForm } from "@/components/recruit/org-forms";
 import { rpcJson } from "@/lib/data/rpc-json";
 import { dayLabel } from "@/lib/format/time";
-import { getMyOrg } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
 
 export const metadata: Metadata = { title: "Company page" };
 

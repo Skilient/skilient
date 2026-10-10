@@ -5,7 +5,7 @@ import { useState, useTransition, type FormEvent } from "react";
 import { FormAlert } from "@/components/auth/form-alert";
 import { ActionButton } from "@/components/teach/action-button";
 import { Button, Field, Input } from "@/components/ui";
-import { createApiToken, createWebhook, deleteWebhook, revokeApiToken } from "@/lib/actions/recruit";
+import { createApiToken, createWebhook, deleteWebhook, revokeApiToken } from "@/lib/features/recruiter-api/actions";
 import { WEBHOOK_EVENTS } from "@/lib/recruit/constants";
 
 /** Create a token: shown once here and never stored (only its hash is). */

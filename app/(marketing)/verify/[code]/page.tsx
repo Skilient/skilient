@@ -7,7 +7,7 @@ import { VerifyColumn } from "@/components/marketing/verify-column";
 import { siteUrl } from "@/lib/cv/site";
 import { STATUS_TEXT, type VerifyStatus } from "@/lib/cv/status";
 import { verifyCode } from "@/lib/data/cv";
-import { getCandidateForCode } from "@/lib/data/recruit";
+import { getCandidateForCode } from "@/lib/features/talent/data";
 import { cn } from "@/lib/cn";
 import { formatCode } from "@/supabase/functions/_shared/cv/sign.ts";
 

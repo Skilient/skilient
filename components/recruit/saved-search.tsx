@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { FormAlert } from "@/components/auth/form-alert";
 import { ActionButton } from "@/components/teach/action-button";
 import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui";
-import { deleteSavedSearch, saveSearch } from "@/lib/actions/recruit";
+import { deleteSavedSearch, saveSearch } from "@/lib/features/saved-searches/actions";
 import type { TalentFilters } from "@/lib/recruit/constants";
 
 export function SaveSearchForm({ filters }: { filters: TalentFilters }) {

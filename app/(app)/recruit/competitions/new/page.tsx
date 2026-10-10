@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CompetitionForm } from "@/components/recruit/competition-forms";
-import { getMyOrg, getOrgCompetitions, getTalentFacets } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
+import { getOrgCompetitions } from "@/lib/features/competitions/data";
+import { getTalentFacets } from "@/lib/features/talent/data";
 
 export const metadata: Metadata = { title: "New competition" };
 

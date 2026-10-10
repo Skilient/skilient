@@ -8,8 +8,9 @@ import { useState, useTransition } from "react";
 import { FormAlert } from "@/components/auth/form-alert";
 import { ActionButton } from "@/components/teach/action-button";
 import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, TierBadge } from "@/components/ui";
-import { createShortlist, deleteShortlist, inviteToApply, removeFromShortlist, renameShortlist, reorderShortlist } from "@/lib/actions/recruit";
-import type { ShortlistItem } from "@/lib/data/recruit";
+import { createShortlist, deleteShortlist, removeFromShortlist, renameShortlist, reorderShortlist } from "@/lib/features/shortlists/actions";
+import { inviteToApply } from "@/lib/features/job-applications/actions";
+import type { ShortlistItem } from "@/lib/features/shortlists/data";
 
 export function NewShortlistForm() {
   const router = useRouter();

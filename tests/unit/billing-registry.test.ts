@@ -59,10 +59,10 @@ function walk(dir: string): string[] {
   });
 }
 
-/** Every rpcAction call in lib/actions: its log name, SQL function and entitlement option. */
+/** Every rpcAction call in the legacy action modules and feature modules. */
 function actionCalls(): { file: string; name: string; fn: string; entitlement: string | null }[] {
   const out: { file: string; name: string; fn: string; entitlement: string | null }[] = [];
-  for (const file of walk(join(root, "lib", "actions"))) {
+  for (const file of [...walk(join(root, "lib", "actions")), ...walk(join(root, "lib", "features"))]) {
     const src = readFileSync(file, "utf8");
     for (const m of src.matchAll(/rpcAction(?:<[^(]*?>)?\(\{([\s\S]*?)\}\);/g)) {
       const block = m[1]!;

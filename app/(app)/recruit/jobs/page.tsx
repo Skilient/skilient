@@ -2,7 +2,8 @@ import { Briefcase } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { Badge, Button, EmptyState } from "@/components/ui";
-import { getMyOrg, getOrgJobs } from "@/lib/data/recruit";
+import { getMyOrg } from "@/lib/features/organizations/data";
+import { getOrgJobs } from "@/lib/features/job-postings/data";
 import { dayLabel } from "@/lib/format/time";
 import { JOB_TYPE_LABELS } from "@/lib/recruit/constants";
 

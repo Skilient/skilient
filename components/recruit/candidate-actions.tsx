@@ -5,7 +5,9 @@ import { useState, useTransition, type FormEvent } from "react";
 import { FormAlert } from "@/components/auth/form-alert";
 import { ActionButton } from "@/components/teach/action-button";
 import { Button, Dialog, DialogContent, DialogTrigger, Field, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from "@/components/ui";
-import { addNote, addToShortlist, createShortlist, deleteNote, inviteToApply, sendContactRequest } from "@/lib/actions/recruit";
+import { addNote, addToShortlist, createShortlist, deleteNote } from "@/lib/features/shortlists/actions";
+import { sendContactRequest } from "@/lib/features/contact-requests/actions";
+import { inviteToApply } from "@/lib/features/job-applications/actions";
 import { CONTACT_LIMITS, CONTACT_TEMPLATES } from "@/lib/recruit/constants";
 
 export function ShortlistControl({

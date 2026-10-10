@@ -6,7 +6,7 @@ import { FirstVisitTip } from "@/components/learn/first-visit-tip";
 import { LeaderboardToggle } from "@/components/ranking/leaderboard-toggle";
 import { RecruiterPrefsForm } from "@/components/recruit/student-controls";
 import { ConfirmAction } from "@/components/ventures/confirm-action";
-import { unblockCompany } from "@/lib/actions/opportunities";
+import { unblockCompany } from "@/lib/features/privacy/actions";
 import { unblockUser } from "@/lib/actions/friends";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { getCvViewsLast30Days } from "@/lib/data/cv";
@@ -14,7 +14,7 @@ import { getBlocks } from "@/lib/data/friends";
 import { ageLabel } from "@/lib/format/time";
 import { getMyRecordViewers } from "@/lib/data/uni";
 import { ADMIN_ROLE_LABELS } from "@/lib/uni/constants";
-import { getBlockedCompanies, getProfileViewers, getRecruiterPrefs } from "@/lib/data/opportunities";
+import { getBlockedCompanies, getProfileViewers, getRecruiterPrefs } from "@/lib/features/privacy/data";
 import { VISIBILITY } from "@/lib/profile/options";
 import { createClient } from "@/lib/supabase/server";
 

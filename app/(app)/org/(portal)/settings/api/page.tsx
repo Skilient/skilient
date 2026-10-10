@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DeleteWebhookButton, RevokeTokenButton, TokenForm, WebhookForm } from "@/components/recruit/api-forms";
 import { Badge, EmptyState } from "@/components/ui";
-import { getApiSettings, getMyOrg } from "@/lib/data/recruit";
+import { getApiSettings } from "@/lib/features/recruiter-api/data";
+import { getMyOrg } from "@/lib/features/organizations/data";
 import { ageLabel } from "@/lib/format/time";
 
 export const metadata: Metadata = { title: "API tokens" };

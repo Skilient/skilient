@@ -21,7 +21,7 @@ export function TrustGap() {
       </SectionHeading>
       <div className="mt-10 grid gap-10 md:mt-14 md:grid-cols-12 md:gap-6">
         <figure className="flex flex-col gap-4 md:col-span-7">
-          <p className="font-display text-[5.5rem] leading-none tracking-[-0.04em] text-primary sm:text-[8rem]">{lead.figure}</p>
+          <p className="font-display text-[5.5rem] leading-none tracking-[-0.04em] text-text-primary sm:text-[8rem]">{lead.figure}</p>
           <figcaption className="flex max-w-[34ch] flex-col gap-3">
             <span className="text-h3 font-semibold">{lead.text}</span>
             <Source text={lead.source} href={lead.href} />

@@ -62,12 +62,57 @@ typography:
     fontFamily: "JetBrains Mono, ui-monospace, monospace"
     fontSize: "13px"
     lineHeight: 1.55
+  headline-phone:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: "2rem"
+    fontWeight: 500
+    lineHeight: 1.1
+    letterSpacing: "-0.02em"
+  display-sm:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: "2.25rem"
+    fontWeight: 500
+    lineHeight: 1.08
+    letterSpacing: "-0.02em"
+  display-md:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: "3.5rem"
+    fontWeight: 500
+    lineHeight: 1.05
+    letterSpacing: "-0.025em"
+  display-lg:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: "4rem"
+    fontWeight: 500
+    lineHeight: 1.05
+    letterSpacing: "-0.025em"
+  step-title:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: "1.625rem"
+    fontWeight: 500
+    lineHeight: 1.15
+    letterSpacing: "-0.015em"
+  stat-sm:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: "5.5rem"
+    fontWeight: 500
+    lineHeight: 1
+    letterSpacing: "-0.04em"
+  stat:
+    fontFamily: "Spectral, Georgia, serif"
+    fontSize: "8rem"
+    fontWeight: 500
+    lineHeight: 1
+    letterSpacing: "-0.04em"
 rounded:
   sm: "3px"
   md: "6px"
   lg: "10px"
   xl: "16px"
   full: "9999px"
+  inset: "2px"
+  device: "2.25rem"
+  device-screen: "1.6rem"
 spacing:
   gutter: "clamp(1rem, 5vw, 2.5rem)"
   column-gap: "24px"

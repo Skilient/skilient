@@ -82,6 +82,7 @@ export const MARKETING_PATHS = [
   "/universities",
   "/faculty",
   "/about",
+  "/faq",
   "/pricing",
   "/request-university",
   "/join",

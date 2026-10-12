@@ -29,6 +29,7 @@ const PAGES = [
   { path: "/faculty", h1: "Your judgement, on the record.", cta: "/signup?role=faculty" },
   { path: "/pricing", h1: "Proof is free. Polish is optional.", cta: null },
   { path: "/about", h1: "A CV should show the work behind it.", cta: null },
+  { path: "/faq", h1: "Questions about Skilient", cta: null },
 ] as const;
 
 test.describe("Marketing: organisation pages, pricing and about", () => {

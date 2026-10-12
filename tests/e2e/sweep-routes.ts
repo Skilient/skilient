@@ -30,7 +30,7 @@ const r = (role: SweepRole, routes: string[]): SweepRoute[] => routes.map((route
 
 export const SWEEP: SweepRoute[] = [
   ...r("visitor", [
-    "/", "/about", "/faculty", "/pricing", "/privacy", "/recruiters", "/terms", "/universities", "/verify", "/verify/[code]",
+    "/", "/about", "/faculty", "/faq", "/pricing", "/privacy", "/recruiters", "/terms", "/universities", "/verify", "/verify/[code]",
     "/request-university", "/request-university/confirm", "/request-university/unsubscribe", "/signin", "/signin/code",
     "/signin/mfa", "/signup", "/signup/recruiter", "/signup/verify", "/forgot-password", "/reset-password", "/auth/confirmed",
     "/auth/link", "/auth/not-me", "/ui", "/cv/[username]",

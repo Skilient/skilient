@@ -15,7 +15,7 @@ export interface NavLink {
  * Marketing pages that exist so far. Phase 12 ships in slices and main deploys to production,
  * so nav and footer links to a page appear only once it is built (each slice adds its pages).
  */
-export const BUILT_PAGES: ReadonlySet<string> = new Set(["/verify", "/recruiters", "/universities", "/faculty", "/pricing", "/about", "/terms", "/privacy"]);
+export const BUILT_PAGES: ReadonlySet<string> = new Set(["/verify", "/recruiters", "/universities", "/faculty", "/pricing", "/about", "/faq", "/terms", "/privacy"]);
 /** Built but kept out of search until their final text exists. */
 export const NOINDEX_PAGES: ReadonlySet<string> = new Set(["/terms", "/privacy"]);
 export const isBuilt = (href: string) => BUILT_PAGES.has(href);
@@ -34,8 +34,9 @@ export const nav: { links: NavLink[]; signIn: NavLink; join: NavLink; open: stri
 };
 
 export const hero = {
-  headline: "Join Pakistan's first social media platform exclusively for university students.",
-  subline: "Build with classmates, prove your skills with real work, and get recognised by recruiters. No more rejected CVs.",
+  headline: "Prove your skills with real work. Recruiters can check it.",
+  subline:
+    "Build ventures with classmates, connect your GitHub work, and get a signed CV that anyone can verify at skilient.com/verify. For students at HEC-listed universities.",
   captureAlt:
     "The University Feed on a phone (sample posts). A reader ticks Informative on a post, its count goes from 11 to 12 people, and the post moves up one place.",
 };
@@ -89,6 +90,7 @@ export const footer = {
       heading: "Skilient",
       links: [
         { label: "About", href: "/about" as Route },
+        { label: "Questions", href: "/faq" as Route },
         { label: "Pricing", href: "/pricing" as Route },
         { label: "Verify a CV", href: "/verify" as Route },
       ],
@@ -235,7 +237,14 @@ export const pricingTeaser = {
   link: "See pricing",
 };
 
-/** Section 13. */
+/** Section 13. The landing shows the first three questions; /faq shows all of them. */
+export const faqPage = {
+  title: "Questions",
+  description: "Who can join, what Skilient reads from GitHub, what your university can see, and how recruiters contact you.",
+  headline: "Questions about Skilient",
+  all: "All questions",
+};
+
 export const faq = {
   heading: "Questions",
   items: [

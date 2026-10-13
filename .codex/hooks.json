@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/home/aeternum/Workspace/startup/skilient/.codex/hooks/session-start.sh'"
+          }
+        ]
+      }
+    ]
+  }
+}

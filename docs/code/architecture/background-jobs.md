@@ -1,4 +1,6 @@
 Commit: dee328c
+
+Email update (2026-10-14): [Brevo inventory and cutover](../../email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
 Covers: supabase/migrations/20260927000000_foundations.sql (job_runs), supabase/migrations/20260930000000_phase3_answers.sql (storage_cleanup), every cron.schedule and pgmq.create in supabase/migrations/, supabase/functions/*/index.ts, supabase/functions/storage-cleanup/, supabase/functions/_shared/storage/, the inbound webhook routes, supabase/config.toml ([functions.*])
 
 # Background jobs

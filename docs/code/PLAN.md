@@ -1,5 +1,7 @@
 # Documentation plan
 
+Email update (2026-10-14): [Brevo inventory and cutover](../email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
+
 Commit: 7d26258
 Covers: every tracked source file outside the CONVENTIONS exclusions (see "Coverage map")
 

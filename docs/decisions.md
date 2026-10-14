@@ -1942,3 +1942,14 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   the E2E job (e.g. by Playwright project/shard) or raise the 5s default assertion timeout for mutation-then-read
   checks; worth doing before stage 5 adds more E2E-adjacent work, since the job's growing length is itself part of
   the problem.
+
+- 2026-10-14 (email migration, Ahmed): replace application/worker Resend HTTP sending and Svix monitoring with Brevo.
+  Required categories select Skilient/security@ or Skilient/notify@ even inside shared runtimes; mixed digests split by
+  category. Keep queues, preferences, cron schedules and 60/day cap. Brevo's 30-minute UUID idempotency is backed by
+  private durable acceptance/lease bookkeeping; expired or changed ambiguous sends require reconciliation. Delivery
+  and final hard-bounce webhooks use an independent bearer secret and atomic opaque receipt deduplication.
+  Supabase Auth SMTP is separately owned, unchanged here. Inventory/cutover: docs/email-brevo-migration.md.
+  Initial implementation LOCAL ONLY: no tests/build/typecheck/lint/Docker/browser/server, push, CI or deployment; authentication tests deferred.
+- 2026-10-14 (email migration follow-up, Ahmed): applied brevo_email_delivery through Supabase MCP to Skilient v1;
+  aligned its history version to local 20261105000001. Read-only catalog inspection confirmed columns, private tables,
+  RLS and denied anon/authenticated execution/access. No code deployed and no tests/live email checks run.

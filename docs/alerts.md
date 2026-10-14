@@ -32,7 +32,7 @@ worker (kind `ops_alert`) to every address in `/ops/config` → `alerts.recipien
 | Database CPU | Grafana Cloud, Supabase metrics endpoint | CPU > 80% for 10 min | Grafana rule "Test" button (question 10) |
 | Database size | watchdog | `db_size`: `pg_database_size` > 80% of `database_bytes` | Lower `database_bytes` in `/ops/config` for one run |
 | Storage | watchdog | `storage_quota`: `storage.objects` total > 80% of `storage.quota_bytes` | As above with the storage figure |
-| Email | Resend webhook → `/api/webhooks/resend` (Svix-signed) | `email_bounce`: bounced / (delivered + bounced) > 5% over 24 h, at least 20 sends | pgTAP `55`; Resend "Send test event" for `email.bounced` |
+| Email | Brevo transactional webhook → `/api/webhooks/brevo` (independent bearer token; durable receipt deduplication) | `email_bounce`: final hard bounces / (delivered + final hard bounces) > 5% over 24 h, at least 20 sends; soft bounces ignored because delivery may still succeed | Send a controlled delivery/final bounce event twice: one signal; see `docs/email-brevo-migration.md`; automated checks unexecuted |
 | GitHub | `github-worker` records the lowest share of the core budget left after each run | `github_headroom`: lowest value in the last 15 min < 20% | pgTAP `55`; unit `github.test.ts` |
 | Performance | `components/analytics/web-vitals.tsx` → `/api/vitals` → `record_web_vitals` | `perf_lcp` / `perf_inp`: p75 over 24 h above 2.5 s / 200 ms, at least 50 samples | pgTAP `55` |
 
@@ -41,4 +41,4 @@ worker (kind `ops_alert`) to every address in `/ops/config` → `alerts.recipien
 1. `/ops/config` → `alerts.recipients` → `["you@…"]`.
 2. Check the pipe end to end: `select private.queue_alert_email('test', 'firing', 'Test alert', 'Ignore me', now());` in
    the SQL editor. The email arrives within a minute (notify worker).
-3. Resend webhook, Sentry rules, Grafana and UptimeRobot: `docs/setup-checklist.md` Phase 13.
+3. Brevo webhook: `docs/email-brevo-migration.md`; Sentry rules, Grafana and UptimeRobot: `docs/setup-checklist.md` Phase 13.

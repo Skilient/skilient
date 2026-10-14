@@ -1,5 +1,8 @@
 # Setup checklist (human steps)
 
+Email provider update (2026-10-14): use [the Brevo inventory and cutover runbook](email-brevo-migration.md).
+The database migration is applied through Supabase MCP; application/worker deployment, automated checks and live authentication tests are pending.
+
 Claude Code can't create these accounts or keys. Do them before (or alongside) phase 0 and put every value in Vercel / Supabase / local `.env.local`, never in the repo. Items marked ⏳ take days or weeks — start them first.
 
 ## Before phase 0
@@ -10,7 +13,9 @@ Claude Code can't create these accounts or keys. Do them before (or alongside) p
 - [x] **Supabase** project in **Mumbai (`ap-south-1`)**, **Pro plan** (daily backups; free projects pause). Note the URL, publishable key (`sb_publishable_…`) and service-role key. Install the Supabase CLI locally (needs Docker). — *done on the **Free plan** by choice (decisions.md 2026-09-28): pausing accepted, no daily backups. ⚠️ Revisit before the closed beta. Storage is 1 GB in total; staff see its use from phase 4 (decisions.md 2026-09-30).*
 - [ ] **GitHub repo secrets** for migrations on merge to `main` (Settings → Secrets and variables → Actions; put them on a `production` environment if you want an approval step): `SUPABASE_ACCESS_TOKEN` (a *scoped* personal access token limited to the Skilient project, not a classic full-account token), `SUPABASE_PROJECT_REF` (from the project URL), `SUPABASE_DB_PASSWORD`.
 - [x] **Sentry** project (Developer plan): DSN + auth token.
-- [x] **Resend**: verify the Skilient sending domain; API key; then set it as Supabase Auth custom SMTP. — *done: `send.techshiner.tech`, Supabase SMTP set*
+- [ ] **Brevo**: authenticate `skilient.com`; verify `Skilient <security@skilient.com>` and `Skilient <notify@skilient.com>`.
+  `BREVO_API_KEY` is already saved in Vercel Production and Supabase Edge Function secrets (Ahmed).
+  Supabase Auth SMTP is handled separately; it requires Brevo SMTP credentials, not the API key. See the email runbook.
 
 ## Before phase 1
 
@@ -24,7 +29,9 @@ Claude Code can't create these accounts or keys. Do them before (or alongside) p
 
 ## Phase 3 ⏳
 
-- [x] **Notification emails** (phase 3 slice 2): *done 2026-09-30.* set three Edge Function secrets on the Supabase project (Dashboard → Edge Functions → Secrets): `RESEND_API_KEY` (the Resend key), `EMAIL_FROM` (e.g. `Skilient <notify@send.techshiner.tech>`), `APP_URL` (the production origin, no trailing slash). Until they're set the `notify-worker` answers "not configured" and notifications stay in-app only; the queue keeps them for up to 12 hours (instant) or until the next digest. It reuses the Vault secret `project_url` set for the GitHub worker.
+- [ ] **Notification email migration**: Edge Function secrets `BREVO_API_KEY` and `APP_URL=https://www.skilient.com`.
+  The sender is selected by category in code, including security notices inside this worker; `EMAIL_FROM` is obsolete.
+  Apply the delivery-ledger migration before deploying the worker. Keep existing notification preferences, crons and 60/day cap.
 
 ## Phase 4
 
@@ -181,8 +188,8 @@ Recruiter portal (decisions.md 2026-10-03). Nothing here is needed to merge; it 
 - [ ] **Optional: `GITHUB_READ_TOKEN`** (Supabase → Edge Functions → Secrets), a read-only fine-grained token with no repository access
   (public data only). Without it the `competition-freeze` function reads public repositories unauthenticated (60 requests an hour per
   address), which is enough for a few teams.
-- [ ] **Teammate invites** email through Resend (`RESEND_API_KEY` and `EMAIL_FROM` in Vercel are already set for the app's security
-  notices). Without them the admin still sees the invite link on screen.
+- [ ] **Teammate invites** email through Brevo (`BREVO_API_KEY` in Vercel), from `Skilient <security@skilient.com>`.
+  Without the key the admin still sees the invite link on screen.
 - [ ] **If a recruiter loses their authenticator**, follow `docs/recruiter-2fa-recovery.md` (the staff reset is phase 11).
 
 ## Phase 9
@@ -401,8 +408,8 @@ Marketing site (`docs/marketing-design-plan.md`, decisions.md "phase 12"). Later
 - [ ] **Closed beta signup** (slice 1). After this migration reaches the hosted project, students and faculty can sign up only at
       NUTECH. Existing accounts elsewhere keep working. Open another university at `/ops/universities/<id>` → Signup → Open signup.
       At public launch use `/ops/universities` → Public launch → Open every university. Both need accounts staff with two-factor.
-- [ ] **Request emails** (slice 1). "Request it" sends a confirmation email through the app's Resend sender (`RESEND_API_KEY`,
-      `EMAIL_FROM`, already set for security emails). Send yourself one from the landing page and check that the confirm and
+- [ ] **Request emails** (slice 1). "Request it" sends a confirmation email through Brevo (`BREVO_API_KEY`),
+      from `Skilient <security@skilient.com>`. Send yourself one from the landing page and check that the confirm and
       unsubscribe links work.
 - [ ] **Turnstile on the request form** (slice 1). It uses the existing `TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET_KEY`. Without
       JavaScript the form can't pass Turnstile in production, so such visitors are asked to turn JavaScript on.
@@ -424,7 +431,7 @@ Marketing site (`docs/marketing-design-plan.md`, decisions.md "phase 12"). Later
       `content/marketing.ts`. Publishing a new agreement version makes everyone accept it again at next sign-in.
 - [ ] **Launch emails** (slice 4). When staff open a university (`/ops/universities/<id>` → Signup, or Public launch), everyone who
       confirmed a request for it is emailed once through the notify worker. Notification emails stop at 60 a day until the
-      Resend plan is upgraded (see "Before the closed beta"), so a big launch sends over several days.
+      application limit is deliberately changed, so a big launch sends over several days regardless of provider plan.
 
 - [ ] **AI-assisted commits** (2026-10-03). After this migration reaches the hosted project, open Settings → GitHub → Resync once.
       The sync then reads your merged pull requests and credits the commits an AI agent wrote in them, labelled AI-assisted.
@@ -466,9 +473,10 @@ commit; each goes where the line says.
 **Later slices** (listed now so they can be set up in one go)
 
 - [ ] **Alert recipient** (slice 2): the email address that receives alerts; set it in `/ops/config` → `alerts.recipients`.
-- [ ] **Resend webhook** (slice 2): Resend → Webhooks → add `https://<domain>/api/webhooks/resend` for `email.delivered` and
-      `email.bounced`; put its signing secret (`whsec_…`) in Vercel (Production) as `RESEND_WEBHOOK_SECRET`. Until it is
-      set the route answers 404. Then "Send test event" → the row appears in `private.service_signals`.
+- [ ] **Brevo webhook**: transactional email, unbatched, `https://www.skilient.com/api/webhooks/brevo`, events
+      `delivered` and `hardBounce` (payload `hard_bounce`). Set an independent bearer token in Brevo's webhook auth and
+      Vercel Production `BREVO_WEBHOOK_SECRET`. No secret: 404; invalid auth: 401. Event receipts deduplicate monitoring.
+      Exact setup and manual checks: [email runbook](email-brevo-migration.md).
 - [ ] **Alert pipe test** (slice 2): after the recipient is set, run the test line in `docs/alerts.md` "After deploy".
 - [ ] **Sentry alert rules** (slice 2): "A new issue is created" (production) → email; an error-volume alert as the interim
       5xx alert until Axiom.
@@ -498,7 +506,8 @@ commit; each goes where the line says.
 
 - [ ] **Vercel Pro**: Hobby is for non-commercial use only, and Skilient takes payments; Pro also unlocks Log Drains, so install
       Axiom (above) right after upgrading.
-- [ ] **Resend paid plan**: the free plan's ~100 emails a day is shared by Supabase Auth (verification codes, magic links), security and notification emails; notification emails stop at 60 a day until then (decisions.md 2026-09-30).
+- [ ] **Brevo sending capacity**: review transactional credits, daily limits and suppression before beta; SMTP and API share
+  provider capacity. The application notification cap remains 60/day; upgrading a provider plan does not remove it.
 
 - [ ] **Switch to www.skilient.com**: the steps in "Switch to www.skilient.com" below, all in one sitting.
 - [ ] Final **user agreement** and **privacy notice** text (the app ships headings-only templates).

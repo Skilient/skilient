@@ -1,57 +1,58 @@
-import { createHmac } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { handleResendWebhook, verifySvix } from "@/lib/monitoring/resend-webhook";
+import { handleBrevoWebhook, verifyBrevoAuthorization } from "@/lib/monitoring/brevo-webhook";
 import { isVitalsMetric, vitalsRoute } from "@/lib/monitoring/vitals";
 
-const KEY = Buffer.from("test-signing-key-for-svix").toString("base64");
-const SECRET = `whsec_${KEY}`;
-const NOW = 1_790_000_000_000;
+const SECRET = "test-brevo-webhook-bearer-secret-32-characters";
 
-function signed(body: string, opts: { id?: string; at?: number; key?: string } = {}) {
-  const id = opts.id ?? "msg_1";
-  const ts = String(Math.floor((opts.at ?? NOW) / 1000));
-  const sig = createHmac("sha256", Buffer.from(opts.key ?? KEY, "base64")).update(`${id}.${ts}.${body}`).digest("base64");
-  return new Headers({ "svix-id": id, "svix-timestamp": ts, "svix-signature": `v1,bogus v1,${sig}` });
+function authorized(secret = SECRET) {
+  return new Headers({ authorization: `Bearer ${secret}` });
 }
 
-describe("verifySvix", () => {
-  const body = JSON.stringify({ type: "email.bounced" });
-  it("accepts a correct signature among several", () => {
-    expect(verifySvix(body, signed(body), SECRET, NOW)).toBe(true);
+describe("verifyBrevoAuthorization", () => {
+  it("accepts the independent bearer token", () => {
+    expect(verifyBrevoAuthorization(authorized(), SECRET)).toBe(true);
   });
-  it("refuses a changed body, another key, an old timestamp or missing headers", () => {
-    expect(verifySvix(`${body} `, signed(body), SECRET, NOW)).toBe(false);
-    expect(verifySvix(body, signed(body, { key: Buffer.from("other").toString("base64") }), SECRET, NOW)).toBe(false);
-    expect(verifySvix(body, signed(body, { at: NOW - 10 * 60_000 }), SECRET, NOW)).toBe(false);
-    expect(verifySvix(body, new Headers(), SECRET, NOW)).toBe(false);
+  it("refuses missing/wrong auth, weak configuration and legacy signature headers", () => {
+    expect(verifyBrevoAuthorization(authorized("other-token"), SECRET)).toBe(false);
+    expect(verifyBrevoAuthorization(new Headers(), SECRET)).toBe(false);
+    expect(verifyBrevoAuthorization(authorized("short"), "short")).toBe(false);
+    expect(verifyBrevoAuthorization(new Headers({ "svix-signature": "v1,bogus" }), SECRET)).toBe(false);
   });
 });
 
-describe("handleResendWebhook", () => {
+describe("handleBrevoWebhook", () => {
   async function run(body: string, headers: Headers, secret: string | undefined | null = SECRET) {
     const recorded: string[] = [];
-    const result = await handleResendWebhook({ rawBody: body, headers, secret: secret ?? undefined, nowMs: NOW, record: async (s) => void recorded.push(s) });
+    const result = await handleBrevoWebhook({ rawBody: body, headers, secret: secret ?? undefined, record: async (s, key) => {
+      expect(key).toMatch(/^[a-f0-9]{64}$/);
+      recorded.push(s);
+    } });
     return { ...result, recorded };
   }
   it("is not there until the secret is set", async () => {
-    const body = JSON.stringify({ type: "email.bounced" });
-    expect((await run(body, signed(body), null)).status).toBe(404);
+    const body = JSON.stringify({ event: "hard_bounce" });
+    expect((await run(body, authorized(), null)).status).toBe(404);
   });
   it("records deliveries and bounces, ignores other events", async () => {
-    for (const [type, signal] of [["email.delivered", "email_delivered"], ["email.bounced", "email_bounced"]] as const) {
-      const body = JSON.stringify({ type, data: { to: ["someone@example.com"] } });
-      const r = await run(body, signed(body));
+    for (const [event, signal] of [["delivered", "email_delivered"], ["hard_bounce", "email_bounced"]] as const) {
+      const body = JSON.stringify({ event, "message-id": "provider-message", email: "someone@example.com" });
+      const r = await run(body, authorized());
       expect(r.status).toBe(200);
       expect(r.recorded).toEqual([signal]);
     }
-    const opened = JSON.stringify({ type: "email.opened" });
-    const r = await run(opened, signed(opened));
+    const opened = JSON.stringify({ event: "soft_bounce" });
+    const r = await run(opened, authorized());
     expect([r.status, r.outcome, r.recorded]).toEqual([200, "ignored", []]);
   });
-  it("refuses bad signatures and bad JSON", async () => {
-    const body = JSON.stringify({ type: "email.bounced" });
-    expect((await run(body, signed("{}"))).status).toBe(401);
-    expect((await run("not json", signed("not json"))).status).toBe(400);
+  it("refuses unauthorized requests before recording, bad JSON and malformed payloads", async () => {
+    const body = JSON.stringify({ event: "hard_bounce" });
+    const refused = await run(body, authorized("wrong"));
+    expect(refused.status).toBe(401);
+    expect(refused.recorded).toEqual([]);
+    expect((await run("not json", authorized())).status).toBe(400);
+    expect((await run(body, authorized())).status).toBe(400);
+    expect((await run("null", authorized())).status).toBe(400);
+    expect((await run("[]", authorized())).status).toBe(400);
   });
 });
 

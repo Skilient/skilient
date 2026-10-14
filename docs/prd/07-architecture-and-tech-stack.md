@@ -16,7 +16,7 @@ flowchart LR
   E --> D
   E --> G[GitHub App API]
   G -. webhooks .-> N
-  A --> M[Resend SMTP]
+  A --> M[Brevo SMTP]
 ```
 
 The browser talks to Supabase directly only for Realtime subscriptions and storage uploads; every mutation goes through a server action.
@@ -29,7 +29,7 @@ The browser talks to Supabase directly only for Realtime subscriptions and stora
 | GitHub | Skilient GitHub App (installation tokens, webhooks, private repos). NextAuth is removed. | Used only for skill extraction, never as sign-in |
 | Data | Supabase Postgres + RLS, Realtime, Storage | Managed, row-level security enforced even on direct API calls |
 | Background jobs | Deno Edge Functions + pg\_cron + pgmq | GitHub import workers (every minute), feed-stage (5 min), quality-index 02:00, ranking-compute 03:00, decay-apply 04:00, anti-gaming 05:00, sponsorship-sync, cv-refresh, notification-digest, graduate-rollover, account-deletion, job-watchdog and the billing worker; every run logged in `job_runs` |
-| Email | Resend as custom SMTP for Supabase Auth, plus notification, digest, university-request and alert emails | Supabase's default mailer is capped for dev use |
+| Email | Brevo SMTP for Supabase Auth (dashboard-managed), plus Brevo API for application and worker emails | Category selects security@ or notify@; see `docs/email-brevo-migration.md` |
 | UI libs | framer-motion, Phosphor icons, next-themes | Animation, icons, theme toggle |
 | Observability | Sentry, Axiom, PostHog (EU), Vercel Analytics + Speed Insights, UptimeRobot | All on free tiers at launch (see "Observability, monitoring and analytics") |
 
@@ -52,7 +52,7 @@ The browser talks to Supabase directly only for Realtime subscriptions and stora
 
 #### Build: project scaffold
 
-- **Create:** create-next-app (TypeScript strict, App Router, ESLint, Tailwind v4), package manager pnpm, Node 22; add `@supabase/ssr`, `@supabase/supabase-js`, zod, next-themes, `@phosphor-icons/react`, framer-motion, `@tanstack/react-query` (client caches for feed and chat), react-hook-form + `@hookform/resolvers`, resend, `@noble/ed25519`, qrcode, `@sparticuz/chromium`, puppeteer-core, `@octokit/app`, `@sentry/nextjs`, posthog-js, posthog-node, `@floating-ui/react` (tour).
+- **Create:** create-next-app (TypeScript strict, App Router, ESLint, Tailwind v4), package manager pnpm, Node 22; add `@supabase/ssr`, `@supabase/supabase-js`, zod, next-themes, `@phosphor-icons/react`, framer-motion, `@tanstack/react-query` (client caches for feed and chat), react-hook-form + `@hookform/resolvers`, `@noble/ed25519`, qrcode, `@sparticuz/chromium`, puppeteer-core, `@octokit/app`, `@sentry/nextjs`, posthog-js, posthog-node, `@floating-ui/react` (tour). Brevo uses the shared fetch transport, with no provider SDK dependency.
 - **Folders:** `app/` (route groups (marketing), (auth), (app) with the app shell, ops, recruit, org, uni, teach, api), `components/{ui,app,marketing}`, `lib/{actions,data,billing,github,cv,supabase,security,validation,tours}`, `supabase/{migrations,functions,tests,templates}`, `tests/{unit,e2e}`.
 - **Server actions pattern:** every action is `action(schema, handler)` from `lib/actions/_wrap.ts`: parses input with Zod, gets the user via `getUser()`, runs the handler, maps known errors (`PaymentRequiredError`, `RateLimitedError`, `ValidationError`) to typed results, and logs unknown errors with the action name.
 - **Lint rules:** no `service_role` imports outside allowed folders; no `getSession()` in server code; no raw `fetch` to Supabase REST.

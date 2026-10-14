@@ -40,6 +40,7 @@ The PRD is split into one file per section so a session reads only what it needs
 | [05-26-admin-portal-skilient-ops.md) | 5.26 Admin portal — Skilient ops (decided 2026-09-25) |
 | [05-27-signup-onboarding-and-learning-the-platform.md) | 5.27 Signup, onboarding and learning the platform (decided 2026-09-25) |
 | [05-28-feed-micro-survey-ventures-and-chat-detail.md) | 5.28 Feed, micro-survey, ventures and chat — detail (decided 2026-09-25) |
+| [05-29-alumni-account.md](05-29-alumni-account.md) | 5.29 Alumni account lifecycle (proposed 2026-10-13) |
 | [06-data-model.md](06-data-model.md) | 6. Data model |
 | [07-architecture-and-tech-stack.md](07-architecture-and-tech-stack.md) | 7. Architecture and tech stack |
 | [08-security-privacy-and-rls.md](08-security-privacy-and-rls.md) | 8. Security, privacy and RLS |

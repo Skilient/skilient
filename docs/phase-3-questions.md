@@ -1,5 +1,7 @@
 # Phase 3: questions and decisions for Ahmed
 
+Email update (2026-10-14): [Brevo inventory and cutover](email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
+
 Running list kept while the phase 3 slices are built and merged. Each item says what was
 assumed so the work could continue; answer inline (or in chat) and the assumption is
 either kept or changed in a follow-up PR. Answered items move to `docs/decisions.md`.

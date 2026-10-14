@@ -1,4 +1,6 @@
 Commit: dee328c
+
+Email update (2026-10-14): [Brevo inventory and cutover](../../email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
 Covers: .env.example, lib/env.ts, next.config.ts, vercel.json, .nvmrc, supabase/config.toml, supabase/seed.sql, .github/workflows/ci.yml, .github/workflows/zap.yml, .github/workflows/restore-drill.yml, scripts/restore/, scripts/zap-gate.mjs, app/api/health/route.ts, lib/health.ts, eslint.config.mjs, vitest.config.mts, vitest.worker.config.mts, vitest.ats.config.mts, playwright.config.ts
 
 # Environments and deploy

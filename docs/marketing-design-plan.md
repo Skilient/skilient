@@ -1,5 +1,7 @@
 # Marketing site design plan (Phase 12)
 
+Email update (2026-10-14): [Brevo inventory and cutover](email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
+
 The plan every Phase 12 slice follows. Sources: PRD 5.1, 4a, 9, 10; screen spec 3.1; decisions.md. Written 2026-10-02 and approved by Ahmed with every default taken (see "Settled answers" at the end). Product truth is in `PRODUCT.md`; the impeccable direction contract is in the landing's surface brief (`impeccable surface-brief read "app/(marketing)/page.tsx"`).
 
 The impeccable concept roll was skipped: the visual world (Editorial, PRD 9) and the page structure (15 sections, split hero, focal motion; PRD 5.1 and screen spec 3.1) are fixed by the brief. The build path is code-led.

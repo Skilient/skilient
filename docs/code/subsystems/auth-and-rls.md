@@ -1,4 +1,6 @@
 Commit: 418074f
+
+Email update (2026-10-14): [Brevo inventory and cutover](../../email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
 Covers: supabase/migrations/20260927210238_identity.sql, supabase/migrations/20260927210824_sync_hec_universities.sql, supabase/migrations/20260928123000_auth_decisions.sql, scripts/universities.mjs, lib/auth/, lib/supabase/, lib/actions/auth.ts, lib/actions/mfa.ts, lib/actions/agreement.ts, lib/data/agreement.ts, lib/data/universities.ts, lib/security/turnstile.ts, lib/security/hibp.ts, lib/security/hash.ts, lib/security/rate-limit.ts, lib/security/request-meta.ts, lib/hooks/use-domain-directory.ts, components/auth/, components/agreement/, components/providers/current-user-provider.tsx, app/(auth)/, app/auth/, app/(app)/agreement/, app/(app)/settings/security/, app/api/universities/domains/route.ts. Non-source: supabase/templates/*.html, supabase/seed/hec_universities.csv
 
 # Auth and RLS

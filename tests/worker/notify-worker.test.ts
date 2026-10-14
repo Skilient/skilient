@@ -229,7 +229,8 @@ describe("notify-worker", () => {
       expect(toT).toHaveLength(1);
       expect(toT[0].body.subject).toBe("Your week on Skilient");
       expect(toT[0].body.textContent).toContain("1 of your ideas close within a week");
-      expect(toT[0].body.headers.idempotencyKey).toMatch(/^teacher-digest-/);
+      // Brevo's idempotency key is the stable UUID derived from the queue key (supabase/functions/_shared/email/delivery.ts).
+      expect(toT[0].body.headers.idempotencyKey).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-a[0-9a-f]{3}-[0-9a-f]{12}$/);
       expect(brevo.sent).toHaveLength(1);
       // Turning the digest off in settings stops it.
       await sql`insert into public.teacher_settings (user_id, digest) values (${t}, false)`;

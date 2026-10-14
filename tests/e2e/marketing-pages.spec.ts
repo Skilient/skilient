@@ -31,6 +31,11 @@ const PAGES = [
   { path: "/about", h1: "A CV should show the work behind it.", cta: null },
 ] as const;
 
+/** The robots meta content, or "" when the page sets none (no waiting: absence is the normal case). */
+async function robotsContent(page: Page): Promise<string> {
+  return page.evaluate(() => document.querySelector('meta[name="robots"]')?.getAttribute("content") ?? "");
+}
+
 test.describe("Marketing: organisation pages, pricing and about", () => {
   for (const p of PAGES) {
     test(`${p.path}: heading, call to action and axe in both themes`, async ({ page }) => {
@@ -209,11 +214,11 @@ test.describe("Marketing: search, sharing and legal pages", () => {
   test("/terms and /privacy are public, indexable and pass axe", async ({ page }) => {
     await page.goto("/terms");
     await expect(page.getByRole("heading", { level: 1, name: "User agreement" })).toBeVisible();
-    expect((await page.locator('meta[name="robots"]').getAttribute("content")) ?? "").not.toMatch(/noindex/);
+    expect(await robotsContent(page)).not.toMatch(/noindex/);
     await axeBothThemes(page, "/terms");
     await page.goto("/privacy");
     await expect(page.getByRole("heading", { level: 1, name: "Privacy notice" })).toBeVisible();
-    expect((await page.locator('meta[name="robots"]').getAttribute("content")) ?? "").not.toMatch(/noindex/);
+    expect(await robotsContent(page)).not.toMatch(/noindex/);
     await axeBothThemes(page, "/privacy");
   });
 

@@ -48,20 +48,27 @@ export interface LandingStats {
 
 const EMPTY_STATS: LandingStats = { universities: [], verified_students: null, ventures: null, shipped_ventures: null };
 
-export const getLandingStats = unstable_cache(
-  async (): Promise<LandingStats> => {
-    const { data, error } = await Promise.resolve()
-      .then(() => createPublicClient().rpc("landing_stats"))
-      .then((r) => r, (e: unknown) => ({ data: null, error: { code: e instanceof Error ? e.message.slice(0, 60) : "unknown" } }));
-    if (error) {
-      logger.error("marketing.landing_stats", { action: "landing_stats", outcome: "error", error_code: error.code ?? "unknown" });
-      return EMPTY_STATS;
-    }
-    return { ...EMPTY_STATS, ...(data as Partial<LandingStats>) };
-  },
-  ["marketing-landing-stats"],
-  { revalidate: 3600 },
-);
+/**
+ * The public reads are cached for an hour, and a failed read is never cached: an empty answer stored
+ * for an hour would hide prices and numbers from every visitor. The loaders throw on error (unstable_cache
+ * stores nothing when its function throws), and the exported wrappers fall back to the empty value.
+ * The cache keys are versioned so entries written before this rule (possibly empty) are never read.
+ */
+export async function loadLandingStats(): Promise<LandingStats> {
+  const { data, error } = await createPublicClient().rpc("landing_stats");
+  if (error) throw new Error(`landing_stats: ${error.code ?? "unknown"}`);
+  return { ...EMPTY_STATS, ...(data as Partial<LandingStats>) };
+}
+const cachedLandingStats = unstable_cache(loadLandingStats, ["marketing-landing-stats-v2"], { revalidate: 3600 });
+export async function getLandingStats(): Promise<LandingStats> {
+  try {
+    return await cachedLandingStats();
+  } catch (err) {
+    unstable_rethrow(err);
+    logger.error("marketing.landing_stats", { action: "landing_stats", outcome: "error", error_code: errorCode(err) });
+    return EMPTY_STATS;
+  }
+}
 
 export interface PublicPlan {
   id: string;
@@ -75,20 +82,21 @@ export interface PublicPlan {
   grants: Record<string, unknown>;
 }
 
-export const getPublicPlans = unstable_cache(
-  async (): Promise<PublicPlan[]> => {
-    const { data, error } = await Promise.resolve()
-      .then(() => createPublicClient().rpc("public_plans"))
-      .then((r) => r, (e: unknown) => ({ data: null, error: { code: e instanceof Error ? e.message.slice(0, 60) : "unknown" } }));
-    if (error) {
-      logger.error("marketing.public_plans", { action: "public_plans", outcome: "error", error_code: error.code ?? "unknown" });
-      return [];
-    }
-    return (data as PublicPlan[] | null) ?? [];
-  },
-  ["marketing-public-plans"],
-  { revalidate: 3600 },
-);
+export async function loadPublicPlans(): Promise<PublicPlan[]> {
+  const { data, error } = await createPublicClient().rpc("public_plans");
+  if (error) throw new Error(`public_plans: ${error.code ?? "unknown"}`);
+  return (data as PublicPlan[] | null) ?? [];
+}
+const cachedPublicPlans = unstable_cache(loadPublicPlans, ["marketing-public-plans-v2"], { revalidate: 3600 });
+export async function getPublicPlans(): Promise<PublicPlan[]> {
+  try {
+    return await cachedPublicPlans();
+  } catch (err) {
+    unstable_rethrow(err);
+    logger.error("marketing.public_plans", { action: "public_plans", outcome: "error", error_code: errorCode(err) });
+    return [];
+  }
+}
 
 export interface PricingExtras {
   add_ons: { sponsored_post?: { pkr: number; days: number }; contact_credits?: { pkr: number } } | null;
@@ -97,18 +105,24 @@ export interface PricingExtras {
 }
 
 /** Add-ons, hiring fees and the trial length for /pricing, from platform_config (what billing charges). */
-export const getPricingExtras = unstable_cache(
-  async (): Promise<PricingExtras> => {
-    const empty: PricingExtras = { add_ons: null, hire_fees: null, trial_days: null };
-    const { data, error } = await Promise.resolve()
-      .then(() => createPublicClient().rpc("public_pricing_extras"))
-      .then((r) => r, (e: unknown) => ({ data: null, error: { code: e instanceof Error ? e.message.slice(0, 60) : "unknown" } }));
-    if (error) {
-      logger.error("marketing.pricing_extras", { action: "public_pricing_extras", outcome: "error", error_code: error.code ?? "unknown" });
-      return empty;
-    }
-    return { ...empty, ...(data as Partial<PricingExtras> | null) };
-  },
-  ["marketing-pricing-extras"],
-  { revalidate: 3600 },
-);
+const EMPTY_EXTRAS: PricingExtras = { add_ons: null, hire_fees: null, trial_days: null };
+export async function loadPricingExtras(): Promise<PricingExtras> {
+  const { data, error } = await createPublicClient().rpc("public_pricing_extras");
+  if (error) throw new Error(`public_pricing_extras: ${error.code ?? "unknown"}`);
+  return { ...EMPTY_EXTRAS, ...(data as Partial<PricingExtras> | null) };
+}
+const cachedPricingExtras = unstable_cache(loadPricingExtras, ["marketing-pricing-extras-v2"], { revalidate: 3600 });
+export async function getPricingExtras(): Promise<PricingExtras> {
+  try {
+    return await cachedPricingExtras();
+  } catch (err) {
+    unstable_rethrow(err);
+    logger.error("marketing.pricing_extras", { action: "public_pricing_extras", outcome: "error", error_code: errorCode(err) });
+    return EMPTY_EXTRAS;
+  }
+}
+
+/** The error's code or first words only: never the message from the database, which can carry data. */
+function errorCode(err: unknown): string {
+  return err instanceof Error ? err.message.slice(0, 60) : "unknown";
+}

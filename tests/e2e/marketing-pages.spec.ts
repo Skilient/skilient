@@ -2,6 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { randomBytes } from "node:crypto";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { createClient } from "@supabase/supabase-js";
 import { createStudent, hasBackend, signInWithPassword, watchConsole } from "./support";
 
 /**
@@ -79,11 +80,14 @@ test.describe("Marketing: pricing", () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
 
   test("every price equals plans, and monthly/yearly switches without JavaScript", async ({ browser }) => {
-    const sql = postgres(DB_URL, { max: 1, onnotice: () => undefined });
-    const plans = await sql<{ id: string; tier: string; interval: string; price_pkr: number | null }[]>`
-      select id, tier, interval, price_pkr from public.plans where active order by audience, position`;
-    const fees = await sql<{ value: { intern: number } }[]>`select value from public.platform_config where key = 'billing.hire_fees'`;
-    await sql.end();
+    // The same anon RPCs the pricing page calls, so the test checks what visitors are served.
+    const anon = createClient(process.env.E2E_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, { auth: { persistSession: false } });
+    const plansRead = await anon.rpc("public_plans");
+    const extrasRead = await anon.rpc("public_pricing_extras");
+    expect(plansRead.error).toBeNull();
+    expect(extrasRead.error).toBeNull();
+    const plans = plansRead.data as { id: string; price_pkr: number | null }[];
+    const extras = extrasRead.data as { hire_fees: { intern?: number } | null };
     const pkr = (n: number) => `PKR ${n.toLocaleString("en-PK")}`;
     const price = (id: string) => Number(plans.find((p) => p.id === id)!.price_pkr);
 
@@ -104,7 +108,7 @@ test.describe("Marketing: pricing", () => {
     await expect(unis.getByTestId("plan-universities-campus").getByText(pkr(price("uni_campus_yearly")), { exact: true })).toBeVisible();
     // Student Pro and the add-ons, from plans and platform_config.
     await expect(page.getByTestId("plan-students-pro").getByText(pkr(price("student_pro_monthly")), { exact: true })).toBeVisible();
-    await expect(page.getByTestId("pricing-add-ons")).toContainText(pkr(fees[0]!.value.intern));
+    await expect(page.getByTestId("pricing-add-ons")).toContainText(pkr(extras.hire_fees!.intern!));
     await context.close();
   });
 });

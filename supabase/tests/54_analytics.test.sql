@@ -38,7 +38,7 @@ update auth.users set email_confirmed_at = now() where id = '54000000-0000-0000-
 select is(pg_temp.n('54000000-0000-0000-0000-00000000000a', 'email_verified'), 1, 'email_verified fires once, however often it flips');
 
 insert into public.agreement_acceptances (user_id, version)
-values ('54000000-0000-0000-0000-00000000000a', (select max(version) from public.agreement_versions));
+values ('54000000-0000-0000-0000-00000000000a', private.current_agreement_version());
 select is(pg_temp.n('54000000-0000-0000-0000-00000000000a', 'agreement_accepted'), 1, 'accepting the agreement is a funnel step');
 
 update public.onboarding_state set step = 3 where user_id = '54000000-0000-0000-0000-00000000000a';

@@ -13,8 +13,7 @@ begin
 end;
 $$;
 
--- Agreements: anyone reads the published text; drafts stay hidden.
-insert into public.agreement_versions (version, title, body_md, summary_md) values (2, 'Draft', 'draft', 'draft');
+-- Agreements: anyone reads the published text; drafts stay hidden (version 2 is the staged draft).
 set local role anon;
 select results_eq($$ select version from public.agreement_versions order by version $$, $$ values (1) $$,
   'anon reads published versions only');

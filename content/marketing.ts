@@ -475,12 +475,10 @@ export const legalPages = {
     title: "User agreement",
     description: "The Skilient user agreement every account accepts at signup.",
     unavailable: "The user agreement couldn't be loaded. Try again in a minute.",
-    version: "Version {version}",
   },
   privacy: {
     title: "Privacy notice",
     description: "What Skilient collects, how we use and share it, including Google user data, and how to delete it.",
     unavailable: "The privacy notice couldn't be loaded. Try again in a minute.",
-    version: "Version {version}",
   },
 };

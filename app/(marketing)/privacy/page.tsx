@@ -22,7 +22,6 @@ export default async function PrivacyPage() {
         <h1 id="page-title" className="font-display text-h1">
           {copy.title}
         </h1>
-        {agreement && privacy ? <p className="text-body-sm text-text-muted">{copy.version.replace("{version}", String(agreement.version))}</p> : null}
       </header>
       {privacy ? <AgreementText markdown={privacy} /> : <p className="text-body text-text-secondary">{copy.unavailable}</p>}
     </article>

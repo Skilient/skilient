@@ -158,13 +158,17 @@ Code checks. Where a code check's snippet sits in one of your repositories, your
 
 This section covers the information we receive from Google when you sign in with Google. We call it Google user data.
 
-What we access. When you choose to sign in with Google, we ask Google only for the openid, email and profile permissions. From Google we receive your Google account identifier, the email address on the account and your name. We do not request access to your Gmail, Google Drive, Google Calendar, contacts or any other Google service, and we do not copy your Google profile photo.
+What we access. When you choose to sign in with Google, we ask Google only for the openid, email and profile permissions. From Google we receive your Google account identifier, the email address on the account and your name. We do not request access to your Gmail, Google Drive, Google Calendar, Google Contacts or any other Google service. We do not copy your Google profile photo. We do not take any action in your Google account other than signing you in.
 
-How we use it. We use Google user data only to provide or improve user-facing features of Skilient: to sign you in, to confirm that your university email address belongs to a listed university, and to show your name and email address in your account. We do not use Google user data for any other purpose.
+How we use it. We use Google user data only to provide or improve user-facing features of Skilient that you can see in the app. Those features are: signing you in; confirming that your university email address belongs to a listed university; showing your name and email address in your account; sending your sign-in codes, security alerts and notifications to that email address; and recognising your account when you sign in again. We do not use Google user data for any other purpose.
 
-What we never do with it. We do not use Google user data for targeted, personalised, retargeted, interest-based or other advertising. We do not sell it, and we do not transfer it to data brokers or information resellers. We do not use it to determine creditworthiness or for lending. We do not use it to build any database other than your Skilient account. We do not use it to develop, improve or train any AI or machine-learning model, whether personalised or not. Skilient does not send Google user data to any AI or language-model service, and Skilient does not use Google Workspace APIs to develop, improve or train non-personalised AI or machine-learning models.
+What we never do with it. We do not use Google user data for targeted, personalised, retargeted, interest-based or other advertising, and we do not use it to serve ads. We do not sell it, and we do not transfer it to advertising platforms, data brokers or information resellers. We do not use it to determine creditworthiness or for lending. We do not use it to create any database other than your Skilient account. We do not use it to develop, improve or train any AI or machine-learning model, personalised or not. Skilient does not send Google user data to any AI or language-model service.
 
-Who receives it. We share Google user data only with the service providers listed in P6, and only as far as they need it to run Skilient for you. We also disclose it where the law requires. Your name and your university email address may be shown to universities and recruiters only as described in headings 6 and 7 of the user agreement and in your settings. Your university email address is shown to others only if you choose to show it.
+AI and machine learning. Google Workspace APIs are not used to develop, improve, or train non-personalized AI and/or ML models.
+
+Who receives it. We share Google user data only with the service providers listed in P6, which process it on our behalf and only as far as they need it to provide the features above. Each of them must protect it under contract and may not use it for its own purposes. We disclose Google user data where the law requires it, and for security purposes such as investigating abuse. Our employees, contractors and agents who handle Google user data must comply with this section.
+
+Who can read it. People read Google user data only: with your affirmative agreement, for example when you ask our support team to look at your account; for security purposes, such as investigating a bug or abuse; where the law requires it; or in aggregated form for our internal operations. Staff access is logged. When a member of staff views your account as you see it, you are notified.
 
 How it is protected. Google user data is encrypted in transit and at rest. It is protected by the same row-level security and access controls as the rest of your personal data, as described in P12.
 
@@ -172,7 +176,7 @@ How long we keep it, and how to delete it. We keep Google user data for as long 
 
 Revoking access. You can stop Skilient's access to your Google account at any time at https://myaccount.google.com/permissions. Revoking access stops Google sign-in, but it does not delete your Skilient account. If you signed up only with Google, you can set a password using the password reset page and then sign in with your email address.
 
-Limited Use. Skilient's use of information received from Google APIs adheres to the Google API Services User Data Policy, including its Limited Use requirements.
+Limited Use. Skilient's use of information received from Google APIs adheres to the Google API Services User Data Policy, including its Limited Use requirements. If we change how we use Google user data, we will tell you and ask you to accept the updated notice before you continue to use Skilient.
 
 ## P4. Why we use your data
 

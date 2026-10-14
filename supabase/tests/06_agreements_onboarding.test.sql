@@ -13,10 +13,10 @@ begin
 end;
 $$;
 
--- Agreements: anyone reads the published text; drafts stay hidden (version 3 is a draft here).
-insert into public.agreement_versions (version, title, body_md, summary_md) values (3, 'Draft', 'draft', 'draft');
+-- Agreements: anyone reads the published text; drafts stay hidden (version 4 is a draft here).
+insert into public.agreement_versions (version, title, body_md, summary_md) values (4, 'Draft', 'draft', 'draft');
 set local role anon;
-select results_eq($$ select version from public.agreement_versions order by version $$, $$ values (1), (2) $$,
+select results_eq($$ select version from public.agreement_versions order by version $$, $$ values (1), (2), (3) $$,
   'anon reads published versions only');
 reset role;
 
@@ -28,10 +28,10 @@ select throws_ok(
   $$ insert into public.agreement_acceptances (user_id, version) values ('30000000-0000-0000-0000-00000000000a', 1) $$,
   '42501', null, 'B cannot accept on A''s behalf');
 select throws_ok(
-  $$ insert into public.agreement_acceptances (user_id, version) values ('30000000-0000-0000-0000-00000000000b', 3) $$,
+  $$ insert into public.agreement_acceptances (user_id, version) values ('30000000-0000-0000-0000-00000000000b', 4) $$,
   '42501', null, 'B cannot accept an unpublished version');
 select lives_ok(
-  $$ insert into public.agreement_acceptances (user_id, version) values ('30000000-0000-0000-0000-00000000000b', 2) $$,
+  $$ insert into public.agreement_acceptances (user_id, version) values ('30000000-0000-0000-0000-00000000000b', 3) $$,
   'B accepts the current version');
 select is((public.my_gate_state() ->> 'agreement_accepted')::boolean, true, 'the gate is satisfied');
 select throws_ok(
@@ -40,15 +40,15 @@ select throws_ok(
 reset role;
 
 -- Publishing a new version re-opens the gate for everyone.
-update public.agreement_versions set published_at = now() - interval '1 second' where version = 3;
+update public.agreement_versions set published_at = now() - interval '1 second' where version = 4;
 set local role authenticated;
 select pg_temp.as_user('30000000-0000-0000-0000-00000000000a');
 select results_eq(
   $$ select (public.my_gate_state() ->> 'agreement_version')::int, (public.my_gate_state() ->> 'agreement_accepted')::boolean $$,
-  $$ values (3, false) $$,
+  $$ values (4, false) $$,
   'a newly published version must be accepted again');
 reset role;
-update public.agreement_versions set published_at = null where version = 3;
+update public.agreement_versions set published_at = null where version = 4;
 
 -- Onboarding: own state only; completion only when the required fields are set.
 set local role authenticated;

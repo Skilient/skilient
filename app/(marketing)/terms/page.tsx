@@ -23,7 +23,6 @@ export default async function TermsPage() {
         <h1 id="page-title" className="font-display text-h1">
           {copy.title}
         </h1>
-        {agreement ? <p className="text-body-sm text-text-muted">{copy.version.replace("{version}", String(agreement.version))}</p> : null}
       </header>
       {text ? <AgreementText markdown={text} /> : <p className="text-body text-text-secondary">{copy.unavailable}</p>}
       <p className="text-body text-text-secondary">

@@ -4966,6 +4966,9 @@ isOneToOne: false
 "record_billing_event":
 { Args: { "p_event": Json,"p_event_id": string,"p_gateway": string,"p_live": boolean,"p_payload": Json,"p_type": string }; Returns: Json
                            },
+"record_brevo_email_signal":
+{ Args: { "p_event_key": string,"p_kind": string }; Returns: undefined
+                           },
 "record_cv_export":
 { Args: { "p_bytes": number,"p_export": string,"p_mac": string,"p_paper": string,"p_pdf_hash": string,"p_record": string,"p_template": string }; Returns: undefined
                            },

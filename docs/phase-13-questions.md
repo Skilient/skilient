@@ -1,5 +1,7 @@
 # Phase 13: questions for Ahmed
 
+Email update (2026-10-14): [Brevo inventory and cutover](email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
+
 One list for the whole phase (CLAUDE.md). Each has a recommended default. Slice 1 is built on the defaults marked
 **(slice 1)**; answering differently changes it in a follow-up. Answered items move to `docs/decisions.md`.
 

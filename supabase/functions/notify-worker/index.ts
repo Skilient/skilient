@@ -1,5 +1,5 @@
 // notify-worker: drains the notification_emails queue (PRD 5.11): instant emails and the
-// daily digest, sent through Resend. Woken each minute by pg_cron
+// daily digest, sent through Brevo. Woken each minute by pg_cron
 // (private.wake_notify_worker) with a bearer secret generated in the database; nothing
 // else may call it.
 import postgres from "npm:postgres@3.4.9";

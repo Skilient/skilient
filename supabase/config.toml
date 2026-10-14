@@ -236,6 +236,8 @@ otp_length = 6
 # Number of seconds before the email OTP expires (defaults to 1 hour). PRD 5.27: 15 minutes.
 otp_expiry = 900
 
+# Hosted Auth uses dashboard-managed Brevo SMTP (separately owned; see docs/email-brevo-migration.md).
+# The local stack intentionally uses local_smtp; this inactive example is not production configuration.
 # Use a production-ready SMTP server
 # [auth.email.smtp]
 # enabled = true

@@ -1,34 +1,24 @@
 import "server-only";
 
 import { logger } from "@/lib/log";
+import { randomUUID } from "node:crypto";
+import { sendViaBrevo, type EmailMessage } from "@/supabase/functions/_shared/email/brevo";
 
-export interface Email {
-  to: string;
-  subject: string;
-  html: string;
-  text: string;
-}
+export type Email = EmailMessage;
 
 /**
- * Transactional email through Resend's HTTP API (PRD 7). Supabase Auth sends its own
- * emails (codes, resets) through Resend SMTP; this is for the app's security notices.
- * Without RESEND_API_KEY / EMAIL_FROM it logs and skips, so local runs don't fail.
+ * Direct application email through Brevo; Supabase Auth owns its separate SMTP path.
+ * Direct sends have no automatic retries or queue, as before. Each invocation has its own UUID.
  */
 export async function sendEmail(email: Email, requestId?: string): Promise<boolean> {
-  const key = process.env.RESEND_API_KEY;
-  const from = process.env.EMAIL_FROM;
-  if (!key || !from) {
+  const key = process.env.BREVO_API_KEY;
+  if (!key) {
     logger.warn("email.skipped", { request_id: requestId, action: "email.send", outcome: "ok", error_code: "not_configured" });
     return false;
   }
   try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from, to: [email.to], subject: email.subject, html: email.html, text: email.text }),
-      signal: AbortSignal.timeout(8000),
-    });
-    if (!res.ok) throw new Error(`http_${res.status}`);
+    const sent = await sendViaBrevo({ apiKey: key, apiUrl: "https://api.brevo.com/v3" }, fetch, email, randomUUID());
+    if (!sent.ok) throw new Error(sent.name);
     logger.info("email.sent", { request_id: requestId, action: "email.send", outcome: "ok" });
     return true;
   } catch (err) {

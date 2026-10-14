@@ -1,4 +1,6 @@
 Commit: dee328c
+
+Email update (2026-10-14): [Brevo inventory and cutover](../../email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
 Covers: places where the code and `docs/prd/` or `docs/decisions.md` disagree (CONVENTIONS, "Mismatches with the spec")
 
 # PRD mismatches

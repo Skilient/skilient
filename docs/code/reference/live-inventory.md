@@ -1,4 +1,6 @@
 Commit: 7d26258
+
+Email update (2026-10-14): [Brevo inventory and cutover](../../email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
 Covers: supabase/functions/, supabase/config.toml, .env.example, scripts/restore/reseed-vault.sql
 
 # Production inventory

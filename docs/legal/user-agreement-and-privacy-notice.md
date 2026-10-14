@@ -200,7 +200,7 @@ Supabase, which provides our database, sign-in service and file storage. Supabas
 
 Vercel, which runs our web application and server functions. Our server functions run in Mumbai.
 
-Resend, which sends the emails we send you, such as sign-in codes, security alerts and notifications.
+Brevo, which sends the emails we send you, such as sign-in codes, security alerts and notifications. Brevo reports back to us whether those emails were delivered or bounced.
 
 Cloudflare Turnstile, which checks for automated sign-ups and sign-ins.
 

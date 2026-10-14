@@ -1,5 +1,7 @@
 # Phase 13 — Hardening plan
 
+Email update (2026-10-14): [Brevo inventory and cutover](email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
+
 Sources: build plan "Phase 13", PRD 10 (all three subsections), PRD 8, PRD 4 (launch gate), decisions.md up to
 2026-10-03. Questions for Ahmed are in `docs/phase-13-questions.md`; accounts and keys in `docs/setup-checklist.md`
 "Phase 13".

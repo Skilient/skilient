@@ -14,7 +14,7 @@ question 16). Once production moves to Pro before the beta, repeat it from a dai
 | | **Vault secrets** don't decrypt in another project: the worker secrets, `project_url` and `cv_export_secret` are recreated (`scripts/restore/reseed-vault.sql`). |
 | | **CV signing key** (private, Vault only): a new key is rotated in. Every CV signed before still verifies, because `signing_keys` (public keys) is restored, and the public keys are also backed up in `docs/signing-keys/`. |
 | | **GitHub tokens** (Vault): students reconnect GitHub; their imported evidence is restored. |
-| | **Edge Functions and their secrets**: functions are deployed from the repo; their secrets (`RESEND_API_KEY`, GitHub App, gateways) are set by hand and the drill doesn't need them. |
+| | **Edge Functions and their secrets**: functions are deployed from the repo; their secrets (`BREVO_API_KEY`, `APP_URL`, GitHub App, gateways) are set by hand and the drill doesn't need them. Restore Brevo delivery tombstones and webhook receipts with the database; see `docs/email-brevo-migration.md`. |
 | | **Auth settings** (templates, redirect URLs, SMTP, hooks) live in the project's settings, not the database: copy them from `supabase/config.toml` and `docs/setup-checklist.md` in a real recovery. |
 
 ## Running the drill

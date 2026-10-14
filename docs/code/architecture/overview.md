@@ -1,4 +1,6 @@
 Commit: dee328c
+
+Email update (2026-10-14): [Brevo inventory and cutover](../../email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
 Covers: app/ (route groups and root files), proxy.ts, lib/actions/context.ts, lib/actions/rpc.ts, lib/data/, lib/supabase/, lib/env.ts, lib/storage.ts, lib/motion.ts, lib/format/, lib/images/, components/ui/, components/providers/theme-provider.tsx, app/globals.css, vercel.json, supabase/config.toml
 
 # Architecture overview

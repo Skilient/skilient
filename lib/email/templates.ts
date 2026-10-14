@@ -54,6 +54,7 @@ export function newDeviceEmail(to: string, d: NewDeviceDetails): Email {
     `When: ${when}`,
   ];
   return {
+    category: "security",
     to,
     subject: title,
     html: layout(
@@ -75,6 +76,7 @@ export function signInAttemptsEmail(to: string, urls: { codeUrl: string; resetUr
     "Someone has entered the wrong password for your account 10 times in the last 15 minutes. We've slowed down password sign-in for your account; your account is not locked.";
   const code = "You can still sign in any time with a code we email you, or with your university Google account.";
   return {
+    category: "security",
     to,
     subject: title,
     html: layout(
@@ -92,6 +94,7 @@ export function backupCodeUsedEmail(to: string, securityUrl: string, at: Date = 
   const title = "A two-factor backup code was used";
   const body = `Someone signed in to your Skilient account with one of your backup codes on ${timeFormat.format(at)} (Pakistan time). Two-factor authentication is now off and your other backup codes no longer work.`;
   return {
+    category: "security",
     to,
     subject: title,
     html: layout(
@@ -108,6 +111,7 @@ export function mfaResetEmail(to: string, securityUrl: string, at: Date = new Da
   const title = "Two-factor on your Skilient account was reset";
   const body = `Skilient support removed the authenticators and backup codes from your account on ${timeFormat.format(at)} (Pakistan time), after checking it was you who asked. Every device was signed out.`;
   return {
+    category: "security",
     to,
     subject: title,
     html: layout(
@@ -124,6 +128,7 @@ export function orgInviteEmail(to: string, d: { orgName: string; role: string; l
   const title = `${d.orgName} invited you to Skilient`;
   const body = `${d.orgName} added you as ${d.role === "admin" ? "an admin" : `a ${d.role}`} on their Skilient recruiter account. Create your account with this work email address to join.`;
   return {
+    category: "security",
     to,
     subject: title,
     html: layout(title, p(body) + button(d.link, "Create my account") + p("This link works once and expires in 7 days."), "If you weren't expecting this, you can ignore the email."),
@@ -135,6 +140,7 @@ export function uniAdminInviteEmail(to: string, d: { university: string; role: s
   const title = `${d.university} invited you to its Skilient portal`;
   const body = `You've been added as ${d.role} on ${d.university}'s university portal on Skilient. Sign in, or create your account with this official email address, then turn on two-factor sign-in to join.`;
   return {
+    category: "security",
     to,
     subject: title,
     html: layout(title, p(body) + button(d.link, "Open the invite") + p("This link works once and expires in 7 days."), "If you weren't expecting this, you can ignore the email."),
@@ -146,6 +152,7 @@ export function fairInviteEmail(to: string, d: { university: string; fair: strin
   const title = `${d.university} invites you to ${d.fair}`;
   const body = `${d.university} invites your company to its job fair "${d.fair}" on Skilient. Fair access is free. Sign in or create a recruiter account with this work email, then accept the invite to open your booth.`;
   return {
+    category: "notification",
     to,
     subject: title,
     html: layout(title, p(body) + button(d.link, "Open the invite"), "If you weren't expecting this, you can ignore the email."),
@@ -160,6 +167,7 @@ export function universityRequestEmail(to: string, d: { university: string | nul
   const body = `You asked for ${name} to join Skilient. Confirm your email address and we'll email you once, on the day it joins.`;
   const footer = "Didn't ask for this? Ignore this email and nothing else happens.";
   return {
+    category: "security",
     to,
     subject: title,
     html: layout(

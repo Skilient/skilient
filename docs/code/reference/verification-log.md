@@ -1,4 +1,6 @@
 Commit: dee328c
+
+Email update (2026-10-14): [Brevo inventory and cutover](../../email-brevo-migration.md) supersedes the historical Resend sections, credentials, endpoints and retry/signature descriptions below. Local migration only; automated and live checks remain unexecuted.
 Covers: claims the docs could not confirm from code, and code-level findings made while writing them (CONVENTIONS, "Verification")
 
 # Verification log

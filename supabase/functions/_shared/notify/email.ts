@@ -3,12 +3,8 @@
  * (lib/email/templates.ts), rebuilt here because Edge Functions bundle only this folder.
  */
 
-export interface EmailMessage {
-  to: string;
-  subject: string;
-  html: string;
-  text: string;
-}
+import type { EmailCategory, EmailMessage } from "../email/brevo.ts";
+export type { EmailMessage } from "../email/brevo.ts";
 
 export function escapeHtml(value: string): string {
   return value
@@ -43,10 +39,11 @@ function footerFor(appUrl: string): string {
 }
 
 /** One notification, sent straight away. */
-export function instantEmail(to: string, appUrl: string, item: { subject: string; text: string; href: string }): EmailMessage {
+export function instantEmail(to: string, appUrl: string, item: { subject: string; text: string; href: string }, category: EmailCategory = "notification"): EmailMessage {
   const url = `${appUrl}${item.href}`;
   const footer = footerFor(appUrl);
   return {
+    category,
     to,
     subject: item.subject,
     html: layout(item.subject, p(item.text) + button(url, "Open Skilient"), footer),
@@ -60,6 +57,7 @@ export function digestEmail(
   appUrl: string,
   items: { text: string; href: string }[],
   more: number,
+  category: EmailCategory = "notification",
 ): EmailMessage {
   const total = items.length + more;
   const subject = total === 1 ? "1 thing waiting for you on Skilient" : `${total} things waiting for you on Skilient`;
@@ -70,6 +68,7 @@ export function digestEmail(
   const moreLine = more > 0 ? `And ${more} more.` : null;
   const footer = footerFor(appUrl);
   return {
+    category,
     to,
     subject,
     html: layout(title, listHtml + (moreLine ? p(moreLine) : "") + button(`${appUrl}/notifications`, "See all notifications"), footer),
@@ -94,6 +93,7 @@ export function teacherDigestEmail(to: string, appUrl: string, counts: Record<st
     .map((i) => `<li style="margin:0 0 8px 0;"><a href="${escapeHtml(`${appUrl}${i.href}`)}" style="color:#0E0D0B;">${escapeHtml(i.text)}</a></li>`)
     .join("")}</ul>`;
   return {
+    category: "notification",
     to,
     subject,
     html: layout(subject, listHtml + button(`${appUrl}/teach`, "Open the teacher portal"), footer),
@@ -108,6 +108,7 @@ export function universityLaunchEmail(to: string, appUrl: string, university: st
   const footer = "You asked us to email you when your university joined. This is the only email we send about it.";
   const body = `<p style="margin:0 0 16px 0;font-size:15px;line-height:24px;">You can now join with your university email: build with classmates, prove your skills with real work, and get a CV recruiters can check.</p>`;
   return {
+    category: "notification",
     to,
     subject,
     html: layout(subject, body + button(join, "Join Skilient"), footer),
@@ -130,6 +131,7 @@ export function opsAlertEmail(
     `<p style="margin:0 0 12px 0;font-size:15px;line-height:24px;">${escapeHtml(alert.detail)}</p>` +
     `<p style="margin:0 0 16px 0;font-size:13px;line-height:20px;color:#5C5A55;">${escapeHtml(lead)}</p>`;
   return {
+    category: "notification",
     to,
     subject,
     html: layout(subject, body + button(`${appUrl}/ops/metrics`, "Open /ops"), footer),

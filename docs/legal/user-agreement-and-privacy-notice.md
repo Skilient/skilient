@@ -150,11 +150,31 @@ CV. The signed snapshot of your skills and evidence, your CV settings, your shar
 
 Payments. Your plan, invoice details (including the name and address you give for an invoice), transaction references and amounts from our payment gateways. We do not receive or store your full card number.
 
-Technical data. Your IP address, which we use for security and rate limits and store as a hash wherever we can, your browser and device details, timestamps, error reports and request identifiers in logs. We use cookies that keep you signed in and protect your account. We do not use advertising cookies or cross-site tracking. Analytics, session recordings and performance measurements are described in P6.
+Technical data. Your IP address, which we use for security and rate limits and store as a hash wherever we can, your browser and device details, timestamps, error reports and request identifiers in logs. We use cookies that keep you signed in and protect your account. We do not use advertising cookies or cross-site tracking. Analytics, session recordings and performance measurements are described in P7.
 
 Code checks. Where a code check's snippet sits in one of your repositories, your answers to the check, and the outcome of the review. We store the location of the snippet, not the code itself.
 
-## P3. Why we use your data
+## P3. Google user data
+
+This section covers the information we receive from Google when you sign in with Google. We call it Google user data.
+
+What we access. When you choose to sign in with Google, we ask Google only for the basic sign-in permissions. From Google we receive your Google account identifier, the email address on the account and your name. We do not request access to your Gmail, Google Drive, Google Calendar, contacts or any other Google service, and we do not copy your Google profile photo.
+
+How we use it. We use Google user data only to provide or improve user-facing features of Skilient: to sign you in, to confirm that your university email address belongs to a listed university, and to show your name and email address in your account. We do not use Google user data for any other purpose.
+
+What we never do with it. We do not use Google user data for targeted, personalised, retargeted, interest-based or other advertising. We do not sell it, and we do not transfer it to data brokers or information resellers. We do not use it to determine creditworthiness or for lending. We do not use it to build any database other than your Skilient account. We do not use it to develop, improve or train any AI or machine-learning model, whether personalised or not. Skilient does not send Google user data to any AI or language-model service, and Skilient does not use Google Workspace APIs to develop, improve or train non-personalised AI or machine-learning models.
+
+Who receives it. We share Google user data only with the service providers listed in P6, and only as far as they need it to run Skilient for you. We also disclose it where the law requires. Your name and your university email address may be shown to universities and recruiters only as described in headings 6 and 7 of the user agreement and in your settings. Your university email address is shown to others only if you choose to show it.
+
+How it is protected. Google user data is encrypted in transit and at rest. It is protected by the same row-level security and access controls as the rest of your personal data, as described in P12.
+
+How long we keep it, and how to delete it. We keep Google user data for as long as your account is active. When you delete your account, we delete it as heading 11 of the user agreement describes. You can start deletion at any time in Settings, or ask us to delete your data by contacting us as described in P14.
+
+Revoking access. You can stop Skilient's access to your Google account at any time at https://myaccount.google.com/permissions. Revoking access stops Google sign-in, but it does not delete your Skilient account. If you signed up only with Google, you can set a password using the password reset page and then sign in with your email address.
+
+Limited Use. Skilient's use of information received from Google APIs adheres to the Google API Services User Data Policy, including its Limited Use requirements.
+
+## P4. Why we use your data
 
 We use personal data to provide Skilient to you and run your account, which is necessary to perform the user agreement. We use it to verify identities and evidence, because the service depends on evidence being real and because we have a legitimate interest in stopping fake evidence. We use it to show your profile, skills and activity to the people and organisations that your settings and the rules allow, as described in the user agreement. We use it to send you notifications you have chosen, and security and account emails that the service needs. We use it to keep the platform safe, prevent fraud and enforce the rules, which is a legitimate interest and, where the law requires it, a legal obligation. We use it to take payments and keep tax records, which is necessary to perform our agreement with you and to comply with the law. We use analytics and error reports to understand how the platform works and to fix problems, using masked or aggregated data wherever we can.
 
@@ -162,7 +182,7 @@ Some features depend on your choice. We ask for your choice in the app when a fe
 
 We do not sell personal data, and we do not use it for third-party advertising.
 
-## P4. Who can see your information
+## P5. Who can see your information
 
 Other students and graduates see what your profile and your privacy settings allow. Your posts are visible to the audiences set for them. Profiles are visible only to signed-in users. Skilient has no public profile pages, and our search engine indexing excludes signed-in pages.
 
@@ -172,7 +192,7 @@ Skilient staff can see your personal data only for a reason, such as support, sa
 
 The public verification page shows a CV's code, status and dates. If a CV has been revoked, it shows only the code and dates. It does not show the rest of the CV.
 
-## P5. Who we share your data with
+## P6. Who we share your data with
 
 We use service providers (processors) who handle data for us under contract, only to run the parts of Skilient that they provide. They are:
 
@@ -186,7 +206,7 @@ Cloudflare Turnstile, which checks for automated sign-ups and sign-ins.
 
 Sentry, which receives error reports. We remove personal data from those reports before they leave our systems, as far as we can.
 
-PostHog, which provides product analytics and session recordings in its EU region, as described in P6.
+PostHog, which provides product analytics and session recordings in its EU region, as described in P7.
 
 Axiom, which holds our application logs for 30 days.
 
@@ -202,48 +222,48 @@ Google, if you choose to sign in with Google.
 
 We also share information when the law requires it, such as with a court or a competent authority. Before we do, we tell you unless the law prevents us from doing so.
 
-Some of these providers store or access data outside Pakistan. P10 describes where data is held.
+Some of these providers store or access data outside Pakistan. P11 describes where data is held.
 
-## P6. Analytics, session recordings and error monitoring
+## P7. Analytics, session recordings and error monitoring
 
 We measure how Skilient is used, so we can find and fix problems and decide what to build next. Our analytics record named events that we have chosen, such as signing up, finishing onboarding, connecting GitHub or sending a message. They are sent to PostHog in its EU region. In PostHog we identify you only by your internal Skilient identifier. We never send names, email addresses, usernames or the content of posts, comments or messages to analytics.
 
 For a sample of sessions (about one in five), we record the screen so that we can see where people get stuck. All form inputs are masked. So is the text of posts, comments, chat messages, CV content, profile about text, and the feed survey, and images in posts and chat are not recorded. We never record chat pages, billing pages, staff pages, sign-in, sign-up or password-reset pages. Recordings are kept for about 30 days and only Skilient staff can view them. We never share them with universities or recruiters.
 
-For a sample of page loads, we measure page speed. We keep those measurements for 14 days. Error reports go to Sentry and application logs go to Axiom, both without personal data where we can manage it, as described in P5 and P7.
+For a sample of page loads, we measure page speed. We keep those measurements for 14 days. Error reports go to Sentry and application logs go to Axiom, both without personal data where we can manage it, as described in P6 and P8.
 
-## P7. How long we keep your data
+## P8. How long we keep your data
 
 Your account data is kept while your account is active. When you delete your account, it is removed as heading 11 of the user agreement describes. Invoices and payment records are kept for the period tax and company law requires, which we plan to set at [six] years. Staff action logs, which record who did what to sensitive records, are kept for [period] so that we can account for those actions. Reports and sanction records are kept for as long as needed to enforce a ban, decide an appeal or defend a legal claim, and are then deleted or anonymised. Images that are no longer used are removed soon after they stop being used.
 
 Security events are kept for one year. Application logs are kept for 30 days. Analytics events are kept for 13 months. Session recordings are kept for about 30 days. Performance measurements are kept for 14 days. Database backups are kept for seven days and then overwritten. A backup that still holds data you have deleted will be overwritten within that period, and until then it is not used for any purpose except restoring the platform after a serious failure.
 
-## P8. Your rights and choices
+## P9. Your rights and choices
 
 Inside the app you can edit your profile; choose what others see; turn recruiter visibility on or off; opt out of the leaderboard; see who has viewed you; block people and companies; choose which notifications you receive and whether emails are instant or sent as a daily digest; revoke your CV links and CVs; disconnect GitHub; and delete your account under heading 11 of the user agreement.
 
-You can also ask us, in writing, to tell you what personal data we hold about you, to correct it, to delete it (subject to heading 11 and P7), to restrict how we use it while we check a complaint, or to stop using a choice you have given us. We do not yet offer a self-service download of all your data, so please ask us instead, and we will provide a copy of the personal data we hold about you within 30 days. We may need to check your identity before we act. If you withdraw a choice you gave us, we will stop relying on it from that point, but this does not undo anything we did before. Withdrawing a choice may mean that some features stop working.
+You can also ask us, in writing, to tell you what personal data we hold about you, to correct it, to delete it (subject to heading 11 and P8), to restrict how we use it while we check a complaint, or to stop using a choice you have given us. We do not yet offer a self-service download of all your data, so please ask us instead, and we will provide a copy of the personal data we hold about you within 30 days. We may need to check your identity before we act. If you withdraw a choice you gave us, we will stop relying on it from that point, but this does not undo anything we did before. Withdrawing a choice may mean that some features stop working.
 
 If you think we have handled your personal data wrongly, please contact us first so that we can put it right. If the law gives you a right to complain to a regulator, you can also do that.
 
-## P9. Children and eligibility
+## P10. Children and eligibility
 
 Skilient is for adults aged 18 and over. We do not knowingly collect personal data from anyone under 18. If we find that an account belongs to someone under 18, we will delete it.
 
-## P10. Where your data is stored and transferred
+## P11. Where your data is stored and transferred
 
-Our main database and file storage are hosted in Mumbai, India, and our server functions run in Mumbai. Some of our service providers, listed in P5, store or access personal data outside Pakistan, including in the European Union for analytics. Before we transfer personal data to a provider, we make sure that its contract requires it to protect the data, and we send only the data the service needs.
+Our main database and file storage are hosted in Mumbai, India, and our server functions run in Mumbai. Some of our service providers, listed in P6, store or access personal data outside Pakistan, including in the European Union for analytics. Before we transfer personal data to a provider, we make sure that its contract requires it to protect the data, and we send only the data the service needs.
 
-## P11. How we protect your data
+## P12. How we protect your data
 
 We protect your data with encrypted connections (TLS) for everything, encryption at rest through our database provider, and row-level security on every table, so that no one can read another person's data unless the rules allow it. Two-factor sign-in is required for staff, recruiters and university admins. Passwords are checked against breached-password lists, using only a partial hash. We limit the rate of sign-ins and other actions. Private files are served only through links that expire after five minutes. We remove location and camera data from images that you upload. We log staff access to personal data.
 
 No system is perfectly secure. If we discover a breach that affects your personal data, we will tell you and the authorities that the law requires, without undue delay. If you find a security problem, please write to security@skilient.com.
 
-## P12. Changes to this notice
+## P13. Changes to this notice
 
 We update this notice when our practices change. Material changes follow heading 13 of the user agreement, so you will be asked to accept them before you use Skilient again. Each version shows its date, so you can see when it changed.
 
-## P13. Contact us
+## P14. Contact us
 
 You can reach us at [COMPANY LEGAL NAME], [REGISTERED ADDRESS]. For privacy requests, write to [PRIVACY CONTACT EMAIL] or use the Feedback page in the app. For security reports, write to security@skilient.com.

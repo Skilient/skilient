@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { PRIVACY_HEADING, splitAgreement } from "@/lib/legal/parts";
 
@@ -21,5 +23,20 @@ describe("splitAgreement", () => {
 
   it("uses the heading the agreement text is written with", () => {
     expect(PRIVACY_HEADING).toBe("## Privacy notice");
+  });
+});
+
+describe("the published agreement text", () => {
+  // docs/legal is the source the migration copies; the pages need its privacy marker to split correctly.
+  const source = readFileSync(join(process.cwd(), "docs/legal/user-agreement-and-privacy-notice.md"), "utf-8");
+  const body = source.slice(source.indexOf("This agreement is between you"));
+
+  it("has the privacy marker exactly once, with the notice after it", () => {
+    expect(body.split(`\n${PRIVACY_HEADING}\n`)).toHaveLength(2);
+    expect(splitAgreement(body).privacy).toMatch(/^## P1\. /);
+  });
+
+  it("leaves no placeholders for the pages to show", () => {
+    expect(body).not.toMatch(/\[[A-Z][A-Za-z ]+\]/);
   });
 });

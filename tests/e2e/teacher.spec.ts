@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Browser, type Page } from "@playwright/test";
-import { adminClient, createStudent, hasBackend, PASSWORD, signInWithPassword, totp, uniqueEmail, watchConsole, type TestStudent } from "./support";
+import { adminClient, currentAgreementVersion, createStudent, hasBackend, PASSWORD, signInWithPassword, totp, uniqueEmail, watchConsole, type TestStudent } from "./support";
 
 /**
  * Phase 7 (PRD 5.21): a faculty account asks for the teacher role and is approved in /ops, posts a
@@ -30,7 +30,7 @@ test.describe("Teacher portal", () => {
       user_metadata: { full_name: fullName, role: "faculty" },
     });
     if (error || !data.user) throw new Error(`createUser: ${error?.message}`);
-    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: 1 });
+    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: await currentAgreementVersion(db) });
     return { id: data.user.id, email, password: PASSWORD, fullName, username: "" };
   }
 

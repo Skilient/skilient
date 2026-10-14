@@ -19,6 +19,19 @@ export function adminClient(): SupabaseClient {
   return admin;
 }
 
+/** The version a new account must accept: the highest published agreement version. */
+export async function currentAgreementVersion(db: SupabaseClient = adminClient()): Promise<number> {
+  const { data, error } = await db
+    .from("agreement_versions")
+    .select("version")
+    .not("published_at", "is", null)
+    .order("version", { ascending: false })
+    .limit(1)
+    .single();
+  if (error || !data) throw new Error(`agreement_versions: ${error?.message ?? "no published version"}`);
+  return data.version;
+}
+
 export function uniqueEmail(domain: "nutech.edu.pk" | "nu.edu.pk", tag = "e2e"): string {
   return `${tag}-${Date.now().toString(36)}-${randomBytes(3).toString("hex")}@${domain}`;
 }
@@ -54,7 +67,7 @@ export async function createStudent(opts: {
   const id = data.user.id;
   const username = `e2e_${randomBytes(5).toString("hex")}`;
   if (opts.agreement ?? true) {
-    const { error: e } = await db.from("agreement_acceptances").insert({ user_id: id, version: 1 });
+    const { error: e } = await db.from("agreement_acceptances").insert({ user_id: id, version: await currentAgreementVersion(db) });
     if (e) throw new Error(`agreement: ${e.message}`);
   }
   if (opts.onboarded ?? true) {

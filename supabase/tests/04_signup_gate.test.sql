@@ -80,7 +80,7 @@ reset role;
 -- handle_new_user(): what a new account gets.
 insert into auth.users (id, email, raw_user_meta_data)
 values ('10000000-0000-0000-0000-000000000001', 'sara@nutech.edu.pk',
-        '{"full_name": "Sara Khan", "agreement_version": "1", "role": "student"}');
+        '{"full_name": "Sara Khan", "agreement_version": "2", "role": "student"}');
 
 select results_eq(
   $$ select role::text, university_id, full_name, onboarding_complete, visibility::text
@@ -94,7 +94,7 @@ select is(
 );
 select is(
   (select version from public.agreement_acceptances where user_id = '10000000-0000-0000-0000-000000000001'),
-  1, 'accepting the agreement at signup is recorded'
+  2, 'accepting the agreement at signup is recorded'
 );
 select is(
   (select kind from public.security_events where user_id = '10000000-0000-0000-0000-000000000001'),

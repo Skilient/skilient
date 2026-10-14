@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Browser, type Page } from "@playwright/test";
-import { adminClient, hasBackend, PASSWORD, signInWithPassword, totp, type TestStudent } from "./support";
+import { adminClient, currentAgreementVersion, hasBackend, PASSWORD, signInWithPassword, totp, type TestStudent } from "./support";
 
 /**
  * Phase 9 (PRD 5.23): a university official signs up, turns on two-factor and claims an unclaimed
@@ -46,7 +46,7 @@ test.describe("University portal", () => {
     const db = adminClient();
     const { data, error } = await db.auth.admin.createUser({ email, password: PASSWORD, email_confirm: true, user_metadata: { full_name: fullName, ...meta } });
     if (error || !data.user) throw new Error(`createUser: ${error?.message}`);
-    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: 1 });
+    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: await currentAgreementVersion(db) });
     return { id: data.user.id, email, password: PASSWORD, fullName, username: "" };
   }
 

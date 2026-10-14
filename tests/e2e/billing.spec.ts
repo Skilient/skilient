@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Browser, type Page } from "@playwright/test";
-import { adminClient, createStudent, hasBackend, PASSWORD, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
+import { adminClient, currentAgreementVersion, createStudent, hasBackend, PASSWORD, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
  * Phase 10 (PRD 4a, 4b, 5.24): the simulated gateway end to end. A student starts the free trial, then pays for
@@ -46,7 +46,7 @@ test.describe("Billing", () => {
     const db = adminClient();
     const { data, error } = await db.auth.admin.createUser({ email, password: PASSWORD, email_confirm: true, user_metadata: meta });
     if (error || !data.user) throw new Error(`createUser: ${error?.message}`);
-    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: 1 });
+    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: await currentAgreementVersion(db) });
     return { id: data.user.id, email, password: PASSWORD, fullName: String(meta.full_name ?? ""), username: "" };
   }
 

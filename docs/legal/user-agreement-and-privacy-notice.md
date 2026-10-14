@@ -1,6 +1,6 @@
 # Skilient User Agreement and Privacy Notice
 
-This agreement is between you and [COMPANY LEGAL NAME], registered in Pakistan at [REGISTERED ADDRESS] ("Skilient", "we", "us"). It applies to everyone who creates an account on Skilient, and to anyone who uses it. The Privacy Notice in the section headed "Privacy notice" below is part of this agreement.
+This agreement is between you and Skilient, registered in Pakistan at NEIC, IJP Road, I-12, Islamabad ("Skilient", "we", "us"). It applies to everyone who creates an account on Skilient, and to anyone who uses it. The Privacy Notice in the section headed "Privacy notice" below is part of this agreement.
 
 ## 1. Who we are and what Skilient is
 
@@ -108,7 +108,7 @@ Deletion is final once it completes. We cannot restore a deleted account or its 
 
 Skilient is provided as it is and as it is available. To the extent the law allows, we make no promise that the platform will always be available or error-free, that it will fit a particular purpose, or that content posted by other people is accurate. We are not responsible for employment, admission, grading, teaching or other decisions made by employers, universities, teachers or other users, or for what users say to each other.
 
-To the extent the law allows, our total liability to you for all claims relating to Skilient is limited to the greater of (a) the fees you paid us in the 12 months before the event that gave rise to the claim and (b) PKR [LIABILITY CAP AMOUNT]. We are not liable for indirect or consequential loss, lost opportunities or lost profits. Nothing in this agreement limits liability for fraud, for death or personal injury caused by negligence, or for anything else that the law does not allow us to limit.
+To the extent the law allows, our total liability to you for all claims relating to Skilient is limited to the fees you paid us in the 12 months before the event that gave rise to the claim. We are not liable for indirect or consequential loss, lost opportunities or lost profits. Nothing in this agreement limits liability for fraud, for death or personal injury caused by negligence, or for anything else that the law does not allow us to limit.
 
 You are responsible for your content and for your breaches of this agreement. To the extent the law allows, you will compensate us for losses that a claim against us causes because of them.
 
@@ -122,13 +122,13 @@ We may change how evidence, skill levels, rank or tiers are scored. We publish e
 
 This agreement is governed by the law of Pakistan. The courts in the city where our registered office is located have jurisdiction over any dispute that we cannot settle between us. Before starting proceedings, please contact us, so that we can try to resolve the dispute. If any part of this agreement is found unenforceable, the rest stays in force. This agreement, the Privacy Notice and the rules published in the app together form the whole agreement between you and Skilient about the platform.
 
-Contact us at [COMPANY LEGAL NAME], [REGISTERED ADDRESS]. For privacy requests, email security@skilient.com with the subject "Privacy request", or write to us at the address above. For security reports, write to security@skilient.com.
+Contact us at Skilient, NEIC, IJP Road, I-12, Islamabad. For privacy requests, email security@skilient.com with the subject "Privacy request", or write to us at the address above. For security reports, write to security@skilient.com.
 
 ## Privacy notice
 
 ## P1. Who we are and what this notice covers
 
-This notice explains what personal data [COMPANY LEGAL NAME] collects through Skilient, why we collect it, who we share it with, how long we keep it and what you can do about it. It covers students, graduates, faculty, recruiters, university staff, people who visit our public pages and people who contact us.
+This notice explains what personal data Skilient collects through Skilient, why we collect it, who we share it with, how long we keep it and what you can do about it. It covers students, graduates, faculty, recruiters, university staff, people who visit our public pages and people who contact us.
 
 This notice applies to the Skilient website and web application at www.skilient.com. We are responsible for the personal data described in this notice. When a university or a company uses Skilient to manage its own records or people, it is responsible for what it does with the information it sees. This notice describes what it can see and the rules it must follow, which are set out in the user agreement.
 
@@ -266,4 +266,4 @@ We update this notice when our practices change. Material changes follow heading
 
 ## P14. Contact us
 
-You can reach us at [COMPANY LEGAL NAME], [REGISTERED ADDRESS]. For privacy requests, email security@skilient.com with the subject "Privacy request", or write to us at the address above. For security reports, write to security@skilient.com.
+You can reach us at Skilient, NEIC, IJP Road, I-12, Islamabad. For privacy requests, email security@skilient.com with the subject "Privacy request", or write to us at the address above. For security reports, write to security@skilient.com.

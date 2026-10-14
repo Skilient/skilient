@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Browser, type Page } from "@playwright/test";
-import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
+import { adminClient, currentAgreementVersion, createStudent, hasBackend, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
  * Phase 11 slice 5 (PRD 5.26): an organisation admin uploads a registration document that only
@@ -44,7 +44,7 @@ test.describe("Org documents and university onboarding", () => {
     const db = adminClient();
     const { data, error } = await db.auth.admin.createUser({ email, password: PASSWORD, email_confirm: true, user_metadata: { full_name: fullName, ...meta } });
     if (error || !data.user) throw new Error(`createUser: ${error?.message}`);
-    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: 1 });
+    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: await currentAgreementVersion(db) });
     return { id: data.user.id, email, password: PASSWORD, fullName, username: "" };
   }
 

@@ -1,7 +1,7 @@
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import { fakePostHog } from "./posthog-fake";
 import { SWEEP, sweepPath, type SweepFixtures, type SweepRole } from "./sweep-routes";
-import { adminClient, createStudent, hasBackend, PASSWORD, signInWithPassword, totp, uniqueEmail, watchConsole, type TestStudent } from "./support";
+import { adminClient, currentAgreementVersion, createStudent, hasBackend, PASSWORD, signInWithPassword, totp, uniqueEmail, watchConsole, type TestStudent } from "./support";
 
 /**
  * CSP sweep (PRD 8 "CSP reports no violations on every screen"; phase 13 slice 3). Every page in app/
@@ -25,7 +25,7 @@ test.describe("CSP sweep", () => {
     const db = adminClient();
     const { data, error } = await db.auth.admin.createUser({ email, password: PASSWORD, email_confirm: true, user_metadata: { full_name: fullName, ...meta } });
     if (error || !data.user) throw new Error(`createUser: ${error?.message}`);
-    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: 1 });
+    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: await currentAgreementVersion(db) });
     return { id: data.user.id, email, password: PASSWORD, fullName, username: "" };
   }
 

@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Browser, type Page } from "@playwright/test";
-import { adminClient, codeFrom, createStudent, hasBackend, latestEmail, PASSWORD, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
+import { adminClient, currentAgreementVersion, codeFrom, createStudent, hasBackend, latestEmail, PASSWORD, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
  * Phase 8 (PRD 5.20): a recruiter signs up with a company email, turns on two-factor, sets up the
@@ -34,7 +34,7 @@ test.describe("Recruiter portal", () => {
     const db = adminClient();
     const { data, error } = await db.auth.admin.createUser({ email, password: PASSWORD, email_confirm: true, user_metadata: { full_name: fullName, role: "recruiter" } });
     if (error || !data.user) throw new Error(`createUser: ${error?.message}`);
-    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: 1 });
+    await db.from("agreement_acceptances").insert({ user_id: data.user.id, version: await currentAgreementVersion(db) });
     return { id: data.user.id, email, password: PASSWORD, fullName, username: "" };
   }
 

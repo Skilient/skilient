@@ -186,7 +186,7 @@ test.describe("Marketing: search, sharing and legal pages", () => {
     expect(robots).toMatch(/Sitemap: .*\/sitemap\.xml/);
     const sitemap = await (await request.get("/sitemap.xml")).text();
     for (const path of ["/recruiters", "/universities", "/faculty", "/pricing", "/about", "/verify"]) expect(sitemap).toContain(`${path}</loc>`);
-    expect(sitemap).not.toContain("/privacy</loc>");
+    for (const path of ["/terms", "/privacy"]) expect(sitemap).toContain(`${path}</loc>`);
 
     await page.goto("/recruiters");
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/recruiters$/);
@@ -206,14 +206,14 @@ test.describe("Marketing: search, sharing and legal pages", () => {
     expect((await request.get("/demo")).status()).toBe(404);
   });
 
-  test("/terms shows the agreement, /privacy its headings; both stay out of search", async ({ page }) => {
+  test("/terms and /privacy are public, indexable and pass axe", async ({ page }) => {
     await page.goto("/terms");
-    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+    await expect(page.getByRole("heading", { level: 1, name: "User agreement" })).toBeVisible();
+    expect((await page.locator('meta[name="robots"]').getAttribute("content")) ?? "").not.toMatch(/noindex/);
     await axeBothThemes(page, "/terms");
     await page.goto("/privacy");
-    await expect(page.getByRole("heading", { level: 1, name: "Privacy" })).toBeVisible();
-    await expect(page.getByTestId("privacy-headings").getByRole("listitem")).toHaveCount(8);
+    await expect(page.getByRole("heading", { level: 1, name: "Privacy notice" })).toBeVisible();
+    expect((await page.locator('meta[name="robots"]').getAttribute("content")) ?? "").not.toMatch(/noindex/);
     await axeBothThemes(page, "/privacy");
   });
 

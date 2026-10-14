@@ -16,8 +16,8 @@ export interface NavLink {
  * so nav and footer links to a page appear only once it is built (each slice adds its pages).
  */
 export const BUILT_PAGES: ReadonlySet<string> = new Set(["/verify", "/recruiters", "/universities", "/faculty", "/pricing", "/about", "/terms", "/privacy"]);
-/** Built but kept out of search until their final text exists. */
-export const NOINDEX_PAGES: ReadonlySet<string> = new Set(["/terms", "/privacy"]);
+/** Built but kept out of search. Empty: the legal pages are public so Google can read the privacy notice. */
+export const NOINDEX_PAGES: ReadonlySet<string> = new Set<string>();
 export const isBuilt = (href: string) => BUILT_PAGES.has(href);
 
 export const nav: { links: NavLink[]; signIn: NavLink; join: NavLink; open: string } = {
@@ -469,27 +469,18 @@ export const aboutPage = {
   },
 };
 
-/** /terms and /privacy (PRD 5.1). Both are noindex until the final text is written (setup checklist, Phase 12). */
+/** /terms (the user agreement) and /privacy (the privacy notice) are both parts of the published agreement text (PRD 5.1). */
 export const legalPages = {
   terms: {
-    title: "Terms",
+    title: "User agreement",
     description: "The Skilient user agreement every account accepts at signup.",
-    unavailable: "The agreement couldn't be loaded. Try again in a minute.",
+    unavailable: "The user agreement couldn't be loaded. Try again in a minute.",
     version: "Version {version}",
   },
   privacy: {
-    title: "Privacy",
-    description: "What Skilient collects, who can see it, and how to delete it.",
-    intro: "This policy is being written. The headings below are what it will cover.",
-    headings: [
-      "What we collect when you sign up",
-      "What we read from GitHub",
-      "Who can see your profile, skills and CV",
-      "What recruiters see, and when",
-      "What your university sees",
-      "How long we keep your data",
-      "Deleting your account",
-      "Your rights and how to contact us",
-    ],
+    title: "Privacy notice",
+    description: "What Skilient collects, how we use and share it, including Google user data, and how to delete it.",
+    unavailable: "The privacy notice couldn't be loaded. Try again in a minute.",
+    version: "Version {version}",
   },
 };

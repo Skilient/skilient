@@ -1,4 +1,4 @@
-import { Bell, CaretRight, Certificate, ChatsCircle, CreditCard, EyeSlash, FileText, GithubLogo, ShieldCheck, Trash, UserCircle } from "@phosphor-icons/react/dist/ssr";
+import { Bell, CaretRight, Certificate, ChatsCircle, CreditCard, EyeSlash, FileText, GithubLogo, Lock, Scales, ShieldCheck, Trash, UserCircle } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { ReplayTourButton } from "@/components/learn/replay-tour-button";
@@ -16,12 +16,14 @@ const sections = [
   { href: "/settings/privacy", title: "Privacy centre", description: "Who sees your profile, CV and record, leaderboards and blocked people.", icon: EyeSlash },
   { href: "/settings/billing", title: "Billing", description: "Student Pro, your free trial, payments and receipts.", icon: CreditCard },
   { href: "/settings/security", title: "Security", description: "Two-factor, signed-in devices and recent account activity.", icon: ShieldCheck },
+  { href: "/terms", title: "User agreement", description: "The terms you accepted when you signed up.", icon: Scales },
+  { href: "/privacy", title: "Privacy notice", description: "What we collect, how we use and share it, and how to delete it.", icon: Lock },
   { href: "/settings/account/delete", title: "Delete account", description: "Permanently delete your account after a 14-day cooling-off.", icon: Trash },
 ] as const;
 
-// Recruiter accounts have no profile, GitHub or CV: they manage their sign-in and which notices email them
-// (the organisation's own settings live under /org).
-const recruiterSections = sections.filter((s) => ["/settings/notifications", "/settings/security"].includes(s.href));
+// Recruiter accounts have no profile, GitHub or CV: they manage their sign-in, which notices email them and the
+// legal texts (the organisation's own settings live under /org).
+const recruiterSections = sections.filter((s) => ["/settings/notifications", "/settings/security", "/terms", "/privacy"].includes(s.href));
 
 export default async function SettingsPage() {
   const user = await getCurrentUser();

@@ -111,7 +111,7 @@ You can delete your account at any time in Settings → Account → Delete accou
 
 When the 14 days end, we delete your account in an automated process. A venture you own passes to the longest-standing other member of that venture. A venture with no other member is deleted. Your posts, messages, endorsements you have given, credentials, notifications and personal details are removed. Your images are removed from our storage. Your sign-in account is then deleted. A staff account cannot start its own deletion; a super admin must remove its staff roles first.
 
-Some information is kept. We keep invoices and payment records for the period that tax and company law requires, which we plan to set at [six] years. We keep reports and sanction records for as long as needed to enforce a ban, decide an appeal or defend a legal claim. Hire records and organisation notes stay in the recruiter's records with the personal details removed; the text of a note is deleted. A revoked CV keeps its code and dates so that the verification page can show that it was revoked, but its content is removed. Database backups keep copies of data for a limited period and then overwrite them, as the Privacy notice describes.
+Some information is kept. We keep invoices and payment records for as long as Pakistani tax and company law requires. We keep reports and sanction records for as long as needed to enforce a ban, decide an appeal or defend a legal claim. Hire records and organisation notes stay in the recruiter's records with the personal details removed; the text of a note is deleted. A revoked CV keeps its code and dates so that the verification page can show that it was revoked, but its content is removed. Database backups keep copies of data for a limited period and then overwrite them, as the Privacy notice describes.
 
 Copies that other people have already made before your account was deleted, such as a CV PDF they downloaded, are outside our control.
 
@@ -133,9 +133,9 @@ We may change how evidence, skill levels, rank or tiers are scored. We publish e
 
 ## 14. Governing law, disputes and contact
 
-This agreement is governed by the law of Pakistan. The courts at [CITY] have jurisdiction over any dispute that we cannot settle between us. Before starting proceedings, please contact us, so that we can try to resolve the dispute. If any part of this agreement is found unenforceable, the rest stays in force. This agreement, the Privacy Notice and the rules published in the app together form the whole agreement between you and Skilient about the platform.
+This agreement is governed by the law of Pakistan. The courts in the city where our registered office is located have jurisdiction over any dispute that we cannot settle between us. Before starting proceedings, please contact us, so that we can try to resolve the dispute. If any part of this agreement is found unenforceable, the rest stays in force. This agreement, the Privacy Notice and the rules published in the app together form the whole agreement between you and Skilient about the platform.
 
-Contact us at [COMPANY LEGAL NAME], [REGISTERED ADDRESS], or by email at [LEGAL CONTACT EMAIL]. For privacy requests, use [PRIVACY CONTACT EMAIL] or the Feedback page in the app. For security reports, write to security@skilient.com.
+Contact us at [COMPANY LEGAL NAME], [REGISTERED ADDRESS]. For privacy requests, email security@skilient.com with the subject "Privacy request", or write to us at the address above. For security reports, write to security@skilient.com.
 
 ## Privacy notice
 
@@ -143,7 +143,7 @@ Contact us at [COMPANY LEGAL NAME], [REGISTERED ADDRESS], or by email at [LEGAL 
 
 This notice explains what personal data [COMPANY LEGAL NAME] collects through Skilient, why we collect it, who we share it with, how long we keep it and what you can do about it. It covers students, graduates, faculty, recruiters, university staff, people who visit our public pages and people who contact us.
 
-We are responsible for the personal data described in this notice. When a university or a company uses Skilient to manage its own records or people, it is responsible for what it does with the information it sees. This notice describes what it can see and the rules it must follow, which are set out in the user agreement.
+This notice applies to the Skilient website and web application at www.skilient.com. We are responsible for the personal data described in this notice. When a university or a company uses Skilient to manage its own records or people, it is responsible for what it does with the information it sees. This notice describes what it can see and the rules it must follow, which are set out in the user agreement.
 
 ## P2. What we collect
 
@@ -171,7 +171,7 @@ Code checks. Where a code check's snippet sits in one of your repositories, your
 
 This section covers the information we receive from Google when you sign in with Google. We call it Google user data.
 
-What we access. When you choose to sign in with Google, we ask Google only for the basic sign-in permissions. From Google we receive your Google account identifier, the email address on the account and your name. We do not request access to your Gmail, Google Drive, Google Calendar, contacts or any other Google service, and we do not copy your Google profile photo.
+What we access. When you choose to sign in with Google, we ask Google only for the openid, email and profile permissions. From Google we receive your Google account identifier, the email address on the account and your name. We do not request access to your Gmail, Google Drive, Google Calendar, contacts or any other Google service, and we do not copy your Google profile photo.
 
 How we use it. We use Google user data only to provide or improve user-facing features of Skilient: to sign you in, to confirm that your university email address belongs to a listed university, and to show your name and email address in your account. We do not use Google user data for any other purpose.
 
@@ -247,7 +247,7 @@ For a sample of page loads, we measure page speed. We keep those measurements fo
 
 ## P8. How long we keep your data
 
-Your account data is kept while your account is active. When you delete your account, it is removed as heading 11 of the user agreement describes. Invoices and payment records are kept for the period tax and company law requires, which we plan to set at [six] years. Staff action logs, which record who did what to sensitive records, are kept for [period] so that we can account for those actions. Reports and sanction records are kept for as long as needed to enforce a ban, decide an appeal or defend a legal claim, and are then deleted or anonymised. Images that are no longer used are removed soon after they stop being used.
+Your account data is kept while your account is active. When you delete your account, it is removed as heading 11 of the user agreement describes. Invoices and payment records are kept for as long as Pakistani tax and company law requires. Staff action logs, which record who did what to sensitive records, are kept for one year so that we can account for those actions. Reports and sanction records are kept for as long as needed to enforce a ban, decide an appeal or defend a legal claim, and are then deleted or anonymised. Images that are no longer used are removed soon after they stop being used.
 
 Security events are kept for one year. Application logs are kept for 30 days. Analytics events are kept for 13 months. Session recordings are kept for about 30 days. Performance measurements are kept for 14 days. Database backups are kept for seven days and then overwritten. A backup that still holds data you have deleted will be overwritten within that period, and until then it is not used for any purpose except restoring the platform after a serious failure.
 
@@ -279,6 +279,6 @@ We update this notice when our practices change. Material changes follow heading
 
 ## P14. Contact us
 
-You can reach us at [COMPANY LEGAL NAME], [REGISTERED ADDRESS]. For privacy requests, write to [PRIVACY CONTACT EMAIL] or use the Feedback page in the app. For security reports, write to security@skilient.com.
+You can reach us at [COMPANY LEGAL NAME], [REGISTERED ADDRESS]. For privacy requests, email security@skilient.com with the subject "Privacy request", or write to us at the address above. For security reports, write to security@skilient.com.
 $agreement$
 );

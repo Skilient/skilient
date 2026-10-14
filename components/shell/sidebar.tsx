@@ -90,6 +90,14 @@ export function Sidebar() {
           </Link>
           <SignOutButton variant="ghost" size="sm" icon />
         </div>
+        <nav aria-label="Legal" className="hidden flex-wrap gap-x-3 gap-y-1 text-body-sm text-text-muted lg:flex">
+          <Link href={"/terms" as Route} className="hover:text-text-primary hover:underline">
+            User agreement
+          </Link>
+          <Link href={"/privacy" as Route} className="hover:text-text-primary hover:underline">
+            Privacy notice
+          </Link>
+        </nav>
         <ThemeToggle className="hidden lg:inline-flex" />
       </div>
     </aside>

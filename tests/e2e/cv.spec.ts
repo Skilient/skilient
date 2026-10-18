@@ -128,6 +128,16 @@ test.describe("Verified CV", () => {
     await expect(page.getByTestId("share-locked")).toBeVisible();
     await expect(page.getByTestId("export-locked")).toBeVisible();
     await expect(page.getByRole("button", { name: "Export ATS PDF" })).toBeDisabled();
+    await expect(page.getByTestId("refresh-locked")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Refresh now" })).toHaveCount(0);
+
+    // A staff grant of the Pro on-demand refresh shows the button instead.
+    await sql`
+      insert into public.entitlement_grants (subject_type, subject_id, key, value, source, ends_at, reason)
+      values ('user', ${student.id}, 'cv.refresh_on_demand', 'true', 'admin', now() + interval '1 day', 'E2E cv.spec')`;
+    await page.reload();
+    await expect(page.getByRole("button", { name: "Refresh now" })).toBeVisible();
+    await expect(page.getByTestId("refresh-locked")).toHaveCount(0);
   });
 
   test("a PDF export verifies, and one changed byte shows Altered", async ({ page }) => {

@@ -2,6 +2,7 @@ import { FirstVisitTip } from "@/components/learn/first-visit-tip";
 import type { Metadata } from "next";
 import { CvExport } from "@/components/cv/cv-export";
 import { CvPaper } from "@/components/cv/cv-paper";
+import { CvRefresh } from "@/components/cv/cv-refresh";
 import { CvSettingsForm } from "@/components/cv/cv-settings-form";
 import { CvVersions } from "@/components/cv/cv-versions";
 import { ShareLinks } from "@/components/cv/share-links";
@@ -70,10 +71,9 @@ export default async function MyCvPage() {
           <h2 id="refresh-h" className="text-h3">
             Updates
           </h2>
-          <p className="mt-2 text-body-sm text-text-secondary">
-            Your CV refreshes on {cv.nextRefreshLabel} with the month&rsquo;s new work, if anything changed. Each refresh gets a new code;
-            older codes show Superseded.
-          </p>
+          <div className="mt-2">
+            <CvRefresh canRefresh={cv.rights.refreshOnDemand} nextRefreshLabel={cv.nextRefreshLabel} />
+          </div>
           <p className="mt-2 text-body-sm text-text-secondary" data-testid="cv-views">
             Views through your links: {cv.views.last30} in the last 30 days, {cv.views.total} in all.
           </p>

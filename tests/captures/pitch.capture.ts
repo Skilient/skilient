@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { expect, test, type Browser, type Page } from "@playwright/test";
@@ -390,6 +391,114 @@ test("pitch: demo campus and every portal", async ({ browser }) => {
     await snap(up, "42-uni-students");
 
     await writeFile(path.join(OUT, "meta.json"), JSON.stringify({ cvCode, ayesha: ayesha.username, lab, rides, crops }, null, 2));
+  } finally {
+    await sql.end();
+  }
+});
+
+/** Commits, repos and a merged PR for Ayesha as the GitHub worker would record them, then the two screens that show them. */
+test("pitch: GitHub verification", async ({ browser }) => {
+  test.skip(!OUT, "set PITCH_OUT to run the pitch captures");
+  test.setTimeout(300_000);
+  await mkdir(OUT, { recursive: true });
+  const sql: Sql = postgres(DB_URL, { max: 1, onnotice: () => undefined });
+  try {
+    const [me] = await sql`select p.user_id as id, u.email from public.profiles p join auth.users u on u.id = p.user_id
+                            where p.full_name = 'Ayesha Siddiqui' order by p.created_at desc limit 1`;
+    if (!me) throw new Error("run 'pitch: demo campus and every portal' first");
+    const ayesha: TestStudent = { id: me.id, email: me.email, password: PASSWORD, fullName: "Ayesha Siddiqui", username: "" };
+    const GH = 90210771;
+    const INSTALL = 70451001;
+    const REPOS: [number, string, boolean, "owned" | "collaborator" | "fork", string[]][] = [
+      [880001, "ayesha-siddiqui-dev/lab-booking", false, "owned", ["TypeScript", "CSS"]],
+      [880002, "ayesha-siddiqui-dev/campus-rides-admin", false, "owned", ["TypeScript"]],
+      [880003, "nutech-acm/event-portal", false, "collaborator", ["TypeScript", "JavaScript"]],
+      [880004, "ayesha-siddiqui-dev/portfolio", false, "owned", ["TypeScript", "CSS"]],
+      [880005, "ayesha-siddiqui-dev/dsa-practice", true, "owned", ["Python", "C++"]],
+      [880006, "ayesha-siddiqui-dev/react-big-calendar", false, "fork", ["JavaScript"]],
+    ];
+    const ids = REPOS.map((r) => r[0]);
+    // Snapshot her levels: the recompute triggers must not move what the first test set.
+    const skills = await sql`select * from public.user_skills where user_id = ${ayesha.id}`;
+    await sql`delete from public.skill_evidence where user_id = ${ayesha.id}`;
+    await sql`delete from public.github_pr_skills where user_id = ${ayesha.id}`;
+    await sql`delete from public.github_pull_requests where user_id = ${ayesha.id}`;
+    await sql`delete from public.github_commits where user_id = ${ayesha.id}`;
+    await sql`delete from public.github_user_repos where user_id = ${ayesha.id}`;
+    await sql`delete from public.sync_jobs where user_id = ${ayesha.id}`;
+    await sql`delete from public.github_repos where repo_id in ${sql(ids)}`;
+    await sql`delete from public.github_installations where installation_id = ${INSTALL}`;
+
+    await sql`insert into public.github_accounts (user_id, github_id, login, connected_at) values (${ayesha.id}, ${GH}, 'ayesha-siddiqui-dev', now() - interval '150 days') on conflict do nothing`;
+    await sql`insert into public.github_installations (installation_id, account_id, account_login, account_type, repository_selection)
+              values (${INSTALL}, ${GH}, 'ayesha-siddiqui-dev', 'User', 'selected')`;
+    for (const [id, name, priv, kind, langs] of REPOS) {
+      await sql`insert into public.github_repos (repo_id, full_name, owner_id, private, fork, parent_full_name, default_branch, pushed_at, languages)
+                values (${id}, ${name}, ${kind === "collaborator" ? 51234987 : GH}, ${priv}, ${kind === "fork"}, ${kind === "fork" ? "jquense/react-big-calendar" : null},
+                        'main', now() - interval '3 days', ${langs})`;
+      await sql`insert into public.github_user_repos (user_id, repo_id, installation_id, kind, discovered_at, classified_at, last_synced_at, harvested_at)
+                values (${ayesha.id}, ${id}, ${INSTALL}, ${kind}, now() - interval '150 days', now() - interval '150 days', now() - interval '2 hours', now() - interval '2 hours')`;
+    }
+
+    // React evidence, newest first in the drawer: counted, signed, one held for review, one not counted.
+    const sha = (s: string) => createHash("sha1").update(s).digest("hex");
+    const COMMITS: [number, string, number, string[], string[], number, "counted" | "held" | "excluded", string | null, boolean][] = [
+      [880001, "booking-calendar-drag", 4, ["lines"], ["src/components/BookingCalendar.tsx", "src/hooks/useSlots.ts"], 186, "counted", null, true],
+      [880003, "event-portal-rsvp", 9, ["import", "lines"], ["web/src/pages/Rsvp.tsx"], 142, "counted", null, true],
+      [880001, "free-now-view", 16, ["import", "lines"], ["src/components/FreeNow.tsx"], 121, "counted", null, false],
+      [880002, "rides-admin-reports", 23, ["lines"], ["src/reports/RideTable.tsx", "src/reports/filters.ts"], 208, "counted", null, true],
+      [880004, "portfolio-burst", 6, ["lines"], ["src/App.tsx"], 400, "held", null, false],
+      [880002, "rides-admin-init", 41, ["manifest", "import"], ["package.json", "src/main.tsx"], 64, "counted", null, false],
+      [880004, "portfolio-prettier", 12, ["lines"], ["src/App.tsx", "src/Hero.tsx"], 58, "excluded", "formatting_only", false],
+      [880001, "booking-schema-ui", 62, ["file", "lines"], ["src/pages/Admin.tsx"], 97, "counted", null, false],
+    ];
+    for (const [repo, key, daysAgo, detectors, paths, lines, status, exclusion, signed] of COMMITS) {
+      const s = sha(key);
+      await sql`insert into public.github_commits (user_id, repo_id, sha, authored_at, occurred_at, seen_via, signed, files, meaningful_lines, status, exclusion, extracted_at)
+                values (${ayesha.id}, ${repo}, ${s}, now() - make_interval(days => ${daysAgo}), now() - make_interval(days => ${daysAgo}), 'harvest', ${signed},
+                        ${paths.length}, ${lines}, ${status}, ${exclusion}, now() - interval '2 hours')`;
+      await sql`insert into public.skill_evidence (user_id, skill_id, repo_id, sha, detectors, paths, lines, occurred_at)
+                values (${ayesha.id}, 'react', ${repo}, ${s}, ${detectors}, ${paths}, ${lines}, now() - make_interval(days => ${daysAgo}))`;
+    }
+    await sql`insert into public.github_pull_requests (user_id, repo_github_id, number, pr_github_id, repo_full_name, repo_private, merged_at, approver_github_id, counted, files)
+              values (${ayesha.id}, 880003, 42, 2210042, 'nutech-acm/event-portal', false, now() - interval '9 days', 51234987, true, 3)`;
+    await sql`insert into public.github_pr_skills (user_id, repo_github_id, number, skill_id, paths) values (${ayesha.id}, 880003, 42, 'react', ${["web/src/pages/Rsvp.tsx"]})`;
+    await sql`insert into public.sync_jobs (user_id, trigger, status, stage, repos_total, repos_done, commits_analysed, skills_found, created_at, finished_at)
+              values (${ayesha.id}, 'webhook', 'done', 'level', 6, 6, 212, 8, now() - interval '2 hours', now() - interval '2 hours')`;
+
+    for (const k of skills) {
+      await sql`update public.user_skills set level = ${k.level}, active_days = ${k.active_days}, lines = ${k.lines}, hits = ${k.hits}, repos = ${k.repos},
+                  peer_verified = ${k.peer_verified}, ai_assisted = ${k.ai_assisted}, last_used_at = ${k.last_used_at}
+                where user_id = ${ayesha.id} and skill_id = ${k.skill_id}`;
+    }
+
+    const page = await studentPage(browser, ayesha, false, { width: 1100, height: 1000 });
+    await page.goto("/settings/github");
+    await expect(page.getByRole("heading", { name: /Connected as/ })).toBeVisible();
+    await snap(page, "50-github-settings", { full: true });
+    const tall = await studentPage(browser, ayesha, false, { width: 1100, height: 1700 });
+    await tall.goto("/me/skills");
+    await tall.getByRole("button", { name: /^React, level 4/ }).click();
+    await expect(tall.getByRole("heading", { name: "Evidence" })).toBeVisible();
+    await expect(tall.getByText("Being reviewed")).toBeVisible();
+    await snap(tall, "51-skill-drawer", { wait: 1200 });
+    const phone = await studentPage(browser, ayesha, true);
+    await phone.goto("/settings/github");
+    await expect(phone.getByRole("heading", { name: /Connected as/ })).toBeVisible();
+    await snap(phone, "52-github-settings-phone", { full: true });
+    await phone.goto("/me/skills");
+    await phone.getByRole("button", { name: /^React, level 4/ }).click();
+    await expect(phone.getByText("Being reviewed")).toBeVisible();
+    const sheet = phone.getByRole("dialog");
+    await sheet.getByRole("heading", { name: "Evidence" }).scrollIntoViewIfNeeded();
+    await phone.waitForTimeout(800);
+    await sheet.screenshot({ path: path.join(OUT, "53-skill-drawer-phone.png"), animations: "disabled" });
+    await sheet.evaluate((el) => {
+      const scroller = [el, ...el.querySelectorAll("*")].find((n) => n.scrollHeight > n.clientHeight + 4 && getComputedStyle(n).overflowY !== "visible");
+      if (scroller) scroller.scrollTop = scroller.scrollHeight;
+    });
+    await phone.waitForTimeout(500);
+    await sheet.screenshot({ path: path.join(OUT, "54-skill-drawer-phone-end.png"), animations: "disabled" });
   } finally {
     await sql.end();
   }

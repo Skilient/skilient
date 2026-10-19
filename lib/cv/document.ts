@@ -5,6 +5,7 @@
  * is escaped here. The PDF prints this string; the web pages render components/cv/cv-document.tsx,
  * which a unit test keeps identical to it. Client-safe: no server imports.
  */
+import type { SkillCategory } from "@/lib/skills/levels";
 import type { CvSection, CvSnapshotV1 } from "./types";
 
 export const CV_TEMPLATES = ["standard", "classic", "compact", "modern", "academic"] as const;
@@ -30,7 +31,7 @@ export const SECTION_HEADINGS: Record<CvSection, string> = {
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const ROLES: Record<string, string> = {
-  lead: "Lead",
+  lead: "Team lead",
   developer: "Developer",
   designer: "Designer",
   researcher: "Researcher",
@@ -55,25 +56,39 @@ export function cvDate(value: string | null | undefined): string {
   return d ? `${Number(d)} ${month} ${y}` : `${month} ${y}`;
 }
 
-function plural(n: number, one: string, many = `${one}s`): string {
-  return `${n} ${n === 1 ? one : many}`;
+/** Skills on the CV read like any CV's: one line per kind of skill (decisions 2026-10-19). */
+const SKILL_GROUPS: { label: string; categories: SkillCategory[] }[] = [
+  { label: "Languages", categories: ["language"] },
+  { label: "Frameworks and libraries", categories: ["framework", "library"] },
+  { label: "Tools and platforms", categories: ["tool", "platform"] },
+  { label: "Practices", categories: ["practice"] },
+];
+
+function capitalise(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-function tierName(tier: string): string {
-  return tier.charAt(0).toUpperCase() + tier.slice(1);
+/** The calendar day in Pakistan (UTC+5 all year), as the verify page shows it. */
+function pktDay(at: Date): string {
+  const d = new Date(at.getTime() + 5 * 3600 * 1000);
+  return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 
-/** Inline text: plain, or bold (a skill, a person, a credential). */
+/** Inline text: plain, or bold (a skill group, a person, a credential). */
 export type Seg = string | { strong: string };
 export interface ProjectView {
   title: string;
+  dates: string;
   meta: string;
-  proof: string;
-  skills: string | null;
-  repository: string | null;
   description: string | null;
+  highlights: string[];
+  skills: string | null;
 }
-export type SectionBody = { kind: "p"; text: string } | { kind: "list"; items: Seg[][] } | { kind: "projects"; items: ProjectView[] };
+export type SectionBody =
+  | { kind: "p"; text: string }
+  | { kind: "list"; items: Seg[][] }
+  | { kind: "lines"; items: Seg[][] }
+  | { kind: "projects"; items: ProjectView[] };
 export interface SectionView {
   key: CvSection;
   heading: string;
@@ -91,46 +106,46 @@ export interface CvView {
   qrDataUri: string | null;
 }
 
+function skillLines(skills: CvSnapshotV1["skills"]): SectionBody {
+  const groups = SKILL_GROUPS.map((g) => ({ label: g.label, names: [] as string[] }));
+  const other: string[] = [];
+  for (const k of skills) {
+    const at = SKILL_GROUPS.findIndex((g) => (g.categories as string[]).includes(k.category ?? ""));
+    if (at < 0) other.push(k.name);
+    else groups[at].names.push(k.name);
+  }
+  // CVs signed before skills carried their category print one plain line.
+  if (other.length === skills.length) return { kind: "p", text: other.join(", ") };
+  if (other.length) groups.push({ label: "Other", names: other });
+  return { kind: "lines", items: groups.filter((g) => g.names.length).map((g): Seg[] => [{ strong: `${g.label}:` }, ` ${g.names.join(", ")}`]) };
+}
+
+function projectDates(p: CvSnapshotV1["projects"][number]): string {
+  if (p.status === "completed") return p.started ? `${cvDate(p.started)} – ${cvDate(p.completed)}` : `Completed ${cvDate(p.completed)}`;
+  return p.started ? `${cvDate(p.started)} – Present` : "In progress";
+}
+
 function sectionBody(s: CvSnapshotV1, section: CvSection): SectionBody | null {
   switch (section) {
     case "summary":
       return s.summary ? { kind: "p", text: s.summary } : null;
     case "skills":
-      if (!s.skills.length) return null;
-      return {
-        kind: "list",
-        items: s.skills.map((k) => {
-          const e = k.evidence;
-          const parts = [
-            e.repos && plural(e.repos, "repository", "repositories"),
-            e.active_days && plural(e.active_days, "active day"),
-            e.pull_requests && plural(e.pull_requests, "merged pull request"),
-            e.entries && plural(e.entries, "confirmed contribution"),
-            e.endorsements && plural(e.endorsements, "endorsement"),
-          ].filter(Boolean);
-          return [{ strong: k.name }, `: Level ${k.level}${k.ai_assisted ? ", AI-assisted" : ""}${parts.length ? ` (${parts.join(", ")})` : ""}`];
-        }),
-      };
+      return s.skills.length ? skillLines(s.skills) : null;
     case "projects":
       if (!s.projects.length) return null;
       return {
         kind: "projects",
         items: s.projects.map((p) => {
-          const role = [p.owner ? "Creator" : null, ROLES[p.role] ?? "Team member"].filter(Boolean).join(", ");
-          const when = p.status === "completed" ? `Completed ${cvDate(p.completed)}` : `In progress${p.started ? ` since ${cvDate(p.started)}` : ""}`;
-          const proof = [
-            plural(p.verified_entries, "peer-verified contribution"),
-            p.faculty_confirmed ? plural(p.faculty_confirmed, "faculty-confirmed entry", "faculty-confirmed entries") : null,
-            plural(p.deliverables, "verified deliverable"),
-            p.faculty_reviewed ? "Reviewed by faculty" : null,
-          ].filter(Boolean);
+          const role = [p.owner ? (p.type === "startup" ? "Founder" : "Creator") : null, ROLES[p.role] ?? "Team member"].filter(Boolean).join(", ");
           return {
             title: p.title,
-            meta: [role, p.type.charAt(0).toUpperCase() + p.type.slice(1), when, `Team of ${p.team_size}`].join(" · "),
-            proof: proof.join(" · "),
-            skills: p.skills.length ? `Skills: ${p.skills.join(", ")}` : null,
-            repository: p.repository ? `Repository: ${p.repository}` : null,
+            dates: projectDates(p),
+            meta: [role, capitalise(p.type), p.team_size > 1 ? `Team of ${p.team_size}` : null, p.ai_assisted ? "AI-assisted" : null]
+              .filter(Boolean)
+              .join(" · "),
             description: p.description || null,
+            highlights: p.highlights ?? [],
+            skills: p.skills.length ? `Skills: ${p.skills.join(", ")}` : null,
           };
         }),
       };
@@ -139,7 +154,7 @@ function sectionBody(s: CvSnapshotV1, section: CvSection): SectionBody | null {
       return {
         kind: "list",
         items: s.open_source.map((pr) => [
-          `${pr.number === null ? `Merged pull request to a ${pr.repository.toLowerCase()}` : `Merged pull request #${pr.number} to ${pr.repository}`}, ${cvDate(pr.merged)}${pr.skills.length ? ` (skills: ${pr.skills.join(", ")})` : ""}`,
+          `${pr.number === null ? `Merged pull request to a ${pr.repository.toLowerCase()}` : `Merged pull request #${pr.number} to ${pr.repository}`}, ${cvDate(pr.merged)}.${pr.skills.length ? ` Skills: ${pr.skills.join(", ")}` : ""}`,
         ]),
       };
     case "endorsements":
@@ -148,17 +163,14 @@ function sectionBody(s: CvSnapshotV1, section: CvSection): SectionBody | null {
         kind: "list",
         items: s.endorsements.map((e) => [
           { strong: e.endorser },
-          ` endorsed ${e.skill} on ${e.venture}, ${cvDate(e.date)}.${e.note ? ` “${e.note}” (note by ${e.endorser})` : ""}`,
+          ` endorsed ${e.skill} on ${e.venture}, ${cvDate(e.date.slice(0, 7))}${e.note ? `: “${e.note}”` : "."}`,
         ]),
       };
     case "credentials":
       if (!s.credentials.length) return null;
       return {
         kind: "list",
-        items: s.credentials.map((c) => [
-          { strong: c.title },
-          `, ${c.issuer}, issued ${cvDate(c.issued)}${c.expires ? `, expires ${cvDate(c.expires)}` : ""}. Checked by Skilient.`,
-        ]),
+        items: s.credentials.map((c) => [{ strong: c.title }, `, ${c.issuer}, ${cvDate(c.issued)}${c.expires ? ` to ${cvDate(c.expires)}` : ""}`]),
       };
     case "education": {
       const e = s.education;
@@ -199,11 +211,13 @@ export function cvView(input: CvDocumentInput): CvView {
     template: input.template,
     name: s.person.name,
     sub: [s.person.department, s.person.university, s.person.graduation_year ? `Class of ${s.person.graduation_year}` : null].filter(Boolean).join(" · "),
-    standing: s.standing.tier ? `${tierName(s.standing.tier)} tier on Skilient${s.standing.top_percent ? ` · Top ${s.standing.top_percent}%` : ""}` : null,
-    contact: s.person.email ? `Email: ${s.person.email}` : "Contact: through Skilient (verify link below)",
+    standing: s.standing.tier
+      ? `${capitalise(s.standing.tier)} tier on Skilient${s.standing.top_percent ? ` · Top ${s.standing.top_percent}% of students` : ""}`
+      : null,
+    contact: s.person.email ? `Email: ${s.person.email}` : "Contact through Skilient",
     sections,
-    issuedLine: `Verified CV issued by Skilient on ${issued.getUTCDate()} ${MONTHS[issued.getUTCMonth()]} ${issued.getUTCFullYear()}. Code ${code.slice(0, 5)}-${code.slice(5)}.`,
-    checkLine: `Every item comes from checked evidence. Check this CV at ${verifyUrl(input.siteUrl, code)}`,
+    issuedLine: `Verified CV issued by Skilient on ${pktDay(issued)}. Code ${code.slice(0, 5)}-${code.slice(5)}.`,
+    checkLine: `Evidence for every item: ${verifyUrl(input.siteUrl, code)}`,
     qrDataUri: input.qrDataUri ?? null,
   };
 }
@@ -218,14 +232,17 @@ function bodyHtml(b: SectionBody): string {
       return `<p>${esc(b.text)}</p>`;
     case "list":
       return `<ul>${b.items.map((i) => `<li>${segHtml(i)}</li>`).join("")}</ul>`;
+    case "lines":
+      return b.items.map((i) => `<p class="cv-line">${segHtml(i)}</p>`).join("");
     case "projects":
       return b.items
         .map(
           (p) =>
-            `<div class="cv-item"><h3>${esc(p.title)}</h3><p class="cv-meta">${esc(p.meta)}</p><p>${esc(p.proof)}</p>` +
+            `<div class="cv-item"><div class="cv-item-head"><h3>${esc(p.title)}</h3><p class="cv-dates">${esc(p.dates)}</p></div>` +
+            `<p class="cv-meta">${esc(p.meta)}</p>` +
+            (p.description ? `<p>${esc(p.description)}</p>` : "") +
+            (p.highlights.length ? `<ul class="cv-points">${p.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>` : "") +
             (p.skills ? `<p>${esc(p.skills)}</p>` : "") +
-            (p.repository ? `<p>${esc(p.repository)}</p>` : "") +
-            (p.description ? `<p class="cv-desc"><span class="cv-label">Description by the team:</span> ${esc(p.description)}</p>` : "") +
             `</div>`,
         )
         .join("");
@@ -265,9 +282,14 @@ const BASE_CSS = `
 .cvdoc li { margin: 2pt 0; }
 .cvdoc .cv-item { break-inside: avoid; margin-bottom: 6pt; }
 .cvdoc .cv-item p { margin-top: 1pt; }
+.cvdoc .cv-item-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12pt; margin-top: 6pt; }
+.cvdoc .cv-item-head h3 { margin-top: 0; }
+.cvdoc .cv-item .cv-dates { flex: none; margin-top: 0; color: var(--cv-muted); white-space: nowrap; }
+.cvdoc .cv-points { margin-top: 2pt; }
+.cvdoc .cv-points li { margin: 1pt 0; }
+.cvdoc .cv-line { margin: 2pt 0; }
 .cvdoc .cv-meta { color: var(--cv-muted); }
 .cvdoc .cv-strong { font-weight: 600; }
-.cvdoc .cv-label { color: var(--cv-muted); font-style: italic; }
 .cvdoc .cv-foot { display: flex; gap: 12pt; align-items: flex-end; justify-content: space-between; margin-top: 18pt;
   padding-top: 6pt; border-top: 0.75pt solid var(--cv-rule); color: var(--cv-muted); font-size: 8.5pt; break-inside: avoid; }
 .cvdoc .cv-qr { flex: none; width: 22mm; height: 22mm; }

@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { CvDocument } from "@/components/cv/cv-document";
 import { cvDate, cvDocumentHtml, CV_TEMPLATES, cvCss, type CvDocumentInput } from "@/lib/cv/document";
 import { FULL_SNAPSHOT } from "@/lib/cv/sample";
+import type { CvSnapshotV1 } from "@/lib/cv/types";
 
 describe("CV document", () => {
   it("escapes every value from the snapshot", () => {
@@ -41,14 +42,51 @@ describe("CV document", () => {
     expect(renderToStaticMarkup(<CvDocument {...input} />)).toBe(cvDocumentHtml(input));
   });
 
-  it("prints AI-assisted skills as such, and older snapshots without the flag as before", () => {
+  const at = (snapshot: CvSnapshotV1): CvDocumentInput => ({ snapshot, code: "ABCDE12345", issuedAt: "2026-10-01T19:30:00Z", template: "standard", siteUrl: "https://skilient.com" });
+  const text = (html: string) => html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+
+  it("groups skills by kind, with no levels, counts or AI labels", () => {
+    const html = cvDocumentHtml(at(FULL_SNAPSHOT));
+    const skills = text(html.slice(html.indexOf(">Skills<"), html.indexOf(">Endorsements<")));
+    expect(skills).toContain("Languages: TypeScript, Python, Kotlin, Go, Rust");
+    expect(skills).toContain("Frameworks and libraries: React, Django, Tailwind CSS, GraphQL, Flutter");
+    expect(skills).toContain("Tools and platforms: PostgreSQL, Docker, Node.js, Redis, Figma");
+    expect(skills).not.toMatch(/Level|AI-assisted|repositor|active day|endorsement/);
+  });
+
+  it("prints older skills without a category as one line", () => {
     const s = structuredClone(FULL_SNAPSHOT);
-    s.skills[0].ai_assisted = true;
-    const input: CvDocumentInput = { snapshot: s, code: "ABCDE12345", issuedAt: "2026-10-01T19:30:00Z", template: "standard", siteUrl: "https://skilient.com" };
-    const html = cvDocumentHtml(input);
-    expect(html).toContain(`: Level ${s.skills[0].level}, AI-assisted`);
+    for (const k of s.skills) delete k.category;
+    const html = cvDocumentHtml(at(s));
+    expect(html).toContain(`<p>${s.skills.map((k) => k.name).join(", ")}</p>`);
+    expect(renderToStaticMarkup(<CvDocument {...at(s)} />)).toBe(html);
+  });
+
+  it("puts AI-assisted on the project, and confirmed notes as bullets", () => {
+    const html = cvDocumentHtml(at(FULL_SNAPSHOT));
+    expect(text(html)).toContain("Developer · Startup · Team of 4 · AI-assisted");
+    expect(text(html)).toContain("Creator, Team lead · Project · Team of 3 A timetable planner");
     expect(html.match(/AI-assisted/g)).toHaveLength(1);
-    expect(renderToStaticMarkup(<CvDocument {...input} />)).toBe(html);
+    expect(html).toContain('<ul class="cv-points"><li>Built the timetable parser');
+    expect(html).toContain('<p class="cv-dates">Jun 2026 – Sep 2026</p>');
+    expect(html).toContain('<p class="cv-dates">Aug 2026 – Present</p>');
+  });
+
+  it("keeps evidence and our own bracketed wording off the CV", () => {
+    const s = structuredClone(FULL_SNAPSHOT);
+    s.person.university = "National University of Technology";
+    for (const c of s.credentials) c.issuer = c.issuer.replace(/ \(AWS\)/, "");
+    const all = text(cvDocumentHtml(at(s)));
+    expect(all).not.toMatch(/peer-verified|verified deliverable|Checked by Skilient|Repository:|Description by the team|note by|Level \d/);
+    expect(all).not.toContain("(");
+    expect(all).toContain("Flare tier on Skilient · Top 18% of students");
+    expect(all).toContain("Contact through Skilient");
+    expect(all).toContain("Evidence for every item: https://skilient.com/verify/ABCDE12345");
+  });
+
+  it("prints the issue date as the day in Pakistan", () => {
+    // 19:30 UTC on 1 October is 00:30 on 2 October in Pakistan.
+    expect(cvDocumentHtml(at(FULL_SNAPSHOT))).toContain("issued by Skilient on 2 Oct 2026.");
   });
 
   it("leaves out empty sections and keeps the chosen order", () => {

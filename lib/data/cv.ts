@@ -3,7 +3,7 @@ import "server-only";
 import { headers } from "next/headers";
 import type { CvTemplate } from "@/lib/cv/document";
 import { verifyStatus, type VerifyStatus } from "@/lib/cv/status";
-import type { CvSection, CvSnapshotV1, CvTier } from "@/lib/cv/types";
+import { CV_SECTIONS, type CvSection, type CvSnapshotV1, type CvTier } from "@/lib/cv/types";
 import { dayLabel } from "@/lib/format/time";
 import { logger, requestIdFrom } from "@/lib/log";
 import { keyedHash, sha256Hex } from "@/lib/security/hash";
@@ -68,7 +68,7 @@ export type MyCv =
     };
 
 const SPARK_UP: CvTier[] = ["spark", "flare", "shine", "radiant", "luminary"];
-const ALL_SECTIONS: CvSection[] = ["summary", "skills", "projects", "open_source", "endorsements", "credentials", "education"];
+const ALL_SECTIONS: CvSection[] = [...CV_SECTIONS];
 
 /** 00:30 PKT on the 1st of next month, as "1 November". */
 export function nextRefreshLabel(now = new Date()): string {

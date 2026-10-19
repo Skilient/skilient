@@ -3,7 +3,7 @@
 -- tables or the private functions from the API. S is the student; T1-T6 and H are teammates
 -- who endorse; O is another student; B is banned.
 begin;
-select plan(58);
+select plan(67);
 
 insert into auth.users (id, email)
 select ('93700000-0000-0000-0000-0000000000' || x.k)::uuid, 'cv' || x.k || '@nutech.edu.pk'
@@ -59,6 +59,26 @@ insert into public.contributions (id, venture_id, user_id, kind, description, sk
   (md5('e6')::uuid, pg_temp.v(6), pg_temp.u('S'), 'code', 'Unconfirmed work', '{}');
 insert into public.contribution_confirmations (contribution_id, confirmer_id) values
   (md5('e1')::uuid, pg_temp.u('T1')), (md5('e2')::uuid, pg_temp.u('T2')), (md5('e5')::uuid, pg_temp.u('T2'));
+-- CV highlights: e1 corrected (and the correction confirmed), e3 never confirmed; on V2 four
+-- confirmed notes, the third long enough to be trimmed.
+insert into public.contributions (id, venture_id, user_id, kind, description, skill_ids, corrects_id) values
+  (md5('e1b')::uuid, pg_temp.v(1), pg_temp.u('S'), 'code', 'Built the timetable parser and its tests', array[pg_temp.sk(1)], md5('e1')::uuid);
+insert into public.contributions (id, venture_id, user_id, kind, description, skill_ids, created_at) values
+  (md5('e3')::uuid, pg_temp.v(1), pg_temp.u('S'), 'code', 'Not confirmed yet', '{}', now()),
+  (md5('h1')::uuid, pg_temp.v(2), pg_temp.u('S'), 'code', 'Set up the menu API', '{}', now() - interval '1 day'),
+  (md5('h2')::uuid, pg_temp.v(2), pg_temp.u('S'), 'code', 'Wrote the order queue', '{}', now() - interval '2 days'),
+  (md5('h3')::uuid, pg_temp.v(2), pg_temp.u('S'), 'code', repeat('Long note ', 20), '{}', now() - interval '3 days'),
+  (md5('h4')::uuid, pg_temp.v(2), pg_temp.u('S'), 'code', 'Oldest note', '{}', now() - interval '4 days');
+insert into public.contribution_confirmations (contribution_id, confirmer_id)
+select md5(x)::uuid, pg_temp.u('T1') from unnest(array['e1b', 'h1', 'h2', 'h3', 'h4']) x;
+-- V2's repository: Claude wrote 300 of S's 400 counted lines there (commits become V2 entries).
+insert into public.github_accounts (user_id, github_id, login) values (pg_temp.u('S'), 93790, 'cvstudent');
+insert into public.github_installations (installation_id, account_id, account_login, account_type) values (93790, 93790, 'cvstudent', 'User');
+insert into public.github_user_repos (user_id, repo_id, installation_id, kind) values (pg_temp.u('S'), 93702, 93790, 'collaborator');
+create function pg_temp.sha(p text) returns text language sql as $$ select encode(extensions.digest(p, 'sha1'), 'hex') $$;
+insert into public.github_commits (user_id, repo_id, sha, occurred_at, seen_via, meaningful_lines, status, ai_agent, via_pr) values
+  (pg_temp.u('S'), 93702, pg_temp.sha('cv-ai1'), now(), 'harvest', 300, 'counted', 'noreply@anthropic.com', 5),
+  (pg_temp.u('S'), 93702, pg_temp.sha('cv-own1'), now(), 'harvest', 100, 'counted', null, null);
 delete from public.venture_members where user_id = pg_temp.u('S') and venture_id in (pg_temp.v(5), pg_temp.v(6));
 update public.ventures set status = 'completed', completed_at = now() - interval '10 days' where id = pg_temp.v(1);
 update public.ventures set status = 'completed', completed_at = now() - interval '40 days' where id = pg_temp.v(5);
@@ -123,8 +143,10 @@ select is(pg_temp.s()->'person'->'email', 'null'::jsonb, 'no email unless the st
 select is(position('BSCS Hons Unchecked' in pg_temp.s()::text), 0, 'the free-text programme appears nowhere');
 select is(pg_temp.s()->'standing', '{"tier": "spark", "top_percent": 12}'::jsonb, 'tier and top 12% (percentile 0.88)');
 select is(pg_temp.s()->'sections', to_jsonb(private.cv_all_sections()), 'every section, in the standard order, by default');
-select ok(pg_temp.s()->>'summary' like 'Computer Science student at %, class of 2027, with verified work in %, % and % across 3 ventures (2 completed).%',
-  'summary: department, university, class, top three skills, ventures');
+select is(pg_temp.s()->'sections', '["summary", "projects", "open_source", "skills", "endorsements", "credentials", "education"]'::jsonb,
+  'projects come before skills by default');
+select ok(pg_temp.s()->>'summary' like 'Computer Science student at %, class of 2027, with verified work in %, % and % across 3 team projects, 2 of them completed.%',
+  'summary: department, university, class, top three skills, team projects');
 select ok(pg_temp.s()->>'summary' like '% 2 merged pull requests to other developers'' repositories. Spark tier on Skilient, top 12%.',
   'summary: pull requests and tier');
 
@@ -136,6 +158,7 @@ select is((select min((x->>'level')::integer) from jsonb_array_elements(pg_temp.
 select is(pg_temp.s()->'skills'->0->>'id', pg_temp.sk(1), 'the L4 skill comes first');
 select is((pg_temp.s()->'skills'->0->'evidence'->>'entries')::integer, 1, 'evidence: its one confirmed entry');
 select is((pg_temp.s()->'skills'->0->'evidence'->>'endorsements')::integer, 6, 'evidence: its visible endorsements (not the hidden one)');
+select is(pg_temp.s()->'skills'->0->>'category', (select category::text from public.skills where id = pg_temp.sk(1)), 'each skill carries its type');
 
 -- ---------------------------------------------------------------------------
 -- Projects
@@ -151,6 +174,16 @@ select is((pg_temp.s()->'projects'->0->>'verified_entries')::integer, 2, 'peer-v
 select is((pg_temp.s()->'projects'->0->>'team_size')::integer, 3, 'team size');
 select ok((pg_temp.s()->'projects'->0->>'owner')::boolean, 'the owner is marked');
 select is(pg_temp.s()->'projects'->0->>'description', 'Team-written description of Timetable', 'the team''s description is frozen in');
+select is((select array_agg(x order by x) from jsonb_array_elements_text(pg_temp.s()->'projects'->0->'highlights') x),
+  array['Built the timetable parser and its tests', 'Wrote the export'], 'highlights: confirmed notes only, with the corrected text');
+select is(jsonb_array_length(pg_temp.s()->'projects'->2->'highlights'), 3, 'highlights: at most 3');
+select is((pg_temp.s()->'projects'->2->'highlights') - 2, '["Set up the menu API", "Wrote the order queue"]'::jsonb, 'highlights: newest first');
+select is(pg_temp.s()->'projects'->2->'highlights'->>2, rtrim(left(btrim(repeat('Long note ', 20)), 159)) || '…', 'a long note is trimmed');
+select is((pg_temp.s()->'projects'->0->>'ai_assisted')::boolean, false, 'a project without agent-written lines isn''t AI-assisted');
+select is((pg_temp.s()->'projects'->2->>'ai_assisted')::boolean, true, 'most of the student''s counted lines by an agent: AI-assisted');
+insert into public.github_commits (user_id, repo_id, sha, occurred_at, seen_via, meaningful_lines, status)
+values (pg_temp.u('S'), 93702, pg_temp.sha('cv-own2'), now(), 'harvest', 300, 'counted');
+select is((private.cv_snapshot(pg_temp.u('S'))->'projects'->2->>'ai_assisted')::boolean, false, 'half or less by an agent: not AI-assisted');
 
 -- ---------------------------------------------------------------------------
 -- Open-source work, endorsements, credentials

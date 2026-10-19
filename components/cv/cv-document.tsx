@@ -26,20 +26,35 @@ function Body({ b }: { b: SectionBody }) {
       </ul>
     );
   }
+  if (b.kind === "lines") {
+    return (
+      <>
+        {b.items.map((item, i) => (
+          <p key={i} className="cv-line">
+            <Segs segs={item} />
+          </p>
+        ))}
+      </>
+    );
+  }
   return (
     <>
       {b.items.map((p, i) => (
         <div key={i} className="cv-item">
-          <h3>{p.title}</h3>
+          <div className="cv-item-head">
+            <h3>{p.title}</h3>
+            <p className="cv-dates">{p.dates}</p>
+          </div>
           <p className="cv-meta">{p.meta}</p>
-          <p>{p.proof}</p>
-          {p.skills ? <p>{p.skills}</p> : null}
-          {p.repository ? <p>{p.repository}</p> : null}
-          {p.description ? (
-            <p className="cv-desc">
-              <span className="cv-label">Description by the team:</span> {p.description}
-            </p>
+          {p.description ? <p>{p.description}</p> : null}
+          {p.highlights.length ? (
+            <ul className="cv-points">
+              {p.highlights.map((h, j) => (
+                <li key={j}>{h}</li>
+              ))}
+            </ul>
           ) : null}
+          {p.skills ? <p>{p.skills}</p> : null}
         </div>
       ))}
     </>

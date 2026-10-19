@@ -2,7 +2,8 @@
  * CvSnapshotV1: what private.cv_snapshot() builds and cv-sign signs (PRD 5.18). Integers and
  * strings only. Client-safe (no server imports).
  */
-export const CV_SECTIONS = ["summary", "skills", "projects", "open_source", "endorsements", "credentials", "education"] as const;
+/** Every section, in the default order (projects first, decisions 2026-10-19). */
+export const CV_SECTIONS = ["summary", "projects", "open_source", "skills", "endorsements", "credentials", "education"] as const;
 export type CvSection = (typeof CV_SECTIONS)[number];
 
 export type CvTier = "raw" | "spark" | "flare" | "shine" | "radiant" | "luminary";
@@ -24,6 +25,8 @@ export interface CvSnapshotV1 {
   skills: {
     id: string;
     name: string;
+    /** The taxonomy category (language, framework, …), for grouping. Added later: absent in older CVs. */
+    category?: string;
     level: number;
     /** Mostly written with an AI coding agent (decisions 2026-10-03). Added later: absent means false. */
     ai_assisted?: boolean;
@@ -49,6 +52,10 @@ export interface CvSnapshotV1 {
     repository: string | null;
     /** Written by the team, frozen at issue. */
     description: string;
+    /** Up to 3 of the student's own notes a teammate confirmed, newest first. Added later. */
+    highlights?: string[];
+    /** Most of the student's counted lines in this venture came from an AI agent. Added later. */
+    ai_assisted?: boolean;
   }[];
   open_source: { repository: string; number: number | null; merged: string; skills: string[] }[];
   endorsements: { endorser: string; skill: string; venture: string; note: string | null; date: string }[];

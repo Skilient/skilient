@@ -1,6 +1,7 @@
 import { CheckCircle, ClockCounterClockwise, Prohibit, Question, Warning } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
+import { CvEvidence } from "@/components/cv/cv-evidence";
 import { CvPaper } from "@/components/cv/cv-paper";
 import { PdfCheck } from "@/components/cv/pdf-check";
 import { VerifyColumn } from "@/components/marketing/verify-column";
@@ -146,6 +147,7 @@ export default async function VerifyPage({ params, searchParams }: PageProps<"/v
         <PdfCheck code={result.code} />
       </div>
       <CvPaper snapshot={result.snapshot} code={result.code} issuedAt={result.issuedAt} siteUrl={siteUrl()} />
+      <CvEvidence snapshot={result.snapshot} />
     </VerifyColumn>
   );
 }

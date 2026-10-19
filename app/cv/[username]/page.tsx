@@ -1,6 +1,7 @@
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { CvEvidence } from "@/components/cv/cv-evidence";
 import { CvPaper } from "@/components/cv/cv-paper";
 import { PublicFrame } from "@/components/cv/public-frame";
 import { EmptyState } from "@/components/ui";
@@ -53,6 +54,7 @@ export default async function SharedCvPage({ params, searchParams }: PageProps<"
         </Link>
       </p>
       <CvPaper snapshot={cv.snapshot} code={cv.code} issuedAt={cv.issuedAt} siteUrl={site} qrDataUri={await qrDataUri(verifyUrl(site, cv.code))} />
+      <CvEvidence snapshot={cv.snapshot} />
     </PublicFrame>
   );
 }

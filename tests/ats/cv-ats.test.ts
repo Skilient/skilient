@@ -50,6 +50,9 @@ describe.each(CV_TEMPLATES)("ATS text: %s template", (template) => {
     // Ligatures off: "fi" and "fl" stay two letters an ATS can search for.
     expect(text).toContain("finds free slots");
     expect(text).toContain("Flare tier");
+    // Skills by kind and the project bullets are real text too.
+    expect(text).toContain("Languages: TypeScript");
+    expect(text).toContain("Designed the free-slot search used by 400 students");
   });
 });
 

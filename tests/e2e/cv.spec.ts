@@ -49,10 +49,16 @@ test.describe("Verified CV", () => {
     if (error) throw new Error(`ranking_scores: ${error.message}`);
   }
 
+  /** axe on the current page in the light theme and again in the dark theme. */
   async function axe(page: Page, label: string) {
-    await expect(page).toHaveTitle(/\S/);
-    const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
-    expect(results.violations.map((v) => `${label}: ${v.id}`)).toEqual([]);
+    for (const scheme of ["light", "dark"] as const) {
+      await page.emulateMedia({ colorScheme: scheme });
+      await page.reload();
+      await expect(page).toHaveTitle(/\S/);
+      await expect(page.locator("html")).toHaveClass(new RegExp(scheme));
+      const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
+      expect(results.violations.map((v) => `${label} (${scheme}): ${v.id}`)).toEqual([]);
+    }
   }
 
   test("issue, share, verify, supersede and revoke", async ({ page, browser }) => {
@@ -91,6 +97,9 @@ test.describe("Verified CV", () => {
     await outsider.goto(`/verify/${first.toLowerCase().slice(0, 5)}-${first.slice(5)}`);
     await expect(outsider.getByTestId("verify-status")).toHaveAttribute("data-status", "valid");
     await expect(outsider.getByTestId("verify-status")).toContainText("Ed25519, checked");
+    // The CV reads like any CV; what was checked sits under it.
+    await expect(outsider.getByTestId("cv-evidence")).toContainText("Evidence behind this CV");
+    await expect(outsider.getByTestId("cv-evidence")).toContainText("Spark is the second of six Skilient tiers.");
     await axe(outsider, "/verify/[code]");
     await adminClient().from("profiles").update({ graduation_year: 2028 }).eq("user_id", student.id);
     const second = await issue(student, "monthly");

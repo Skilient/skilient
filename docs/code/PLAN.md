@@ -721,6 +721,8 @@ One row per source file or folder (trailing slash). Every tracked source file ou
 | `app/(app)/settings/notifications/` | subsystems/notifications-and-email |
 | `supabase/functions/notify-worker/` | subsystems/notifications-and-email |
 | `supabase/functions/_shared/notify/` | subsystems/notifications-and-email |
+| `supabase/functions/_shared/email/` | subsystems/notifications-and-email |
+| `supabase/migrations/20261105000001_brevo_email_delivery.sql` | subsystems/notifications-and-email |
 | `supabase/migrations/20260929070000_reports.sql` | subsystems/moderation-and-appeals |
 | `supabase/migrations/20261007000000_penalty_rules.sql` | subsystems/moderation-and-appeals |
 | `supabase/migrations/20261027000000_sanctions_appeals.sql` | subsystems/moderation-and-appeals |

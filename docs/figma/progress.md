@@ -147,32 +147,32 @@ variables, plus its empty/error frames where `screens.json` lists those states.
 - [x] `/recruit/shortlists/[id]`
 - [x] `/recruit/shortlists`
 
-## university (24 screens, slice 7)
+## university (30 screens + 1 redirect, slice 7)
 
-- [ ] `/u/[slug]/[[...page]]`
-- [ ] `/uni/announcements`
-- [ ] `/uni/billing`
-- [ ] `/uni/dashboard/[area]` — tabs: adoption, activity, skills, skills_gap, tiers, outcomes, faculty, benchmark
-- [ ] `/uni/events`
-- [ ] `/uni/fairs/[id]`
-- [ ] `/uni/fairs`
-- [ ] `/uni/hackathons`
-- [ ] `/uni/moderation`
-- [ ] `/uni`
-- [ ] `/uni/people/awards`
-- [ ] `/uni/people`
-- [ ] `/uni/reports`
-- [ ] `/uni/settings/admins`
-- [ ] `/uni/settings/branding`
-- [ ] `/uni/settings/calendar`
-- [ ] `/uni/settings/domains`
-- [ ] `/uni/settings/ecosphere`
-- [ ] `/uni/settings`
-- [ ] `/uni/sponsorship`
-- [ ] `/uni/students/[id]`
-- [ ] `/uni/students`
-- [ ] `/uni/claim`
-- [ ] `/uni/join`
+- [x] `/u/[slug]/[[...page]]`
+- [x] `/uni/announcements`
+- [x] `/uni/billing`
+- [x] `/uni/dashboard/[area]` — tabs: adoption, activity, skills, skills_gap, tiers, outcomes, faculty, benchmark
+- [x] `/uni/events`
+- [x] `/uni/fairs/[id]`
+- [x] `/uni/fairs`
+- [x] `/uni/hackathons`
+- [x] `/uni/moderation`
+- [x] `/uni`
+- [x] `/uni/people/awards`
+- [x] `/uni/people`
+- [x] `/uni/reports`
+- [x] `/uni/settings/admins`
+- [x] `/uni/settings/branding`
+- [x] `/uni/settings/calendar`
+- [x] `/uni/settings/domains`
+- [x] `/uni/settings/ecosphere`
+- [x] `/uni/settings` — redirect-only, no screen (sends to `/uni/settings/ecosphere`)
+- [x] `/uni/sponsorship`
+- [x] `/uni/students/[id]`
+- [x] `/uni/students`
+- [x] `/uni/claim`
+- [x] `/uni/join`
 
 ## ops (36 screens, slice 8)
 

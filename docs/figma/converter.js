@@ -10,7 +10,7 @@ const page = await figma.getNodeByIdAsync(JOBS[0].o.page);
 await figma.setCurrentPageAsync(page);
 
 // Fonts used by the text styles and raw text.
-const FONTS = [["Spectral", "Medium"], ["Spectral", "Regular"], ["Spectral", "SemiBold"], ["Barlow", "Regular"], ["Barlow", "Medium"], ["Barlow", "SemiBold"], ["Barlow", "Bold"], ["JetBrains Mono", "Regular"], ["JetBrains Mono", "Medium"]];
+const FONTS = [["Spectral", "Medium"], ["Spectral", "Regular"], ["Spectral", "SemiBold"], ["Barlow", "Regular"], ["Barlow", "Medium"], ["Barlow", "SemiBold"], ["Barlow", "Bold"], ["JetBrains Mono", "Regular"], ["JetBrains Mono", "Medium"], ["JetBrains Mono", "Bold"]];
 for (const [family, style] of FONTS) await figma.loadFontAsync({ family, style });
 const WEIGHT = { 300: "Regular", 400: "Regular", 500: "Medium", 600: "SemiBold", 700: "Bold", 800: "Bold" };
 const familyOf = (f) => (/spectral/i.test(f) ? "Spectral" : /mono/i.test(f) ? "JetBrains Mono" : "Barlow");
@@ -58,7 +58,7 @@ async function makeText(n) {
   DX = 0;
   const t = figma.createText();
   if (n.st && TS[n.st]) await t.setTextStyleIdAsync(TS[n.st].id);
-  else if (n.fn) { t.fontName = { family: familyOf(n.fn[0]), style: WEIGHT[n.fn[2]] ?? "Regular" }; t.fontSize = n.fn[1]; t.lineHeight = { unit: "PIXELS", value: n.fn[3] }; }
+  else if (n.fn) { t.fontName = { family: familyOf(n.fn[0]), style: familyOf(n.fn[0]) === "JetBrains Mono" && n.fn[2] === 600 ? "Bold" : WEIGHT[n.fn[2]] ?? "Regular" }; t.fontSize = n.fn[1]; t.lineHeight = { unit: "PIXELS", value: n.fn[3] }; }
   t.characters = n.x || " ";
   const p = paint(n.c ?? "text/primary"); if (p) t.fills = [p];
   if (n.up) t.textCase = "UPPER";

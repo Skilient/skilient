@@ -155,7 +155,10 @@ async function setupAccounts(sql: Sql): Promise<Accounts> {
   const [{ domain: uniDomain }] = await sql`select domain from public.university_domains where university_id = ${uniId} limit 1`;
   const uniOwner = await account(`registrar-${tag}@${uniDomain}`, "Rida Registrar", { role: "university_admin", university_id: uniId });
   await sql`update public.universities set owner_id = ${uniOwner.id} where id = ${uniId} and owner_id is null`;
-  await sql`insert into public.university_admins (user_id, university_id, role) values (${uniOwner.id}, ${uniId}, 'owner') on conflict do nothing`;
+  // One owner per university: earlier capture runs leave an owner behind, so replace it here (local data only).
+  // The insert must not be silent: a conflict would leave the captured official without a seat.
+  await sql`delete from public.university_admins where university_id = ${uniId} and role = 'owner' and user_id <> ${uniOwner.id}`;
+  await sql`insert into public.university_admins (user_id, university_id, role) values (${uniOwner.id}, ${uniId}, 'owner')`;
   return { student, newStudent, onboardingStudent, mfaStudent, teacher, recruiter, uniOwner, admin, uniId };
 }
 

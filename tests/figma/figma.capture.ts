@@ -221,7 +221,7 @@ test("figma reference captures", async ({ browser }) => {
   const manifest: { route: string; tab: string; url: string; files?: Record<string, string>; skipped?: string }[] = [];
   try {
     const who = await setupAccounts(sql);
-    let people: any[] = [];
+    let people: TestStudent[] = [];
     let ventureId: string | undefined;
     if (entries.some((e) => e.role === "student" || e.role === "teacher")) {
       const result = await seedStudentWorld(sql, who.student, Math.random().toString(36).slice(2, 6));

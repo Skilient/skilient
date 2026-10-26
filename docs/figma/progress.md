@@ -123,29 +123,29 @@ variables, plus its empty/error frames where `screens.json` lists those states.
 - [ ] `/teach/ventures/[id]`
 - [ ] `/teach/apply`
 
-## recruiter (21 screens, slice 6)
+## recruiter (20 screens + 1 redirect, slice 6)
 
-- [ ] `/companies/[slug]`
-- [ ] `/org/billing`
-- [ ] `/org/members`
-- [ ] `/org/plan`
-- [ ] `/org/settings/api`
-- [ ] `/org/settings`
-- [ ] `/org/join`
-- [ ] `/recruit/analytics`
-- [ ] `/recruit/candidates/[id]`
-- [ ] `/recruit/competitions/[id]`
-- [ ] `/recruit/competitions/new`
-- [ ] `/recruit/competitions`
-- [ ] `/recruit/contacts`
-- [ ] `/recruit/jobs/[id]/applicants`
-- [ ] `/recruit/jobs/[id]`
-- [ ] `/recruit/jobs/new`
-- [ ] `/recruit/jobs`
-- [ ] `/recruit`
-- [ ] `/recruit/search`
-- [ ] `/recruit/shortlists/[id]`
-- [ ] `/recruit/shortlists`
+- [x] `/companies/[slug]`
+- [x] `/org/billing`
+- [x] `/org/members`
+- [x] `/org/plan`
+- [x] `/org/settings/api`
+- [x] `/org/settings`
+- [x] `/org/join` — redirects a signed-in recruiter to `/recruit` (no screen; like `/ventures/[id]/chat`)
+- [x] `/recruit/analytics`
+- [x] `/recruit/candidates/[id]`
+- [x] `/recruit/competitions/[id]`
+- [x] `/recruit/competitions/new`
+- [x] `/recruit/competitions`
+- [x] `/recruit/contacts`
+- [x] `/recruit/jobs/[id]/applicants`
+- [x] `/recruit/jobs/[id]`
+- [x] `/recruit/jobs/new`
+- [x] `/recruit/jobs`
+- [x] `/recruit`
+- [x] `/recruit/search`
+- [x] `/recruit/shortlists/[id]`
+- [x] `/recruit/shortlists`
 
 ## university (24 screens, slice 7)
 

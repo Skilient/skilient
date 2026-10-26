@@ -109,19 +109,19 @@ variables, plus its empty/error frames where `screens.json` lists those states.
 
 ## teacher (13 screens, slice 5)
 
-- [ ] `/teach/code-checks/[id]`
-- [ ] `/teach/code-checks` — tabs: graded, open
-- [ ] `/teach/ideas/[id]`
-- [ ] `/teach/ideas/new`
-- [ ] `/teach/ideas`
-- [ ] `/teach/judging/[id]`
-- [ ] `/teach/judging`
-- [ ] `/teach`
-- [ ] `/teach/reviews/[requestId]`
-- [ ] `/teach/reviews` — tabs: done, open
-- [ ] `/teach/settings`
-- [ ] `/teach/ventures/[id]`
-- [ ] `/teach/apply`
+- [x] `/teach/code-checks/[id]`
+- [x] `/teach/code-checks` — tabs: graded, open
+- [x] `/teach/ideas/[id]`
+- [x] `/teach/ideas/new`
+- [x] `/teach/ideas`
+- [x] `/teach/judging/[id]`
+- [x] `/teach/judging`
+- [x] `/teach`
+- [x] `/teach/reviews/[requestId]`
+- [x] `/teach/reviews` — tabs: done, open
+- [x] `/teach/settings`
+- [x] `/teach/ventures/[id]`
+- [x] `/teach/apply` (AROUND hook, see decisions 2026-10-26)
 
 ## recruiter (20 screens + 1 redirect, slice 6)
 

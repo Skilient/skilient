@@ -24,7 +24,7 @@ const DB_URL = process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@1
 const ONLY = process.env.FIGMA_PORTAL;
 const ROUTES = process.env.FIGMA_ROUTES ? new RegExp(process.env.FIGMA_ROUTES) : null;
 
-type Role = "anonymous" | "student" | "new_student" | "onboarding_student" | "mfa_pending" | "teacher" | "recruiter" | "university_owner" | "super_admin" | "anyone";
+type Role = "anonymous" | "student" | "new_student" | "onboarding_student" | "mfa_pending" | "teacher" | "recruiter" | "university_owner" | "uni_claimant" | "super_admin" | "anyone";
 interface Entry {
   route: string;
   portal: string;
@@ -115,6 +115,7 @@ interface Accounts {
   teacher: TestStudent;
   recruiter: TestStudent;
   uniOwner: TestStudent;
+  uniClaimant: TestStudent;
   admin: TestStudent;
   uniId: string;
 }
@@ -159,7 +160,9 @@ async function setupAccounts(sql: Sql): Promise<Accounts> {
   // The insert must not be silent: a conflict would leave the captured official without a seat.
   await sql`delete from public.university_admins where university_id = ${uniId} and role = 'owner' and user_id <> ${uniOwner.id}`;
   await sql`insert into public.university_admins (user_id, university_id, role) values (${uniOwner.id}, ${uniId}, 'owner')`;
-  return { student, newStudent, onboardingStudent, mfaStudent, teacher, recruiter, uniOwner, admin, uniId };
+  // An official with no seat yet: /uni/claim is the page for them (the owner above already has one).
+  const uniClaimant = await account(`claimant-${tag}@${uniDomain}`, "Ines Claimant", { role: "university_admin", university_id: uniId });
+  return { student, newStudent, onboardingStudent, mfaStudent, teacher, recruiter, uniOwner, uniClaimant, admin, uniId };
 }
 
 /** Signed in, with two-factor on where the portal needs aal2. Returns the storage state. */
@@ -246,6 +249,7 @@ test("figma reference captures", async ({ browser }) => {
       teacher: { user: who.teacher, twoFactor: false },
       recruiter: { user: who.recruiter, twoFactor: true },
       university_owner: { user: who.uniOwner, twoFactor: true },
+      uni_claimant: { user: who.uniClaimant, twoFactor: true },
       super_admin: { user: who.admin, twoFactor: true },
     };
     const states = new Map<Role, Awaited<ReturnType<typeof signedInState>> | undefined>();
@@ -268,13 +272,15 @@ test("figma reference captures", async ({ browser }) => {
       } else if (resolve) {
         params = (await resolve(sql, who).catch(() => null)) ?? {};
       }
-      const role = roles[e.role];
-      if (role.user && !states.has(e.role)) states.set(e.role, await signedInState(browser, role.user, role.twoFactor, role.passwordOnlyAfter));
+      // /uni/claim is captured as an official without a seat; every other university route uses the seated owner.
+      const key: Role = e.route === "/uni/claim" ? "uni_claimant" : e.role;
+      const role = roles[key];
+      if (role.user && !states.has(key)) states.set(key, await signedInState(browser, role.user, role.twoFactor, role.passwordOnlyAfter));
       await AROUND[e.route]?.before(sql, who);
       for (const { tab, url } of urls(e, params)) {
         const files: Record<string, string> = {};
         for (const [vp, size] of Object.entries(VIEWPORTS)) {
-          const ctx: BrowserContext = await browser.newContext({ viewport: size, hasTouch: vp === "phone", storageState: states.get(e.role) });
+          const ctx: BrowserContext = await browser.newContext({ viewport: size, hasTouch: vp === "phone", storageState: states.get(key) });
           const page = await ctx.newPage();
           try {
             const res = await page.goto(url, { waitUntil: "networkidle" });

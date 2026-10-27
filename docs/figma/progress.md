@@ -175,43 +175,44 @@ variables, plus its empty/error frames where `screens.json` lists those states.
 - [x] `/uni/join`
 
 ## ops (36 screens, slice 8)
+Not built: the four detail routes that need seeded data (`/ops/evidence/credentials/[id]`, `/ops/evidence/flags/[id]`, `/ops/evidence/ranking/[id]`, `/ops/universities/claims/[id]`). Each was left unticked; seed them and capture again before building.
 
-- [ ] `/ops/appeals/[id]`
-- [ ] `/ops/appeals` — tabs: decided
-- [ ] `/ops/audit`
-- [ ] `/ops/billing/[type]/[id]`
-- [ ] `/ops/billing` — tabs: accounts, revenue, gateways
-- [ ] `/ops/config/[key]`
-- [ ] `/ops/config`
-- [ ] `/ops/config/plans`
-- [ ] `/ops/config/skills`
-- [ ] `/ops/evidence/code-checks/[id]`
+- [x] `/ops/appeals/[id]`
+- [x] `/ops/appeals` — tabs: decided
+- [x] `/ops/audit`
+- [x] `/ops/billing/[type]/[id]`
+- [x] `/ops/billing` — tabs: accounts, revenue, gateways
+- [x] `/ops/config/[key]`
+- [x] `/ops/config`
+- [x] `/ops/config/plans`
+- [x] `/ops/config/skills`
+- [x] `/ops/evidence/code-checks/[id]`
 - [ ] `/ops/evidence/credentials/[id]`
 - [ ] `/ops/evidence/flags/[id]`
-- [ ] `/ops/evidence` — tabs: credentials, reviewed, checks, graded, flags, ranking, ranking_reviewed, cvs
+- [x] `/ops/evidence` — tabs: credentials, reviewed, checks, graded, flags, ranking, ranking_reviewed, cvs
 - [ ] `/ops/evidence/ranking/[id]`
-- [ ] `/ops/exam-periods`
-- [ ] `/ops/feedback/[id]`
-- [ ] `/ops/feedback` — tabs: open, closed
-- [ ] `/ops/graduation`
-- [ ] `/ops/leads`
-- [ ] `/ops/metrics`
-- [ ] `/ops/orgs/[id]`
-- [ ] `/ops/orgs/competitions`
-- [ ] `/ops/orgs` — tabs: pending, verified, suspended, rejected
-- [ ] `/ops/orgs/spam`
-- [ ] `/ops`
-- [ ] `/ops/reports/[id]`
-- [ ] `/ops/reports` — tabs: resolved
-- [ ] `/ops/sanctions` — tabs: recent, active
-- [ ] `/ops/staff`
-- [ ] `/ops/teachers` — tabs: decided, pending
-- [ ] `/ops/universities/[id]` — tabs: overview, ecosphere, exams, invoices
+- [x] `/ops/exam-periods`
+- [x] `/ops/feedback/[id]`
+- [x] `/ops/feedback` — tabs: open, closed
+- [x] `/ops/graduation`
+- [x] `/ops/leads`
+- [x] `/ops/metrics`
+- [x] `/ops/orgs/[id]`
+- [x] `/ops/orgs/competitions`
+- [x] `/ops/orgs` — tabs: pending, verified, suspended, rejected
+- [x] `/ops/orgs/spam`
+- [x] `/ops`
+- [x] `/ops/reports/[id]`
+- [x] `/ops/reports` — tabs: resolved
+- [x] `/ops/sanctions` — tabs: recent, active
+- [x] `/ops/staff`
+- [x] `/ops/teachers` — tabs: decided, pending
+- [x] `/ops/universities/[id]` — tabs: overview, ecosphere, exams, invoices
 - [ ] `/ops/universities/claims/[id]`
-- [ ] `/ops/universities`
-- [ ] `/ops/users/[id]` — tabs: overview, evidence, cvs, sanctions
-- [ ] `/ops/users/[id]/view/[page]` — tabs: profile, me, cv, opportunities, privacy, notifications
-- [ ] `/ops/users`
+- [x] `/ops/universities`
+- [x] `/ops/users/[id]` — tabs: overview, evidence, cvs, sanctions
+- [x] `/ops/users/[id]/view/[page]` — tabs: profile, me, cv, opportunities, privacy, notifications
+- [x] `/ops/users`
 
 ## dev (1 screens, slice —)
 

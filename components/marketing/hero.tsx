@@ -101,6 +101,7 @@ export function Hero({
           </div>
         </div>
         <div className="relative flex justify-center lg:col-span-4 lg:items-end lg:justify-end">
+          <div aria-hidden className="hero-backdrop pointer-events-none absolute -top-10 -right-16 bottom-0 -left-28 -z-10" />
           <RecordCard />
           <HeroFeedCapture shots={captures.hero} />
         </div>

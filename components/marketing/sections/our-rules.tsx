@@ -8,11 +8,12 @@ export function OurRules() {
   return (
     <section aria-labelledby="rules-title" data-testid="our-rules">
       <div className="mx-auto max-w-page px-[var(--page-gutter)] py-16 sm:py-20">
-        <div className="neu-ink px-6 py-12 sm:px-12 sm:py-16">
+        <div className="neu-ink relative overflow-hidden px-6 py-12 sm:px-12 sm:py-16">
+          <div aria-hidden className="neu-weave pointer-events-none absolute inset-y-0 right-0 hidden w-2/5 [mask-image:linear-gradient(90deg,transparent,#000_70%)] md:block" />
           <h2 id="rules-title" className="neu-mono mb-8 text-text-secondary">
             {rules.heading}
           </h2>
-          <ol className="flex flex-col">
+          <ol className="relative flex flex-col">
             {rules.lines.map((line, i) => (
               <li
                 key={line}

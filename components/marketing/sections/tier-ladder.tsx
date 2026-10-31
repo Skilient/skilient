@@ -1,5 +1,6 @@
 import { tiers } from "@/content/marketing";
 import { TierBadge } from "../neu";
+import { Streak } from "../streak";
 import { Section, SectionHeading } from "./section";
 
 /**
@@ -11,7 +12,7 @@ import { Section, SectionHeading } from "./section";
  */
 export function TierLadder() {
   return (
-    <Section labelledBy="tiers-title" step="05 · Tiers">
+    <Section labelledBy="tiers-title" decor={<Streak seed={11} />} step="05 · Tiers">
       <SectionHeading id="tiers-title" className="max-w-[22ch]">
         {tiers.heading}
       </SectionHeading>

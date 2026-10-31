@@ -7,7 +7,8 @@ import { UniEmailField } from "../uni-email-field";
 export function FinalCta({ home, siteKey }: { home: string | null; siteKey: string | null }) {
   return (
     <section aria-labelledby="final-title">
-      <div className="mx-auto max-w-page px-[var(--page-gutter)] py-16 sm:py-20">
+      <div className="relative mx-auto max-w-page px-[var(--page-gutter)] py-16 sm:py-20">
+        <div aria-hidden className="neu-weave pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_70%_75%_at_50%_50%,#000_30%,transparent_80%)]" />
       <div className="neu-raised-l flex flex-col items-center gap-6 rounded-[var(--r-card)] px-6 py-16 text-center sm:py-20">
         <h2 id="final-title" className="font-display text-[2.5rem] leading-[1.05] tracking-[-0.025em] sm:text-[3.5rem]">
           {finalCta.heading}

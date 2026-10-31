@@ -10,6 +10,7 @@ export function Section({
   inner,
   dense = false,
   step,
+  decor,
 }: {
   id?: string;
   labelledBy: string;
@@ -19,10 +20,13 @@ export function Section({
   dense?: boolean;
   /** A mono ledger line above the content ("03 · Proof"): the page counted in steps. */
   step?: string;
+  /** Background art for the empty space beside the heading (desktop only, aria-hidden). */
+  decor?: ReactNode;
 }) {
   return (
     <section id={id} aria-labelledby={labelledBy} className={className}>
-      <div className={cn("mx-auto max-w-page px-[var(--page-gutter)]", dense ? "py-16" : "py-16 sm:py-20", inner)}>
+      <div className={cn("mx-auto max-w-page px-[var(--page-gutter)]", dense ? "py-16" : "py-16 sm:py-20", inner, decor ? "relative" : null)}>
+        {decor ? <div aria-hidden className="pointer-events-none absolute top-16 right-[var(--page-gutter)] hidden sm:top-20 lg:block">{decor}</div> : null}
         {step ? (
           <p aria-hidden className="neu-mono mb-5 flex items-center gap-3 text-text-secondary">
             <span className="h-px w-8 bg-border-strong" />

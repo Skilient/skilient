@@ -1,5 +1,6 @@
 import { Briefcase, EnvelopeSimple, GithubLogo, SealCheck } from "@phosphor-icons/react/dist/ssr";
 import { howItWorks } from "@/content/marketing";
+import { Streak } from "../streak";
 import { Section, SectionHeading } from "./section";
 
 const ICONS = { email: EnvelopeSimple, github: GithubLogo, verified: SealCheck, recognised: Briefcase } as const;
@@ -12,7 +13,7 @@ const ICONS = { email: EnvelopeSimple, github: GithubLogo, verified: SealCheck, 
 export function HowItWorks() {
   const total = String(howItWorks.steps.length).padStart(2, "0");
   return (
-    <Section labelledBy="how-title" step="02 · How it works">
+    <Section labelledBy="how-title" decor={<Streak seed={3} />} step="02 · How it works">
       <SectionHeading id="how-title">{howItWorks.heading}</SectionHeading>
       <ol
         tabIndex={0}

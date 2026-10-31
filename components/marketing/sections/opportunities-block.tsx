@@ -4,6 +4,7 @@ import { opportunities } from "@/content/marketing";
 import { cn } from "@/lib/cn";
 import { captures } from "@/lib/marketing/captures";
 import { CaptureImage } from "../capture-image";
+import { Streak } from "../streak";
 import { Section, SectionHeading } from "./section";
 
 function Cell({ icon, title, text, className, children }: { icon: ReactNode; title: string; text: string; className?: string; children?: ReactNode }) {
@@ -29,7 +30,7 @@ export function OpportunitiesBlock() {
   const c = opportunities.cells;
   const icon = "size-5 shrink-0 text-[var(--signal-ink)]";
   return (
-    <Section labelledBy="opps-title" step="07 · Opportunities">
+    <Section labelledBy="opps-title" decor={<Streak seed={29} />} step="07 · Opportunities">
       <SectionHeading id="opps-title">{opportunities.heading}</SectionHeading>
       <ul className="mt-10 grid gap-6 md:grid-cols-12">
         <Cell icon={<Briefcase aria-hidden weight="bold" className={icon} />} title={c.jobs.title} text={c.jobs.text} className="md:col-span-6 md:row-span-2">

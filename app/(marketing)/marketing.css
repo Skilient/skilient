@@ -45,6 +45,10 @@ html.dark:has(.neu) body {
   --pressed-signal: inset 5px 5px 10px rgb(142 52 18 / 0.7);
   --raised-ink: 10px 10px 24px rgb(120 108 90 / 0.55), -10px -10px 24px rgb(255 255 255 / 0.9);
 
+  /* The charpai weave: plain over-under strands, low contrast, backgrounds only. */
+  --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.5' stroke='%23000' stroke-opacity='.09'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
+  --weave-on-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.05' stroke='%23000' stroke-opacity='.5'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
+
   --r-card: 32px;
   --r-tile: 24px;
   --r-well: 16px;
@@ -112,12 +116,99 @@ html.dark:has(.neu) body {
   --raised-signal: 7px 7px 16px rgb(0 0 0 / 0.55), -7px -7px 16px rgb(255 255 255 / 0.05);
   --pressed-signal: inset 5px 5px 10px rgb(120 40 10 / 0.7);
   --raised-ink: 10px 10px 24px rgb(0 0 0 / 0.55), -10px -10px 24px rgb(255 255 255 / 0.05);
+  --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.035' stroke='%23000' stroke-opacity='.45'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
+  --weave-on-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.45' stroke='%23000' stroke-opacity='.08'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
 
   --text-on-primary: #1b1b19;
   --text-disabled: #7d766b;
   --border-strong: #6c665c;
   --border-muted: #3d3933;
   --interactive-primary-hover: #f4855a;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Background texture (app/(marketing)/CLAUDE.md: weave and mesh, low contrast, */
+/* never under body text). The page's weave shows only outside the content     */
+/* column, so on a 1280 px screen it lives in the gutters and on wider ones in  */
+/* the margins.                                                                 */
+/* ------------------------------------------------------------------------- */
+.neu {
+  position: relative;
+  isolation: isolate;
+}
+.neu::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--weave);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    #000 0,
+    #000 calc(50% - 680px),
+    transparent calc(50% - 600px),
+    transparent calc(50% + 600px),
+    #000 calc(50% + 680px),
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000 0,
+    #000 calc(50% - 680px),
+    transparent calc(50% - 600px),
+    transparent calc(50% + 600px),
+    #000 calc(50% + 680px),
+    #000 100%
+  );
+}
+/* A decorative weave field; callers add a mask so it fades where text begins. */
+.neu-weave {
+  background-image: var(--weave);
+}
+.neu-ink .neu-weave {
+  background-image: var(--weave-on-ink);
+}
+/* The hero's one orange gradient, with the weave fading out around the phone. */
+.hero-backdrop {
+  background-image:
+    radial-gradient(circle at 22% 58%, color-mix(in srgb, var(--signal) 34%, transparent), color-mix(in srgb, var(--signal-tint) 14%, transparent) 32%, transparent 52%),
+    var(--weave);
+  background-size:
+    100% 100%,
+    24px 24px;
+  background-repeat: no-repeat, repeat;
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 45%, transparent 80%);
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 45%, transparent 80%);
+}
+/* Streaks: a contribution grid, cells pressed in when empty, tinted when filled. */
+.streak {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 10px);
+  gap: 4px;
+}
+.streak > i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  box-shadow: var(--pressed-s);
+}
+.streak > i[data-l="1"] {
+  background: color-mix(in srgb, var(--signal-tint) 45%, var(--surface));
+  box-shadow: none;
+}
+.streak > i[data-l="2"] {
+  background: var(--signal-tint);
+  box-shadow: none;
+}
+.streak > i[data-l="3"] {
+  background: var(--signal);
+  box-shadow: none;
+}
+.streak {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%);
+  mask-image: linear-gradient(90deg, transparent, #000 30%);
 }
 
 /* Focus: a 2 px synergy ring, offset 2 px, never the error colour. */

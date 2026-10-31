@@ -42,9 +42,9 @@ test.describe("Marketing: hero", () => {
       if (width === 1280) {
         const lines = await page.locator("#hero-title").evaluate((h) => Math.round(h.getBoundingClientRect().height / parseFloat(getComputedStyle(h).lineHeight)));
         expect(lines).toBe(2);
-        // The phone ends at the hero's bottom edge, inside the first screen.
-        const phone = (await page.getByTestId("hero-capture").boundingBox())!;
-        expect(phone.y + phone.height).toBeLessThanOrEqual(height);
+        // The orbit of proof objects sits inside the first screen too.
+        const orbit = (await page.getByTestId("hero-orbit").boundingBox())!;
+        expect(orbit.y + orbit.height).toBeLessThanOrEqual(height);
       }
     }
   });
@@ -57,43 +57,42 @@ test.describe("Marketing: hero", () => {
     expect(problems).toEqual([]);
   });
 
-  test("the focal sequence plays once and ends with post A moved up; reduced motion only crossfades", async ({ browser }, info) => {
+  test("the orbit arrives once on load; under reduced motion it is simply there", async ({ browser }, info) => {
     test.skip(info.project.name !== "desktop", "one browser is enough");
-    const order = (page: Page) =>
-      page.locator(".hero-feed > .hero-card").evaluateAll((cards) =>
-        cards.map((c) => ({ a: c.classList.contains("hero-card-a"), order: Number(getComputedStyle(c).order) })).sort((x, y) => x.order - y.order).map((c) => (c.a ? "A" : "B")),
-      );
     const motion = await (await browser.newContext({ viewport: { width: 1280, height: 720 } })).newPage();
     await motion.goto("/");
-    await expect(motion.locator(".hero-screen")).toHaveAttribute("data-state", "done", { timeout: 5000 });
-    expect(await order(motion)).toEqual(["A", "B"]);
+    const objects = motion.locator(".orbit-in");
+    await expect(objects).toHaveCount(5);
+    // The entrance ends with every object fully shown and nothing left running.
+    await expect
+      .poll(() => objects.evaluateAll((els) => els.every((e) => getComputedStyle(e).opacity === "1" && e.getAnimations().every((a) => a.playState === "finished"))), { timeout: 5000 })
+      .toBe(true);
 
     const still = await (await browser.newContext({ viewport: { width: 1280, height: 720 }, reducedMotion: "reduce" })).newPage();
     await still.goto("/");
-    await expect(still.locator(".hero-screen")).toHaveAttribute("data-state", "answered", { timeout: 5000 });
-    await still.waitForTimeout(1500);
-    // Nothing moves under reduced motion: B stays above A.
-    expect(await order(still)).toEqual(["B", "A"]);
+    expect(await still.locator(".orbit-in").evaluateAll((els) => els.map((e) => getComputedStyle(e).animationName))).toEqual(Array(5).fill("none"));
+    expect(await still.locator(".orbit-obj").first().evaluate((e) => getComputedStyle(e).animationName)).toBe("none");
   });
 });
 
-test.describe("Marketing: landing sections", () => {
+test.describe("Marketing: landing story", () => {
   const SECTIONS = [
     "Anyone can write \u201cReact\u201d on a CV.",
-    "How it works",
-    "Posts go viral because they provide value, not entertainment.",
-    "Build in teams of up to six.",
-    "Skills you\u2019ve proven, not skills you\u2019ve typed.",
-    "A CV anyone can check.",
-    "Opportunities come to you.",
+    "Ayesha signs up with her university email.",
+    "She links GitHub, and her code starts to count.",
+    "She builds with classmates, in a team of up to six.",
+    "Her teammates confirm the work. Faculty can too.",
+    "Six tiers. Only verified work moves you up.",
+    "Skilient signs her CV.",
+    "Recruiters find her. They ask first.",
     "Our rules",
+    "Prove it. Don\u2019t claim it.",
     "For organisations",
     "Free is enough to prove yourself.",
     "Questions",
-    "Prove it. Don\u2019t claim it.",
   ];
 
-  test("every section is there, in order, with JavaScript off", async ({ browser }, info) => {
+  test("every chapter is there, in order, with JavaScript off", async ({ browser }, info) => {
     test.skip(info.project.name !== "desktop", "one browser is enough");
     const page = await (await browser.newContext({ javaScriptEnabled: false })).newPage();
     await page.goto("/");
@@ -102,35 +101,59 @@ test.describe("Marketing: landing sections", () => {
     expect(order.every((i) => i >= 0), JSON.stringify(headings)).toBe(true);
     expect([...order].sort((a, b) => a - b)).toEqual(order);
     for (const h of SECTIONS) await expect(page.getByRole("main").getByRole("heading", { level: 2, name: h, exact: true })).toBeVisible();
+    // Without motion each chapter shows its object and the line it added, inline.
+    await expect(page.locator("#first-commit .inline-visual")).toBeVisible();
+    await expect(page.locator(".story-stage").first()).toBeHidden();
     // The FAQ works without JavaScript too.
     await page.getByText("What happens when I graduate?").click();
     await expect(page.getByText("Your account becomes a graduate account.")).toBeVisible();
   });
 
-  test("tier ladder shows filled under reduced motion; FAQ and the how-it-works rail work from the keyboard", async ({ browser }, info) => {
+  test("on a large screen the record fills as the chapters pass, and the climb rises", async ({ browser }, info) => {
     test.skip(info.project.name !== "desktop", "one browser is enough");
-    const page = await (await browser.newContext({ reducedMotion: "reduce" })).newPage();
+    const page = await (await browser.newContext({ viewport: { width: 1280, height: 720 } })).newPage();
     await page.goto("/");
-    const ladder = page.getByTestId("tier-ladder");
-    await ladder.scrollIntoViewIfNeeded();
-    const scale = await ladder.locator(".tier-fill").evaluate((el) => getComputedStyle(el).transform);
-    expect(["none", "matrix(1, 0, 0, 1, 0, 0)"]).toContain(scale);
-    // Without scroll-driven animation support the ladder is filled as well.
-    await page.addStyleTag({ content: ".tier-fill { animation: none !important; }" });
-    expect(await ladder.locator(".tier-fill").evaluate((el) => getComputedStyle(el).transform)).toMatch(/none|matrix\(1, 0, 0, 1, 0, 0\)/);
+    const stage = page.locator(".story-a .story-stage");
+    await expect(stage).toBeVisible();
+    const opacity = (selector: string) => page.locator(selector).evaluate((e) => Number(getComputedStyle(e).opacity));
+    const scrollToEl = (selector: string, where: "start" | "end") =>
+      page.locator(selector).evaluate((el, at) => {
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo(0, at === "start" ? top : top + (el as HTMLElement).offsetHeight - window.innerHeight);
+      }, where);
+    await scrollToEl(".story-a", "start");
+    await expect.poll(() => opacity(".story-a .record .rec-skills .rec-fill")).toBe(0);
+    await expect.poll(() => opacity(".story-a .record .rec-skills .rec-wait")).toBe(1);
+    await scrollToEl(".story-a", "end");
+    await expect.poll(() => opacity(".story-a .record .rec-skills .rec-fill")).toBe(1);
+    await expect.poll(() => opacity(".story-a .record .rec-endorse .rec-fill")).toBe(1);
+    await expect.poll(() => opacity(".story-a .record .rec-tier-flare")).toBe(1);
+
+    const track = page.locator(".climb-track");
+    await scrollToEl(".climb", "start");
+    const before = await track.evaluate((e) => e.getBoundingClientRect().left);
+    await scrollToEl(".climb", "end");
+    await expect.poll(() => track.evaluate((e) => e.getBoundingClientRect().left)).toBeLessThan(before - 400);
+    await expect(page.locator(".climb-stop-here")).toContainText("Ayesha is here");
+  });
+
+  test("reduced motion shows every scene in place; the FAQ works from the keyboard", async ({ browser }, info) => {
+    test.skip(info.project.name !== "desktop", "one browser is enough");
+    const page = await (await browser.newContext({ viewport: { width: 1280, height: 720 }, reducedMotion: "reduce" })).newPage();
+    await page.goto("/");
+    // Nothing pins: the scenes are in normal flow, the climb lists all six tiers.
+    expect(await page.locator(".climb-pin").evaluate((e) => getComputedStyle(e).position)).toBe("static");
+    await expect(page.locator(".climb-stop")).toHaveCount(6);
+    for (const el of await page.locator(".climb-stop").all()) {
+      await el.scrollIntoViewIfNeeded();
+      await expect(el).toBeVisible();
+    }
+    await expect(page.locator(".story-stage").first()).toBeHidden();
 
     const summary = page.locator("summary", { hasText: "How do recruiters contact me?" });
     await summary.focus();
     await page.keyboard.press("Enter");
     await expect(page.getByText("Through a contact request that names the company and the role.")).toBeVisible();
-
-    await page.setViewportSize({ width: 390, height: 844 });
-    const rail = page.getByTestId("how-rail");
-    await rail.focus();
-    const before = await rail.evaluate((el) => el.scrollLeft);
-    await page.keyboard.press("ArrowRight");
-    await page.keyboard.press("ArrowRight");
-    await expect.poll(() => rail.evaluate((el) => el.scrollLeft)).toBeGreaterThan(before);
   });
 
   test("the pricing teaser reads Student Pro from plans", async ({ page }, info) => {
@@ -147,11 +170,10 @@ test.describe("Marketing: without JavaScript", () => {
     const page = await (await browser.newContext({ javaScriptEnabled: false })).newPage();
     await page.goto("/");
     await expect(page.locator("#hero-title")).toBeVisible();
-    await expect(page.locator(".hero-a-before")).toBeHidden();
-    await expect(page.locator(".hero-a-after").first()).toBeVisible();
+    await expect(page.locator(".orbit-obj")).toHaveCount(5);
     // Nothing on the page is hidden waiting for a script.
     const hidden = await page.locator("main *").evaluateAll((els) =>
-      els.filter((e) => e.checkVisibility() && getComputedStyle(e).opacity === "0" && !e.closest(".hero-tap")).map((e) => e.className),
+      els.filter((e) => e.checkVisibility() && getComputedStyle(e).opacity === "0").map((e) => e.className),
     );
     expect(hidden).toEqual([]);
 

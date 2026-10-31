@@ -143,6 +143,15 @@ html.dark:has(.neu) body {
 .neu {
   position: relative;
   isolation: isolate;
+  /* Nothing scrolls sideways; clip (not hidden) so sticky scenes still pin. */
+  overflow-x: clip;
+}
+/* No scrollbars on the marketing pages (Ahmed, 2026-10-31); scrolling itself is untouched. */
+html:has(.neu) {
+  scrollbar-width: none;
+}
+html:has(.neu)::-webkit-scrollbar {
+  display: none;
 }
 .neu::before {
   content: "";
@@ -189,36 +198,6 @@ html.dark:has(.neu) body {
   -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 45%, transparent 80%);
   mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 45%, transparent 80%);
 }
-/* Streaks: a contribution grid, cells pressed in when empty, tinted when filled. */
-.streak {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(7, 10px);
-  gap: 4px;
-}
-.streak > i {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-  box-shadow: var(--pressed-s);
-}
-.streak > i[data-l="1"] {
-  background: color-mix(in srgb, var(--signal-tint) 45%, var(--surface));
-  box-shadow: none;
-}
-.streak > i[data-l="2"] {
-  background: var(--signal-tint);
-  box-shadow: none;
-}
-.streak > i[data-l="3"] {
-  background: var(--signal);
-  box-shadow: none;
-}
-.streak {
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%);
-  mask-image: linear-gradient(90deg, transparent, #000 30%);
-}
-
 /* Focus: a 2 px synergy ring, offset 2 px, never the error colour. */
 .neu :focus-visible {
   outline: 2px solid var(--synergy);
@@ -270,29 +249,6 @@ html.dark:has(.neu) body {
 }
 .neu-tile {
   border-radius: var(--r-tile);
-}
-/* One big numeral as the hero of a panel: debossed into the card, decorative. */
-.neu-ghost {
-  position: absolute;
-  font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 0.8;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
-  color: transparent;
-  background: linear-gradient(145deg, var(--surface-lo), var(--surface-hi));
-  -webkit-background-clip: text;
-  background-clip: text;
-  text-shadow:
-    1px 1px 1px rgb(255 255 255 / 0.55),
-    -1px -1px 1px rgb(0 0 0 / 0.08);
-  pointer-events: none;
-  user-select: none;
-}
-.dark .neu-ghost {
-  text-shadow:
-    1px 1px 1px rgb(255 255 255 / 0.05),
-    -1px -1px 1px rgb(0 0 0 / 0.5);
 }
 /* A ledger bar: ten countable cells, filled ones in the accent (Ascent: steps, never one vague bar). */
 .ledger {
@@ -613,112 +569,6 @@ html.dark:has(.neu) body {
 }
 
 /* ------------------------------------------------------------------------- */
-/* Hero phone and the focal sequence                                          */
-/* ------------------------------------------------------------------------- */
-.hero-phone {
-  width: min(100%, 22rem);
-  padding: 12px 12px 0;
-  border-radius: 2.5rem 2.5rem 0 0;
-  background: var(--surface);
-  box-shadow: var(--raised-l);
-}
-.hero-screen {
-  position: relative;
-  height: 26rem;
-  overflow: hidden;
-  border-radius: 1.75rem 1.75rem 0 0;
-  background: var(--surface);
-  box-shadow: var(--pressed);
-}
-@media (max-width: 639px) {
-  .hero-top {
-    display: none;
-  }
-  /* Narrower on phones, so the headline (painted first) stays the page's largest element. */
-  .hero-phone {
-    width: min(100%, 17.5rem);
-  }
-  .hero-screen {
-    height: 22rem;
-  }
-}
-@media (min-width: 1024px) {
-  .hero-screen {
-    height: 35rem;
-  }
-}
-.hero-feed {
-  display: flex;
-  flex-direction: column;
-  gap: 2.05%;
-}
-.hero-card {
-  position: relative;
-}
-.hero-card-a {
-  order: 1;
-}
-.hero-card-b {
-  order: 2;
-}
-.hero-a-stack {
-  display: grid;
-}
-.hero-a-stack > * {
-  grid-area: 1 / 1;
-  position: relative;
-}
-.hero-a-before,
-.hero-roll {
-  display: none;
-}
-.hero-tap {
-  position: absolute;
-  width: 11%;
-  aspect-ratio: 1;
-  border: 2px solid var(--text-primary);
-  border-radius: 9999px;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-.hero-roll {
-  position: absolute;
-  overflow: hidden;
-  background: var(--bg-surface);
-}
-.hero-roll-track {
-  display: flex;
-  flex-direction: column;
-  height: 200%;
-}
-.hero-roll-track > * {
-  height: 50%;
-}
-.hero-roll-track picture,
-.hero-roll-track img {
-  height: 100%;
-}
-
-/* With JavaScript: the start state until the sequence runs. */
-[data-js] .hero-screen:not([data-state="done"]) .hero-card-a {
-  order: 2;
-}
-[data-js] .hero-screen:not([data-state="done"]) .hero-card-b {
-  order: 1;
-}
-[data-js] .hero-screen[data-state="start"] .hero-a-before,
-[data-js] .hero-screen[data-state="answered"] .hero-a-before {
-  display: block;
-}
-[data-js] .hero-screen[data-state="start"] .hero-a-after {
-  opacity: 0;
-}
-[data-js] .hero-roll {
-  display: block;
-}
-
-/* ------------------------------------------------------------------------- */
 /* Live at                                                                    */
 /* ------------------------------------------------------------------------- */
 .live-list > li:not(:last-child)::after {
@@ -741,76 +591,6 @@ a:hover > .cta-arrow,
   text-decoration: underline;
   text-underline-offset: 6px;
   text-decoration-thickness: 2px;
-}
-
-/* How it works: native scroll-snap; a quiet scrollbar in the theme. */
-.how-rail {
-  scrollbar-width: thin;
-  scroll-padding-inline: var(--page-gutter);
-}
-
-/* ------------------------------------------------------------------------- */
-/* Tier ladder: the one scroll-linked element (plan B3)                      */
-/* ------------------------------------------------------------------------- */
-.tier-track,
-.tier-fill {
-  left: 9px;
-  top: 8px;
-  bottom: 8px;
-  width: 6px;
-  border-radius: 999px;
-}
-.tier-track {
-  box-shadow: var(--pressed-s);
-}
-.tier-fill {
-  transform-origin: top;
-}
-@media (min-width: 768px) {
-  .tier-track,
-  .tier-fill {
-    left: 8px;
-    right: 0;
-    top: auto;
-    bottom: 0;
-    width: auto;
-    height: 6px;
-  }
-  .tier-fill {
-    transform-origin: left;
-  }
-}
-@keyframes tier-fill-y {
-  from {
-    transform: scaleY(0);
-  }
-}
-@keyframes tier-fill-x {
-  from {
-    transform: scaleX(0);
-  }
-}
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .tier-fill {
-      animation: tier-fill-y linear both;
-      animation-timeline: view();
-      animation-range: entry 35% cover 60%;
-    }
-    @media (min-width: 768px) {
-      .tier-fill {
-        animation-name: tier-fill-x;
-      }
-    }
-  }
-}
-
-/* ------------------------------------------------------------------------- */
-/* Verified CV specimen: the sheet is cut by its frame, not faded            */
-/* ------------------------------------------------------------------------- */
-.cv-specimen {
-  border-radius: var(--r-tile);
-  font-family: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -911,9 +691,3 @@ a:hover > .cta-arrow,
   box-shadow: var(--pressed);
 }
 
-/* Tier terraces: each step stands higher than the one before (Ascent). */
-@media (min-width: 768px) {
-  .tier-step {
-    min-height: calc(9rem + var(--step) * 1.75rem);
-  }
-}

@@ -8,7 +8,7 @@ import { Section, SectionHeading } from "./section";
  */
 export function Faq() {
   return (
-    <Section labelledBy="faq-title" step="10 · Questions">
+    <Section labelledBy="faq-title" step="Epilogue · Questions" className="epilogue">
       <div className="grid gap-8 md:grid-cols-12 md:gap-6">
         <SectionHeading id="faq-title" className="md:col-span-3">
           {faq.heading}

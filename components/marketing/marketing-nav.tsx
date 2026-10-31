@@ -42,7 +42,7 @@ export function MarketingNav({ home }: { home: string | null }) {
         </ul>
         <div className="flex items-center gap-2">
           {home ? null : (
-            <Link href={nav.signIn.href} className={`${linkClass} hidden sm:inline-flex`}>
+            <Link href={nav.signIn.href} className={`${linkClass} whitespace-nowrap max-sm:hidden`}>
               {nav.signIn.label}
             </Link>
           )}

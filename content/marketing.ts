@@ -37,22 +37,9 @@ export const hero = {
   headline: "Join Pakistan's first social media platform exclusively for university students.",
   /** The words set in italic (the headline's turn); must end the headline. */
   headlineTurn: "exclusively for university students.",
-  /** The verified record beside the phone: the sample CV (lib/cv/sample.ts), labelled as a sample. */
-  record: {
-    label: "Sample verified record",
-    name: "Ayesha Khan",
-    context: "National University of Technology · CS 2027",
-    tier: "Flare",
-    stats: [
-      { value: "4", label: "team projects" },
-      { value: "3", label: "merged PRs" },
-      { value: "3", label: "endorsements" },
-    ],
-    signed: "Signed 1 Sep 2026 · 09:00 PKT",
-  },
   subline: "Build with classmates, prove your skills with real work, and get recognised by recruiters. No more rejected CVs.",
-  captureAlt:
-    "The University Feed on a phone (sample posts). A reader ticks Informative on a post, its count goes from 11 to 12 people, and the post moves up one place.",
+  /** The proof objects orbiting the headline (Blender renders in public/marketing/objects/). */
+  orbitAlt: "Proof objects around the headline: the verified seal, a Flare tier medallion, a commit, an endorsement and a university email.",
 };
 
 /** The university email field (hero and final CTA). `{name}` is the university. */
@@ -158,24 +145,6 @@ export const trustGap = {
   ],
 };
 
-/** Section 4. */
-export const howItWorks = {
-  heading: "How it works",
-  steps: [
-    { icon: "email", title: "Sign up with your university email", text: "Only students and faculty with a university email can join.", proof: "Checked · university domain" },
-    { icon: "github", title: "Build ventures with classmates and connect GitHub", text: "Start a project or a startup, fill its open roles, and link the repositories you work in.", proof: "Linked · GitHub repositories" },
-    { icon: "verified", title: "Get verified by your code, your teammates and your faculty", text: "Your commits, your teammates’ confirmations and your faculty’s reviews become verified skills.", proof: "Confirmed · commits, peers, faculty" },
-    { icon: "recognised", title: "Get recognised: verified CV, recruiter requests, jobs", text: "Your signed CV grows as you prove more. Recruiters ask before they contact you, and you decide.", proof: "Signed · Ed25519, verify by code" },
-  ] as const,
-};
-
-/** Section 5. */
-export const feed = {
-  heading: "Posts go viral because they provide value, not entertainment.",
-  body: "Under each post, readers answer one question with a tick or a cross. Posts that people find informative reach more students. There are no likes.",
-  alt: "Two posts in the University Feed (sample posts): one asks the reader “Was this informative?” with a tick and a cross; the other reads “15 people find this interesting”.",
-};
-
 /** Section 6. */
 export const ventures = {
   heading: "Build in teams of up to six.",
@@ -222,6 +191,105 @@ export const opportunities = {
     competitions: { title: "Competitions and hackathons", text: "Company competitions and university hackathons, judged on the work." },
     fairs: { title: "Job fairs", text: "Digital fairs run by your university, with company booths and queues." },
   },
+};
+
+/**
+ * The landing story (decisions 2026-10-31): Ayesha, the sample student, from day one to found.
+ * The chapters are her story; the finale speaks to "you". Every number on her record is the
+ * sample CV's (lib/cv/sample.ts), and she is labelled a sample wherever her record shows.
+ */
+export const story = {
+  sample: "Sample student",
+  sampleNote: "Ayesha Khan is a sample student. Her record is the sample CV.",
+  prologue: {
+    kicker: "Prologue",
+    bridge: "So every CV gets read as a claim. This is the story of one that isn’t.",
+  },
+  person: {
+    name: "Ayesha Khan",
+    initials: "AK",
+    context: "National University of Technology · Computer Science · 2027",
+  },
+  chapters: [
+    {
+      id: "day-one",
+      kicker: "Day one",
+      title: "Ayesha signs up with her university email.",
+      body: "Only students and faculty with a university email get in, so everyone here is who they say they are. Her record opens at Raw: identity verified, nothing claimed yet.",
+      proof: "Checked · university domain",
+    },
+    {
+      id: "first-commit",
+      kicker: "First commit",
+      title: "She links GitHub, and her code starts to count.",
+      body: "Ayesha picks the repositories she works in. Her own commits become evidence for each skill she uses, counted from the code and never typed into a box. Her first verified contribution makes her Spark.",
+      proof: "Counted · React, 8 repositories, 40 active days",
+    },
+    {
+      id: "team",
+      kicker: "The team",
+      title: "She builds with classmates, in a team of up to six.",
+      body: "Ayesha starts Campus Timetable Planner and lists the roles it needs, with the skills for each. Classmates apply with their verified skills. When the work ships, the team posts it and readers tick whether it was informative. There are no likes.",
+      proof: "Team of 3 · 3 places open",
+    },
+    {
+      id: "proof",
+      kicker: "Proof",
+      title: "Her teammates confirm the work. Faculty can too.",
+      body: "Bilal confirms the parser she built and endorses her React: “Built the whole parser in a week.” Faculty can review a project and confirm contributions as well. Confirmed work and endorsements make her Flare, in the top 18% of students.",
+      proof: "Endorsed · React, by Bilal Ahmed",
+    },
+  ],
+  record: {
+    tiers: [
+      { id: "raw", name: "Raw", line: "Identity verified" },
+      { id: "spark", name: "Spark", line: "First verified contribution" },
+      { id: "flare", name: "Flare", line: "Top 18% of students" },
+    ] as const,
+    skills: [
+      { name: "React", evidence: "8 repos · 40 active days" },
+      { name: "TypeScript", evidence: "7 repos · 39 active days" },
+    ],
+    project: { title: "Campus Timetable Planner", line: "Team lead · Team of 3 · Jun – Sep 2026" },
+    endorsement: { line: "Bilal Ahmed endorsed React", meta: "Campus Timetable Planner · 20 Sep 2026" },
+    signed: "Signed 1 Oct 2026 · 09:00 PKT",
+    post: { title: "Shipped: Campus Timetable Planner", informative: "Informative", count: "11 → 12" },
+  },
+  climb: {
+    kicker: "The climb",
+    title: "Six tiers. Only verified work moves you up.",
+    body: "Rank, tiers, leaderboards and recruiter search never use payment. Ayesha is at Flare, with three tiers still ahead of her.",
+    here: "Ayesha is here",
+    ahead: "Ahead",
+    alt: "Six clay terraces rising left to right, each topped with its tier finish, a marker standing on the third, Flare.",
+  },
+  signed: {
+    kicker: "Signed",
+    title: "Skilient signs her CV.",
+    body: "Every Skilient CV is signed. A recruiter enters its code at skilient.com/verify and sees exactly what was verified, and when. It refreshes on the 1st of each month as she proves more.",
+    chips: ["Ed25519 signature", "Issued 1 Oct 2026", "QR + 10-character code"],
+    link: "Verify a CV",
+  },
+  found: {
+    kicker: "Found",
+    title: "Recruiters find her. They ask first.",
+    body: "Companies search verified skills, not keywords. A recruiter sends a contact request that names the company and the role, and Ayesha accepts or declines. Only then do they see her name. Jobs show their pay range, and competitions and fairs reach her through her university.",
+    request: {
+      label: "Contact request",
+      role: "Frontend intern (React)",
+      company: "Indus Softworks",
+      meta: "Software · 51–200 people · Islamabad",
+      verified: "Verified company",
+      accept: "Accept",
+      decline: "Decline",
+    },
+    chips: ["Jobs show their pay", "Competitions and hackathons", "University job fairs"],
+  },
+  finale: {
+    kicker: "Your turn",
+    body: "Ayesha’s record is a sample. Yours starts with your university email.",
+  },
+  epilogue: "For organisations, pricing and questions",
 };
 
 /** Section 10. */

@@ -15,7 +15,7 @@ export function PricingTeaser({ plans }: { plans: PublicPlan[] }) {
   const monthly = plans.find((p) => p.id === "student_pro_monthly")?.price_pkr ?? null;
   const yearly = plans.find((p) => p.id === "student_pro_yearly")?.price_pkr ?? null;
   return (
-    <Section labelledBy="pricing-title" step="09 · Pricing">
+    <Section labelledBy="pricing-title" step="Epilogue · Pricing" className="epilogue">
       <div className="grid gap-10 md:grid-cols-12 md:gap-6">
         <div className="flex flex-col gap-5 md:col-span-7">
           <SectionHeading id="pricing-title" className="max-w-[18ch]">

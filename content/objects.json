@@ -1,0 +1,172 @@
+{
+  "seal": {
+    "w": 821,
+    "h": 790,
+    "shared": {
+      "512": {
+        "avif": "/marketing/objects/seal-512.avif",
+        "webp": "/marketing/objects/seal-512.webp"
+      }
+    }
+  },
+  "medallion-raw": {
+    "w": 818,
+    "h": 781,
+    "shared": {
+      "320": {
+        "avif": "/marketing/objects/medallion-raw-320.avif",
+        "webp": "/marketing/objects/medallion-raw-320.webp"
+      }
+    }
+  },
+  "medallion-spark": {
+    "w": 818,
+    "h": 781,
+    "shared": {
+      "320": {
+        "avif": "/marketing/objects/medallion-spark-320.avif",
+        "webp": "/marketing/objects/medallion-spark-320.webp"
+      }
+    }
+  },
+  "medallion-flare": {
+    "w": 818,
+    "h": 781,
+    "shared": {
+      "320": {
+        "avif": "/marketing/objects/medallion-flare-320.avif",
+        "webp": "/marketing/objects/medallion-flare-320.webp"
+      }
+    }
+  },
+  "medallion-shine": {
+    "w": 818,
+    "h": 781,
+    "shared": {
+      "320": {
+        "avif": "/marketing/objects/medallion-shine-320.avif",
+        "webp": "/marketing/objects/medallion-shine-320.webp"
+      }
+    }
+  },
+  "medallion-radiant": {
+    "w": 818,
+    "h": 781,
+    "shared": {
+      "320": {
+        "avif": "/marketing/objects/medallion-radiant-320.avif",
+        "webp": "/marketing/objects/medallion-radiant-320.webp"
+      }
+    }
+  },
+  "medallion-luminary": {
+    "w": 818,
+    "h": 781,
+    "shared": {
+      "320": {
+        "avif": "/marketing/objects/medallion-luminary-320.avif",
+        "webp": "/marketing/objects/medallion-luminary-320.webp"
+      }
+    }
+  },
+  "commit": {
+    "w": 909,
+    "h": 816,
+    "shared": {
+      "448": {
+        "avif": "/marketing/objects/commit-448.avif",
+        "webp": "/marketing/objects/commit-448.webp"
+      }
+    }
+  },
+  "rosette": {
+    "w": 746,
+    "h": 914,
+    "shared": {
+      "448": {
+        "avif": "/marketing/objects/rosette-448.avif",
+        "webp": "/marketing/objects/rosette-448.webp"
+      }
+    }
+  },
+  "envelope": {
+    "w": 1023,
+    "h": 671,
+    "shared": {
+      "448": {
+        "avif": "/marketing/objects/envelope-448.avif",
+        "webp": "/marketing/objects/envelope-448.webp"
+      }
+    }
+  },
+  "tray": {
+    "w": 1024,
+    "h": 1024,
+    "light": {
+      "720": {
+        "avif": "/marketing/objects/tray-light-720.avif",
+        "webp": "/marketing/objects/tray-light-720.webp"
+      }
+    },
+    "dark": {
+      "720": {
+        "avif": "/marketing/objects/tray-dark-720.avif",
+        "webp": "/marketing/objects/tray-dark-720.webp"
+      }
+    }
+  },
+  "terraces": {
+    "w": 3200,
+    "h": 1300,
+    "light": {
+      "1280": {
+        "avif": "/marketing/objects/terraces-light-1280.avif",
+        "webp": "/marketing/objects/terraces-light-1280.webp"
+      },
+      "2560": {
+        "avif": "/marketing/objects/terraces-light-2560.avif",
+        "webp": "/marketing/objects/terraces-light-2560.webp"
+      }
+    },
+    "points": {
+      "raw": [
+        0.1501,
+        0.6982
+      ],
+      "spark": [
+        0.2876,
+        0.603
+      ],
+      "flare": [
+        0.4284,
+        0.5056
+      ],
+      "marker": [
+        0.4266,
+        0.349
+      ],
+      "shine": [
+        0.5724,
+        0.406
+      ],
+      "radiant": [
+        0.7199,
+        0.304
+      ],
+      "luminary": [
+        0.8709,
+        0.1995
+      ]
+    },
+    "dark": {
+      "1280": {
+        "avif": "/marketing/objects/terraces-dark-1280.avif",
+        "webp": "/marketing/objects/terraces-dark-1280.webp"
+      },
+      "2560": {
+        "avif": "/marketing/objects/terraces-dark-2560.avif",
+        "webp": "/marketing/objects/terraces-dark-2560.webp"
+      }
+    }
+  }
+}

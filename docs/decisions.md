@@ -1991,3 +1991,30 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   - The venture capture gets an overlapping team byline from the capture's real team.
   - The jobs cell shows the captured post's facts as chips; competitions get a podium and fairs a booth queue (both decorative, aria-hidden).
   - The feed pair gets an "Informative 11 → 12" chip, FAQ items are numbered, and the CV block lists what the signature carries.
+
+## Landing as a story (2026-10-31)
+
+- **Ahmed's answers (2026-10-31):**
+  - Story: one student's climb.
+  - Hero: proof objects in orbit.
+  - 3D: Blender stills with code motion, warm clay with foil.
+  - Motion: cinematic chapters, landing only this slice.
+  - Copy: rewritten as a story, Ayesha's in the chapters and "you" in the finale.
+  - The email field stays in the first screen.
+  - Phones get the same story with lighter staging.
+  - No scrollbars, and nothing in their place.
+  - Organisations, pricing and FAQ move to a calm epilogue.
+- **Structure:**
+  - Hero (orbit) → prologue (the trust gap on an ink scene that opens to full screen) → chapters 1–4 → chapter 5, the climb → chapters 6–7 → the rules → the finale → the epilogue.
+  - In chapters 1–4 the record pins on the right and each chapter's object docks into its row.
+  - The climb is a pinned diagonal pan up six terraces.
+  - In chapters 6–7 the seal stamps the last row and a recruiter's request arrives and is accepted.
+  - Copy is in `story` in `content/marketing.ts`. Every number on Ayesha's record is the sample CV's, and she is labelled a sample.
+  - The CV's signing date moves to 1 Oct 2026, the monthly refresh after her 20 Sep endorsement.
+- **Motion engine:** CSS scroll-driven animations in `app/(marketing)/story.css`, so there's no animation JavaScript. The only script is the hero's pointer parallax (`orbit-parallax.tsx`). Research: GSAP ScrollTrigger is now free but adds JS. Lenis smooth scrolling is criticised as scroll-jacking. Scroll-driven CSS runs in Chromium and Safari 26; Firefox has it behind a flag. Motion applies only with `[data-js]`, `@supports (animation-timeline: view())` and `prefers-reduced-motion: no-preference`. Otherwise every scene is static at its end state, with inline chapter visuals. Pins apply only at ≥1024×600.
+- **Renders:**
+  - `scripts/renders/objects.py` builds every object in code and renders it headless in Blender 4.5 (Cycles CPU, transparent, top-left key light).
+  - Objects: the seal (ink, foil edge), six medallions (Raw woven jute, Spark tint, Flare signal, Shine gold, Radiant rose-gold foil, Luminary iridescent), the commit keycap, the endorsement rosette, the university-email envelope, the woven charpai team tray (light/dark) and the terraces (light/dark, with step positions projected for the climb).
+  - `scripts/renders/export.mjs` trims and exports AVIF/WebP to `public/marketing/objects/` and writes `content/objects.json`.
+  - Video stays out (PRD 10): these are stills, and motion is code.
+- **Removed:** the hero phone and its focal sequence, the profile card, the "Verified by…" tag, How it works (the chapters tell it), the big step numerals, the streak grids, the tier ladder, the feed/ventures/opportunities blocks and the CV specimen. The captures stay for /recruiters.

@@ -16,7 +16,7 @@ const DOMAIN: Record<string, { band: string; Icon: typeof Buildings }> = {
  */
 export function ForOrgs() {
   return (
-    <Section labelledBy="orgs-title" step="08 · For organisations">
+    <Section labelledBy="orgs-title" step="Epilogue · For organisations" className="epilogue">
       <SectionHeading id="orgs-title">{forOrgs.heading}</SectionHeading>
       <ul className="mt-8 flex flex-col gap-5">
         {forOrgs.rows.map((row) => {

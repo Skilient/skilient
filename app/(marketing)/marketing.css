@@ -49,6 +49,11 @@ html.dark:has(.neu) body {
   --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.5' stroke='%23000' stroke-opacity='.09'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
   --weave-on-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.05' stroke='%23000' stroke-opacity='.5'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
 
+  /* The surface lit from the top left: one colour, a touch lighter up-left and deeper down-right. */
+  --surface-hi: #f0ece5;
+  --surface-lo: #dcd5c9;
+  --rim: inset 1px 1px 0 rgb(255 255 255 / 0.7), inset -1px -1px 0 rgb(188 178 162 / 0.35);
+
   --r-card: 32px;
   --r-tile: 24px;
   --r-well: 16px;
@@ -116,6 +121,9 @@ html.dark:has(.neu) body {
   --raised-signal: 7px 7px 16px rgb(0 0 0 / 0.55), -7px -7px 16px rgb(255 255 255 / 0.05);
   --pressed-signal: inset 5px 5px 10px rgb(120 40 10 / 0.7);
   --raised-ink: 10px 10px 24px rgb(0 0 0 / 0.55), -10px -10px 24px rgb(255 255 255 / 0.05);
+  --surface-hi: #322e29;
+  --surface-lo: #24211d;
+  --rim: inset 1px 1px 0 rgb(255 255 255 / 0.06), inset -1px -1px 0 rgb(0 0 0 / 0.35);
   --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.035' stroke='%23000' stroke-opacity='.45'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
   --weave-on-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.45' stroke='%23000' stroke-opacity='.08'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
 
@@ -252,18 +260,65 @@ html.dark:has(.neu) body {
   background: var(--surface);
   box-shadow: var(--raised-l);
 }
+.neu-card,
+.neu-tile {
+  background: linear-gradient(145deg, var(--surface-hi), var(--surface) 45%, var(--surface-lo));
+  box-shadow: var(--raised-m), var(--rim);
+}
 .neu-card {
-  background: var(--surface);
   border-radius: var(--r-card);
-  box-shadow: var(--raised-m);
 }
 .neu-tile {
-  background: var(--surface);
   border-radius: var(--r-tile);
-  box-shadow: var(--raised-m);
+}
+/* One big numeral as the hero of a panel: debossed into the card, decorative. */
+.neu-ghost {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: transparent;
+  background: linear-gradient(145deg, var(--surface-lo), var(--surface-hi));
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow:
+    1px 1px 1px rgb(255 255 255 / 0.55),
+    -1px -1px 1px rgb(0 0 0 / 0.08);
+  pointer-events: none;
+  user-select: none;
+}
+.dark .neu-ghost {
+  text-shadow:
+    1px 1px 1px rgb(255 255 255 / 0.05),
+    -1px -1px 1px rgb(0 0 0 / 0.5);
+}
+/* A ledger bar: ten countable cells, filled ones in the accent (Ascent: steps, never one vague bar). */
+.ledger {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+}
+.ledger > i {
+  height: 10px;
+  border-radius: 3px;
+  box-shadow: var(--pressed-s);
+}
+.ledger > i[data-on] {
+  background: var(--signal);
+  box-shadow: none;
+}
+/* A proof line at the foot of a card: hairline above, mono below. */
+.proof-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-top: 1px solid var(--border-muted);
+  padding-top: 0.875rem;
 }
 .neu-chip {
-  background: var(--surface);
+  background: linear-gradient(145deg, var(--surface-hi), var(--surface-lo));
   border-radius: 999px;
   box-shadow: var(--raised-s);
 }

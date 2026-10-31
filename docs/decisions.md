@@ -1982,3 +1982,12 @@ Append-only. One dated entry per product decision, with the reason. Carried over
 - **Contrast (the brief asks for a build-time check):** muted text #6F695F is 4.18:1 on the surface, so it is darkened to #5C564D (5.57:1). Orange used as text or an icon is #A93E17 (4.76:1). Text on signal buttons is ink (4.65:1), because white on #E1592B is 3.71:1. The focus ring is #2C6CB8 (4.09:1), because #4A8BD6 is 2.71:1. Dark mode is our own derivation; the brief only defines light.
 - **Sections:** the full-bleed vermillion "Our rules" field becomes the page's one ink card. Orange stays with the hero and the primary action. The organisation rows stay full-width rows (decisions 2026-10-02) but become domain modules: colour band plus pictogram. The hero keeps the tested feed phone and adds a verified record overlapping it, built from the sample CV's own data. On /pricing the pinned plans are Student Pro, Recruiter Growth and University Growth.
 - **Background (Ahmed, 2026-10-31: "the background is so empty"):** the brief's texture motifs are added at low contrast and never under body text. A charpai weave (`--weave`, plain over-under strands) shows only outside the content column: in the gutters at 1280 px and in the margins on wider screens. The hero has one orange glow with weave fading out around the phone. Decorative contribution-grid streaks (`components/marketing/streak.tsx`, aria-hidden, busier toward the present) sit beside the How it works, Tiers and Opportunities headings on desktop. A weave fades in on the empty right side of the rules card and around the final CTA card.
+- **Richer cards (Ahmed, 2026-10-31: "the cards feel bland"):**
+  - Cards and tiles get a convex finish, lit from the top left (`--surface-hi`/`--surface-lo` plus a rim highlight).
+  - Panels carry one debossed numeral (`.neu-ghost`) in the How it works steps and the tiers.
+  - Steps end with a mono proof line naming what each step checks.
+  - Trust-gap figures get a 10-cell ledger bar with the figure's own share filled, never inflated.
+  - Tiers show a six-step mini ladder.
+  - The venture capture gets an overlapping team byline from the capture's real team.
+  - The jobs cell shows the captured post's facts as chips; competitions get a podium and fairs a booth queue (both decorative, aria-hidden).
+  - The feed pair gets an "Informative 11 → 12" chip, FAQ items are numbered, and the CV block lists what the signature carries.

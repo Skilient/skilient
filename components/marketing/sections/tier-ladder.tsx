@@ -22,10 +22,22 @@ export function TierLadder() {
         <div aria-hidden className="tier-fill absolute bg-[var(--signal)]" />
         <ol className="relative grid gap-5 md:grid-cols-6 md:items-end md:gap-4">
           {tiers.ladder.map((t, i) => (
-            <li key={t.id} className="tier-step neu-tile flex flex-col gap-3 p-5" style={{ "--step": i } as React.CSSProperties}>
-              <span className="neu-mono text-text-secondary">Level {String(i + 1).padStart(2, "0")}</span>
-              <TierBadge tier={t.id} name={t.name} className="self-start" />
-              <span className="text-body-sm text-text-secondary">{t.meaning}</span>
+            <li key={t.id} className="tier-step neu-tile relative flex flex-col gap-3 overflow-hidden p-5" style={{ "--step": i } as React.CSSProperties}>
+              <span aria-hidden className="neu-ghost -right-1 -bottom-2 text-[5.5rem]">
+                {i + 1}
+              </span>
+              <span className="neu-mono relative text-text-secondary">Level {String(i + 1).padStart(2, "0")}</span>
+              <TierBadge tier={t.id} name={t.name} className="relative self-start" />
+              <span className="relative text-body-sm text-text-secondary">{t.meaning}</span>
+              <span aria-hidden className="relative mt-auto flex items-end gap-1 pt-2">
+                {tiers.ladder.map((_, j) => (
+                  <i
+                    key={j}
+                    className={j <= i ? "w-2.5 rounded-[2px] bg-[var(--signal)]" : "w-2.5 rounded-[2px] shadow-[var(--pressed-s)]"}
+                    style={{ height: `${6 + j * 3}px` }}
+                  />
+                ))}
+              </span>
             </li>
           ))}
         </ol>

@@ -8,6 +8,9 @@ import { siteUrl } from "@/lib/cv/site";
 import { Seal } from "../neu";
 import { Section, SectionHeading } from "./section";
 
+/** What the signature carries (lib/cv, supabase/functions/_shared/cv). */
+const PROOF = ["Ed25519 signature", "Issued 1 Sep 2026", "QR + 10-character code"];
+
 /**
  * Landing section 8 (PRD 5.1): the verified CV as a document specimen. The real CV component
  * renders the sample snapshot (lib/cv/sample.ts), labelled as a sample; beside it the verify code
@@ -27,6 +30,13 @@ export function CvPreview() {
               <span className="neu-mono text-text-secondary">{formatCode(verifiedCv.sampleCode)}</span>
             </div>
           </div>
+          <ul className="flex flex-wrap gap-2">
+            {PROOF.map((p) => (
+              <li key={p} className="neu-mono neu-well-s rounded-full px-3 py-1.5 text-text-secondary">
+                {p}
+              </li>
+            ))}
+          </ul>
           <Link href="/verify" className="neu-btn-2 self-start text-body">
             {verifiedCv.link}
             <ArrowRight aria-hidden weight="bold" className="cta-arrow size-4" />

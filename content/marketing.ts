@@ -162,10 +162,10 @@ export const trustGap = {
 export const howItWorks = {
   heading: "How it works",
   steps: [
-    { icon: "email", title: "Sign up with your university email", text: "Only students and faculty with a university email can join." },
-    { icon: "github", title: "Build ventures with classmates and connect GitHub", text: "Start a project or a startup, fill its open roles, and link the repositories you work in." },
-    { icon: "verified", title: "Get verified by your code, your teammates and your faculty", text: "Your commits, your teammates’ confirmations and your faculty’s reviews become verified skills." },
-    { icon: "recognised", title: "Get recognised: verified CV, recruiter requests, jobs", text: "Your signed CV grows as you prove more. Recruiters ask before they contact you, and you decide." },
+    { icon: "email", title: "Sign up with your university email", text: "Only students and faculty with a university email can join.", proof: "Checked · university domain" },
+    { icon: "github", title: "Build ventures with classmates and connect GitHub", text: "Start a project or a startup, fill its open roles, and link the repositories you work in.", proof: "Linked · GitHub repositories" },
+    { icon: "verified", title: "Get verified by your code, your teammates and your faculty", text: "Your commits, your teammates’ confirmations and your faculty’s reviews become verified skills.", proof: "Confirmed · commits, peers, faculty" },
+    { icon: "recognised", title: "Get recognised: verified CV, recruiter requests, jobs", text: "Your signed CV grows as you prove more. Recruiters ask before they contact you, and you decide.", proof: "Signed · Ed25519, verify by code" },
   ] as const,
 };
 

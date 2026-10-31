@@ -11,10 +11,9 @@ import { ArtImage } from "./art-image";
  * (docs/marketing-design-plan.md B7). Each page composes its own layout from these.
  */
 
-export const ctaClass =
-  "inline-flex h-12 items-center gap-2 rounded-md bg-primary px-6 text-body-lg font-semibold text-text-on-primary transition-[background-color,transform] duration-[120ms] ease-standard hover:bg-primary-hover active:scale-[0.98]";
+/** The page's one call to action: a raised signal-orange pill (an anchor on the same page or a route). */
+export const ctaClass = "neu-btn text-body-lg";
 
-/** The page's one call to action: a vermillion link (an anchor on the same page or a route). */
 /**
  * An organisation page's call to action. `track` names it in the `org_cta_click` analytics event
  * (PRD 5.1), sent by AnalyticsLoader's click listener, so this stays a server component.
@@ -65,7 +64,7 @@ export function OrgHero({
   aside?: ReactNode;
 }) {
   return (
-    <section aria-labelledby="page-title" className="border-b border-border-muted">
+    <section aria-labelledby="page-title">
       <div className="mx-auto grid max-w-page gap-10 px-[var(--page-gutter)] py-12 sm:py-16 md:grid-cols-12 md:items-center md:gap-6">
         <div className="flex flex-col gap-6 md:col-span-7">
           <h1 id="page-title" className="text-hero max-w-[16ch] text-text-primary">
@@ -78,7 +77,9 @@ export function OrgHero({
           </div>
         </div>
         <div className="md:col-span-4 md:col-start-9">
-          <ArtImage name={art} eager sizes="(min-width: 768px) 30vw, 16rem" className="mx-auto max-w-[16rem] md:max-w-none" />
+          <div className="neu-card mx-auto max-w-[17rem] p-3 md:max-w-none">
+            <ArtImage name={art} eager sizes="(min-width: 768px) 30vw, 16rem" className="overflow-hidden rounded-[var(--r-tile)]" />
+          </div>
         </div>
       </div>
     </section>

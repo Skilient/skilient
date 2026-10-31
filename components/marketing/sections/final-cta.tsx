@@ -6,9 +6,10 @@ import { UniEmailField } from "../uni-email-field";
 /** Landing section 14 (PRD 5.1): the page's one centred statement, and the email field again. */
 export function FinalCta({ home, siteKey }: { home: string | null; siteKey: string | null }) {
   return (
-    <section aria-labelledby="final-title" className="bg-bg-surface">
-      <div className="mx-auto flex max-w-page flex-col items-center gap-6 px-[var(--page-gutter)] py-20 text-center sm:py-28">
-        <h2 id="final-title" className="font-display text-[2.5rem] leading-[1.05] tracking-[-0.025em] sm:text-[4rem]">
+    <section aria-labelledby="final-title">
+      <div className="mx-auto max-w-page px-[var(--page-gutter)] py-16 sm:py-20">
+      <div className="neu-raised-l flex flex-col items-center gap-6 rounded-[var(--r-card)] px-6 py-16 text-center sm:py-20">
+        <h2 id="final-title" className="font-display text-[2.5rem] leading-[1.05] tracking-[-0.025em] sm:text-[3.5rem]">
           {finalCta.heading}
         </h2>
         <p className="text-body-lg text-text-secondary">{finalCta.body}</p>
@@ -16,7 +17,7 @@ export function FinalCta({ home, siteKey }: { home: string | null; siteKey: stri
           {home ? (
             <Link
               href={home as Route}
-              className="inline-flex h-12 items-center rounded-md bg-primary px-6 text-body-lg font-semibold text-text-on-primary transition-[background-color,transform] duration-[120ms] ease-standard hover:bg-primary-hover active:scale-[0.98]"
+              className="neu-btn text-body-lg"
             >
               {emailField.signedIn}
             </Link>
@@ -24,6 +25,7 @@ export function FinalCta({ home, siteKey }: { home: string | null; siteKey: stri
             <UniEmailField idPrefix="final" siteKey={siteKey} />
           )}
         </div>
+      </div>
       </div>
     </section>
   );

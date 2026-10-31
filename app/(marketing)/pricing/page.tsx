@@ -32,18 +32,18 @@ export default async function PricingPage() {
 
   return (
     <>
-      <section aria-labelledby="page-title" className="border-b border-border-muted">
+      <section aria-labelledby="page-title">
         <div className="mx-auto flex max-w-page flex-col gap-6 px-[var(--page-gutter)] py-12 sm:py-16">
           <h1 id="page-title" className="text-hero max-w-[18ch] text-text-primary">
             {copy.headline}
           </h1>
           <p className="max-w-[60ch] text-body-lg text-text-secondary">{copy.intro}</p>
-          <nav aria-label="Plans for" className="flex flex-wrap gap-2">
+          <nav aria-label="Plans for" className="neu-well flex flex-wrap gap-2 self-start rounded-full p-1.5">
             {copy.audiences.map((a) => (
               <a
                 key={a.id}
                 href={`#${a.id}`}
-                className="inline-flex h-10 items-center rounded-md border border-border-default px-4 text-body font-semibold hover:border-border-strong"
+                className="inline-flex h-11 items-center rounded-full px-5 text-body font-semibold transition-shadow duration-[140ms] ease-out hover:shadow-[var(--raised-s)]"
               >
                 {a.label}
               </a>
@@ -52,17 +52,18 @@ export default async function PricingPage() {
         </div>
       </section>
 
-      <Section id="students" labelledBy="students-title" className="scroll-mt-4 border-b border-border-muted">
+      <Section id="students" labelledBy="students-title" className="scroll-mt-4">
         <SectionHeading id="students-title">{copy.students.heading}</SectionHeading>
         <div className="mt-10">
           <PlanTable
             id="students"
             plans={by("user")}
+            pinned="pro"
             free={{ label: copy.students.freeLabel, items: copy.students.freeItems }}
             notes={{ pro: [trial ? `${trial}.` : null, copy.students.sponsored].filter(Boolean).join(" ") }}
             extra={{
               pro: viewer ? null : (
-                <Link href="/signup" className="inline-flex items-center gap-1.5 self-start text-body font-semibold underline underline-offset-4">
+                <Link href="/signup" className="neu-btn mt-2 self-start text-body">
                   {nav.join.label}
                   <ArrowRight aria-hidden weight="bold" className="cta-arrow size-4" />
                 </Link>
@@ -72,13 +73,13 @@ export default async function PricingPage() {
         </div>
       </Section>
 
-      <Section id="recruiters" labelledBy="recruiters-title" className="scroll-mt-4 border-b border-border-muted bg-bg-surface">
+      <Section id="recruiters" labelledBy="recruiters-title" className="scroll-mt-4">
         <SectionHeading id="recruiters-title">{copy.recruiters.heading}</SectionHeading>
         <div className="mt-10">
-          <PlanTable id="recruiters" plans={by("org")} free={copy.recruiters.explore} />
+          <PlanTable id="recruiters" plans={by("org")} free={copy.recruiters.explore} pinned="growth" />
         </div>
         {addOns.length ? (
-          <div className="mt-12 flex max-w-[72ch] flex-col gap-3" data-testid="pricing-add-ons">
+          <div className="neu-well mt-12 flex max-w-[72ch] flex-col gap-3 p-6" data-testid="pricing-add-ons">
             <h3 className="text-h3">{copy.recruiters.addOns}</h3>
             <ul className="flex flex-col gap-2">
               {addOns.map((line) => (
@@ -94,10 +95,10 @@ export default async function PricingPage() {
         </div>
       </Section>
 
-      <Section id="universities" labelledBy="universities-title" className="scroll-mt-4 border-b border-border-muted">
+      <Section id="universities" labelledBy="universities-title" className="scroll-mt-4">
         <SectionHeading id="universities-title">{copy.universities.heading}</SectionHeading>
         <div className="mt-10">
-          <PlanTable id="universities" plans={by("university")} free={copy.universities.free} />
+          <PlanTable id="universities" plans={by("university")} free={copy.universities.free} pinned="growth" />
         </div>
         <p className="mt-10 text-body text-text-secondary">{copy.universities.note}</p>
         <div className="mt-6">
@@ -110,12 +111,12 @@ export default async function PricingPage() {
           <SectionHeading id="pricing-faq-title" className="md:col-span-3">
             Questions
           </SectionHeading>
-          <div className="border-t border-border-default md:col-span-8 md:col-start-5">
+          <div className="flex flex-col gap-4 md:col-span-8 md:col-start-5">
             {copy.faq.map((item) => (
-              <details key={item.q} className="faq-item group border-b border-border-default">
+              <details key={item.q} className="faq-item group px-6">
                 <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 text-h4 [&::-webkit-details-marker]:hidden">
                   {item.q}
-                  <CaretDown aria-hidden weight="bold" className="faq-caret size-5 shrink-0 text-text-secondary" />
+                  <CaretDown aria-hidden weight="bold" className="faq-caret size-5 shrink-0 text-[var(--signal-ink)]" />
                 </summary>
                 <p className="max-w-[64ch] pb-6 text-body-lg text-text-secondary">{item.a}</p>
               </details>

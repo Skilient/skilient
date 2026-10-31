@@ -31,7 +31,7 @@ export default async function FacultyPage() {
         aside={<span className="text-body font-semibold text-text-secondary">{copy.free}</span>}
       />
 
-      <Section labelledBy="do-title" className="border-b border-border-muted">
+      <Section labelledBy="do-title">
         <SectionHeading id="do-title" className="sr-only">
           What faculty do on Skilient
         </SectionHeading>
@@ -39,7 +39,7 @@ export default async function FacultyPage() {
           {copy.features.map((f) => {
             const Icon = ICONS[f.icon];
             return (
-              <li key={f.title} className="grid grid-cols-[2rem_1fr] gap-x-4 border-t border-border-default pt-6">
+              <li key={f.title} className="neu-tile grid grid-cols-[2rem_1fr] gap-x-4 p-6">
                 <Icon aria-hidden className="size-7 text-primary" />
                 <div className="flex flex-col gap-1">
                   <h3 className="text-h3">{f.title}</h3>
@@ -51,7 +51,7 @@ export default async function FacultyPage() {
         </ul>
       </Section>
 
-      <Section labelledBy="join-title" className="bg-bg-surface">
+      <Section labelledBy="join-title">
         <div className="flex max-w-[62ch] flex-col gap-5">
           <SectionHeading id="join-title">{copy.join.heading}</SectionHeading>
           <p className="text-body-lg text-text-secondary">{copy.join.text}</p>

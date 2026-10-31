@@ -35,6 +35,21 @@ export const nav: { links: NavLink[]; signIn: NavLink; join: NavLink; open: stri
 
 export const hero = {
   headline: "Join Pakistan's first social media platform exclusively for university students.",
+  /** The words set in italic (the headline's turn); must end the headline. */
+  headlineTurn: "exclusively for university students.",
+  /** The verified record beside the phone: the sample CV (lib/cv/sample.ts), labelled as a sample. */
+  record: {
+    label: "Sample verified record",
+    name: "Ayesha Khan",
+    context: "National University of Technology · CS 2027",
+    tier: "Flare",
+    stats: [
+      { value: "4", label: "team projects" },
+      { value: "3", label: "merged PRs" },
+      { value: "3", label: "endorsements" },
+    ],
+    signed: "Signed 1 Sep 2026 · 09:00 PKT",
+  },
   subline: "Build with classmates, prove your skills with real work, and get recognised by recruiters. No more rejected CVs.",
   captureAlt:
     "The University Feed on a phone (sample posts). A reader ticks Informative on a post, its count goes from 11 to 12 people, and the post moves up one place.",

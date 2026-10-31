@@ -4,7 +4,7 @@ import { Section, SectionHeading } from "./section";
 
 function Source({ text, href }: { text: string; href: string }) {
   return (
-    <a href={href} rel="noopener" className="inline-flex items-start gap-1 text-body-sm text-text-muted underline-offset-4 hover:text-text-primary hover:underline">
+    <a href={href} rel="noopener" className="neu-mono inline-flex min-h-6 items-start gap-1 text-text-secondary underline-offset-4 hover:text-text-primary hover:underline">
       <span>{text}</span>
       <ArrowUpRight aria-hidden weight="bold" className="mt-0.5 size-3.5 shrink-0" />
     </a>
@@ -15,22 +15,22 @@ function Source({ text, href }: { text: string; href: string }) {
 export function TrustGap() {
   const { lead, rest } = trustGap;
   return (
-    <Section labelledBy="trust-title" className="border-b border-border-muted">
+    <Section labelledBy="trust-title" step="01 · The gap">
       <SectionHeading id="trust-title" className="max-w-[22ch]">
         {trustGap.heading}
       </SectionHeading>
       <div className="mt-10 grid gap-10 md:mt-14 md:grid-cols-12 md:gap-6">
-        <figure className="flex flex-col gap-4 md:col-span-7">
-          <p className="font-display text-[5.5rem] leading-none tracking-[-0.04em] text-primary sm:text-[8rem]">{lead.figure}</p>
+        <figure className="neu-card flex flex-col gap-5 p-8 sm:p-10 md:col-span-7">
+          <p className="neu-figure font-display text-[5.5rem] leading-none tracking-[-0.04em] text-[var(--signal-ink)] sm:text-[8rem]">{lead.figure}</p>
           <figcaption className="flex max-w-[34ch] flex-col gap-3">
             <span className="text-h3 font-semibold">{lead.text}</span>
             <Source text={lead.source} href={lead.href} />
           </figcaption>
         </figure>
-        <div className="flex flex-col gap-10 md:col-span-5 md:border-l md:border-border-default md:pl-8">
+        <div className="flex flex-col gap-6 md:col-span-5">
           {rest.map((s) => (
-            <figure key={s.figure} className="flex flex-col gap-2">
-              <p className="font-display text-h1 leading-none tabular-nums">{s.figure}</p>
+            <figure key={s.figure} className="neu-tile flex flex-col gap-2 p-6">
+              <p className="neu-figure text-[2.25rem] leading-none font-semibold">{s.figure}</p>
               <figcaption className="flex flex-col gap-2">
                 <span className="text-body-lg">{s.text}</span>
                 <Source text={s.source} href={s.href} />

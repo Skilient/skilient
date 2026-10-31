@@ -23,7 +23,7 @@ export function ArtImage({
   const set = (ext: "avif" | "webp") =>
     small ? `/marketing/art/${name}-480.${ext} 480w, /marketing/art/${name}.${ext} ${file.width}w` : `/marketing/art/${name}.${ext}`;
   return (
-    <picture className={cn("block overflow-hidden rounded-lg border border-border-default", className)}>
+    <picture className={cn("block overflow-hidden rounded-[var(--r-tile)]", className)}>
       <source type="image/avif" srcSet={set("avif")} sizes={sizes} />
       <img
         src={`/marketing/art/${name}.webp`}

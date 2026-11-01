@@ -3,8 +3,7 @@ import type { Route } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import type { ArtName } from "@/lib/marketing/art";
-import { ArtImage } from "./art-image";
+import { Orbit, type OrbitItem } from "./story/orbit";
 
 /**
  * Parts shared by /recruiters, /universities, /faculty, /pricing and /about
@@ -49,24 +48,29 @@ export function CtaLink({
   );
 }
 
-/** An organisation page's opening: the headline and one CTA in 7 columns, the print in 5. */
+/**
+ * An organisation page's opening (decisions 2026-11-01): the headline and one CTA in 7 columns,
+ * the page's proof objects in orbit in 5, gathering away as the story starts.
+ */
 export function OrgHero({
   headline,
   intro,
-  art,
+  orbit,
+  orbitAlt,
   cta,
   aside,
 }: {
   headline: string;
   intro: string;
-  art: Exclude<ArtName, "og-plate" | "about-corridor" | "about-desk">;
+  orbit: OrbitItem[];
+  orbitAlt: string;
   cta: ReactNode;
   aside?: ReactNode;
 }) {
   return (
-    <section aria-labelledby="page-title">
-      <div className="mx-auto grid max-w-page gap-10 px-[var(--page-gutter)] py-12 sm:py-16 md:grid-cols-12 md:items-center md:gap-6">
-        <div className="flex flex-col gap-6 md:col-span-7">
+    <section aria-labelledby="page-title" className="hero">
+      <div className="mx-auto grid max-w-page gap-8 px-[var(--page-gutter)] pt-8 pb-4 sm:pt-12 lg:grid-cols-12 lg:gap-6 lg:pt-10">
+        <div className="hero-copy flex flex-col gap-6 lg:col-span-7 lg:self-center lg:pb-16">
           <h1 id="page-title" className="text-hero max-w-[16ch] text-text-primary">
             {headline}
           </h1>
@@ -76,10 +80,8 @@ export function OrgHero({
             {aside}
           </div>
         </div>
-        <div className="md:col-span-4 md:col-start-9">
-          <div className="neu-card mx-auto max-w-[17rem] p-3 md:max-w-none">
-            <ArtImage name={art} eager sizes="(min-width: 768px) 30vw, 16rem" className="overflow-hidden rounded-[var(--r-tile)]" />
-          </div>
+        <div className="lg:col-span-5">
+          <Orbit id="org-orbit" items={orbit} alt={orbitAlt} testId="org-orbit" />
         </div>
       </div>
     </section>

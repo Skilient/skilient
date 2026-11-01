@@ -401,6 +401,56 @@ export const recruitersPage = {
     text: "Start free with names hidden. Paid plans open full profiles, contact requests and team seats.",
     link: "Compare every plan",
   },
+  /** The story (decisions 2026-11-01): the reader is a recruiter at Indus Softworks, the sample company, meeting Ayesha's record. */
+  orbitAlt: "Proof objects around the headline: a loupe over a record card, a company letter sealed in ink, the verified seal and an endorsement.",
+  chapters: [
+    {
+      id: "search",
+      kicker: "Search",
+      title: "You search for React. You get proof, not keywords.",
+      body: "Search students by verified skill, tier, university and batch. Every result shows what proves each skill. Names stay hidden until a student accepts your request.",
+      proof: "Searched · React, Flare and above",
+    },
+    {
+      id: "evidence",
+      kicker: "Evidence",
+      title: "Open a skill and see the work behind it.",
+      body: "Each skill opens on its proof: commits and merged pull requests, teammate confirmations, code checks and credentials. Ventures list the team, each person’s role, and a “Reviewed by faculty” badge when a teacher has scored the work.",
+      proof: "React · 8 repositories, 40 active days",
+    },
+    {
+      id: "contact",
+      kicker: "Contact",
+      title: "You ask first. She decides.",
+      body: "Your contact request names your company and a real role, and uses one credit. Ayesha sees your company page first, then accepts or declines. Only after she accepts do you see her name, in a chat labelled with your company that she can close any time.",
+      proof: "Requests expire after 14 days",
+    },
+    {
+      id: "hire",
+      kicker: "Hire",
+      title: "Post the job. Meet her at the fair.",
+      body: "Jobs and internships reach students in Opportunities, and every post shows its pay range; posts without one aren’t accepted. Universities run digital job fairs where your company takes a booth and meets students in a queue.",
+      proof: "Every post shows its pay",
+    },
+    {
+      id: "trust",
+      kicker: "Trust",
+      title: "Every company is verified.",
+      body: "Sign up with your work email and turn on two-factor. We check your company before you can see any student, and your email domain must match your website. Students see that you are verified before they answer.",
+      proof: "Verified company",
+    },
+  ],
+  rules: {
+    heading: "The rules of contact",
+    lines: ["You ask before you contact.", "She decides, and can close the chat.", "A decline holds for 90 days.", "Students choose whether they can be found."],
+  },
+  stage: {
+    sample: "Sample",
+    search: { query: "React", filters: ["Flare and above", "Computer Science", "2027"], results: 12, hidden: "Name hidden until accepted" },
+    candidate: { context: "National University of Technology · CS 2027", tier: "Flare", skills: [{ name: "React", level: "Level 4", evidence: "8 repos · 40 active days" }, { name: "TypeScript", level: "Level 4", evidence: "7 repos · 39 active days" }] },
+    evidence: { skill: "React", items: ["8 repositories · 40 active days", "Confirmed by Bilal Ahmed, teammate", "Campus Timetable Planner · Team lead", "Endorsed: “Built the whole parser in a week.”"] },
+    company: { name: "Indus Softworks", meta: "Software · 51–200 people · Islamabad", verified: "Verified company", domain: "Email domain matches the website" },
+  },
 };
 
 /** /universities (PRD 5.1, 5.23). */
@@ -436,10 +486,36 @@ export const universitiesPage = {
       heading: "Student Pro for your students",
       text: "Growth sponsors Student Pro for final-year students, Campus for everyone. Ability to pay never decides who has a polished CV.",
     },
-  ],
+  ] as const,
   plans: {
     heading: "University licences",
     text: "Licences are yearly, invoiced, and paid by bank transfer or a payment link.",
+  },
+  /** The story (decisions 2026-11-01): the reader runs careers at National University of Technology, Ayesha's university (a sample). */
+  orbitAlt: "Proof objects around the headline: a clay campus with an orange pennant, a job-fair booth with a queue and an event ticket.",
+  kickers: { ecosphere: "Your ecosphere", dashboards: "Dashboards", records: "Records", events: "Fairs and events", pro: "Student Pro" },
+  titles: {
+    ecosphere: "An ecosphere in your colours.",
+    dashboards: "See what your students have proven.",
+    records: "Open a record. Every view is logged.",
+    events: "Run the fair. Fill the queue.",
+    pro: "Polish for every final-year student.",
+  },
+  proofs: {
+    ecosphere: "Free for every university",
+    dashboards: "Groups of five or more only",
+    records: "Logged · seen by the student on Pro",
+    events: "Growth and Campus",
+    pro: "Ability to pay never decides",
+  },
+  stage: {
+    sample: "Sample",
+    name: "National University of Technology",
+    modules: ["University feed", "Announcements", "Rankings", "Faculty", "Exam periods"],
+    dashboard: { heading: "Proven skills · Computer Science", rows: [{ skill: "React", students: 41 }, { skill: "Python", students: 36 }, { skill: "PostgreSQL", students: 22 }, { skill: "Figma", students: 9 }], hidden: "Groups under 5 are not shown" },
+    record: { person: "Ayesha Khan", viewer: "Career Services", when: "2 Nov 2026 · 10:14 PKT", note: "View logged" },
+    fair: { heading: "Autumn job fair", booths: [{ name: "Indus Softworks", queue: "3 ahead" }, { name: "Booth 11", queue: "Slot 14:30" }, { name: "Booth 07", queue: "You’re next" }] },
+    pro: { line: "Student Pro, sponsored", who: "Final-year students · Growth licence" },
   },
   talk: {
     heading: "Talk to us",
@@ -475,6 +551,27 @@ export const facultyPage = {
   join: {
     heading: "How you join",
     text: "Sign up with your university email and ask for the faculty role with your department and title. Your university approves it, or we check your university’s public faculty page.",
+  },
+  /** The story (decisions 2026-11-01): the reader teaches at Ayesha's university and posts the idea behind Library Seat Finder (a sample venture on her CV). */
+  orbitAlt: "Proof objects around the headline: a fountain pen, a glowing light bulb for project ideas, a page of code marked up in orange and the verified seal.",
+  chapters: [
+    { id: "ideas", feature: "ideas", kicker: "Ideas", title: "Post an idea. Teams form around it.", proof: "Library Seat Finder · team of 5" },
+    { id: "supervise", feature: "supervise", kicker: "Supervise", title: "Follow the work in its own thread.", proof: "Separate from the team’s chat" },
+    { id: "confirm", feature: "confirm", kicker: "Confirm", title: "Confirm what each student did.", proof: "Faculty-confirmed · on her CV" },
+    { id: "review", feature: "review", kicker: "Review", title: "Score the work on five criteria.", proof: "Reviewed by faculty" },
+    { id: "endorse", feature: "endorse", kicker: "Endorse and grade", title: "Endorse the skills you saw. Grade real code.", proof: "Never ranked yourself" },
+  ] as const,
+  stage: {
+    sample: "Sample",
+    idea: { title: "Library Seat Finder", skills: ["React", "Figma"], team: "Teams of 3 to 5", deliverables: "3 deliverables" },
+    thread: [
+      { who: "You", text: "Does the seat map update when someone leaves?" },
+      { who: "Ayesha Khan", text: "Every 30 seconds. The sensor feed is in the repo." },
+    ],
+    confirm: { line: "Designed the seat map", who: "Ayesha Khan", action: "Confirm", done: "Faculty-confirmed" },
+    rubric: ["Problem and scope", "Technical quality", "Collaboration", "Documentation", "Outcome"],
+    endorse: { line: "You endorsed Ayesha’s Figma", meta: "Library Seat Finder" },
+    grade: { line: "Code check · React", meta: "Explain this hook · graded" },
   },
 };
 
@@ -541,6 +638,9 @@ export const aboutPage = {
     ],
   },
   incubation: { label: "Incubated at", name: "NEIC", full: "NUTECH Entrepreneurial and Incubation Center" },
+  /** The story (decisions 2026-11-01): the manifesto lights a sentence at a time; the roll call and values follow. */
+  sceneAlt: "Two cups of chai on a woven charpai, the dhaba table where conversations about work start.",
+  manifesto: "Why we built it",
   values: {
     heading: "What we hold to",
     items: [

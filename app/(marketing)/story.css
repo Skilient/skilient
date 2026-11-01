@@ -6,8 +6,9 @@
  * end of this file applies only when all three allow it ([data-js], @supports, no-preference), and
  * pins scenes only on large screens; phones get the same story with lighter staging.
  *
- * Every "from" state that hides text uses opacity 0, never a faint value, so nothing waiting to
- * animate is ever on screen at low contrast. Clipping is `overflow: clip`, never `hidden`: a
+ * Text never fades: it arrives by a mask wipe (clip-path) and a rise, always at full opacity, so
+ * nothing on screen is ever at low contrast, even halfway through its reveal. Only pictures and
+ * scenes that start fully hidden use opacity. Clipping is `overflow: clip`, never `hidden`: a
  * hidden box is a scroll container, and view() timelines inside it would measure against it.
  */
 
@@ -626,6 +627,11 @@
   flex-shrink: 0;
   color: var(--ink-accent);
 }
+/* Sentences rather than slogans (the about manifesto). */
+.rules-prose .rules-line {
+  font-size: clamp(1.375rem, 1rem + 1.3vw, 2.125rem);
+  line-height: 1.25;
+}
 .finale-card {
   position: relative;
   display: flex;
@@ -673,6 +679,254 @@
   }
 }
 
+
+/* ========================================================================= */
+/* Organisation pages: the pinned story and its panels (decisions 2026-11-01) */
+/* ========================================================================= */
+.pin-stage-inner {
+  position: relative;
+  width: 600px;
+  height: min(600px, 86svh);
+}
+.pin-scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-items: center;
+}
+.pin-in {
+  position: relative;
+}
+.pin-panel {
+  width: 410px;
+  padding: 22px 24px;
+}
+.pin-obj {
+  position: absolute;
+  top: -36px;
+  left: 360px;
+  width: 190px;
+  pointer-events: none;
+}
+.pin-obj img {
+  filter: drop-shadow(10px 16px 16px rgb(110 92 64 / 0.3));
+}
+.dark .pin-obj img {
+  filter: drop-shadow(10px 16px 18px rgb(0 0 0 / 0.55));
+}
+/* Inline (phones, no motion): the panel full width, its object over its corner. */
+.pin-inline {
+  grid-template-columns: 1fr;
+}
+.pin-inline .inline-object {
+  position: relative;
+  z-index: 1;
+  width: 6.5rem;
+  margin-bottom: -2.75rem;
+  justify-self: end;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.panel-sample {
+  padding: 3px 7px;
+  border-radius: var(--r-tag);
+  box-shadow: var(--pressed-s);
+  color: var(--text-secondary);
+}
+.panel-search {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.875rem;
+  border-radius: 999px;
+}
+.panel-chip {
+  padding: 4px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text-secondary);
+}
+.panel-candidate {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+}
+.panel-avatar {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #1b1b19;
+}
+.panel-skill {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+/* A status tag: square-cornered, tinted (never the tier badge's shape). */
+.panel-level {
+  padding: 1px 6px;
+  border-radius: var(--r-tag);
+  box-shadow: var(--pressed-s);
+  color: var(--text-primary);
+}
+.panel-row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--r-well);
+}
+.panel-capture {
+  max-height: 340px;
+  overflow: clip;
+  padding: 8px;
+  border-radius: var(--r-tile);
+}
+.panel-capture img {
+  border-radius: 14px;
+}
+/* The contact request shows its head (company, role, verified), not the sample's message. */
+.panel-capture-short {
+  max-height: 232px;
+}
+.panel-verified {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.375rem;
+  padding: 4px 10px;
+  border-radius: var(--r-tag);
+  box-shadow: var(--pressed-s);
+}
+.panel-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.panel-crest {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--on-ink);
+  font: 600 0.6875rem var(--font-mono);
+}
+.panel-toggle {
+  position: relative;
+  width: 2.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  box-shadow: var(--pressed-s);
+}
+.panel-toggle-on {
+  background: var(--signal);
+  box-shadow: var(--pressed-signal);
+}
+.panel-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--raised-s);
+}
+.panel-toggle-on .panel-knob {
+  left: calc(100% - 1.125rem - 3px);
+}
+.panel-bar {
+  display: grid;
+  grid-template-columns: 8rem 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+.panel-cells {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 3px;
+}
+.panel-cells > i,
+.panel-pips > i {
+  height: 10px;
+  border-radius: 3px;
+  box-shadow: var(--pressed-s);
+}
+.panel-cells > i[data-on],
+.panel-pips > i[data-on] {
+  background: var(--signal);
+  box-shadow: none;
+}
+.panel-pips {
+  display: flex;
+  justify-self: end;
+  gap: 5px;
+}
+.panel-pips > i {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+}
+.panel-bubble {
+  display: flex;
+  max-width: 88%;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: 16px;
+}
+.panel-bubble-me {
+  align-self: flex-end;
+}
+.panel-done {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--signal);
+  color: #1b1b19;
+}
+/* About: the chai scene and the calm pricing pair. */
+.orbit.orbit-scene {
+  aspect-ratio: 1.35 / 1;
+  max-width: 42rem;
+}
+@media (min-width: 1024px) {
+  .orbit.orbit-scene {
+    width: 100%;
+  }
+  .orbit.orbit-calm {
+    width: min(22rem, 28vw);
+  }
+}
+.value-seal {
+  display: inline-flex;
+  align-self: flex-start;
+}
+
 /* ========================================================================= */
 /* Motion                                                                     */
 /* ========================================================================= */
@@ -688,10 +942,14 @@
     transform: rotate(-34deg) scale(0.82);
   }
 }
+/* The clip ends outside the box (-80px), so shadows and focus rings are never cut. */
 @keyframes rise {
   from {
-    opacity: 0;
+    clip-path: inset(-80px -80px 100% -80px);
     translate: 0 36px;
+  }
+  to {
+    clip-path: inset(-80px);
   }
 }
 @keyframes pop {
@@ -895,9 +1153,82 @@
 }
 @keyframes rule-lit {
   from {
-    opacity: 0;
+    clip-path: inset(-40px -40px 100% -40px);
     translate: 0 22px;
     filter: blur(5px);
+  }
+  to {
+    clip-path: inset(-40px);
+  }
+}
+
+@keyframes pin-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 64px, 0) rotate(2deg) scale(0.95);
+  }
+}
+@keyframes pin-out {
+  to {
+    opacity: 0;
+    transform: translate3d(0, -64px, 0) scale(0.95);
+  }
+}
+@keyframes obj-drift {
+  from {
+    translate: 46px 40px;
+    rotate: 12deg;
+  }
+  to {
+    translate: -24px -36px;
+    rotate: -6deg;
+  }
+}
+@keyframes roll-in {
+  from {
+    clip-path: inset(-80px -80px 100% -80px);
+    translate: 0 70px;
+    rotate: calc(-4deg + var(--i) * 4deg);
+  }
+  to {
+    clip-path: inset(-80px);
+  }
+}
+@keyframes seal-stamp {
+  0% {
+    opacity: 0;
+    scale: 2.6;
+    rotate: -28deg;
+  }
+  70% {
+    opacity: 1;
+    scale: 0.88;
+    rotate: 0deg;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes step-rise {
+  from {
+    clip-path: inset(-80px -80px 100% -80px);
+    translate: 0 calc(40px + var(--i) * 24px);
+  }
+  to {
+    clip-path: inset(-80px);
+  }
+}
+@keyframes plan-light {
+  0%,
+  100% {
+    box-shadow: var(--raised-ink);
+  }
+  50% {
+    box-shadow:
+      var(--raised-ink),
+      0 0 0 6px color-mix(in srgb, var(--signal) 30%, transparent),
+      0 0 48px color-mix(in srgb, var(--signal) 45%, transparent);
   }
 }
 
@@ -948,6 +1279,39 @@
       animation: pop linear both;
       animation-timeline: view();
       animation-range: entry 10% cover 35%;
+    }
+    [data-js] .roll-call-item {
+      animation: roll-in linear both;
+      animation-timeline: view();
+      animation-range: entry calc(8% + var(--i) * 10%) cover calc(32% + var(--i) * 8%);
+    }
+    [data-js] .value-tile {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry calc(5% + var(--i) * 6%) cover calc(28% + var(--i) * 6%);
+    }
+    [data-js] .value-seal {
+      animation: seal-stamp linear both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 50%;
+    }
+    /* Plans rise in as stepping stones, small to large; the pinned plan gets one moment of light. */
+    [data-js] .plan-col {
+      animation: step-rise linear both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--i) * 6%) cover calc(24% + var(--i) * 6%);
+    }
+    [data-js] .plan-pinned {
+      animation:
+        step-rise linear both,
+        plan-light linear both;
+      animation-timeline: view(), view();
+      animation-range:
+        entry calc(var(--i) * 6%) cover calc(24% + var(--i) * 6%),
+        cover 30% cover 55%;
+    }
+    [data-js] .epilogue > div > :has(.plan-table) {
+      animation: none;
     }
     [data-js] .finale-obj {
       animation: pop linear both;
@@ -1322,9 +1686,36 @@
         width: 6.5rem;
       }
 
+      /* Organisation pages: one scene per chapter takes over from the last. */
+      [data-js] .pin-story {
+        view-timeline: --pin block;
+      }
+      [data-js] .pin-story .story-text {
+        padding-bottom: 40svh;
+      }
+      [data-js] .pin-scene .pin-in {
+        animation: pin-in linear both;
+        animation-timeline: --pin;
+        animation-range: contain var(--in-a) contain var(--in-b);
+      }
+      [data-js] .pin-scene .pin-out {
+        animation: pin-out linear both;
+        animation-timeline: --pin;
+        animation-range: contain var(--out-a) contain var(--out-b);
+      }
+      [data-js] .pin-first .pin-in,
+      [data-js] .pin-last .pin-out {
+        animation: none;
+      }
+      [data-js] .pin-obj {
+        animation: obj-drift linear both;
+        animation-timeline: --pin;
+        animation-range: contain var(--in-a) contain var(--out-b);
+      }
+
       /* The rules light one at a time, and stay lit. */
       [data-js] .rules {
-        height: 280svh;
+        height: calc(120svh + var(--n, 4) * 40svh);
         padding: 0;
         view-timeline: --rules block;
       }
@@ -1341,13 +1732,14 @@
       [data-js] .rules-line {
         animation: rule-lit linear both;
         animation-timeline: --rules;
-        animation-range: contain calc(var(--i) * 20% + 4%) contain calc(var(--i) * 20% + 18%);
+        animation-range: contain calc(var(--i) * 80% / var(--n) + 4%) contain calc(var(--i) * 80% / var(--n) + 4% + 56% / var(--n));
       }
     }
 
     /* A narrower large screen: the stage scales to fit. */
     @media (min-width: 1024px) and (max-width: 1279px), (min-width: 1024px) and (max-height: 760px) {
-      [data-js] .stage-inner {
+      [data-js] .stage-inner,
+      [data-js] .pin-stage-inner {
         zoom: 0.84;
       }
     }

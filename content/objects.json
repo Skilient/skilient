@@ -100,8 +100,8 @@
     }
   },
   "tray": {
-    "w": 1024,
-    "h": 1024,
+    "w": 980,
+    "h": 591,
     "light": {
       "720": {
         "avif": "/marketing/objects/tray-light-720.avif",
@@ -112,6 +112,96 @@
       "720": {
         "avif": "/marketing/objects/tray-dark-720.avif",
         "webp": "/marketing/objects/tray-dark-720.webp"
+      }
+    }
+  },
+  "loupe": {
+    "w": 598,
+    "h": 578,
+    "shared": {
+      "560": {
+        "avif": "/marketing/objects/loupe-560.avif",
+        "webp": "/marketing/objects/loupe-560.webp"
+      }
+    }
+  },
+  "letter": {
+    "w": 669,
+    "h": 750,
+    "shared": {
+      "448": {
+        "avif": "/marketing/objects/letter-448.avif",
+        "webp": "/marketing/objects/letter-448.webp"
+      }
+    }
+  },
+  "campus": {
+    "w": 909,
+    "h": 738,
+    "shared": {
+      "640": {
+        "avif": "/marketing/objects/campus-640.avif",
+        "webp": "/marketing/objects/campus-640.webp"
+      }
+    }
+  },
+  "booth": {
+    "w": 896,
+    "h": 797,
+    "shared": {
+      "640": {
+        "avif": "/marketing/objects/booth-640.avif",
+        "webp": "/marketing/objects/booth-640.webp"
+      }
+    }
+  },
+  "ticket": {
+    "w": 918,
+    "h": 440,
+    "shared": {
+      "512": {
+        "avif": "/marketing/objects/ticket-512.avif",
+        "webp": "/marketing/objects/ticket-512.webp"
+      }
+    }
+  },
+  "pen": {
+    "w": 828,
+    "h": 278,
+    "shared": {
+      "640": {
+        "avif": "/marketing/objects/pen-640.avif",
+        "webp": "/marketing/objects/pen-640.webp"
+      }
+    }
+  },
+  "bulb": {
+    "w": 496,
+    "h": 674,
+    "shared": {
+      "448": {
+        "avif": "/marketing/objects/bulb-448.avif",
+        "webp": "/marketing/objects/bulb-448.webp"
+      }
+    }
+  },
+  "page": {
+    "w": 684,
+    "h": 753,
+    "shared": {
+      "448": {
+        "avif": "/marketing/objects/page-448.avif",
+        "webp": "/marketing/objects/page-448.webp"
+      }
+    }
+  },
+  "chai": {
+    "w": 974,
+    "h": 697,
+    "shared": {
+      "800": {
+        "avif": "/marketing/objects/chai-800.avif",
+        "webp": "/marketing/objects/chai-800.webp"
       }
     }
   },

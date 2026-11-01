@@ -8,3 +8,8 @@ The marketing pages follow the neumorphism UI rules in `app/(marketing)/CLAUDE.m
 - Motion is CSS only, in `app/(marketing)/story.css`. Static first; the motion block applies under `[data-js]` + `@supports (animation-timeline: view())` + no reduced motion; pins only at ≥1024×600. Text never starts at a faint opacity (axe), only 0.
 - The `animation` shorthand resets `animation-timeline`: put the timeline in the same rule, after the shorthand.
 - Renders: edit `scripts/renders/objects.py`, run `blender -b -P scripts/renders/objects.py -- --out /tmp/renders/final` (add `--preview` for quick checks, `--project --only terraces-light` for the climb's step points), then `node scripts/renders/export.mjs /tmp/renders/final`.
+
+## Organisation pages (decisions 2026-11-01)
+
+- `OrgHero` (`org-parts.tsx`) takes an orbit (`story/orbit.tsx`, the same one as the landing hero). `PinnedStory` (`story/pinned-story.tsx`) takes chapters with a `panel` and an `object`; panels live in `story/panels-{recruiters,universities,faculty}.tsx`. `LitLines` (`story/rules.tsx`) lights any list of lines; `prose` for sentences.
+- `PlanTable` columns carry `--i`, so plans rise in as steps on every page that shows them.

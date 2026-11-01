@@ -14,7 +14,6 @@ import type { InitialEmailState } from "@/components/marketing/uni-email-field";
 import { hero } from "@/content/marketing";
 import { getLandingStats, getPublicPlans, getViewer } from "@/lib/data/marketing";
 import { turnstileSiteKey } from "@/lib/security/turnstile";
-import "./story.css";
 
 export const metadata: Metadata = {
   title: { absolute: "Skilient: prove your skills with real work" },

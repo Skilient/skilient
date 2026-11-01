@@ -26,13 +26,32 @@ const OBJECTS = {
   commit: { widths: [448] },
   rosette: { widths: [448] },
   envelope: { widths: [448] },
-  tray: { widths: [720], themed: true },
+  tray: { widths: [720], themed: true, vignette: true },
+  loupe: { widths: [560] },
+  letter: { widths: [448] },
+  campus: { widths: [640], vignette: true },
+  booth: { widths: [640], vignette: true },
+  ticket: { widths: [512] },
+  pen: { widths: [640] },
+  bulb: { widths: [448] },
+  page: { widths: [448] },
+  chai: { widths: [800], vignette: true },
   terraces: { widths: [1280, 2560], themed: true, points: true },
 };
 
-async function exportOne(name, file, widths, trim = true) {
+/** Fades a grounded object's floor shadow out before the frame's edge, so no square edge shows. */
+async function vignetted(file) {
+  const { width, height } = await sharp(file).metadata();
+  const mask = Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><defs><radialGradient id="g" cx="50%" cy="50%" r="50%"><stop offset="78%" stop-color="#fff" stop-opacity="1"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><rect width="100%" height="100%" fill="url(#g)"/></svg>`,
+  );
+  return sharp(file).composite([{ input: mask, blend: "dest-in" }]).png().toBuffer();
+}
+
+async function exportOne(name, file, widths, trim = true, vignette = false) {
   // Scenes with projected points keep their full frame, so both themes and the points line up.
-  const source = trim ? sharp(file).trim({ threshold: 2 }) : sharp(file);
+  const input = vignette ? await vignetted(file) : file;
+  const source = trim ? sharp(input).trim({ threshold: 2 }) : sharp(input);
   const { data, info } = await source.png().toBuffer({ resolveWithObject: true });
   const files = {};
   for (const w of widths) {
@@ -60,7 +79,7 @@ for (const [name, spec] of Object.entries(OBJECTS)) {
   const entry = {};
   for (const theme of themes) {
     const id = theme ? `${name}-${theme}` : name;
-    const out = await exportOne(id, path.join(SRC, `${id}.png`), spec.widths, !spec.points);
+    const out = await exportOne(id, path.join(SRC, `${id}.png`), spec.widths, !spec.points, spec.vignette);
     entry.w = out.w;
     entry.h = out.h;
     entry[theme ?? "shared"] = out.files;

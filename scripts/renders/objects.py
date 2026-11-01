@@ -65,6 +65,7 @@ def reset_scene(width, height):
     scene.cycles.glossy_bounces = 4
     scene.cycles.transparent_max_bounces = 4
     scene.render.film_transparent = True
+    scene.cycles.film_transparent_glass = True
     scene.render.resolution_x = width
     scene.render.resolution_y = height
     scene.render.resolution_percentage = 25 if args.preview else 100
@@ -278,6 +279,23 @@ def iridescent(name):
     hsv.inputs[1].default_value = 0.42
     hsv.inputs[2].default_value = 0.97
     nt.links.new(hsv.outputs[0], b.inputs["Base Color"])
+    return m
+
+
+def glass(name, tint="#EEF3F2"):
+    """Clear glass (the loupe's lens, the bulb): it refracts what is behind it, the page shows through."""
+    m = principled(name, tint, roughness=0.02)
+    b = m.node_tree.nodes["Principled BSDF"]
+    b.inputs["Transmission Weight"].default_value = 1.0
+    b.inputs["IOR"].default_value = 1.45
+    return m
+
+
+def glow(name, colour, strength=8.0):
+    m = principled(name, colour, roughness=0.4)
+    b = m.node_tree.nodes["Principled BSDF"]
+    b.inputs["Emission Color"].default_value = srgb(colour)
+    b.inputs["Emission Strength"].default_value = strength
     return m
 
 
@@ -604,6 +622,290 @@ def build_terraces(theme):
     return r, None
 
 
+
+# ---------------------------------------------------------------------------
+# Organisation pages (decisions 2026-11-01)
+# ---------------------------------------------------------------------------
+GREY_INK = "#5C564D"
+STONE = "#E2D7C3"
+WOOD = "#8C6A43"
+
+
+def strips(prefix, rows, material, z, parent, height=0.065, thickness=0.018):
+    """Lines of text as raised strips: rows of (x_left, y, length)."""
+    for i, (x, y, length) in enumerate(rows):
+        rounded_box(f"{prefix}{i}", (length, height, thickness), height / 2.2, material, location=(x + length / 2, y, z + thickness / 2), parent=parent, segments=3)
+
+
+def build_loupe():
+    """Recruiters: a loupe over a record card. The lens refracts the lines and the orange tick under it."""
+    r = root("loupe", (50, 0, -16))
+    paper = add_noise_bump(principled("paper", PAPER, roughness=0.7), scale=40, strength=0.03)
+    lines = principled("lines", GREY_INK, roughness=0.6)
+    orange = clay("signal", SIGNAL, roughness=0.42)
+    ink = principled("ink", INK, roughness=0.38, coat=0.3)
+    jute = add_noise_bump(principled("handle", JUTE, roughness=0.55, coat=0.2), scale=30, strength=0.04)
+    rounded_box("card", (1.55, 1.95, 0.07), 0.07, paper, location=(0, 0, 0.035), parent=r, segments=5)
+    strips("line", [(-0.6, 0.62, 1.1), (-0.6, 0.42, 0.75), (-0.6, 0.1, 0.95), (-0.6, -0.1, 0.62), (-0.6, -0.42, 0.85)], lines, 0.07, r)
+    z = 0.07 + 0.04
+    tube("tick", [(0.12, -0.12, z), (0.24, -0.25, z), (0.5, 0.06, z)], 0.04, orange, parent=r)
+    lens_c = (0.3, -0.12, 0.62)
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.56, minor_radius=0.075, major_segments=128, minor_segments=24, location=lens_c)
+    ring = bpy.context.active_object
+    ring.data.materials.append(ink)
+    ring.parent = r
+    cylinder("lens", 0.53, 0.06, glass("lens"), location=lens_c, parent=r, bevel_width=0.025)
+    for o in (ring,):
+        for poly in o.data.polygons:
+            poly.use_smooth = True
+    d = Vector((0.62, -0.62, 0.05)).normalized()
+    start = Vector(lens_c) + d * 0.6
+    tube("collar", [tuple(start), tuple(start + d * 0.16)], 0.1, ink, parent=r)
+    tube("handle", [tuple(start + d * 0.16), tuple(start + d * 1.05)], 0.085, jute, parent=r)
+    return r, None
+
+
+def build_letter():
+    """Recruiters: the company's letter, sealed in ink with a tick, an orange band across the top."""
+    r = root("letter", (50, 0, 12))
+    paper = add_noise_bump(principled("paper", PAPER, roughness=0.72), scale=40, strength=0.035)
+    lines = principled("lines", GREY_INK, roughness=0.6)
+    tint = clay("band", SIGNAL_TINT, roughness=0.5)
+    ink = principled("ink", INK, roughness=0.4, coat=0.25)
+    white = clay("tick", PAPER, roughness=0.5)
+    rounded_box("sheet", (1.45, 1.95, 0.04), 0.035, paper, location=(0, 0, 0.02), parent=r, segments=4)
+    rounded_box("band", (1.2, 0.14, 0.015), 0.05, tint, location=(0, 0.75, 0.0475), parent=r, segments=3)
+    strips("line", [(-0.6, 0.45, 1.05), (-0.6, 0.27, 0.9), (-0.6, 0.09, 1.0), (-0.6, -0.09, 0.7), (-0.6, -0.36, 0.55)], lines, 0.04, r)
+    wax = prism("wax", circle_points(160, 0.25, wobble=0.06, lobes=9), 0.08, [ink], parent=r)
+    bevel(wax, width=0.03, segments=5, angle=35)
+    wax.location = (0.38, -0.62, 0.04)
+    z = 0.04 + 0.08 + 0.03
+    tube("seal-tick", [(0.27, -0.62, z), (0.34, -0.69, z), (0.5, -0.52, z)], 0.032, white, parent=r)
+    return r, None
+
+
+def build_campus():
+    """Universities: a clay campus, columns on stepped stone, an orange pennant on the roof."""
+    r = root("campus", (14, 0, 24))
+    stone = add_noise_bump(principled("stone", STONE, roughness=0.65), scale=24, strength=0.04)
+    paper = principled("wall", PAPER, roughness=0.7)
+    ink = principled("ink", INK, roughness=0.5)
+    orange = clay("signal", SIGNAL, roughness=0.42)
+    for i, (w, d) in enumerate([(2.7, 1.7), (2.5, 1.55), (2.3, 1.4)]):
+        rounded_box(f"step{i}", (w, d, 0.13), 0.04, stone, location=(0, 0, 0.065 + i * 0.13), parent=r, segments=3)
+    base = 0.39
+    rounded_box("wall", (2.0, 0.22, 1.0), 0.03, paper, location=(0, 0.35, base + 0.5), parent=r, segments=3)
+    rounded_box("door", (0.34, 0.06, 0.56), 0.03, ink, location=(0, 0.22, base + 0.28), parent=r, segments=3)
+    for i in range(6):
+        x = -0.85 + i * 0.34
+        cylinder(f"col{i}", 0.085, 1.0, stone, location=(x, -0.45, base + 0.5), parent=r, verts=48, bevel_width=0.015)
+    rounded_box("architrave", (2.35, 1.3, 0.15), 0.03, stone, location=(0, -0.02, base + 1.075), parent=r, segments=3)
+    ped = prism("pediment", [(-1.17, 0), (1.17, 0), (0, 0.46)], 1.25, [stone], parent=r)
+    bevel(ped, width=0.02, segments=3, angle=35)
+    ped.rotation_euler = (math.radians(90), 0, 0)
+    ped.location = (0, 0.6, base + 1.15)
+    tube("pole", [(0.0, 0.0, base + 1.55), (0.0, 0.0, base + 2.25)], 0.02, ink, parent=r)
+    flag = prism("flag", [(0, 0), (0.5, -0.12), (0, -0.26)], 0.03, [orange], parent=r)
+    flag.rotation_euler = (math.radians(90), 0, 0)
+    flag.location = (0.0, 0.015, base + 2.25)
+    shadow_floor(0.0)
+    return r, None
+
+
+def build_booth():
+    """Universities: a job-fair booth with a striped awning, and two students in the queue."""
+    r = root("booth", (10, 0, -26))
+    jute = add_noise_bump(principled("floor", JUTE, roughness=0.7), scale=20, strength=0.05)
+    paper = principled("paper", PAPER, roughness=0.65)
+    stone = principled("board", STONE, roughness=0.65)
+    ink = principled("ink", INK, roughness=0.45, coat=0.2)
+    orange = clay("signal", SIGNAL, roughness=0.42)
+    rounded_box("floor", (2.5, 2.9, 0.08), 0.04, jute, location=(0, -0.55, 0.04), parent=r, segments=3)
+    rounded_box("counter", (2.0, 0.62, 0.78), 0.05, paper, location=(0, -0.3, 0.47), parent=r, segments=4)
+    rounded_box("band", (2.02, 0.03, 0.15), 0.01, orange, location=(0, -0.62, 0.7), parent=r, segments=2)
+    rounded_box("board", (2.2, 0.12, 1.75), 0.04, stone, location=(0, 0.62, 0.955), parent=r, segments=3)
+    rounded_box("screen", (1.05, 0.03, 0.62), 0.03, ink, location=(0, 0.55, 1.22), parent=r, segments=3)
+    for i, h in enumerate((0.18, 0.3, 0.42)):
+        rounded_box(f"bar{i}", (0.14, 0.02, h), 0.01, orange, location=(-0.22 + i * 0.22, 0.525, 0.98 + h / 2), parent=r, segments=2)
+    for i in range(6):
+        slat = rounded_box(f"slat{i}", (0.37, 0.75, 0.05), 0.02, orange if i % 2 == 0 else paper, location=(-0.925 + i * 0.37, 0.25, 1.86), parent=r, segments=2)
+        slat.rotation_euler = (math.radians(-16), 0, 0)
+    rounded_box("sign", (1.0, 0.08, 0.26), 0.04, ink, location=(0, 0.62, 2.0), parent=r, segments=3)
+    cylinder("sign-dot", 0.06, 0.02, orange, location=(-0.36, 0.575, 2.0), parent=r, verts=48, bevel_width=0.0).rotation_euler = (math.radians(90), 0, 0)
+    pawn("first", clay("first", SIGNAL, roughness=0.42), (-0.25, -1.05, 0.08), parent=r, scale=1.0)
+    pawn("second", clay("second", SIGNAL_TINT, roughness=0.5), (0.2, -1.55, 0.08), parent=r, scale=1.0)
+    shadow_floor(0.0)
+    return r, None
+
+
+def build_ticket():
+    """Universities: an event ticket with its stub, the perforation and a check-in code."""
+    r = root("ticket", (50, 0, -16))
+    paper = add_noise_bump(principled("paper", PAPER, roughness=0.68), scale=40, strength=0.03)
+    orange = clay("signal", SIGNAL, roughness=0.45)
+    ink = principled("ink", INK, roughness=0.5)
+    lines = principled("lines", GREY_INK, roughness=0.6)
+    pts = [(-1.0, -0.45), (0.35, -0.45)]
+    pts += [(0.45 + 0.1 * math.cos(t), -0.45 + 0.1 * math.sin(t)) for t in [math.pi - k * math.pi / 12 for k in range(1, 12)]]
+    pts += [(0.55, -0.45), (1.0, -0.45), (1.0, 0.45), (0.55, 0.45)]
+    pts += [(0.45 + 0.1 * math.cos(t), 0.45 + 0.1 * math.sin(t)) for t in [-k * math.pi / 12 for k in range(1, 12)]]
+    pts += [(0.35, 0.45), (-1.0, 0.45)]
+    body = prism("ticket", pts, 0.05, [paper], parent=r)
+    bevel(body, width=0.03, segments=4, angle=35)
+    rounded_box("band", (0.2, 0.9, 0.012), 0.004, orange, location=(-0.89, 0, 0.056), parent=r, segments=2)
+    for i in range(7):
+        cylinder(f"perf{i}", 0.016, 0.012, lines, location=(0.45, -0.27 + i * 0.09, 0.056), parent=r, verts=24, bevel_width=0.0)
+    strips("line", [(-0.62, 0.22, 0.85), (-0.62, 0.04, 0.6), (-0.62, -0.2, 0.7)], lines, 0.05, r)
+    cells = [1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1]
+    for k, on in enumerate(cells):
+        if on:
+            cx = 0.63 + (k % 5) * 0.065
+            cy = 0.13 - (k // 5) * 0.065
+            rounded_box(f"qr{k}", (0.055, 0.055, 0.012), 0.008, ink, location=(cx, cy, 0.056), parent=r, segments=2)
+    return r, None
+
+
+def build_pen():
+    """Faculty: a fountain pen in ink with a gold nib and clip, lying across the page."""
+    r = root("pen", (28, -6, 30))
+    ink = principled("ink", INK, roughness=0.28, coat=0.6)
+    gold_m = gold("gold")
+    def along_x(obj):
+        obj.rotation_euler = (0, math.radians(90), 0)
+        return obj
+    along_x(cylinder("barrel", 0.13, 1.35, ink, location=(-0.05, 0, 0), parent=r, verts=64, bevel_width=0.03))
+    along_x(cylinder("cap", 0.142, 0.78, ink, location=(0.95, 0, 0), parent=r, verts=64, bevel_width=0.05))
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=48, ring_count=24, radius=0.142, location=(1.34, 0, 0))
+    end = bpy.context.active_object
+    end.data.materials.append(ink)
+    end.parent = r
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.142, minor_radius=0.022, major_segments=64, minor_segments=16, location=(0.57, 0, 0), rotation=(0, math.radians(90), 0))
+    band = bpy.context.active_object
+    band.data.materials.append(gold_m)
+    band.parent = r
+    clip = rounded_box("clip", (0.62, 0.05, 0.04), 0.015, gold_m, location=(0.98, 0, 0.165), parent=r, segments=3)
+    bpy.ops.mesh.primitive_cone_add(vertices=64, radius1=0.12, radius2=0.075, depth=0.3, location=(-0.87, 0, 0), rotation=(0, math.radians(-90), 0))
+    grip = bpy.context.active_object
+    grip.data.materials.append(ink)
+    grip.parent = r
+    bpy.ops.mesh.primitive_cone_add(vertices=64, radius1=0.075, radius2=0.004, depth=0.36, location=(-1.2, 0, 0), rotation=(0, math.radians(-90), 0))
+    nib = bpy.context.active_object
+    nib.scale = (1, 1, 0.45)
+    nib.data.materials.append(gold_m)
+    nib.parent = r
+    for o in (end, band, grip, nib):
+        for poly in o.data.polygons:
+            poly.use_smooth = True
+    return r, None
+
+
+def build_bulb():
+    """Faculty: a project idea, a glass bulb with a glowing orange filament on a clay base."""
+    r = root("bulb", (8, 0, -12))
+    glass_m = glass("glass", "#F4F6F3")
+    metal = principled("metal", "#CFC7B8", roughness=0.3, metallic=1.0)
+    ink = principled("ink", INK, roughness=0.5)
+    filament = glow("filament", "#FF7A3C", strength=40.0)
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=96, ring_count=48, radius=0.62, location=(0, 0, 1.05))
+    bulb = bpy.context.active_object
+    bulb.scale = (1, 1, 1.06)
+    bulb.data.materials.append(glass_m)
+    bulb.parent = r
+    bpy.ops.mesh.primitive_cone_add(vertices=96, radius1=0.3, radius2=0.42, depth=0.42, location=(0, 0, 0.5))
+    neck = bpy.context.active_object
+    neck.data.materials.append(glass_m)
+    neck.parent = r
+    for o in (bulb, neck):
+        for poly in o.data.polygons:
+            poly.use_smooth = True
+    for i in range(4):
+        bpy.ops.mesh.primitive_torus_add(major_radius=0.29, minor_radius=0.05, major_segments=64, minor_segments=16, location=(0, 0, 0.08 + i * 0.07))
+        t = bpy.context.active_object
+        t.data.materials.append(metal)
+        t.parent = r
+        for poly in t.data.polygons:
+            poly.use_smooth = True
+    cylinder("cap", 0.27, 0.3, metal, location=(0, 0, 0.17), parent=r, verts=64, bevel_width=0.02)
+    cylinder("contact", 0.12, 0.08, ink, location=(0, 0, -0.01), parent=r, verts=48, bevel_width=0.02)
+    tube("stem-l", [(-0.12, 0, 0.45), (-0.16, 0, 0.98)], 0.012, ink, parent=r)
+    tube("stem-r", [(0.12, 0, 0.45), (0.16, 0, 0.98)], 0.012, ink, parent=r)
+    zig = [(-0.16, 0, 0.98)] + [(-0.16 + k * 0.04, 0, 0.98 + (0.07 if k % 2 else 0.0)) for k in range(1, 8)] + [(0.16, 0, 0.98)]
+    tube("filament", zig, 0.022, filament, parent=r)
+    return r, None
+
+
+def build_page():
+    """Faculty: a page of code marked up in orange: ticks in the margin, one line circled."""
+    r = root("page", (50, 0, 14))
+    paper = add_noise_bump(principled("paper", PAPER, roughness=0.7), scale=40, strength=0.03)
+    lines = principled("lines", GREY_INK, roughness=0.6)
+    tint = clay("keyword", SIGNAL_TINT, roughness=0.55)
+    orange = clay("signal", SIGNAL, roughness=0.42)
+    rounded_box("sheet", (1.5, 2.0, 0.035), 0.03, paper, location=(0, 0, 0.0175), parent=r, segments=4)
+    rows = [(0.0, 0.7), (0.12, 0.55), (0.12, 0.8), (0.24, 0.45), (0.24, 0.62), (0.12, 0.5), (0.0, 0.3), (0.12, 0.66), (0.0, 0.4)]
+    for i, (indent, length) in enumerate(rows):
+        y = 0.75 - i * 0.18
+        x = -0.48 + indent
+        kw = 0.16 if i % 3 == 0 else 0.0
+        if kw:
+            rounded_box(f"kw{i}", (kw, 0.06, 0.016), 0.025, tint, location=(x + kw / 2, y, 0.035 + 0.008), parent=r, segments=3)
+        rounded_box(f"code{i}", (length, 0.06, 0.016), 0.025, lines, location=(x + kw + 0.03 + length / 2, y, 0.035 + 0.008), parent=r, segments=3)
+    z = 0.035 + 0.035
+    for y in (0.57, 0.03):
+        tube(f"tick{y}", [(-0.66, y + 0.01, z), (-0.6, y - 0.05, z), (-0.5, y + 0.07, z)], 0.025, orange, parent=r)
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.36, minor_radius=0.018, major_segments=96, minor_segments=12, location=(-0.05, -0.33, z))
+    ring = bpy.context.active_object
+    ring.scale = (1.35, 0.42, 1)
+    ring.data.materials.append(orange)
+    ring.parent = r
+    return r, None
+
+
+def build_chai():
+    """About: two cups of chai on a woven charpai, the dhaba table where it started."""
+    r = root("chai", (0, 0, 26))
+    wood = add_noise_bump(principled("wood", WOOD, roughness=0.55, coat=0.15), scale=26, strength=0.05)
+    weave = add_weave_bump(principled("weave", JUTE, roughness=0.8), scale=11.0, strength=0.5, distance=0.03)
+    cup = principled("cup", PAPER, roughness=0.3, coat=0.4)
+    band = clay("band", SIGNAL, roughness=0.4)
+    tea = principled("tea", "#9A6638", roughness=0.15, coat=0.6)
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            cylinder(f"leg{sx}{sy}", 0.075, 0.62, wood, location=(sx * 0.92, sy * 0.56, 0.31), parent=r, verts=32, bevel_width=0.02)
+    for name, size, loc in [
+        ("rail-n", (2.04, 0.13, 0.13), (0, 0.56, 0.62)),
+        ("rail-s", (2.04, 0.13, 0.13), (0, -0.56, 0.62)),
+        ("rail-e", (0.13, 1.25, 0.13), (0.92, 0, 0.62)),
+        ("rail-w", (0.13, 1.25, 0.13), (-0.92, 0, 0.62)),
+    ]:
+        rounded_box(name, size, 0.045, wood, location=loc, parent=r, segments=4)
+    rounded_box("woven", (1.74, 0.99, 0.04), 0.015, weave, location=(0, 0, 0.635), parent=r, segments=2)
+    top = 0.655
+    for i, (x, y) in enumerate([(-0.36, 0.08), (0.32, -0.12)]):
+        cylinder(f"saucer{i}", 0.27, 0.03, cup, location=(x, y, top + 0.015), parent=r, verts=96, bevel_width=0.012)
+        bpy.ops.mesh.primitive_cone_add(vertices=96, radius1=0.135, radius2=0.175, depth=0.27, location=(x, y, top + 0.03 + 0.135))
+        body = bpy.context.active_object
+        bevel(body, width=0.015, segments=4, angle=30)
+        body.data.materials.append(cup)
+        body.parent = r
+        for poly in body.data.polygons:
+            poly.use_smooth = True
+        cylinder(f"tea{i}", 0.158, 0.012, tea, location=(x, y, top + 0.03 + 0.27 + 0.002), parent=r, verts=96, bevel_width=0.0)
+        bpy.ops.mesh.primitive_torus_add(major_radius=0.17, minor_radius=0.014, major_segments=96, minor_segments=12, location=(x, y, top + 0.03 + 0.2))
+        ring = bpy.context.active_object
+        ring.data.materials.append(band)
+        ring.parent = r
+        bpy.ops.mesh.primitive_torus_add(major_radius=0.07, minor_radius=0.02, major_segments=48, minor_segments=12, location=(x + 0.19, y, top + 0.03 + 0.14), rotation=(math.radians(90), 0, 0))
+        handle = bpy.context.active_object
+        handle.data.materials.append(cup)
+        handle.parent = r
+        for o in (ring, handle):
+            for poly in o.data.polygons:
+                poly.use_smooth = True
+    shadow_floor(0.0)
+    return r, None
+
+
 # ---------------------------------------------------------------------------
 # Render
 # ---------------------------------------------------------------------------
@@ -620,9 +922,21 @@ JOBS = {
     "envelope": (build_envelope, None),
     "tray-light": (lambda: build_tray("light"), None),
     "tray-dark": (lambda: build_tray("dark"), None),
+    "loupe": (build_loupe, None),
+    "letter": (build_letter, None),
+    "campus": (build_campus, None),
+    "booth": (build_booth, None),
+    "ticket": (build_ticket, None),
+    "pen": (build_pen, None),
+    "bulb": (build_bulb, None),
+    "page": (build_page, None),
+    "chai": (build_chai, None),
     "terraces-light": (lambda: build_terraces("light"), (3200, 1300)),
     "terraces-dark": (lambda: build_terraces("dark"), (3200, 1300)),
 }
+
+
+GROUNDED = {"campus", "booth", "chai"}
 
 
 def bounds():
@@ -635,13 +949,19 @@ def bounds():
     lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
     hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
     centre = (lo + hi) / 2
-    return centre, max((p - centre).length for p in pts) * 0.82
+    # The first set was framed at 0.82; long objects need the whole sphere (export trims the margin).
+    tight = 0.82 if bpy.context.scene.get("tight_frame") else 1.0
+    return centre, max((p - centre).length for p in pts) * tight
+
+
+FIRST_SET = {"seal", "commit", "rosette", "envelope"} | {f"medallion-{t}" for t in ["raw", "spark", "flare", "shine", "radiant", "luminary"]}
 
 
 def render(name):
     build, dims = JOBS[name]
     width, height = dims or (args.size, args.size)
     reset_scene(width, height)
+    bpy.context.scene["tight_frame"] = name in FIRST_SET
     world()
     obj, radius = build()
     if name.startswith("terraces"):
@@ -658,7 +978,9 @@ def render(name):
         centre, radius = bounds()
         fov = 2 * math.atan(18 / 85)
         distance = radius * 1.08 / math.tan(fov / 2)
-        camera(centre + Vector((0, -distance * 0.96, distance * 0.28)), centre, lens=85)
+        # Things that stand on the ground are seen from a little higher, like a model on a table.
+        lift = 0.5 if name in GROUNDED else 0.28
+        camera(centre + Vector((0, -distance * 0.94, distance * lift)), centre, lens=85)
         studio(tuple(centre))
     if args.project:
         project(name, width, height)

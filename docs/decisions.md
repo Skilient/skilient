@@ -2018,3 +2018,21 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   - `scripts/renders/export.mjs` trims and exports AVIF/WebP to `public/marketing/objects/` and writes `content/objects.json`.
   - Video stays out (PRD 10): these are stills, and motion is code.
 - **Removed:** the hero phone and its focal sequence, the profile card, the "Verified by…" tag, How it works (the chapters tell it), the big step numerals, the streak grids, the tier ladder, the feed/ventures/opportunities blocks and the CV specimen. The captures stay for /recruiters.
+
+## Organisation pages, pricing and about as stories (2026-11-01)
+
+- **Ahmed's answers (2026-11-01):** the pages speak to their reader, from that reader's seat in Ayesha's sample world. Pricing stays calm, with plans rising as steps. About is a manifesto and roll call opened by chai on a charpai. Each page gets its own set of renders.
+- **Recruiters:** you are a recruiter at Indus Softworks, the sample company in the product captures. Five pinned chapters: search (names hidden), evidence, contact, hire, trust. Then the rules of contact light up one by one, then the recruiter plans.
+- **Universities:** you run careers at National University of Technology, Ayesha's sample university. Five chapters: ecosphere, dashboards, records, fairs, Student Pro. Then the licences and Talk to us.
+- **Faculty:** you post the idea behind Library Seat Finder, a sample venture on her CV. Five chapters: ideas, supervise, confirm, review (the five rubric parts as the teacher portal names them), endorse and grade.
+- **Pricing:** no pins. Plan columns rise in as stepping stones, the pinned plan gets one moment of light, and the hero holds the seal and a commit only (never a tier, since rank is never sold).
+- **About:** the story's four sentences light up on the ink card, the team rises in as a roll call, and each value's seal stamps down.
+- **Numbers and data on the stages are samples, labelled "Sample":**
+  - Dashboard counts: 41, 36, 22, 9.
+  - The record-view log time, the fair queue, the supervisor thread and the rubric scores.
+  - Ayesha's skills, levels and evidence are the sample CV's.
+- **Captures:** the venture-team capture (a different sample person) leaves /recruiters, because the story must keep one cast. The contact-request and jobs captures (Indus Softworks, Frontend intern (React)) stay as real product windows.
+- **Shared parts:** `Orbit`, `PinnedStory` (scenes cross over on one `--pin` timeline) and `LitLines` (the rules effect, now for any number of lines). The story stylesheet moved to the marketing layout.
+- **New renders** (same script and look): loupe over a record card, company letter, campus, fair booth with a queue, event ticket, fountain pen, idea bulb, marked-up page, and chai on a charpai.
+- **Text never fades in (2026-11-01):** reveals on every marketing page are a mask wipe (`clip-path`) plus a rise, always at full opacity. On phones, chapter kickers sit near the first fold and were half-faded at load, which axe flagged. The clip ends outside the box, so shadows and focus rings are never cut. Only pictures, and stage scenes that start fully hidden, use opacity.
+- **Grounded renders** (campus, booth, chai, the landing's tray) get a radial fade at export, so the floor shadow dissolves before the frame's edge instead of showing a square.

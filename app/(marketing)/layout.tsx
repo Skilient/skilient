@@ -6,6 +6,7 @@ import { getViewer } from "@/lib/data/marketing";
 import { NONCE_HEADER } from "@/lib/security/headers";
 import { marketingFontVariables } from "./fonts";
 import "./marketing.css";
+import "./story.css";
 
 /** Organization structured data for search (PRD 5.1). `<` is escaped so the JSON can't close the script. */
 function organizationJsonLd(): string {

@@ -3,10 +3,16 @@ import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { CtaLink } from "@/components/marketing/org-parts";
 import { PlanTable } from "@/components/marketing/plan-table";
+import { Orbit, type OrbitItem } from "@/components/marketing/story/orbit";
 import { Section, SectionHeading } from "@/components/marketing/sections/section";
 import { nav, pricingPage as copy, recruitersPage, universitiesPage } from "@/content/marketing";
 import { getPricingExtras, getPublicPlans, getViewer } from "@/lib/data/marketing";
 import { pkr } from "@/lib/marketing/plan-lines";
+
+const ORBIT: OrbitItem[] = [
+  { name: "seal", x: 14, y: 16, w: 50, d: 1, r: -6, eager: true },
+  { name: "commit", x: 58, y: 48, w: 34, d: 0.6, r: 10 },
+];
 
 export const metadata: Metadata = { title: copy.title, description: copy.description, alternates: { canonical: "/pricing" } };
 
@@ -32,8 +38,9 @@ export default async function PricingPage() {
 
   return (
     <>
-      <section aria-labelledby="page-title">
-        <div className="mx-auto flex max-w-page flex-col gap-6 px-[var(--page-gutter)] py-12 sm:py-16">
+      <section aria-labelledby="page-title" className="hero">
+        <div className="mx-auto grid max-w-page gap-8 px-[var(--page-gutter)] pt-10 pb-4 sm:pt-14 lg:grid-cols-12 lg:items-center lg:gap-6">
+        <div className="hero-copy flex flex-col gap-6 lg:col-span-8">
           <h1 id="page-title" className="text-hero max-w-[18ch] text-text-primary">
             {copy.headline}
           </h1>
@@ -50,9 +57,14 @@ export default async function PricingPage() {
             ))}
           </nav>
         </div>
+        <div className="lg:col-span-4">
+          {/* Proof is free: the seal and the commit, never a tier (rank is never sold). */}
+          <Orbit id="pricing-orbit" items={ORBIT} alt="The verified seal and a commit: the proof every student gets for free." className="orbit-calm" />
+        </div>
+        </div>
       </section>
 
-      <Section id="students" labelledBy="students-title" className="scroll-mt-4">
+      <Section id="students" labelledBy="students-title" className="scroll-mt-4 epilogue">
         <SectionHeading id="students-title">{copy.students.heading}</SectionHeading>
         <div className="mt-10">
           <PlanTable
@@ -73,7 +85,7 @@ export default async function PricingPage() {
         </div>
       </Section>
 
-      <Section id="recruiters" labelledBy="recruiters-title" className="scroll-mt-4">
+      <Section id="recruiters" labelledBy="recruiters-title" className="scroll-mt-4 epilogue">
         <SectionHeading id="recruiters-title">{copy.recruiters.heading}</SectionHeading>
         <div className="mt-10">
           <PlanTable id="recruiters" plans={by("org")} free={copy.recruiters.explore} pinned="growth" />
@@ -95,7 +107,7 @@ export default async function PricingPage() {
         </div>
       </Section>
 
-      <Section id="universities" labelledBy="universities-title" className="scroll-mt-4">
+      <Section id="universities" labelledBy="universities-title" className="scroll-mt-4 epilogue">
         <SectionHeading id="universities-title">{copy.universities.heading}</SectionHeading>
         <div className="mt-10">
           <PlanTable id="universities" plans={by("university")} free={copy.universities.free} pinned="growth" />
@@ -106,7 +118,7 @@ export default async function PricingPage() {
         </div>
       </Section>
 
-      <Section labelledBy="pricing-faq-title">
+      <Section labelledBy="pricing-faq-title" className="epilogue">
         <div className="grid gap-8 md:grid-cols-12 md:gap-6">
           <SectionHeading id="pricing-faq-title" className="md:col-span-3">
             Questions

@@ -1,10 +1,7 @@
 import type { Route } from "next";
 import Link from "next/link";
-import type { CSSProperties } from "react";
 import { emailField, hero } from "@/content/marketing";
-import type { ObjectName } from "@/lib/marketing/objects";
-import { ObjectImage } from "./story/object-image";
-import { OrbitParallax } from "./story/orbit-parallax";
+import { Orbit, type OrbitItem } from "./story/orbit";
 import { UniEmailField, type InitialEmailState } from "./uni-email-field";
 
 /** The headline with its italic turn (app/(marketing)/CLAUDE.md: serif for belief, one italic turn). */
@@ -24,7 +21,7 @@ function Headline() {
  * The proof objects in orbit: where each sits (percent of the orbit box), how wide it is, how
  * near it is (depth drives the pointer parallax) and its tilt. Front objects are larger.
  */
-const ORBIT: { name: ObjectName; x: number; y: number; w: number; d: number; r: number; eager?: boolean }[] = [
+const ORBIT: OrbitItem[] = [
   { name: "rosette", x: 4, y: 6, w: 27, d: 0.35, r: 9 },
   { name: "medallion-flare", x: 58, y: 2, w: 33, d: 0.6, r: -7 },
   { name: "seal", x: 16, y: 34, w: 46, d: 1, r: -5, eager: true },
@@ -67,27 +64,7 @@ export function Hero({
           </div>
         </div>
         <div className="lg:col-span-4">
-          <div id="orbit" role="img" aria-label={hero.orbitAlt} className="orbit" data-testid="hero-orbit">
-            <div aria-hidden className="hero-backdrop orbit-glow" />
-            <svg aria-hidden className="orbit-rings" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <ellipse cx="50" cy="52" rx="46" ry="30" pathLength={1} />
-              <ellipse cx="50" cy="52" rx="34" ry="21" pathLength={1} />
-            </svg>
-            {ORBIT.map((o, i) => (
-              <div
-                key={o.name}
-                className="orbit-obj"
-                style={{ "--x": o.x, "--y": o.y, "--w": o.w, "--d": o.d, "--r": `${o.r}deg`, "--i": i, zIndex: Math.round(o.d * 10) } as CSSProperties}
-              >
-                <div className="orbit-par">
-                  <div className="orbit-in">
-                    <ObjectImage name={o.name} eager={o.eager} priority={o.eager} />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <OrbitParallax targetId="orbit" />
+          <Orbit id="orbit" items={ORBIT} alt={hero.orbitAlt} testId="hero-orbit" />
         </div>
       </div>
     </section>

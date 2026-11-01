@@ -1,5 +1,5 @@
 import { Check } from "@phosphor-icons/react/dist/ssr";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { pricingPage as copy } from "@/content/marketing";
 import { cn } from "@/lib/cn";
 import type { PublicPlan } from "@/lib/data/marketing";
@@ -44,9 +44,28 @@ function Price({ plan, per, className }: { plan: PublicPlan | null; per: string;
   );
 }
 
-function Column({ title, price, items, note, extra, testId, pinned = false }: { title: string; price: ReactNode; items: string[]; note?: ReactNode; extra?: ReactNode; testId?: string; pinned?: boolean }) {
+function Column({
+  title,
+  price,
+  items,
+  note,
+  extra,
+  testId,
+  pinned = false,
+  index = 0,
+}: {
+  title: string;
+  price: ReactNode;
+  items: string[];
+  note?: ReactNode;
+  extra?: ReactNode;
+  testId?: string;
+  pinned?: boolean;
+  /** Its place from small to large: plans rise in as stepping stones (story.css). */
+  index?: number;
+}) {
   return (
-    <li className={cn("flex flex-col gap-4 p-7", pinned ? "neu-ink" : "neu-card")} data-testid={testId}>
+    <li className={cn("plan-col flex flex-col gap-4 p-7", pinned ? "neu-ink plan-pinned" : "neu-card")} style={{ "--i": index } as CSSProperties} data-testid={testId}>
       {pinned ? <span className="neu-mono self-start rounded-[var(--r-tag)] bg-[var(--signal)] px-2 py-1 text-[#1b1b19]">Recommended</span> : null}
       <h3 className="text-h3">{title}</h3>
       {price}
@@ -108,9 +127,10 @@ export function PlanTable({
             items={[...free.items]}
             note={free.note ? <p className="text-body-sm text-text-secondary">{free.note}</p> : null}
             testId={`plan-${id}-free`}
+            index={0}
           />
         ) : null}
-        {rows.map((t) => {
+        {rows.map((t, i) => {
           const both = t.month && t.year;
           const price = both ? (
             <>
@@ -129,6 +149,7 @@ export function PlanTable({
               note={notes[t.tier] ? <p className="text-body-sm text-text-secondary">{notes[t.tier]}</p> : null}
               extra={extra?.[t.tier]}
               testId={`plan-${id}-${t.tier}`}
+              index={(free ? 1 : 0) + i}
               pinned={t.tier === pinned}
             />
           );

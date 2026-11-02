@@ -28,8 +28,8 @@ export function SkillLevelIcon({ level, className }: { level: SkillLevel; classN
 }
 
 /**
- * Skill tag with its evidence level (L0–L4, PRD 5.5). L3 and up, confirmed by other people,
- * use the verified proof colour. `verified` forces that style without a level (tags on posts).
+ * Skill tag with its evidence level (L0–L4, PRD 5.5). Flat with a hairline and a mono level, never
+ * the tier shape (the brief §3). L3 and up, confirmed by other people, wear ink: a stronger hairline. `verified` forces that style without a level (tags on posts).
  * `peerVerified` adds a check for a skill endorsed by 2+ different teammates (PRD 5.16).
  * `aiAssisted` marks a skill mostly written with an AI coding agent (decisions 2026-10-03).
  */
@@ -52,8 +52,8 @@ export function SkillChip({
   return (
     <span
       className={cn(
-        "inline-flex h-7 items-center gap-1.5 rounded-sm border px-2 text-body-sm",
-        proof ? "border-verified bg-verified-subtle text-text-primary" : "border-border-default bg-bg-surface text-text-primary",
+        "inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-body-sm",
+        proof ? "border-verified font-semibold text-text-primary" : "border-border-strong text-text-primary",
         className,
       )}
     >
@@ -64,7 +64,7 @@ export function SkillChip({
       ) : null}
       <span>{name}</span>
       {level !== undefined ? (
-        <span className="font-mono text-code-sm text-text-secondary" aria-label={`Level ${level}`}>
+        <span className="neu-mono text-text-secondary" aria-label={`Level ${level}`}>
           L{level}
         </span>
       ) : null}

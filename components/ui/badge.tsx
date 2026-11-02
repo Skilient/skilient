@@ -4,15 +4,16 @@ import { cn } from "@/lib/cn";
 
 export type BadgeTone = "neutral" | "primary" | "accent" | "verified" | "success" | "warning" | "error" | "info";
 
+/** Status tags are square-cornered with a tint (the brief §3); never the tier or the chip shape. */
 const tones: Record<BadgeTone, string> = {
   neutral: "border-border-default bg-bg-subtle text-text-secondary",
-  primary: "border-primary bg-primary-subtle text-text-primary",
-  accent: "border-accent bg-accent-subtle text-text-primary",
+  primary: "border-transparent bg-primary-subtle text-text-primary",
+  accent: "border-transparent bg-accent text-text-on-accent",
   verified: "border-verified bg-verified-subtle text-verified",
-  success: "border-success text-text-primary",
-  warning: "border-warning text-text-primary",
-  error: "border-error text-text-error",
-  info: "border-info text-text-primary",
+  success: "border-success/40 bg-bg-subtle text-text-primary",
+  warning: "border-warning/40 bg-bg-subtle text-text-primary",
+  error: "border-error/50 bg-bg-subtle text-text-error",
+  info: "border-info/40 bg-bg-subtle text-text-primary",
 };
 
 // Status badges always carry an icon: never colour alone (PRD 9.5). Text stays on

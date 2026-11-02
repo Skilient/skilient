@@ -13,7 +13,7 @@ for (const colorScheme of ["light", "dark"] as const) {
       for (const panel of ["light", "dark"]) {
         const p = page.locator(`[data-theme-panel="${panel}"]`);
         await expect(p).toHaveClass(new RegExp(`\\b${panel}\\b`));
-        for (const title of ["Typography", "Buttons", "Form controls", "Tabs", "Dialog, sheet and toast", "Avatar and badges", "Verified stamp", "States"]) {
+        for (const title of ["Typography", "Buttons", "Form controls", "Tabs", "Dialog, sheet and toast", "Avatar and badges", "Verified stamp", "States", "Phase 14 objects"]) {
           await expect(p.getByRole("heading", { name: title })).toBeVisible();
         }
       }
@@ -21,8 +21,9 @@ for (const colorScheme of ["light", "dark"] as const) {
       // Panels really differ: light page ground vs dark page ground.
       const bg = (panel: string) =>
         page.locator(`[data-theme-panel="${panel}"]`).evaluate((el) => getComputedStyle(el).backgroundColor);
-      expect(await bg("light")).toBe("rgb(240, 239, 237)");
-      expect(await bg("dark")).toBe("rgb(10, 10, 9)");
+      // The neu surfaces (phase 14): #E6E1D8 and #2A2723.
+      expect(await bg("light")).toBe("rgb(230, 225, 216)");
+      expect(await bg("dark")).toBe("rgb(42, 39, 35)");
 
       await testInfo.attach(`gallery-${colorScheme}-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true, animations: "disabled" }),

@@ -120,7 +120,7 @@
 .prologue-title {
   margin-top: 1rem;
   max-width: 18ch;
-  font-family: var(--font-display);
+  font-family: var(--font-display-face);
   font-size: clamp(2.25rem, 1.2rem + 3vw, 3.75rem);
   font-weight: 500;
   line-height: 1.05;
@@ -140,7 +140,7 @@
 }
 .prologue-figure {
   position: relative;
-  font-family: var(--font-display);
+  font-family: var(--font-display-face);
   font-size: clamp(5.5rem, 3rem + 8vw, 9rem);
   line-height: 0.9;
   letter-spacing: -0.04em;
@@ -201,7 +201,7 @@
 .prologue-bridge em {
   display: block;
   margin-top: 0.75rem;
-  font-family: var(--font-spectral-italic), var(--font-display);
+  font-family: var(--font-spectral-italic), var(--font-display-face);
   font-size: clamp(1.5rem, 1rem + 1.6vw, 2.25rem);
   font-style: italic;
   line-height: 1.2;
@@ -614,7 +614,7 @@
   gap: 1.25rem;
   padding-block: 1.25rem;
   border-top: 1px solid color-mix(in srgb, var(--on-ink) 18%, transparent);
-  font-family: var(--font-display);
+  font-family: var(--font-display-face);
   font-size: clamp(2rem, 1.2rem + 3vw, 3.5rem);
   line-height: 1.08;
   letter-spacing: -0.02em;
@@ -644,7 +644,7 @@
 }
 .finale-title {
   max-width: 16ch;
-  font-family: var(--font-display);
+  font-family: var(--font-display-face);
   font-size: clamp(2.5rem, 1.6rem + 3vw, 3.75rem);
   font-weight: 500;
   line-height: 1.05;

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./styles/tokens.css";
+@import "./styles/neu.css";
 
 /* Theme is a class on <html> set by next-themes (attribute: class). */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -10,9 +11,11 @@
  * subtrees re-theme without new classes.
  */
 @theme inline {
-  /* Fonts (variables set by next/font in app/fonts.ts) */
-  --font-display: var(--font-spectral), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
+  /* Fonts (variables set by next/font in app/fonts.ts). Space Grotesk for the interface and headings
+     (phase 14); font-serif is Spectral for belief moments only; /ops (.classic) keeps PRD 9. */
+  --font-display: var(--font-display-face);
+  --font-sans: var(--font-ui);
+  --font-serif: var(--font-spectral), Georgia, "Times New Roman", serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Type scale (PRD 9.2) */
@@ -20,19 +23,20 @@
   --text-display--line-height: 1.05;
   --text-display--letter-spacing: -0.025em;
   --text-display--font-weight: 500;
-  --text-h1: 40px;
-  --text-h1--line-height: 1.1;
-  --text-h1--letter-spacing: -0.02em;
-  --text-h1--font-weight: 500;
-  --text-h2: 30px;
+  /* The brief's visible scale (48 / 36 / 28 / 20 / 16 / 14 / 12) at app density. */
+  --text-h1: clamp(28px, 1.2rem + 1.2vw, 36px);
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h1--font-weight: 600;
+  --text-h2: 28px;
   --text-h2--line-height: 1.15;
-  --text-h2--letter-spacing: -0.015em;
-  --text-h2--font-weight: 500;
-  --text-h3: 22px;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h2--font-weight: 600;
+  --text-h3: 20px;
   --text-h3--line-height: 1.25;
-  --text-h3--letter-spacing: -0.005em;
+  --text-h3--letter-spacing: -0.01em;
   --text-h3--font-weight: 600;
-  --text-h4: 17px;
+  --text-h4: 16px;
   --text-h4--line-height: 1.3;
   --text-h4--font-weight: 600;
   --text-body-lg: 18px;
@@ -45,7 +49,7 @@
   --text-label--line-height: 1.4;
   --text-label--letter-spacing: 0.08em;
   --text-label--font-weight: 600;
-  --text-caption: 11px;
+  --text-caption: 12px;
   --text-caption--line-height: 1.45;
   --text-caption--font-weight: 500;
   --text-code: 13px;
@@ -98,15 +102,34 @@
   --color-tier-luminary: var(--tier-luminary);
   --color-tier-luminary-text: var(--tier-luminary-text);
 
-  /* Radius (PRD 9.4) */
+  /* The neu palette, for the few places that name it directly. */
+  --color-surface: var(--surface);
+  --color-surface-hi: var(--surface-hi);
+  --color-surface-lo: var(--surface-lo);
+  --color-ink: var(--ink);
+  --color-on-ink: var(--on-ink);
+  --color-signal: var(--signal);
+  --color-signal-ink: var(--signal-ink);
+  --color-signal-tint: var(--signal-tint);
+  --color-synergy: var(--synergy);
+  --color-jute: var(--jute);
+  --color-mustard: var(--mustard);
+
+  /* Radius: app density (tokens.css block 3); /ops keeps PRD 9.4 through .classic. */
   --radius-none: 0;
-  --radius-sm: 3px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
-  --radius-xl: 16px;
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-xl);
+  --radius-2xl: var(--r-card);
   --radius-full: 9999px;
 
-  /* Elevation */
+  /* Elevation: PRD 9 steps (re-pointed) and the neu names */
+  --shadow-raised-s: var(--raised-s);
+  --shadow-raised-m: var(--raised-m);
+  --shadow-raised-l: var(--raised-l);
+  --shadow-pressed: var(--pressed);
+  --shadow-pressed-s: var(--pressed-s);
   --shadow-1: var(--elevation-1);
   --shadow-2: var(--elevation-2);
   --shadow-3: var(--elevation-3);
@@ -127,7 +150,7 @@
   html {
     background-color: var(--bg-page);
     color: var(--text-primary);
-    font-family: var(--font-sans);
+    font-family: var(--font-ui);
     font-size: 15px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -136,6 +159,19 @@
   body {
     background-color: var(--bg-page);
     color: var(--text-primary);
+  }
+
+  /* /ops keeps PRD 9 (decision 15): the scope re-declares the font and the ground it inherits. */
+  .classic {
+    font-family: var(--font-ui);
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+  }
+
+  /* Proof as texture: numbers that stack line up. */
+  .tabular-nums,
+  time {
+    font-variant-numeric: tabular-nums;
   }
 
   /* Themed browser surfaces (Gate B craft floor) */
@@ -150,7 +186,7 @@
     accent-color: var(--interactive-primary);
   }
 
-  /* 2px focus ring, 2px offset, primary (PRD 9.5) */
+  /* 2px focus ring, 2px offset, synergy blue (the brief; never the error colour) */
   :focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;

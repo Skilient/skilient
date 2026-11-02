@@ -1995,3 +1995,17 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   - campus board (buy, sell, lost and found), attendance tracker
   - official course spaces, office hours, the FYP hub, research and lab openings, recommendation letters, society advisor, class pulse
   - internship logbook, freelance proof, group-work receipts
+
+## Student-first answers (2026-11-02)
+
+- **Ahmed answered questions 1–16** of `docs/student-first-questions.md`. Defaults accepted: 2 (claim emails, 180-day hold), 3 (auto-issue Attended and Completed at 72 hours), 4 (CV "Leadership and activities"), 6 (staff verify societies), 7 (8 paths, 10 seniors, Shine or higher), 8 (peer reviewers), 9 (yearbook calendar), 10 (faculty: redesign only), 11 (web push and PWA), 12 (merge the marketing branch in phase 14 slice 2), 13 (Student Pro in-app only), 14 (Space Grotesk; the CV keeps Barlow), 15 (ops keeps PRD 9).
+- **1. The Record moves rank slightly** (Ahmed). Formula v2 adds a Record component of at most 100 points, and every v1 component and threshold stays, so no score drops (PRD 5.30, pointer in 5.13). **Only merit entries count**: office-bearer terms, competition results (at least 5 entrants) and volunteer hours, with at most 50 points from any one society. Why attendance is excluded: it is cheap to pile up, and with paid tickets it would let money buy rank (CLAUDE.md "never sell rank"). Skilient-issued entries are excluded because their sources already score (Work, Skills) or, for teaching, are too easy to game early. The weight is open question 17.
+- **5. Paid and free tickets** (Ahmed), PRD 5.31:
+  - PKR through the local gateway, priced in SQL; a 15-minute seat hold.
+  - Receipts in the invoice series "on behalf of" the society; credit notes for refunds.
+  - The host picks the refund policy; cancellations refund everyone.
+  - Money is held until 7 days after the event, then paid by staff to a staff-verified payout account (CNIC name match). Chargebacks come out of the next payout.
+  - A paid ticket buys a seat, never proof or rank.
+  - The fee, payout, refund and limit details are open questions 18–21.
+  - The merchant agreement must allow collecting on behalf of societies before paid tickets go live (`docs/setup-checklist.md`).
+- **16. Existing recruiter and university accounts are deleted** (Ahmed). Default for how (question 22): one migration in phase 14 slice 1 runs `private.delete_account` for every `recruiter` and `university_admin` account and deletes their organisations and seats. Faculty with a seat keep their account. The pull request lists the counts before merge, so the deletion is visible before it runs on production.

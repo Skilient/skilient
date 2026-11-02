@@ -26,7 +26,30 @@ Rules:
 - **No officer issues to themselves alone.** Any entry naming the issuing officer needs a second officer's confirmation.
 - **Every entry is immutable once signed.** A correction issues a new entry and the old code reads "Superseded by <code>".
 - **Revocation** (the issuing society's officers, or staff) needs a reason, is audited, notifies the student with the reason, and can be appealed through the existing appeals flow (5.26).
-- **The Record does not change rank** in formula v1 (5.13). Revisit in formula v2 (question 1).
+- **The Record moves rank slightly** (Ahmed, 2026-11-02), through ranking **formula v2** below.
+
+#### Rank: formula v2 adds a small Record component
+
+Formula v2 keeps every v1 component (5.13) unchanged and adds one Proof component, **Record**, worth at most **100 points**. The maximum becomes 2,600, and tier thresholds are unchanged, so no student's score drops. Record is about 4% of the maximum, the smallest component after Credentials.
+
+**Only entries that take merit or effort count.** Attended and Completed entries never add rank, because attendance is cheap and paid tickets (5.31) would otherwise let money buy rank (CLAUDE.md: never sell rank). Skilient-issued entries add nothing here either: venture completions already score in Work, proof tasks in Verified skills, and teaching is left out because swap rings are hard to detect early.
+
+| Entry | Points |
+| --- | --- |
+| Office bearer term | President 35, other officers 25 (one term per society per academic year) |
+| Result | 1st 30, 2nd 20, 3rd 15, finalist 10; only in competitions with at least 5 entrants (people or teams) |
+| Volunteer | 2 per hour |
+
+Caps and anti-gaming:
+- 100 points in total.
+- 50 points at most from any one society.
+- 20 points a year at most from volunteer hours.
+- Entries from a society verified less than 30 days ago are held until day 30.
+- The 150-points-in-24-hours review (5.13) applies.
+- Revoked and superseded entries drop out at the next nightly run.
+- `/me/score` lists every counted entry, as it does for other components.
+
+Build: `score_record(user, as_of)` joins `compute_ranking`. The weights live in `platform_config` `ranking.formula` (version 2). `docs/ranking-reference.md` gains Record reference students, and pgTAP `32` still reproduces every hand-worked score. As 5.13 requires, the change is announced in-app and applied in one recompute.
 - Entries can be reported (5.12).
 
 #### Activity flow
@@ -79,4 +102,5 @@ Rules:
   - an officer can't issue to themselves without a second officer
   - a claim email turns into entries after signup with the same address and never with a different one
   - the transcript PDF verifies every entry on it
+  - formula v2 reproduces the hand-worked Record scores in `docs/ranking-reference.md`, and attendance entries never add rank
   - pgTAP refuses every cross-user read

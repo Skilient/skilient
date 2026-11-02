@@ -257,8 +257,8 @@ PRD 5.30–5.34. These screens follow the neumorphism brief (`app/(marketing)/CL
 | Induction round | `/societies/[slug]/inductions/[id]` | Header + roles + apply sheet | Roles with seats, questions, deadline in mono; officer view: applicants, shortlist, accept/decline | Closed, already applied, accepted, declined |
 | Create event | `/societies/[slug]/events/new` | Stepper (Basics, When and where, Who, Form, Record, Review) with "N steps left" | Sessions, ticket types and capacity, eligibility, form builder, what attendees earn | Draft saved, validation error |
 | Event page | `/events/[id]` | Cover + details + register | Agenda, host societies, seats left, what you'll earn, friends going | Not eligible (flat button + reason), registration not open, full (waitlist), cancelled, ended |
-| Register | Sheet on event page | Form | Questions, ticket type, team create/join | Confirmed, pending approval, waitlisted #N |
-| Ticket | `/events/[id]/ticket` | Ticket object | Signed QR, brightness hint, session list, cancel | Offline (cached), cancelled, checked in |
+| Register | Sheet on event page | Form | Questions, ticket type (free or price in PKR with the refund policy), team create/join, Pay | Confirmed, pending approval (pay link after approval), waitlisted #N, seat held 15 min while paying, payment failed |
+| Ticket | `/events/[id]/ticket` | Ticket object | Signed QR, brightness hint, session list, receipt link, cancel (with refund if within policy) | Offline (cached), cancelled, refunded, checked in |
 | My tickets | `/me/tickets` | List | Upcoming and past tickets | None yet (next eligible event) |
 | Event manage | `/events/[id]/manage` | Stat tiles + tabs (Registrations, Waitlist, Staff, Messages, Close-out) | Approve/decline, message registrants, add staff, edit with change notice | Draft, live, ended, cancelled |
 | Check-in | `/events/[id]/check-in` | Full-screen scanner + headcount | Camera scan with green/amber/red result and time, search by name, add by email, session picker | No camera permission (search only), offline (retry), not staff |
@@ -281,5 +281,7 @@ PRD 5.30–5.34. These screens follow the neumorphism brief (`app/(marketing)/CL
 | Share sheet | From a post's Share | Sheet | Recent DMs and venture chats, search, note, Send, Undo toast | No chats yet, rate limited |
 | People you may know | Section on `/friends` and `/explore` | Cards | Reason line, Add friend, dismiss | No suggestions |
 | Society review (ops) | `/ops/societies` (+ `[id]`) | Queue + case | Proof document, claim, approve / ask for more / reject | Empty queue |
+| Society payouts | `/societies/[slug]/manage/payouts` | Settings layout + statement | Payout account (holder, bank, IBAN, CNIC upload), status, per-event statement (gross, refunds, gateway fee, Skilient fee, net), payout history with references | Account pending or rejected (reason), paid tickets paused (negative balance) |
+| Payout accounts and payouts (ops) | `/ops/payouts` (+ `accounts/[id]`) | Queue + case | CNIC name match, approve/reject account, due payouts with net amounts, mark paid with transfer reference | Nothing due |
 
 Route note: `/opportunities/*` redirects to `/openings/*`. `/pricing` redirects to `/features` (marketing).

@@ -60,7 +60,7 @@ No society chat: Skilient has no group chats beyond venture chats (decisions 202
    2. **When and where:** a single session, or several sessions (each with its own time). A venue or an online link.
    3. **Who:**
       - eligibility: own university (default), all universities, or chosen departments and batches
-      - ticket types (for example Participant or Audience), each with a capacity
+      - ticket types (for example Participant or Audience), each with a capacity and free or a price in PKR (paid tickets need a verified payout account, below)
       - team registration on or off (2–6 people per team)
       - approval mode (automatic or manual)
       - when registration opens and closes
@@ -119,7 +119,51 @@ No society chat: Skilient has no group chats beyond venture chats (decisions 202
 5. **At the venue:** show the QR, or self check-in by scanning the host's rotating code.
 6. **After:** "New on your Record" → the Record. An optional feedback form stays open for 7 days.
 
-Paid tickets are out at launch (question 5).
+#### Paid tickets and payouts (Ahmed, 2026-11-02: paid and free tickets)
+
+A ticket type is free or paid. Paying for a ticket buys a seat, never proof or rank: the Record entry is the same as for a free ticket, and attendance entries never add rank (5.30).
+
+**Who can sell.**
+- Only a **verified** society with a **verified payout account** can publish paid ticket types.
+- **Payout account:** the president or treasurer submits the account holder's name, bank and IBAN, plus a CNIC photo whose name matches the holder.
+  - Staff check it in an `/ops` queue (audited); the CNIC image sits in a private bucket and is deleted 30 days after the check.
+  - A changed account needs a fresh check and pauses payouts until it passes.
+
+**Prices and fees.**
+- PKR only, through the local gateway (5.24, `BILLING_GATEWAY_LOCAL`).
+- Each ticket costs between PKR 100 and PKR 10,000, within `platform_config` `events.ticket_limits`.
+- The buyer pays the listed price.
+- The gateway fee and the Skilient fee (`events.ticket_fee_bps`, 0 until Ahmed sets it; question 18) come out of the payout. The event page and the society's dashboard show both.
+- The price is always read in SQL from `event_ticket_types`, never from the client (CLAUDE.md).
+
+**Buying (student), flow B step 3 with payment.**
+1. Form → paid ticket type → **Pay PKR 500**. This creates a checkout session (`create_checkout` with subject `event_ticket`, priced in SQL), then the gateway page, then `/billing/return/[session]`.
+2. The seat is **held for 15 minutes** while payment is pending. If payment fails or the hold expires, the seat returns to the pool.
+3. Payment succeeded (gateway webhook through `record_billing_event`) → **Confirmed**, the ticket is issued, and a receipt is sent: an invoice in the immutable invoice series, issued by Skilient "on behalf of <society>".
+4. Manual-approval events take payment **after** approval: the approval notice carries a 48-hour payment link.
+5. **Waitlist with paid tickets:** the promoted person gets a 24-hour hold to pay before the seat moves to the next person.
+
+**Refunds.**
+- The host picks a refund policy when publishing: **no refunds**, or **full refund until N days before** (shown on the event page and the receipt).
+- A student cancels within the policy → an automatic full refund through the gateway adapter's `refund` → the seat frees and the waitlist is promoted.
+- **The host cancels the event** → every paid ticket is refunded in full automatically, and the society bears the gateway fee.
+- A credit note is issued in the `-CN` series for every refund.
+
+**Payouts.**
+- Each event's ticket money is held until **7 days after the event ends**, the refund and dispute window.
+- Staff then pay the net amount (sales minus refunds, gateway fee and Skilient fee) by bank transfer to the verified payout account, and mark the payout paid with the transfer reference. This is audited, and the society sees a statement.
+- Payouts are manual and weekly at first (question 19); automate when the gateway supports splits.
+- **Chargebacks** come out of the society's next payout. A negative balance pauses paid tickets for that society until it is settled.
+
+**Limits.** At most 3 paid events live per society at once until its first payout succeeds. Staff can pause a society's paid tickets.
+
+**Build:**
+- `event_ticket_types.price_pkr`, `refund_policy`.
+- Billing subject `event_ticket` in `create_checkout`, with `billing_apply_event` confirming the registration.
+- `event_payments` (link to `payments`), `society_payout_accounts` (status pending, verified, rejected), `society_payouts` (period, gross, refunds, fees, net, status, reference).
+- Staff `ops_payout_accounts`, `ops_payouts`, `mark_payout_paid`, audited before and after.
+- A `refund_ticket` path through the billing worker.
+- **Legal before going live:** the merchant agreement must allow collecting on behalf of societies (`docs/setup-checklist.md`).
 
 #### Build: societies and events
 
@@ -153,4 +197,7 @@ Paid tickets are out at launch (question 5).
   - a scanned ticket checks in once and refuses a second scan with the first time
   - a student can't create an event
   - close-out issues Record entries to every checked-in attendee
+  - a paid ticket is confirmed only by the gateway webhook, and a held seat returns after 15 minutes unpaid
+  - cancelling an event refunds every paid ticket with a credit note
+  - a payout's net equals sales minus refunds and fees, and only staff can mark it paid
   - every screen passes axe in both themes

@@ -542,3 +542,16 @@ GitHub, payments) to the coming-soon page.
     link starts with `https://www.skilient.com`; open a CV verify link; `https://skilient.com` lands on www.
 11. **Afterwards:** Search Console and share previews (Phase 12 slice 4), and back up the CV key file from the new address
     (Phase 5). CV PDFs exported before the switch print skilient.vercel.app links and are test-only (decisions.md 2026-10-01).
+
+## Student-first track (2026-11-02)
+
+- [ ] **Merchant agreement for ticket sales** (phase 15 slice 4): confirm with the local gateway and counsel that Skilient may collect
+      ticket payments on behalf of societies and pay them out (agent or marketplace terms), and whether tickets need a
+      separate tax treatment on receipts. Paid tickets stay off until this is done.
+- [ ] **A bank account for held ticket money and a named person for payouts** (phase 15 slice 4): staff pay societies weekly
+      by bank transfer from `/ops/payouts` and record the transfer reference.
+- [ ] **Skilient's ticket fee** (question 18): set `events.ticket_fee_bps` in `/ops/config` when decided (0 until then).
+- [ ] **Web push keys** (phase 18 slice 3): generate a VAPID key pair; the private key goes in Vault as `web_push_vapid_private`
+      and in `scripts/restore/reseed-vault.sql`, the public key in `NEXT_PUBLIC_VAPID_PUBLIC_KEY`.
+- [ ] **Storage plan:** society documents, CNIC images (deleted 30 days after the check), event covers, yearbook photos and
+      Record PDFs add to storage; check the Supabase plan's quota before the closed beta.

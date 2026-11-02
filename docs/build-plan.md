@@ -231,11 +231,11 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 
 📖 `docs/student-first-plan.md` (Portals, How the app looks), `09-design-system-and-ux.md`, `screen-spec.md` §1–2, the brief `app/(marketing)/CLAUDE.md` on `claude/wonderful-feynman-rmrfgy`
 
-- [ ] Slice 1: portals flag (`platform_config` `portals.enabled`, gate, signup refusal, student surfaces), marketing CTAs to "Talk to us", `/pricing` → `/features`
+- [ ] Slice 1: portals flag (`platform_config` `portals.enabled`, gate, signup refusal, student surfaces), marketing CTAs to "Talk to us", `/pricing` → `/features`, and the migration that deletes every recruiter and university-official account through `private.delete_account` (counts listed in the PR)
 - [ ] Slice 2: design system in the app (merge the marketing branch, root neu tokens with PRD 9 names re-pointed, Space Grotesk, rebuilt `components/ui/` primitives and the new ones, `/ui` gallery, token contrast test, ops `.classic`)
 - [ ] Slices 3–4: shell (rail, header with ⌘K, phone dock, Openings in nav) and core screens (post card with `⋯`, Me, Score, Ventures team tray, chat, notifications, onboarding, empty states with renders)
 
-✅ Recruiter and official signup refused and their routes 404 while the flag is off, restored when on · every existing screen renders on the new tokens in light and dark with axe clean · every token pair passes the contrast test · Lighthouse mobile ≥ 90 on `/feed`
+✅ Recruiter and official signup refused and their routes 404 while the flag is off, restored when on · no recruiter or official account remains, and faculty with a university seat keep their account · every existing screen renders on the new tokens in light and dark with axe clean · every token pair passes the contrast test · Lighthouse mobile ≥ 90 on `/feed`
 
 ## Phase 15 — Societies and events
 
@@ -244,18 +244,19 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 - [ ] Slice 1: societies (request, ops verification, page, officers and handover, membership modes, induction rounds, posts as the society, term confirmations)
 - [ ] Slice 2: events (stepper, sessions, ticket types, eligibility, form builder, teams, approval, waitlist, signed tickets, reminders, change notices; event posts officer-only)
 - [ ] Slice 3: check-in (scanner, search, add by email, per session, live headcount), close-out (attendance fixes, results, volunteer hours, issue preview), CSV export, feedback
+- [ ] Slice 4: paid tickets and payouts (payout accounts verified in /ops, `event_ticket` checkout priced in SQL, seat holds, receipts, refund policies and automatic refunds on cancel, held funds, staff payouts with statements, chargebacks)
 
-✅ A society goes from request to verified to its first induction round · no oversell under parallel registrations · a ticket checks in once and the second scan shows the first time · a student can't create an event · close-out lists every checked-in attendee for issuing
+✅ A society goes from request to verified to its first induction round · no oversell under parallel registrations · a ticket checks in once and the second scan shows the first time · a student can't create an event · close-out lists every checked-in attendee for issuing · a paid ticket confirms only on the gateway webhook and an unpaid hold frees after 15 minutes · a cancelled event refunds every paid ticket · a payout's net equals sales minus refunds and fees
 
 ## Phase 16 — The Record
 
 📖 `05-30-the-record.md`, `05-18-verified-cv.md`, `05-26-…` (appeals)
 
-- [ ] Slice 1: entries, `record_entry` signing through `cv-sign`, `/verify/[code]` for entries, issuing from close-out, term confirmations and venture completions, revocation and supersede
+- [ ] Slice 1: entries, `record_entry` signing through `cv-sign`, `/verify/[code]` for entries, issuing from close-out, term confirmations and venture completions, revocation and supersede, ranking formula v2 (`score_record`, reference students in `docs/ranking-reference.md`)
 - [ ] Slice 2: `/me/record`, certificate and transcript PDFs, share links, CV "Leadership and activities", claim by email after signup, mistake reports and appeals
 - [ ] Slice 3: landing story features The Record (marketing)
 
-✅ A checked-in attendee gets a sealed entry that verifies, and a revoked one shows revoked · no officer issues to themselves alone · a claim works only for the same verified email · the transcript PDF verifies every entry on it
+✅ A checked-in attendee gets a sealed entry that verifies, and a revoked one shows revoked · no officer issues to themselves alone · a claim works only for the same verified email · the transcript PDF verifies every entry on it · formula v2 reproduces the hand-worked Record scores and attendance never adds rank
 
 ## Phase 17 — Growth
 

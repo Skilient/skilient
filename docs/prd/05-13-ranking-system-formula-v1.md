@@ -1,5 +1,7 @@
 ### 5.13 Ranking system (formula v1, decided 2026-09-25)
 
+**Formula v2 (decided 2026-11-02):** adds a Record component (at most 100 points, so the maximum becomes 2,600) and leaves every v1 component and tier threshold as below. Details in 5.30.
+
 Score = **Proof** (verified work, never decays) + **Momentum** (recent community activity, decays). Each component has a points cap, so the weights are real; the maximum is 2,500 points. This replaces both earlier specs (the company-context 50/20/20/10 split and the ranking doc's Foundation 60 / Reputation 40).
 
 | Layer | Component | Weight | Max points | How points are earned |

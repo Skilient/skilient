@@ -12,7 +12,7 @@ import { Rules } from "@/components/marketing/story/rules";
 import { StorySignedFound } from "@/components/marketing/story/signed-found";
 import type { InitialEmailState } from "@/components/marketing/uni-email-field";
 import { hero } from "@/content/marketing";
-import { getLandingStats, getPublicPlans, getViewer } from "@/lib/data/marketing";
+import { getLandingStats, getViewer } from "@/lib/data/marketing";
 import { turnstileSiteKey } from "@/lib/security/turnstile";
 
 export const metadata: Metadata = {
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
  * was sent without JavaScript.
  */
 export default async function LandingPage({ searchParams }: PageProps<"/">) {
-  const [viewer, stats, plans, sp] = await Promise.all([getViewer(), getLandingStats(), getPublicPlans(), searchParams]);
+  const [viewer, stats, sp] = await Promise.all([getViewer(), getLandingStats(), searchParams]);
   const email = typeof sp.email === "string" ? sp.email.trim().slice(0, 254) : "";
   const state: InitialEmailState = sp.state === "personal" || sp.state === "invalid" ? sp.state : null;
   const home = viewer?.home ?? null;
@@ -45,7 +45,7 @@ export default async function LandingPage({ searchParams }: PageProps<"/">) {
       <Rules />
       <Finale home={home} siteKey={siteKey} />
       <ForOrgs />
-      <PricingTeaser plans={plans} />
+      <PricingTeaser />
       <Faq />
     </>
   );

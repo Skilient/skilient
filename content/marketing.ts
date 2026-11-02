@@ -15,7 +15,7 @@ export interface NavLink {
  * Marketing pages that exist so far. Phase 12 ships in slices and main deploys to production,
  * so nav and footer links to a page appear only once it is built (each slice adds its pages).
  */
-export const BUILT_PAGES: ReadonlySet<string> = new Set(["/verify", "/recruiters", "/universities", "/faculty", "/pricing", "/about", "/terms", "/privacy"]);
+export const BUILT_PAGES: ReadonlySet<string> = new Set(["/verify", "/recruiters", "/universities", "/faculty", "/features", "/about", "/terms", "/privacy"]);
 /** Built but kept out of search. Empty: the legal pages are public so Google can read the privacy notice. */
 export const NOINDEX_PAGES: ReadonlySet<string> = new Set<string>();
 export const isBuilt = (href: string) => BUILT_PAGES.has(href);
@@ -25,7 +25,7 @@ export const nav: { links: NavLink[]; signIn: NavLink; join: NavLink; open: stri
     { label: "For recruiters", href: "/recruiters" as Route },
     { label: "For universities", href: "/universities" as Route },
     { label: "For faculty", href: "/faculty" as Route },
-    { label: "Pricing", href: "/pricing" as Route },
+    { label: "Features", href: "/features" as Route },
     { label: "Verify a CV", href: "/verify" as Route },
   ],
   signIn: { label: "Sign in", href: "/signin" as Route },
@@ -91,7 +91,7 @@ export const footer = {
       heading: "Skilient",
       links: [
         { label: "About", href: "/about" as Route },
-        { label: "Pricing", href: "/pricing" as Route },
+        { label: "Features", href: "/features" as Route },
         { label: "Verify a CV", href: "/verify" as Route },
       ],
     },
@@ -302,8 +302,8 @@ export const rules = {
 export const forOrgs = {
   heading: "For organisations",
   rows: [
-    { label: "Recruiters", text: "Search verified skills and contact students who choose to be found.", page: "/recruiters" as Route, fallback: "/signup/recruiter" as Route },
-    { label: "Universities", text: "Run your campus on Skilient: dashboards, fairs, hackathons and sponsored Pro.", page: "/universities" as Route, fallback: "/signup?role=university_admin" as Route },
+    { label: "Recruiters", text: "Search verified skills and contact students who choose to be found.", page: "/recruiters" as Route, fallback: "/recruiters#talk" as Route },
+    { label: "Universities", text: "Run your campus on Skilient: dashboards, fairs, hackathons and sponsored Pro.", page: "/universities" as Route, fallback: "/universities#talk" as Route },
     { label: "Faculty", text: "Supervise ventures and confirm your students’ work. Free for faculty.", page: "/faculty" as Route, fallback: "/signup?role=faculty" as Route },
   ],
 };
@@ -311,11 +311,11 @@ export const forOrgs = {
 /** Section 12. The price comes from `plans`. */
 export const pricingTeaser = {
   heading: "Free is enough to prove yourself.",
-  body: "Verification, your rank and tier, your verified CV and being found by recruiters are free, always.",
+  body: "Verification, your rank and tier, and your verified CV are free, always.",
   pro: "Student Pro",
-  perks: ["Refresh your CV any time", "ATS-ready PDF export and more layouts", "See which companies viewed your CV"],
-  sponsored: "Free through your university on a Growth or Campus licence.",
-  link: "See pricing",
+  perks: ["Refresh your CV any time", "ATS-ready PDF export and more layouts", "See who viewed your CV"],
+  sponsored: "Conveniences only: Student Pro never changes rank or who finds you.",
+  link: "See every feature",
 };
 
 /** Section 13. */
@@ -366,7 +366,7 @@ export const recruitersPage = {
   description: "Search Pakistani university students by verified skills, see the evidence behind each one, and contact the ones who choose to be found.",
   headline: "Hire on evidence you can check.",
   intro: "Every skill on Skilient comes with its proof: the code a student wrote, the teammates who confirmed it, the faculty who reviewed the work. Search by what students have done, not what they claim.",
-  cta: { label: "Create a recruiter account", href: "/signup/recruiter" as Route },
+  cta: { label: "Talk to us", href: "#talk" },
   signedIn: "Open dashboard",
   see: {
     heading: "What you see",
@@ -400,6 +400,20 @@ export const recruitersPage = {
     heading: "Recruiter plans",
     text: "Start free with names hidden. Paid plans open full profiles, contact requests and team seats.",
     link: "Compare every plan",
+  },
+  /** Phase 14: recruiter accounts aren't open yet, so the page ends on a sales conversation. */
+  talk: {
+    heading: "Talk to us",
+    text: "Recruiter accounts aren’t open yet. Tell us what you hire for and we’ll reply by email, and bring you in first when they open.",
+    name: "Your name",
+    role: "Your role",
+    roleHelp: "For example, Head of Talent.",
+    organisation: "Company",
+    email: "Work email",
+    message: "Which roles do you hire students for?",
+    submit: "Send",
+    sent: "Thank you. We have your message and will reply by email.",
+    rateLimited: "Too many messages from this network. Try again in an hour.",
   },
   /** The story (decisions 2026-11-01): the reader is a recruiter at Indus Softworks, the sample company, meeting Ayesha's record. */
   orbitAlt: "Proof objects around the headline: a loupe over a record card, a company letter sealed in ink, the verified seal and an endorsement.",
@@ -519,7 +533,7 @@ export const universitiesPage = {
   },
   talk: {
     heading: "Talk to us",
-    text: "Tell us about your university and what you need. We reply by email.",
+    text: "University accounts aren’t open yet. Tell us about your university and what you need, and we’ll reply by email.",
     name: "Your name",
     role: "Your role",
     roleHelp: "For example, Director of Career Services.",
@@ -617,6 +631,58 @@ export const pricingPage = {
     { q: "Does paying change my rank?", a: "No. Rank, tiers, leaderboards and recruiter search never use payment. Student Pro adds conveniences such as PDF export, more CV layouts and seeing who viewed your CV." },
     { q: "How do I pay?", a: "In PKR by card, JazzCash or Easypaisa. University licences are invoiced and paid by bank transfer or a payment link." },
     { q: "Can I cancel?", a: "Yes, any time from Settings. You keep the plan until the end of the period you paid for." },
+  ],
+};
+
+/**
+ * /features (phase 14, decisions 2026-11-02): what students, Student Pro, faculty and organisations
+ * get, with no prices. /pricing redirects here.
+ */
+export const featuresPage = {
+  title: "Features",
+  description: "What Skilient gives students, faculty and organisations. Proof is free for every student, and money never buys rank.",
+  headline: "Proof is free. Everything else is a convenience.",
+  intro: "Every student gets verified skills, rank, tiers and a signed CV for free, always. Student Pro adds conveniences and never touches rank or visibility.",
+  audiences: [
+    { id: "students", label: "Students" },
+    { id: "pro", label: "Student Pro" },
+    { id: "faculty", label: "Faculty" },
+    { id: "organisations", label: "Organisations" },
+  ],
+  students: {
+    heading: "For every student, free",
+    items: [
+      { title: "Skills proved by your work", text: "Connect GitHub and your commits and merged pull requests level each skill. Teammates and faculty confirm the rest.", proof: "GitHub · teammates · faculty" },
+      { title: "Ventures with classmates", text: "Start a project or a startup, recruit a team by role, and finish it together. Completed work stays on your record.", proof: "Roles · team · completion" },
+      { title: "Rank, tiers and leaderboards", text: "Six tiers from Raw to Luminary, earned only by verified work. Leaderboards for your university, department and batch.", proof: "Raw → Luminary" },
+      { title: "A CV that verifies itself", text: "Your CV is signed and refreshed every month. Anyone can check its code at skilient.com/verify.", proof: "Signed · Ed25519" },
+      { title: "Your campus, in one place", text: "A university feed, chat with friends and teammates, events and the people in your batch.", proof: "Feed · chat · events" },
+    ],
+  },
+  pro: {
+    heading: "Student Pro",
+    text: "Conveniences for the CV you already earned. It never changes rank, tiers, leaderboards or who finds you.",
+    items: ["PDF export of your verified CV", "More CV layouts", "See who viewed your CV, and when", "Insights on your posts"],
+    note: "Start Student Pro from Settings → Billing once you have an account. Some universities sponsor it for their students.",
+  },
+  faculty: {
+    heading: "For faculty, free",
+    items: ["Supervise ventures and review the work", "Confirm what each student contributed", "Grade code checks", "Post project ideas students can start from", "Endorse the skills you have seen"],
+    cta: { label: "Join as faculty", href: "/signup?role=faculty" as Route },
+  },
+  organisations: {
+    heading: "For organisations",
+    text: "Recruiter and university accounts aren’t open yet. Tell us what you need and we’ll reply by email.",
+    rows: [
+      { id: "recruiters", title: "Recruiters", text: "Search students by verified skill and see the evidence behind each one.", href: "/recruiters#talk" as Route },
+      { id: "universities", title: "Universities", text: "Dashboards on verified work, student records and events for your campus.", href: "/universities#talk" as Route },
+    ],
+    cta: "Talk to us",
+  },
+  faq: [
+    { q: "Does paying change my rank?", a: "No. Rank, tiers, leaderboards and search never use payment. Student Pro adds conveniences such as PDF export, more CV layouts and seeing who viewed your CV." },
+    { q: "Is Skilient free for students?", a: "Yes. Verification, rank, tiers, leaderboards, ventures and your verified CV are free for every student, always." },
+    { q: "Who can join?", a: "Students and faculty at a Pakistani university that is live on Skilient, with their university email." },
   ],
 };
 

@@ -39,7 +39,7 @@ const NEVER_RECORDED: RegExp[] = [
 /** PRD 10: heatmaps on marketing pages, Home, Opportunities and onboarding. */
 const HEATMAP_PAGES: RegExp[] = [
   /^\/$/,
-  /^\/(recruiters|universities|faculty|pricing|about|request-university|verify)$/,
+  /^\/(recruiters|universities|faculty|features|about|request-university|verify)$/,
   /^\/feed$/,
   /^\/opportunities(\/[^/]+)?$/,
   /^\/onboarding(\/|$)/,

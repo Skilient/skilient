@@ -6,7 +6,8 @@ import type { ReactNode } from "react";
 import { FirstVisitTip } from "@/components/learn/first-visit-tip";
 import { Badge, Button, EmptyState } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { getOpportunities, OPPORTUNITY_TABS, type OpportunityTab } from "@/lib/data/portal";
+import { getOpportunities, visibleOpportunities, visibleOpportunityTabs, type OpportunityTab } from "@/lib/data/portal";
+import { getPortals } from "@/lib/data/portals";
 import { eventTime } from "@/lib/format/time";
 
 export const metadata: Metadata = { title: "Opportunities" };
@@ -64,9 +65,11 @@ const EMPTY: Record<OpportunityTab, { icon: ReactNode; title: string; descriptio
 /** /opportunities/[tab] (PRD 5.25, screen spec 3.10): seven tabs, each with its own teaching empty state. */
 export default async function OpportunitiesPage({ params }: PageProps<"/opportunities/[tab]">) {
   const { tab } = await params;
-  const current = OPPORTUNITY_TABS.find((t) => t.key === tab);
+  // Jobs, contact requests, applications and job fairs wait for their portals (phase 14).
+  const tabs = visibleOpportunityTabs(await getPortals());
+  const current = tabs.find((t) => t.key === tab);
   if (!current) notFound();
-  const items = await getOpportunities(current.key);
+  const items = visibleOpportunities(await getOpportunities(current.key), await getPortals());
   const empty = EMPTY[current.key];
   return (
     <main className="mx-auto flex w-full max-w-[680px] flex-col gap-5 px-[var(--page-gutter)] py-8">
@@ -74,7 +77,7 @@ export default async function OpportunitiesPage({ params }: PageProps<"/opportun
       <FirstVisitTip id="opportunities" />
       <nav aria-label="Opportunity types" className="-mx-1 overflow-x-auto">
         <ul className="flex gap-2 px-1 pb-1">
-          {OPPORTUNITY_TABS.map((t) => (
+          {tabs.map((t) => (
             <li key={t.key}>
               <Link
                 href={`/opportunities/${t.key}` as Route}

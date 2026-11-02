@@ -24,6 +24,8 @@ interface Values {
   campus: string | null;
   visibility: Visibility;
   recruiterVisible: boolean;
+  /** The recruiter portal is open (phase 14); otherwise the visibility switch is hidden. */
+  recruiterPortal: boolean;
   lookingFor: LookingFor[];
 }
 
@@ -132,7 +134,7 @@ export function ProfileSettingsForm({
         </Section>
 
         <Section title="Opportunities">
-          <LookingForFields defaultValues={values.lookingFor} defaultRecruiterVisible={values.recruiterVisible} />
+          <LookingForFields defaultValues={values.lookingFor} defaultRecruiterVisible={values.recruiterVisible} showRecruiter={values.recruiterPortal} />
         </Section>
 
         <div className="sticky bottom-0 -mx-[var(--page-gutter)] flex flex-wrap items-center justify-end gap-3 border-t border-border-default bg-bg-page/95 px-[var(--page-gutter)] py-3 backdrop-blur-sm">

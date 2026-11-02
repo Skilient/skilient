@@ -2,6 +2,9 @@
 -- teammate of Acme, S1..S4 are NUTECH students, ST is accounts staff (aal2).
 begin;
 select plan(208);
+-- Phase 14 turned the recruiter and university portals off by flag; this file tests them open.
+insert into public.platform_config (key, version, value, reason)
+values ('portals.enabled', 1000, '{"recruiter": true, "university": true, "faculty": true}', 'pgTAP: portals open');
 
 insert into auth.users (id, email, raw_user_meta_data) values
   ('95000000-0000-0000-0000-0000000000a1', 'r1@acmecorp.com', '{"role":"recruiter","full_name":"Rita Recruiter"}'),

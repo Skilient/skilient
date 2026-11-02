@@ -2,6 +2,9 @@
 -- CSV, A owns a venture with B and C, D is another NUTECH student, S is accounts staff (aal2).
 begin;
 select plan(96);
+-- Phase 14 turned the recruiter and university portals off by flag; this file tests them open.
+insert into public.platform_config (key, version, value, reason)
+values ('portals.enabled', 1000, '{"recruiter": true, "university": true, "faculty": true}', 'pgTAP: portals open');
 
 insert into auth.users (id, email, raw_user_meta_data) values
   ('94000000-0000-0000-0000-0000000000a1', 't1@nutech.edu.pk', '{"role":"faculty","full_name":"Dr One"}'),

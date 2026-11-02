@@ -17,7 +17,7 @@ export interface ClientEventProps {
   uni_not_live: { source: "hero" | "final"; known: boolean };
   /** "Request your university" was sent. */
   uni_requested: { known: boolean };
-  /** A call to action on an organisation page (/recruiters, /universities, /faculty, /pricing, /about). */
+  /** A call to action on an organisation page (/recruiters, /universities, /faculty, /features, /about). */
   org_cta_click: { cta: string; page: string };
 }
 

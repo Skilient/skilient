@@ -6,6 +6,7 @@ import type { LookingFor, Visibility } from "@/lib/profile/options";
 import { publicImageUrl } from "@/lib/storage";
 import { createClient } from "@/lib/supabase/server";
 import { ProfileSettingsForm } from "./profile-settings-form";
+import { getPortals } from "@/lib/data/portals";
 
 export const metadata: Metadata = { title: "Edit profile" };
 
@@ -50,6 +51,7 @@ export default async function ProfileSettingsPage() {
             campus: p.campus,
             visibility: p.visibility as Visibility,
             recruiterVisible: p.recruiter_visible,
+            recruiterPortal: (await getPortals()).recruiter,
             lookingFor: p.looking_for as LookingFor[],
           }}
         />

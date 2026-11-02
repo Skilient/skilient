@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { CtaLink, OrgHero } from "@/components/marketing/org-parts";
-import { PlanTable } from "@/components/marketing/plan-table";
 import { Section, SectionHeading } from "@/components/marketing/sections/section";
 import type { OrbitItem } from "@/components/marketing/story/orbit";
 import { DashboardPanel, EcospherePanel, FairPanel, ProPanel, RecordsPanel } from "@/components/marketing/story/panels-universities";
 import { PinnedStory } from "@/components/marketing/story/pinned-story";
 import { TalkToUsForm } from "@/components/marketing/talk-to-us-form";
-import { pricingPage, universitiesPage as copy } from "@/content/marketing";
-import { getPublicPlans } from "@/lib/data/marketing";
+import { universitiesPage as copy } from "@/content/marketing";
 import type { ObjectName } from "@/lib/marketing/objects";
 import { turnstileSiteKey } from "@/lib/security/turnstile";
 
@@ -32,10 +30,10 @@ const OBJECTS: Partial<Record<Id, ObjectName>> = { ecosphere: "campus", dashboar
 /**
  * /universities (PRD 5.1, 5.23; decisions 2026-11-01): the reader runs careers at Ayesha's
  * university (a sample). Ecosphere, dashboards, records, fairs and Student Pro as pinned chapters,
- * then the licences from `plans` and "Talk to us" (a sales lead in /ops/leads).
+ * then "Talk to us" (a sales lead in /ops/leads). University accounts aren't open yet (phase 14), so
+ * the licence table waits with them.
  */
-export default async function UniversitiesPage() {
-  const plans = await getPublicPlans();
+export default function UniversitiesPage() {
   return (
     <>
       <OrgHero
@@ -63,16 +61,6 @@ export default async function UniversitiesPage() {
         }))}
       />
 
-      <Section id="plans" labelledBy="plans-title" className="epilogue" step="Epilogue · Licences">
-        <div className="flex flex-col gap-3">
-          <SectionHeading id="plans-title">{copy.plans.heading}</SectionHeading>
-          <p className="max-w-[62ch] text-body-lg text-text-secondary">{copy.plans.text}</p>
-        </div>
-        <div className="mt-10">
-          <PlanTable id="universities" plans={plans.filter((p) => p.audience === "university")} free={pricingPage.universities.free} pinned="growth" />
-        </div>
-      </Section>
-
       <Section id="talk" labelledBy="talk-title" className="epilogue" step="Epilogue · Talk to us">
         <div className="grid gap-10 md:grid-cols-12 md:gap-6">
           <div className="flex flex-col gap-4 md:col-span-4">
@@ -80,7 +68,7 @@ export default async function UniversitiesPage() {
             <p className="text-body-lg text-text-secondary">{copy.talk.text}</p>
           </div>
           <div className="md:col-span-7 md:col-start-6">
-            <TalkToUsForm siteKey={turnstileSiteKey()} />
+            <TalkToUsForm siteKey={turnstileSiteKey()} kind="university" />
           </div>
         </div>
       </Section>

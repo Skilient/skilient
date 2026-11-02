@@ -1,14 +1,13 @@
-import type { Metadata, Route } from "next";
-import Link from "next/link";
+import type { Metadata } from "next";
 import { CtaLink, OrgHero } from "@/components/marketing/org-parts";
-import { PlanTable } from "@/components/marketing/plan-table";
 import { Section, SectionHeading } from "@/components/marketing/sections/section";
 import type { OrbitItem } from "@/components/marketing/story/orbit";
 import { ContactPanel, EvidencePanel, HirePanel, SearchPanel, TrustPanel } from "@/components/marketing/story/panels-recruiters";
 import { PinnedStory } from "@/components/marketing/story/pinned-story";
 import { LitLines } from "@/components/marketing/story/rules";
-import { nav, pricingPage, recruitersPage as copy } from "@/content/marketing";
-import { getPublicPlans, getViewer } from "@/lib/data/marketing";
+import { TalkToUsForm } from "@/components/marketing/talk-to-us-form";
+import { recruitersPage as copy } from "@/content/marketing";
+import { turnstileSiteKey } from "@/lib/security/turnstile";
 
 export const metadata: Metadata = { title: copy.title, description: copy.description, alternates: { canonical: "/recruiters" } };
 
@@ -25,16 +24,12 @@ const OBJECTS = ["loupe", "rosette", "letter", "booth", "seal"] as const;
 /**
  * /recruiters (PRD 5.1, 5.20; decisions 2026-11-01): the reader is a recruiter at the sample
  * company meeting Ayesha's record. Search, evidence, contact, hire and trust as pinned chapters,
- * the rules of contact, then the recruiter plans from `plans`.
+ * the rules of contact, then "Talk to us": recruiter accounts aren't open yet (phase 14, the portal
+ * is off by flag), so the page ends on a sales lead in /ops/leads instead of plans and a signup.
  */
-export default async function RecruitersPage() {
-  const [viewer, plans] = await Promise.all([getViewer(), getPublicPlans()]);
-  const cta = viewer ? (
-    <CtaLink href={viewer.home} testId="org-cta" track="open_app">
-      {viewer.role === "recruiter" ? copy.signedIn : nav.open}
-    </CtaLink>
-  ) : (
-    <CtaLink href={copy.cta.href} testId="org-cta" track="recruiter_signup">
+export default function RecruitersPage() {
+  const cta = (
+    <CtaLink href={copy.cta.href} testId="org-cta" track="talk_to_us">
       {copy.cta.label}
     </CtaLink>
   );
@@ -49,19 +44,15 @@ export default async function RecruitersPage() {
 
       <LitLines id="contact-rules-title" heading={copy.rules.heading} lines={copy.rules.lines} />
 
-      <Section id="plans" labelledBy="plans-title" className="epilogue" step="Epilogue · Plans">
-        <div className="flex flex-col gap-3">
-          <SectionHeading id="plans-title">{copy.plans.heading}</SectionHeading>
-          <p className="max-w-[62ch] text-body-lg text-text-secondary">{copy.plans.text}</p>
-        </div>
-        <div className="mt-10">
-          <PlanTable id="recruiters" plans={plans.filter((p) => p.audience === "org")} free={pricingPage.recruiters.explore} pinned="growth" />
-        </div>
-        <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
-          {cta}
-          <Link href={"/pricing#recruiters" as Route} className="neu-btn-3 text-body">
-            {copy.plans.link}
-          </Link>
+      <Section id="talk" labelledBy="talk-title" className="epilogue" step="Epilogue · Talk to us">
+        <div className="grid gap-10 md:grid-cols-12 md:gap-6">
+          <div className="flex flex-col gap-4 md:col-span-4">
+            <SectionHeading id="talk-title">{copy.talk.heading}</SectionHeading>
+            <p className="text-body-lg text-text-secondary">{copy.talk.text}</p>
+          </div>
+          <div className="md:col-span-7 md:col-start-6">
+            <TalkToUsForm siteKey={turnstileSiteKey()} kind="recruiter" />
+          </div>
         </div>
       </Section>
     </>

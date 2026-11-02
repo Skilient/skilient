@@ -15,6 +15,7 @@ import { ageLabel } from "@/lib/format/time";
 import { getMyRecordViewers } from "@/lib/data/uni";
 import { ADMIN_ROLE_LABELS } from "@/lib/uni/constants";
 import { getBlockedCompanies, getProfileViewers, getRecruiterPrefs } from "@/lib/features/privacy/data";
+import { getPortals } from "@/lib/data/portals";
 import { VISIBILITY } from "@/lib/profile/options";
 import { createClient } from "@/lib/supabase/server";
 
@@ -44,16 +45,18 @@ export default async function PrivacyCentrePage() {
   const user = await getCurrentUser();
   if (!user) redirect("/signin?next=/settings/privacy");
   const supabase = await createClient();
+  // Recruiter and university parts wait for their portals (phase 14); nothing of theirs is read meanwhile.
+  const portals = await getPortals();
   const [{ data: profile }, { data: cv }, { count: links }, views, blocks, companies, viewers, prefs, recordViewers] = await Promise.all([
     supabase.from("profiles").select("leaderboard_opt_out, visibility, recruiter_visible, looking_for").eq("user_id", user.id).maybeSingle(),
     supabase.from("cv_settings").select("visibility").eq("user_id", user.id).maybeSingle(),
     supabase.from("cv_share_links").select("id", { count: "exact", head: true }).eq("user_id", user.id).is("revoked_at", null),
     getCvViewsLast30Days(user.id),
     getBlocks(),
-    getBlockedCompanies(),
-    getProfileViewers(),
-    getRecruiterPrefs(),
-    getMyRecordViewers().catch(() => ({ locked: true as const })),
+    portals.recruiter ? getBlockedCompanies() : [],
+    portals.recruiter ? getProfileViewers() : null,
+    portals.recruiter ? getRecruiterPrefs() : null,
+    portals.university ? getMyRecordViewers().catch(() => ({ locked: true as const })) : null,
   ]);
   const visibility = VISIBILITY.find((o) => o.value === profile?.visibility) ?? VISIBILITY[0];
   const looking = (profile?.looking_for ?? []) as string[];
@@ -74,6 +77,8 @@ export default async function PrivacyCentrePage() {
         </p>
       </Section>
 
+      {portals.recruiter && prefs && viewers ? (
+        <>
       <Section id="recruiter-h" title="Recruiter visibility">
         <p className="px-5 text-body-sm text-text-secondary" data-testid="recruiter-visibility">
           <strong className="text-text-primary">{profile?.recruiter_visible ? "On." : "Off."}</strong>{" "}
@@ -125,6 +130,8 @@ export default async function PrivacyCentrePage() {
           <p className="px-5 pb-4 text-body-sm text-text-secondary">You haven&apos;t blocked a company. Open a company page and choose Block to hide yourself from everyone who works there.</p>
         )}
       </Section>
+        </>
+      ) : null}
 
       <Section id="leaderboard-h" title="Leaderboards">
         <LeaderboardToggle initialOptOut={profile?.leaderboard_opt_out ?? false} />
@@ -148,6 +155,7 @@ export default async function PrivacyCentrePage() {
         </p>
       </Section>
 
+      {recordViewers ? (
       <Section id="record-h" title="Who at my university viewed my record">
         <p className="px-5 pb-2 text-body-sm text-text-secondary">
           Universities on a Growth or Campus licence can open individual student records (covered by the user agreement), and every
@@ -170,6 +178,7 @@ export default async function PrivacyCentrePage() {
           </ul>
         )}
       </Section>
+      ) : null}
 
       <Section id="blocked-h" title="Blocked people">
         {blocks.length ? (

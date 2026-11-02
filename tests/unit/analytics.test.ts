@@ -66,7 +66,7 @@ describe("what PostHog may see (PRD 10)", () => {
   });
 
   it("keeps heatmaps on marketing pages, Home, Opportunities and onboarding only", () => {
-    for (const path of ["/", "/recruiters", "/pricing", "/feed", "/opportunities", "/opportunities/jobs", "/onboarding/3"]) {
+    for (const path of ["/", "/recruiters", "/features", "/feed", "/opportunities", "/opportunities/jobs", "/onboarding/3"]) {
       expect(isHeatmapPage(path), path).toBe(true);
     }
     for (const path of ["/explore", "/chat", "/post/1", "/opportunities/jobs/1", "/me"]) {

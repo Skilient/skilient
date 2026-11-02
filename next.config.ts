@@ -47,6 +47,8 @@ const nextConfig: NextConfig = {
       { source: "/startups", destination: "/ventures?type=startup", permanent: true },
       { source: "/startups/new", destination: "/ventures/new?type=startup", permanent: true },
       { source: "/startups/:path*", destination: "/ventures/:path*", permanent: true },
+      // Phase 14 (decisions 2026-11-02): no prices on the public site; /features lists what each audience gets.
+      { source: "/pricing", destination: "/features", permanent: true },
     ];
   },
 };

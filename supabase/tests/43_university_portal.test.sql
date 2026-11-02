@@ -3,6 +3,9 @@
 -- ST accounts staff; MO a moderator; X1 an official at another university.
 begin;
 select * from no_plan();
+-- Phase 14 turned the recruiter and university portals off by flag; this file tests them open.
+insert into public.platform_config (key, version, value, reason)
+values ('portals.enabled', 1000, '{"recruiter": true, "university": true, "faculty": true}', 'pgTAP: portals open');
 
 create function pg_temp.as_user(p_id text, p_aal text default 'aal2') returns void language plpgsql as $$
 begin

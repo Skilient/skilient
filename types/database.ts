@@ -4909,6 +4909,9 @@ isOneToOne: false
 "pinned_university_announcement":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
+"portals_state":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "post_cards":
 { Args: { "p_ids": (string)[] }; Returns: {
               "audience": Database["public"]['Enums']["post_audience"],"author_avatar_path": string,"author_id": string,"author_muted": boolean,"author_name": string,"author_username": string,"body": string,"can_edit": boolean,"comment_count": number,"created_at": string,"edited_at": string,"event": Json,"id": string,"is_mine": boolean,"link": Json,"media": Json,"pinned_until": string,"poll": Json,"stage": Database["public"]['Enums']["post_stage"],"type": Database["public"]['Enums']["post_type"],"venture": Json

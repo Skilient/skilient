@@ -4,13 +4,18 @@ import { useState } from "react";
 import { Checkbox, Switch } from "@/components/ui";
 import { LOOKING_FOR, type LookingFor } from "@/lib/profile/options";
 
-/** PRD 5.27 step 5: what you're looking for, plus recruiter visibility. */
+/**
+ * PRD 5.27 step 5: what you're looking for, plus recruiter visibility. While the recruiter portal
+ * is off (phase 14) the switch is hidden and the saved value rides along unchanged.
+ */
 export function LookingForFields({
   defaultValues,
   defaultRecruiterVisible,
+  showRecruiter = true,
 }: {
   defaultValues: LookingFor[];
   defaultRecruiterVisible: boolean;
+  showRecruiter?: boolean;
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set(defaultValues));
   const [recruiters, setRecruiters] = useState(defaultRecruiterVisible);
@@ -40,6 +45,9 @@ export function LookingForFields({
           </div>
         ))}
       </fieldset>
+      {!showRecruiter ? (
+        defaultRecruiterVisible ? <input type="hidden" name="recruiterVisible" value="on" /> : null
+      ) : (
       <div className="flex items-start justify-between gap-4 rounded-lg border border-border-default p-4">
         <div>
           <label htmlFor="recruiterVisible" className="text-body font-semibold">
@@ -58,6 +66,7 @@ export function LookingForFields({
           aria-describedby="recruiterVisible-help"
         />
       </div>
+      )}
     </div>
   );
 }

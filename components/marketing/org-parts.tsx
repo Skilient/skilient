@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 import { Orbit, type OrbitItem } from "./story/orbit";
 
 /**
- * Parts shared by /recruiters, /universities, /faculty, /pricing and /about
+ * Parts shared by /recruiters, /universities, /faculty, /features and /about
  * (docs/marketing-design-plan.md B7). Each page composes its own layout from these.
  */
 

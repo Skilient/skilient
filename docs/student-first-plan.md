@@ -45,7 +45,7 @@ Every step starts with someone else's action that needs an account to receive.
   - `validate_signup` refuses recruiter and official signups.
   - Recruiter bits are hidden on student surfaces.
   - Code stays; switching the flag back restores the portals.
-  - Existing recruiter and university-official accounts are deleted in phase 14 slice 1 (Ahmed, 2026-11-02).
+  - Existing recruiter and university-official accounts are deleted in phase 14 (Ahmed, 2026-11-02).
 - **Faculty** stays live as it is (ideas, supervision, reviews, code checks, endorsements, judging) and gets the redesign. New faculty work waits for Ahmed's direction (question 10).
 - **Marketing.**
   - `/recruiters` and `/universities` keep their URLs; their calls to action become "Talk to us" (`submit_sales_lead` → `/ops/leads`).
@@ -80,15 +80,15 @@ The app adopts the neumorphism brief from the marketing branch (`claude/wonderfu
 
 ## Phases
 
-Five build phases, one slice per session. The detail and "done when" lines are in `build-plan.md`.
+Five build phases, **each built in one go: one session and one PR per phase, no slices** (Ahmed, 2026-11-02). The detail and "done when" lines are in `build-plan.md`.
 
-| Phase | Slices |
+| Phase | What it builds |
 | --- | --- |
-| 14 New look | 1. Portals flag, marketing routes, `/features`, delete recruiter and official accounts · 2. Design system in the app · 3–4. Shell and core screens |
-| 15 Societies and events | 1. Societies · 2. Events, registration, tickets · 3. Check-in, close-out, export · 4. Paid tickets (receipt upload and review) |
-| 16 The Record | 1. Entries, signing, verify, issuing, formula v2 · 2. `/me/record`, PDFs, share, CV, claim by email, corrections · 3. Landing story update |
-| 17 Growth | 1. Paths and proof tasks · 2. Skill swap |
-| 18 Community | 1. Openings · 2. Yearbook · 3. Share-to-chat, people you may know, PWA and push |
+| 14 New look | Portals flag, marketing routes, `/features`, delete recruiter and official accounts · Design system in the app · Shell and core screens |
+| 15 Societies and events | Societies · Events, registration, tickets · Check-in, close-out, export · Paid tickets (receipt upload and review) |
+| 16 The Record | Entries, signing, verify, issuing, formula v2 · `/me/record`, PDFs, share, CV, claim by email, corrections · Landing story update |
+| 17 Growth | Paths and proof tasks · Skill swap |
+| 18 Community | Openings · Yearbook · Share-to-chat, people you may know, PWA and push |
 | 13 (rest) | Load test, design gates on the new design, launch gate |
 
 **Checklist for every new table or feature:**

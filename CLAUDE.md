@@ -61,6 +61,7 @@ Quality rules above still apply in full; these rules only cut waste.
 
 **Building and testing**
 - One slice per session. When a slice is merged, the next slice starts in a fresh session.
+- Student-first track (phases 14–18): no slices. Each phase is built whole in one session and one PR (Ahmed, 2026-11-02).
 - Locally, run typecheck, lint and only the tests for the code you changed. The full suite runs in CI.
 - Prefer fewer, larger slices when a phase's pieces are small.
 

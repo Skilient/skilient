@@ -2021,3 +2021,4 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   - 21: PKR 100 to 10,000 per ticket. The "3 paid events until the first payout" limit is dropped with the payouts.
   - 22: delete recruiter and official accounts through `private.delete_account` in phase 14 slice 1, with counts listed in the pull request.
   - No questions are open on the track.
+- **2026-11-02 (Ahmed): no slices on the Student-first track.** Each of phases 14–18 is built whole in one session and one pull request, in order; the build-plan boxes are its parts, not separate sessions. Supersedes the "one slice per session" split in the plan and the "phase N slice M" references above (CLAUDE.md updated).

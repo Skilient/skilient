@@ -545,10 +545,10 @@ GitHub, payments) to the coming-soon page.
 
 ## Student-first track (2026-11-02)
 
-- [ ] **Agreement and privacy notice for paid tickets** (phase 15 slice 4): with counsel, add that students pay societies
+- [ ] **Agreement and privacy notice for paid tickets** (phase 15): with counsel, add that students pay societies
       directly, that Skilient isn't a party to ticket payments or refunds, and that payment receipts are stored for 90 days
       after the event. This needs a new agreement version (re-accept).
-- [ ] **Web push keys** (phase 18 slice 3): generate a VAPID key pair; the private key goes in Vault as `web_push_vapid_private`
+- [ ] **Web push keys** (phase 18): generate a VAPID key pair; the private key goes in Vault as `web_push_vapid_private`
       and in `scripts/restore/reseed-vault.sql`, the public key in `NEXT_PUBLIC_VAPID_PUBLIC_KEY`.
 - [ ] **Storage plan:** society documents, payment receipts (deleted 90 days after each event), event covers, yearbook photos and
       Record PDFs add to storage; check the Supabase plan's quota before the closed beta.

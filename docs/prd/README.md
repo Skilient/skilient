@@ -2,6 +2,8 @@
 
 The PRD is split into one file per section so a session reads only what it needs. Where a feature section (5.x) and section 6 (data model) differ, the feature section wins. Where 5.28 differs from 5.6/5.7/5.9/5.15, 5.28 wins. 5.27 replaces 5.3. "Screen spec tab" in the text means `../screen-spec.md`.
 
+**Student-first scope (2026-11-02):** 5.30–5.34 win over older sections where they differ (events are society-only, Opportunities is now Openings, share-to-chat and web push are allowed). While the recruiter and university portals are switched off, 5.20, 5.23 and the organisation parts of 5.24 describe dormant features. Overview and rejected ideas: `../student-first-plan.md`.
+
 | File | Section |
 | --- | --- |
 | [00-title.md](00-title.md) | Title and date |
@@ -41,6 +43,11 @@ The PRD is split into one file per section so a session reads only what it needs
 | [05-27-signup-onboarding-and-learning-the-platform.md) | 5.27 Signup, onboarding and learning the platform (decided 2026-09-25) |
 | [05-28-feed-micro-survey-ventures-and-chat-detail.md) | 5.28 Feed, micro-survey, ventures and chat — detail (decided 2026-09-25) |
 | [05-29-alumni-account.md](05-29-alumni-account.md) | 5.29 Alumni account lifecycle (proposed 2026-10-13) |
+| [05-30-the-record.md](05-30-the-record.md) | 5.30 The Record: the signed co-curricular record (decided 2026-11-02) |
+| [05-31-societies-and-events.md](05-31-societies-and-events.md) | 5.31 Societies and society events (decided 2026-11-02) |
+| [05-32-paths-and-proof-tasks.md](05-32-paths-and-proof-tasks.md) | 5.32 Paths, proof tasks and the skill swap (decided 2026-11-02) |
+| [05-33-yearbook.md](05-33-yearbook.md) | 5.33 Digital yearbook (decided 2026-11-02) |
+| [05-34-openings-sharing-and-reach.md](05-34-openings-sharing-and-reach.md) | 5.34 Openings, share-to-chat, people you may know and push (decided 2026-11-02) |
 | [06-data-model.md](06-data-model.md) | 6. Data model |
 | [07-architecture-and-tech-stack.md](07-architecture-and-tech-stack.md) | 7. Architecture and tech stack |
 | [08-security-privacy-and-rls.md](08-security-privacy-and-rls.md) | 8. Security, privacy and RLS |

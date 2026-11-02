@@ -7,6 +7,7 @@ Skilient is a university-gated social platform for Pakistani students: they prov
 - `docs/prd/` — the PRD, one file per section. **Start with `docs/prd/README.md`** (index). Read only the sections the current phase lists.
 - `docs/screen-spec.md` — every screen: route, layout, key elements, states, and the two design gates.
 - `docs/build-plan.md` — the phases, in order, each with its PRD sections and "done when" checks. **This is the source of truth for what to build next.**
+- `docs/student-first-plan.md` — **the current scope (2026-11-02): students first.** Recruiter and university portals are off by flag, faculty stays; The Record, societies and events, paths, the yearbook and Openings come next (phases 14–18). Read it before planning any feature, and don't re-propose its rejected list.
 - `docs/decisions.md` — every product decision so far, dated, with reasons. Append new ones.
 - `docs/setup-checklist.md` — accounts and keys a human must create; never invent values.
 - `brand/` — final logo SVGs (Editorial: ink #0E0D0B, vermillion #C03910). Copy into `public/brand/` in phase 0.
@@ -25,7 +26,7 @@ Category selects security@ or notify@ with display name Skilient. Auth SMTP is d
 ## Never
 
 - No AI/LLM API anywhere in the product (no Claude, OpenAI, etc.). Summaries, questions and grading are templates or humans.
-- No likes, reactions, saves or share-to-chat on posts. No video anywhere. No public profile pages.
+- No likes, reactions or saves on posts (share-to-chat is allowed, never counted). No group chats beyond venture chats. No video anywhere. No public profile pages.
 - Never sell rank or visibility; never order search, leaderboards or "For you" by payment.
 - No service-role key in pages, client code, or server actions acting for a user (only Edge Functions, jobs, billing worker).
 - No table without RLS (default deny) and a pgTAP refusal test. No `getSession()` in server code; use `getUser()`.

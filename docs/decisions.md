@@ -1973,3 +1973,25 @@ Append-only. One dated entry per product decision, with the reason. Carried over
 - **Default section order:** Summary, Projects, Open-source work, Skills, Endorsements, Credentials, Education. Saved settings still on the old default order move to the new one; chosen orders stay.
 - **Issue date** prints as the day in Pakistan, matching the verify page (it was the UTC day).
 - Migration `20261109000000_cv_recruiter_layout.sql`; signed CVs are untouched and render in the new layout; the new fields arrive at each student's next refresh.
+
+## Student-first scope (2026-11-02)
+
+- **Rule (Ahmed, 2026-11-02):** Skilient focuses on students only for now, aiming to be the portal a student can't do university without ("if a university student isn't on Skilient, they aren't in university"). Plan: `docs/student-first-plan.md`; features PRD 5.30–5.34; screens `screen-spec.md` §3.14; phases 14–18 in `build-plan.md`; open questions `docs/student-first-questions.md` (phases build on their defaults until answered). Supersedes PRD 4's "launch everything at once" until Ahmed says otherwise.
+- **The Record is the headline feature (PRD 5.30):** a signed co-curricular transcript. Issuers are verified societies and Skilient itself (not faculty, not outside organisations). Issuers issue only through Skilient, so the entry is the certificate and receiving it needs an account; walk-ins are added by university email and claim after signup. Why: co-curricular certificates are fakeable Canva PDFs today, every student collects them, and each event pulls its attendees onto the platform.
+- **"What do I even learn?" is answered by Paths plus proof tasks (PRD 5.32):** paths from the order seniors proved skills (aggregate, 10 or more seniors, else a config starter path), and a staff-written task per next skill verified by GitHub, then a peer, then a code check. No AI.
+- **Social additions:** a digital yearbook for the final year (owner-approved notes, kind superlatives with secret votes, frozen at graduation; PRD 5.33), a skill swap ledger (learner-confirmed sessions become a Taught entry on the teacher's Record; PRD 5.32), share-to-chat, and people you may know (PRD 5.34).
+- **Share-to-chat is allowed** into DMs and venture chats (supersedes 5.28 and the CLAUDE.md "Never" line). Shares are never counted or shown. Likes, reactions and saves on posts stay out.
+- **No group chats** beyond venture chats; societies have no chat.
+- **Events are society-only** (supersedes 5.28's "Event: anyone verified"). Past student event posts stay readable with their RSVPs. Society events get full tooling: stepper creation, form builder, ticket types, waitlist, teams, signed offline tickets, scanner check-in, close-out that issues Record entries (PRD 5.31). Paid tickets are out at launch.
+- **Opportunities is renamed Openings** (supersedes the 5.25 hub): one page of category cards across the page (no carousels), each featuring its latest opening; a card opens its category in detail. The campus pulse ("This week") lives there, with no new email.
+- **Web push and an installable app are allowed** (supersedes 5.25's "no installable app, no push"), offered after a first meaningful action.
+- **Portals:** recruiter and university signup, routes and nav go off behind `platform_config` `portals.enabled`; code and data stay. Faculty stays live as it is and gets the redesign; new faculty work waits for Ahmed's direction.
+- **Marketing routes:** `/recruiters` and `/universities` keep their URLs (indexed) with "Talk to us" CTAs into `submit_sales_lead`; `/pricing` redirects (308) to a new `/features` page that lists features and a contact CTA, with no prices; organisation signup and claim routes redirect to `#talk`.
+- **The app adopts the neumorphism brief** from the marketing branch (`claude/wonderful-feynman-rmrfgy`), superseding the 2026-10-31 line "the app, portals and /ops keep PRD 9". One system, two densities: the `.neu` tokens become the root tokens with PRD 9 names re-pointed, the app uses smaller radii and shadows, Space Grotesk replaces Barlow (the CV keeps Barlow), and 3D renders appear only at earned moments. `/ops` keeps PRD 9 through a `.classic` scope.
+- **Phases:** five build phases (14 New look, 15 Societies and events, 16 The Record, 17 Growth, 18 Community), then the rest of phase 13. Phase 13's design gates run on the new design.
+- **Rejected (Ahmed, 2026-11-02); don't propose again:**
+  - spaces (university, department, batch, study group), course spaces, My Day, timetable, course resources, campus Q&A
+  - group chats, the "now" status line, fresher buddy
+  - campus board (buy, sell, lost and found), attendance tracker
+  - official course spaces, office hours, the FYP hub, research and lab openings, recommendation letters, society advisor, class pulse
+  - internship logbook, freelance proof, group-work receipts

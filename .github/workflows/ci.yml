@@ -224,6 +224,13 @@ jobs:
         run: pnpm test:e2e --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           E2E_EXPECT_HEALTHY: "1"
+      - name: E2E with the recruiter and university portals switched on (@portals)
+        # Phase 14: those portals are off by flag; their specs run after the main pass, with the flag
+        # switched on by the global setup and off again by the teardown (tests/e2e/portals-setup.ts).
+        if: always()
+        run: pnpm test:e2e:portals --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        env:
+          E2E_EXPECT_HEALTHY: "1"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:

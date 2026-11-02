@@ -14,6 +14,7 @@
     "test:worker": "vitest run --config vitest.worker.config.mts",
     "test:ats": "vitest run --config vitest.ats.config.mts",
     "test:e2e": "playwright test",
+    "test:e2e:portals": "E2E_PORTALS=1 playwright test --pass-with-no-tests",
     "marketing:captures": "playwright test -c playwright.captures.config.ts",
     "db:start": "supabase start",
     "db:reset": "supabase db reset",

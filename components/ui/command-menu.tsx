@@ -60,7 +60,14 @@ export function CommandMenu({ items, searchHref = "/explore", className }: { ite
   }, []);
 
   const results = useMemo(() => {
-    const found = items.filter((i) => matches(i, query.trim()));
+    const q = query.trim().toLowerCase();
+    // A label that starts with the words beats one that contains them, which beats a description match.
+    const rank = (i: CommandItem) => (!q ? 0 : i.label.toLowerCase().startsWith(q) ? 0 : i.label.toLowerCase().includes(q) ? 1 : 2);
+    const found = items
+      .filter((i) => matches(i, q))
+      .map((item, index) => ({ item, index, r: rank(item) }))
+      .sort((a, b) => a.r - b.r || a.index - b.index)
+      .map((x) => x.item);
     const search: CommandItem[] = query.trim()
       ? [{ key: "search", label: `Search for “${query.trim()}”`, description: "People, ventures and skills in Explore", href: `${searchHref}?q=${encodeURIComponent(query.trim())}`, group: "Search" }]
       : [];
@@ -74,8 +81,10 @@ export function CommandMenu({ items, searchHref = "/explore", className }: { ite
     router.push(item.href as Route);
   };
 
+  // Grouped by place while browsing; one ranked list while searching, so the arrows follow what you see.
+  const searching = query.trim().length > 0;
   const groups = results.reduce<Record<string, { item: CommandItem; index: number }[]>>((acc, item, index) => {
-    (acc[item.group] ??= []).push({ item, index });
+    (acc[searching ? "Results" : item.group] ??= []).push({ item, index });
     return acc;
   }, {});
 

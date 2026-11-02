@@ -9,7 +9,7 @@ import { adminClient, currentAgreementVersion, codeFrom, createStudent, hasBacke
  * student, who then chats with the company; jobs need pay, applications move through the pipeline;
  * a student can hide from one company. Key screens are checked with axe in both themes.
  */
-test.describe("Recruiter portal", () => {
+test.describe("Recruiter portal", { tag: "@portals" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
   test.beforeEach(({}, info) => {
     test.skip(info.project.name !== "desktop", "account flows run once, on desktop");

@@ -113,7 +113,7 @@ test.describe("CSP sweep", () => {
     await sweep(await signedIn(browser, faculty), "faculty", {});
   });
 
-  test("recruiter pages", async ({ browser }) => {
+  test("recruiter pages", { tag: "@portals" }, async ({ browser }) => {
     test.setTimeout(300_000);
     const db = adminClient();
     const domain = `sweep-${Math.random().toString(36).slice(2, 8)}.example.com`;
@@ -129,7 +129,7 @@ test.describe("CSP sweep", () => {
     await sweep(await signedIn(browser, recruiter, true), "recruiter", { orgSlug: slug });
   });
 
-  test("university official pages", async ({ browser }) => {
+  test("university official pages", { tag: "@portals" }, async ({ browser }) => {
     test.setTimeout(300_000);
     const db = adminClient();
     const { data } = await db.from("university_domains").select("university_id, domain, universities!inner(owner_id)").eq("kind", "both").is("universities.owner_id", null).limit(50);

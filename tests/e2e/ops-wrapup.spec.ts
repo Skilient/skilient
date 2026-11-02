@@ -7,7 +7,7 @@ import { adminClient, currentAgreementVersion, createStudent, hasBackend, signIn
  * accounts staff can open; accounts staff onboard a university from the list (assign an owner
  * who has two-factor, add a domain) and read its tabs. axe in both themes on each new page.
  */
-test.describe("Org documents and university onboarding", () => {
+test.describe("Org documents and university onboarding", { tag: "@portals" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
   test.beforeEach(({}, info) => {
     test.skip(info.project.name !== "desktop", "account flows run once, on desktop");

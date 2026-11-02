@@ -2,7 +2,7 @@ import type { Route } from "next";
 import Link from "next/link";
 import { EndorseSheet } from "@/components/endorsements/endorse-sheet";
 import { TeamControls } from "@/components/ventures/team-controls";
-import { Avatar, TierBadge } from "@/components/ui";
+import { Avatar, TeamTray, TierBadge } from "@/components/ui";
 import { getEndorseOptions } from "@/lib/data/endorsements";
 import { getTiers } from "@/lib/data/tiers";
 import { getVenture } from "@/lib/data/ventures";
@@ -28,15 +28,20 @@ export default async function VentureTeamPage({ params, searchParams }: PageProp
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
+        {/* The team tray: the owner in front, open places as pressed holes (Synergy). */}
+        <TeamTray
+          members={[...v.team].sort((a, b) => Number(b.isOwner) - Number(a.isOwner)).map((m) => ({ name: m.fullName, src: m.avatarUrl, tier: tiers.get(m.userId) ?? null, role: TEAM_ROLE_LABELS[m.teamRole] }))}
+          open={Math.max(v.teamSize - v.counts.members, 0)}
+        />
         <p className="text-body-sm text-text-secondary">
           {v.counts.members} of {v.teamSize} members. A venture has at most 6.
         </p>
         {endorseOptions ? <EndorseSheet ventureId={v.id} options={endorseOptions} defaultOpen={endorse === "1"} /> : null}
       </div>
-      <ul className="flex flex-col divide-y divide-border-default rounded-lg border border-border-default">
+      <ul className="neu-tile flex flex-col divide-y divide-border-muted">
         {v.team.map((m) => (
           <li key={m.userId} className="flex flex-wrap items-center gap-3 p-4">
-            <Avatar name={m.fullName} src={m.avatarUrl} size="md" />
+            <Avatar name={m.fullName} src={m.avatarUrl} size="md" tier={tiers.get(m.userId) ?? null} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-body font-semibold">
                 {m.username ? (

@@ -156,11 +156,13 @@ test.describe("Marketing: landing story", () => {
     await expect(page.getByText("Through a contact request that names the company and the role.")).toBeVisible();
   });
 
-  test("the pricing teaser reads Student Pro from plans", async ({ page }, info) => {
-    test.skip(!hasBackend || info.project.name !== "desktop", "needs the local Supabase stack");
-    const { data } = await adminClient().from("plans").select("price_pkr").eq("id", "student_pro_monthly").single();
+  test("the pricing teaser names Student Pro without a price and links to /features", async ({ page }, info) => {
+    test.skip(info.project.name !== "desktop", "one browser is enough");
     await page.goto("/");
-    await expect(page.getByTestId("pricing-teaser")).toContainText(`PKR ${Number(data!.price_pkr).toLocaleString("en-PK")}`);
+    const teaser = page.getByTestId("pricing-teaser");
+    await expect(teaser).toContainText("Student Pro");
+    await expect(teaser).not.toContainText("PKR");
+    await expect(teaser.getByRole("link", { name: /See every feature/ })).toHaveAttribute("href", "/features");
   });
 });
 

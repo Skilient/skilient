@@ -10,7 +10,7 @@ import { getOpportunities, visibleOpportunities, visibleOpportunityTabs, type Op
 import { getPortals } from "@/lib/data/portals";
 import { eventTime } from "@/lib/format/time";
 
-export const metadata: Metadata = { title: "Opportunities" };
+export const metadata: Metadata = { title: "Openings" };
 
 /**
  * What each tab says while it is empty: what belongs there and one thing to do about it.
@@ -73,18 +73,18 @@ export default async function OpportunitiesPage({ params }: PageProps<"/opportun
   const empty = EMPTY[current.key];
   return (
     <main className="mx-auto flex w-full max-w-[680px] flex-col gap-5 px-[var(--page-gutter)] py-8">
-      <h1 className="font-display text-h1">Opportunities</h1>
+      <h1 className="text-h1">Openings</h1>
       <FirstVisitTip id="opportunities" />
-      <nav aria-label="Opportunity types" className="-mx-1 overflow-x-auto">
-        <ul className="flex gap-2 px-1 pb-1">
+      <nav aria-label="Opening types" className="-mx-1 overflow-x-auto">
+        <ul className="flex gap-2 px-1 pt-1 pb-2">
           {tabs.map((t) => (
             <li key={t.key}>
               <Link
                 href={`/opportunities/${t.key}` as Route}
                 aria-current={t.key === current.key ? "page" : undefined}
                 className={cn(
-                  "inline-flex h-9 items-center rounded-full border px-3 text-body-sm font-semibold whitespace-nowrap",
-                  t.key === current.key ? "border-primary bg-primary-subtle text-text-primary" : "border-border-default text-text-secondary hover:border-border-strong",
+                  "inline-flex h-10 items-center rounded-full px-4 text-body-sm font-semibold whitespace-nowrap transition-shadow duration-[140ms] ease-out",
+                  t.key === current.key ? "bg-bg-surface text-text-primary shadow-[var(--pressed-s)]" : "text-text-secondary shadow-[var(--raised-s)] hover:text-text-primary",
                 )}
               >
                 {t.label}
@@ -107,7 +107,7 @@ export default async function OpportunitiesPage({ params }: PageProps<"/opportun
       ) : (
         <ul className="flex flex-col gap-3" data-testid="opportunity-list">
           {items.map((o) => (
-            <li key={o.id} className="rounded-lg border border-border-default bg-bg-surface p-4">
+            <li key={o.id} className="neu-tile p-4">
               <div className="flex flex-wrap items-center gap-2">
                 <Link href={o.href as Route} className="text-h4 underline-offset-4 hover:underline">
                   {o.title}

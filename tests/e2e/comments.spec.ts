@@ -81,12 +81,15 @@ test.describe("Comments, hide and mute", () => {
     // "Not for me" folds the card with Undo.
     await bPage.goto("/feed");
     const bCard = bPage.getByTestId("post").filter({ hasText: text });
+    // Not for me, Mute and Report sit in the post's ⋯ menu (phase 14).
+    await bCard.getByRole("button", { name: "More for this post" }).click();
     await bCard.getByRole("button", { name: "Not for me" }).click();
     await expect(bPage.getByText("Hidden. You'll see fewer posts like this.")).toBeVisible();
     await bPage.getByRole("button", { name: "Undo" }).click();
     await expect(bPage.getByTestId("post").filter({ hasText: text })).toBeVisible();
 
     // Mute takes A's posts out of B's feed, and is undone from Friends → Blocked.
+    await bPage.getByTestId("post").filter({ hasText: text }).getByRole("button", { name: "More for this post" }).click();
     await bPage.getByTestId("post").filter({ hasText: text }).getByRole("button", { name: "Mute Asma" }).click();
     await expect(bPage.getByText(`You muted ${author.fullName}.`)).toBeVisible();
     await bPage.reload();

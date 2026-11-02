@@ -1,4 +1,4 @@
-import { Plus, RocketLaunch } from "@phosphor-icons/react/dist/ssr";
+import { Check, Plus, RocketLaunch } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { VentureCard } from "@/components/ventures/venture-card";
@@ -31,10 +31,11 @@ function Chip({ to, active, children }: { to: Route; active: boolean; children: 
       href={to}
       aria-current={active ? "true" : undefined}
       className={cn(
-        "inline-flex h-8 items-center rounded-full border px-3 text-body-sm font-semibold transition-colors duration-[120ms]",
-        active ? "border-text-primary bg-text-primary text-bg-page" : "border-border-default text-text-secondary hover:border-border-strong hover:text-text-primary",
+        "inline-flex h-10 items-center gap-1.5 rounded-full px-4 text-body-sm font-semibold transition-shadow duration-[140ms] ease-out",
+        active ? "bg-bg-surface text-text-primary shadow-[var(--pressed-s)]" : "text-text-secondary shadow-[var(--raised-s)] hover:text-text-primary",
       )}
     >
+      {active ? <Check aria-hidden weight="bold" className="size-3.5 text-[var(--signal-ink)]" /> : null}
       {children}
     </Link>
   );
@@ -55,7 +56,7 @@ export default async function VenturesPage({ searchParams }: PageProps<"/venture
   const filtered = p.status || p.open || p.mine;
 
   return (
-    <main className="mx-auto flex max-w-[760px] flex-col gap-6 px-[var(--page-gutter)] py-8">
+    <main className="mx-auto flex max-w-[960px] flex-col gap-6 px-[var(--page-gutter)] py-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="font-display text-h1">Ventures</h1>
@@ -76,23 +77,14 @@ export default async function VenturesPage({ searchParams }: PageProps<"/venture
         </div>
       </div>
 
-      <nav aria-label="Venture type" className="border-b border-border-default">
-        <ul className="-mb-px flex gap-1">
+      <nav aria-label="Venture type">
+        <div className="neu-track">
           {(["project", "startup"] as const).map((t) => (
-            <li key={t}>
-              <Link
-                href={href(p, { type: t })}
-                aria-current={p.type === t ? "page" : undefined}
-                className={cn(
-                  "inline-flex h-11 items-center border-b-2 px-3 text-body font-semibold",
-                  p.type === t ? "border-primary text-text-primary" : "border-transparent text-text-secondary hover:text-text-primary",
-                )}
-              >
-                {TYPE_LABELS[t].many}
-              </Link>
-            </li>
+            <Link key={t} href={href(p, { type: t })} aria-current={p.type === t ? "page" : undefined}>
+              {TYPE_LABELS[t].many}
+            </Link>
           ))}
-        </ul>
+        </div>
       </nav>
 
       <div role="group" aria-label="Filters" className="flex flex-wrap gap-2">
@@ -114,7 +106,7 @@ export default async function VenturesPage({ searchParams }: PageProps<"/venture
 
       {ventures.length ? (
         <>
-          <ul className="flex flex-col gap-3">
+          <ul className="neu-list grid gap-5 sm:grid-cols-2">
             {ventures.map((v) => (
               <li key={v.id}>
                 <VentureCard venture={v} />
@@ -129,6 +121,7 @@ export default async function VenturesPage({ searchParams }: PageProps<"/venture
         </>
       ) : (
         <EmptyState
+          object={filtered ? undefined : "tray"}
           icon={<RocketLaunch aria-hidden className="size-8" />}
           title={filtered ? "No ventures match these filters" : `No ${TYPE_LABELS[p.type].many.toLowerCase()} yet`}
           description={

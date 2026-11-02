@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { pktDate } from "@/lib/format/time";
-import { badgeLabel, isActive, PRIMARY_NAV, SECONDARY_NAV } from "@/lib/nav";
+import { activeLevel, badgeLabel, currentPlace, isActive, PRIMARY_NAV, SECONDARY_NAV } from "@/lib/nav";
 import { TIP_IDS, TIPS } from "@/lib/tips";
 import { TOURS } from "@/lib/tours";
 import { studentTour } from "@/lib/tours/student";
@@ -9,8 +9,8 @@ import { studentTour } from "@/lib/tours/student";
 const migration = readFileSync("supabase/migrations/20261010000000_student_portal.sql", "utf8");
 
 describe("navigation", () => {
-  it("has the five areas in the PRD order, each with a tooltip line", () => {
-    expect(PRIMARY_NAV.map((i) => i.label)).toEqual(["Home", "Opportunities", "Ventures", "Chat", "Me"]);
+  it("has the five places of the phone dock in order, each with a tooltip line (phase 14: Openings)", () => {
+    expect(PRIMARY_NAV.map((i) => i.label)).toEqual(["Home", "Openings", "Ventures", "Chat", "Me"]);
     for (const item of [...PRIMARY_NAV, ...SECONDARY_NAV]) {
       expect(item.description.length, item.key).toBeGreaterThan(10);
       expect(item.description, item.key).not.toMatch(/—/);
@@ -19,10 +19,20 @@ describe("navigation", () => {
   it("marks the right item active, and Feedback separately from Me", () => {
     const at = (path: string) => [...PRIMARY_NAV, ...SECONDARY_NAV].filter((i) => isActive(i, path)).map((i) => i.key);
     expect(at("/feed")).toEqual(["home"]);
-    expect(at("/opportunities/jobs")).toEqual(["opportunities"]);
+    expect(at("/opportunities/competitions")).toEqual(["openings"]);
+    expect(at("/leaderboard")).toEqual(["leaderboard"]);
     expect(at("/me/score")).toEqual(["me"]);
     expect(at("/feedback")).toEqual(["feedback"]);
     expect(at("/ventures/abc/team")).toEqual(["ventures"]);
+  });
+  it("finds the level inside a place: the longest prefix wins", () => {
+    const me = PRIMARY_NAV.find((i) => i.key === "me")!;
+    expect(activeLevel(me, "/me")?.label).toBe("Overview");
+    expect(activeLevel(me, "/me/cv")?.label).toBe("CV");
+    expect(activeLevel(me, "/profile/aisha")?.label).toBe("Overview");
+    const ventures = PRIMARY_NAV.find((i) => i.key === "ventures")!;
+    expect(activeLevel(ventures, "/ventures/abc/team")?.label).toBe("All ventures");
+    expect(currentPlace("/feedback")?.key).toBe("feedback");
   });
   it("caps badges at 99+", () => {
     expect(badgeLabel(7)).toBe("7");

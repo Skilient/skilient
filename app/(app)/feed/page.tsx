@@ -70,23 +70,14 @@ export default async function FeedPage({ searchParams }: PageProps<"/feed">) {
   return (
     <main className="mx-auto flex max-w-[680px] flex-col gap-5 px-[var(--page-gutter)] py-8">
       <h1 className="sr-only">Home</h1>
-      <nav aria-label="Feeds" className="border-b border-border-default">
-        <ul className="-mb-px flex gap-1">
+      <nav aria-label="Feeds">
+        <div className="neu-track">
           {TABS.filter((t) => feedOn || t.key !== "university").map((t) => (
-            <li key={t.key}>
-              <Link
-                href={href(t.key, filter)}
-                aria-current={tab === t.key ? "page" : undefined}
-                className={cn(
-                  "inline-flex h-11 items-center border-b-2 px-3 text-body font-semibold whitespace-nowrap",
-                  tab === t.key ? "border-primary text-text-primary" : "border-transparent text-text-secondary hover:text-text-primary",
-                )}
-              >
-                {t.label}
-              </Link>
-            </li>
+            <Link key={t.key} href={href(t.key, filter)} aria-current={tab === t.key ? "page" : undefined}>
+              {t.label}
+            </Link>
           ))}
-        </ul>
+        </div>
       </nav>
 
       <ProgressCard card={card} />
@@ -96,15 +87,15 @@ export default async function FeedPage({ searchParams }: PageProps<"/feed">) {
       <Composer userId={user.id} defaultAudience={user.status === "graduate" ? "global" : tab} ventures={ventures} isStaff={staff} graduate={user.status === "graduate"} />
 
       <nav aria-label="Filter posts">
-        <ul className="flex gap-2 overflow-x-auto pb-1">
+        <ul className="-mx-2 flex gap-2 overflow-x-auto px-2 pt-1 pb-2">
           {FEED_FILTERS.map((f) => (
             <li key={f}>
               <Link
                 href={href(tab, f)}
                 aria-current={filter === f ? "true" : undefined}
                 className={cn(
-                  "inline-flex h-9 items-center rounded-full border px-3 text-body-sm font-semibold whitespace-nowrap",
-                  filter === f ? "border-primary bg-primary-subtle text-text-primary" : "border-border-default text-text-secondary hover:border-border-strong",
+                  "inline-flex h-10 items-center rounded-full px-4 text-body-sm font-semibold whitespace-nowrap transition-shadow duration-[140ms] ease-out",
+                  filter === f ? "bg-bg-surface text-text-primary shadow-[var(--pressed-s)]" : "text-text-secondary shadow-[var(--raised-s)] hover:text-text-primary",
                 )}
               >
                 {FILTER_LABELS[f]}
@@ -128,6 +119,7 @@ export default async function FeedPage({ searchParams }: PageProps<"/feed">) {
         footer={<FollowedUpdates updates={updates} />}
         empty={
           <EmptyState
+            object={filter === "all" ? "campus" : undefined}
             icon={<Newspaper aria-hidden className="size-8" />}
             title={filter === "all" ? (tab === "university" ? "Your university feed is quiet" : "Nothing in the Global Feed yet") : `No ${FILTER_LABELS[filter].toLowerCase()} yet`}
             description="Be the first to post, or find a venture to join and classmates to follow."

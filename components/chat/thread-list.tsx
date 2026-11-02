@@ -41,7 +41,7 @@ function ChatSearch() {
       {note ? <FieldError>{note}</FieldError> : null}
       {active ? (
         hits.length ? (
-          <ul className="divide-y divide-border-muted overflow-hidden rounded-lg border border-border-default bg-bg-surface" data-testid="chat-search-results">
+          <ul className="neu-tile divide-y divide-border-muted overflow-hidden" data-testid="chat-search-results">
             {hits.map((h) => (
               <li key={h.messageId}>
                 <Link href={`/chat/${h.threadId}#m-${h.messageId}` as Route} className="flex flex-col gap-0.5 px-3 py-2 hover:bg-bg-subtle">
@@ -73,7 +73,7 @@ export function ThreadList({ threads }: { threads: ThreadRow[] }) {
     <nav aria-label="Conversations" className={cn("min-w-0 flex-col gap-3 md:flex", inThread ? "hidden" : "flex")}>
       <ChatSearch />
       {threads.length ? (
-        <ul className="divide-y divide-border-muted overflow-hidden rounded-lg border border-border-default bg-bg-surface" data-testid="thread-list">
+        <ul className="neu-tile neu-list divide-y divide-border-muted overflow-hidden" data-testid="thread-list">
           {threads.map((t) => {
             const active = pathname === `/chat/${t.id}`;
             return (
@@ -85,7 +85,7 @@ export function ThreadList({ threads }: { threads: ThreadRow[] }) {
                   data-testid="thread-row"
                 >
                   {t.type === "group" ? (
-                    <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-bg-subtle text-text-secondary">
+                    <span className="neu-well-s inline-flex size-10 shrink-0 items-center justify-center rounded-full text-text-secondary">
                       <UsersThree aria-hidden weight="bold" className="size-5" />
                     </span>
                   ) : (
@@ -102,7 +102,7 @@ export function ThreadList({ threads }: { threads: ThreadRow[] }) {
                       </span>
                       {t.muted ? <BellSlash aria-label="Muted" weight="bold" className="size-3.5 shrink-0 text-text-secondary" /> : null}
                       {t.unread && !active ? (
-                        <span className="shrink-0 rounded-full bg-primary px-1.5 text-caption font-semibold text-text-on-primary" data-testid="thread-unread">
+                        <span className="shrink-0 rounded-full bg-primary px-1.5 font-mono text-[0.6875rem] leading-5 text-text-on-primary" data-testid="thread-unread">
                           {t.unread}
                           <span className="sr-only"> unread</span>
                         </span>
@@ -115,7 +115,7 @@ export function ThreadList({ threads }: { threads: ThreadRow[] }) {
           })}
         </ul>
       ) : (
-        <div className="rounded-lg border border-dashed border-border-default bg-bg-surface px-4 py-8 text-center text-body-sm text-text-secondary">
+        <div className="neu-well px-4 py-8 text-center text-body-sm text-text-secondary">
           No conversations yet. Message a friend from their profile, or open your venture&apos;s chat.
         </div>
       )}

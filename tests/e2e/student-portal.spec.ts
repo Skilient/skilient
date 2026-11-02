@@ -32,10 +32,10 @@ test.describe("Student portal", () => {
     await expect(page).toHaveURL(/\/feed/);
 
     // Every nav item carries its one-line description for assistive tech.
-    for (const key of ["home", "opportunities", "ventures", "chat", "me", "explore", "leaderboard", "notifications", "feedback"]) {
+    for (const key of ["home", "openings", "ventures", "chat", "me", "events", "explore", "leaderboard", "notifications", "feedback"]) {
       await expect(page.getByTestId(`nav-${key}`)).toHaveAttribute("aria-describedby", /.+/);
     }
-    await page.getByTestId("nav-opportunities").hover();
+    await page.getByTestId("nav-openings").hover();
     await expect(page.getByRole("tooltip")).toContainText("matched to your skills");
 
     // The tour starts by itself, and runs from the keyboard alone.
@@ -53,7 +53,7 @@ test.describe("Student portal", () => {
     await page.getByTestId("tour-next").focus();
     await page.keyboard.press("Enter");
     await expect(page.getByTestId("tour-progress")).toHaveText("Step 2 of 9");
-    await expect(popover).toContainText("Opportunities");
+    await expect(popover).toContainText("Openings");
     await page.getByTestId("tour-back").focus();
     await page.keyboard.press("Enter");
     await expect(page.getByTestId("tour-progress")).toHaveText("Step 1 of 9");

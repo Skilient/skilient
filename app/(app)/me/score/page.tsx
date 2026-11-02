@@ -1,11 +1,23 @@
 import { FirstVisitTip } from "@/components/learn/first-visit-tip";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
-import { EmptyState, TierBadge, tierLabel } from "@/components/ui";
+import { ObjectImage } from "@/components/marketing/story/object-image";
+import { EmptyState, Ladder, TierBadge, TIERS, tierLabel, type LadderStep, type Tier } from "@/components/ui";
 import { getMyScore, type ComponentView, type EvidenceLine } from "@/lib/data/ranking";
 import { points } from "@/lib/ranking/labels";
 
 export const metadata: Metadata = { title: "Your score" };
+
+/** The six tiers as a ladder: the ones below yours done, yours current, the next one next (Ascent). */
+function tierSteps(current: Tier | null, next: Tier | null, needs: number): LadderStep[] {
+  const at = current ? TIERS.indexOf(current) : -1;
+  return TIERS.map((t, i) => ({
+    key: t,
+    label: tierLabel[t],
+    state: i < at ? "done" : i === at ? "current" : t === next ? "next" : "later",
+    meta: i === at ? "you are here" : t === next && needs ? `${needs} ${needs === 1 ? "step" : "steps"} to go` : undefined,
+  }));
+}
 
 function signed(n: number): string {
   if (n === 0) return "no change";
@@ -23,7 +35,7 @@ export default async function ScorePage() {
     <main className="mx-auto flex w-full max-w-[680px] flex-col gap-6 px-[var(--page-gutter)] py-8">
       <FirstVisitTip id="score" />
       <div>
-        <h1 className="font-display text-h1">Your score</h1>
+        <h1 className="text-h1">Your score</h1>
         <p className="mt-1 text-body text-text-secondary">
           Proof (verified work, skills, endorsements, credentials) never fades; Momentum does when you&rsquo;re inactive. Only you see
           your points. Scores update every night at about 3 AM.
@@ -32,43 +44,58 @@ export default async function ScorePage() {
 
       {!s.scored ? (
         <EmptyState
+          object="medallion-raw"
           title="No score yet"
           description="You'll get one after the next nightly run. To be ranked, log a contribution on a venture and ask a teammate to confirm it."
         />
       ) : (
         <>
-          <section aria-labelledby="total-h" className="flex flex-col gap-3 rounded-lg border border-border-strong bg-bg-surface p-5" data-testid="score-total">
+          <section aria-labelledby="total-h" className="neu-card flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:p-6" data-testid="score-total">
             <h2 id="total-h" className="sr-only">
               Total
             </h2>
-            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-              <p className="font-display text-display tabular-nums">{points(s.total)}</p>
-              <p className="text-body text-text-secondary">points</p>
-              {s.tier ? <TierBadge tier={s.tier} /> : <span className="text-body-sm font-semibold text-text-secondary">Not ranked yet</span>}
+            {/* The medallion is an earned object: the tier you hold, rendered once, never in navigation. */}
+            <span className="block w-28 shrink-0 self-center sm:w-32">
+              <ObjectImage name={`medallion-${s.tier ?? "raw"}`} alt={s.tier ? `${tierLabel[s.tier]} medallion` : ""} sizes="128px" eager />
+            </span>
+            <div className="flex min-w-0 flex-col gap-3">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+                <p className="font-mono text-[3rem] leading-none font-medium tabular-nums">{points(s.total)}</p>
+                <p className="text-body text-text-secondary">points</p>
+                {s.tier ? <TierBadge tier={s.tier} size="md" /> : <span className="text-body-sm font-semibold text-text-secondary">Not ranked yet</span>}
+              </div>
+              <p className="neu-mono text-text-secondary">
+                {s.weekDelta !== null ? `This week: ${signed(s.weekDelta)} since ${s.lastWeekLabel}.` : "Your weekly change shows after your first Sunday."}
+                {s.updatedLabel ? ` Updated ${s.updatedLabel}.` : ""}
+              </p>
             </div>
-            <p className="text-body-sm text-text-secondary">
-              {s.weekDelta !== null ? `This week: ${signed(s.weekDelta)} since ${s.lastWeekLabel}.` : "Your weekly change shows after your first Sunday."}
-              {s.updatedLabel ? ` Updated ${s.updatedLabel}.` : ""}
-            </p>
           </section>
 
           <Notices s={s} />
 
-          <section aria-labelledby="next-h" className="rounded-lg border border-border-default bg-bg-surface p-5" data-testid="next-tier">
-            <h2 id="next-h" className="text-h3">
-              {s.next.tier ? `What ${tierLabel[s.next.tier]} needs` : "You're at the top tier"}
-            </h2>
-            {s.next.tier ? (
-              s.next.needs.length ? (
-                <ul className="mt-2 flex list-disc flex-col gap-1 pl-5 text-body">
-                  {s.next.needs.map((n) => (
-                    <li key={n}>{n}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-2 text-body">You meet everything; it shows after the next nightly run.</p>
-              )
-            ) : null}
+          <section aria-labelledby="next-h" className="neu-tile grid gap-6 p-5 sm:grid-cols-2" data-testid="next-tier">
+            <Ladder label="tiers reached" steps={tierSteps(s.tier, s.next.tier, s.next.needs.length)} />
+            <div>
+              <h2 id="next-h" className="text-h3">
+                {s.next.tier ? `What ${tierLabel[s.next.tier]} needs` : "You're at the top tier"}
+              </h2>
+              {s.next.tier ? (
+                s.next.needs.length ? (
+                  <ol className="mt-3 flex flex-col gap-2 text-body">
+                    {s.next.needs.map((n, i) => (
+                      <li key={n} className="flex gap-3">
+                        <span aria-hidden className="neu-well-s inline-flex size-7 shrink-0 items-center justify-center rounded-[7px] font-mono text-[0.75rem] text-text-secondary">
+                          {i + 1}
+                        </span>
+                        <span>{n}</span>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p className="mt-2 text-body">You meet everything; it shows after the next nightly run.</p>
+                )
+              ) : null}
+            </div>
           </section>
 
           {s.components.map((c) => (
@@ -76,7 +103,7 @@ export default async function ScorePage() {
           ))}
 
           {s.adjustments.length ? (
-            <section aria-labelledby="adj-h" className="rounded-lg border border-border-default bg-bg-surface p-5">
+            <section aria-labelledby="adj-h" className="neu-tile p-5">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h2 id="adj-h" className="text-h3">
                   Adjustments
@@ -132,7 +159,7 @@ function Notices({ s }: { s: Awaited<ReturnType<typeof getMyScore>> }) {
   return (
     <ul className="flex flex-col gap-2" data-testid="score-notices">
       {notes.map((n) => (
-        <li key={n.key} className="rounded-md border border-border-default bg-bg-subtle px-4 py-3 text-body-sm">
+        <li key={n.key} className="neu-well-s px-4 py-3 text-body-sm">
           {n.text}
         </li>
       ))}
@@ -142,18 +169,22 @@ function Notices({ s }: { s: Awaited<ReturnType<typeof getMyScore>> }) {
 
 function ComponentSection({ c }: { c: ComponentView }) {
   const share = Math.min(100, Math.round((c.points / c.max) * 100));
+  const cells = Math.round(share / 10);
   return (
-    <section aria-labelledby={`c-${c.key}`} className="rounded-lg border border-border-default bg-bg-surface p-5" data-testid={`component-${c.key}`}>
+    <section aria-labelledby={`c-${c.key}`} className="neu-tile p-5" data-testid={`component-${c.key}`}>
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id={`c-${c.key}`} className="text-h3">
           {c.label} <span className="text-body-sm font-normal text-text-secondary">· {c.layer}</span>
         </h2>
-        <p className="text-h4 tabular-nums">
+        <p className="font-mono text-h4 tabular-nums">
           {points(c.points)} <span className="text-body-sm font-normal text-text-secondary">of {points(c.max)}</span>
         </p>
       </div>
-      <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-bg-muted" aria-hidden>
-        <div className="h-full rounded-full bg-primary" style={{ width: `${share}%` }} />
+      {/* Ten countable cells, never one vague bar (Ascent). */}
+      <div className="ledger mt-3" aria-hidden>
+        {Array.from({ length: 10 }, (_, i) => (
+          <i key={i} data-on={i < cells ? "" : undefined} />
+        ))}
       </div>
       <p className="mt-2 text-body-sm text-text-secondary">
         {c.hint}
@@ -179,7 +210,7 @@ function Evidence({ lines }: { lines: EvidenceLine[] }) {
             )}
             {l.detail ? <span className="block text-caption text-text-secondary">{l.detail}</span> : null}
           </span>
-          {l.points ? <span className="shrink-0 tabular-nums">{points(l.points)}</span> : null}
+          {l.points ? <span className="shrink-0 font-mono tabular-nums">{points(l.points)}</span> : null}
         </li>
       ))}
     </ul>

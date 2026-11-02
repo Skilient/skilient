@@ -348,8 +348,8 @@ export function Conversation({
   const seenId = thread.type === "dm" && receipt && lastMine && receipt >= lastMine.createdAt ? lastMine.id : null;
 
   return (
-    <section className="flex h-[calc(100dvh-9rem)] min-h-[420px] flex-col overflow-hidden rounded-lg border border-border-default bg-bg-surface" aria-labelledby="thread-title">
-      <header className="flex items-center justify-between gap-3 border-b border-border-default px-4 py-3">
+    <section className="neu-card flex h-[calc(100dvh-9rem)] min-h-[420px] flex-col overflow-hidden" aria-labelledby="thread-title">
+      <header className="flex items-center justify-between gap-3 border-b border-border-muted px-4 py-3">
         <div className="flex min-w-0 items-center gap-3">
           <Link href="/chat" className="text-body-sm text-text-secondary underline-offset-4 hover:underline md:hidden">
             All chats
@@ -597,7 +597,7 @@ function MessageBubble({
   const sent = m.status === "sent";
   return (
     <>
-      <div className={cn("rounded-lg px-3 py-2", mine ? "bg-primary-subtle" : "bg-bg-subtle", m.status === "failed" && "border border-error")}>
+      <div className={cn("rounded-[18px] px-3.5 py-2.5", mine ? "rounded-br-md bg-primary-subtle shadow-[var(--raised-s)]" : "rounded-bl-md bg-bg-surface shadow-[var(--raised-s)]", m.status === "failed" && "border border-error")}>
         {m.replyTo ? (
           <button
             type="button"
@@ -672,7 +672,7 @@ function MessageBubble({
         </ul>
       ) : null}
       {picking ? (
-        <div role="group" aria-label="Pick a reaction" className="flex gap-1 rounded-full border border-border-default bg-bg-surface p-1 shadow-1">
+        <div role="group" aria-label="Pick a reaction" className="flex gap-1 rounded-full bg-bg-surface p-1 shadow-[var(--raised-m)]">
           {REACTIONS.map((emoji) => (
             <button key={emoji} type="button" aria-label={`React ${emoji}`} onClick={() => react(emoji)} className="inline-flex size-8 items-center justify-center rounded-full hover:bg-bg-subtle">
               <span aria-hidden>{emoji}</span>
@@ -810,7 +810,7 @@ function Composer({
 
   return (
     <form method="post"
-      className="flex flex-col gap-2 border-t border-border-default p-3"
+      className="flex flex-col gap-2 border-t border-border-muted p-3"
       onSubmit={(e) => {
         e.preventDefault();
         submit();

@@ -1,19 +1,18 @@
 "use client";
 
-import { Gear } from "@phosphor-icons/react/dist/ssr";
 import type { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SignOutButton } from "@/components/auth/sign-out-button";
 import { useCurrentUser } from "@/components/providers/current-user-provider";
 import { BadgePill } from "@/components/shell/badge-pill";
 import { useNavBadges } from "@/components/shell/nav-badges";
-import { Avatar, ThemeToggle, Tooltip } from "@/components/ui";
+import { Avatar, Tooltip } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { isActive, PRIMARY_NAV, SECONDARY_NAV, type NavItem } from "@/lib/nav";
+import { activeLevel, currentPlace, isActive, PRIMARY_NAV, SECONDARY_NAV, type NavItem } from "@/lib/nav";
 
-function SidebarLink({ item, pathname }: { item: NavItem; pathname: string }) {
+/** One place on the rail: raised at rest, pressed in when you are there (with a filled icon and a label change). */
+function RailLink({ item, pathname }: { item: NavItem; pathname: string }) {
   const badges = useNavBadges();
   const count = item.badge ? badges[item.badge] : 0;
   const active = isActive(item, pathname);
@@ -24,81 +23,101 @@ function SidebarLink({ item, pathname }: { item: NavItem; pathname: string }) {
         <Link
           href={item.href as Route}
           aria-current={active ? "page" : undefined}
-          aria-label={count > 0 ? `${item.label}, ${count} ${item.badge === "notifications" || item.badge === "chat" ? "unread" : "waiting"}` : undefined}
+          aria-label={count > 0 ? `${item.label}, ${count} ${item.badge === "notifications" || item.badge === "chat" ? "unread" : "waiting"}` : item.label}
           data-tour={`nav-${item.key}`}
           data-testid={`nav-${item.key}`}
           className={cn(
-            "relative flex h-11 items-center gap-3 rounded-md px-3 text-body font-semibold md:justify-center lg:justify-start",
-            active ? "bg-primary-subtle text-text-primary" : "text-text-secondary hover:bg-bg-subtle hover:text-text-primary",
+            "relative flex size-12 flex-col items-center justify-center rounded-[14px] transition-shadow duration-[140ms] ease-out",
+            active ? "bg-bg-surface text-[var(--signal-ink)] shadow-[var(--pressed)]" : "text-text-secondary shadow-[var(--raised-s)] hover:text-text-primary",
           )}
         >
           <Icon aria-hidden weight={active ? "fill" : "bold"} className="size-6 shrink-0" />
-          <span className="hidden truncate lg:inline">{item.label}</span>
-          <BadgePill count={count} className="ml-auto hidden lg:inline" testId={item.key === "notifications" ? "notification-count" : `${item.key}-badge`} />
-          {count > 0 ? <span aria-hidden className="absolute top-1.5 right-2 size-2 rounded-full bg-primary lg:hidden" /> : null}
+          <BadgePill
+            count={count}
+            className="absolute -top-1.5 -right-1.5"
+            testId={item.key === "notifications" ? "notification-count" : `${item.key}-badge`}
+          />
         </Link>
       </Tooltip>
     </li>
   );
 }
 
-/** Desktop sidebar (240 px) and the tablet icon rail (72 px). Hidden on phones, which get the tab bar. */
+/**
+ * The two-tier sidebar (the brief §3 "Shell", phase 14): a raised rail of places (72 px, also the
+ * tablet's whole sidebar) plus, from 1024 px, the levels inside the place you are in. Hidden on
+ * phones, which get the dock.
+ */
 export function Sidebar() {
   const user = useCurrentUser();
   const pathname = usePathname();
+  const place = currentPlace(pathname);
+  const level = place ? activeLevel(place, pathname) : null;
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 hidden w-[72px] flex-col gap-4 border-r border-border-default bg-bg-surface px-3 py-4 md:flex lg:w-60">
-      <Link href="/feed" aria-label="Skilient home" className="flex h-10 items-center gap-2 rounded-md px-2 md:justify-center lg:justify-start">
-        <Image src="/brand/skilient-icon.svg" alt="" width={28} height={28} className="size-7 dark:hidden" />
-        <Image src="/brand/skilient-icon-white.svg" alt="" width={28} height={28} className="hidden size-7 dark:block" />
-        <span className="hidden font-display text-h3 lg:inline">Skilient</span>
-      </Link>
-      <nav aria-label="Main" className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
-        <ul className="flex flex-col gap-1">
-          {PRIMARY_NAV.map((item) => (
-            <SidebarLink key={item.key} item={item} pathname={pathname} />
-          ))}
-        </ul>
-        <hr className="border-border-muted" />
-        <ul className="flex flex-col gap-1">
-          {SECONDARY_NAV.map((item) => (
-            <SidebarLink key={item.key} item={item} pathname={pathname} />
-          ))}
-        </ul>
-      </nav>
-      <div className="flex flex-col gap-2 border-t border-border-muted pt-3">
+    <aside className="fixed inset-y-0 left-0 z-30 hidden md:flex" aria-label="Sidebar">
+      <div className="flex w-[76px] flex-col items-center gap-4 bg-bg-surface py-4 shadow-[var(--raised-m)]">
+        <Link href="/feed" aria-label="Skilient home" className="flex size-11 items-center justify-center rounded-full">
+          <Image src="/brand/skilient-icon.svg" alt="" width={28} height={28} className="size-7 dark:hidden" />
+          <Image src="/brand/skilient-icon-white.svg" alt="" width={28} height={28} className="hidden size-7 dark:block" />
+        </Link>
+        <nav aria-label="Main" className="flex min-h-0 flex-1 flex-col items-center gap-4 overflow-y-auto px-2 pt-1 pb-2">
+          <ul className="flex flex-col gap-3">
+            {PRIMARY_NAV.map((item) => (
+              <RailLink key={item.key} item={item} pathname={pathname} />
+            ))}
+          </ul>
+          <span aria-hidden className="neu-hole h-1 w-8 shrink-0" />
+          <ul className="flex flex-col gap-3">
+            {SECONDARY_NAV.map((item) => (
+              <RailLink key={item.key} item={item} pathname={pathname} />
+            ))}
+          </ul>
+        </nav>
+      </div>
+      <div className="hidden w-[208px] flex-col gap-4 px-4 py-5 lg:flex" data-testid="sidebar-levels">
+        {place ? (
+          <>
+            <p className="px-2 text-h4 text-text-primary">{place.label}</p>
+            {place.levels?.length ? (
+              <nav aria-label={`${place.label} sections`}>
+                <ul className="flex flex-col gap-1">
+                  {place.levels.map((l) => {
+                    const on = l === level;
+                    return (
+                      <li key={l.href + l.label}>
+                        <Link
+                          href={l.href as Route}
+                          aria-current={on ? "page" : undefined}
+                          className={cn(
+                            "flex min-h-11 items-center rounded-[12px] px-3 text-body font-semibold transition-shadow duration-[140ms] ease-out",
+                            on ? "bg-bg-surface text-text-primary shadow-[var(--pressed-s)]" : "text-text-secondary hover:text-text-primary hover:shadow-[var(--raised-s)]",
+                          )}
+                        >
+                          {on ? <span aria-hidden className="mr-2 h-4 w-1 rounded-full bg-primary" /> : null}
+                          {l.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            ) : (
+              <p className="px-2 text-body-sm text-text-secondary">{place.description}</p>
+            )}
+          </>
+        ) : null}
         {user ? (
           <Link
             href={(user.username ? `/profile/${user.username}` : "/me") as Route}
-            className="flex items-center gap-2 rounded-md px-2 py-1 hover:bg-bg-subtle md:justify-center lg:justify-start"
+            className="mt-auto flex items-center gap-2 rounded-[14px] p-2 hover:shadow-[var(--raised-s)]"
             aria-label={`${user.fullName}, your profile`}
           >
             <Avatar name={user.fullName} src={user.avatarUrl} size="sm" />
-            <span className="hidden max-w-[14ch] truncate text-body-sm font-semibold lg:inline" data-testid="current-user-name">
+            <span className="max-w-[14ch] truncate text-body-sm font-semibold" data-testid="current-user-name">
               {user.fullName}
             </span>
           </Link>
         ) : null}
-        <div className="flex items-center gap-1 md:flex-col lg:flex-row lg:justify-between">
-          <Link
-            href="/settings"
-            aria-label="Settings"
-            title="Settings"
-            className="inline-flex size-9 items-center justify-center rounded-md text-text-secondary hover:bg-bg-subtle hover:text-text-primary"
-          >
-            <Gear aria-hidden weight="bold" className="size-5" />
-          </Link>
-          <SignOutButton variant="ghost" size="sm" icon />
-        </div>
-        <nav aria-label="Legal" className="hidden flex-wrap gap-x-3 gap-y-1 text-body-sm text-text-muted lg:flex">
-          <Link href={"/terms" as Route} className="hover:text-text-primary hover:underline">
-            User agreement
-          </Link>
-          <Link href={"/privacy" as Route} className="hover:text-text-primary hover:underline">
-            Privacy notice
-          </Link>
-        </nav>
-        <ThemeToggle className="hidden lg:inline-flex" />
       </div>
     </aside>
   );

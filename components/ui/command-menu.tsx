@@ -4,7 +4,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/ssr";
 import type { Route } from "next";
 import { useRouter } from "next/navigation";
-import { useEffect, useId, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useId, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 export interface CommandItem {
@@ -18,6 +18,8 @@ export interface CommandItem {
   /** Extra words that should match ("cv", "rank"). */
   keywords?: string[];
 }
+
+const noop = () => () => {};
 
 function matches(item: CommandItem, query: string): boolean {
   if (!query) return true;
@@ -40,10 +42,13 @@ export function CommandMenu({ items, searchHref = "/explore", className }: { ite
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const listId = useId();
-  const [isMac, setIsMac] = useState(true);
+  const isMac = useSyncExternalStore(
+    noop,
+    () => /mac|iphone|ipad/i.test(navigator.platform || navigator.userAgent),
+    () => true,
+  );
 
   useEffect(() => {
-    setIsMac(/mac|iphone|ipad/i.test(navigator.platform || navigator.userAgent));
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();

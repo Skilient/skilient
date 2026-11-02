@@ -52,6 +52,7 @@ test.describe("Reports and /ops", () => {
     await signInWithPassword(page, reader.email, reader.password);
     await page.goto("/feed");
     const card = page.getByTestId("post").filter({ hasText: `Buy exam leaks ${tag}` });
+    await card.getByRole("button", { name: "More for this post" }).click();
     await card.getByRole("button", { name: "Report" }).click();
     const dialog = page.getByRole("dialog", { name: "Report this post" });
     await dialog.getByRole("radio", { name: "Spam" }).check();
@@ -61,6 +62,7 @@ test.describe("Reports and /ops", () => {
     await expect(page.getByRole("dialog")).toContainText("Thanks, we'll review this.");
     await page.getByRole("button", { name: "Close" }).first().click();
     // A second report on the same post is refused politely.
+    await card.getByRole("button", { name: "More for this post" }).click();
     await card.getByRole("button", { name: "Report" }).click();
     await page.getByRole("dialog").getByRole("radio", { name: "Other" }).check();
     await page.getByRole("dialog").getByRole("button", { name: "Send report" }).click();

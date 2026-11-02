@@ -1,6 +1,6 @@
 "use client";
 
-import { Code, Plus, UsersThree } from "@phosphor-icons/react/dist/ssr";
+import { Code, Plus } from "@phosphor-icons/react/dist/ssr";
 import { useState } from "react";
 import {
   Avatar,

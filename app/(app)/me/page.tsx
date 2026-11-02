@@ -3,15 +3,22 @@ import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { SignOutButton } from "@/components/auth/sign-out-button";
-import { Avatar } from "@/components/ui";
+import { Avatar, StatTile, TierBadge, tierLabel } from "@/components/ui";
 import { getCurrentUser } from "@/lib/auth/current-user";
+import { getMyScore } from "@/lib/data/ranking";
+import { points } from "@/lib/ranking/labels";
 
 export const metadata: Metadata = { title: "Me" };
 
-/** /me (PRD 5.25): the Me area's home, and on a phone the menu for everything that isn't a tab. */
+/**
+ * /me (PRD 5.25, phase 14): the Me area's home, and on a phone the menu for everything that isn't a
+ * tab. Name first, then university, then tier, then the numbers (the brief: Recognition before stats).
+ * Record, Paths and Tickets join the list with phases 15–17.
+ */
 export default async function MePage() {
   const user = await getCurrentUser();
   if (!user) redirect("/signin?next=/me");
+  const score = await getMyScore().catch(() => null);
   const links: { href: string; title: string; description: string; icon: typeof Gear }[] = [
     { href: user.username ? `/profile/${user.username}` : "/settings/profile", title: "Profile", description: "How others see you. Edit your bio, photo and looking-for line.", icon: IdentificationCard },
     { href: "/me/skills", title: "Skills", description: "Every skill with its level, the evidence and how to reach the next level.", icon: Sparkle },
@@ -25,24 +32,37 @@ export default async function MePage() {
     { href: "/settings", title: "Settings", description: "Account, notifications, privacy, GitHub and deleting your account.", icon: Gear },
   ];
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-[var(--page-gutter)] py-8">
-      <div className="flex items-center gap-4">
-        <Avatar name={user.fullName} src={user.avatarUrl} size="lg" />
-        <div className="min-w-0">
-          <h1 className="font-display text-h1 break-words">{user.fullName}</h1>
-          <p className="text-body-sm text-text-secondary">{[user.username ? `@${user.username}` : null, user.universityName].filter(Boolean).join(" · ")}</p>
+    <main className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-[var(--page-gutter)] py-8">
+      <section aria-labelledby="me-name" className="neu-card flex flex-col gap-5 p-5 sm:p-6">
+        <div className="flex items-center gap-4">
+          <Avatar name={user.fullName} src={user.avatarUrl} size="xl" tier={score?.tier ?? null} />
+          <div className="flex min-w-0 flex-col gap-1.5">
+            <h1 id="me-name" className="text-h1 break-words">
+              {user.fullName}
+            </h1>
+            <p className="text-body-sm text-text-secondary">{[user.username ? `@${user.username}` : null, user.universityName].filter(Boolean).join(" · ")}</p>
+            {score?.tier ? <TierBadge tier={score.tier} size="md" className="self-start" /> : null}
+          </div>
         </div>
-      </div>
-      <ul className="divide-y divide-border-muted overflow-hidden rounded-lg border border-border-default bg-bg-surface">
+        {score?.scored ? (
+          <div className="grid grid-cols-2 gap-4">
+            <StatTile label="Score" value={points(score.total)} hint={score.updatedLabel ? `updated ${score.updatedLabel}` : undefined} />
+            <StatTile label="Next tier" value={score.next.tier ? tierLabel[score.next.tier] : "Top"} hint={score.next.tier ? `${score.next.needs.length} to go` : "nothing left to climb"} />
+          </div>
+        ) : null}
+      </section>
+      <ul className="neu-list grid gap-3 sm:grid-cols-2">
         {links.map(({ href, title, description, icon: Icon }) => (
           <li key={href}>
-            <Link href={href as Route} className="flex items-center gap-4 px-5 py-4 hover:bg-bg-subtle">
-              <Icon aria-hidden weight="bold" className="size-6 shrink-0 text-text-muted" />
+            <Link href={href as Route} className="neu-tile flex h-full items-center gap-4 px-5 py-4 transition-shadow duration-[140ms] ease-out active:shadow-[var(--pressed)]">
+              <span aria-hidden className="neu-well-s inline-flex size-11 shrink-0 items-center justify-center rounded-full text-[var(--signal-ink)]">
+                <Icon weight="bold" className="size-5" />
+              </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-h4">{title}</span>
                 <span className="block text-body-sm text-text-secondary">{description}</span>
               </span>
-              <CaretRight aria-hidden weight="bold" className="size-4 shrink-0 text-text-muted" />
+              <CaretRight aria-hidden weight="bold" className="size-4 shrink-0 text-text-secondary" />
             </Link>
           </li>
         ))}

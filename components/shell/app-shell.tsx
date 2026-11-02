@@ -11,8 +11,8 @@ import { TopBar } from "@/components/shell/top-bar";
 import { TourHost, type TourInitial } from "@/components/tour/tour-host";
 
 /**
- * The five-area student shell (PRD 5.25, screen spec 2): sidebar on desktop, an icon rail on
- * tablets, a top bar and bottom tabs on phones. Onboarding, the agreement and a pending
+ * The five-area student shell (PRD 5.25, phase 14): the two-tier sidebar on desktop (rail plus
+ * levels), the rail alone on tablets, the dock on phones, and the header with ⌘K everywhere. Onboarding, the agreement and a pending
  * deletion keep the plain header, and so do the other portals until they get their own
  * shells (phases 7-9). /ops has its own staff shell (phase 11).
  */
@@ -33,9 +33,9 @@ export function AppShell({ children, tour }: { children: ReactNode; tour: TourIn
     <>
       <NavBadgesSync userId={user.id} />
       <Sidebar />
-      <div className="md:pl-[72px] lg:pl-60">
+      <div className="md:pl-[76px] lg:pl-[284px]">
         <TopBar />
-        <div className="pb-20 md:pb-0">{children}</div>
+        <div className="pb-28 md:pb-0">{children}</div>
       </div>
       <BottomTabs />
       <Suspense fallback={null}>

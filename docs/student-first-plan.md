@@ -80,7 +80,7 @@ The app adopts the neumorphism brief from the marketing branch (`claude/wonderfu
 
 ## Phases
 
-Five build phases, **each built in one go: one session and one PR per phase, no slices** (Ahmed, 2026-11-02). The detail and "done when" lines are in `build-plan.md`.
+Five build phases, **each built in one go: one session and one PR per phase, no slices** (Ahmed, 2026-11-02). The detail and "done when" lines are in `build-plan.md`. The session prompt for each phase is in `student-first-prompts.md`.
 
 | Phase | What it builds |
 | --- | --- |

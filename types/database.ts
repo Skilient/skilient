@@ -5354,7 +5354,7 @@ isOneToOne: false
 { Args: { "p_comments"?: string,"p_request": string,"p_rubric": Json }; Returns: string
                            },
 "submit_sales_lead":
-{ Args: { "p_email": string,"p_message": string,"p_name": string,"p_organisation": string,"p_role": string }; Returns: string
+{ Args: { "p_email": string,"p_kind"?: string,"p_message": string,"p_name": string,"p_organisation": string,"p_role": string }; Returns: string
                            },
 "submit_uni_claim":
 { Args: { "p": Json }; Returns: string

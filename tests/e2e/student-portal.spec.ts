@@ -130,12 +130,13 @@ test.describe("Student portal", () => {
     expect(problems).toEqual([]);
   });
 
-  test("the phone shell: five tabs, a top bar and a shorter tour", async ({ page }, info) => {
+  test("the phone shell: five places in the dock, a header and a shorter tour", async ({ page }, info) => {
     test.skip(info.project.name !== "phone", "phone only");
     test.setTimeout(90_000);
     const me = await createStudent({ domain: "nutech.edu.pk", fullName: "Phone Tabs", tour: true });
     await signInWithPassword(page, me.email, me.password);
-    await expect(page.getByTestId("tour-progress")).toHaveText(/Step 1 of 8/);
+    // Phone: the dock's five places, the search well (Explore) and the bell; Leaderboard and Feedback are desktop rail stops.
+    await expect(page.getByTestId("tour-progress")).toHaveText(/Step 1 of 7/);
     await page.getByTestId("tour-skip").click();
     await expect(page.getByRole("navigation", { name: "Main" }).getByRole("link")).toHaveCount(5);
     await page.getByTestId("tab-me").click();

@@ -36,7 +36,18 @@ function matches(item: CommandItem, query: string): boolean {
  * well in the header. Type to filter, arrows to move, Enter to go. A Radix dialog, so focus is
  * trapped and Escape closes it. Explore holds the real search; the menu's last row hands off to it.
  */
-export function CommandMenu({ items, searchHref = "/explore", className }: { items: CommandItem[]; searchHref?: string; className?: string }) {
+export function CommandMenu({
+  items,
+  searchHref = "/explore",
+  tourAnchor,
+  className,
+}: {
+  items: CommandItem[];
+  searchHref?: string;
+  /** A coach-mark id for the search well (the student tour points Explore here on phones). */
+  tourAnchor?: string;
+  className?: string;
+}) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -104,6 +115,7 @@ export function CommandMenu({ items, searchHref = "/explore", className }: { ite
           className,
         )}
         data-testid="command-trigger"
+        data-tour={tourAnchor}
       >
         <MagnifyingGlass aria-hidden weight="bold" className="size-4 shrink-0" />
         <span className="min-w-0 flex-1 truncate">Search or jump to…</span>

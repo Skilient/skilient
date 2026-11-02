@@ -90,7 +90,7 @@ export const PRIMARY_NAV: NavItem[] = [
     levels: [
       { label: "All ventures", href: "/ventures", match: ["/ventures"] },
       { label: "Requests", href: "/requests", keywords: ["applications", "invites"] },
-      { label: "Start a venture", href: "/ventures/new", match: [], keywords: ["new", "project", "startup"] },
+      { label: "New venture", href: "/ventures/new", match: [], keywords: ["start", "project", "startup"] },
     ],
   },
   {

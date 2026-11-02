@@ -47,17 +47,17 @@ async function faculty(): Promise<TestStudent> {
   return { id: data.user.id, email, password: PASSWORD, fullName: "Dr Look", username: "" };
 }
 
-async function axeSweep(browser: Browser, who: TestStudent | null, role: SweepRole, fixtures: Partial<SweepFixtures>) {
+async function axeSweep(browser: Browser, who: TestStudent | null, role: SweepRole, fixtures: Partial<SweepFixtures>, colorScheme: "light" | "dark") {
   const failures: string[] = [];
-  for (const colorScheme of ["light", "dark"] as const) {
+  {
     const page = await (await browser.newContext({ colorScheme })).newPage();
     if (who) await signInWithPassword(page, who.email, who.password);
     for (const entry of SWEEP.filter((s) => s.role === role)) {
       const path = sweepPath(entry, fixtures);
       await page.goto(path, { waitUntil: "load" });
-      await page.waitForLoadState("networkidle", { timeout: 5_000 }).catch(() => undefined);
+      await page.waitForLoadState("networkidle", { timeout: 3_000 }).catch(() => undefined);
       // Let first-paint motion settle so contrast is measured on the end state.
-      await page.waitForTimeout(300);
+      await page.waitForTimeout(200);
       const results = await new AxeBuilder({ page }).withTags(RULES).analyze();
       for (const v of results.violations) failures.push(`${path} (${colorScheme}) ${v.id}: ${v.nodes.slice(0, 3).map((n) => n.target.join(" ")).join(", ")}`);
     }
@@ -72,21 +72,24 @@ test.describe("New look: axe on every screen, light and dark", () => {
     test.skip(info.project.name !== "desktop", "runs once, on desktop");
   });
 
-  test("visitor pages", async ({ browser }) => {
-    test.setTimeout(400_000);
-    await axeSweep(browser, null, "visitor", {});
-  });
+  // One test per role and theme, so each stays well inside its timeout on a busy CI shard.
+  for (const scheme of ["light", "dark"] as const) {
+    test(`visitor pages (${scheme})`, async ({ browser }) => {
+      test.setTimeout(400_000);
+      await axeSweep(browser, null, "visitor", {}, scheme);
+    });
 
-  test("student pages", async ({ browser }) => {
-    test.setTimeout(600_000);
-    const { student, fixtures } = await studentWithContent();
-    await axeSweep(browser, student, "student", fixtures);
-  });
+    test(`student pages (${scheme})`, async ({ browser }) => {
+      test.setTimeout(600_000);
+      const { student, fixtures } = await studentWithContent();
+      await axeSweep(browser, student, "student", fixtures, scheme);
+    });
 
-  test("faculty pages", async ({ browser }) => {
-    test.setTimeout(400_000);
-    await axeSweep(browser, await faculty(), "faculty", {});
-  });
+    test(`faculty pages (${scheme})`, async ({ browser }) => {
+      test.setTimeout(400_000);
+      await axeSweep(browser, await faculty(), "faculty", {}, scheme);
+    });
+  }
 });
 
 test.describe("New look: the shell", () => {

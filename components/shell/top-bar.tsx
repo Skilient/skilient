@@ -90,14 +90,14 @@ function AccountMenu() {
 export function TopBar() {
   const { notifications } = useNavBadges();
   return (
-    <header className="sticky top-0 z-20 bg-bg-page/90 backdrop-blur-md">
+    <header className="sticky top-0 z-20 bg-bg-page/90 backdrop-blur-md md:static md:bg-transparent md:backdrop-blur-none">
       <div className="flex h-16 items-center gap-3 px-[var(--page-gutter)]">
         <Link href="/feed" aria-label="Skilient home" className="shrink-0 rounded-full md:hidden">
           <Image src="/brand/skilient-icon.svg" alt="" width={28} height={28} className="size-7 dark:hidden" />
           <Image src="/brand/skilient-icon-white.svg" alt="" width={28} height={28} className="hidden size-7 dark:block" />
         </Link>
         <div className="min-w-0 flex-1 md:max-w-md">
-          <CommandMenu items={COMMANDS} />
+          <CommandMenu items={COMMANDS} tourAnchor="nav-explore" />
         </div>
         <div className="ml-auto flex items-center gap-2">
           <Tooltip label="Notifications" description="What happened since you were last here." placement="bottom">
@@ -106,7 +106,7 @@ export function TopBar() {
               aria-label={notifications > 0 ? `Notifications, ${notifications} unread` : "Notifications"}
               data-tour="nav-notifications"
               data-testid="notification-bell-small"
-              className="neu-icon-btn relative"
+              className="neu-icon-btn relative md:hidden"
             >
               <Bell aria-hidden weight="bold" className="size-5" />
               <BadgePill count={notifications} className="absolute -top-1 -right-1" />

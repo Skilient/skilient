@@ -10,10 +10,10 @@ const tones: Record<BadgeTone, string> = {
   primary: "border-transparent bg-primary-subtle text-text-primary",
   accent: "border-transparent bg-accent text-text-on-accent",
   verified: "border-verified bg-verified-subtle text-verified",
-  success: "border-success/40 bg-bg-subtle text-text-primary",
-  warning: "border-warning/40 bg-bg-subtle text-text-primary",
-  error: "border-error/50 bg-bg-subtle text-text-error",
-  info: "border-info/40 bg-bg-subtle text-text-primary",
+  success: "border-success/50 text-text-primary",
+  warning: "border-warning/50 text-text-primary",
+  error: "border-error/60 text-text-error",
+  info: "border-info/50 text-text-primary",
 };
 
 // Status badges always carry an icon: never colour alone (PRD 9.5). Text stays on

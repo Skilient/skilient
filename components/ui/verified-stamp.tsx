@@ -17,7 +17,7 @@ export function VerifiedStamp({ children, animate = true, className }: { childre
 
   return (
     <motion.div
-      className={cn("relative flex items-center gap-3 overflow-hidden rounded-md border border-border-default px-4 py-3", className)}
+      className={cn("relative flex items-center gap-3 overflow-hidden rounded-md border border-[var(--card-border)] bg-bg-surface px-4 py-3 shadow-[var(--raised-s)]", className)}
       initial={still ? false : { backgroundColor: "rgba(0,0,0,0)" }}
       animate={{ backgroundColor: "var(--verified-subtle)" }}
       transition={{ duration: duration.slow, ease: easing.standard }}

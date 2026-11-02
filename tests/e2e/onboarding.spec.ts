@@ -96,7 +96,8 @@ test.describe("onboarding and profiles", () => {
     // 5. Looking for
     await expect(page).toHaveURL(/\/onboarding\/looking-for$/);
     await page.getByRole("checkbox", { name: "An internship" }).check();
-    await page.getByRole("switch", { name: "Let recruiters find me" }).click();
+    // The recruiter portal is off (phase 14): the visibility switch waits with it.
+    await expect(page.getByRole("switch", { name: "Let recruiters find me" })).toHaveCount(0);
     await axe(page, "step 5");
     await page.getByRole("button", { name: "Continue" }).click();
 

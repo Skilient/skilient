@@ -4,6 +4,7 @@ import type { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SignOutButton } from "@/components/auth/sign-out-button";
 import { useCurrentUser } from "@/components/providers/current-user-provider";
 import { BadgePill } from "@/components/shell/badge-pill";
 import { useNavBadges } from "@/components/shell/nav-badges";
@@ -107,16 +108,19 @@ export function Sidebar() {
           </>
         ) : null}
         {user ? (
-          <Link
-            href={(user.username ? `/profile/${user.username}` : "/me") as Route}
-            className="mt-auto flex items-center gap-2 rounded-[14px] p-2 hover:shadow-[var(--raised-s)]"
-            aria-label={`${user.fullName}, your profile`}
-          >
-            <Avatar name={user.fullName} src={user.avatarUrl} size="sm" />
-            <span className="max-w-[14ch] truncate text-body-sm font-semibold" data-testid="current-user-name">
-              {user.fullName}
-            </span>
-          </Link>
+          <div className="mt-auto flex flex-col gap-1">
+            <Link
+              href={(user.username ? `/profile/${user.username}` : "/me") as Route}
+              className="flex min-w-0 flex-1 items-center gap-2 rounded-[14px] p-2 hover:shadow-[var(--raised-s)]"
+              aria-label={`${user.fullName}, your profile`}
+            >
+              <Avatar name={user.fullName} src={user.avatarUrl} size="sm" />
+              <span className="truncate text-body-sm font-semibold" data-testid="current-user-name">
+                {user.fullName}
+              </span>
+            </Link>
+            <SignOutButton variant="ghost" size="sm" icon className="justify-start" />
+          </div>
         ) : null}
       </div>
     </aside>

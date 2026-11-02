@@ -231,9 +231,9 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 
 📖 `docs/student-first-plan.md` (Portals, How the app looks), `09-design-system-and-ux.md`, `screen-spec.md` §1–2, the brief `app/(marketing)/CLAUDE.md` on `claude/wonderful-feynman-rmrfgy`
 
-- [ ] portals flag (`platform_config` `portals.enabled`, gate, signup refusal, student surfaces), marketing CTAs to "Talk to us", `/pricing` → `/features`, and the migration that deletes every recruiter and university-official account through `private.delete_account` (counts listed in the PR)
-- [ ] design system in the app (merge the marketing branch, root neu tokens with PRD 9 names re-pointed, Space Grotesk, rebuilt `components/ui/` primitives and the new ones, `/ui` gallery, token contrast test, ops `.classic`)
-- [ ] shell (rail, header with ⌘K, phone dock, Openings in nav) and core screens (post card with `⋯`, Me, Score, Ventures team tray, chat, notifications, onboarding, empty states with renders)
+- [x] portals flag (`platform_config` `portals.enabled`, gate, signup refusal, student surfaces), marketing CTAs to "Talk to us", `/pricing` → `/features`, and the migration that deletes every recruiter and university-official account through `private.delete_account` (counts listed in the PR)
+- [x] design system in the app (merge the marketing branch, root neu tokens with PRD 9 names re-pointed, Space Grotesk, rebuilt `components/ui/` primitives and the new ones, `/ui` gallery, token contrast test, ops `.classic`)
+- [x] shell (rail, header with ⌘K, phone dock, Openings in nav) and core screens (post card with `⋯`, Me, Score, Ventures team tray, chat, notifications, onboarding, empty states with renders)
 
 ✅ Recruiter and official signup refused and their routes 404 while the flag is off, restored when on · no recruiter or official account remains, and faculty with a university seat keep their account · every existing screen renders on the new tokens in light and dark with axe clean · every token pair passes the contrast test · Lighthouse mobile ≥ 90 on `/feed`
 

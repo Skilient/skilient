@@ -63,7 +63,8 @@ export default async function VenturesPage({ searchParams }: PageProps<"/venture
           <p className="mt-1 text-body text-text-secondary">Projects and startups students are building. Join one, or start your own.</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button asChild variant="secondary">
+          {/* From 1024 px the sidebar's second tier lists Requests; the button is for phones and tablets. */}
+          <Button asChild variant="secondary" className="lg:hidden">
             <Link href="/requests" aria-label="Requests">
               Requests
             </Link>

@@ -93,7 +93,7 @@ export function Tooltip({
             style={floatingStyles}
             {...getFloatingProps()}
             className={cn(
-              "pointer-events-none z-50 max-w-[240px] rounded-md border border-border-default bg-bg-elevated px-3 py-2 shadow-3",
+              "pointer-events-none z-50 max-w-[240px] rounded-md border border-[var(--card-border)] bg-bg-elevated px-3 py-2 shadow-3",
             )}
           >
             <p className="text-body-sm font-semibold text-text-primary">{label}</p>

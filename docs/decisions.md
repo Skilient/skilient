@@ -2009,3 +2009,15 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   - The fee, payout, refund and limit details are open questions 18–21.
   - The merchant agreement must allow collecting on behalf of societies before paid tickets go live (`docs/setup-checklist.md`).
 - **16. Existing recruiter and university accounts are deleted** (Ahmed). Default for how (question 22): one migration in phase 14 slice 1 runs `private.delete_account` for every `recruiter` and `university_admin` account and deletes their organisations and seats. Faculty with a seat keep their account. The pull request lists the counts before merge, so the deletion is visible before it runs on production.
+- **2026-11-02 (Ahmed): paid tickets are paid directly to the society.** The student pays by bank transfer, JazzCash or Easypaisa using the society's payment details and a reference code, then uploads the receipt (screenshot or PDF). An officer approves or rejects it. **Skilient never handles ticket money**, which supersedes the gateway, payouts, fee and automatic-refund design above; questions 18–20 are dropped. Safeguards (PRD 5.31):
+  - a payment-details change takes effect only after a second officer confirms it, because a hijacked officer account redirecting money is the main scam risk
+  - 24-hour seat holds
+  - duplicate receipt and transaction-ID flags
+  - refunds marked sent and received between society and student, with disputes into reports after 72 hours
+  - receipts private, deleted 90 days after the event, and on the never-recorded analytics list
+  - The agreement must say Skilient isn't a party to ticket payments (setup checklist).
+- **2026-11-02 (Ahmed): defaults for questions 17, 21 and 22.**
+  - 17: the Record component is at most 100 points, merit entries only.
+  - 21: PKR 100 to 10,000 per ticket. The "3 paid events until the first payout" limit is dropped with the payouts.
+  - 22: delete recruiter and official accounts through `private.delete_account` in phase 14 slice 1, with counts listed in the pull request.
+  - No questions are open on the track.

@@ -60,7 +60,7 @@ No society chat: Skilient has no group chats beyond venture chats (decisions 202
    2. **When and where:** a single session, or several sessions (each with its own time). A venue or an online link.
    3. **Who:**
       - eligibility: own university (default), all universities, or chosen departments and batches
-      - ticket types (for example Participant or Audience), each with a capacity and free or a price in PKR (paid tickets need a verified payout account, below)
+      - ticket types (for example Participant or Audience), each with a capacity and free or a price in PKR (paid tickets need the society's confirmed payment details, below)
       - team registration on or off (2–6 people per team)
       - approval mode (automatic or manual)
       - when registration opens and closes
@@ -119,51 +119,56 @@ No society chat: Skilient has no group chats beyond venture chats (decisions 202
 5. **At the venue:** show the QR, or self check-in by scanning the host's rotating code.
 6. **After:** "New on your Record" → the Record. An optional feedback form stays open for 7 days.
 
-#### Paid tickets and payouts (Ahmed, 2026-11-02: paid and free tickets)
+#### Paid tickets: pay the society directly, upload the receipt (Ahmed, 2026-11-02)
 
-A ticket type is free or paid. Paying for a ticket buys a seat, never proof or rank: the Record entry is the same as for a free ticket, and attendance entries never add rank (5.30).
+A ticket type is free or paid. **Skilient never handles the money.** The student pays the society directly (bank transfer, JazzCash or Easypaisa) and uploads the receipt, and an officer confirms it. There is no gateway, no payout, no Skilient fee and no Skilient refund. Paying buys a seat, never proof or rank: the Record entry is the same as for a free ticket, and attendance entries never add rank (5.30).
 
-**Who can sell.**
-- Only a **verified** society with a **verified payout account** can publish paid ticket types.
-- **Payout account:** the president or treasurer submits the account holder's name, bank and IBAN, plus a CNIC photo whose name matches the holder.
-  - Staff check it in an `/ops` queue (audited); the CNIC image sits in a private bucket and is deleted 30 days after the check.
-  - A changed account needs a fresh check and pauses payouts until it passes.
+**Society payment details** (Society manage → Payment details):
+- Up to 3 methods. Bank transfer: bank, account title, account number or IBAN. JazzCash or Easypaisa: account title and number.
+- Any officer can propose a change, but it **takes effect only after a second officer confirms it**. Every officer is notified and the change is audited. Why: a hijacked officer account changing where money goes is the main scam risk.
+- Students see the details only after picking a paid ticket, with "Updated <date>".
+- A society with no confirmed payment details can't publish a paid ticket type.
 
-**Prices and fees.**
-- PKR only, through the local gateway (5.24, `BILLING_GATEWAY_LOCAL`).
-- Each ticket costs between PKR 100 and PKR 10,000, within `platform_config` `events.ticket_limits`.
-- The buyer pays the listed price.
-- The gateway fee and the Skilient fee (`events.ticket_fee_bps`, 0 until Ahmed sets it; question 18) come out of the payout. The event page and the society's dashboard show both.
-- The price is always read in SQL from `event_ticket_types`, never from the client (CLAUDE.md).
+**Buying (student)**, flow B step 3 with payment:
+1. Form → paid ticket type. The sheet shows:
+   - the amount
+   - the society's payment details
+   - a **reference code** to put in the transfer note (for example `SKL-7F3K`)
+   - the refund policy
+   - the line "You pay CS Society directly. Skilient doesn't handle the money."
+2. The seat is **held for 24 hours** for the student to pay and upload.
+3. **Upload the receipt:** a screenshot (PNG, JPEG or WebP, 5 MB or less, re-encoded with EXIF stripped) or a PDF (`%PDF-` check), plus an optional transaction ID → status **Payment under review · 14:02**. The hold lasts until an officer decides.
+4. **The officer reviews** (event manage → Payments): receipt, amount, reference code, transaction ID, uploaded time.
+   - **Approve** → Confirmed, the ticket is issued, and the student is notified.
+   - **Reject** with a reason ("Amount doesn't match") → the student can upload again within 24 hours, otherwise the seat is released.
+5. **Duplicate check.** The same receipt image (perceptual hash) or transaction ID used on another registration in the same society is flagged on the review card ("Also uploaded for Ali Khan's registration · 12 Nov"). The officer decides; nothing is rejected automatically.
+6. **No receipt in 24 hours** → the hold expires, the seat returns, and the student is told.
+7. **Waitlist with paid tickets:** the promoted person gets the same 24-hour hold.
+8. **Manual-approval events** ask for payment only after approval; the approval notice starts the 24-hour hold.
 
-**Buying (student), flow B step 3 with payment.**
-1. Form → paid ticket type → **Pay PKR 500**. This creates a checkout session (`create_checkout` with subject `event_ticket`, priced in SQL), then the gateway page, then `/billing/return/[session]`.
-2. The seat is **held for 15 minutes** while payment is pending. If payment fails or the hold expires, the seat returns to the pool.
-3. Payment succeeded (gateway webhook through `record_billing_event`) → **Confirmed**, the ticket is issued, and a receipt is sent: an invoice in the immutable invoice series, issued by Skilient "on behalf of <society>".
-4. Manual-approval events take payment **after** approval: the approval notice carries a 48-hour payment link.
-5. **Waitlist with paid tickets:** the promoted person gets a 24-hour hold to pay before the seat moves to the next person.
+**Refunds** (between the society and the student):
+- When publishing, the host states its policy: **no refunds**, or **refund until N days before**. It shows on the event page and the ticket.
+- A student who cancels within the policy gets "Refund requested". An officer pays it back outside Skilient and marks **Refund sent** (an optional proof upload). The student can mark it **Received**, or **Not received**, which opens a report.
+- **The host cancels a paid event** → every paid registrant is told "CS Society will refund you", and close-out lists every refund still to mark. A cancelled paid event with refunds unmarked after 14 days is flagged to staff.
 
-**Refunds.**
-- The host picks a refund policy when publishing: **no refunds**, or **full refund until N days before** (shown on the event page and the receipt).
-- A student cancels within the policy → an automatic full refund through the gateway adapter's `refund` → the seat frees and the waitlist is promoted.
-- **The host cancels the event** → every paid ticket is refunded in full automatically, and the society bears the gateway fee.
-- A credit note is issued in the `-CN` series for every refund.
+**Disputes and limits:**
+- "I paid but wasn't confirmed" and "Refund not received" go to the society first. After 72 hours with no answer they become a report case (5.12, target event registration).
+- Staff never move money. They can pause a society's paid tickets or suspend the society.
+- Prices are PKR 100 to 10,000 per ticket (`platform_config` `events.ticket_limits`).
 
-**Payouts.**
-- Each event's ticket money is held until **7 days after the event ends**, the refund and dispute window.
-- Staff then pay the net amount (sales minus refunds, gateway fee and Skilient fee) by bank transfer to the verified payout account, and mark the payout paid with the transfer reference. This is audited, and the society sees a statement.
-- Payouts are manual and weekly at first (question 19); automate when the gateway supports splits.
-- **Chargebacks** come out of the society's next payout. A negative balance pauses paid tickets for that society until it is settled.
-
-**Limits.** At most 3 paid events live per society at once until its first payout succeeds. Staff can pause a society's paid tickets.
+**Privacy:**
+- Receipts sit in a private bucket `event-receipts/{event}/{registration}`, visible only to the student, the society's officers and staff on a report.
+- They are deleted 90 days after the event ends (`storage-cleanup`).
+- The Payments tab and the receipt upload are on the never-recorded route list (`lib/analytics/privacy.ts`).
 
 **Build:**
 - `event_ticket_types.price_pkr`, `refund_policy`.
-- Billing subject `event_ticket` in `create_checkout`, with `billing_apply_event` confirming the registration.
-- `event_payments` (link to `payments`), `society_payout_accounts` (status pending, verified, rejected), `society_payouts` (period, gross, refunds, fees, net, status, reference).
-- Staff `ops_payout_accounts`, `ops_payouts`, `mark_payout_paid`, audited before and after.
-- A `refund_ticket` path through the billing worker.
-- **Legal before going live:** the merchant agreement must allow collecting on behalf of societies (`docs/setup-checklist.md`).
+- `society_payment_methods` (proposed_by, confirmed_by, effective_at).
+- `event_payments`: registration, reference_code, receipt_path, receipt_hash, transaction_id, status (awaiting, under_review, approved, rejected), decided_by and decided_at, refund_status (requested, sent, received, disputed).
+- `submit_receipt`, `review_payment`, `mark_refund_sent`, `confirm_refund`.
+- Holds expire in `event-tick`.
+- The receipt is checked in a server action the same way as credentials (`lib/actions/credentials.ts`).
+- The agreement and privacy notice must say that Skilient isn't a party to ticket payments and that receipts are stored (`docs/setup-checklist.md`).
 
 #### Build: societies and events
 
@@ -197,7 +202,8 @@ A ticket type is free or paid. Paying for a ticket buys a seat, never proof or r
   - a scanned ticket checks in once and refuses a second scan with the first time
   - a student can't create an event
   - close-out issues Record entries to every checked-in attendee
-  - a paid ticket is confirmed only by the gateway webhook, and a held seat returns after 15 minutes unpaid
-  - cancelling an event refunds every paid ticket with a credit note
-  - a payout's net equals sales minus refunds and fees, and only staff can mark it paid
+  - a paid ticket is confirmed only when an officer approves the receipt, and an unpaid hold frees the seat after 24 hours
+  - a payment-details change takes effect only after a second officer confirms it
+  - a reused receipt or transaction ID is flagged to the officer
+  - receipts are unreadable to anyone but the student, the society's officers and staff on a report
   - every screen passes axe in both themes

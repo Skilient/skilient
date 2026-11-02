@@ -11,7 +11,7 @@ Skilient becomes **the portal a student can't do university without**: "if a uni
 | Feature | PRD | One line |
 | --- | --- | --- |
 | **The Record** (headline) | 5.30 | A signed, verifiable co-curricular transcript. Verified societies and Skilient issue entries, only through Skilient, so receiving one needs an account. Merit entries move rank slightly (formula v2) |
-| Societies and society events | 5.31 | Society pages, officers, inductions; events with stepper creation, form builder, free and paid ticket types (PKR, payouts to societies), waitlist, teams, signed tickets, scanner check-in, close-out that issues Record entries. Students can't create events |
+| Societies and society events | 5.31 | Society pages, officers, inductions; events with stepper creation, form builder, free and paid ticket types (paid directly to the society; the student uploads the receipt and an officer confirms it), waitlist, teams, signed tickets, scanner check-in, close-out that issues Record entries. Students can't create events |
 | Paths, proof tasks, skill swap | 5.32 | "What do I even learn?": skills in the order seniors proved them, a task per next skill that becomes evidence, and learner-confirmed teaching that lands on the teacher's Record |
 | Digital yearbook | 5.33 | Final year: notes the owner approves, kind superlatives with secret votes, frozen at graduation |
 | Openings, share-to-chat, people you may know, push | 5.34 | One page of category cards with the latest opening on each; share a post into a DM or venture chat; suggestions with reasons; an installable app with web push |
@@ -85,7 +85,7 @@ Five build phases, one slice per session. The detail and "done when" lines are i
 | Phase | Slices |
 | --- | --- |
 | 14 New look | 1. Portals flag, marketing routes, `/features`, delete recruiter and official accounts · 2. Design system in the app · 3–4. Shell and core screens |
-| 15 Societies and events | 1. Societies · 2. Events, registration, tickets · 3. Check-in, close-out, export · 4. Paid tickets and payouts |
+| 15 Societies and events | 1. Societies · 2. Events, registration, tickets · 3. Check-in, close-out, export · 4. Paid tickets (receipt upload and review) |
 | 16 The Record | 1. Entries, signing, verify, issuing, formula v2 · 2. `/me/record`, PDFs, share, CV, claim by email, corrections · 3. Landing story update |
 | 17 Growth | 1. Paths and proof tasks · 2. Skill swap |
 | 18 Community | 1. Openings · 2. Yearbook · 3. Share-to-chat, people you may know, PWA and push |

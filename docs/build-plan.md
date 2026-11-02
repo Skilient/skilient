@@ -244,9 +244,9 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 - [ ] Slice 1: societies (request, ops verification, page, officers and handover, membership modes, induction rounds, posts as the society, term confirmations)
 - [ ] Slice 2: events (stepper, sessions, ticket types, eligibility, form builder, teams, approval, waitlist, signed tickets, reminders, change notices; event posts officer-only)
 - [ ] Slice 3: check-in (scanner, search, add by email, per session, live headcount), close-out (attendance fixes, results, volunteer hours, issue preview), CSV export, feedback
-- [ ] Slice 4: paid tickets and payouts (payout accounts verified in /ops, `event_ticket` checkout priced in SQL, seat holds, receipts, refund policies and automatic refunds on cancel, held funds, staff payouts with statements, chargebacks)
+- [ ] Slice 4: paid tickets paid directly to the society (payment details with second-officer confirmation, reference codes, 24-hour holds, receipt upload and officer review, duplicate flags, refund policy and refunds marked by the society, disputes into reports)
 
-✅ A society goes from request to verified to its first induction round · no oversell under parallel registrations · a ticket checks in once and the second scan shows the first time · a student can't create an event · close-out lists every checked-in attendee for issuing · a paid ticket confirms only on the gateway webhook and an unpaid hold frees after 15 minutes · a cancelled event refunds every paid ticket · a payout's net equals sales minus refunds and fees
+✅ A society goes from request to verified to its first induction round · no oversell under parallel registrations · a ticket checks in once and the second scan shows the first time · a student can't create an event · close-out lists every checked-in attendee for issuing · a paid ticket confirms only on an officer's receipt approval and an unpaid hold frees after 24 hours · a payment-details change needs a second officer · receipts are private to the student, the officers and staff on a report
 
 ## Phase 16 — The Record
 

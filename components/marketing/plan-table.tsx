@@ -1,5 +1,5 @@
 import { Check } from "@phosphor-icons/react/dist/ssr";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { pricingPage as copy } from "@/content/marketing";
 import { cn } from "@/lib/cn";
 import type { PublicPlan } from "@/lib/data/marketing";
@@ -38,22 +38,42 @@ function Price({ plan, per, className }: { plan: PublicPlan | null; per: string;
   if (!plan) return null;
   return (
     <p className={cn("flex flex-wrap items-baseline gap-x-2", className)}>
-      <span className="font-display text-h2 tabular-nums">{plan.price_pkr === null ? copy.custom : pkr(plan.price_pkr)}</span>
+      <span className="neu-figure text-[1.75rem] leading-none font-semibold">{plan.price_pkr === null ? copy.custom : pkr(plan.price_pkr)}</span>
       {plan.price_pkr === null ? null : <span className="text-body text-text-secondary">{per}</span>}
     </p>
   );
 }
 
-function Column({ title, price, items, note, extra, testId }: { title: string; price: ReactNode; items: string[]; note?: ReactNode; extra?: ReactNode; testId?: string }) {
+function Column({
+  title,
+  price,
+  items,
+  note,
+  extra,
+  testId,
+  pinned = false,
+  index = 0,
+}: {
+  title: string;
+  price: ReactNode;
+  items: string[];
+  note?: ReactNode;
+  extra?: ReactNode;
+  testId?: string;
+  pinned?: boolean;
+  /** Its place from small to large: plans rise in as stepping stones (story.css). */
+  index?: number;
+}) {
   return (
-    <li className="flex flex-col gap-4 border-t border-border-default pt-6" data-testid={testId}>
+    <li className={cn("plan-col flex flex-col gap-4 p-7", pinned ? "neu-ink plan-pinned" : "neu-card")} style={{ "--i": index } as CSSProperties} data-testid={testId}>
+      {pinned ? <span className="neu-mono self-start rounded-[var(--r-tag)] bg-[var(--signal)] px-2 py-1 text-[#1b1b19]">Recommended</span> : null}
       <h3 className="text-h3">{title}</h3>
       {price}
       {note}
       <ul className="flex flex-col gap-2">
         {items.map((item) => (
           <li key={item} className="flex items-start gap-2 text-body">
-            <Check aria-hidden weight="bold" className="mt-1 size-4 shrink-0 text-text-secondary" />
+            <Check aria-hidden weight="bold" className="mt-1 size-4 shrink-0 text-[var(--signal-ink)] [.neu-ink_&]:text-[var(--ink-accent)]" />
             {item}
           </li>
         ))}
@@ -69,8 +89,11 @@ export function PlanTable({
   free,
   notes = {},
   extra,
+  pinned,
 }: {
   id: string;
+  /** The one pinned plan, shown in ink (app/(marketing)/CLAUDE.md: plans grow small to large, one pinned). */
+  pinned?: string;
   plans: PublicPlan[];
   free?: FreeColumn;
   /** A line under a tier's price, keyed by tier (a trial, a sponsorship). */
@@ -96,17 +119,18 @@ export function PlanTable({
           </label>
         </fieldset>
       ) : null}
-      <ul className={cn("grid gap-x-6 gap-y-10 sm:grid-cols-2", cols >= 4 ? "lg:grid-cols-4" : cols === 3 ? "lg:grid-cols-3" : "")}>
+      <ul className={cn("grid gap-6 sm:grid-cols-2", cols >= 4 ? "lg:grid-cols-4" : cols === 3 ? "lg:grid-cols-3" : "")}>
         {free ? (
           <Column
             title={free.label}
-            price={<p className="font-display text-h2">{copy.free}</p>}
+            price={<p className="text-[1.75rem] leading-none font-semibold">{copy.free}</p>}
             items={[...free.items]}
             note={free.note ? <p className="text-body-sm text-text-secondary">{free.note}</p> : null}
             testId={`plan-${id}-free`}
+            index={0}
           />
         ) : null}
-        {rows.map((t) => {
+        {rows.map((t, i) => {
           const both = t.month && t.year;
           const price = both ? (
             <>
@@ -125,6 +149,8 @@ export function PlanTable({
               note={notes[t.tier] ? <p className="text-body-sm text-text-secondary">{notes[t.tier]}</p> : null}
               extra={extra?.[t.tier]}
               testId={`plan-${id}-${t.tier}`}
+              index={(free ? 1 : 0) + i}
+              pinned={t.tier === pinned}
             />
           );
         })}

@@ -2022,3 +2022,66 @@ Append-only. One dated entry per product decision, with the reason. Carried over
   - 22: delete recruiter and official accounts through `private.delete_account` in phase 14 slice 1, with counts listed in the pull request.
   - No questions are open on the track.
 - **2026-11-02 (Ahmed): no slices on the Student-first track.** Each of phases 14–18 is built whole in one session and one pull request, in order; the build-plan boxes are its parts, not separate sessions. Supersedes the "one slice per session" split in the plan and the "phase N slice M" references above (CLAUDE.md updated).
+
+## Marketing redesign: neumorphism (2026-10-31)
+
+- **Rule (Ahmed, 2026-10-31):** the marketing pages are redesigned to the UI brief now in `app/(marketing)/CLAUDE.md` (design insights, neumorphism system, UX laws). The root `CLAUDE.md` is unchanged; `components/marketing/CLAUDE.md` points to the brief. Scope is the public site only: the app, portals and `/ops` keep PRD 9.
+- **How:** `.neu` on the marketing layout re-points PRD 9's semantic tokens to the one surface (#E6E1D8 light, #2A2723 dark), so shared utilities follow. Component classes (`neu-btn`, `neu-card`, `neu-tile`, `neu-well`, `neu-ink`, tier finishes) sit in `@layer components` in `app/(marketing)/marketing.css`. Seal and tier badge are in `components/marketing/neu.tsx`.
+- **Fonts:** Space Grotesk (interface) and Spectral italic (the headline's turn) load in `app/(marketing)/fonts.ts`, on marketing routes only. This differs from the root CLAUDE.md stack (Barlow) because the brief asks for it. The CV specimen keeps Barlow so it shows the real document.
+- **Contrast (the brief asks for a build-time check):** muted text #6F695F is 4.18:1 on the surface, so it is darkened to #5C564D (5.57:1). Orange used as text or an icon is #A93E17 (4.76:1). Text on signal buttons is ink (4.65:1), because white on #E1592B is 3.71:1. The focus ring is #2C6CB8 (4.09:1), because #4A8BD6 is 2.71:1. Dark mode is our own derivation; the brief only defines light.
+- **Sections:** the full-bleed vermillion "Our rules" field becomes the page's one ink card. Orange stays with the hero and the primary action. The organisation rows stay full-width rows (decisions 2026-10-02) but become domain modules: colour band plus pictogram. The hero keeps the tested feed phone and adds a verified record overlapping it, built from the sample CV's own data. On /pricing the pinned plans are Student Pro, Recruiter Growth and University Growth.
+- **Background (Ahmed, 2026-10-31: "the background is so empty"):** the brief's texture motifs are added at low contrast and never under body text. A charpai weave (`--weave`, plain over-under strands) shows only outside the content column: in the gutters at 1280 px and in the margins on wider screens. The hero has one orange glow with weave fading out around the phone. Decorative contribution-grid streaks (`components/marketing/streak.tsx`, aria-hidden, busier toward the present) sit beside the How it works, Tiers and Opportunities headings on desktop. A weave fades in on the empty right side of the rules card and around the final CTA card.
+- **Richer cards (Ahmed, 2026-10-31: "the cards feel bland"):**
+  - Cards and tiles get a convex finish, lit from the top left (`--surface-hi`/`--surface-lo` plus a rim highlight).
+  - Panels carry one debossed numeral (`.neu-ghost`) in the How it works steps and the tiers.
+  - Steps end with a mono proof line naming what each step checks.
+  - Trust-gap figures get a 10-cell ledger bar with the figure's own share filled, never inflated.
+  - Tiers show a six-step mini ladder.
+  - The venture capture gets an overlapping team byline from the capture's real team.
+  - The jobs cell shows the captured post's facts as chips; competitions get a podium and fairs a booth queue (both decorative, aria-hidden).
+  - The feed pair gets an "Informative 11 → 12" chip, FAQ items are numbered, and the CV block lists what the signature carries.
+
+## Landing as a story (2026-10-31)
+
+- **Ahmed's answers (2026-10-31):**
+  - Story: one student's climb.
+  - Hero: proof objects in orbit.
+  - 3D: Blender stills with code motion, warm clay with foil.
+  - Motion: cinematic chapters, landing only this slice.
+  - Copy: rewritten as a story, Ayesha's in the chapters and "you" in the finale.
+  - The email field stays in the first screen.
+  - Phones get the same story with lighter staging.
+  - No scrollbars, and nothing in their place.
+  - Organisations, pricing and FAQ move to a calm epilogue.
+- **Structure:**
+  - Hero (orbit) → prologue (the trust gap on an ink scene that opens to full screen) → chapters 1–4 → chapter 5, the climb → chapters 6–7 → the rules → the finale → the epilogue.
+  - In chapters 1–4 the record pins on the right and each chapter's object docks into its row.
+  - The climb is a pinned diagonal pan up six terraces.
+  - In chapters 6–7 the seal stamps the last row and a recruiter's request arrives and is accepted.
+  - Copy is in `story` in `content/marketing.ts`. Every number on Ayesha's record is the sample CV's, and she is labelled a sample.
+  - The CV's signing date moves to 1 Oct 2026, the monthly refresh after her 20 Sep endorsement.
+- **Motion engine:** CSS scroll-driven animations in `app/(marketing)/story.css`, so there's no animation JavaScript. The only script is the hero's pointer parallax (`orbit-parallax.tsx`). Research: GSAP ScrollTrigger is now free but adds JS. Lenis smooth scrolling is criticised as scroll-jacking. Scroll-driven CSS runs in Chromium and Safari 26; Firefox has it behind a flag. Motion applies only with `[data-js]`, `@supports (animation-timeline: view())` and `prefers-reduced-motion: no-preference`. Otherwise every scene is static at its end state, with inline chapter visuals. Pins apply only at ≥1024×600.
+- **Renders:**
+  - `scripts/renders/objects.py` builds every object in code and renders it headless in Blender 4.5 (Cycles CPU, transparent, top-left key light).
+  - Objects: the seal (ink, foil edge), six medallions (Raw woven jute, Spark tint, Flare signal, Shine gold, Radiant rose-gold foil, Luminary iridescent), the commit keycap, the endorsement rosette, the university-email envelope, the woven charpai team tray (light/dark) and the terraces (light/dark, with step positions projected for the climb).
+  - `scripts/renders/export.mjs` trims and exports AVIF/WebP to `public/marketing/objects/` and writes `content/objects.json`.
+  - Video stays out (PRD 10): these are stills, and motion is code.
+- **Removed:** the hero phone and its focal sequence, the profile card, the "Verified by…" tag, How it works (the chapters tell it), the big step numerals, the streak grids, the tier ladder, the feed/ventures/opportunities blocks and the CV specimen. The captures stay for /recruiters.
+
+## Organisation pages, pricing and about as stories (2026-11-01)
+
+- **Ahmed's answers (2026-11-01):** the pages speak to their reader, from that reader's seat in Ayesha's sample world. Pricing stays calm, with plans rising as steps. About is a manifesto and roll call opened by chai on a charpai. Each page gets its own set of renders.
+- **Recruiters:** you are a recruiter at Indus Softworks, the sample company in the product captures. Five pinned chapters: search (names hidden), evidence, contact, hire, trust. Then the rules of contact light up one by one, then the recruiter plans.
+- **Universities:** you run careers at National University of Technology, Ayesha's sample university. Five chapters: ecosphere, dashboards, records, fairs, Student Pro. Then the licences and Talk to us.
+- **Faculty:** you post the idea behind Library Seat Finder, a sample venture on her CV. Five chapters: ideas, supervise, confirm, review (the five rubric parts as the teacher portal names them), endorse and grade.
+- **Pricing:** no pins. Plan columns rise in as stepping stones, the pinned plan gets one moment of light, and the hero holds the seal and a commit only (never a tier, since rank is never sold).
+- **About:** the story's four sentences light up on the ink card, the team rises in as a roll call, and each value's seal stamps down.
+- **Numbers and data on the stages are samples, labelled "Sample":**
+  - Dashboard counts: 41, 36, 22, 9.
+  - The record-view log time, the fair queue, the supervisor thread and the rubric scores.
+  - Ayesha's skills, levels and evidence are the sample CV's.
+- **Captures:** the venture-team capture (a different sample person) leaves /recruiters, because the story must keep one cast. The contact-request and jobs captures (Indus Softworks, Frontend intern (React)) stay as real product windows.
+- **Shared parts:** `Orbit`, `PinnedStory` (scenes cross over on one `--pin` timeline) and `LitLines` (the rules effect, now for any number of lines). The story stylesheet moved to the marketing layout.
+- **New renders** (same script and look): loupe over a record card, company letter, campus, fair booth with a queue, event ticket, fountain pen, idea bulb, marked-up page, and chai on a charpai.
+- **Text never fades in (2026-11-01):** reveals on every marketing page are a mask wipe (`clip-path`) plus a rise, always at full opacity. On phones, chapter kickers sit near the first fold and were half-faded at load, which axe flagged. The clip ends outside the box, so shadows and focus rings are never cut. Only pictures, and stage scenes that start fully hidden, use opacity.
+- **Grounded renders** (campus, booth, chai, the landing's tray) get a radial fade at export, so the floor shadow dissolves before the frame's edge instead of showing a square.

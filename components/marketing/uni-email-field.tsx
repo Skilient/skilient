@@ -104,7 +104,7 @@ export function UniEmailField({
     <>
       <form action="/join" method="get" onSubmit={onSubmit} className="flex w-full max-w-xl flex-col gap-2" noValidate>
         <Label htmlFor={inputId}>{copy.label}</Label>
-        <div className="flex flex-col gap-2 sm:flex-row">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <Input
             ref={input}
             id={inputId}
@@ -124,12 +124,12 @@ export function UniEmailField({
             }}
             aria-invalid={tone === "error" ? true : undefined}
             aria-describedby={statusId}
-            className="h-12 min-w-0 text-body-lg sm:flex-1"
+            className="h-14 min-w-0 text-body-lg sm:flex-1"
             data-testid={`${idPrefix}-email`}
           />
           <button
             type="submit"
-            className="inline-flex h-12 shrink-0 items-center justify-center rounded-md bg-primary px-6 text-body-lg font-semibold text-text-on-primary transition-[background-color,transform] duration-[120ms] ease-standard hover:bg-primary-hover active:scale-[0.98] active:bg-primary-active"
+            className="neu-btn h-14 shrink-0 px-7 text-body-lg"
           >
             {copy.submit}
           </button>
@@ -142,7 +142,7 @@ export function UniEmailField({
                 {message(visible)}
               </span>
               {visible.kind === "not_live" || visible.kind === "unknown" ? (
-                <button type="button" onClick={() => openSheet(visible)} className="font-semibold text-text-primary underline underline-offset-4">
+                <button type="button" onClick={() => openSheet(visible)} className="neu-btn-3 min-h-10 text-body">
                   {copy.request}
                 </button>
               ) : null}
@@ -159,14 +159,14 @@ export function UniEmailField({
         {sheetFor ? (
           <div className="flex flex-col gap-5 p-6 sm:p-8">
             <div className="flex items-start justify-between gap-4">
-              <h2 id={`${idPrefix}-sheet-title`} className="font-display text-h2">
+              <h2 id={`${idPrefix}-sheet-title`} className="neu-h2">
                 {requestCopy.title}
               </h2>
               <button
                 type="button"
                 onClick={() => dialog.current?.close()}
                 aria-label="Close"
-                className="-mt-1 -mr-2 inline-flex size-10 shrink-0 items-center justify-center rounded-md hover:bg-bg-subtle"
+                className="neu-icon-btn -mt-1 shrink-0"
               >
                 <X aria-hidden weight="bold" className="size-5" />
               </button>

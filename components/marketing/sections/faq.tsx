@@ -8,17 +8,22 @@ import { Section, SectionHeading } from "./section";
  */
 export function Faq() {
   return (
-    <Section labelledBy="faq-title" className="border-b border-border-muted">
+    <Section labelledBy="faq-title" step="Epilogue · Questions" className="epilogue">
       <div className="grid gap-8 md:grid-cols-12 md:gap-6">
         <SectionHeading id="faq-title" className="md:col-span-3">
           {faq.heading}
         </SectionHeading>
-        <div className="border-t border-border-default md:col-span-8 md:col-start-5">
-          {faq.items.map((item) => (
-            <details key={item.q} className="faq-item group border-b border-border-default">
-              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 text-h4 [&::-webkit-details-marker]:hidden">
-                {item.q}
-                <CaretDown aria-hidden weight="bold" className="faq-caret size-5 shrink-0 text-text-secondary" />
+        <div className="flex flex-col gap-4 md:col-span-8 md:col-start-5">
+          {faq.items.map((item, i) => (
+            <details key={item.q} className="faq-item group px-6">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 text-h4 font-semibold [&::-webkit-details-marker]:hidden">
+                <span className="flex items-baseline gap-4">
+                  <span aria-hidden className="neu-mono text-[var(--signal-ink)]">
+                    Q{String(i + 1).padStart(2, "0")}
+                  </span>
+                  {item.q}
+                </span>
+                <CaretDown aria-hidden weight="bold" className="faq-caret size-5 shrink-0 text-[var(--signal-ink)]" />
               </summary>
               <p className="max-w-[64ch] pb-6 text-body-lg text-text-secondary">{item.a}</p>
             </details>

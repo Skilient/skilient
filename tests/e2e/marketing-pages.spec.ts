@@ -76,6 +76,61 @@ test.describe("Marketing: organisation pages, pricing and about", () => {
   });
 });
 
+test.describe("Marketing: organisation stories", () => {
+  const STORIES = [
+    { path: "/recruiters", chapters: ["You search for React. You get proof, not keywords.", "Open a skill and see the work behind it.", "You ask first. She decides.", "Post the job. Meet her at the fair.", "Every company is verified."] },
+    { path: "/universities", chapters: ["An ecosphere in your colours.", "See what your students have proven.", "Open a record. Every view is logged.", "Run the fair. Fill the queue.", "Polish for every final-year student."] },
+    { path: "/faculty", chapters: ["Post an idea. Teams form around it.", "Follow the work in its own thread.", "Confirm what each student did.", "Score the work on five criteria.", "Endorse the skills you saw. Grade real code."] },
+  ] as const;
+
+  for (const story of STORIES) {
+    test(`${story.path}: every chapter in order and nothing hidden without JavaScript`, async ({ browser }, info) => {
+      test.skip(info.project.name !== "desktop", "one browser is enough");
+      const page = await (await browser.newContext({ javaScriptEnabled: false })).newPage();
+      await page.goto(story.path);
+      const headings = await page.locator("main h2").allTextContents();
+      const order = story.chapters.map((h) => headings.indexOf(h));
+      expect(order.every((i) => i >= 0), JSON.stringify(headings)).toBe(true);
+      expect([...order].sort((a, b) => a - b)).toEqual(order);
+      await expect(page.locator(".pin-stage")).toBeHidden();
+      // The plan tables' monthly/yearly radios are visually hidden on purpose (CSS-only toggle).
+      const hidden = await page
+        .locator("main *")
+        .evaluateAll((els) => els.filter((e) => !(e instanceof HTMLInputElement) && e.checkVisibility() && getComputedStyle(e).opacity === "0").map((e) => e.className));
+      expect(hidden).toEqual([]);
+    });
+  }
+
+  test("on a large screen the stage changes scene as the chapters pass", async ({ browser }, info) => {
+    test.skip(info.project.name !== "desktop", "one browser is enough");
+    const page = await (await browser.newContext({ viewport: { width: 1280, height: 720 } })).newPage();
+    await page.goto("/recruiters");
+    await expect(page.locator(".pin-stage")).toBeVisible();
+    const opacity = (n: number) => page.locator(".pin-scene").nth(n).locator(".pin-in").evaluate((e) => Number(getComputedStyle(e).opacity));
+    const scrollToStory = (at: "start" | "end") =>
+      page.locator(".pin-story").evaluate((el, where) => {
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo(0, where === "start" ? top : top + (el as HTMLElement).offsetHeight - window.innerHeight);
+      }, at);
+    await scrollToStory("start");
+    await expect.poll(() => opacity(4)).toBe(0);
+    await scrollToStory("end");
+    await expect.poll(() => opacity(4)).toBe(1);
+    await expect.poll(() => page.locator(".pin-scene").first().locator(".pin-out").evaluate((e) => Number(getComputedStyle(e).opacity))).toBe(0);
+  });
+
+  test("/about: the manifesto, the roll call and the values are all there under reduced motion", async ({ browser }, info) => {
+    test.skip(info.project.name !== "desktop", "one browser is enough");
+    const page = await (await browser.newContext({ reducedMotion: "reduce" })).newPage();
+    await page.goto("/about");
+    await expect(page.locator(".rules-line")).toHaveCount(4);
+    expect(await page.locator(".rules-pin").evaluate((e) => getComputedStyle(e).position)).toBe("static");
+    for (const item of await page.locator(".roll-call-item, .value-tile").all()) {
+      expect(await item.evaluate((e) => getComputedStyle(e).animationName)).toBe("none");
+    }
+  });
+});
+
 test.describe("Marketing: pricing", () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
 

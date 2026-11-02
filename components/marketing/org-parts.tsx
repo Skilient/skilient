@@ -3,18 +3,16 @@ import type { Route } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import type { ArtName } from "@/lib/marketing/art";
-import { ArtImage } from "./art-image";
+import { Orbit, type OrbitItem } from "./story/orbit";
 
 /**
  * Parts shared by /recruiters, /universities, /faculty, /pricing and /about
  * (docs/marketing-design-plan.md B7). Each page composes its own layout from these.
  */
 
-export const ctaClass =
-  "inline-flex h-12 items-center gap-2 rounded-md bg-primary px-6 text-body-lg font-semibold text-text-on-primary transition-[background-color,transform] duration-[120ms] ease-standard hover:bg-primary-hover active:scale-[0.98]";
+/** The page's one call to action: a raised signal-orange pill (an anchor on the same page or a route). */
+export const ctaClass = "neu-btn text-body-lg";
 
-/** The page's one call to action: a vermillion link (an anchor on the same page or a route). */
 /**
  * An organisation page's call to action. `track` names it in the `org_cta_click` analytics event
  * (PRD 5.1), sent by AnalyticsLoader's click listener, so this stays a server component.
@@ -50,24 +48,29 @@ export function CtaLink({
   );
 }
 
-/** An organisation page's opening: the headline and one CTA in 7 columns, the print in 5. */
+/**
+ * An organisation page's opening (decisions 2026-11-01): the headline and one CTA in 7 columns,
+ * the page's proof objects in orbit in 5, gathering away as the story starts.
+ */
 export function OrgHero({
   headline,
   intro,
-  art,
+  orbit,
+  orbitAlt,
   cta,
   aside,
 }: {
   headline: string;
   intro: string;
-  art: Exclude<ArtName, "og-plate" | "about-corridor" | "about-desk">;
+  orbit: OrbitItem[];
+  orbitAlt: string;
   cta: ReactNode;
   aside?: ReactNode;
 }) {
   return (
-    <section aria-labelledby="page-title" className="border-b border-border-muted">
-      <div className="mx-auto grid max-w-page gap-10 px-[var(--page-gutter)] py-12 sm:py-16 md:grid-cols-12 md:items-center md:gap-6">
-        <div className="flex flex-col gap-6 md:col-span-7">
+    <section aria-labelledby="page-title" className="hero">
+      <div className="mx-auto grid max-w-page gap-8 px-[var(--page-gutter)] pt-8 pb-4 sm:pt-12 lg:grid-cols-12 lg:gap-6 lg:pt-10">
+        <div className="hero-copy flex flex-col gap-6 lg:col-span-7 lg:self-center lg:pb-16">
           <h1 id="page-title" className="text-hero max-w-[16ch] text-text-primary">
             {headline}
           </h1>
@@ -77,8 +80,8 @@ export function OrgHero({
             {aside}
           </div>
         </div>
-        <div className="md:col-span-4 md:col-start-9">
-          <ArtImage name={art} eager sizes="(min-width: 768px) 30vw, 16rem" className="mx-auto max-w-[16rem] md:max-w-none" />
+        <div className="lg:col-span-5">
+          <Orbit id="org-orbit" items={orbit} alt={orbitAlt} testId="org-orbit" />
         </div>
       </div>
     </section>

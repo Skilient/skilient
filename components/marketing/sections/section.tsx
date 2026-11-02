@@ -9,6 +9,8 @@ export function Section({
   className,
   inner,
   dense = false,
+  step,
+  decor,
 }: {
   id?: string;
   labelledBy: string;
@@ -16,18 +18,31 @@ export function Section({
   className?: string;
   inner?: string;
   dense?: boolean;
+  /** A mono ledger line above the content ("03 · Proof"): the page counted in steps. */
+  step?: string;
+  /** Background art for the empty space beside the heading (desktop only, aria-hidden). */
+  decor?: ReactNode;
 }) {
   return (
     <section id={id} aria-labelledby={labelledBy} className={className}>
-      <div className={cn("mx-auto max-w-page px-[var(--page-gutter)]", dense ? "py-16" : "py-16 sm:py-20", inner)}>{children}</div>
+      <div className={cn("mx-auto max-w-page px-[var(--page-gutter)]", dense ? "py-16" : "py-16 sm:py-20", inner, decor ? "relative" : null)}>
+        {decor ? <div aria-hidden className="pointer-events-none absolute top-16 right-[var(--page-gutter)] hidden sm:top-20 lg:block">{decor}</div> : null}
+        {step ? (
+          <p aria-hidden className="neu-mono mb-5 flex items-center gap-3 text-text-secondary">
+            <span className="h-px w-8 bg-border-strong" />
+            {step}
+          </p>
+        ) : null}
+        {children}
+      </div>
     </section>
   );
 }
 
-/** A section heading: Spectral h1 size on the landing, more space above than below. */
+/** A section heading: Grotesk (serif is kept for belief moments), the 36 px step of the scale. */
 export function SectionHeading({ id, children, className }: { id: string; children: ReactNode; className?: string }) {
   return (
-    <h2 id={id} className={cn("font-display text-[2rem] leading-[1.1] tracking-[-0.02em] text-text-primary sm:text-h1", className)}>
+    <h2 id={id} className={cn("neu-h2 text-text-primary", className)}>
       {children}
     </h2>
   );

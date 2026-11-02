@@ -54,7 +54,8 @@ function AccountMenu() {
         type="button"
         aria-expanded={open}
         aria-controls={id}
-        aria-label={`${user.fullName}, account menu`}
+        aria-label="Account menu"
+        title={user.fullName}
         onClick={() => setOpen((o) => !o)}
         className="inline-flex size-11 items-center justify-center rounded-full"
         data-testid="account-menu"

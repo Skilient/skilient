@@ -4,6 +4,7 @@ import { DotsThree, EyeSlash, SpeakerSlash } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { ReportButton } from "@/components/reports/report-button";
 import { Button } from "@/components/ui";
+import { cn } from "@/lib/cn";
 import { hidePost, muteUser } from "@/lib/actions/posts";
 
 /**
@@ -82,7 +83,7 @@ export function ViewerActions({
       <div
         id={menuId}
         hidden={!open}
-        className="absolute right-0 bottom-12 z-20 flex w-56 flex-col gap-1 rounded-lg bg-bg-elevated p-2 shadow-[var(--raised-l)]"
+        className={cn("absolute right-0 bottom-12 z-20 w-56 flex-col gap-1 rounded-lg bg-bg-elevated p-2 shadow-[var(--raised-l)]", open ? "flex" : "hidden")}
       >
         <Button data-menu-item variant="ghost" size="sm" className="justify-start rounded-md" disabled={pending} onClick={() => run(() => hidePost(postId, true), "hidden")}>
           <EyeSlash aria-hidden weight="bold" className="size-4" />

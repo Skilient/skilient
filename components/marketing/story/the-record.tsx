@@ -10,7 +10,7 @@ import { Chapter } from "./chapters";
  */
 export function StoryRecord() {
   return (
-    <section aria-label="Ayesha’s story: The Record" className="story" data-testid="story-record">
+    <section aria-label="Ayesha’s story: The Record" data-testid="story-record">
       <div className="mx-auto max-w-page px-[var(--page-gutter)]">
         <Chapter
           id="the-record"

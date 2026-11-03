@@ -246,17 +246,15 @@ revoke all on table public.record_entries, public.record_claims, public.record_s
   public.record_pdf_exports from anon, authenticated;
 grant select on table public.record_entries, public.record_share_links, public.record_corrections, public.record_pdf_exports to authenticated;
 
-create policy record_entries_owner_read on public.record_entries for select to authenticated
-  using (user_id = (select auth.uid()));
-create policy record_entries_issuer_read on public.record_entries for select to authenticated
-  using (issuer_type = 'society' and issuer_id is not null and status <> 'held' and private.is_society_officer(issuer_id));
+create policy record_entries_read on public.record_entries for select to authenticated
+  using (user_id = (select auth.uid())
+         or (issuer_type = 'society' and issuer_id is not null and status <> 'held' and private.is_society_officer(issuer_id)));
 create policy record_share_links_owner_read on public.record_share_links for select to authenticated
   using (user_id = (select auth.uid()));
-create policy record_corrections_owner_read on public.record_corrections for select to authenticated
-  using (user_id = (select auth.uid()));
-create policy record_corrections_issuer_read on public.record_corrections for select to authenticated
-  using (exists (select 1 from public.record_entries e where e.id = entry_id and e.issuer_type = 'society'
-                   and private.is_society_officer(e.issuer_id)));
+create policy record_corrections_read on public.record_corrections for select to authenticated
+  using (user_id = (select auth.uid())
+         or exists (select 1 from public.record_entries e where e.id = entry_id and e.issuer_type = 'society'
+                      and private.is_society_officer(e.issuer_id)));
 create policy record_pdf_exports_owner_read on public.record_pdf_exports for select to authenticated
   using (user_id = (select auth.uid()));
 

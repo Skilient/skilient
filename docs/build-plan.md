@@ -252,9 +252,9 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 
 📖 `05-30-the-record.md`, `05-18-verified-cv.md`, `05-26-…` (appeals)
 
-- [ ] entries, `record_entry` signing through `cv-sign`, `/verify/[code]` for entries, issuing from close-out, term confirmations and venture completions, revocation and supersede, ranking formula v2 (`score_record`, reference students in `docs/ranking-reference.md`)
-- [ ] `/me/record`, certificate and transcript PDFs, share links, CV "Leadership and activities", claim by email after signup, mistake reports and appeals
-- [ ] landing story features The Record (marketing)
+- [x] entries, `record_entry` signing through `cv-sign`, `/verify/[code]` for entries, issuing from close-out, term confirmations and venture completions, revocation and supersede, ranking formula v2 (`score_record`, reference students in `docs/ranking-reference.md`)
+- [x] `/me/record`, certificate and transcript PDFs, share links, CV "Leadership and activities", claim by email after signup, mistake reports and appeals
+- [x] landing story features The Record (marketing)
 
 ✅ A checked-in attendee gets a sealed entry that verifies, and a revoked one shows revoked · no officer issues to themselves alone · a claim works only for the same verified email · the transcript PDF verifies every entry on it · formula v2 reproduces the hand-worked Record scores and attendance never adds rank
 

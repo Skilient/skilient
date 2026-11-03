@@ -292,6 +292,27 @@ export const story = {
   epilogue: "For organisations, pricing and questions",
 };
 
+/**
+ * The Record on the landing story (phase 16, PRD 5.30): Ayesha's co-curricular transcript. Every
+ * line here is live: verified societies issue at close-out, terms are confirmed by a second
+ * officer, each entry has a code at /verify, and the transcript is one signed PDF. Sample entries.
+ */
+export const theRecord = {
+  kicker: "The Record",
+  title: "Her society work is signed too.",
+  body: "When Ayesha checks in at the CS Society’s workshop, the society issues her entry through Skilient: no Canva certificate to fake. Her term as General Secretary is confirmed by a second officer. Each entry has a code anyone can check, and her whole Record prints as one signed transcript next to the academic one.",
+  chips: ["Issued by verified societies", "A code on every entry", "Transcript PDF with a QR"],
+  rule: "Office terms, results and volunteer hours move rank a little. Attendance never does, and a paid ticket buys a seat, not rank.",
+  link: "Verify an entry",
+  heading: "Ayesha’s Record",
+  year: "2026–27",
+  entries: [
+    { issuer: "CS Society", title: "Office bearer: General Secretary", date: "30 Jun 2026", line: "General Secretary · Sep 2025 – Jun 2026", code: "7RCD0-K2M4P" },
+    { issuer: "CS Society", title: "Result: Campus Hackathon", date: "15 Nov 2026", line: "2nd of 14 teams", code: "7RCD0-Q8T1W" },
+    { issuer: "CS Society", title: "Attended: Build with React", date: "12 Nov 2026", line: "Checked in 10:04", code: "7RCD0-H3V9N" },
+  ],
+};
+
 /** Section 10. */
 export const rules = {
   heading: "Our rules",
@@ -656,6 +677,7 @@ export const featuresPage = {
       { title: "Ventures with classmates", text: "Start a project or a startup, recruit a team by role, and finish it together. Completed work stays on your record.", proof: "Roles · team · completion" },
       { title: "Rank, tiers and leaderboards", text: "Six tiers from Raw to Luminary, earned only by verified work. Leaderboards for your university, department and batch.", proof: "Raw → Luminary" },
       { title: "A CV that verifies itself", text: "Your CV is signed and refreshed every month. Anyone can check its code at skilient.com/verify.", proof: "Signed · Ed25519" },
+      { title: "The Record", text: "Every society event you attend, office you hold, result you place and hour you volunteer, signed by the society through Skilient. Print it as a transcript next to your academic one.", proof: "Verified societies · a code per entry" },
       { title: "Your campus, in one place", text: "A university feed, chat with friends and teammates, events and the people in your batch.", proof: "Feed · chat · events" },
     ],
   },

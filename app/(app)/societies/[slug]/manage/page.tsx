@@ -235,7 +235,7 @@ export default async function ManageSocietyPage({ params }: PageProps<"/societie
 
       <Section title="Terms" id="terms">
         <p className="text-body-sm text-text-secondary">
-          When a term ends, the President (or, for the President, the next one) confirms it. A confirmed term becomes an Office bearer entry on the officer's Record.
+          When a term ends, the President (or, for the President, the next one) confirms it. A confirmed term becomes an Office bearer entry on the officer&rsquo;s Record.
         </p>
         <DataTable
           testId="terms"

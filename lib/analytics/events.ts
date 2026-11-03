@@ -58,6 +58,8 @@ export const SERVER_EVENTS = [
   "event_published",
   "event_registered",
   "event_checked_in",
+  "record_entry_sealed",
+  "record_entries_claimed",
 ] as const;
 
 export type ServerEvent = (typeof SERVER_EVENTS)[number];

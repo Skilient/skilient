@@ -479,6 +479,43 @@ export function describeNotification(n: NotificationInput): NotificationText {
       return n.data.accepted
         ? { text: `${str(n.data.society) ?? "The society"} accepted you in ${str(n.data.round) ?? "its induction round"}. You're a member.`, href: `/societies/${str(n.data.slug) ?? ""}`, subject: "You're in" }
         : { text: `${str(n.data.society) ?? "The society"} didn't take you in ${str(n.data.round) ?? "this round"}${n.data.expired ? " (no decision before it closed)" : ""}. Thanks for applying.`, href: `/societies/${str(n.data.slug) ?? ""}`, subject: "Your induction application" };
+    // The Record (phase 16, PRD 5.30)
+    case "record_entry":
+      return {
+        text: `New on your Record: ${str(n.data.title) ?? "an entry"} · ${str(n.data.issuer) ?? "Skilient"}${str(n.data.date) ? ` · ${str(n.data.date)}` : ""}${n.data.corrected ? " (corrected)" : ""}.`,
+        href: "/me/record",
+        subject: "New on your Record",
+      };
+    case "record_revoked":
+      return {
+        text: `${str(n.data.issuer) ?? "The issuer"} revoked ${str(n.data.title) ?? "an entry"} on your Record: ${str(n.data.reason) ?? "no reason given"}. You can appeal within 30 days.`,
+        href: "/me/record?status=revoked",
+        subject: "An entry on your Record was revoked",
+      };
+    case "record_confirm":
+      return {
+        text: `Confirm a Record entry for another officer of ${str(n.data.society) ?? "your society"}: ${str(n.data.title) ?? "an entry"}.`,
+        href: `/societies/${str(n.data.slug) ?? ""}/manage#record`,
+        subject: "A Record entry needs a second officer",
+      };
+    case "record_mistake":
+      return {
+        text: `${who} reported a mistake on ${str(n.data.title) ?? "a Record entry"} from ${str(n.data.society) ?? "your society"}.`,
+        href: `/societies/${str(n.data.slug) ?? ""}/manage#record`,
+        subject: "A mistake reported on a Record entry",
+      };
+    case "record_mistake_declined":
+      return {
+        text: `${str(n.data.issuer) ?? "The issuer"} kept ${str(n.data.title) ?? "your entry"} as it is: ${str(n.data.note) ?? ""}`.trim(),
+        href: "/me/record",
+        subject: "Your Record entry stays as it is",
+      };
+    case "ranking_formula":
+      return {
+        text: "Your score now includes the Record: office-bearer terms, competition results and volunteer hours, up to 100 points. Attendance never counts, and no score goes down.",
+        href: "/me/score",
+        subject: "Ranking formula v2",
+      };
     case "term_ended":
       return { text: `A term ended at ${str(n.data.society) ?? "your society"}: confirm your officers' terms.`, href: `/societies/${str(n.data.slug) ?? ""}/manage#terms`, subject: "Confirm your officers' terms" };
     case "event_published":

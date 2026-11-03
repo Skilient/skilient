@@ -116,6 +116,25 @@ export function universityLaunchEmail(to: string, appUrl: string, university: st
   };
 }
 
+/**
+ * A walk-in's held Record entry (PRD 5.30): the one claim email for this event. The link is a
+ * plain signup page (nothing a scanner can consume); the entry joins the Record only after
+ * signing up and verifying this same address.
+ */
+export function recordClaimEmail(to: string, appUrl: string, event: string, society: string): EmailMessage {
+  const subject = `Your entry for ${event} is waiting`;
+  const join = `${appUrl}/signup?email=${encodeURIComponent(to)}`;
+  const footer = "You were checked in with this address. This is the only email we send about this event; the entry is held for 180 days.";
+  const line = `${society} checked you in at ${event}. Your Attended entry is held for this address. Sign up with this university email to claim it onto your Record.`;
+  return {
+    category: "notification",
+    to,
+    subject,
+    html: layout(subject, `<p style="margin:0 0 16px 0;font-size:15px;line-height:24px;">${escapeHtml(line)}</p>` + button(join, "Sign up to claim it"), footer),
+    text: `${subject}\n\n${line}\n\nSign up to claim it: ${join}\n\n${footer}\n`,
+  };
+}
+
 /** An operational alert for staff (PRD 10 "Alerts — email only"), queued by private.job_watchdog. */
 export function opsAlertEmail(
   to: string,

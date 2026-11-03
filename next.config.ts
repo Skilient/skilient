@@ -1,6 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs/config";
 import type { NextConfig } from "next";
-import { securityHeaders } from "./lib/security/headers";
+import { CHECK_IN_SOURCE, checkInHeaders, securityHeaders } from "./lib/security/headers";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -21,7 +21,11 @@ const nextConfig: NextConfig = {
     serverActions: { bodySizeLimit: "9mb" },
   },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    // Later entries override earlier ones for the same header key: the check-in page gets the camera.
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      { source: CHECK_IN_SOURCE, headers: checkInHeaders },
+    ];
   },
   // PostHog EU behind our own origin (PRD 10; phase 13 question 3): the CSP stays 'self' and ad
   // blockers don't drop page views. proxy.ts skips /ingest, so no session work runs for these.

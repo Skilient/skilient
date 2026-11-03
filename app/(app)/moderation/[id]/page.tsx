@@ -6,7 +6,16 @@ import { getMyModerationNotice } from "@/lib/data/ops";
 
 export const metadata: Metadata = { title: "Moderation decision" };
 
-const NOUNS: Record<string, string> = { post: "post", comment: "comment", message: "message", profile: "profile", venture: "venture" };
+const NOUNS: Record<string, string> = {
+  post: "post",
+  comment: "comment",
+  message: "message",
+  profile: "profile",
+  venture: "venture",
+  society: "society",
+  event: "event",
+  event_registration: "ticket payment",
+};
 
 /** What a moderation notification refers to: the content and the reason, never who reported or decided. */
 export default async function ModerationNoticePage({ params }: PageProps<"/moderation/[id]">) {

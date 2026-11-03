@@ -7,7 +7,7 @@ import { Button, Dialog, DialogClose, DialogContent, DialogFooter, Textarea } fr
 import { submitReport } from "@/lib/actions/reports";
 import { cn } from "@/lib/cn";
 
-type Target = "post" | "comment" | "message" | "profile" | "venture";
+type Target = "post" | "comment" | "message" | "profile" | "venture" | "society" | "event";
 type Reason = "spam" | "harassment" | "inappropriate" | "misinformation" | "impersonation" | "other";
 
 const REASONS: { value: Reason; label: string }[] = [
@@ -19,7 +19,15 @@ const REASONS: { value: Reason; label: string }[] = [
   { value: "other", label: "Other" },
 ];
 
-const NOUNS: Record<Target, string> = { post: "post", comment: "comment", message: "message", profile: "profile", venture: "venture" };
+const NOUNS: Record<Target, string> = {
+  post: "post",
+  comment: "comment",
+  message: "message",
+  profile: "profile",
+  venture: "venture",
+  society: "society",
+  event: "event",
+};
 
 export interface EarlierMessage {
   id: string;

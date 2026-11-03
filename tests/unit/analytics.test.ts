@@ -158,8 +158,9 @@ describe("what PostHog may see (PRD 10)", () => {
 
 describe("event list", () => {
   const dir = "supabase/migrations";
+  // Every migration: feature migrations (phase 15 onward) track their own events.
   const sql = readdirSync(dir)
-    .filter((f) => f.endsWith("_analytics.sql"))
+    .filter((f) => f.endsWith(".sql"))
     .map((f) => readFileSync(`${dir}/${f}`, "utf8"))
     .join("\n");
 

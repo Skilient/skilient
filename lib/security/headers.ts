@@ -10,6 +10,15 @@ export const securityHeaders: { key: string; value: string }[] = [
   { key: "X-Content-Type-Options", value: "nosniff" },
 ];
 
+/**
+ * The door scanner (PRD 5.31) reads tickets with the camera, on that one page only; every other page
+ * keeps the camera, microphone and location off.
+ */
+export const CHECK_IN_SOURCE = "/events/:id/check-in";
+export const checkInHeaders: { key: string; value: string }[] = securityHeaders.map((h) =>
+  h.key === "Permissions-Policy" ? { key: h.key, value: "camera=(self), microphone=(), geolocation=()" } : h,
+);
+
 /** Request header carrying the per-request CSP nonce from proxy.ts to the render. */
 export const NONCE_HEADER = "x-nonce";
 

@@ -26,6 +26,18 @@ $$;
 create function pg_temp.uid(p_id text) returns uuid language sql as $$ select ('19000000-0000-0000-0000-00000000000' || p_id)::uuid $$;
 create function pg_temp.v(p_name text) returns uuid language sql as $$ select current_setting('test.' || p_name)::uuid $$;
 create function pg_temp.clear_rl() returns void language sql security definer as $$ delete from private.rate_limit_events $$;
+-- A student event post from before phase 15: still readable, still takes RSVPs.
+create function pg_temp.legacy_event() returns uuid language plpgsql security definer as $$
+declare v_id uuid;
+begin
+  insert into public.posts (author_id, university_id, audience, type, body)
+  select p.user_id, p.university_id, 'global', 'event', 'Hack night'
+    from public.profiles p where p.user_id = '19000000-0000-0000-0000-00000000000a'
+  returning id into v_id;
+  insert into public.post_events (post_id, starts_at, place) values (v_id, now() + interval '2 days', 'Lab 3');
+  return v_id;
+end;
+$$;
 grant execute on all functions in schema pg_temp to authenticated;
 
 set local role authenticated;
@@ -63,7 +75,7 @@ select throws_ok($$ select public.create_post('{"type":"poll","body":"Pick","pol
 select throws_ok($$ select public.create_post('{"type":"poll","body":"Pick","poll":{"options":["a","b"],"days":9}}') $$,
   '23514', null, 'a poll closes within 7 days');
 select throws_ok($$ select public.create_post('{"type":"event","body":"Meetup","event":{"place":"Lab 3"}}') $$,
-  '22023', null, 'an event needs a date');
+  '42501', null, 'students no longer post events (society officers do, PRD 5.31)');
 
 -- Uploaded images count once they exist in the author's folder.
 reset role;
@@ -144,8 +156,7 @@ select throws_ok($$ select public.vote_poll(pg_temp.v('poll'), 1::smallint) $$, 
 
 select pg_temp.as_user('a');
 select pg_temp.clear_rl();
-select set_config('test.ev', public.create_post(jsonb_build_object('type', 'event', 'audience', 'global', 'body', 'Hack night',
-  'event', jsonb_build_object('starts_at', now() + interval '2 days', 'place', 'Lab 3')))::text, false);
+select set_config('test.ev', pg_temp.legacy_event()::text, false);
 select pg_temp.as_user('c');
 select lives_ok($$ select public.rsvp_event(pg_temp.v('ev'), 'going') $$, 'C is going');
 select lives_ok($$ select public.rsvp_event(pg_temp.v('ev'), 'interested') $$, 'and can change to interested');

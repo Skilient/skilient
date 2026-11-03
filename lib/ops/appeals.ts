@@ -16,7 +16,16 @@ export const APPEAL_STATUS_LABELS: Record<AppealStatus, string> = {
 
 export const SANCTION_LABELS: Record<SanctionKind, string> = { warn: "Warning", suspend: "Suspension", ban: "Ban", throttle: "Throttle" };
 
-const TARGET_NOUNS: Record<string, string> = { post: "post", comment: "comment", message: "message", profile: "profile", venture: "venture" };
+const TARGET_NOUNS: Record<string, string> = {
+  post: "post",
+  comment: "comment",
+  message: "message",
+  profile: "profile",
+  venture: "venture",
+  society: "society",
+  event: "event",
+  event_registration: "ticket payment",
+};
 
 type Summary = Record<string, unknown>;
 const s = (v: unknown) => (typeof v === "string" && v.trim() ? v : null);

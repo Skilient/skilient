@@ -159,20 +159,20 @@ test.describe("Posts", () => {
     await expect(poll.getByText("1 vote")).toBeVisible();
     await expect(poll.getByRole("button", { name: "Library" })).toHaveCount(0);
 
-    // An event from FAST, RSVP from the owner, and the Events filter.
+    // Students no longer post events (PRD 5.31): the composer has no Event type. A student event
+    // post from before phase 15 stays readable and takes RSVPs, and the Events filter finds it.
     const plannerPage = await (await browser.newContext()).newPage();
     await signInWithPassword(plannerPage, planner.email, planner.password);
     await plannerPage.goto("/feed?tab=global");
-    const pc = plannerPage.getByTestId("composer");
-    await pc.getByRole("radio", { name: "Event" }).click();
-    await pc.getByLabel("What's happening").fill(`Hack night ${tag}`);
-    const when = new Date(Date.now() + 3 * 86400_000);
-    const local = new Date(when.getTime() - when.getTimezoneOffset() * 60_000).toISOString().slice(0, 16);
-    await pc.getByLabel("Date and time").fill(local);
-    await pc.getByLabel("Place").fill("FAST Lab 2");
-    await pc.getByRole("radio", { name: "Global" }).click();
-    await pc.getByRole("button", { name: "Post", exact: true }).click();
-    await expect(plannerPage.getByTestId("post").filter({ hasText: `Hack night ${tag}` })).toBeVisible();
+    await expect(plannerPage.getByTestId("composer").getByRole("radio", { name: "Event" })).toHaveCount(0);
+    const db = adminClient();
+    const { data: legacy, error: legacyError } = await db
+      .from("posts")
+      .insert({ author_id: planner.id, university_id: null, audience: "global", type: "event", body: `Hack night ${tag}` })
+      .select("id")
+      .single();
+    expect(legacyError).toBeNull();
+    expect((await db.from("post_events").insert({ post_id: legacy!.id, starts_at: new Date(Date.now() + 3 * 86400_000).toISOString(), place: "FAST Lab 2" })).error).toBeNull();
     await promote(`Hack night ${tag}`);
 
     await page.goto("/feed?tab=global&filter=events");

@@ -17,6 +17,7 @@ const CLAIMS = {
   ranking_flags: { fn: "claim_ranking_flag", id: "p_id", uuid: true, page: (id: string) => `/ops/evidence/ranking/${id}` },
   feedback: { fn: "claim_feedback", id: "p_id", uuid: true, page: (id: string) => `/ops/feedback/${id}` },
   appeals: { fn: "claim_appeal", id: "p_id", uuid: true, page: (id: string) => `/ops/appeals/${id}` },
+  societies: { fn: "claim_society", id: "p_society", uuid: true, page: (id: string) => `/ops/societies/${id}` },
 } as const;
 
 export type ClaimableQueue = keyof typeof CLAIMS;

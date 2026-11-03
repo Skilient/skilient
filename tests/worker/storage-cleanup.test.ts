@@ -76,6 +76,27 @@ describe("storage-cleanup worker", () => {
     expect(storage.calls[0]).toMatchObject({ url: "http://storage.test/storage/v1/object/cv-exports", prefixes: [path] });
   });
 
+  it("deletes society proofs, society images and payment receipts (phase 15)", async () => {
+    const proof = `${randomUUID()}/${randomUUID()}.pdf`;
+    const logo = pathFor();
+    const receipt = `${randomUUID()}/${randomUUID()}/${randomUUID()}.webp`;
+    await queue("society-documents", proof);
+    await queue("society-media", logo);
+    await queue("event-receipts", receipt);
+    const storage = fakeStorage();
+    expect(await runStorageCleanup({ db, remove: storage.remove, log })).toEqual({ deleted: 3, failed: 0, dropped: 0 });
+    expect(storage.calls.map((c) => c.url.split("/").pop()).sort()).toEqual(["event-receipts", "society-documents", "society-media"]);
+    expect(storage.calls.find((c) => c.url.endsWith("/event-receipts"))?.prefixes).toEqual([receipt]);
+  });
+
+  it("refuses a receipt path that isn't {event}/{registration}/{file}", async () => {
+    await queue("event-receipts", pathFor());
+    await queue("society-media", `${randomUUID()}/${randomUUID()}.pdf`);
+    const storage = fakeStorage();
+    expect(await runStorageCleanup({ db, remove: storage.remove, log })).toEqual({ deleted: 0, failed: 0, dropped: 2 });
+    expect(storage.calls).toHaveLength(0);
+  });
+
   it("leaves files queued when the Storage API fails", async () => {
     await queue("chat-media", pathFor());
     const out = await runStorageCleanup({ db, remove: fakeStorage(500).remove, log });

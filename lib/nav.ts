@@ -9,6 +9,7 @@ import {
   Medal,
   RocketLaunch,
   UserCircle,
+  UsersFour,
   UsersThree,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon } from "@phosphor-icons/react";
@@ -120,6 +121,7 @@ export const PRIMARY_NAV: NavItem[] = [
       { label: "CV", href: "/me/cv", keywords: ["resume", "verified"] },
       { label: "Score", href: "/me/score", keywords: ["rank", "tier"] },
       { label: "Credentials", href: "/me/credentials", keywords: ["certificates"] },
+      { label: "Tickets", href: "/me/tickets", keywords: ["events", "registrations", "qr"] },
       { label: "Settings", href: "/settings", keywords: ["account", "privacy", "security"] },
     ],
   },
@@ -127,7 +129,8 @@ export const PRIMARY_NAV: NavItem[] = [
 
 /** Below the places on the rail; on a phone they live in the header, the command menu or Me. */
 export const SECONDARY_NAV: NavItem[] = [
-  { key: "events", label: "Events", description: "Talks and workshops at your university and beyond.", href: "/events", icon: CalendarBlank, match: ["/events", "/u"] },
+  { key: "societies", label: "Societies", description: "Clubs and societies: follow, join, apply.", href: "/societies", icon: UsersFour, match: ["/societies"] },
+  { key: "events", label: "Events", description: "Society talks, workshops, hackathons and socials.", href: "/events", icon: CalendarBlank, match: ["/events", "/u"] },
   { key: "explore", label: "Explore", description: "Find people, ventures and skills.", href: "/explore", icon: MagnifyingGlass, match: ["/explore"] },
   { key: "leaderboard", label: "Leaderboard", description: "Where you stand at your university and overall.", href: "/leaderboard", icon: Medal, match: ["/leaderboard"] },
   { key: "friends", label: "Friends", description: "Your friends and their requests.", href: "/friends", icon: UsersThree, badge: "friends", match: ["/friends"] },

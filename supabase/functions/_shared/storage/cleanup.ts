@@ -12,11 +12,32 @@ interface QueueRow {
   message: { bucket?: string; path?: string };
 }
 
-const BUCKETS = new Set(["post-media", "chat-media", "avatars", "credentials", "cv-exports", "feedback", "university-claims", "university-media"]);
+const BUCKETS = new Set([
+  "post-media",
+  "chat-media",
+  "avatars",
+  "credentials",
+  "cv-exports",
+  "feedback",
+  "university-claims",
+  "university-media",
+  "society-documents",
+  "society-media",
+  "event-receipts",
+]);
 // Every bucket stores WebP re-encodes, except credentials, which also keeps PDFs as uploaded,
 // and cv-exports, which holds only CV PDFs (deleted after 30 days; decisions.md 2026-10-01).
+// Society proofs keep PDFs too; payment receipts live at {event}/{registration}/{uuid} (PRD 5.31).
 const PATH = /^[0-9a-f-]{36}\/[0-9a-f-]{36}\.webp$/;
 const PDF_PATH = /^[0-9a-f-]{36}\/[0-9a-f-]{36}\.pdf$/;
+const RECEIPT_PATH = /^[0-9a-f-]{36}\/[0-9a-f-]{36}\/[0-9a-f-]{36}\.(webp|pdf)$/;
+const PDF_BUCKETS = new Set(["credentials", "cv-exports", "university-claims", "society-documents"]);
+
+function allowed(bucket: string, path: string): boolean {
+  if (!BUCKETS.has(bucket)) return false;
+  if (bucket === "event-receipts") return RECEIPT_PATH.test(path);
+  return PATH.test(path) || (PDF_BUCKETS.has(bucket) && PDF_PATH.test(path));
+}
 const MAX_TRIES = 5;
 
 export type Remove = (bucket: string, paths: string[]) => Promise<void>;
@@ -42,7 +63,7 @@ export async function runStorageCleanup(opts: { db: Db; remove: Remove; log: Log
   for (const row of rows) {
     const bucket = row.message?.bucket ?? "";
     const path = row.message?.path ?? "";
-    if (!BUCKETS.has(bucket) || !(PATH.test(path) || ((bucket === "credentials" || bucket === "cv-exports" || bucket === "university-claims") && PDF_PATH.test(path)))) {
+    if (!allowed(bucket, path)) {
       await db.query("select pgmq.archive('storage_cleanup', $1::bigint)", [row.msg_id]);
       out.dropped++;
       log("storage.cleanup", { outcome: "refused", reason: "bad_message" });

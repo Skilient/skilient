@@ -32,7 +32,10 @@ const NEVER_RECORDED: RegExp[] = [
   /^\/cv\//,
   /^\/verify\/./,
   /^\/request-university\/(confirm|unsubscribe)(\/|$)/,
-  /^\/events\/[^/]+\/(check-in|attend)(\/|$)/,
+  // Society events (PRD 5.31): the door, the ticket page (receipt upload), event manage (Payments shows
+  // receipts) and a society's payment details.
+  /^\/events\/[^/]+\/(check-in|attend|ticket|manage)(\/|$)/,
+  /^\/societies\/[^/]+\/manage\/payments(\/|$)/,
   /^\/ui(\/|$)/,
 ];
 

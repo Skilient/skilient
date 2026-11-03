@@ -53,11 +53,15 @@ export function PostCard({ post, headingLevel = 2, showCommentsLink = true }: { 
       data-type={post.type}
     >
       <header className="flex items-start gap-3">
-        <Avatar name={post.author.name} src={post.author.avatarUrl} size="md" />
+        <Avatar name={post.society?.name ?? post.author.name} src={post.society ? post.society.logoUrl : post.author.avatarUrl} size="md" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <Heading id={`post-${post.id}-by`} className="text-body font-semibold">
-              {post.author.username ? (
+              {post.society ? (
+                <Link href={`/societies/${post.society.slug}` as Route} className="underline-offset-4 hover:underline" data-testid="post-society">
+                  {post.society.name}
+                </Link>
+              ) : post.author.username ? (
                 <Link href={`/profile/${post.author.username}` as Route} className="underline-offset-4 hover:underline">
                   {post.author.name}
                 </Link>
@@ -65,7 +69,7 @@ export function PostCard({ post, headingLevel = 2, showCommentsLink = true }: { 
                 post.author.name
               )}
             </Heading>
-            {post.author.tier ? <TierBadge tier={post.author.tier} /> : null}
+            {post.society ? <span className="text-caption text-text-secondary">by {post.author.name}</span> : post.author.tier ? <TierBadge tier={post.author.tier} /> : null}
           </div>
           <p className="flex flex-wrap items-center gap-x-2 text-caption text-text-secondary">
             <Link href={`/post/${post.id}` as Route} className="inline-flex min-h-6 items-center hover:underline">

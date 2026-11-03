@@ -241,10 +241,10 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 
 📖 `05-31-societies-and-events.md`, `05-28-…` (Feed), `05-23-university-portal.md` (events, check-in), `05-12-moderation-and-admin.md`
 
-- [ ] societies (request, ops verification, page, officers and handover, membership modes, induction rounds, posts as the society, term confirmations)
-- [ ] events (stepper, sessions, ticket types, eligibility, form builder, teams, approval, waitlist, signed tickets, reminders, change notices; event posts officer-only)
-- [ ] check-in (scanner, search, add by email, per session, live headcount), close-out (attendance fixes, results, volunteer hours, issue preview), CSV export, feedback
-- [ ] paid tickets paid directly to the society (payment details with second-officer confirmation, reference codes, 24-hour holds, receipt upload and officer review, duplicate flags, refund policy and refunds marked by the society, disputes into reports)
+- [x] societies (request, ops verification, page, officers and handover, membership modes, induction rounds, posts as the society, term confirmations)
+- [x] events (stepper, sessions, ticket types, eligibility, form builder, teams, approval, waitlist, signed tickets, reminders, change notices; event posts officer-only)
+- [x] check-in (scanner, search, add by email, per session, live headcount), close-out (attendance fixes, results, volunteer hours, issue preview), CSV export, feedback
+- [x] paid tickets paid directly to the society (payment details with second-officer confirmation, reference codes, 24-hour holds, receipt upload and officer review, duplicate flags, refund policy and refunds marked by the society, disputes into reports)
 
 ✅ A society goes from request to verified to its first induction round · no oversell under parallel registrations · a ticket checks in once and the second scan shows the first time · a student can't create an event · close-out lists every checked-in attendee for issuing · a paid ticket confirms only on an officer's receipt approval and an unpaid hold frees after 24 hours · a payment-details change needs a second officer · receipts are private to the student, the officers and staff on a report
 

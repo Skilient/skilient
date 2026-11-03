@@ -129,3 +129,28 @@ describe("notification emails", () => {
     expect(mail.text).toContain("And 3 more.");
   });
 });
+
+describe("phase 15 notifications (societies and events)", () => {
+  it("words every new type and links somewhere real", async () => {
+    const { readFileSync } = await import("node:fs");
+    const sql = ["20261111000001_societies.sql", "20261111000002_society_events.sql", "20261111000003_paid_tickets.sql"]
+      .map((f) => readFileSync(`supabase/migrations/${f}`, "utf8"))
+      .join("\n");
+    const types = [...sql.matchAll(/\('([a-z_]+)', 'societies', (?:true|false)\)/g)].map((m) => m[1]);
+    expect(types.length).toBeGreaterThan(25);
+    for (const type of types) {
+      const d = describeNotification({ actorName: "Amna Khan", type, entityType: "event", entityId: "e1", data: { society: "CS Society", slug: "cs-society", event: "Build with React" } });
+      expect(d.text, type).not.toBe("You have a new notification.");
+      expect(d.href.startsWith("/"), type).toBe(true);
+      expect(d.href, type).not.toContain("//");
+      expect(d.subject.length, type).toBeGreaterThan(5);
+      expect(d.text, type).not.toMatch(/—/);
+    }
+  });
+
+  it("sends a held seat to the ticket page to pay", () => {
+    const d = describeNotification({ actorName: null, type: "event_registration", entityType: "event", entityId: "e1", data: { event: "Hack night", status: "held" } });
+    expect(d.text).toContain("held for 24 hours");
+    expect(d.href).toBe("/events/e1/ticket");
+  });
+});

@@ -53,6 +53,11 @@ export const SERVER_EVENTS = [
   "hire_confirmed",
   "subscription_started",
   "subscription_cancelled",
+  "society_requested",
+  "society_verified",
+  "event_published",
+  "event_registered",
+  "event_checked_in",
 ] as const;
 
 export type ServerEvent = (typeof SERVER_EVENTS)[number];

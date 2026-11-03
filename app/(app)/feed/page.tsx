@@ -4,6 +4,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ProgressCard } from "@/components/home/progress-card";
 import { Composer } from "@/components/posts/composer";
+import { getMyOfficerSocieties } from "@/lib/data/societies";
 import { FeedList } from "@/components/posts/feed-list";
 import { FollowedUpdates } from "@/components/posts/followed-updates";
 import { NewPostsPill } from "@/components/posts/new-posts-pill";
@@ -27,6 +28,7 @@ const FILTER_LABELS: Record<FeedFilter, string> = {
   all: "All",
   ventures: "Ventures",
   events: "Events",
+  societies: "Societies",
   announcements: "Announcements",
   shipped: "Shipped",
 };
@@ -54,7 +56,7 @@ export default async function FeedPage({ searchParams }: PageProps<"/feed">) {
   const filter: FeedFilter = FEED_FILTERS.includes(sp.filter as FeedFilter) ? (sp.filter as FeedFilter) : "all";
 
   const supabase = await createClient();
-  const [page, pinned, updates, ventures, staff, card, uniPinned, questions, questionsDismissed] = await Promise.all([
+  const [page, pinned, updates, ventures, staff, card, uniPinned, questions, questionsDismissed, societies] = await Promise.all([
     getFeed(tab, filter),
     filter === "all" || filter === "announcements" ? getPinnedAnnouncement() : Promise.resolve(null),
     filter === "all" ? getFollowedUpdates() : Promise.resolve([]),
@@ -64,6 +66,7 @@ export default async function FeedPage({ searchParams }: PageProps<"/feed">) {
     filter === "all" || filter === "announcements" ? getPinnedUniversityAnnouncement() : Promise.resolve(null),
     getMyUniQuestions().catch(() => []),
     supabase.from("ui_state").select("value").eq("user_id", user.id).eq("key", "uni_questions_dismissed").maybeSingle().then((r) => r.data?.value === true),
+    getMyOfficerSocieties(),
   ]);
   const unanswered = questions.some((q) => q.answer === null);
 
@@ -84,7 +87,14 @@ export default async function FeedPage({ searchParams }: PageProps<"/feed">) {
 
       {questions.length > 0 && unanswered && !questionsDismissed ? <QuestionsCard university={eco?.name ?? "Your university"} questions={questions} /> : null}
 
-      <Composer userId={user.id} defaultAudience={user.status === "graduate" ? "global" : tab} ventures={ventures} isStaff={staff} graduate={user.status === "graduate"} />
+      <Composer
+        userId={user.id}
+        defaultAudience={user.status === "graduate" ? "global" : tab}
+        ventures={ventures}
+        isStaff={staff}
+        graduate={user.status === "graduate"}
+        societies={societies.map((x) => ({ id: x.id, name: x.name, slug: x.slug }))}
+      />
 
       <nav aria-label="Filter posts">
         <ul className="-mx-2 flex gap-2 overflow-x-auto px-2 pt-1 pb-2">

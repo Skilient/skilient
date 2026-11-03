@@ -348,11 +348,11 @@ export const faq = {
   items: [
     {
       q: "Who can join?",
-      a: "Students and faculty with an email address from a university on Skilient. Recruiters join with a company email, and their company is verified before they can contact anyone.",
+      a: "Students and faculty with an email address from a university on Skilient. Recruiters and university staff can’t sign up yet.",
     },
     {
       q: "Is it free?",
-      a: "Yes. Proving your skills, your rank and tier, your verified CV and being found by recruiters are free. Student Pro adds conveniences such as PDF export and more CV layouts. It never changes your rank.",
+      a: "Yes. Proving your skills, your rank and tier, your verified CV and your Record are free. Student Pro adds conveniences such as PDF export of your CV and more CV layouts. It never changes your rank.",
     },
     {
       q: "What do you read from my GitHub?",
@@ -360,15 +360,15 @@ export const faq = {
     },
     {
       q: "Can my university see my activity?",
-      a: "Yes, if your university is on a Growth or Campus plan: its staff can open your student record. Every view is logged, and with Student Pro you can see who viewed it and when. On other plans it never sees individual records; the Basic plan shows only totals for groups of five or more.",
+      a: "No. University staff can’t sign up to Skilient yet, so nobody at your university sees your activity through Skilient. Officers of a society you belong to see the Record entries their society issued you, and faculty who supervise your venture see its work.",
     },
     {
       q: "What happens when I graduate?",
-      a: "Your account becomes a graduate account. You keep your profile, CV, skills and evidence, chat and friends, stay visible to recruiters and can still apply to jobs. You can no longer post in your university feed or join university-only ventures.",
+      a: "Your account becomes a graduate account. You keep your profile, CV, Record, skills and evidence, chat and friends, and you can still share your CV and Record. You can no longer post in your university feed or join university-only ventures.",
     },
     {
-      q: "How do recruiters contact me?",
-      a: "Through a contact request that names the company and the role. You accept or decline. Only after you accept do they see your name, and you talk in a chat labelled with the company. You choose in Settings whether recruiters can find you at all.",
+      q: "Can recruiters find me on Skilient?",
+      a: "Not yet: recruiters can’t sign up, search or contact students on Skilient. You decide who sees your work. Send a link to your signed CV or your Record with an application; it expires, you can revoke it, and anyone who opens it can check it at skilient.com/verify.",
     },
   ],
 };

@@ -151,10 +151,10 @@ test.describe("Marketing: landing story", () => {
     }
     await expect(page.locator(".story-stage").first()).toBeHidden();
 
-    const summary = page.locator("summary", { hasText: "How do recruiters contact me?" });
+    const summary = page.locator("summary", { hasText: "Can recruiters find me on Skilient?" });
     await summary.focus();
     await page.keyboard.press("Enter");
-    await expect(page.getByText("Through a contact request that names the company and the role.")).toBeVisible();
+    await expect(page.getByText("Not yet: recruiters can’t sign up, search or contact students on Skilient.", { exact: false })).toBeVisible();
   });
 
   test("the pricing teaser names Student Pro without a price and links to /features", async ({ page }, info) => {

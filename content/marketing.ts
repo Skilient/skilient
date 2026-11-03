@@ -613,51 +613,6 @@ export const facultyPage = {
   },
 };
 
-/** /pricing (PRD 4a). Prices and limits come from `plans`. */
-export const pricingPage = {
-  title: "Pricing",
-  description: "Proof is free for every student. Student Pro, recruiter plans and university licences, in PKR.",
-  headline: "Proof is free. Polish is optional.",
-  intro: "Verification, rank, tiers, your verified CV and being found by recruiters are free for every student, always. Money never buys rank or visibility.",
-  audiences: [
-    { id: "students", label: "Students" },
-    { id: "recruiters", label: "Recruiters" },
-    { id: "universities", label: "Universities" },
-  ],
-  monthly: "Monthly",
-  yearly: "Yearly",
-  billing: "Billing period",
-  free: "Free",
-  custom: "Custom",
-  perMonth: "a month",
-  perYear: "a year",
-  trial: "{days}-day free trial",
-  students: {
-    heading: "Students",
-    freeLabel: "Every student",
-    freeItems: ["Verified skills, rank, tier and leaderboards", "Your verified CV, refreshed on the 1st of each month", "Share your CV link from Spark tier", "Be found by recruiters, if you choose"],
-    sponsored: "Free through your university on a Growth or Campus licence.",
-  },
-  recruiters: {
-    heading: "Recruiters",
-    explore: { label: "Explore", items: ["Browse students by tier, skill and university, names hidden", "One job post"] },
-    addOns: "Add-ons on every plan",
-    sponsoredPost: "Sponsored job post: {price} for {days} days. Labelled “Sponsored” and never ranked above other results in talent search.",
-    credits: "Extra contact credits: {price} each.",
-    hireFee: "Hiring fee per recorded hire: {intern} for an intern, {fullTime} for a full-time hire. Waived on Growth and Enterprise.",
-  },
-  universities: {
-    heading: "Universities",
-    free: { label: "Every university", items: ["Your ecosphere: feed, announcements, rankings, faculty, exam periods", "One admin seat"] },
-    note: "Licences are yearly and invoiced.",
-  },
-  faq: [
-    { q: "Does paying change my rank?", a: "No. Rank, tiers, leaderboards and recruiter search never use payment. Student Pro adds conveniences such as PDF export, more CV layouts and seeing who viewed your CV." },
-    { q: "How do I pay?", a: "In PKR by card, JazzCash or Easypaisa. University licences are invoiced and paid by bank transfer or a payment link." },
-    { q: "Can I cancel?", a: "Yes, any time from Settings. You keep the plan until the end of the period you paid for." },
-  ],
-};
-
 /**
  * /features (phase 14, decisions 2026-11-02): what students, Student Pro, faculty and organisations
  * get, with no prices. /pricing redirects here.

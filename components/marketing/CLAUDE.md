@@ -12,4 +12,3 @@ The marketing pages follow the neumorphism UI rules in `app/(marketing)/CLAUDE.m
 ## Organisation pages (decisions 2026-11-01)
 
 - `OrgHero` (`org-parts.tsx`) takes an orbit (`story/orbit.tsx`, the same one as the landing hero). `PinnedStory` (`story/pinned-story.tsx`) takes chapters with a `panel` and an `object`; panels live in `story/panels-{recruiters,universities,faculty}.tsx`. `LitLines` (`story/rules.tsx`) lights any list of lines; `prose` for sentences.
-- `PlanTable` columns carry `--i`, so plans rise in as steps on every page that shows them.

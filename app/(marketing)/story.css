@@ -1210,27 +1210,6 @@
     scale: 1;
   }
 }
-@keyframes step-rise {
-  from {
-    clip-path: inset(-80px -80px 100% -80px);
-    translate: 0 calc(40px + var(--i) * 24px);
-  }
-  to {
-    clip-path: inset(-80px);
-  }
-}
-@keyframes plan-light {
-  0%,
-  100% {
-    box-shadow: var(--raised-ink);
-  }
-  50% {
-    box-shadow:
-      var(--raised-ink),
-      0 0 0 6px color-mix(in srgb, var(--signal) 30%, transparent),
-      0 0 48px color-mix(in srgb, var(--signal) 45%, transparent);
-  }
-}
 
 /* Time-based: the orbit arrives when the page loads (motion allowed, script on). */
 @media (prefers-reduced-motion: no-preference) {
@@ -1294,24 +1273,6 @@
       animation: seal-stamp linear both;
       animation-timeline: view();
       animation-range: entry 40% cover 50%;
-    }
-    /* Plans rise in as stepping stones, small to large; the pinned plan gets one moment of light. */
-    [data-js] .plan-col {
-      animation: step-rise linear both;
-      animation-timeline: view();
-      animation-range: entry calc(var(--i) * 6%) cover calc(24% + var(--i) * 6%);
-    }
-    [data-js] .plan-pinned {
-      animation:
-        step-rise linear both,
-        plan-light linear both;
-      animation-timeline: view(), view();
-      animation-range:
-        entry calc(var(--i) * 6%) cover calc(24% + var(--i) * 6%),
-        cover 30% cover 55%;
-    }
-    [data-js] .epilogue > div > :has(.plan-table) {
-      animation: none;
     }
     [data-js] .finale-obj {
       animation: pop linear both;

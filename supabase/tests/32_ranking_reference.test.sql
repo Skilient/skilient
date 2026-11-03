@@ -3,7 +3,7 @@
 -- compute_ranking() gives the same points, component by component, as of Wednesday
 -- 9 December 2026, 12:00 PKT.
 begin;
-select plan(92);
+select plan(105);
 
 -- R1-R10 are the reference students (R7 at FAST-NUCES, the rest at NUTECH); Q1-Q10 answer
 -- surveys, apply to ventures and (for R10) endorse.
@@ -389,6 +389,93 @@ select is((select sum((x->>'points')::numeric) from jsonb_array_elements(pg_temp
 select is(pg_temp.score(pg_temp.r(5)), pg_temp.s(5), 'computing again gives the same result');
 delete from public.exam_periods;
 select is(pg_temp.pts(pg_temp.score(pg_temp.r(7), 0), 'momentum'), 75.60, 'without the exam period R7 decays 8 weeks: 75.60');
+
+-- ---------------------------------------------------------------------------
+-- Formula v2 (PRD 5.30): Record reference students R11-R13 (docs/ranking-reference.md).
+-- Societies SA, SB and SD were verified on 1 Jan 2026; SC on 20 Nov 2026, 19 days before
+-- the as-of date, so its entries are held until day 30.
+-- ---------------------------------------------------------------------------
+insert into auth.users (id, email)
+select ('93200000-0000-0000-0000-0000000000' || i)::uuid, 'rr' || i || '@nutech.edu.pk' from generate_series(11, 13) i;
+update public.profiles set onboarding_complete = true, username = 'rf_' || right(user_id::text, 4)
+ where user_id in (pg_temp.r(11), pg_temp.r(12), pg_temp.r(13));
+insert into public.signing_keys (key_id, public_key, active_from, retired_at)
+values ('cv-20260101-0000bbbb', repeat('C', 43), '2026-01-01', '2026-01-02');
+create function pg_temp.soc(p text) returns uuid language sql immutable as $$
+  select ('93200000-0000-0000-0000-0000000005' || p)::uuid
+$$;
+insert into public.societies (id, university_id, slug, name, name_key, category, about, status, verified_at)
+select pg_temp.soc(x.k), p.university_id, 'ref-' || lower(x.k), x.name, lower(x.name), 'technology',
+       'A reference society for the ranking reference students.', 'verified', pg_temp.pkt(x.verified)
+  from (values ('a1', 'Ref CS Society', '2026-01-01 12:00'), ('b1', 'Ref Debating Society', '2026-01-01 12:00'),
+               ('c1', 'Ref Robotics Club', '2026-11-20 12:00'), ('d1', 'Ref Film Society', '2026-01-01 12:00')) as x(k, name, verified)
+  cross join (select university_id from public.profiles where user_id = pg_temp.r(1)) p;
+create sequence pg_temp.rec_seq;
+-- A sealed entry (signature fields are well-formed placeholders: scoring never reads them).
+create function pg_temp.rec(p_user integer, p_soc text, p_kind text, p_evidence jsonb, p_on date, p_status text default 'sealed')
+returns uuid language sql as $$
+  insert into public.record_entries (user_id, kind, issuer_type, issuer_id, issuer_name, source, source_id, title, evidence, occurred_on,
+                                     status, code, key_id, payload, envelope_hash, signature, signed_at,
+                                     revoked_at, revoked_category, revoked_reason)
+  values (pg_temp.r(p_user), p_kind, case when p_soc is null then 'skilient' else 'society' end, pg_temp.soc(p_soc),
+          coalesce((select name from public.societies where id = pg_temp.soc(p_soc)), 'Skilient'),
+          case when p_kind = 'office_bearer' then 'term' when p_kind = 'venture_completed' then 'venture' else 'event' end,
+          gen_random_uuid(), 'Reference ' || p_kind, p_evidence, p_on,
+          p_status, '93R' || lpad(nextval('pg_temp.rec_seq')::text, 7, '0'), 'cv-20260101-0000bbbb', '{}'::jsonb, repeat('a', 64),
+          repeat('A', 86), (p_on::timestamp + interval '12 hours') at time zone 'Asia/Karachi',
+          case when p_status = 'revoked' then now() end, case when p_status = 'revoked' then 'not_earned' end,
+          case when p_status = 'revoked' then 'Reference revocation' end)
+  returning id
+$$;
+create function pg_temp.term(p_role text, p_from text, p_to text) returns jsonb language sql immutable as $$
+  select jsonb_build_object('line', 'Reference term', 'role', p_role, 'from', p_from, 'to', p_to)
+$$;
+
+-- R11: one term per society per year, a result below 5 entrants, the yearly volunteer cap, the per-society cap.
+select pg_temp.rec(11, 'a1', 'office_bearer', pg_temp.term('president', '2025-09-01', '2026-06-30'), '2026-06-30');
+select pg_temp.rec(11, 'a1', 'office_bearer', pg_temp.term('officer', '2025-09-01', '2026-01-31'), '2026-01-31');
+select pg_temp.rec(11, 'a1', 'result', '{"line": "1st of 12 teams", "place": 1, "entrants": 12}', '2026-11-15');
+select pg_temp.rec(11, 'b1', 'result', '{"line": "2nd of 4", "place": 2, "entrants": 4}', '2026-10-01');
+select pg_temp.rec(11, 'b1', 'result', '{"line": "3rd of 8", "place": 3, "entrants": 8}', '2026-10-20');
+select pg_temp.rec(11, 'b1', 'attended', '{"line": "Checked in 10:04"}', '2026-10-20');
+select pg_temp.rec(11, 'b1', 'volunteer', '{"line": "6 h", "minutes": 360}', '2026-10-10');
+select pg_temp.rec(11, 'b1', 'volunteer', '{"line": "5 h", "minutes": 300}', '2026-11-20');
+-- R12: per-society caps, the 30-day hold, then the component cap of 100.
+select pg_temp.rec(12, 'a1', 'office_bearer', pg_temp.term('president', '2025-09-01', '2026-06-30'), '2026-06-30');
+select pg_temp.rec(12, 'a1', 'office_bearer', pg_temp.term('officer', '2026-09-01', '2026-11-30'), '2026-11-30');
+select pg_temp.rec(12, 'b1', 'office_bearer', pg_temp.term('president', '2025-09-01', '2026-06-30'), '2026-06-30');
+select pg_temp.rec(12, 'b1', 'result', '{"line": "1st of 5", "place": 1, "entrants": 5}', '2026-11-01');
+select pg_temp.rec(12, 'c1', 'office_bearer', pg_temp.term('officer', '2026-09-01', '2026-12-01'), '2026-12-01');
+select pg_temp.rec(12, 'd1', 'result', '{"line": "Finalist of 20", "place": 5, "entrants": 20}', '2026-11-05');
+-- R13: attendance, a revoked result, a superseded volunteer entry, a Skilient entry.
+select pg_temp.rec(13, 'a1', 'attended', '{"line": "Checked in 09:58"}', '2026-10-01');
+select pg_temp.rec(13, 'a1', 'attended', '{"line": "Checked in 14:02"}', '2026-11-01');
+select pg_temp.rec(13, 'a1', 'completed', '{"line": "3 of 4 sessions", "sessions": 3, "of": 4}', '2026-11-10');
+select pg_temp.rec(13, 'a1', 'result', '{"line": "1st of 10", "place": 1, "entrants": 10}', '2026-11-12', 'revoked');
+select pg_temp.rec(13, 'b1', 'volunteer', '{"line": "4 h", "minutes": 240}', '2026-11-02', 'superseded');
+select pg_temp.rec(13, 'b1', 'volunteer', '{"line": "3 h", "minutes": 180}', '2026-11-02');
+select pg_temp.rec(13, null, 'venture_completed', '{"line": "Team of 4 · completed 21 Sep 2026", "team_size": 4}', '2026-09-21');
+
+select is(pg_temp.pts(pg_temp.score(pg_temp.r(11)), 'record'), 85.00, 'R11 record: CS 35 + 30 = 65 capped at 50; Debating 15 + 12 + 8 = 35');
+select is((select (x->>'points')::numeric from jsonb_array_elements(pg_temp.score(pg_temp.r(11))->'record'->'societies') x
+            where (x->>'society_id')::uuid = pg_temp.soc('a1')), 50.00, 'R11: at most 50 from one society');
+select is((select count(*)::integer from jsonb_array_elements(pg_temp.score(pg_temp.r(11))->'record'->'items') x where x->>'kind' = 'office_bearer'), 1,
+  'R11: one term per society per academic year (the president''s)');
+select is((select sum((x->>'points')::numeric) from jsonb_array_elements(pg_temp.score(pg_temp.r(11))->'record'->'items') x where x->>'kind' = 'volunteer'), 20.00,
+  'R11: volunteer hours capped at 20 a year (12 + 8)');
+select is((pg_temp.score(pg_temp.r(11))->>'total')::numeric, 85.00, 'R11 total 85.00');
+select is(pg_temp.pts(pg_temp.score(pg_temp.r(12)), 'record'), 100.00, 'R12 record: 50 + 50 + 10 = 110 capped at 100; Robotics held');
+select ok(not exists (select 1 from jsonb_array_elements(pg_temp.score(pg_temp.r(12))->'record'->'items') x where (x->>'society_id')::uuid = pg_temp.soc('c1')),
+  'R12: a society verified 19 days ago doesn''t count yet');
+select is(pg_temp.pts(private.compute_ranking(pg_temp.r(12), pg_temp.pkt('2026-12-21 12:00'), null, 0), 'record'), 100.00,
+  'R12 after day 30: still 100 (the cap)');
+select is((pg_temp.score(pg_temp.r(12))->>'total')::numeric, 100.00, 'R12 total 100.00');
+select is(pg_temp.pts(pg_temp.score(pg_temp.r(13)), 'record'), 6.00, 'R13 record: attendance, revoked and Skilient entries count 0; 3 h = 6');
+select is((pg_temp.score(pg_temp.r(13))->>'total')::numeric, 6.00, 'R13 total 6.00');
+select is(pg_temp.pts(private.compute_ranking(pg_temp.r(11), pg_temp.pkt('2026-12-09 12:00'),
+                                              (select value from public.platform_config where key = 'ranking.formula' and version = 1), 0), 'record'),
+  0::numeric, 'formula v1 scores no Record');
+select is(pg_temp.pts(pg_temp.s(1), 'record'), 0::numeric, 'R1-R10 have no Record: their v1 numbers stand');
 
 select * from finish();
 rollback;

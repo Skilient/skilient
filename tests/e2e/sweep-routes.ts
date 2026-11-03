@@ -33,7 +33,7 @@ export const SWEEP: SweepRoute[] = [
     "/", "/about", "/faculty", "/features", "/privacy", "/recruiters", "/terms", "/universities", "/verify", "/verify/[code]",
     "/request-university", "/request-university/confirm", "/request-university/unsubscribe", "/signin", "/signin/code",
     "/signin/mfa", "/signup", "/signup/recruiter", "/signup/verify", "/forgot-password", "/reset-password", "/auth/confirmed",
-    "/auth/link", "/auth/not-me", "/ui", "/cv/[username]",
+    "/auth/link", "/auth/not-me", "/ui", "/cv/[username]", "/record/[username]", "/verify/transcript/[id]",
   ]),
   ...r("student", [
     "/feed", "/explore", "/friends", "/chat", "/chat/[threadId]", "/notifications", "/leaderboard", "/me", "/me/credentials",
@@ -45,7 +45,7 @@ export const SWEEP: SweepRoute[] = [
     "/settings/notifications", "/settings/privacy", "/settings/profile", "/settings/security", "/agreement", "/onboarding",
     "/onboarding/[step]", "/onboarding/done", "/societies", "/societies/new", "/societies/[slug]", "/societies/[slug]/manage",
     "/societies/[slug]/manage/payments", "/societies/[slug]/inductions/new", "/societies/[slug]/inductions/[id]",
-    "/societies/[slug]/events/new", "/events/[id]/ticket", "/events/[id]/manage", "/me/tickets",
+    "/societies/[slug]/events/new", "/events/[id]/ticket", "/events/[id]/manage", "/me/tickets", "/me/record",
   ]),
   ...["jobs", "applications", "competitions", "ideas"].map((tab): SweepRoute => ({ route: "/opportunities/[tab]", role: "student", params: { tab: `=${tab}` } })),
   ...["/profile/[username]", "/profile/[username]/activity", "/profile/[username]/skills", "/profile/[username]/ventures"].map(
@@ -83,7 +83,7 @@ export const SWEEP: SweepRoute[] = [
     "/ops/evidence/flags/[id]", "/ops/evidence/ranking/[id]", "/ops/exam-periods", "/ops/feedback", "/ops/feedback/[id]",
     "/ops/graduation", "/ops/leads", "/ops/metrics", "/ops/orgs", "/ops/orgs/competitions", "/ops/orgs/spam", "/ops/reports",
     "/ops/reports/[id]", "/ops/sanctions", "/ops/societies", "/ops/societies/[id]", "/ops/staff", "/ops/teachers", "/ops/universities",
-    "/ops/universities/claims/[id]", "/ops/users",
+    "/ops/universities/claims/[id]", "/ops/users", "/ops/record",
   ]),
   { route: "/ops/config/[key]", role: "staff", params: { key: "=alerts.limits" } },
   { route: "/ops/users/[id]", role: "staff", params: { id: "studentId" } },

@@ -161,7 +161,7 @@ export function isPublicPath(pathname: string): boolean {
     pathname.startsWith("/opengraph-image") ||
     // PRD 5.1: there is no /demo, and it answers 404 rather than a sign-in redirect.
     matches(pathname, "/demo") ||
-    ["/auth", "/api", "/ui", "/verify", "/cv", "/.well-known", ...MARKETING_PATHS].some((p) => matches(pathname, p))
+    ["/auth", "/api", "/ui", "/verify", "/cv", "/record", "/.well-known", ...MARKETING_PATHS].some((p) => matches(pathname, p))
   );
 }
 

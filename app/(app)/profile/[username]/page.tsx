@@ -3,12 +3,16 @@ import Link from "next/link";
 import { ProfileCredentials } from "@/components/credentials/profile-credentials";
 import { EndorsementList } from "@/components/endorsements/endorsement-list";
 import { SkillList } from "@/components/skills/skill-list";
-import { EmptyState } from "@/components/ui";
+import { EmptyState, RecordEntry } from "@/components/ui";
 import { getProfileCredentials } from "@/lib/data/credentials";
 import { getEndorsements } from "@/lib/data/endorsements";
 import { getAwardsFor } from "@/lib/data/uni";
 import { getProfile } from "@/lib/data/profiles";
 import { getProfileSkills } from "@/lib/data/skills";
+import { getRecordHighlights } from "@/lib/data/record";
+import { ReportButton } from "@/components/reports/report-button";
+import { KIND_LABELS } from "@/lib/record/constants";
+import { formatCode } from "@/supabase/functions/_shared/cv/sign.ts";
 import { LOOKING_FOR, VISIBILITY } from "@/lib/profile/options";
 
 /** Top skills on the overview; the Skills tab lists them all. */
@@ -20,11 +24,12 @@ export default async function ProfileOverviewPage({ params }: PageProps<"/profil
   const lookup = await getProfile(username);
   if (lookup.kind !== "full") return null;
   const p = lookup.profile;
-  const [skills, endorsements, credentials, awards] = await Promise.all([
+  const [skills, endorsements, credentials, awards, highlights] = await Promise.all([
     getProfileSkills(p.userId, p.isOwner),
     getEndorsements(p.userId),
     getProfileCredentials(p.userId),
     getAwardsFor(p.userId).catch(() => []),
+    getRecordHighlights(p.userId).catch(() => []),
   ]);
   const openTo = LOOKING_FOR.filter((o) => p.lookingFor.includes(o.value)).map((o) => o.label);
   const details = [
@@ -72,6 +77,32 @@ export default async function ProfileOverviewPage({ params }: PageProps<"/profil
             ownerName={p.fullName.split(/\s+/)[0] ?? p.fullName}
             grouped={false}
           />
+        </section>
+      ) : null}
+      {highlights.length ? (
+        <section aria-labelledby="record-highlights" data-testid="record-highlights">
+          <h2 id="record-highlights" className="mb-1 font-serif text-h4">
+            From the Record
+          </h2>
+          <ul className="flex flex-col">
+            {highlights.map((h) => (
+              <RecordEntry
+                key={h.code}
+                issuer={h.issuerName}
+                title={`${KIND_LABELS[h.kind]}: ${h.title}`}
+                date={h.dateLabel}
+                evidence={h.line ? <span>{h.line}</span> : null}
+                action={
+                  <span className="flex items-center gap-2">
+                    <Link href={`/verify/${h.code}` as Route} className="font-mono text-body-sm underline underline-offset-4" aria-label={`Verify ${h.title}`}>
+                      {formatCode(h.code)}
+                    </Link>
+                    {p.isOwner ? null : <ReportButton targetType="record_entry" targetId={h.id} compact />}
+                  </span>
+                }
+              />
+            ))}
+          </ul>
         </section>
       ) : null}
       {endorsements.length ? (

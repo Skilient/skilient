@@ -59,6 +59,7 @@ const ALLOWED_EVENTS = new Set<string>(["$pageview", "$identify", "$snapshot", "
 const NAMED_SEGMENTS: [RegExp, string][] = [
   [/^\/profile\/[^/]+/, "/profile/:username"],
   [/^\/cv\/[^/]+/, "/cv/:username"],
+  [/^\/record\/[^/]+/, "/record/:username"],
   [/^\/verify\/[^/]+/, "/verify/:code"],
 ];
 

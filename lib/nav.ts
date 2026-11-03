@@ -110,12 +110,13 @@ export const PRIMARY_NAV: NavItem[] = [
   {
     key: "me",
     label: "Me",
-    description: "Your profile, skills, CV and score.",
+    description: "Your profile, Record, skills, CV and score.",
     href: "/me",
     icon: UserCircle,
     match: ["/me", "/profile", "/settings", "/appeals", "/billing"],
     levels: [
       { label: "Overview", href: "/me", match: ["/me", "/profile"] },
+      { label: "Record", href: "/me/record", keywords: ["transcript", "certificates", "entries", "activities"] },
       { label: "Skills", href: "/me/skills" },
       { label: "Work", href: "/me/work" },
       { label: "CV", href: "/me/cv", keywords: ["resume", "verified"] },

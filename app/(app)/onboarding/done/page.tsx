@@ -1,6 +1,7 @@
 import { CheckCircle, Circle } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
+import { ClaimCard } from "@/components/record/claim-card";
 import { Button } from "@/components/ui";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import type { ChecklistItem } from "@/lib/data/portal";
@@ -13,7 +14,7 @@ export const metadata: Metadata = { title: "You're in" };
 export default async function OnboardingDonePage() {
   const user = await getCurrentUser();
   const supabase = await createClient();
-  const { data } = await supabase.rpc("getting_started");
+  const [{ data }, { data: waiting }] = await Promise.all([supabase.rpc("getting_started"), supabase.rpc("record_waiting")]);
   const items = ((data as unknown as { items?: ChecklistItem[] } | null)?.items ?? []).map((i) => ({
     ...i,
     // Everyone who reaches this page has finished the wizard, which is what "your profile" means here.
@@ -21,6 +22,8 @@ export default async function OnboardingDonePage() {
   }));
   return (
     <main className="mx-auto flex w-full max-w-xl flex-col gap-6 px-[var(--page-gutter)] py-12">
+      {/* PRD 5.30: walk-ins a society checked in by this email before they joined. */}
+      <ClaimCard waiting={typeof waiting === "number" ? waiting : 0} />
       <div className="rounded-lg border border-border-default bg-bg-surface p-6 shadow-1 sm:p-8">
         <h1 className="font-display text-h1">You&apos;re in{user ? `, ${user.fullName.split(/\s+/)[0]}` : ""}</h1>
         <p className="mt-2 text-body text-text-secondary">Your profile is set up. Here&apos;s what builds your proof from here:</p>

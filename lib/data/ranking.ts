@@ -223,6 +223,20 @@ export async function getMyScore(): Promise<ScoreView> {
     href: "/me/credentials",
   }));
 
+  // Formula v2 (PRD 5.30): the counted Record entries, at most 50 per society and 100 in all.
+  const recordLines: EvidenceLine[] = arr(part("record").items).map((r) => {
+    const e = nameOf("record", r.id) as { title?: string; issuer?: string; line?: string } | undefined;
+    return {
+      label: `${e?.title ?? "A Record entry"}${e?.issuer ? ` · ${e.issuer}` : ""}`,
+      detail: e?.line ?? undefined,
+      points: num(r.points),
+      href: "/me/record",
+    };
+  });
+  for (const soc of arr(part("record").societies)) {
+    if (num(soc.raw) > num(soc.points)) recordLines.push({ label: "One society's entries are capped at 50 points", detail: `${num(soc.raw)} before the cap`, points: 0 });
+  }
+
   const m = part("momentum");
   const content = (m.content ?? {}) as Json;
   const consistency = (m.consistency ?? {}) as Json;
@@ -253,6 +267,7 @@ export async function getMyScore(): Promise<ScoreView> {
     skills: skillLines,
     endorsements: endorsementLines,
     credentials: credentialLines,
+    record: recordLines,
     momentum: momentumLines,
   };
   const empties: Record<ComponentKey, string> = {
@@ -260,6 +275,7 @@ export async function getMyScore(): Promise<ScoreView> {
     skills: "Connect GitHub and log contributions: skills at L2 and above count here.",
     endorsements: "Teammates on an in-progress or completed venture can endorse your skills.",
     credentials: "Add a certificate in Credentials; it counts once Skilient approves it.",
+    record: "Hold an office, place in a competition or volunteer with a verified society. Attendance never adds rank.",
     momentum: "Post, log contributions and confirm your teammates' entries.",
   };
   const components: ComponentView[] = COMPONENT_KEYS.map((key) => ({

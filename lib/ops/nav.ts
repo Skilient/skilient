@@ -1,4 +1,5 @@
 import {
+  Certificate,
   Buildings,
   ChartLine,
   CalendarX,
@@ -44,6 +45,7 @@ export const OPS_AREAS: OpsArea[] = [
   { key: "inbox", label: "Inbox", href: "/ops", icon: Tray, group: "Work", roles: [], match: [] },
   { key: "reports", label: "Reports", href: "/ops/reports", icon: Flag, group: "Work", roles: ["moderator"], match: ["/ops/reports"] },
   { key: "evidence", label: "Evidence", href: "/ops/evidence", icon: SealCheck, group: "Work", roles: ["trust_reviewer"], match: ["/ops/evidence"] },
+  { key: "record", label: "Record entries", href: "/ops/record", icon: Certificate, group: "Work", roles: ["trust_reviewer", "moderator"], match: ["/ops/record"] },
   { key: "appeals", label: "Appeals", href: "/ops/appeals", icon: Scales, group: "Work", roles: [], match: ["/ops/appeals"] },
   { key: "sanctions", label: "Sanctions", href: "/ops/sanctions", icon: Prohibit, group: "Work", roles: ["moderator", "accounts"], match: ["/ops/sanctions"] },
   { key: "users", label: "Users", href: "/ops/users", icon: UserList, group: "Work", roles: [], match: ["/ops/users"] },

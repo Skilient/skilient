@@ -19,6 +19,10 @@ import {
 } from "@/lib/actions/societies";
 import { getSocietyEventList } from "@/lib/data/events";
 import { getSocietyManage, officerSociety } from "@/lib/data/societies";
+import { getSocietyRecord } from "@/lib/data/record";
+import { MistakeForm, RevokeEntryButton } from "@/components/record/officer-forms";
+import { confirmRecordEntry } from "@/lib/actions/record";
+import { KIND_LABELS, STATUS_LABELS } from "@/lib/record/constants";
 import { defaultTerm, MEMBERSHIP_MODES, SOCIETY_CATEGORIES } from "@/lib/societies/constants";
 
 export const metadata: Metadata = { title: "Manage society" };
@@ -32,7 +36,7 @@ export default async function ManageSocietyPage({ params }: PageProps<"/societie
   const { slug } = await params;
   const page = await officerSociety(slug);
   if (!page || page.status !== "verified") notFound();
-  const [m, events] = await Promise.all([getSocietyManage(page.id), getSocietyEventList(page.id)]);
+  const [m, events, rec] = await Promise.all([getSocietyManage(page.id), getSocietyEventList(page.id), getSocietyRecord(page.id)]);
   const term = defaultTerm();
 
   return (
@@ -180,9 +184,58 @@ export default async function ManageSocietyPage({ params }: PageProps<"/societie
         </div>
       </Section>
 
+      <Section title="Record" id="record">
+        <p className="text-body-sm text-text-secondary">
+          Entries your society issued. An entry naming the officer who issued it waits for a second officer. A correction issues a new entry and
+          the old code reads “superseded”.{rec.held ? ` ${rec.held} held for walk-ins who haven't signed up yet.` : ""}
+        </p>
+        {rec.awaiting.length ? (
+          <DataTable
+            testId="record-awaiting"
+            head={["Student", "Entry", "Evidence", ""]}
+            rows={rec.awaiting.map((a) => [
+              a.name,
+              `${KIND_LABELS[a.kind]}: ${a.title}`,
+              a.line,
+              a.canConfirm ? (
+                <ActionButton key="c" action={confirmRecordEntry} args={{ entryId: a.id }} variant="primary" testId="confirm-entry">
+                  Confirm
+                </ActionButton>
+              ) : (
+                <Badge key="c" tone="warning">
+                  Another officer confirms
+                </Badge>
+              ),
+            ])}
+          />
+        ) : null}
+        {rec.mistakes.map((x) => (
+          <div key={x.id} className="neu-card flex flex-col gap-3 p-4" data-testid="record-mistake">
+            <p className="text-body">
+              <span className="font-semibold">{x.name}</span> reported a mistake on {KIND_LABELS[x.kind]}: {x.title} (<span className="neu-mono">{x.code}</span>): “{x.note}”
+            </p>
+            <MistakeForm mistake={x} />
+          </div>
+        ))}
+        <DataTable
+          testId="record-entries"
+          empty="No entries yet. Close out an event or confirm a term to issue them."
+          head={["Student", "Entry", "Code", "Status", ""]}
+          rows={rec.entries.map((e) => [
+            e.name,
+            `${KIND_LABELS[e.kind]}: ${e.title}`,
+            <span key="c" className="neu-mono">
+              {e.code ?? "not sealed"}
+            </span>,
+            STATUS_LABELS[e.status] ?? e.status,
+            e.status === "sealed" || e.status === "pending" ? <RevokeEntryButton key="r" entryId={e.id} title={`${e.name}: ${e.title}`} /> : null,
+          ])}
+        />
+      </Section>
+
       <Section title="Terms" id="terms">
         <p className="text-body-sm text-text-secondary">
-          When a term ends, the President (or, for the President, the next one) confirms it. Confirmed terms become Record entries when The Record opens.
+          When a term ends, the President (or, for the President, the next one) confirms it. A confirmed term becomes an Office bearer entry on the officer's Record.
         </p>
         <DataTable
           testId="terms"

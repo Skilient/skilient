@@ -1080,7 +1080,7 @@ stable
 security definer
 set search_path = ''
 as $$
-  select coalesce(jsonb_agg(jsonb_build_object('kind', e.kind, 'title', e.title, 'issuer_name', e.issuer_name,
+  select coalesce(jsonb_agg(jsonb_build_object('id', e.id, 'kind', e.kind, 'title', e.title, 'issuer_name', e.issuer_name,
                                                'line', e.evidence ->> 'line', 'occurred_on', e.occurred_on, 'code', e.code)
                             order by e.pinned_at), '[]'::jsonb)
     from public.record_entries e

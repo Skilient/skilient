@@ -37,10 +37,21 @@ export default async function ScorePage() {
       <div>
         <h1 className="text-h1">Your score</h1>
         <p className="mt-1 text-body text-text-secondary">
-          Proof (verified work, skills, endorsements, credentials) never fades; Momentum does when you&rsquo;re inactive. Only you see
-          your points. Scores update every night at about 3 AM.
+          Proof (verified work, skills, endorsements, credentials, your Record) never fades; Momentum does when you&rsquo;re inactive. Only you
+          see your points. Scores update every night at about 3 AM.
         </p>
       </div>
+
+      {/* PRD 5.13: a formula change is announced in-app and applied in one recompute (formula v2, PRD 5.30). */}
+      <aside aria-labelledby="formula-h" className="neu-well flex flex-col gap-1 p-4" data-testid="formula-v2">
+        <h2 id="formula-h" className="text-body font-semibold">
+          New in formula v2: the Record counts
+        </h2>
+        <p className="text-body-sm text-text-secondary">
+          Office-bearer terms, competition results (5 or more entrants) and volunteer hours from verified societies add up to 100 points, at most
+          50 from one society. Attendance and paid tickets never add rank, and no score went down: every other weight is unchanged.
+        </p>
+      </aside>
 
       {!s.scored ? (
         <EmptyState

@@ -462,7 +462,7 @@
   opacity: 0;
 }
 
-/* The recruiter's request. */
+/* The share-link card (chapter 7; the .request-* names are from its first version). */
 .request-card {
   display: flex;
   flex-direction: column;
@@ -1589,7 +1589,7 @@
         animation-timeline: --story-b;
         animation-range: contain 12% contain 26%;
       }
-      /* Then a recruiter's request arrives over the record, and is accepted. */
+      /* Then a share link arrives over the record, and is copied. */
       [data-js] .request-stage {
         animation: request-in linear both;
         animation-timeline: --story-b;

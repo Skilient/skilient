@@ -194,7 +194,7 @@ export const opportunities = {
 };
 
 /**
- * The landing story (decisions 2026-10-31): Ayesha, the sample student, from day one to found.
+ * The landing story (decisions 2026-10-31): Ayesha, the sample student, from day one to a CV she shares.
  * The chapters are her story; the finale speaks to "you". Every number on her record is the
  * sample CV's (lib/cv/sample.ts), and she is labelled a sample wherever her record shows.
  */
@@ -270,20 +270,23 @@ export const story = {
     chips: ["Ed25519 signature", "Issued 1 Oct 2026", "QR + 10-character code"],
     link: "Verify a CV",
   },
-  found: {
-    kicker: "Found",
-    title: "Recruiters find her. They ask first.",
-    body: "Companies search verified skills, not keywords. A recruiter sends a contact request that names the company and the role, and Ayesha accepts or declines. Only then do they see her name. Jobs show their pay range, and competitions and fairs reach her through her university.",
-    request: {
-      label: "Contact request",
-      role: "Frontend intern (React)",
-      company: "Indus Softworks",
-      meta: "Software · 51–200 people · Islamabad",
-      verified: "Verified company",
-      accept: "Accept",
-      decline: "Decline",
+  // Chapter 7 claims only what is live (decisions 2026-11-03): the recruiter portal is off, so
+  // Ayesha shares her signed CV herself, with a link that expires.
+  shared: {
+    kicker: "Shared",
+    title: "She sends a link. Anyone can check it.",
+    body: "Ayesha applies for an internship and a scholarship. With each application she sends a link to her signed CV that expires in 30 days and that she can revoke at any time. Whoever opens it sees the CV, checks its code at skilient.com/verify, and sees the evidence behind every item. She sees how many times each link was opened.",
+    link: {
+      label: "Share link",
+      title: "Internship application",
+      line: "Signed CV · expires in 30 days",
+      url: "skilient.com/cv/ayeshakhan?t=…",
+      signed: "Signed",
+      copy: "Copy link",
+      copied: "Copied · 14:32",
+      revoke: "Revoke",
     },
-    chips: ["Jobs show their pay", "Competitions and hackathons", "University job fairs"],
+    chips: ["Links that expire", "Revoke any time", "A view count on every link"],
   },
   finale: {
     kicker: "Your turn",

@@ -174,6 +174,20 @@ export async function signInWithPassword(page: Page, email: string, password: st
  * that keeps a connection open and still raced late animations (decisions 2026-11-04, "CI speed").
  */
 export async function settle(page: Page): Promise<void> {
+  // A page may still redirect on the client after `load` (a venture chat the viewer can't open, an onboarding
+  // step); the check then follows it to the page the visitor actually lands on, at most twice.
+  for (let attempt = 0; ; attempt++) {
+    try {
+      await settleOnce(page);
+      return;
+    } catch (error) {
+      if (attempt >= 2 || !/Execution context was destroyed|frame was detached/i.test(String(error))) throw error;
+      await page.waitForLoadState("load");
+    }
+  }
+}
+
+async function settleOnce(page: Page): Promise<void> {
   const within = { timeout: 10_000 };
   await page.waitForFunction(() => document.readyState === "complete", undefined, within);
   await page.evaluate(async () => {
@@ -181,8 +195,8 @@ export async function settle(page: Page): Promise<void> {
     await new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
   });
   await page.waitForFunction(() => !document.querySelector('[aria-busy="true"]'), undefined, within);
-  await page.waitForFunction(() =>
-    document.getAnimations().every((a) => a.playState !== "running" || a.effect?.getComputedTiming().endTime === Infinity),
+  await page.waitForFunction(
+    () => document.getAnimations().every((a) => a.playState !== "running" || a.effect?.getComputedTiming().endTime === Infinity),
     undefined,
     within,
   );

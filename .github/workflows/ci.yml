@@ -3,6 +3,11 @@ name: CI
 on:
   pull_request:
   workflow_dispatch:
+    inputs:
+      e2e_workers:
+        description: "Playwright workers per E2E shard (empty: Playwright's default, half the CPUs). For measuring."
+        required: false
+        default: ""
   push:
     branches: [main]
 
@@ -241,6 +246,7 @@ jobs:
         run: pnpm test:e2e --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           E2E_EXPECT_HEALTHY: "1"
+          E2E_WORKERS: ${{ inputs.e2e_workers }}
       - name: E2E with the recruiter and university portals switched on (@portals)
         # Phase 14: those portals are off by flag; their specs run after the main pass, with the flag
         # switched on by the global setup and off again by the teardown (tests/e2e/portals-setup.ts).
@@ -251,6 +257,7 @@ jobs:
         run: pnpm test:e2e:portals --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           E2E_EXPECT_HEALTHY: "1"
+          E2E_WORKERS: ${{ inputs.e2e_workers }}
       - name: Disk use (peak during the job) and what holds it
         if: always()
         run: |

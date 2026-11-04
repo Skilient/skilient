@@ -36,7 +36,7 @@ test.describe("Student portal", () => {
       await expect(page.getByTestId(`nav-${key}`)).toHaveAttribute("aria-describedby", /.+/);
     }
     await page.getByTestId("nav-openings").hover();
-    await expect(page.getByRole("tooltip")).toContainText("matched to your skills");
+    await expect(page.getByRole("tooltip")).toContainText("each card with its newest opening");
 
     // The tour starts by itself, and runs from the keyboard alone.
     const popover = page.getByTestId("tour-popover");

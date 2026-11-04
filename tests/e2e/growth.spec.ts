@@ -68,6 +68,9 @@ test.describe("Growth: paths, proof tasks, skill swap", () => {
     const friend = await createStudent({ domain: "nutech.edu.pk", fullName: `Faraz Friend ${tag}` });
     const seniors = Array.from({ length: 10 }, () => crypto.randomUUID());
 
+    // A run that timed out never reached its cleanup: drop its seniors first.
+    await sql`delete from auth.users where email like 'path-senior-%@nutech.edu.pk'`;
+    await sql`select private.compute_paths()`;
     try {
       // --- The starter path ------------------------------------------------------------
       const page = await pageFor(browser, student);
@@ -79,16 +82,16 @@ test.describe("Growth: paths, proof tasks, skill swap", () => {
       await expect(page.getByTestId("paths-no-github")).toBeVisible();
       await axeBothThemes(page, "/me/paths");
 
-      // --- 10 seniors (Shine, 6 of DevOps' 11 skills at L2, Docker first) switch it -----------
+      // --- 10 seniors (Shine, 7 of DevOps' 11 skills at L2 (60%, rounded up), Docker first) switch it -----------
       await sql`insert into auth.users (id, email, raw_user_meta_data, email_confirmed_at)
-                select x, 'senior-' || ${tag} || '-' || n || '@nutech.edu.pk', jsonb_build_object('full_name', 'Senior ' || n), now()
+                select x, 'path-senior-' || ${tag} || '-' || n || '@nutech.edu.pk', jsonb_build_object('full_name', 'Senior ' || n), now()
                   from unnest(${seniors}::uuid[]) with ordinality as t(x, n)`;
       await sql`insert into public.ranking_scores (user_id, formula_version, components, proof, momentum, adjustments, total, ranked, tier, computed_at, published_at)
                 select x, 2, '{}', 0, 0, 0, 500, true, 'shine', now(), now() from unnest(${seniors}::uuid[]) x`;
       await sql`insert into public.user_skills (user_id, skill_id, level, l2_at)
                 select x, s.skill, 2, now() - interval '300 days' + make_interval(days => s.d)
                   from unnest(${seniors}::uuid[]) x,
-                       (values ('docker', 0), ('shell', 20), ('github-actions', 40), ('nginx', 60), ('terraform', 80), ('aws', 100)) as s(skill, d)`;
+                       (values ('docker', 0), ('shell', 20), ('github-actions', 40), ('nginx', 60), ('terraform', 80), ('aws', 100), ('docker-compose', 120)) as s(skill, d)`;
       await sql`select private.compute_paths()`;
       await page.reload();
       await expect(page.getByTestId("path-source")).toContainText("Based on 10 seniors' records");
@@ -100,7 +103,9 @@ test.describe("Growth: paths, proof tasks, skill swap", () => {
       await expect(page.locator('[data-testid="path-square"][data-state="next"]')).toHaveAttribute("data-skill", "docker");
 
       // --- A proof task proved by GitHub, without a peer ----------------------------------
-      const [ghTask] = await sql<{ id: string }[]>`
+      // The drawer offers at most 3 tasks: earlier runs' test tasks are switched off first.
+      await sql`update public.proof_tasks set active = false where title like 'Ship a container %' or title like 'Chart a service %'`;
+      await sql`
         insert into public.proof_tasks (skill_id, title, difficulty, brief, checklist)
         values ('docker', ${`Ship a container ${tag}`}, 'starter', 'Write a Dockerfile for one of your projects so it runs with one command anywhere.',
                 '["docker build works from a clean checkout", "The image runs as a non-root user", "The README has the command"]')
@@ -169,6 +174,7 @@ test.describe("Growth: paths, proof tasks, skill swap", () => {
       await expect(peerPage.getByRole("heading", { level: 1 })).toContainText(`Can you check Hira's Helm task?`);
       await axeBothThemes(peerPage, "/me/tasks/reviews/[id]");
       await peerPage.getByTestId("review-accept").click();
+      await expect(peerPage.getByTestId("review-tick")).toHaveCount(3);
       for (const tick of await peerPage.getByTestId("review-tick").all()) await tick.click();
       await peerPage.getByTestId("review-confirm").click();
       await expect(peerPage.getByTestId("review-closed")).toContainText("You confirmed this task");
@@ -178,6 +184,7 @@ test.describe("Growth: paths, proof tasks, skill swap", () => {
     } finally {
       await sql`delete from auth.users where id = any(${seniors}::uuid[])`;
       await sql`select private.compute_paths()`;
+      await sql`update public.proof_tasks set active = false where title like ${`% ${tag}`}`;
     }
   });
 
@@ -213,6 +220,7 @@ test.describe("Growth: paths, proof tasks, skill swap", () => {
     // The teacher accepts: a DM opens.
     await tPage.goto("/swaps?tab=teach");
     await tPage.getByTestId("swap-request").filter({ hasText: `Hira Learn ${tag}` }).getByTestId("swap-accept").click();
+    await expect(tPage.getByTestId("swap-request").filter({ hasText: `Hira Learn ${tag}` })).toHaveCount(0);
     const [swap] = await sql<{ id: string; thread_id: string | null; status: string }[]>`
       select id, thread_id, status from public.swaps where teacher_id = ${teacher.id} and learner_id = ${learner.id}`;
     expect(swap.status).toBe("accepted");
@@ -222,8 +230,12 @@ test.describe("Growth: paths, proof tasks, skill swap", () => {
     await lPage.goto(`/swaps/${swap.id}`);
     await expect(lPage.getByTestId("swap-chat")).toBeVisible();
     const at = new Date(Date.now() + 2 * 86_400_000 + 5 * 3_600_000).toISOString().slice(0, 16); // UTC+5 wall time
-    await lPage.getByTestId("session-at").fill(at);
-    await lPage.getByTestId("session-place").fill("Library, room 2");
+    // Filled again until it sticks: a fill that lands before hydration is reset by React.
+    await expect(async () => {
+      await lPage.getByTestId("session-at").fill(at);
+      await lPage.getByTestId("session-place").fill("Library, room 2");
+      await expect(lPage.getByTestId("session-at")).toHaveValue(at, { timeout: 1_000 });
+    }).toPass();
     await lPage.getByTestId("session-propose").click();
     await expect(lPage.getByTestId("swap-session")).toContainText("Proposed");
     await tPage.goto(`/swaps/${swap.id}`);

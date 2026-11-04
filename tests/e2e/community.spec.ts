@@ -165,7 +165,7 @@ test.describe("Community: Openings, yearbook, share, push", () => {
     await expect(ownerPage.getByTestId("yearbook-vote")).toHaveAttribute("data-state", "open");
     await axeBothThemes(ownerPage, "superlatives");
     await ownerPage.goto("/settings/privacy");
-    await expect(ownerPage.getByTestId("superlatives-toggle")).toBeVisible();
+    await expect(ownerPage.getByTestId("superlatives-toggle").filter({ visible: true })).toBeVisible();
   });
 
   test("Share: the recipient sees the post, and 'This post isn't available' once they can't", async ({ browser }) => {
@@ -182,11 +182,11 @@ test.describe("Community: Openings, yearbook, share, push", () => {
 
     const aPage = await pageFor(browser, a);
     await aPage.goto(`/post/${post.id}`);
-    await aPage.getByTestId("post-share").click();
+    await aPage.getByTestId("post-share").filter({ visible: true }).click();
     const sheet = aPage.getByTestId("share-sheet");
     await expect(sheet.getByRole("checkbox", { name: b.fullName })).toBeVisible();
     await axeBothThemes(aPage, "post page");
-    await aPage.getByTestId("post-share").click();
+    await aPage.getByTestId("post-share").filter({ visible: true }).click();
     await sheet.getByRole("checkbox", { name: b.fullName }).click();
     await sheet.getByLabel("Add a note (optional)").fill("Worth a read");
     await sheet.getByTestId("share-send").click();

@@ -1,7 +1,8 @@
 /*
- * Skilient service worker (PRD 5.34): the app shell for offline moments and the open ticket, plus
- * web push. There is no offline feed: only an offline page and tickets the student already opened
- * are cached, and every cache is cleared at sign-out. Kept dependency-free; served with no-cache.
+ * Skilient service worker (PRD 5.34): the open ticket offline, plus web push. It handles ticket pages
+ * only (network first, the last good copy without signal, the offline page if there is none); no other
+ * page goes through it, so there is no offline feed. Tickets are cleared at sign-out. Dependency-free;
+ * served with no-cache.
  */
 const SHELL = "skilient-shell-v1";
 const TICKETS = "skilient-tickets-v1";
@@ -33,8 +34,10 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET" || request.mode !== "navigate") return;
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
-  if (TICKET_PATH.test(url.pathname)) {
+  // Only ticket pages are handled; every other navigation goes straight to the network as if there
+  // were no service worker, so streamed pages render exactly as they do without one.
+  if (url.origin !== self.location.origin || !TICKET_PATH.test(url.pathname)) return;
+  {
     // Network first; the last good copy of an open ticket shows at the door without signal.
     event.respondWith(
       fetch(request)
@@ -44,9 +47,7 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(async () => (await caches.match(new Request(url.pathname), { cacheName: TICKETS })) || caches.match("/offline.html")),
     );
-    return;
   }
-  event.respondWith(fetch(request).catch(() => caches.match("/offline.html")));
 });
 
 self.addEventListener("message", (event) => {

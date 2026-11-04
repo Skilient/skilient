@@ -7,9 +7,9 @@ export type TipId = (typeof TIP_IDS)[number];
 
 export const TIPS: Record<TipId, { title: string; body: string; more: string }> = {
   opportunities: {
-    title: "How Opportunities works",
-    body: "Roles, requests and competitions are matched to skills you have proof of. Nothing here is ordered by who pays.",
-    more: "Recruiters see only what your privacy settings allow, and you decide who can contact you. Sponsored roles are marked on the Jobs tab only; they never change your For you list.",
+    title: "How Openings works",
+    body: "Each card shows its newest opening. Items that match skills you have proof of come first. Nothing here is ordered by who pays.",
+    more: "Venture roles, society inductions, events, project ideas, your next path square and skill-swap teachers each have a card. This week is rebuilt every night from what happened at your university.",
   },
   venture: {
     title: "What a venture is",

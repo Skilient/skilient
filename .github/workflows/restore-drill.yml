@@ -104,7 +104,9 @@ jobs:
 
       - name: Re-create Vault secrets and deploy Edge Functions on scratch
         run: |
-          psql "$SCRATCH_DB_URL" -v ON_ERROR_STOP=1 -v project_url="$SCRATCH_URL" -f scripts/restore/reseed-vault.sql
+          read -r VAPID_PUBLIC VAPID_PRIVATE < <(node scripts/restore/vapid-keys.mjs)
+          psql "$SCRATCH_DB_URL" -v ON_ERROR_STOP=1 -v project_url="$SCRATCH_URL" \
+            -v vapid_public_key="$VAPID_PUBLIC" -v vapid_private_key="$VAPID_PRIVATE" -f scripts/restore/reseed-vault.sql
           pnpm exec supabase functions deploy --project-ref "$SCRATCH_SUPABASE_PROJECT_REF" --use-api
 
       - name: New CV signing key on scratch (old CVs still verify with the restored public keys)

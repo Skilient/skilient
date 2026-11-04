@@ -10,7 +10,7 @@ import { call, NO_SESSION, signedIn } from "@/lib/actions/rpc";
  * cooldown and the attached-message rules are all checked in SQL (`submit_report`).
  */
 
-const TARGETS = ["post", "comment", "message", "profile", "venture", "society", "event", "record_entry", "swap"] as const;
+const TARGETS = ["post", "comment", "message", "profile", "venture", "society", "event", "record_entry", "swap", "yearbook_page", "yearbook_note"] as const;
 const REPORT_REASONS = ["spam", "harassment", "inappropriate", "misinformation", "impersonation", "other"] as const;
 
 export async function submitReport(input: {

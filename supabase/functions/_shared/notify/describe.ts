@@ -315,7 +315,7 @@ export function describeNotification(n: NotificationInput): NotificationText {
     case "contact_request": {
       const org = str(n.data.org_name) ?? "A company";
       const role = str(n.data.role_title) ?? "a role";
-      return { text: `${org} would like to talk to you about ${role}.`, href: `/opportunities/contact-requests/${n.entityId}`, subject: `${org} wants to talk to you on Skilient` };
+      return { text: `${org} would like to talk to you about ${role}.`, href: `/openings/contact-requests/${n.entityId}`, subject: `${org} wants to talk to you on Skilient` };
     }
     case "contact_accepted": {
       const threadId = str(n.data.thread_id);
@@ -348,7 +348,7 @@ export function describeNotification(n: NotificationInput): NotificationText {
       const org = str(n.data.org_name) ?? "The company";
       const stage = str(n.data.stage);
       const reason = str(n.data.reason);
-      const href = `/opportunities/applications/${n.entityId}`;
+      const href = `/openings/applications/${n.entityId}`;
       if (stage === "rejected") return { text: `${org} didn't take your application for ${job} forward.${reason ? ` ${reason}` : ""}`, href, subject: `An update on your application to ${job}` };
       if (stage === "hired") return { text: `${org} hired you for ${job}. Congratulations.`, href, subject: `${org} hired you` };
       return { text: `Your application to ${job} at ${org} moved to ${stage ?? "the next stage"}.`, href, subject: `Your application to ${job} moved to ${stage ?? "the next stage"}` };
@@ -356,7 +356,7 @@ export function describeNotification(n: NotificationInput): NotificationText {
     case "job_invite": {
       const job = str(n.data.job_title) ?? "a job";
       const org = str(n.data.org_name) ?? "A company";
-      return { text: `${org} invited you to apply for ${job}.`, href: `/opportunities/jobs/${n.entityId}`, subject: `${org} invited you to apply` };
+      return { text: `${org} invited you to apply for ${job}.`, href: `/openings/jobs/${n.entityId}`, subject: `${org} invited you to apply` };
     }
     case "hire_outcome_due":
       return { text: "Is a hire from three months ago meeting expectations? Answer in one tap.", href: "/recruit", subject: "One question about your hire" };
@@ -658,6 +658,18 @@ export function describeNotification(n: NotificationInput): NotificationText {
         text: `${who} ${n.data.accepted ? "confirmed" : "rejected"} a change to ${str(n.data.society) ?? "your society"}'s payment details.`,
         href: `/societies/${str(n.data.slug) ?? ""}/manage/payments`,
         subject: n.data.accepted ? "Payment details changed" : "Payment details change rejected",
+      };
+    case "yearbook_open":
+      return { text: `Your yearbook is open: the batch of ${n.data.batch ?? "your year"} can sign each other's pages now.`, href: "/yearbook", subject: "Your yearbook is open" };
+    case "yearbook_note":
+      return { text: `${who} signed your yearbook. Approve the note to show it to your batch.`, href: "/yearbook/me", subject: `${who} signed your yearbook` };
+    case "yearbook_vote_open":
+      return { text: "The superlative vote is open: one secret vote per title, for someone in your department.", href: "/yearbook/vote", subject: "Vote your batch's superlatives" };
+    case "yearbook_award":
+      return {
+        text: `Your batch voted you "${str(n.data.title) ?? "a superlative"}". Only you know until the reveal; you can decline it before then.`,
+        href: "/yearbook/me",
+        subject: "Your batch voted you a superlative",
       };
     default:
       return { text: "You have a new notification.", href: "/notifications", subject: "New activity on Skilient" };

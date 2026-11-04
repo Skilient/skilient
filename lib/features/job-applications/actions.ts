@@ -17,12 +17,12 @@ export async function applyToJob(jobId: string, note: string): Promise<ActionRes
     input: { jobId, note },
     fn: "apply_to_job",
     args: (v) => ({ p_job: v.jobId, p_note: v.note || null }),
-    revalidate: ["/opportunities/applications", `/opportunities/jobs/${jobId}`],
+    revalidate: ["/openings/applications", `/openings/jobs/${jobId}`],
   });
 }
 
 export async function withdrawJobApplication(id: string): Promise<ActionResult> {
-  return rpcAction({ name: "student.withdraw_job_application", schema: uuid, input: id, fn: "withdraw_job_application", args: (v) => ({ p_id: v }), revalidate: ["/opportunities/applications", `/opportunities/applications/${id}`] });
+  return rpcAction({ name: "student.withdraw_job_application", schema: uuid, input: id, fn: "withdraw_job_application", args: (v) => ({ p_id: v }), revalidate: ["/openings/applications", `/openings/applications/${id}`] });
 }
 
 export async function moveApplication(jobId: string, applicationId: string, to: (typeof STAGES)[number], why: string | null = null): Promise<ActionResult> {

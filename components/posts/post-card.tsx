@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatCircle, Globe, Megaphone, PaperPlaneTilt, PushPin, RocketLaunch, UsersThree } from "@phosphor-icons/react";
+import { ChatCircle, Globe, Megaphone, PushPin, RocketLaunch, UsersThree } from "@phosphor-icons/react";
 import type { Route } from "next";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -8,6 +8,7 @@ import { EventBlock } from "@/components/posts/event-block";
 import { InsightsButton } from "@/components/posts/insights-button";
 import { PollBlock } from "@/components/posts/poll-block";
 import { PostMenu } from "@/components/posts/post-menu";
+import { ShareSheet } from "@/components/posts/share-sheet";
 import { SurveyStrip } from "@/components/posts/survey-strip";
 import { useQualifiedView } from "@/components/posts/view-tracker";
 import { FoldedPost, ViewerActions } from "@/components/posts/viewer-actions";
@@ -28,7 +29,7 @@ const TYPE_LABEL: Partial<Record<PostCardData["type"], string>> = {
 /**
  * One post (PRD 5.28, phase 14): a raised card, the author's name first, the survey strip in a
  * well, and Comment and Share as the visible actions; Not for me, Mute and Report sit in the `⋯`
- * menu. No like, reaction or save controls exist. Share opens in phase 18 (share-to-chat).
+ * menu. No like, reaction or save controls exist. Share sends the post into a chat (phase 18).
  */
 export function PostCard({ post, headingLevel = 2, showCommentsLink = true }: { post: PostCardData; headingLevel?: 2 | 3; showCommentsLink?: boolean }) {
   const [gone, setGone] = useState(false);
@@ -147,7 +148,7 @@ export function PostCard({ post, headingLevel = 2, showCommentsLink = true }: { 
               {post.commentCount === 0 ? "Comment" : `${post.commentCount} ${post.commentCount === 1 ? "comment" : "comments"}`}
             </Link>
           ) : null}
-          <ShareStub postId={post.id} />
+          <ShareSheet postId={post.id} />
         </div>
         {post.isMine ? (
           <div className="flex flex-wrap items-center gap-1">
@@ -159,27 +160,6 @@ export function PostCard({ post, headingLevel = 2, showCommentsLink = true }: { 
         )}
       </footer>
     </article>
-  );
-}
-
-/** Share to chat arrives in phase 18: shown, flat and disabled, with the reason beside it (the brief §4 law 14). */
-function ShareStub({ postId }: { postId: string }) {
-  return (
-    <span className="inline-flex items-center gap-2">
-      <button
-        type="button"
-        aria-disabled="true"
-        aria-describedby={`share-${postId}-why`}
-        className="inline-flex min-h-11 cursor-not-allowed items-center gap-1.5 rounded-full border border-border-muted px-4 text-body-sm font-semibold text-text-disabled"
-        data-testid="post-share"
-      >
-        <PaperPlaneTilt aria-hidden weight="bold" className="size-4" />
-        Share
-      </button>
-      <span id={`share-${postId}-why`} className="sr-only">
-        Sharing a post into a chat is coming soon.
-      </span>
-    </span>
   );
 }
 

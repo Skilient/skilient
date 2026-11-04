@@ -37,8 +37,8 @@ export const SWEEP: SweepRoute[] = [
   ]),
   ...r("student", [
     "/feed", "/explore", "/friends", "/chat", "/chat/[threadId]", "/notifications", "/leaderboard", "/me", "/me/credentials",
-    "/me/cv", "/me/score", "/me/skills", "/me/work", "/me/code-checks/[id]", "/opportunities", "/opportunities/applications/[id]",
-    "/opportunities/contact-requests/[id]", "/opportunities/jobs/[id]", "/ventures", "/ventures/new", "/requests", "/feedback",
+    "/me/cv", "/me/score", "/me/skills", "/me/work", "/me/code-checks/[id]", "/openings", "/openings/applications/[id]",
+    "/openings/contact-requests/[id]", "/openings/jobs/[id]", "/ventures", "/ventures/new", "/requests", "/feedback",
     "/appeals", "/events", "/events/[id]", "/events/[id]/attend", "/events/[id]/check-in", "/fairs/invite", "/fairs/[id]",
     "/competitions/[id]", "/ideas/[id]", "/moderation/[id]", "/billing/checkout/[session]", "/billing/return/[session]",
     "/settings", "/settings/account/delete", "/settings/billing", "/settings/chat", "/settings/github",
@@ -46,9 +46,12 @@ export const SWEEP: SweepRoute[] = [
     "/onboarding/[step]", "/onboarding/done", "/societies", "/societies/new", "/societies/[slug]", "/societies/[slug]/manage",
     "/societies/[slug]/manage/payments", "/societies/[slug]/inductions/new", "/societies/[slug]/inductions/[id]",
     "/societies/[slug]/events/new", "/events/[id]/ticket", "/events/[id]/manage", "/me/tickets", "/me/record", "/me/paths", "/me/tasks/[id]", "/me/tasks/reviews/[id]",
-    "/swaps", "/swaps/[id]",
+    "/swaps", "/swaps/[id]", "/yearbook", "/yearbook/me", "/yearbook/vote",
   ]),
-  ...["jobs", "applications", "competitions", "ideas"].map((tab): SweepRoute => ({ route: "/opportunities/[tab]", role: "student", params: { tab: `=${tab}` } })),
+  ...["venture-roles", "inductions", "events", "ideas", "paths", "swaps", "this-week"].map(
+    (category): SweepRoute => ({ route: "/openings/[category]", role: "student", params: { category: `=${category}` } }),
+  ),
+  { route: "/yearbook/[username]", role: "student", params: { username: "username" } },
   ...["/profile/[username]", "/profile/[username]/activity", "/profile/[username]/skills", "/profile/[username]/ventures"].map(
     (route): SweepRoute => ({ route, role: "student", params: { username: "username" } }),
   ),

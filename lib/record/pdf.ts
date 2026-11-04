@@ -33,7 +33,7 @@ const FONTS: [family: string, weight: string, file: string][] = [
 ];
 
 let fontCss: string | null = null;
-function fonts(): string {
+export function fonts(): string {
   fontCss ??= FONTS.map(([family, weight, file]) => {
     const data = readFileSync(join(process.cwd(), "lib", "cv", "fonts", file)).toString("base64");
     return `@font-face { font-family: "${family}"; font-weight: ${weight}; font-style: normal; src: url(data:font/woff2;base64,${data}) format("woff2"); }`;

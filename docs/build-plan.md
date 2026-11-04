@@ -271,9 +271,9 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 
 📖 `05-34-openings-sharing-and-reach.md`, `05-33-yearbook.md`, `05-09-chat.md`
 
-- [ ] Openings (grid in one SQL call, category pages, This week, redirects from `/opportunities`)
-- [ ] yearbook (pages, notes with owner approval, superlatives, reveal, freeze, page PDF)
-- [ ] share-to-chat, people you may know, PWA (manifest, service worker, cached ticket) and web push
+- [x] Openings (grid in one SQL call, category pages, This week, redirects from `/opportunities`)
+- [x] yearbook (pages, notes with owner approval, superlatives, reveal, freeze, page PDF)
+- [x] share-to-chat, people you may know, PWA (manifest, service worker, cached ticket) and web push
 
 ✅ Openings shows every card's latest item with loading, empty and error states · unapproved yearbook notes and votes are unreadable to others · a shared post the recipient can't see renders as unavailable · an event reminder arrives as a push and stops when the category is off
 

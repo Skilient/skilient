@@ -19,7 +19,8 @@ describe("navigation", () => {
   it("marks the right item active, and Feedback separately from Me", () => {
     const at = (path: string) => [...PRIMARY_NAV, ...SECONDARY_NAV].filter((i) => isActive(i, path)).map((i) => i.key);
     expect(at("/feed")).toEqual(["home"]);
-    expect(at("/opportunities/competitions")).toEqual(["openings"]);
+    expect(at("/openings/competitions")).toEqual(["openings"]);
+    expect(at("/yearbook/amna")).toEqual(["yearbook"]);
     expect(at("/leaderboard")).toEqual(["leaderboard"]);
     expect(at("/me/score")).toEqual(["me"]);
     expect(at("/feedback")).toEqual(["feedback"]);

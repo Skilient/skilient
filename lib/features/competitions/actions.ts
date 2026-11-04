@@ -102,7 +102,7 @@ export async function respondTeamInvite(competitionId: string, teamId: string, a
     input: { teamId, accept },
     fn: "respond_team_invite",
     args: (v) => ({ p_team: v.teamId, p_accept: v.accept }),
-    revalidate: [`/competitions/${competitionId}`, "/opportunities/competitions"],
+    revalidate: [`/competitions/${competitionId}`, "/openings/competitions"],
   });
 }
 export async function submitRepo(competitionId: string, teamId: string, url: string): Promise<ActionResult> {

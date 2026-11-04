@@ -72,7 +72,7 @@ export default async function EcospherePage({ params }: PageProps<"/u/[slug]/[[.
       {home.jobs ? (
         <Section title="Open jobs and internships" id="j-h">
           {home.jobs.length === 0 ? <p className="text-body text-text-secondary">No open roles right now.</p> : (
-            <ul className="flex flex-col gap-1">{home.jobs.map((j) => <li key={j.id}><Link className="underline" href={`/opportunities/jobs/${j.id}` as Route}>{j.title}</Link> · {j.company}</li>)}</ul>
+            <ul className="flex flex-col gap-1">{home.jobs.map((j) => <li key={j.id}><Link className="underline" href={`/openings/jobs/${j.id}` as Route}>{j.title}</Link> · {j.company}</li>)}</ul>
           )}
         </Section>
       ) : null}

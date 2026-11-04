@@ -3,6 +3,7 @@ import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ReceiptForm } from "@/components/events/receipt-form";
+import { PushOffer } from "@/components/pwa/push-offer";
 import { ActionButton } from "@/components/societies/action-button";
 import { Badge, Ticket, type TicketStatus } from "@/components/ui";
 import { confirmRefund, raisePaymentIssue } from "@/lib/actions/event-payments";
@@ -44,6 +45,7 @@ export default async function TicketPage({ params }: PageProps<"/events/[id]/tic
         {t.title}
       </Link>
       <h1 className="font-display text-h2">Your ticket</h1>
+      <p className="text-caption text-text-secondary">Opened once, this ticket also shows without signal on this device.</p>
       {status ? (
         <Ticket
           title={t.title}
@@ -72,6 +74,8 @@ export default async function TicketPage({ params }: PageProps<"/events/[id]/tic
           </p>
         </section>
       )}
+      {/* PRD 5.34: push is offered after a meaningful action; registering for an event is one. */}
+      <PushOffer reason="We'll remind you a day and an hour before, and tell you if the time or place changes." />
       {t.regStatus === "waitlisted" && t.waitlistPosition ? (
         <p className="neu-mono text-text-secondary" data-testid="waitlist-position">
           Number {t.waitlistPosition} on the waitlist. If a seat frees up, you&apos;re moved in automatically and told.

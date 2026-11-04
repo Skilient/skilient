@@ -61,9 +61,9 @@ export async function saveJob(id: string | null, input: JobInput): Promise<Actio
 }
 
 export async function publishJob(id: string): Promise<ActionResult> {
-  return rpcAction({ name: "recruit.publish_job", schema: uuid, input: id, fn: "publish_job", args: (v) => ({ p_id: v }), revalidate: ["/recruit/jobs", `/recruit/jobs/${id}`, "/opportunities/jobs"] });
+  return rpcAction({ name: "recruit.publish_job", schema: uuid, input: id, fn: "publish_job", args: (v) => ({ p_id: v }), revalidate: ["/recruit/jobs", `/recruit/jobs/${id}`, "/openings/jobs"] });
 }
 
 export async function closeJob(id: string): Promise<ActionResult> {
-  return rpcAction({ name: "recruit.close_job", schema: uuid, input: id, fn: "close_job", args: (v) => ({ p_id: v }), revalidate: ["/recruit/jobs", `/recruit/jobs/${id}`, "/opportunities/jobs"] });
+  return rpcAction({ name: "recruit.close_job", schema: uuid, input: id, fn: "close_job", args: (v) => ({ p_id: v }), revalidate: ["/recruit/jobs", `/recruit/jobs/${id}`, "/openings/jobs"] });
 }

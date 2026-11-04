@@ -397,14 +397,14 @@ isOneToOne: false
                   ]
                 },"chat_messages": {
                   Row: {
-                    "body": string,"created_at": string,"deleted_at": string | null,"edited_at": string | null,"id": string,"link_url": string | null,"media_height": number | null,"media_path": string | null,"media_width": number | null,"removed_by": string | null,"reply_to_id": string | null,"search": unknown,"sender_id": string,"thread_id": string
+                    "body": string,"created_at": string,"deleted_at": string | null,"edited_at": string | null,"id": string,"link_url": string | null,"media_height": number | null,"media_path": string | null,"media_width": number | null,"removed_by": string | null,"reply_to_id": string | null,"search": unknown,"sender_id": string,"shared": boolean,"shared_post_id": string | null,"thread_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "body"?: string,"created_at"?: string,"deleted_at"?: string | null,"edited_at"?: string | null,"id"?: string,"link_url"?: string | null,"media_height"?: number | null,"media_path"?: string | null,"media_width"?: number | null,"removed_by"?: string | null,"reply_to_id"?: string | null,"search"?: never,"sender_id": string,"thread_id": string
+                    "body"?: string,"created_at"?: string,"deleted_at"?: string | null,"edited_at"?: string | null,"id"?: string,"link_url"?: string | null,"media_height"?: number | null,"media_path"?: string | null,"media_width"?: number | null,"removed_by"?: string | null,"reply_to_id"?: string | null,"search"?: never,"sender_id": string,"shared"?: boolean,"shared_post_id"?: string | null,"thread_id": string
                   }
                   Update: {
-                    "body"?: string,"created_at"?: string,"deleted_at"?: string | null,"edited_at"?: string | null,"id"?: string,"link_url"?: string | null,"media_height"?: number | null,"media_path"?: string | null,"media_width"?: number | null,"removed_by"?: string | null,"reply_to_id"?: string | null,"search"?: never,"sender_id"?: string,"thread_id"?: string
+                    "body"?: string,"created_at"?: string,"deleted_at"?: string | null,"edited_at"?: string | null,"id"?: string,"link_url"?: string | null,"media_height"?: number | null,"media_path"?: string | null,"media_width"?: number | null,"removed_by"?: string | null,"reply_to_id"?: string | null,"search"?: never,"sender_id"?: string,"shared"?: boolean,"shared_post_id"?: string | null,"thread_id"?: string
                   }
                   Relationships: [
                     {
@@ -412,6 +412,12 @@ isOneToOne: false
       columns: ["reply_to_id"]
 isOneToOne: false
       referencedRelation: "chat_messages"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "chat_messages_shared_post_id_fkey"
+      columns: ["shared_post_id"]
+isOneToOne: false
+      referencedRelation: "posts"
       referencedColumns: ["id"]
     },{
       foreignKeyName: "chat_messages_thread_id_fkey"
@@ -2359,14 +2365,14 @@ isOneToOne: false
                   ]
                 },"notification_categories": {
                   Row: {
-                    "allow_instant": boolean,"category": string,"default_channel": Database["public"]['Enums']["email_channel"],"description": string,"label": string,"position": number
+                    "allow_instant": boolean,"category": string,"default_channel": Database["public"]['Enums']["email_channel"],"description": string,"label": string,"position": number,"push_default": boolean | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "allow_instant"?: boolean,"category": string,"default_channel": Database["public"]['Enums']["email_channel"],"description": string,"label": string,"position": number
+                    "allow_instant"?: boolean,"category": string,"default_channel": Database["public"]['Enums']["email_channel"],"description": string,"label": string,"position": number,"push_default"?: boolean | null
                   }
                   Update: {
-                    "allow_instant"?: boolean,"category"?: string,"default_channel"?: Database["public"]['Enums']["email_channel"],"description"?: string,"label"?: string,"position"?: number
+                    "allow_instant"?: boolean,"category"?: string,"default_channel"?: Database["public"]['Enums']["email_channel"],"description"?: string,"label"?: string,"position"?: number,"push_default"?: boolean | null
                   }
                   Relationships: [
                     
@@ -2391,16 +2397,36 @@ isOneToOne: false
       referencedColumns: ["category"]
     }
                   ]
-                },"notification_types": {
+                },"notification_push_prefs": {
                   Row: {
-                    "category": string,"emailed": boolean,"type": string
+                    "category": string,"push": boolean,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "category": string,"emailed"?: boolean,"type": string
+                    "category": string,"push": boolean,"updated_at"?: string,"user_id": string
                   }
                   Update: {
-                    "category"?: string,"emailed"?: boolean,"type"?: string
+                    "category"?: string,"push"?: boolean,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notification_push_prefs_category_fkey"
+      columns: ["category"]
+isOneToOne: false
+      referencedRelation: "notification_categories"
+      referencedColumns: ["category"]
+    }
+                  ]
+                },"notification_types": {
+                  Row: {
+                    "category": string,"emailed": boolean,"pushed": boolean,"type": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "category": string,"emailed"?: boolean,"pushed"?: boolean,"type": string
+                  }
+                  Update: {
+                    "category"?: string,"emailed"?: boolean,"pushed"?: boolean,"type"?: string
                   }
                   Relationships: [
                     {
@@ -2444,6 +2470,40 @@ isOneToOne: false
                   }
                   Relationships: [
                     
+                  ]
+                },"openings_seen": {
+                  Row: {
+                    "category": string,"seen_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "category": string,"seen_at"?: string,"user_id": string
+                  }
+                  Update: {
+                    "category"?: string,"seen_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"openings_weekly": {
+                  Row: {
+                    "built_at": string,"events": (string)[],"inductions": (string)[],"posts": NonNullable<Json>,"university_id": string,"ventures": (string)[],"week_start": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "built_at"?: string,"events"?: (string)[],"inductions"?: (string)[],"posts"?: NonNullable<Json>,"university_id": string,"ventures"?: (string)[],"week_start": string
+                  }
+                  Update: {
+                    "built_at"?: string,"events"?: (string)[],"inductions"?: (string)[],"posts"?: NonNullable<Json>,"university_id"?: string,"ventures"?: (string)[],"week_start"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "openings_weekly_university_id_fkey"
+      columns: ["university_id"]
+isOneToOne: true
+      referencedRelation: "universities"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"ops_audit_log": {
                   Row: {
@@ -2973,14 +3033,14 @@ isOneToOne: false
                   ]
                 },"profiles": {
                   Row: {
-                    "availability": (string)[],"avatar_path": string | null,"bio": string | null,"campus": string | null,"chat_read_receipts": boolean,"city": string | null,"cover_path": string | null,"created_at": string,"delete_after": string | null,"department": string | null,"department_id": string | null,"full_name": string,"graduated_at": string | null,"graduation_year": number | null,"leaderboard_opt_out": boolean,"looking_for": (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete": boolean,"programme": string | null,"recruiter_visible": boolean,"remote_ok": boolean,"role": Database["public"]['Enums']["account_role"],"status": Database["public"]['Enums']["account_status"],"university_id": string | null,"updated_at": string,"user_id": string,"username": string | null,"visibility": Database["public"]['Enums']["profile_visibility"]
+                    "availability": (string)[],"avatar_path": string | null,"bio": string | null,"campus": string | null,"chat_read_receipts": boolean,"city": string | null,"cover_path": string | null,"created_at": string,"delete_after": string | null,"department": string | null,"department_id": string | null,"full_name": string,"graduated_at": string | null,"graduation_year": number | null,"leaderboard_opt_out": boolean,"looking_for": (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete": boolean,"programme": string | null,"recruiter_visible": boolean,"remote_ok": boolean,"role": Database["public"]['Enums']["account_role"],"status": Database["public"]['Enums']["account_status"],"university_id": string | null,"updated_at": string,"user_id": string,"username": string | null,"visibility": Database["public"]['Enums']["profile_visibility"],"yearbook_superlatives_opt_out": boolean
                   }
                   ComputedFields: never
                   Insert: {
-                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name": string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id": string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"]
+                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name": string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id": string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"],"yearbook_superlatives_opt_out"?: boolean
                   }
                   Update: {
-                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name"?: string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id"?: string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"]
+                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name"?: string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id"?: string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"],"yearbook_superlatives_opt_out"?: boolean
                   }
                   Relationships: [
                     {
@@ -3082,6 +3142,34 @@ isOneToOne: false
       referencedRelation: "skills"
       referencedColumns: ["id"]
     }
+                  ]
+                },"push_subscriptions": {
+                  Row: {
+                    "auth": string,"created_at": string,"endpoint": string,"failures": number,"id": string,"last_used_at": string | null,"p256dh": string,"user_agent": string | null,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "auth": string,"created_at"?: string,"endpoint": string,"failures"?: number,"id"?: string,"last_used_at"?: string | null,"p256dh": string,"user_agent"?: string | null,"user_id": string
+                  }
+                  Update: {
+                    "auth"?: string,"created_at"?: string,"endpoint"?: string,"failures"?: number,"id"?: string,"last_used_at"?: string | null,"p256dh"?: string,"user_agent"?: string | null,"user_id"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"pymk_dismissals": {
+                  Row: {
+                    "created_at": string,"dismissed_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"dismissed_id": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"dismissed_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    
                   ]
                 },"ranking_adjustments": {
                   Row: {
@@ -4917,6 +5005,106 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"yearbook_awards": {
+                  Row: {
+                    "declined_at": string | null,"status": string,"title": string,"title_key": string,"told_at": string,"winner_id": string,"yearbook_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "declined_at"?: string | null,"status"?: string,"title": string,"title_key": string,"told_at"?: string,"winner_id": string,"yearbook_id": string
+                  }
+                  Update: {
+                    "declined_at"?: string | null,"status"?: string,"title"?: string,"title_key"?: string,"told_at"?: string,"winner_id"?: string,"yearbook_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "yearbook_awards_yearbook_id_fkey"
+      columns: ["yearbook_id"]
+isOneToOne: false
+      referencedRelation: "yearbooks"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"yearbook_notes": {
+                  Row: {
+                    "approved_at": string | null,"body": string,"created_at": string,"hidden_at": string | null,"id": string,"page_id": string,"removed_at": string | null,"removed_by": string | null,"updated_at": string,"writer_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "approved_at"?: string | null,"body": string,"created_at"?: string,"hidden_at"?: string | null,"id"?: string,"page_id": string,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"writer_id": string
+                  }
+                  Update: {
+                    "approved_at"?: string | null,"body"?: string,"created_at"?: string,"hidden_at"?: string | null,"id"?: string,"page_id"?: string,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"writer_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "yearbook_notes_page_id_fkey"
+      columns: ["page_id"]
+isOneToOne: false
+      referencedRelation: "yearbook_pages"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"yearbook_pages": {
+                  Row: {
+                    "created_at": string,"department": string | null,"highlights": (string)[],"id": string,"photo_path": string | null,"quote": string | null,"removed_at": string | null,"removed_by": string | null,"updated_at": string,"user_id": string,"visible": boolean,"yearbook_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"department"?: string | null,"highlights"?: (string)[],"id"?: string,"photo_path"?: string | null,"quote"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"user_id": string,"visible"?: boolean,"yearbook_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"department"?: string | null,"highlights"?: (string)[],"id"?: string,"photo_path"?: string | null,"quote"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"user_id"?: string,"visible"?: boolean,"yearbook_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "yearbook_pages_yearbook_id_fkey"
+      columns: ["yearbook_id"]
+isOneToOne: false
+      referencedRelation: "yearbooks"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"yearbook_votes": {
+                  Row: {
+                    "nominee_id": string,"title_key": string,"updated_at": string,"voter_id": string,"yearbook_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "nominee_id": string,"title_key": string,"updated_at"?: string,"voter_id": string,"yearbook_id": string
+                  }
+                  Update: {
+                    "nominee_id"?: string,"title_key"?: string,"updated_at"?: string,"voter_id"?: string,"yearbook_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "yearbook_votes_yearbook_id_fkey"
+      columns: ["yearbook_id"]
+isOneToOne: false
+      referencedRelation: "yearbooks"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"yearbooks": {
+                  Row: {
+                    "batch": number,"created_at": string,"freezes_at": string,"frozen_at": string | null,"id": string,"opens_at": string,"reveal_at": string,"revealed_at": string | null,"university_id": string,"vote_closes_at": string,"vote_opens_at": string,"winners_told_at": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "batch": number,"created_at"?: string,"freezes_at": string,"frozen_at"?: string | null,"id"?: string,"opens_at": string,"reveal_at": string,"revealed_at"?: string | null,"university_id": string,"vote_closes_at": string,"vote_opens_at": string,"winners_told_at"?: string | null
+                  }
+                  Update: {
+                    "batch"?: number,"created_at"?: string,"freezes_at"?: string,"frozen_at"?: string | null,"id"?: string,"opens_at"?: string,"reveal_at"?: string,"revealed_at"?: string | null,"university_id"?: string,"vote_closes_at"?: string,"vote_opens_at"?: string,"winners_told_at"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "yearbooks_university_id_fkey"
+      columns: ["university_id"]
+isOneToOne: false
+      referencedRelation: "universities"
+      referencedColumns: ["id"]
+    }
+                  ]
                 }
           }
           Views: {
@@ -5090,6 +5278,9 @@ isOneToOne: false
                            },
 "cancel_swap_session":
 { Args: { "p_session": string }; Returns: undefined
+                           },
+"cast_yearbook_vote":
+{ Args: { "p_title": string,"p_username": string }; Returns: undefined
                            },
 "check_in_email":
 { Args: { "p_email": string,"p_event": string,"p_session": string }; Returns: Json
@@ -5303,11 +5494,17 @@ isOneToOne: false
 "decide_uni_domain":
 { Args: { "p_approve": boolean,"p_id": string,"p_reason": string }; Returns: undefined
                            },
+"decide_yearbook_note":
+{ Args: { "p_approve": boolean,"p_note": string }; Returns: undefined
+                           },
 "decline_record_mistake":
 { Args: { "p_correction": string,"p_note": string }; Returns: undefined
                            },
 "decline_task_review":
 { Args: { "p_review": string }; Returns: undefined
+                           },
+"decline_yearbook_award":
+{ Args: { "p_title": string }; Returns: undefined
                            },
 "delete_comment":
 { Args: { "p_comment": string }; Returns: undefined
@@ -5336,6 +5533,9 @@ isOneToOne: false
 "delete_programme":
 { Args: { "p_id": string }; Returns: undefined
                            },
+"delete_push_subscription":
+{ Args: { "p_endpoint": string }; Returns: undefined
+                           },
 "delete_saved_search":
 { Args: { "p_id": string }; Returns: undefined
                            },
@@ -5356,6 +5556,9 @@ isOneToOne: false
                            },
 "disconnect_github":
 { Args: Record<PropertyKey, never>; Returns: boolean
+                           },
+"dismiss_suggestion":
+{ Args: { "p_username": string }; Returns: undefined
                            },
 "dispute_hire_fee":
 { Args: { "p_id": string,"p_kind": string,"p_reason": string }; Returns: undefined
@@ -5640,6 +5843,9 @@ isOneToOne: false
 "mark_notification_read":
 { Args: { "p_id": string }; Returns: undefined
                            },
+"mark_openings_seen":
+{ Args: { "p_category": string }; Returns: undefined
+                           },
 "mark_refund_sent":
 { Args: { "p_note": string,"p_payment": string }; Returns: undefined
                            },
@@ -5759,6 +5965,9 @@ isOneToOne: false
 "my_profile_viewers":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
+"my_push_settings":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "my_record":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
@@ -5835,6 +6044,15 @@ isOneToOne: false
 { Args: { "p_token_hash": string,"p_viewer_key": string }; Returns: {
               "code": string,"expires_at": string,"issued_at": string,"key_id": string,"signature": string,"snapshot": Json,"snapshot_hash": string,"state": string,"username": string
             }[]
+                           },
+"openings":
+{ Args: { "p_after"?: number,"p_category": string,"p_matched_only"?: boolean,"p_q"?: string,"p_sort"?: string }; Returns: Json
+                           },
+"openings_overview":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"openings_this_week":
+{ Args: Record<PropertyKey, never>; Returns: Json
                            },
 "opportunities":
 { Args: { "p_after"?: number,"p_tab": string }; Returns: {
@@ -6120,6 +6338,9 @@ isOneToOne: false
 "pending_friend_request_count":
 { Args: Record<PropertyKey, never>; Returns: number
                            },
+"people_you_may_know":
+{ Args: { "p_limit"?: number }; Returns: Json
+                           },
 "pin_comment":
 { Args: { "p_comment": string,"p_pin": boolean }; Returns: undefined
                            },
@@ -6184,6 +6405,9 @@ isOneToOne: false
                            },
 "publish_job":
 { Args: { "p_id": string }; Returns: undefined
+                           },
+"push_public_key":
+{ Args: Record<PropertyKey, never>; Returns: string
                            },
 "raise_payment_issue":
 { Args: { "p_registration": string }; Returns: undefined
@@ -6491,6 +6715,9 @@ isOneToOne: false
 "save_programme":
 { Args: { "p_department": string,"p_name": string }; Returns: string
                            },
+"save_push_subscription":
+{ Args: { "p_auth": string,"p_endpoint": string,"p_p256dh": string,"p_user_agent"?: string }; Returns: undefined
+                           },
 "save_recruiter_prefs":
 { Args: { "p_availability": (string)[],"p_city": string,"p_remote": boolean }; Returns: undefined
                            },
@@ -6517,6 +6744,9 @@ isOneToOne: false
                            },
 "save_venture_role":
 { Args: { "p_role"?: string,"p_skill_ids": (string)[],"p_slots": number,"p_title": string,"p_venture": string }; Returns: string
+                           },
+"save_yearbook_page":
+{ Args: { "p_clear_photo"?: boolean,"p_highlights": (string)[],"p_photo"?: string,"p_quote": string,"p_visible": boolean }; Returns: undefined
                            },
 "saved_searches_list":
 { Args: Record<PropertyKey, never>; Returns: Json
@@ -6563,7 +6793,7 @@ isOneToOne: false
             }[]
                            },
 "send_message":
-{ Args: { "p_body": string,"p_media"?: Json,"p_reply_to"?: string,"p_thread": string }; Returns: string
+{ Args: { "p_body": string,"p_media"?: Json,"p_reply_to"?: string,"p_shared_post"?: string,"p_thread": string }; Returns: string
                            },
 "set_branding_image":
 { Args: { "p_kind": string,"p_path": string }; Returns: undefined
@@ -6595,6 +6825,9 @@ isOneToOne: false
 "set_org_member_role":
 { Args: { "p_role": Database["public"]['Enums']["org_role"],"p_user": string }; Returns: undefined
                            },
+"set_push_pref":
+{ Args: { "p_category": string,"p_on": boolean }; Returns: undefined
+                           },
 "set_read_receipts":
 { Args: { "p_on": boolean }; Returns: undefined
                            },
@@ -6603,6 +6836,9 @@ isOneToOne: false
                            },
 "set_society_images":
 { Args: { "p_cover": string,"p_logo": string,"p_society": string }; Returns: undefined
+                           },
+"set_superlatives_opt_out":
+{ Args: { "p_on": boolean }; Returns: undefined
                            },
 "set_ui_state":
 { Args: { "p_key": string,"p_value": Json }; Returns: undefined
@@ -6613,11 +6849,20 @@ isOneToOne: false
 "set_venture_questions":
 { Args: { "p_questions": (string)[],"p_venture": string }; Returns: undefined
                            },
+"share_post":
+{ Args: { "p_note"?: string,"p_post": string,"p_threads": (string)[] }; Returns: (string)[]
+                           },
+"share_targets":
+{ Args: { "p_q"?: string }; Returns: Json
+                           },
 "shortlist_get":
 { Args: { "p_list": string }; Returns: Json
                            },
 "shortlists_list":
 { Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"sign_yearbook":
+{ Args: { "p_body": string,"p_username": string }; Returns: string
                            },
 "signin_failed":
 { Args: { "p_email": string,"p_ip_hash": string }; Returns: Json
@@ -6802,7 +7047,7 @@ isOneToOne: false
                            },
 "thread_messages":
 { Args: { "p_before"?: string,"p_limit"?: number,"p_thread": string }; Returns: {
-              "body": string,"created_at": string,"deleted": boolean,"edited_at": string,"id": string,"link": Json,"media_height": number,"media_path": string,"media_width": number,"pinned": boolean,"reactions": Json,"reply_excerpt": string,"reply_sender_id": string,"reply_to_id": string,"sender_id": string
+              "body": string,"created_at": string,"deleted": boolean,"edited_at": string,"id": string,"link": Json,"media_height": number,"media_path": string,"media_width": number,"pinned": boolean,"reactions": Json,"reply_excerpt": string,"reply_sender_id": string,"reply_to_id": string,"sender_id": string,"shared": boolean,"shared_post_id": string
             }[]
                            },
 "thread_people":
@@ -6849,6 +7094,9 @@ isOneToOne: false
                            },
 "unblock_user":
 { Args: { "p_username": string }; Returns: undefined
+                           },
+"undo_share":
+{ Args: { "p_messages": (string)[] }; Returns: number
                            },
 "unfriend":
 { Args: { "p_username": string }; Returns: undefined
@@ -7025,10 +7273,25 @@ isOneToOne: false
                            },
 "withdraw_job_application":
 { Args: { "p_id": string }; Returns: undefined
+                           },
+"yearbook_ballot":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"yearbook_home":
+{ Args: { "p_q"?: string }; Returns: Json
+                           },
+"yearbook_me":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"yearbook_nominees":
+{ Args: { "p_q"?: string }; Returns: Json
+                           },
+"yearbook_page":
+{ Args: { "p_username": string }; Returns: Json
                            }
           }
           Enums: {
-            "account_role": "student"|"faculty"|"recruiter"|"university_admin","account_status": "active"|"graduate"|"deleting","anti_gaming_kind": "ring"|"rapid_gain"|"swap_ring"|"swap_repeat","appeal_decision_type": "sanction"|"report_case"|"cv_revocation"|"credential"|"code_check"|"record_revocation","appeal_status": "pending"|"upheld"|"overturned","application_stage": "applied"|"screening"|"interview"|"offer"|"hired"|"rejected"|"withdrawn","application_status": "pending"|"accepted"|"declined"|"withdrawn"|"closed","billing_subject": "user"|"org"|"university","chat_thread_type": "dm"|"group","code_check_status": "preparing"|"ready"|"in_progress"|"submitted"|"passed"|"failed"|"unavailable"|"expired","competition_status": "draft"|"in_review"|"rejected"|"approved"|"live"|"frozen"|"judged","contact_status": "pending"|"accepted"|"declined"|"expired","contribution_kind": "code"|"design"|"research"|"docs"|"management"|"other","contribution_source": "manual"|"github","credential_status": "pending"|"approved"|"rejected"|"expired","cv_visibility": "private"|"link"|"recruiters","domain_kind": "student"|"faculty"|"both","email_channel": "instant_email"|"digest"|"off","entitlement_kind": "bool"|"int"|"limit"|"enum","fair_queue_status": "waiting"|"called"|"talking"|"done"|"skipped"|"left","fair_status": "draft"|"published"|"cancelled","feedback_status": "received"|"reviewing"|"planned"|"shipped"|"wont_do","feedback_type": "bug"|"idea"|"confusing"|"praise","friend_request_status": "pending"|"accepted"|"declined","github_commit_status": "pending"|"counted"|"held"|"excluded","github_repo_kind": "owned"|"collaborator"|"fork"|"template","grant_source": "plan"|"add_on"|"sponsorship"|"trial"|"admin","idea_audience": "university"|"global","idea_difficulty": "intro"|"intermediate"|"advanced","idea_status": "open"|"closed","job_run_status": "running"|"succeeded"|"failed","job_status": "draft"|"live"|"closed"|"paused","looking_for_option": "internship"|"job"|"teammates"|"project"|"mentorship","org_role": "admin"|"recruiter"|"billing","org_status": "pending"|"verified"|"suspended"|"rejected","post_audience": "university"|"global","post_stage": "seed"|"limited"|"full"|"global_boost"|"demoted"|"held","post_type": "general"|"invite"|"announcement"|"event"|"poll"|"shipped","profile_visibility": "friends"|"university"|"global","ranking_adjustment_kind": "penalty"|"rapid_gain","ranking_tier": "raw"|"spark"|"flare"|"shine"|"radiant"|"luminary","report_case_status": "open"|"dismissed"|"removed"|"warned","report_reason": "spam"|"harassment"|"inappropriate"|"misinformation"|"impersonation"|"other","report_target": "post"|"comment"|"message"|"profile"|"venture"|"society"|"event"|"event_registration"|"record_entry"|"swap","review_flag_kind": "burst"|"backdating"|"cross_account_duplicate","review_flag_status": "open"|"cleared"|"upheld","review_request_status": "open"|"submitted"|"declined"|"expired"|"cancelled","rsvp_status": "going"|"interested","sales_lead_status": "new"|"contacted"|"won"|"lost","sanction_kind": "warn"|"suspend"|"ban"|"throttle","skill_category": "language"|"framework"|"library"|"tool"|"platform"|"practice","society_role": "president"|"officer"|"member","society_status": "pending"|"more_info"|"verified"|"rejected"|"suspended","staff_role": "moderator"|"trust_reviewer"|"accounts"|"super_admin","subscription_status": "trialing"|"active"|"past_due"|"expired"|"cancelled","supervisor_status": "invited"|"active"|"ended","sync_status": "queued"|"running"|"done"|"failed"|"cancelled","teacher_status": "pending"|"approved"|"revoked","uni_admin_role": "owner"|"admin"|"career"|"coordinator"|"comms","uni_event_scope": "university"|"global","uni_event_type": "talk"|"workshop"|"hackathon"|"competition"|"other"|"social"|"volunteering","uni_hide_status": "hidden"|"restored"|"removed","uni_request_status": "pending"|"approved"|"rejected","venture_invite_status": "pending"|"accepted"|"declined"|"revoked","venture_stage": "idea"|"prototype"|"launched"|"revenue","venture_status": "recruiting"|"in_progress"|"completed"|"abandoned","venture_team_role": "lead"|"developer"|"designer"|"researcher"|"other","venture_type": "project"|"startup","venture_visibility": "public"|"university"|"unlisted"
+            "account_role": "student"|"faculty"|"recruiter"|"university_admin","account_status": "active"|"graduate"|"deleting","anti_gaming_kind": "ring"|"rapid_gain"|"swap_ring"|"swap_repeat","appeal_decision_type": "sanction"|"report_case"|"cv_revocation"|"credential"|"code_check"|"record_revocation","appeal_status": "pending"|"upheld"|"overturned","application_stage": "applied"|"screening"|"interview"|"offer"|"hired"|"rejected"|"withdrawn","application_status": "pending"|"accepted"|"declined"|"withdrawn"|"closed","billing_subject": "user"|"org"|"university","chat_thread_type": "dm"|"group","code_check_status": "preparing"|"ready"|"in_progress"|"submitted"|"passed"|"failed"|"unavailable"|"expired","competition_status": "draft"|"in_review"|"rejected"|"approved"|"live"|"frozen"|"judged","contact_status": "pending"|"accepted"|"declined"|"expired","contribution_kind": "code"|"design"|"research"|"docs"|"management"|"other","contribution_source": "manual"|"github","credential_status": "pending"|"approved"|"rejected"|"expired","cv_visibility": "private"|"link"|"recruiters","domain_kind": "student"|"faculty"|"both","email_channel": "instant_email"|"digest"|"off","entitlement_kind": "bool"|"int"|"limit"|"enum","fair_queue_status": "waiting"|"called"|"talking"|"done"|"skipped"|"left","fair_status": "draft"|"published"|"cancelled","feedback_status": "received"|"reviewing"|"planned"|"shipped"|"wont_do","feedback_type": "bug"|"idea"|"confusing"|"praise","friend_request_status": "pending"|"accepted"|"declined","github_commit_status": "pending"|"counted"|"held"|"excluded","github_repo_kind": "owned"|"collaborator"|"fork"|"template","grant_source": "plan"|"add_on"|"sponsorship"|"trial"|"admin","idea_audience": "university"|"global","idea_difficulty": "intro"|"intermediate"|"advanced","idea_status": "open"|"closed","job_run_status": "running"|"succeeded"|"failed","job_status": "draft"|"live"|"closed"|"paused","looking_for_option": "internship"|"job"|"teammates"|"project"|"mentorship","org_role": "admin"|"recruiter"|"billing","org_status": "pending"|"verified"|"suspended"|"rejected","post_audience": "university"|"global","post_stage": "seed"|"limited"|"full"|"global_boost"|"demoted"|"held","post_type": "general"|"invite"|"announcement"|"event"|"poll"|"shipped","profile_visibility": "friends"|"university"|"global","ranking_adjustment_kind": "penalty"|"rapid_gain","ranking_tier": "raw"|"spark"|"flare"|"shine"|"radiant"|"luminary","report_case_status": "open"|"dismissed"|"removed"|"warned","report_reason": "spam"|"harassment"|"inappropriate"|"misinformation"|"impersonation"|"other","report_target": "post"|"comment"|"message"|"profile"|"venture"|"society"|"event"|"event_registration"|"record_entry"|"swap"|"yearbook_page"|"yearbook_note","review_flag_kind": "burst"|"backdating"|"cross_account_duplicate","review_flag_status": "open"|"cleared"|"upheld","review_request_status": "open"|"submitted"|"declined"|"expired"|"cancelled","rsvp_status": "going"|"interested","sales_lead_status": "new"|"contacted"|"won"|"lost","sanction_kind": "warn"|"suspend"|"ban"|"throttle","skill_category": "language"|"framework"|"library"|"tool"|"platform"|"practice","society_role": "president"|"officer"|"member","society_status": "pending"|"more_info"|"verified"|"rejected"|"suspended","staff_role": "moderator"|"trust_reviewer"|"accounts"|"super_admin","subscription_status": "trialing"|"active"|"past_due"|"expired"|"cancelled","supervisor_status": "invited"|"active"|"ended","sync_status": "queued"|"running"|"done"|"failed"|"cancelled","teacher_status": "pending"|"approved"|"revoked","uni_admin_role": "owner"|"admin"|"career"|"coordinator"|"comms","uni_event_scope": "university"|"global","uni_event_type": "talk"|"workshop"|"hackathon"|"competition"|"other"|"social"|"volunteering","uni_hide_status": "hidden"|"restored"|"removed","uni_request_status": "pending"|"approved"|"rejected","venture_invite_status": "pending"|"accepted"|"declined"|"revoked","venture_stage": "idea"|"prototype"|"launched"|"revenue","venture_status": "recruiting"|"in_progress"|"completed"|"abandoned","venture_team_role": "lead"|"developer"|"designer"|"researcher"|"other","venture_type": "project"|"startup","venture_visibility": "public"|"university"|"unlisted"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -7148,7 +7411,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "account_role": ["student", "faculty", "recruiter", "university_admin"],"account_status": ["active", "graduate", "deleting"],"anti_gaming_kind": ["ring", "rapid_gain", "swap_ring", "swap_repeat"],"appeal_decision_type": ["sanction", "report_case", "cv_revocation", "credential", "code_check", "record_revocation"],"appeal_status": ["pending", "upheld", "overturned"],"application_stage": ["applied", "screening", "interview", "offer", "hired", "rejected", "withdrawn"],"application_status": ["pending", "accepted", "declined", "withdrawn", "closed"],"billing_subject": ["user", "org", "university"],"chat_thread_type": ["dm", "group"],"code_check_status": ["preparing", "ready", "in_progress", "submitted", "passed", "failed", "unavailable", "expired"],"competition_status": ["draft", "in_review", "rejected", "approved", "live", "frozen", "judged"],"contact_status": ["pending", "accepted", "declined", "expired"],"contribution_kind": ["code", "design", "research", "docs", "management", "other"],"contribution_source": ["manual", "github"],"credential_status": ["pending", "approved", "rejected", "expired"],"cv_visibility": ["private", "link", "recruiters"],"domain_kind": ["student", "faculty", "both"],"email_channel": ["instant_email", "digest", "off"],"entitlement_kind": ["bool", "int", "limit", "enum"],"fair_queue_status": ["waiting", "called", "talking", "done", "skipped", "left"],"fair_status": ["draft", "published", "cancelled"],"feedback_status": ["received", "reviewing", "planned", "shipped", "wont_do"],"feedback_type": ["bug", "idea", "confusing", "praise"],"friend_request_status": ["pending", "accepted", "declined"],"github_commit_status": ["pending", "counted", "held", "excluded"],"github_repo_kind": ["owned", "collaborator", "fork", "template"],"grant_source": ["plan", "add_on", "sponsorship", "trial", "admin"],"idea_audience": ["university", "global"],"idea_difficulty": ["intro", "intermediate", "advanced"],"idea_status": ["open", "closed"],"job_run_status": ["running", "succeeded", "failed"],"job_status": ["draft", "live", "closed", "paused"],"looking_for_option": ["internship", "job", "teammates", "project", "mentorship"],"org_role": ["admin", "recruiter", "billing"],"org_status": ["pending", "verified", "suspended", "rejected"],"post_audience": ["university", "global"],"post_stage": ["seed", "limited", "full", "global_boost", "demoted", "held"],"post_type": ["general", "invite", "announcement", "event", "poll", "shipped"],"profile_visibility": ["friends", "university", "global"],"ranking_adjustment_kind": ["penalty", "rapid_gain"],"ranking_tier": ["raw", "spark", "flare", "shine", "radiant", "luminary"],"report_case_status": ["open", "dismissed", "removed", "warned"],"report_reason": ["spam", "harassment", "inappropriate", "misinformation", "impersonation", "other"],"report_target": ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry", "swap"],"review_flag_kind": ["burst", "backdating", "cross_account_duplicate"],"review_flag_status": ["open", "cleared", "upheld"],"review_request_status": ["open", "submitted", "declined", "expired", "cancelled"],"rsvp_status": ["going", "interested"],"sales_lead_status": ["new", "contacted", "won", "lost"],"sanction_kind": ["warn", "suspend", "ban", "throttle"],"skill_category": ["language", "framework", "library", "tool", "platform", "practice"],"society_role": ["president", "officer", "member"],"society_status": ["pending", "more_info", "verified", "rejected", "suspended"],"staff_role": ["moderator", "trust_reviewer", "accounts", "super_admin"],"subscription_status": ["trialing", "active", "past_due", "expired", "cancelled"],"supervisor_status": ["invited", "active", "ended"],"sync_status": ["queued", "running", "done", "failed", "cancelled"],"teacher_status": ["pending", "approved", "revoked"],"uni_admin_role": ["owner", "admin", "career", "coordinator", "comms"],"uni_event_scope": ["university", "global"],"uni_event_type": ["talk", "workshop", "hackathon", "competition", "other", "social", "volunteering"],"uni_hide_status": ["hidden", "restored", "removed"],"uni_request_status": ["pending", "approved", "rejected"],"venture_invite_status": ["pending", "accepted", "declined", "revoked"],"venture_stage": ["idea", "prototype", "launched", "revenue"],"venture_status": ["recruiting", "in_progress", "completed", "abandoned"],"venture_team_role": ["lead", "developer", "designer", "researcher", "other"],"venture_type": ["project", "startup"],"venture_visibility": ["public", "university", "unlisted"]
+            "account_role": ["student", "faculty", "recruiter", "university_admin"],"account_status": ["active", "graduate", "deleting"],"anti_gaming_kind": ["ring", "rapid_gain", "swap_ring", "swap_repeat"],"appeal_decision_type": ["sanction", "report_case", "cv_revocation", "credential", "code_check", "record_revocation"],"appeal_status": ["pending", "upheld", "overturned"],"application_stage": ["applied", "screening", "interview", "offer", "hired", "rejected", "withdrawn"],"application_status": ["pending", "accepted", "declined", "withdrawn", "closed"],"billing_subject": ["user", "org", "university"],"chat_thread_type": ["dm", "group"],"code_check_status": ["preparing", "ready", "in_progress", "submitted", "passed", "failed", "unavailable", "expired"],"competition_status": ["draft", "in_review", "rejected", "approved", "live", "frozen", "judged"],"contact_status": ["pending", "accepted", "declined", "expired"],"contribution_kind": ["code", "design", "research", "docs", "management", "other"],"contribution_source": ["manual", "github"],"credential_status": ["pending", "approved", "rejected", "expired"],"cv_visibility": ["private", "link", "recruiters"],"domain_kind": ["student", "faculty", "both"],"email_channel": ["instant_email", "digest", "off"],"entitlement_kind": ["bool", "int", "limit", "enum"],"fair_queue_status": ["waiting", "called", "talking", "done", "skipped", "left"],"fair_status": ["draft", "published", "cancelled"],"feedback_status": ["received", "reviewing", "planned", "shipped", "wont_do"],"feedback_type": ["bug", "idea", "confusing", "praise"],"friend_request_status": ["pending", "accepted", "declined"],"github_commit_status": ["pending", "counted", "held", "excluded"],"github_repo_kind": ["owned", "collaborator", "fork", "template"],"grant_source": ["plan", "add_on", "sponsorship", "trial", "admin"],"idea_audience": ["university", "global"],"idea_difficulty": ["intro", "intermediate", "advanced"],"idea_status": ["open", "closed"],"job_run_status": ["running", "succeeded", "failed"],"job_status": ["draft", "live", "closed", "paused"],"looking_for_option": ["internship", "job", "teammates", "project", "mentorship"],"org_role": ["admin", "recruiter", "billing"],"org_status": ["pending", "verified", "suspended", "rejected"],"post_audience": ["university", "global"],"post_stage": ["seed", "limited", "full", "global_boost", "demoted", "held"],"post_type": ["general", "invite", "announcement", "event", "poll", "shipped"],"profile_visibility": ["friends", "university", "global"],"ranking_adjustment_kind": ["penalty", "rapid_gain"],"ranking_tier": ["raw", "spark", "flare", "shine", "radiant", "luminary"],"report_case_status": ["open", "dismissed", "removed", "warned"],"report_reason": ["spam", "harassment", "inappropriate", "misinformation", "impersonation", "other"],"report_target": ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry", "swap", "yearbook_page", "yearbook_note"],"review_flag_kind": ["burst", "backdating", "cross_account_duplicate"],"review_flag_status": ["open", "cleared", "upheld"],"review_request_status": ["open", "submitted", "declined", "expired", "cancelled"],"rsvp_status": ["going", "interested"],"sales_lead_status": ["new", "contacted", "won", "lost"],"sanction_kind": ["warn", "suspend", "ban", "throttle"],"skill_category": ["language", "framework", "library", "tool", "platform", "practice"],"society_role": ["president", "officer", "member"],"society_status": ["pending", "more_info", "verified", "rejected", "suspended"],"staff_role": ["moderator", "trust_reviewer", "accounts", "super_admin"],"subscription_status": ["trialing", "active", "past_due", "expired", "cancelled"],"supervisor_status": ["invited", "active", "ended"],"sync_status": ["queued", "running", "done", "failed", "cancelled"],"teacher_status": ["pending", "approved", "revoked"],"uni_admin_role": ["owner", "admin", "career", "coordinator", "comms"],"uni_event_scope": ["university", "global"],"uni_event_type": ["talk", "workshop", "hackathon", "competition", "other", "social", "volunteering"],"uni_hide_status": ["hidden", "restored", "removed"],"uni_request_status": ["pending", "approved", "rejected"],"venture_invite_status": ["pending", "accepted", "declined", "revoked"],"venture_stage": ["idea", "prototype", "launched", "revenue"],"venture_status": ["recruiting", "in_progress", "completed", "abandoned"],"venture_team_role": ["lead", "developer", "designer", "researcher", "other"],"venture_type": ["project", "startup"],"venture_visibility": ["public", "university", "unlisted"]
           }
         }
 } as const

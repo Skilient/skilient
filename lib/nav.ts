@@ -1,5 +1,6 @@
 import {
   Bell,
+  BookOpenText,
   CalendarBlank,
   ChatCircleDots,
   ChatsCircle,
@@ -21,13 +22,13 @@ import type { Icon } from "@phosphor-icons/react";
  * command menu and the tooltips (label plus a one-line description, PRD 5.27). `data-tour` ids tie
  * each place to its coach mark. Client-safe: no server code.
  *
- * Opportunities is called Openings in the nav (decisions 2026-11-02); its page moves to /openings
- * in phase 18. Places that don't exist yet (Societies, Yearbook; Record, Paths and Tickets inside
- * Me) join the config with the phase that builds them.
+ * Opportunities became Openings (decisions 2026-11-02) at /openings in phase 18; /opportunities/*
+ * redirects there (next.config.ts). The Yearbook is listed for everyone: its page says when the
+ * caller's book opens if they aren't in the final year.
  */
-export type BadgeKey = "chat" | "notifications" | "friends" | "ventures" | "opportunities";
+export type BadgeKey = "chat" | "notifications" | "friends" | "ventures" | "openings";
 export type NavBadges = Record<BadgeKey, number>;
-export const NO_BADGES: NavBadges = { chat: 0, notifications: 0, friends: 0, ventures: 0, opportunities: 0 };
+export const NO_BADGES: NavBadges = { chat: 0, notifications: 0, friends: 0, ventures: 0, openings: 0 };
 
 /** A level inside a place: the second tier of the sidebar and a row in the command menu. */
 export interface NavLevel {
@@ -70,15 +71,18 @@ export const PRIMARY_NAV: NavItem[] = [
   {
     key: "openings",
     label: "Openings",
-    description: "Competitions, events and project ideas matched to your skills.",
-    href: "/opportunities/for_you",
+    description: "Venture roles, inductions, events, ideas and more, each card with its newest opening.",
+    href: "/openings",
     icon: Compass,
-    badge: "opportunities",
-    match: ["/opportunities", "/competitions", "/ideas"],
+    badge: "openings",
+    match: ["/openings", "/competitions", "/ideas"],
     levels: [
-      { label: "For you", href: "/opportunities/for_you" },
-      { label: "Competitions", href: "/opportunities/competitions", match: ["/opportunities/competitions", "/competitions"], keywords: ["hackathons"] },
-      { label: "Project ideas", href: "/opportunities/ideas", match: ["/opportunities/ideas", "/ideas"] },
+      { label: "All openings", href: "/openings", keywords: ["opportunities"] },
+      { label: "This week", href: "/openings/this-week", keywords: ["campus pulse"] },
+      { label: "Venture roles", href: "/openings/venture-roles", keywords: ["roles", "teams"] },
+      { label: "Inductions", href: "/openings/inductions", keywords: ["societies", "recruitment"] },
+      { label: "Events", href: "/openings/events", match: ["/openings/events"] },
+      { label: "Project ideas", href: "/openings/ideas", match: ["/openings/ideas", "/ideas"] },
     ],
   },
   {
@@ -134,6 +138,7 @@ export const PRIMARY_NAV: NavItem[] = [
 export const SECONDARY_NAV: NavItem[] = [
   { key: "societies", label: "Societies", description: "Clubs and societies: follow, join, apply.", href: "/societies", icon: UsersFour, match: ["/societies"] },
   { key: "events", label: "Events", description: "Society talks, workshops, hackathons and socials.", href: "/events", icon: CalendarBlank, match: ["/events", "/u"] },
+  { key: "yearbook", label: "Yearbook", description: "Your final-year batch's book: notes, superlatives, kept after graduation.", href: "/yearbook", icon: BookOpenText, match: ["/yearbook"] },
   { key: "swaps", label: "Skill swap", description: "Teach what you know, learn from seniors at your university.", href: "/swaps", icon: Swap, match: ["/swaps"] },
   { key: "explore", label: "Explore", description: "Find people, ventures and skills.", href: "/explore", icon: MagnifyingGlass, match: ["/explore"] },
   { key: "leaderboard", label: "Leaderboard", description: "Where you stand at your university and overall.", href: "/leaderboard", icon: Medal, match: ["/leaderboard"] },

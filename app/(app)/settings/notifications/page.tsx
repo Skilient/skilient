@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { ChannelPicker } from "@/components/notifications/channel-picker";
-import { getNotificationSettings } from "@/lib/data/notifications";
+import { PushSettings } from "@/components/notifications/push-settings";
+import { getNotificationSettings, getPushSettings } from "@/lib/data/notifications";
 
 export const metadata: Metadata = { title: "Notification settings" };
 
-/** /settings/notifications (screen spec 3.10): per category, instant email / daily digest / off. */
+/** /settings/notifications (screen spec 3.10): per category, instant email / daily digest / off; phone push per category (PRD 5.34). */
 export default async function NotificationSettingsPage() {
-  const settings = await getNotificationSettings();
+  const [settings, push] = await Promise.all([getNotificationSettings(), getPushSettings()]);
   return (
     <main className="mx-auto flex max-w-2xl flex-col gap-6 px-[var(--page-gutter)] py-8">
       <div>
@@ -30,6 +31,7 @@ export default async function NotificationSettingsPage() {
           ),
         )}
       </div>
+      <PushSettings devices={push.devices} categories={push.categories} />
     </main>
   );
 }

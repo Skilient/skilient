@@ -3,7 +3,9 @@ import { after } from "next/server";
 import { AnalyticsIdentity } from "@/components/analytics/analytics-identity";
 import { CurrentUserProvider } from "@/components/providers/current-user-provider";
 import { UpgradeSheetHost } from "@/components/billing/upgrade-sheet";
+import { ServiceWorkerRegistrar } from "@/components/pwa/service-worker";
 import { AppShell } from "@/components/shell/app-shell";
+import { Toaster } from "@/components/ui";
 import { RestrictionBanner } from "@/components/shell/restriction-banner";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { getTourState } from "@/lib/data/portal";
@@ -36,12 +38,16 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
   ]);
   return (
     <CurrentUserProvider key={user?.id ?? "signed-out"} initialUser={user}>
-      <AppShell tour={tour}>
-        {restriction ? <RestrictionBanner restriction={restriction} /> : null}
-        {children}
-      </AppShell>
+      {/* Toasts with a time and an undo (the brief; share-to-chat's "Sent · Undo", PRD 5.34). */}
+      <Toaster>
+        <AppShell tour={tour}>
+          {restriction ? <RestrictionBanner restriction={restriction} /> : null}
+          {children}
+        </AppShell>
+      </Toaster>
       <UpgradeSheetHost />
       <AnalyticsIdentity />
+      <ServiceWorkerRegistrar />
     </CurrentUserProvider>
   );
 }

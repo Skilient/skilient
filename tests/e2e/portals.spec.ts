@@ -44,14 +44,13 @@ test.describe("Portals off", () => {
     test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
     const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Portal Student" });
     await signInWithPassword(page, student.email, student.password);
-    for (const path of ["/recruit", "/uni", "/opportunities/jobs", "/opportunities/contact_requests", "/opportunities/applications/x", "/fairs/invite"]) {
+    for (const path of ["/recruit", "/uni", "/openings/jobs", "/openings/contact-requests", "/openings/applications/x", "/fairs/invite"]) {
       const res = await page.goto(path);
       expect(res?.status(), path).toBe(404);
     }
-    await page.goto("/opportunities/for_you");
-    const types = page.getByRole("navigation", { name: "Opening types" });
-    await expect(types.getByRole("link", { name: "For you" })).toBeVisible();
-    for (const name of ["Jobs", "Contact requests", "Applications", "Job fairs"]) await expect(types.getByRole("link", { name })).toHaveCount(0);
+    await page.goto("/openings");
+    await expect(page.getByTestId("opening-card-venture_roles")).toBeVisible();
+    for (const c of ["jobs", "contact_requests", "applications", "job_fairs", "competitions"]) await expect(page.getByTestId(`opening-card-${c}`)).toHaveCount(0);
     await page.goto("/settings/privacy");
     await expect(page.getByRole("heading", { level: 1, name: "Privacy" })).toBeVisible();
     for (const name of ["Recruiter visibility", "Which companies viewed my profile", "Blocked companies", "Who at my university viewed my record"]) {

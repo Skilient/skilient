@@ -510,6 +510,65 @@ export function describeNotification(n: NotificationInput): NotificationText {
         href: "/me/record",
         subject: "Your Record entry stays as it is",
       };
+    // Paths, proof tasks and the skill swap (phase 17, PRD 5.32)
+    case "task_done":
+      return {
+        text: `Your ${str(n.data.skill) ?? ""} proof task is done: ${str(n.data.title) ?? "the task"}, verified by ${n.data.by === "github" ? "GitHub" : n.data.by === "peer" ? "a peer review" : "a code check"}. It's on your Record.`,
+        href: `/me/tasks/${n.entityId}`,
+        subject: "Your proof task is done",
+      };
+    case "task_needs_changes":
+      return {
+        text: `A peer sent your ${str(n.data.skill) ?? ""} task back with a note: ${str(n.data.title) ?? "the task"}.`,
+        href: `/me/tasks/${n.entityId}`,
+        subject: "Your proof task needs changes",
+      };
+    case "task_review_offer":
+      return {
+        text: `Can you check ${str(n.data.student) ?? "a student"}'s ${str(n.data.skill) ?? ""} task? ${str(n.data.title) ?? ""}`.trim(),
+        href: `/me/tasks/reviews/${n.entityId}`,
+        subject: `Can you check ${str(n.data.student) ?? "a student"}'s ${str(n.data.skill) ?? ""} task?`,
+      };
+    case "swap_request":
+      return {
+        text: `${who} asked you to teach ${str(n.data.skill) ?? "a skill"} in a skill swap${str(n.data.offered) ? `, offering ${str(n.data.offered)} back` : ""}.`,
+        href: "/swaps?tab=teach",
+        subject: `${who} asked you to teach ${str(n.data.skill) ?? "a skill"}`,
+      };
+    case "swap_accepted":
+      return {
+        text: `${who} accepted your skill swap for ${str(n.data.skill) ?? "a skill"}${n.data.mutual ? " (mutual)" : ""}. Propose a first session.`,
+        href: `/swaps/${n.entityId}`,
+        subject: "Your skill swap was accepted",
+      };
+    case "swap_declined":
+      return {
+        text: n.data.expired
+          ? `Your skill swap request for ${str(n.data.skill) ?? "a skill"} expired without an answer. Try another teacher.`
+          : `${who} can't teach ${str(n.data.skill) ?? "it"} right now. Try another teacher.`,
+        href: "/swaps?tab=learn",
+        subject: "Your skill swap request",
+      };
+    case "swap_session_proposed":
+      return { text: `${who} proposed a ${str(n.data.skill) ?? "skill swap"} session: ${str(n.data.when) ?? "a new time"}.`, href: `/swaps/${n.entityId}`, subject: "A session was proposed" };
+    case "swap_session_accepted":
+      return { text: `${who} accepted the ${str(n.data.skill) ?? "skill swap"} session on ${str(n.data.when) ?? "the proposed time"}.`, href: `/swaps/${n.entityId}`, subject: "Session booked" };
+    case "swap_session_reminder":
+      return {
+        text: `Reminder: your ${str(n.data.skill) ?? "skill swap"} session is ${str(n.data.when) ?? "soon"}${str(n.data.place) ? ` at ${str(n.data.place)}` : ""}.`,
+        href: `/swaps/${n.entityId}`,
+        subject: "Your skill swap session is coming up",
+      };
+    case "swap_session_ask":
+      return { text: `Did your ${str(n.data.skill) ?? "skill swap"} session with ${who} happen?`, href: `/swaps/${n.entityId}`, subject: "Did your session happen?" };
+    case "swap_note":
+      return { text: `${who} left you a thank-you note for ${str(n.data.skill) ?? "a session"}. Approve it to show it on your profile.`, href: `/swaps/${n.entityId}`, subject: "A thank-you note" };
+    case "swap_closed":
+      return {
+        text: `Your ${str(n.data.skill) ?? "skill"} swap closed${n.data.reason === "inactive" ? " after 30 days without a session" : ""}.${n.data.taught ? " Your Record gets a Taught entry." : ""}`,
+        href: `/swaps/${n.entityId}`,
+        subject: "Your skill swap closed",
+      };
     case "ranking_formula":
       return {
         text: "Your score now includes the Record: office-bearer terms, competition results and volunteer hours, up to 100 points. Attendance never counts, and no score goes down.",

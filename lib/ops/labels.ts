@@ -31,9 +31,12 @@ export const FLAG_LABELS: Record<string, string> = {
 };
 
 /** Ranking flags from the nightly run (PRD 5.13 anti-gaming). */
-export const RANKING_FLAG_LABELS: Record<"ring" | "rapid_gain", string> = {
+export const RANKING_FLAG_LABELS: Record<"ring" | "rapid_gain" | "swap_ring" | "swap_repeat", string> = {
   ring: "Endorsement ring",
   rapid_gain: "Fast gain",
+  // Skill swap (PRD 5.32): flags only; uphold and revoke the Taught entries in /ops/record if they don't stand.
+  swap_ring: "Skill swap ring",
+  swap_repeat: "Rapid swap confirmations",
 };
 
 export const RANKING_FLAG_STATUS: Record<"open" | "cleared" | "upheld", string> = {

@@ -616,6 +616,41 @@ describe("github-link and github-worker", () => {
     await sql`delete from private.github_webhook_events where delivery_id = ${delivery}`;
   });
 
+  it("a submitted proof task completes from its repository's rescan, without a peer (PRD 5.32)", async () => {
+    const gh = fakeGithub();
+    const [task] = await sql`select id from public.proof_tasks where skill_id = 'python' and active limit 1`;
+    const [attempt] = await sql`
+      insert into public.task_attempts (user_id, task_id, skill_id, repo_id, repo_full_name, status, route, started_at, submitted_at)
+      values (${userId}, ${task.id}, 'python', 801, 'student/robot', 'verifying', 'github', now() - interval '1 hour', now())
+      returning id`;
+    // What submit_task queues: one repository's harvest, no sync job.
+    await sql`select private.enqueue_github(${sql.json({ stage: "harvest", user_id: userId, repo_id: 801 })}::jsonb)`;
+    EXTRA.push({ sha: sha("task1"), author: STUDENT_GITHUB_ID, date: new Date(Date.now() - 600_000).toISOString(), parents: 1, files: [file("app/task.py", lines(30))] });
+    await runWorker({ db, cfg, fetch: gh.fetch, log, visibilitySeconds: 0 });
+
+    const [done] = await sql`select status, verified_by, record_entry_id is not null as entry from public.task_attempts where id = ${attempt.id}`;
+    expect(done).toEqual({ status: "done", verified_by: "github", entry: true });
+    expect(await sql`select count(*)::int as n from public.task_reviews where attempt_id = ${attempt.id}`).toEqual([{ n: 0 }]);
+    const [entry] = await sql`select kind, issuer_name, source from public.record_entries where source_id = ${attempt.id}`;
+    expect(entry).toEqual({ kind: "proof_task", issuer_name: "Skilient", source: "task" });
+    await sql`delete from public.record_entries where source_id = ${attempt.id}`;
+    await sql`delete from public.task_attempts where id = ${attempt.id}`;
+  });
+
+  it("a proof task whose repository shows only older commits waits for a peer", async () => {
+    const gh = fakeGithub();
+    const [task] = await sql`select id from public.proof_tasks where skill_id = 'python' and active limit 1`;
+    const [attempt] = await sql`
+      insert into public.task_attempts (user_id, task_id, skill_id, repo_id, repo_full_name, status, route, started_at, submitted_at)
+      values (${userId}, ${task.id}, 'python', 801, 'student/robot', 'verifying', 'github', now(), now())
+      returning id`;
+    await sql`select private.enqueue_github(${sql.json({ stage: "harvest", user_id: userId, repo_id: 801 })}::jsonb)`;
+    await runWorker({ db, cfg, fetch: gh.fetch, log, visibilitySeconds: 0 });
+    const [still] = await sql`select status from public.task_attempts where id = ${attempt.id}`;
+    expect(still.status).toBe("verifying");
+    await sql`delete from public.task_attempts where id = ${attempt.id}`;
+  });
+
   it("disconnect revokes the grant at GitHub and forgets the secrets", async () => {
     const gh = fakeGithub();
     const [before] = await sql`select access_secret_id, refresh_secret_id from private.github_tokens where user_id = ${userId}`;

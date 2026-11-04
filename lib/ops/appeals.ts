@@ -26,6 +26,7 @@ const TARGET_NOUNS: Record<string, string> = {
   event: "event",
   event_registration: "ticket payment",
   record_entry: "Record entry",
+  swap: "skill swap",
 };
 
 type Summary = Record<string, unknown>;

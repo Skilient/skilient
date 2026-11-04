@@ -2567,6 +2567,66 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"path_follows": {
+                  Row: {
+                    "created_at": string,"role": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"role": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"role"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "path_follows_role_fkey"
+      columns: ["role"]
+isOneToOne: false
+      referencedRelation: "paths"
+      referencedColumns: ["role"]
+    }
+                  ]
+                },"path_skills": {
+                  Row: {
+                    "after_days": number | null,"position": number,"role": string,"skill_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "after_days"?: number | null,"position": number,"role": string,"skill_id": string
+                  }
+                  Update: {
+                    "after_days"?: number | null,"position"?: number,"role"?: string,"skill_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "path_skills_role_fkey"
+      columns: ["role"]
+isOneToOne: false
+      referencedRelation: "paths"
+      referencedColumns: ["role"]
+    },{
+      foreignKeyName: "path_skills_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"paths": {
+                  Row: {
+                    "computed_at": string,"name": string,"pictogram": string,"position": number,"role": string,"seniors": number,"source": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "computed_at"?: string,"name": string,"pictogram": string,"position": number,"role": string,"seniors"?: number,"source"?: string
+                  }
+                  Update: {
+                    "computed_at"?: string,"name"?: string,"pictogram"?: string,"position"?: number,"role"?: string,"seniors"?: number,"source"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"payments": {
                   Row: {
                     "amount": number,"checkout_session_id": string | null,"created_at": string,"currency": string,"gateway": string,"gateway_payment_id": string,"id": string,"invoice_id": string | null,"kind": string,"live": boolean,"method": string,"mor_invoice_ref": string | null,"refunded_amount": number,"status": string,"subject_id": string,"subject_type": Database["public"]['Enums']["billing_subject"],"subscription_id": string | null
@@ -3000,6 +3060,26 @@ isOneToOne: false
       columns: ["university_id"]
 isOneToOne: false
       referencedRelation: "universities"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"proof_tasks": {
+                  Row: {
+                    "active": boolean,"author_id": string | null,"brief": string,"checklist": NonNullable<Json>,"created_at": string,"difficulty": string,"id": string,"skill_id": string,"title": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"author_id"?: string | null,"brief": string,"checklist": NonNullable<Json>,"created_at"?: string,"difficulty": string,"id"?: string,"skill_id": string,"title": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "active"?: boolean,"author_id"?: string | null,"brief"?: string,"checklist"?: NonNullable<Json>,"created_at"?: string,"difficulty"?: string,"id"?: string,"skill_id"?: string,"title"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "proof_tasks_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
       referencedColumns: ["id"]
     }
                   ]
@@ -3815,6 +3895,136 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"swap_notes": {
+                  Row: {
+                    "author_id": string,"body": string,"created_at": string,"decided_at": string | null,"id": string,"session_id": string,"status": string,"swap_id": string,"teacher_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "author_id": string,"body": string,"created_at"?: string,"decided_at"?: string | null,"id"?: string,"session_id": string,"status"?: string,"swap_id": string,"teacher_id": string
+                  }
+                  Update: {
+                    "author_id"?: string,"body"?: string,"created_at"?: string,"decided_at"?: string | null,"id"?: string,"session_id"?: string,"status"?: string,"swap_id"?: string,"teacher_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "swap_notes_session_id_fkey"
+      columns: ["session_id"]
+isOneToOne: true
+      referencedRelation: "swap_sessions"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "swap_notes_swap_id_fkey"
+      columns: ["swap_id"]
+isOneToOne: false
+      referencedRelation: "swaps"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"swap_offers": {
+                  Row: {
+                    "created_at": string,"note": string | null,"skill_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"note"?: string | null,"skill_id": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"note"?: string | null,"skill_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "swap_offers_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"swap_sessions": {
+                  Row: {
+                    "asked_at": string | null,"confirmed_at": string | null,"confirmed_minutes": number | null,"created_at": string,"id": string,"minutes": number,"no_show_reason": string | null,"place": string,"proposed_by": string,"reminded_at": string | null,"responded_at": string | null,"starts_at": string,"status": string,"swap_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "asked_at"?: string | null,"confirmed_at"?: string | null,"confirmed_minutes"?: number | null,"created_at"?: string,"id"?: string,"minutes": number,"no_show_reason"?: string | null,"place": string,"proposed_by": string,"reminded_at"?: string | null,"responded_at"?: string | null,"starts_at": string,"status"?: string,"swap_id": string
+                  }
+                  Update: {
+                    "asked_at"?: string | null,"confirmed_at"?: string | null,"confirmed_minutes"?: number | null,"created_at"?: string,"id"?: string,"minutes"?: number,"no_show_reason"?: string | null,"place"?: string,"proposed_by"?: string,"reminded_at"?: string | null,"responded_at"?: string | null,"starts_at"?: string,"status"?: string,"swap_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "swap_sessions_swap_id_fkey"
+      columns: ["swap_id"]
+isOneToOne: false
+      referencedRelation: "swaps"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"swap_wants": {
+                  Row: {
+                    "created_at": string,"note": string | null,"skill_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"note"?: string | null,"skill_id": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"note"?: string | null,"skill_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "swap_wants_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"swaps": {
+                  Row: {
+                    "close_reason": string | null,"closed_at": string | null,"closed_by": string | null,"decided_at": string | null,"expires_at": string,"id": string,"learner_id": string,"mutual_of": string | null,"note": string | null,"offered_skill_id": string | null,"preferred_times": string | null,"requested_at": string,"skill_id": string,"status": string,"taught_entry_id": string | null,"teacher_id": string,"thread_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "close_reason"?: string | null,"closed_at"?: string | null,"closed_by"?: string | null,"decided_at"?: string | null,"expires_at": string,"id"?: string,"learner_id": string,"mutual_of"?: string | null,"note"?: string | null,"offered_skill_id"?: string | null,"preferred_times"?: string | null,"requested_at"?: string,"skill_id": string,"status"?: string,"taught_entry_id"?: string | null,"teacher_id": string,"thread_id"?: string | null
+                  }
+                  Update: {
+                    "close_reason"?: string | null,"closed_at"?: string | null,"closed_by"?: string | null,"decided_at"?: string | null,"expires_at"?: string,"id"?: string,"learner_id"?: string,"mutual_of"?: string | null,"note"?: string | null,"offered_skill_id"?: string | null,"preferred_times"?: string | null,"requested_at"?: string,"skill_id"?: string,"status"?: string,"taught_entry_id"?: string | null,"teacher_id"?: string,"thread_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "swaps_mutual_of_fkey"
+      columns: ["mutual_of"]
+isOneToOne: false
+      referencedRelation: "swaps"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "swaps_offered_skill_id_fkey"
+      columns: ["offered_skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "swaps_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "swaps_taught_entry_id_fkey"
+      columns: ["taught_entry_id"]
+isOneToOne: false
+      referencedRelation: "record_entries"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "swaps_thread_id_fkey"
+      columns: ["thread_id"]
+isOneToOne: false
+      referencedRelation: "chat_threads"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"sync_jobs": {
                   Row: {
                     "commits_analysed": number,"created_at": string,"error": string | null,"finished_at": string | null,"id": number,"pending": number,"repos_done": number,"repos_total": number,"skills_found": number,"stage": string | null,"status": Database["public"]['Enums']["sync_status"],"trigger": string,"updated_at": string,"user_id": string
@@ -3846,6 +4056,70 @@ isOneToOne: false
       columns: ["university_id"]
 isOneToOne: false
       referencedRelation: "universities"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"task_attempts": {
+                  Row: {
+                    "code_check_id": string | null,"done_at": string | null,"id": string,"note": string | null,"offered_at": string | null,"record_entry_id": string | null,"repo_full_name": string | null,"repo_id": number | null,"round": number,"route": string | null,"skill_id": string,"started_at": string,"status": string,"submitted_at": string | null,"task_id": string,"updated_at": string,"user_id": string,"verified_by": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "code_check_id"?: string | null,"done_at"?: string | null,"id"?: string,"note"?: string | null,"offered_at"?: string | null,"record_entry_id"?: string | null,"repo_full_name"?: string | null,"repo_id"?: number | null,"round"?: number,"route"?: string | null,"skill_id": string,"started_at"?: string,"status"?: string,"submitted_at"?: string | null,"task_id": string,"updated_at"?: string,"user_id": string,"verified_by"?: string | null
+                  }
+                  Update: {
+                    "code_check_id"?: string | null,"done_at"?: string | null,"id"?: string,"note"?: string | null,"offered_at"?: string | null,"record_entry_id"?: string | null,"repo_full_name"?: string | null,"repo_id"?: number | null,"round"?: number,"route"?: string | null,"skill_id"?: string,"started_at"?: string,"status"?: string,"submitted_at"?: string | null,"task_id"?: string,"updated_at"?: string,"user_id"?: string,"verified_by"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "task_attempts_code_check_id_fkey"
+      columns: ["code_check_id"]
+isOneToOne: false
+      referencedRelation: "code_checks"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_attempts_record_entry_id_fkey"
+      columns: ["record_entry_id"]
+isOneToOne: false
+      referencedRelation: "record_entries"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_attempts_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_attempts_task_id_fkey"
+      columns: ["task_id"]
+isOneToOne: false
+      referencedRelation: "proof_tasks"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_attempts_user_id_repo_id_fkey"
+      columns: ["user_id","repo_id"]
+isOneToOne: false
+      referencedRelation: "github_user_repos"
+      referencedColumns: ["user_id","repo_id"]
+    }
+                  ]
+                },"task_reviews": {
+                  Row: {
+                    "attempt_id": string,"checklist": Json | null,"decided_at": string | null,"id": string,"note": string | null,"offered_at": string,"responded_at": string | null,"reviewer_id": string,"round": number,"status": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "attempt_id": string,"checklist"?: Json | null,"decided_at"?: string | null,"id"?: string,"note"?: string | null,"offered_at"?: string,"responded_at"?: string | null,"reviewer_id": string,"round": number,"status"?: string
+                  }
+                  Update: {
+                    "attempt_id"?: string,"checklist"?: Json | null,"decided_at"?: string | null,"id"?: string,"note"?: string | null,"offered_at"?: string,"responded_at"?: string | null,"reviewer_id"?: string,"round"?: number,"status"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "task_reviews_attempt_id_fkey"
+      columns: ["attempt_id"]
+isOneToOne: false
+      referencedRelation: "task_attempts"
       referencedColumns: ["id"]
     }
                   ]
@@ -4321,14 +4595,14 @@ isOneToOne: false
                   ]
                 },"user_skills": {
                   Row: {
-                    "active_days": number,"ai_assisted": boolean,"ai_lines": number,"hits": number,"last_used_at": string | null,"level": number,"lines": number,"peer_verified": boolean,"repos": number,"skill_id": string,"updated_at": string,"user_id": string
+                    "active_days": number,"ai_assisted": boolean,"ai_lines": number,"hits": number,"l2_at": string | null,"last_used_at": string | null,"level": number,"lines": number,"peer_verified": boolean,"repos": number,"skill_id": string,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "active_days"?: number,"ai_assisted"?: boolean,"ai_lines"?: number,"hits"?: number,"last_used_at"?: string | null,"level": number,"lines"?: number,"peer_verified"?: boolean,"repos"?: number,"skill_id": string,"updated_at"?: string,"user_id": string
+                    "active_days"?: number,"ai_assisted"?: boolean,"ai_lines"?: number,"hits"?: number,"l2_at"?: string | null,"last_used_at"?: string | null,"level": number,"lines"?: number,"peer_verified"?: boolean,"repos"?: number,"skill_id": string,"updated_at"?: string,"user_id": string
                   }
                   Update: {
-                    "active_days"?: number,"ai_assisted"?: boolean,"ai_lines"?: number,"hits"?: number,"last_used_at"?: string | null,"level"?: number,"lines"?: number,"peer_verified"?: boolean,"repos"?: number,"skill_id"?: string,"updated_at"?: string,"user_id"?: string
+                    "active_days"?: number,"ai_assisted"?: boolean,"ai_lines"?: number,"hits"?: number,"l2_at"?: string | null,"last_used_at"?: string | null,"level"?: number,"lines"?: number,"peer_verified"?: boolean,"repos"?: number,"skill_id"?: string,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -4663,11 +4937,17 @@ isOneToOne: false
                 }
           }
           Functions: {
-            "accept_fair_invite":
+            "abandon_task":
+{ Args: { "p_attempt": string }; Returns: undefined
+                           },
+"accept_fair_invite":
 { Args: { "p_token_hash": string }; Returns: string
                            },
 "accept_org_invite":
 { Args: { "p_id": string }; Returns: string
+                           },
+"accept_task_review":
+{ Args: { "p_review": string }; Returns: undefined
                            },
 "accept_uni_invite":
 { Args: { "p_id": string }; Returns: string
@@ -4805,6 +5085,12 @@ isOneToOne: false
 "cancel_subscription":
 { Args: { "p_resume"?: boolean,"p_subject": string }; Returns: undefined
                            },
+"cancel_swap_request":
+{ Args: { "p_swap": string }; Returns: undefined
+                           },
+"cancel_swap_session":
+{ Args: { "p_session": string }; Returns: undefined
+                           },
 "check_in_email":
 { Args: { "p_email": string,"p_event": string,"p_session": string }; Returns: Json
                            },
@@ -4825,6 +5111,9 @@ isOneToOne: false
                            },
 "choose_seats":
 { Args: { "p_keep": (string)[] }; Returns: undefined
+                           },
+"choose_task_code_check":
+{ Args: { "p_attempt": string }; Returns: string
                            },
 "claim_appeal":
 { Args: { "p_claim": boolean,"p_id": string }; Returns: undefined
@@ -4906,6 +5195,9 @@ isOneToOne: false
                            },
 "confirm_refund":
 { Args: { "p_payment": string,"p_received": boolean }; Returns: undefined
+                           },
+"confirm_swap_session":
+{ Args: { "p_happened": boolean,"p_minutes": number,"p_note": string,"p_reason": string,"p_session": string }; Returns: undefined
                            },
 "confirm_term":
 { Args: { "p_term": string }; Returns: undefined
@@ -5002,6 +5294,9 @@ isOneToOne: false
 "decide_society":
 { Args: { "p_action": string,"p_reason": string,"p_society": string }; Returns: undefined
                            },
+"decide_swap_note":
+{ Args: { "p_approve": boolean,"p_note": string }; Returns: undefined
+                           },
 "decide_uni_claim":
 { Args: { "p_approve": boolean,"p_id": string,"p_reason": string }; Returns: undefined
                            },
@@ -5010,6 +5305,9 @@ isOneToOne: false
                            },
 "decline_record_mistake":
 { Args: { "p_correction": string,"p_note": string }; Returns: undefined
+                           },
+"decline_task_review":
+{ Args: { "p_review": string }; Returns: undefined
                            },
 "delete_comment":
 { Args: { "p_comment": string }; Returns: undefined
@@ -5079,6 +5377,9 @@ isOneToOne: false
                            },
 "end_supervision":
 { Args: { "p_venture": string }; Returns: undefined
+                           },
+"end_swap":
+{ Args: { "p_swap": string }; Returns: undefined
                            },
 "endorse":
 { Args: { "p_endorsee": string,"p_items": Json,"p_note"?: string,"p_venture": string }; Returns: number
@@ -5160,6 +5461,9 @@ isOneToOne: false
                            },
 "fix_attendance":
 { Args: { "p_event": string,"p_present": boolean,"p_reason": string,"p_session": string,"p_user": string }; Returns: undefined
+                           },
+"follow_path":
+{ Args: { "p_follow": boolean,"p_role": string }; Returns: undefined
                            },
 "follow_society":
 { Args: { "p_on": boolean,"p_society": string }; Returns: undefined
@@ -5310,6 +5614,9 @@ isOneToOne: false
 "lift_sanction":
 { Args: { "p_id": string,"p_reason": string }; Returns: undefined
                            },
+"link_task_repo":
+{ Args: { "p_attempt": string,"p_repo": number }; Returns: undefined
+                           },
 "link_venture_repo":
 { Args: { "p_repo"?: number,"p_venture": string }; Returns: undefined
                            },
@@ -5446,6 +5753,9 @@ isOneToOne: false
 "my_org_invites":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
+"my_paths":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "my_profile_viewers":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
@@ -5479,6 +5789,9 @@ isOneToOne: false
                            },
 "my_society_requests":
 { Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"my_task":
+{ Args: { "p_attempt": string }; Returns: Json
                            },
 "my_threads":
 { Args: Record<PropertyKey, never>; Returns: {
@@ -5643,6 +5956,9 @@ isOneToOne: false
 "ops_plans":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
+"ops_proof_tasks":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "ops_queue":
 { Args: { "p_status"?: string }; Returns: {
               "claimed_by_me": boolean,"claimed_by_name": string,"excerpt": string,"id": string,"last_reported_at": string,"opened_at": string,"owner_name": string,"reasons": (Database["public"]['Enums']["report_reason"])[],"reports": number,"soft_signal": boolean,"status": Database["public"]['Enums']["report_case_status"],"target_type": Database["public"]['Enums']["report_target"]
@@ -5689,6 +6005,9 @@ isOneToOne: false
                            },
 "ops_sanctions":
 { Args: { "p_active"?: boolean }; Returns: Json
+                           },
+"ops_save_proof_task":
+{ Args: { "p": Json,"p_id": string,"p_reason": string }; Returns: string
                            },
 "ops_set_config":
 { Args: { "p_expected": number,"p_key": string,"p_reason": string,"p_value": Json }; Returns: number
@@ -5786,6 +6105,12 @@ isOneToOne: false
 "org_response_stats":
 { Args: { "p_org": string }; Returns: Json
                            },
+"path_skill_drawer":
+{ Args: { "p_role"?: string,"p_skill": string }; Returns: Json
+                           },
+"path_view":
+{ Args: { "p_role": string }; Returns: Json
+                           },
 "payment_details_page":
 { Args: { "p_society": string }; Returns: Json
                            },
@@ -5841,6 +6166,9 @@ isOneToOne: false
                            },
 "propose_payment_method":
 { Args: { "p": Json,"p_society": string }; Returns: string
+                           },
+"propose_swap_session":
+{ Args: { "p_minutes": number,"p_place": string,"p_starts_at": string,"p_swap": string }; Returns: string
                            },
 "public_plans":
 { Args: Record<PropertyKey, never>; Returns: Json
@@ -5978,6 +6306,9 @@ isOneToOne: false
 "request_society":
 { Args: { "p": Json }; Returns: string
                            },
+"request_swap":
+{ Args: { "p_note": string,"p_offer"?: string,"p_skill": string,"p_teacher": string,"p_times": string }; Returns: string
+                           },
 "request_teacher_role":
 { Args: { "p_department": string,"p_title": string }; Returns: Database["public"]['Enums']["teacher_status"]
                            },
@@ -6010,6 +6341,12 @@ isOneToOne: false
                            },
 "respond_supervision":
 { Args: { "p_accept": boolean,"p_venture": string }; Returns: undefined
+                           },
+"respond_swap":
+{ Args: { "p_accept": boolean,"p_swap": string }; Returns: undefined
+                           },
+"respond_swap_session":
+{ Args: { "p_accept": boolean,"p_session": string }; Returns: undefined
                            },
 "respond_team_invite":
 { Args: { "p_accept": boolean,"p_team": string }; Returns: undefined
@@ -6046,6 +6383,9 @@ isOneToOne: false
                            },
 "review_requests_for":
 { Args: { "p_venture": string }; Returns: Json
+                           },
+"review_task":
+{ Args: { "p_confirm": boolean,"p_note": string,"p_review": string,"p_ticks": Json }; Returns: undefined
                            },
 "review_teacher_flag":
 { Args: { "p_id": string,"p_reason": string,"p_upheld": boolean }; Returns: undefined
@@ -6159,6 +6499,12 @@ isOneToOne: false
                            },
 "save_society_event":
 { Args: { "p": Json,"p_society": string }; Returns: string
+                           },
+"save_swap_offer":
+{ Args: { "p_note": string,"p_on": boolean,"p_skill": string }; Returns: undefined
+                           },
+"save_swap_want":
+{ Args: { "p_note": string,"p_on": boolean,"p_skill": string }; Returns: undefined
                            },
 "save_teacher_settings":
 { Args: { "p_cap": number,"p_digest": boolean,"p_opt_in": boolean,"p_skills": (string)[] }; Returns: undefined
@@ -6312,6 +6658,9 @@ isOneToOne: false
 "start_review":
 { Args: { "p_venture": string }; Returns: string
                            },
+"start_task":
+{ Args: { "p_task": string }; Returns: string
+                           },
 "start_trial":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
@@ -6356,6 +6705,9 @@ isOneToOne: false
 "submit_sales_lead":
 { Args: { "p_email": string,"p_kind"?: string,"p_message": string,"p_name": string,"p_organisation": string,"p_role": string }; Returns: string
                            },
+"submit_task":
+{ Args: { "p_attempt": string }; Returns: string
+                           },
 "submit_uni_claim":
 { Args: { "p": Json }; Returns: string
                            },
@@ -6373,11 +6725,26 @@ isOneToOne: false
               "answered_at": string,"can_change": boolean,"dimension": string,"my_answer": boolean,"post_id": string,"public_line": Json,"question": string,"question_id": number
             }[]
                            },
+"swap_notes_for":
+{ Args: { "p_user": string }; Returns: Json
+                           },
+"swap_page":
+{ Args: { "p_swap": string }; Returns: Json
+                           },
+"swap_teachers":
+{ Args: { "p_skill": string }; Returns: Json
+                           },
+"swaps_page":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "talent_explore":
 { Args: { "p_filters": Json,"p_offset"?: number }; Returns: Json
                            },
 "talent_facets":
 { Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"task_review_page":
+{ Args: { "p_review": string }; Returns: Json
                            },
 "teacher_claim_code_check":
 { Args: { "p_claim": boolean,"p_id": string }; Returns: undefined
@@ -6661,7 +7028,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "account_role": "student"|"faculty"|"recruiter"|"university_admin","account_status": "active"|"graduate"|"deleting","anti_gaming_kind": "ring"|"rapid_gain","appeal_decision_type": "sanction"|"report_case"|"cv_revocation"|"credential"|"code_check"|"record_revocation","appeal_status": "pending"|"upheld"|"overturned","application_stage": "applied"|"screening"|"interview"|"offer"|"hired"|"rejected"|"withdrawn","application_status": "pending"|"accepted"|"declined"|"withdrawn"|"closed","billing_subject": "user"|"org"|"university","chat_thread_type": "dm"|"group","code_check_status": "preparing"|"ready"|"in_progress"|"submitted"|"passed"|"failed"|"unavailable"|"expired","competition_status": "draft"|"in_review"|"rejected"|"approved"|"live"|"frozen"|"judged","contact_status": "pending"|"accepted"|"declined"|"expired","contribution_kind": "code"|"design"|"research"|"docs"|"management"|"other","contribution_source": "manual"|"github","credential_status": "pending"|"approved"|"rejected"|"expired","cv_visibility": "private"|"link"|"recruiters","domain_kind": "student"|"faculty"|"both","email_channel": "instant_email"|"digest"|"off","entitlement_kind": "bool"|"int"|"limit"|"enum","fair_queue_status": "waiting"|"called"|"talking"|"done"|"skipped"|"left","fair_status": "draft"|"published"|"cancelled","feedback_status": "received"|"reviewing"|"planned"|"shipped"|"wont_do","feedback_type": "bug"|"idea"|"confusing"|"praise","friend_request_status": "pending"|"accepted"|"declined","github_commit_status": "pending"|"counted"|"held"|"excluded","github_repo_kind": "owned"|"collaborator"|"fork"|"template","grant_source": "plan"|"add_on"|"sponsorship"|"trial"|"admin","idea_audience": "university"|"global","idea_difficulty": "intro"|"intermediate"|"advanced","idea_status": "open"|"closed","job_run_status": "running"|"succeeded"|"failed","job_status": "draft"|"live"|"closed"|"paused","looking_for_option": "internship"|"job"|"teammates"|"project"|"mentorship","org_role": "admin"|"recruiter"|"billing","org_status": "pending"|"verified"|"suspended"|"rejected","post_audience": "university"|"global","post_stage": "seed"|"limited"|"full"|"global_boost"|"demoted"|"held","post_type": "general"|"invite"|"announcement"|"event"|"poll"|"shipped","profile_visibility": "friends"|"university"|"global","ranking_adjustment_kind": "penalty"|"rapid_gain","ranking_tier": "raw"|"spark"|"flare"|"shine"|"radiant"|"luminary","report_case_status": "open"|"dismissed"|"removed"|"warned","report_reason": "spam"|"harassment"|"inappropriate"|"misinformation"|"impersonation"|"other","report_target": "post"|"comment"|"message"|"profile"|"venture"|"society"|"event"|"event_registration"|"record_entry","review_flag_kind": "burst"|"backdating"|"cross_account_duplicate","review_flag_status": "open"|"cleared"|"upheld","review_request_status": "open"|"submitted"|"declined"|"expired"|"cancelled","rsvp_status": "going"|"interested","sales_lead_status": "new"|"contacted"|"won"|"lost","sanction_kind": "warn"|"suspend"|"ban"|"throttle","skill_category": "language"|"framework"|"library"|"tool"|"platform"|"practice","society_role": "president"|"officer"|"member","society_status": "pending"|"more_info"|"verified"|"rejected"|"suspended","staff_role": "moderator"|"trust_reviewer"|"accounts"|"super_admin","subscription_status": "trialing"|"active"|"past_due"|"expired"|"cancelled","supervisor_status": "invited"|"active"|"ended","sync_status": "queued"|"running"|"done"|"failed"|"cancelled","teacher_status": "pending"|"approved"|"revoked","uni_admin_role": "owner"|"admin"|"career"|"coordinator"|"comms","uni_event_scope": "university"|"global","uni_event_type": "talk"|"workshop"|"hackathon"|"competition"|"other"|"social"|"volunteering","uni_hide_status": "hidden"|"restored"|"removed","uni_request_status": "pending"|"approved"|"rejected","venture_invite_status": "pending"|"accepted"|"declined"|"revoked","venture_stage": "idea"|"prototype"|"launched"|"revenue","venture_status": "recruiting"|"in_progress"|"completed"|"abandoned","venture_team_role": "lead"|"developer"|"designer"|"researcher"|"other","venture_type": "project"|"startup","venture_visibility": "public"|"university"|"unlisted"
+            "account_role": "student"|"faculty"|"recruiter"|"university_admin","account_status": "active"|"graduate"|"deleting","anti_gaming_kind": "ring"|"rapid_gain"|"swap_ring"|"swap_repeat","appeal_decision_type": "sanction"|"report_case"|"cv_revocation"|"credential"|"code_check"|"record_revocation","appeal_status": "pending"|"upheld"|"overturned","application_stage": "applied"|"screening"|"interview"|"offer"|"hired"|"rejected"|"withdrawn","application_status": "pending"|"accepted"|"declined"|"withdrawn"|"closed","billing_subject": "user"|"org"|"university","chat_thread_type": "dm"|"group","code_check_status": "preparing"|"ready"|"in_progress"|"submitted"|"passed"|"failed"|"unavailable"|"expired","competition_status": "draft"|"in_review"|"rejected"|"approved"|"live"|"frozen"|"judged","contact_status": "pending"|"accepted"|"declined"|"expired","contribution_kind": "code"|"design"|"research"|"docs"|"management"|"other","contribution_source": "manual"|"github","credential_status": "pending"|"approved"|"rejected"|"expired","cv_visibility": "private"|"link"|"recruiters","domain_kind": "student"|"faculty"|"both","email_channel": "instant_email"|"digest"|"off","entitlement_kind": "bool"|"int"|"limit"|"enum","fair_queue_status": "waiting"|"called"|"talking"|"done"|"skipped"|"left","fair_status": "draft"|"published"|"cancelled","feedback_status": "received"|"reviewing"|"planned"|"shipped"|"wont_do","feedback_type": "bug"|"idea"|"confusing"|"praise","friend_request_status": "pending"|"accepted"|"declined","github_commit_status": "pending"|"counted"|"held"|"excluded","github_repo_kind": "owned"|"collaborator"|"fork"|"template","grant_source": "plan"|"add_on"|"sponsorship"|"trial"|"admin","idea_audience": "university"|"global","idea_difficulty": "intro"|"intermediate"|"advanced","idea_status": "open"|"closed","job_run_status": "running"|"succeeded"|"failed","job_status": "draft"|"live"|"closed"|"paused","looking_for_option": "internship"|"job"|"teammates"|"project"|"mentorship","org_role": "admin"|"recruiter"|"billing","org_status": "pending"|"verified"|"suspended"|"rejected","post_audience": "university"|"global","post_stage": "seed"|"limited"|"full"|"global_boost"|"demoted"|"held","post_type": "general"|"invite"|"announcement"|"event"|"poll"|"shipped","profile_visibility": "friends"|"university"|"global","ranking_adjustment_kind": "penalty"|"rapid_gain","ranking_tier": "raw"|"spark"|"flare"|"shine"|"radiant"|"luminary","report_case_status": "open"|"dismissed"|"removed"|"warned","report_reason": "spam"|"harassment"|"inappropriate"|"misinformation"|"impersonation"|"other","report_target": "post"|"comment"|"message"|"profile"|"venture"|"society"|"event"|"event_registration"|"record_entry"|"swap","review_flag_kind": "burst"|"backdating"|"cross_account_duplicate","review_flag_status": "open"|"cleared"|"upheld","review_request_status": "open"|"submitted"|"declined"|"expired"|"cancelled","rsvp_status": "going"|"interested","sales_lead_status": "new"|"contacted"|"won"|"lost","sanction_kind": "warn"|"suspend"|"ban"|"throttle","skill_category": "language"|"framework"|"library"|"tool"|"platform"|"practice","society_role": "president"|"officer"|"member","society_status": "pending"|"more_info"|"verified"|"rejected"|"suspended","staff_role": "moderator"|"trust_reviewer"|"accounts"|"super_admin","subscription_status": "trialing"|"active"|"past_due"|"expired"|"cancelled","supervisor_status": "invited"|"active"|"ended","sync_status": "queued"|"running"|"done"|"failed"|"cancelled","teacher_status": "pending"|"approved"|"revoked","uni_admin_role": "owner"|"admin"|"career"|"coordinator"|"comms","uni_event_scope": "university"|"global","uni_event_type": "talk"|"workshop"|"hackathon"|"competition"|"other"|"social"|"volunteering","uni_hide_status": "hidden"|"restored"|"removed","uni_request_status": "pending"|"approved"|"rejected","venture_invite_status": "pending"|"accepted"|"declined"|"revoked","venture_stage": "idea"|"prototype"|"launched"|"revenue","venture_status": "recruiting"|"in_progress"|"completed"|"abandoned","venture_team_role": "lead"|"developer"|"designer"|"researcher"|"other","venture_type": "project"|"startup","venture_visibility": "public"|"university"|"unlisted"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -6781,7 +7148,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "account_role": ["student", "faculty", "recruiter", "university_admin"],"account_status": ["active", "graduate", "deleting"],"anti_gaming_kind": ["ring", "rapid_gain"],"appeal_decision_type": ["sanction", "report_case", "cv_revocation", "credential", "code_check", "record_revocation"],"appeal_status": ["pending", "upheld", "overturned"],"application_stage": ["applied", "screening", "interview", "offer", "hired", "rejected", "withdrawn"],"application_status": ["pending", "accepted", "declined", "withdrawn", "closed"],"billing_subject": ["user", "org", "university"],"chat_thread_type": ["dm", "group"],"code_check_status": ["preparing", "ready", "in_progress", "submitted", "passed", "failed", "unavailable", "expired"],"competition_status": ["draft", "in_review", "rejected", "approved", "live", "frozen", "judged"],"contact_status": ["pending", "accepted", "declined", "expired"],"contribution_kind": ["code", "design", "research", "docs", "management", "other"],"contribution_source": ["manual", "github"],"credential_status": ["pending", "approved", "rejected", "expired"],"cv_visibility": ["private", "link", "recruiters"],"domain_kind": ["student", "faculty", "both"],"email_channel": ["instant_email", "digest", "off"],"entitlement_kind": ["bool", "int", "limit", "enum"],"fair_queue_status": ["waiting", "called", "talking", "done", "skipped", "left"],"fair_status": ["draft", "published", "cancelled"],"feedback_status": ["received", "reviewing", "planned", "shipped", "wont_do"],"feedback_type": ["bug", "idea", "confusing", "praise"],"friend_request_status": ["pending", "accepted", "declined"],"github_commit_status": ["pending", "counted", "held", "excluded"],"github_repo_kind": ["owned", "collaborator", "fork", "template"],"grant_source": ["plan", "add_on", "sponsorship", "trial", "admin"],"idea_audience": ["university", "global"],"idea_difficulty": ["intro", "intermediate", "advanced"],"idea_status": ["open", "closed"],"job_run_status": ["running", "succeeded", "failed"],"job_status": ["draft", "live", "closed", "paused"],"looking_for_option": ["internship", "job", "teammates", "project", "mentorship"],"org_role": ["admin", "recruiter", "billing"],"org_status": ["pending", "verified", "suspended", "rejected"],"post_audience": ["university", "global"],"post_stage": ["seed", "limited", "full", "global_boost", "demoted", "held"],"post_type": ["general", "invite", "announcement", "event", "poll", "shipped"],"profile_visibility": ["friends", "university", "global"],"ranking_adjustment_kind": ["penalty", "rapid_gain"],"ranking_tier": ["raw", "spark", "flare", "shine", "radiant", "luminary"],"report_case_status": ["open", "dismissed", "removed", "warned"],"report_reason": ["spam", "harassment", "inappropriate", "misinformation", "impersonation", "other"],"report_target": ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry"],"review_flag_kind": ["burst", "backdating", "cross_account_duplicate"],"review_flag_status": ["open", "cleared", "upheld"],"review_request_status": ["open", "submitted", "declined", "expired", "cancelled"],"rsvp_status": ["going", "interested"],"sales_lead_status": ["new", "contacted", "won", "lost"],"sanction_kind": ["warn", "suspend", "ban", "throttle"],"skill_category": ["language", "framework", "library", "tool", "platform", "practice"],"society_role": ["president", "officer", "member"],"society_status": ["pending", "more_info", "verified", "rejected", "suspended"],"staff_role": ["moderator", "trust_reviewer", "accounts", "super_admin"],"subscription_status": ["trialing", "active", "past_due", "expired", "cancelled"],"supervisor_status": ["invited", "active", "ended"],"sync_status": ["queued", "running", "done", "failed", "cancelled"],"teacher_status": ["pending", "approved", "revoked"],"uni_admin_role": ["owner", "admin", "career", "coordinator", "comms"],"uni_event_scope": ["university", "global"],"uni_event_type": ["talk", "workshop", "hackathon", "competition", "other", "social", "volunteering"],"uni_hide_status": ["hidden", "restored", "removed"],"uni_request_status": ["pending", "approved", "rejected"],"venture_invite_status": ["pending", "accepted", "declined", "revoked"],"venture_stage": ["idea", "prototype", "launched", "revenue"],"venture_status": ["recruiting", "in_progress", "completed", "abandoned"],"venture_team_role": ["lead", "developer", "designer", "researcher", "other"],"venture_type": ["project", "startup"],"venture_visibility": ["public", "university", "unlisted"]
+            "account_role": ["student", "faculty", "recruiter", "university_admin"],"account_status": ["active", "graduate", "deleting"],"anti_gaming_kind": ["ring", "rapid_gain", "swap_ring", "swap_repeat"],"appeal_decision_type": ["sanction", "report_case", "cv_revocation", "credential", "code_check", "record_revocation"],"appeal_status": ["pending", "upheld", "overturned"],"application_stage": ["applied", "screening", "interview", "offer", "hired", "rejected", "withdrawn"],"application_status": ["pending", "accepted", "declined", "withdrawn", "closed"],"billing_subject": ["user", "org", "university"],"chat_thread_type": ["dm", "group"],"code_check_status": ["preparing", "ready", "in_progress", "submitted", "passed", "failed", "unavailable", "expired"],"competition_status": ["draft", "in_review", "rejected", "approved", "live", "frozen", "judged"],"contact_status": ["pending", "accepted", "declined", "expired"],"contribution_kind": ["code", "design", "research", "docs", "management", "other"],"contribution_source": ["manual", "github"],"credential_status": ["pending", "approved", "rejected", "expired"],"cv_visibility": ["private", "link", "recruiters"],"domain_kind": ["student", "faculty", "both"],"email_channel": ["instant_email", "digest", "off"],"entitlement_kind": ["bool", "int", "limit", "enum"],"fair_queue_status": ["waiting", "called", "talking", "done", "skipped", "left"],"fair_status": ["draft", "published", "cancelled"],"feedback_status": ["received", "reviewing", "planned", "shipped", "wont_do"],"feedback_type": ["bug", "idea", "confusing", "praise"],"friend_request_status": ["pending", "accepted", "declined"],"github_commit_status": ["pending", "counted", "held", "excluded"],"github_repo_kind": ["owned", "collaborator", "fork", "template"],"grant_source": ["plan", "add_on", "sponsorship", "trial", "admin"],"idea_audience": ["university", "global"],"idea_difficulty": ["intro", "intermediate", "advanced"],"idea_status": ["open", "closed"],"job_run_status": ["running", "succeeded", "failed"],"job_status": ["draft", "live", "closed", "paused"],"looking_for_option": ["internship", "job", "teammates", "project", "mentorship"],"org_role": ["admin", "recruiter", "billing"],"org_status": ["pending", "verified", "suspended", "rejected"],"post_audience": ["university", "global"],"post_stage": ["seed", "limited", "full", "global_boost", "demoted", "held"],"post_type": ["general", "invite", "announcement", "event", "poll", "shipped"],"profile_visibility": ["friends", "university", "global"],"ranking_adjustment_kind": ["penalty", "rapid_gain"],"ranking_tier": ["raw", "spark", "flare", "shine", "radiant", "luminary"],"report_case_status": ["open", "dismissed", "removed", "warned"],"report_reason": ["spam", "harassment", "inappropriate", "misinformation", "impersonation", "other"],"report_target": ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry", "swap"],"review_flag_kind": ["burst", "backdating", "cross_account_duplicate"],"review_flag_status": ["open", "cleared", "upheld"],"review_request_status": ["open", "submitted", "declined", "expired", "cancelled"],"rsvp_status": ["going", "interested"],"sales_lead_status": ["new", "contacted", "won", "lost"],"sanction_kind": ["warn", "suspend", "ban", "throttle"],"skill_category": ["language", "framework", "library", "tool", "platform", "practice"],"society_role": ["president", "officer", "member"],"society_status": ["pending", "more_info", "verified", "rejected", "suspended"],"staff_role": ["moderator", "trust_reviewer", "accounts", "super_admin"],"subscription_status": ["trialing", "active", "past_due", "expired", "cancelled"],"supervisor_status": ["invited", "active", "ended"],"sync_status": ["queued", "running", "done", "failed", "cancelled"],"teacher_status": ["pending", "approved", "revoked"],"uni_admin_role": ["owner", "admin", "career", "coordinator", "comms"],"uni_event_scope": ["university", "global"],"uni_event_type": ["talk", "workshop", "hackathon", "competition", "other", "social", "volunteering"],"uni_hide_status": ["hidden", "restored", "removed"],"uni_request_status": ["pending", "approved", "rejected"],"venture_invite_status": ["pending", "accepted", "declined", "revoked"],"venture_stage": ["idea", "prototype", "launched", "revenue"],"venture_status": ["recruiting", "in_progress", "completed", "abandoned"],"venture_team_role": ["lead", "developer", "designer", "researcher", "other"],"venture_type": ["project", "startup"],"venture_visibility": ["public", "university", "unlisted"]
           }
         }
 } as const

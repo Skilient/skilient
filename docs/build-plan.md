@@ -262,8 +262,8 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 
 📖 `05-32-paths-and-proof-tasks.md`, `05-05-github-skill-extraction-and-verification.md`, `05-13-ranking-system-formula-v1.md` (anti-gaming)
 
-- [ ] paths (weekly compute, starter path, ladder, skill drawer) and proof tasks (bank in `/ops/config`, repository link, GitHub then peer then code check, Record entry)
-- [ ] skill swap (offers, wants, matches, requests, DM unlock, sessions, learner confirmation, thank-you notes, Taught entry, limits)
+- [x] paths (weekly compute, starter path, ladder, skill drawer) and proof tasks (bank in `/ops/config`, repository link, GitHub then peer then code check, Record entry)
+- [x] skill swap (offers, wants, matches, requests, DM unlock, sessions, learner confirmation, thank-you notes, Taught entry, limits)
 
 ✅ A path switches from starter to data order at 10 seniors · a task proved by GitHub completes without a peer · a peer can't review a friend's task · one confirmed swap issues exactly one Taught entry
 

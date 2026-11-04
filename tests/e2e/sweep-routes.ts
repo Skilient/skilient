@@ -45,7 +45,8 @@ export const SWEEP: SweepRoute[] = [
     "/settings/notifications", "/settings/privacy", "/settings/profile", "/settings/security", "/agreement", "/onboarding",
     "/onboarding/[step]", "/onboarding/done", "/societies", "/societies/new", "/societies/[slug]", "/societies/[slug]/manage",
     "/societies/[slug]/manage/payments", "/societies/[slug]/inductions/new", "/societies/[slug]/inductions/[id]",
-    "/societies/[slug]/events/new", "/events/[id]/ticket", "/events/[id]/manage", "/me/tickets", "/me/record",
+    "/societies/[slug]/events/new", "/events/[id]/ticket", "/events/[id]/manage", "/me/tickets", "/me/record", "/me/paths", "/me/tasks/[id]", "/me/tasks/reviews/[id]",
+    "/swaps", "/swaps/[id]",
   ]),
   ...["jobs", "applications", "competitions", "ideas"].map((tab): SweepRoute => ({ route: "/opportunities/[tab]", role: "student", params: { tab: `=${tab}` } })),
   ...["/profile/[username]", "/profile/[username]/activity", "/profile/[username]/skills", "/profile/[username]/ventures"].map(
@@ -83,7 +84,7 @@ export const SWEEP: SweepRoute[] = [
     "/ops/evidence/flags/[id]", "/ops/evidence/ranking/[id]", "/ops/exam-periods", "/ops/feedback", "/ops/feedback/[id]",
     "/ops/graduation", "/ops/leads", "/ops/metrics", "/ops/orgs", "/ops/orgs/competitions", "/ops/orgs/spam", "/ops/reports",
     "/ops/reports/[id]", "/ops/sanctions", "/ops/societies", "/ops/societies/[id]", "/ops/staff", "/ops/teachers", "/ops/universities",
-    "/ops/universities/claims/[id]", "/ops/users", "/ops/record",
+    "/ops/universities/claims/[id]", "/ops/users", "/ops/record", "/ops/config/tasks",
   ]),
   { route: "/ops/config/[key]", role: "staff", params: { key: "=alerts.limits" } },
   { route: "/ops/users/[id]", role: "staff", params: { id: "studentId" } },

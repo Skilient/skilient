@@ -6,6 +6,7 @@ const TABS = [
   { href: "/ops/config", label: "Settings" },
   { href: "/ops/config/plans", label: "Plan prices" },
   { href: "/ops/config/skills", label: "Skills" },
+  { href: "/ops/config/tasks", label: "Proof tasks" },
 ] as const;
 
 export function ConfigTabs({ current }: { current: (typeof TABS)[number]["href"] }) {

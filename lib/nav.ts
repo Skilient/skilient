@@ -8,6 +8,7 @@ import {
   MagnifyingGlass,
   Medal,
   RocketLaunch,
+  Swap,
   UserCircle,
   UsersFour,
   UsersThree,
@@ -117,6 +118,7 @@ export const PRIMARY_NAV: NavItem[] = [
     levels: [
       { label: "Overview", href: "/me", match: ["/me", "/profile"] },
       { label: "Record", href: "/me/record", keywords: ["transcript", "certificates", "entries", "activities"] },
+      { label: "Paths", href: "/me/paths", match: ["/me/paths", "/me/tasks"], keywords: ["roadmap", "what to learn", "proof tasks", "ladder"] },
       { label: "Skills", href: "/me/skills" },
       { label: "Work", href: "/me/work" },
       { label: "CV", href: "/me/cv", keywords: ["resume", "verified"] },
@@ -132,6 +134,7 @@ export const PRIMARY_NAV: NavItem[] = [
 export const SECONDARY_NAV: NavItem[] = [
   { key: "societies", label: "Societies", description: "Clubs and societies: follow, join, apply.", href: "/societies", icon: UsersFour, match: ["/societies"] },
   { key: "events", label: "Events", description: "Society talks, workshops, hackathons and socials.", href: "/events", icon: CalendarBlank, match: ["/events", "/u"] },
+  { key: "swaps", label: "Skill swap", description: "Teach what you know, learn from seniors at your university.", href: "/swaps", icon: Swap, match: ["/swaps"] },
   { key: "explore", label: "Explore", description: "Find people, ventures and skills.", href: "/explore", icon: MagnifyingGlass, match: ["/explore"] },
   { key: "leaderboard", label: "Leaderboard", description: "Where you stand at your university and overall.", href: "/leaderboard", icon: Medal, match: ["/leaderboard"] },
   { key: "friends", label: "Friends", description: "Your friends and their requests.", href: "/friends", icon: UsersThree, badge: "friends", match: ["/friends"] },

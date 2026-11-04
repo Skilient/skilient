@@ -598,6 +598,8 @@ const STAGES: { [S in Message["stage"]]: (ctx: Ctx, msg: Extract<Message, { stag
       listed.length < MAX_COMMITS,
     ]);
     await db.query("select private.recompute_user_skills($1)", [msg.user_id]);
+    // Proof tasks (PRD 5.32): a submitted task whose repository now shows the skill is done.
+    await db.query("select private.task_github_check($1)", [msg.user_id]);
     const batches: Message[] = [];
     for (let i = 0; i < shas.length; i += EXTRACT_BATCH) {
       batches.push({ stage: "extract", user_id: msg.user_id, job_id: msg.job_id, repo_id: msg.repo_id, shas: shas.slice(i, i + EXTRACT_BATCH) });
@@ -682,6 +684,8 @@ const STAGES: { [S in Message["stage"]]: (ctx: Ctx, msg: Extract<Message, { stag
       if (isNew) recorded++;
     }
     await db.query("select private.recompute_user_skills($1)", [msg.user_id]);
+    // Proof tasks (PRD 5.32): a submitted task whose repository now shows the skill is done.
+    await db.query("select private.task_github_check($1)", [msg.user_id]);
     await advance(ctx, msg.job_id, [], recorded);
   },
 

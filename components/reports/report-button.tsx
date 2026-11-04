@@ -7,7 +7,7 @@ import { Button, Dialog, DialogClose, DialogContent, DialogFooter, Textarea } fr
 import { submitReport } from "@/lib/actions/reports";
 import { cn } from "@/lib/cn";
 
-type Target = "post" | "comment" | "message" | "profile" | "venture" | "society" | "event" | "record_entry";
+type Target = "post" | "comment" | "message" | "profile" | "venture" | "society" | "event" | "record_entry" | "swap";
 type Reason = "spam" | "harassment" | "inappropriate" | "misinformation" | "impersonation" | "other";
 
 const REASONS: { value: Reason; label: string }[] = [
@@ -28,6 +28,7 @@ const NOUNS: Record<Target, string> = {
   society: "society",
   event: "event",
   record_entry: "Record entry",
+  swap: "skill swap",
 };
 
 export interface EarlierMessage {

@@ -49,7 +49,7 @@ test.describe("Portals off", () => {
       expect(res?.status(), path).toBe(404);
     }
     await page.goto("/openings");
-    await expect(page.getByTestId("opening-card-venture_roles")).toBeVisible();
+    await expect(page.getByTestId("openings-grid").getByTestId("opening-card-venture_roles")).toBeVisible();
     for (const c of ["jobs", "contact_requests", "applications", "job_fairs", "competitions"]) await expect(page.getByTestId(`opening-card-${c}`)).toHaveCount(0);
     await page.goto("/settings/privacy");
     await expect(page.getByRole("heading", { level: 1, name: "Privacy" })).toBeVisible();

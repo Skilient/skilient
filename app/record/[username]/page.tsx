@@ -61,7 +61,7 @@ export default async function SharedRecordPage({ params, searchParams }: PagePro
                   date={e.dateLabel}
                   evidence={e.line ? <span>{e.line}</span> : null}
                   action={
-                    <Link href={`/verify/${e.code}` as Route} className="font-mono text-body-sm font-semibold underline underline-offset-4" aria-label={`Verify ${e.title}`}>
+                    <Link href={`/verify/${e.code}` as Route} className="font-mono text-body-sm font-semibold underline underline-offset-4" aria-label={`${formatCode(e.code)}: verify ${e.title}`}>
                       {formatCode(e.code)}
                     </Link>
                   }

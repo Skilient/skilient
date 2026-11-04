@@ -167,7 +167,7 @@ test.describe("The Record", () => {
     const url = (await page.getByTestId("record-new-link-url").textContent())!.trim();
     await visitor.goto(url.replace(/^https?:\/\/[^/]+/, ""));
     await expect(visitor.getByTestId("shared-record")).toContainText(student.fullName);
-    await expect(visitor.getByRole("link", { name: `Verify Build with React ${tag}` })).toBeVisible();
+    await expect(visitor.getByRole("link", { name: new RegExp(`: verify Build with React ${tag}$`) })).toBeVisible();
     await axeBothThemes(visitor, "/record/[username]");
 
     // The transcript PDF verifies every entry on it.

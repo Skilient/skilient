@@ -10,6 +10,8 @@ export interface LadderStep {
   /** Mono evidence: "since 12 Oct", "3 of 5". */
   meta?: ReactNode;
   state: LadderState;
+  /** Replaces the label with a control (a button that opens the step's drawer); it should name the step. */
+  action?: ReactNode;
 }
 
 const STATE_LABEL: Record<LadderState, string> = { done: "done", current: "you are here", next: "next", later: "later" };
@@ -49,7 +51,11 @@ export function Ladder({ steps, label, className }: { steps: LadderStep[]; label
             >
               {s.state === "done" ? <Check weight="bold" className="size-4" /> : i + 1}
             </span>
-            <span className={cn("min-w-0 flex-1 font-semibold", s.state === "later" ? "text-text-secondary" : "text-text-primary")}>{s.label}</span>
+            {s.action ? (
+              <span className="min-w-0 flex-1">{s.action}</span>
+            ) : (
+              <span className={cn("min-w-0 flex-1 font-semibold", s.state === "later" ? "text-text-secondary" : "text-text-primary")}>{s.label}</span>
+            )}
             {s.meta ? <span className="neu-mono text-text-secondary">{s.meta}</span> : null}
             <span className="sr-only">({STATE_LABEL[s.state]})</span>
           </li>

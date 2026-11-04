@@ -35,7 +35,11 @@ export default async function OpsRankingFlagPage({ params }: PageProps<"/ops/evi
           </p>
           <h1 className="font-display text-h1">{RANKING_FLAG_LABELS[f.kind]}</h1>
           <p className="mt-1 text-body text-text-secondary">
-            {f.kind === "ring"
+            {f.kind === "swap_ring"
+              ? "Three people confirmed skill swap sessions with each other in a cycle within 30 days. Flag only: nothing is held while it is open."
+              : f.kind === "swap_repeat"
+                ? "Three or more swap sessions between the same two people were confirmed within 24 hours. Flag only: nothing is held while it is open."
+                : f.kind === "ring"
               ? "Every pair here endorsed each other within 180 days, through ventures with no outside evidence (no completed deliverable, no GitHub commits from the person endorsed). While open, these endorsements count 0."
               : f.gain?.reason === "completions"
                 ? "More than 2 completed ventures in 7 days. While open, the published score and tier stay where they were."

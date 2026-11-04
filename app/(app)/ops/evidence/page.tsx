@@ -194,7 +194,9 @@ async function RankingFlagTable({ status }: { status: "open" | "reviewed" }) {
               <td className="px-3 py-2 align-top tabular-nums">
                 {r.kind === "rapid_gain"
                   ? `+${r.gain?.toFixed(2)} (${r.fromTotal?.toFixed(2)} to ${r.toTotal?.toFixed(2)})`
-                  : `${r.endorsements} ${r.endorsements === 1 ? "endorsement" : "endorsements"}`}
+                  : r.kind === "swap_ring" || r.kind === "swap_repeat"
+                    ? "Skill swap sessions"
+                    : `${r.endorsements} ${r.endorsements === 1 ? "endorsement" : "endorsements"}`}
               </td>
               <td className="px-3 py-2 align-top tabular-nums">{status === "open" ? r.age : r.reviewedLabel}</td>
               <td className="px-3 py-2 align-top">

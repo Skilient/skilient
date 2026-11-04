@@ -5,14 +5,14 @@ import { FormAlert } from "@/components/auth/form-alert";
 import { Button, Textarea } from "@/components/ui";
 import { resolveCase, type CaseAction, type Severity } from "@/lib/actions/ops/moderation";
 
-type Target = "post" | "comment" | "message" | "profile" | "venture" | "society" | "event" | "event_registration" | "record_entry";
+type Target = "post" | "comment" | "message" | "profile" | "venture" | "society" | "event" | "event_registration" | "record_entry" | "swap";
 
 const ACTIONS: { value: CaseAction; label: string; hint: string; targets: Target[] }[] = [
-  { value: "dismiss", label: "Dismiss", hint: "Nothing breaks the guidelines. A held post goes back to the feed.", targets: ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry"] },
+  { value: "dismiss", label: "Dismiss", hint: "Nothing breaks the guidelines. A held post goes back to the feed.", targets: ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry", "swap"] },
   { value: "remove", label: "Remove content", hint: "Hidden from everyone, the owner included; images are deleted. The owner is told why.", targets: ["post", "comment", "message"] },
   { value: "clear_profile", label: "Clear bio and photo", hint: "The profile stays; its bio and photo are removed. The owner is told why.", targets: ["profile"] },
   { value: "unlist", label: "Unlist the venture", hint: "It leaves browse and search; members keep access. The owner is told why.", targets: ["venture"] },
-  { value: "warn", label: "Warn the owner", hint: "The content stays. The owner gets a warning with your reason.", targets: ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry"] },
+  { value: "warn", label: "Warn the owner", hint: "The content stays. The owner gets a warning with your reason.", targets: ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry", "swap"] },
 ];
 
 const SEVERITIES: { value: Severity; label: string; hint: string }[] = [

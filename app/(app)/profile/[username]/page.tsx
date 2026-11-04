@@ -10,6 +10,8 @@ import { getAwardsFor } from "@/lib/data/uni";
 import { getProfile } from "@/lib/data/profiles";
 import { getProfileSkills } from "@/lib/data/skills";
 import { getRecordHighlights } from "@/lib/data/record";
+import { getSwapNotesFor } from "@/lib/data/growth";
+import { hoursLabel } from "@/lib/growth/constants";
 import { ReportButton } from "@/components/reports/report-button";
 import { KIND_LABELS } from "@/lib/record/constants";
 import { formatCode } from "@/supabase/functions/_shared/cv/sign.ts";
@@ -24,12 +26,13 @@ export default async function ProfileOverviewPage({ params }: PageProps<"/profil
   const lookup = await getProfile(username);
   if (lookup.kind !== "full") return null;
   const p = lookup.profile;
-  const [skills, endorsements, credentials, awards, highlights] = await Promise.all([
+  const [skills, endorsements, credentials, awards, highlights, swapNotes] = await Promise.all([
     getProfileSkills(p.userId, p.isOwner),
     getEndorsements(p.userId),
     getProfileCredentials(p.userId),
     getAwardsFor(p.userId).catch(() => []),
     getRecordHighlights(p.userId).catch(() => []),
+    getSwapNotesFor(p.userId).catch(() => ({ minutes: 0, notes: [] })),
   ]);
   const openTo = LOOKING_FOR.filter((o) => p.lookingFor.includes(o.value)).map((o) => o.label);
   const details = [
@@ -101,6 +104,24 @@ export default async function ProfileOverviewPage({ params }: PageProps<"/profil
                   </span>
                 }
               />
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {swapNotes.notes.length ? (
+        <section aria-labelledby="swap-notes" data-testid="swap-notes">
+          <h2 id="swap-notes" className="mb-1 text-h4">
+            Thank-you notes
+          </h2>
+          <p className="mb-2 neu-mono text-text-secondary">{hoursLabel(swapNotes.minutes)} taught in skill swaps</p>
+          <ul className="flex flex-col gap-2">
+            {swapNotes.notes.map((n) => (
+              <li key={`${n.author}-${n.on}-${n.body}`} className="neu-well p-3">
+                <p className="text-body-sm">&ldquo;{n.body}&rdquo;</p>
+                <p className="text-caption text-text-secondary">
+                  {n.author} · {n.skill} · {n.on}
+                </p>
+              </li>
             ))}
           </ul>
         </section>

@@ -65,7 +65,7 @@ export function Turnstile({
         widgetId.current = window.turnstile.render(container.current, {
           sitekey: siteKey,
           action,
-          appearance: "interaction-only",
+          appearance: "always",
           theme: "auto",
           callback: (token: string) => callback.current(token),
           "expired-callback": () => callback.current(null),

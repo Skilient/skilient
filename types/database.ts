@@ -397,14 +397,14 @@ isOneToOne: false
                   ]
                 },"chat_messages": {
                   Row: {
-                    "body": string,"created_at": string,"deleted_at": string | null,"edited_at": string | null,"id": string,"link_url": string | null,"media_height": number | null,"media_path": string | null,"media_width": number | null,"removed_by": string | null,"reply_to_id": string | null,"search": unknown,"sender_id": string,"thread_id": string
+                    "body": string,"created_at": string,"deleted_at": string | null,"edited_at": string | null,"id": string,"link_url": string | null,"media_height": number | null,"media_path": string | null,"media_width": number | null,"removed_by": string | null,"reply_to_id": string | null,"search": unknown,"sender_id": string,"shared": boolean,"shared_post_id": string | null,"thread_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "body"?: string,"created_at"?: string,"deleted_at"?: string | null,"edited_at"?: string | null,"id"?: string,"link_url"?: string | null,"media_height"?: number | null,"media_path"?: string | null,"media_width"?: number | null,"removed_by"?: string | null,"reply_to_id"?: string | null,"search"?: never,"sender_id": string,"thread_id": string
+                    "body"?: string,"created_at"?: string,"deleted_at"?: string | null,"edited_at"?: string | null,"id"?: string,"link_url"?: string | null,"media_height"?: number | null,"media_path"?: string | null,"media_width"?: number | null,"removed_by"?: string | null,"reply_to_id"?: string | null,"search"?: never,"sender_id": string,"shared"?: boolean,"shared_post_id"?: string | null,"thread_id": string
                   }
                   Update: {
-                    "body"?: string,"created_at"?: string,"deleted_at"?: string | null,"edited_at"?: string | null,"id"?: string,"link_url"?: string | null,"media_height"?: number | null,"media_path"?: string | null,"media_width"?: number | null,"removed_by"?: string | null,"reply_to_id"?: string | null,"search"?: never,"sender_id"?: string,"thread_id"?: string
+                    "body"?: string,"created_at"?: string,"deleted_at"?: string | null,"edited_at"?: string | null,"id"?: string,"link_url"?: string | null,"media_height"?: number | null,"media_path"?: string | null,"media_width"?: number | null,"removed_by"?: string | null,"reply_to_id"?: string | null,"search"?: never,"sender_id"?: string,"shared"?: boolean,"shared_post_id"?: string | null,"thread_id"?: string
                   }
                   Relationships: [
                     {
@@ -412,6 +412,12 @@ isOneToOne: false
       columns: ["reply_to_id"]
 isOneToOne: false
       referencedRelation: "chat_messages"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "chat_messages_shared_post_id_fkey"
+      columns: ["shared_post_id"]
+isOneToOne: false
+      referencedRelation: "posts"
       referencedColumns: ["id"]
     },{
       foreignKeyName: "chat_messages_thread_id_fkey"
@@ -919,14 +925,14 @@ isOneToOne: false
                   ]
                 },"cv_settings": {
                   Row: {
-                    "sections": (string)[],"show_email": boolean,"show_percentile": boolean | null,"updated_at": string,"user_id": string,"visibility": Database["public"]['Enums']["cv_visibility"]
+                    "record_entries": (string)[],"sections": (string)[],"show_email": boolean,"show_percentile": boolean | null,"updated_at": string,"user_id": string,"visibility": Database["public"]['Enums']["cv_visibility"]
                   }
                   ComputedFields: never
                   Insert: {
-                    "sections"?: (string)[],"show_email"?: boolean,"show_percentile"?: boolean | null,"updated_at"?: string,"user_id": string,"visibility"?: Database["public"]['Enums']["cv_visibility"]
+                    "record_entries"?: (string)[],"sections"?: (string)[],"show_email"?: boolean,"show_percentile"?: boolean | null,"updated_at"?: string,"user_id": string,"visibility"?: Database["public"]['Enums']["cv_visibility"]
                   }
                   Update: {
-                    "sections"?: (string)[],"show_email"?: boolean,"show_percentile"?: boolean | null,"updated_at"?: string,"user_id"?: string,"visibility"?: Database["public"]['Enums']["cv_visibility"]
+                    "record_entries"?: (string)[],"sections"?: (string)[],"show_email"?: boolean,"show_percentile"?: boolean | null,"updated_at"?: string,"user_id"?: string,"visibility"?: Database["public"]['Enums']["cv_visibility"]
                   }
                   Relationships: [
                     
@@ -1129,16 +1135,212 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
-                },"event_registrations": {
+                },"event_checkins": {
                   Row: {
-                    "cancelled_at": string | null,"checked_in_at": string | null,"event_id": string,"registered_at": string,"reminded_at": string | null,"user_id": string
+                    "checked_in_at": string,"checked_in_by": string | null,"email_attendee_id": string | null,"event_id": string,"id": string,"method": string,"reason": string | null,"removed_at": string | null,"removed_by": string | null,"removed_reason": string | null,"session_id": string,"user_id": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "cancelled_at"?: string | null,"checked_in_at"?: string | null,"event_id": string,"registered_at"?: string,"reminded_at"?: string | null,"user_id": string
+                    "checked_in_at"?: string,"checked_in_by"?: string | null,"email_attendee_id"?: string | null,"event_id": string,"id"?: string,"method": string,"reason"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"removed_reason"?: string | null,"session_id": string,"user_id"?: string | null
                   }
                   Update: {
-                    "cancelled_at"?: string | null,"checked_in_at"?: string | null,"event_id"?: string,"registered_at"?: string,"reminded_at"?: string | null,"user_id"?: string
+                    "checked_in_at"?: string,"checked_in_by"?: string | null,"email_attendee_id"?: string | null,"event_id"?: string,"id"?: string,"method"?: string,"reason"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"removed_reason"?: string | null,"session_id"?: string,"user_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_checkins_email_attendee_id_fkey"
+      columns: ["email_attendee_id"]
+isOneToOne: false
+      referencedRelation: "event_email_attendees"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "event_checkins_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "event_checkins_session_id_fkey"
+      columns: ["session_id"]
+isOneToOne: false
+      referencedRelation: "event_sessions"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_cohosts": {
+                  Row: {
+                    "created_at": string,"event_id": string,"society_id": string,"status": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"event_id": string,"society_id": string,"status"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"event_id"?: string,"society_id"?: string,"status"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_cohosts_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "event_cohosts_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_email_attendees": {
+                  Row: {
+                    "added_by": string | null,"claimed_by": string | null,"created_at": string,"email": string,"event_id": string,"id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "added_by"?: string | null,"claimed_by"?: string | null,"created_at"?: string,"email": string,"event_id": string,"id"?: string
+                  }
+                  Update: {
+                    "added_by"?: string | null,"claimed_by"?: string | null,"created_at"?: string,"email"?: string,"event_id"?: string,"id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_email_attendees_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_feedback": {
+                  Row: {
+                    "comment": string | null,"created_at": string,"event_id": string,"rating": number,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "comment"?: string | null,"created_at"?: string,"event_id": string,"rating": number,"user_id": string
+                  }
+                  Update: {
+                    "comment"?: string | null,"created_at"?: string,"event_id"?: string,"rating"?: number,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_feedback_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_issuances": {
+                  Row: {
+                    "auto": boolean,"event_id": string,"issued_at": string,"issued_by": string | null,"preview": NonNullable<Json>,"status": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "auto"?: boolean,"event_id": string,"issued_at"?: string,"issued_by"?: string | null,"preview": NonNullable<Json>,"status"?: string
+                  }
+                  Update: {
+                    "auto"?: boolean,"event_id"?: string,"issued_at"?: string,"issued_by"?: string | null,"preview"?: NonNullable<Json>,"status"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_issuances_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: true
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_messages": {
+                  Row: {
+                    "body": string,"created_at": string,"event_id": string,"id": string,"sender_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body": string,"created_at"?: string,"event_id": string,"id"?: string,"sender_id"?: string | null
+                  }
+                  Update: {
+                    "body"?: string,"created_at"?: string,"event_id"?: string,"id"?: string,"sender_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_messages_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_payments": {
+                  Row: {
+                    "amount_pkr": number,"case_id": string | null,"created_at": string,"decided_at": string | null,"decided_by": string | null,"event_id": string,"id": string,"issue_raised_at": string | null,"receipt_deleted_at": string | null,"receipt_hash": string | null,"receipt_path": string | null,"receipt_phash": string | null,"reference_code": string,"refund_answered_at": string | null,"refund_note": string | null,"refund_requested_at": string | null,"refund_sent_at": string | null,"refund_status": string | null,"registration_id": string,"reject_reason": string | null,"society_id": string,"status": string,"transaction_id": string | null,"uploaded_at": string | null,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "amount_pkr": number,"case_id"?: string | null,"created_at"?: string,"decided_at"?: string | null,"decided_by"?: string | null,"event_id": string,"id"?: string,"issue_raised_at"?: string | null,"receipt_deleted_at"?: string | null,"receipt_hash"?: string | null,"receipt_path"?: string | null,"receipt_phash"?: string | null,"reference_code": string,"refund_answered_at"?: string | null,"refund_note"?: string | null,"refund_requested_at"?: string | null,"refund_sent_at"?: string | null,"refund_status"?: string | null,"registration_id": string,"reject_reason"?: string | null,"society_id": string,"status"?: string,"transaction_id"?: string | null,"uploaded_at"?: string | null,"user_id": string
+                  }
+                  Update: {
+                    "amount_pkr"?: number,"case_id"?: string | null,"created_at"?: string,"decided_at"?: string | null,"decided_by"?: string | null,"event_id"?: string,"id"?: string,"issue_raised_at"?: string | null,"receipt_deleted_at"?: string | null,"receipt_hash"?: string | null,"receipt_path"?: string | null,"receipt_phash"?: string | null,"reference_code"?: string,"refund_answered_at"?: string | null,"refund_note"?: string | null,"refund_requested_at"?: string | null,"refund_sent_at"?: string | null,"refund_status"?: string | null,"registration_id"?: string,"reject_reason"?: string | null,"society_id"?: string,"status"?: string,"transaction_id"?: string | null,"uploaded_at"?: string | null,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_payments_case_id_fkey"
+      columns: ["case_id"]
+isOneToOne: false
+      referencedRelation: "report_cases"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "event_payments_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "event_payments_registration_id_fkey"
+      columns: ["registration_id"]
+isOneToOne: true
+      referencedRelation: "event_registrations"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "event_payments_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_questions": {
+                  Row: {
+                    "event_id": string,"kind": string,"label": string,"options": (string)[],"position": number,"required": boolean
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "event_id": string,"kind": string,"label": string,"options"?: (string)[],"position": number,"required"?: boolean
+                  }
+                  Update: {
+                    "event_id"?: string,"kind"?: string,"label"?: string,"options"?: (string)[],"position"?: number,"required"?: boolean
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_questions_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_registrations": {
+                  Row: {
+                    "added_by": string | null,"answers": NonNullable<Json>,"cancelled_at": string | null,"checked_in_at": string | null,"decided_at": string | null,"event_id": string,"hold_expires_at": string | null,"id": string,"registered_at": string,"reminded_1h_at": string | null,"reminded_at": string | null,"status": string,"team_id": string | null,"ticket_type_id": string | null,"user_id": string,"waitlist_position": number | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "added_by"?: string | null,"answers"?: NonNullable<Json>,"cancelled_at"?: string | null,"checked_in_at"?: string | null,"decided_at"?: string | null,"event_id": string,"hold_expires_at"?: string | null,"id"?: string,"registered_at"?: string,"reminded_1h_at"?: string | null,"reminded_at"?: string | null,"status"?: string,"team_id"?: string | null,"ticket_type_id"?: string | null,"user_id": string,"waitlist_position"?: number | null
+                  }
+                  Update: {
+                    "added_by"?: string | null,"answers"?: NonNullable<Json>,"cancelled_at"?: string | null,"checked_in_at"?: string | null,"decided_at"?: string | null,"event_id"?: string,"hold_expires_at"?: string | null,"id"?: string,"registered_at"?: string,"reminded_1h_at"?: string | null,"reminded_at"?: string | null,"status"?: string,"team_id"?: string | null,"ticket_type_id"?: string | null,"user_id"?: string,"waitlist_position"?: number | null
                   }
                   Relationships: [
                     {
@@ -1146,6 +1348,44 @@ isOneToOne: false
       columns: ["event_id"]
 isOneToOne: false
       referencedRelation: "events"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "event_registrations_team_id_fkey"
+      columns: ["team_id"]
+isOneToOne: false
+      referencedRelation: "event_teams"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "event_registrations_ticket_type_id_fkey"
+      columns: ["ticket_type_id"]
+isOneToOne: false
+      referencedRelation: "event_ticket_types"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_results": {
+                  Row: {
+                    "created_at": string,"event_id": string,"id": string,"label": string | null,"place": number,"set_by": string | null,"team_id": string | null,"user_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"event_id": string,"id"?: string,"label"?: string | null,"place": number,"set_by"?: string | null,"team_id"?: string | null,"user_id"?: string | null
+                  }
+                  Update: {
+                    "created_at"?: string,"event_id"?: string,"id"?: string,"label"?: string | null,"place"?: number,"set_by"?: string | null,"team_id"?: string | null,"user_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_results_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "event_results_team_id_fkey"
+      columns: ["team_id"]
+isOneToOne: false
+      referencedRelation: "event_teams"
       referencedColumns: ["id"]
     }
                   ]
@@ -1169,19 +1409,111 @@ isOneToOne: false
       referencedColumns: ["post_id"]
     }
                   ]
-                },"events": {
+                },"event_sessions": {
                   Row: {
-                    "cancelled_at": string | null,"capacity": number | null,"created_at": string,"created_by": string | null,"description": string | null,"ends_at": string,"id": string,"link": string | null,"location": string | null,"scope": Database["public"]['Enums']["uni_event_scope"],"starts_at": string,"title": string,"type": Database["public"]['Enums']["uni_event_type"],"university_id": string,"updated_at": string
+                    "ends_at": string,"event_id": string,"id": string,"position": number,"starts_at": string,"title": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "cancelled_at"?: string | null,"capacity"?: number | null,"created_at"?: string,"created_by"?: string | null,"description"?: string | null,"ends_at": string,"id"?: string,"link"?: string | null,"location"?: string | null,"scope"?: Database["public"]['Enums']["uni_event_scope"],"starts_at": string,"title": string,"type": Database["public"]['Enums']["uni_event_type"],"university_id": string,"updated_at"?: string
+                    "ends_at": string,"event_id": string,"id"?: string,"position": number,"starts_at": string,"title"?: string | null
                   }
                   Update: {
-                    "cancelled_at"?: string | null,"capacity"?: number | null,"created_at"?: string,"created_by"?: string | null,"description"?: string | null,"ends_at"?: string,"id"?: string,"link"?: string | null,"location"?: string | null,"scope"?: Database["public"]['Enums']["uni_event_scope"],"starts_at"?: string,"title"?: string,"type"?: Database["public"]['Enums']["uni_event_type"],"university_id"?: string,"updated_at"?: string
+                    "ends_at"?: string,"event_id"?: string,"id"?: string,"position"?: number,"starts_at"?: string,"title"?: string | null
                   }
                   Relationships: [
                     {
+      foreignKeyName: "event_sessions_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_staff": {
+                  Row: {
+                    "added_by": string | null,"created_at": string,"event_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "added_by"?: string | null,"created_at"?: string,"event_id": string,"user_id": string
+                  }
+                  Update: {
+                    "added_by"?: string | null,"created_at"?: string,"event_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_staff_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_teams": {
+                  Row: {
+                    "captain_id": string | null,"code": string,"created_at": string,"event_id": string,"id": string,"name": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "captain_id"?: string | null,"code": string,"created_at"?: string,"event_id": string,"id"?: string,"name": string
+                  }
+                  Update: {
+                    "captain_id"?: string | null,"code"?: string,"created_at"?: string,"event_id"?: string,"id"?: string,"name"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_teams_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"event_ticket_types": {
+                  Row: {
+                    "capacity": number,"event_id": string,"id": string,"name": string,"position": number,"price_pkr": number | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "capacity": number,"event_id": string,"id"?: string,"name": string,"position": number,"price_pkr"?: number | null
+                  }
+                  Update: {
+                    "capacity"?: number,"event_id"?: string,"id"?: string,"name"?: string,"position"?: number,"price_pkr"?: number | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "event_ticket_types_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"events": {
+                  Row: {
+                    "approval_mode": string,"cancel_reason": string | null,"cancelled_at": string | null,"capacity": number | null,"completed_min": number | null,"cover_path": string | null,"created_at": string,"created_by": string | null,"description": string | null,"eligibility": NonNullable<Json>,"ends_at": string,"id": string,"link": string | null,"location": string | null,"post_id": string | null,"published_at": string | null,"record_kinds": (string)[],"refund_days": number | null,"refund_policy": string,"registration_closes_at": string | null,"registration_opens_at": string | null,"scope": Database["public"]['Enums']["uni_event_scope"],"society_id": string | null,"starts_at": string,"status": string,"team_max": number | null,"team_min": number | null,"title": string,"type": Database["public"]['Enums']["uni_event_type"],"university_id": string,"updated_at": string,"volunteer_hours": boolean
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "approval_mode"?: string,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"capacity"?: number | null,"completed_min"?: number | null,"cover_path"?: string | null,"created_at"?: string,"created_by"?: string | null,"description"?: string | null,"eligibility"?: NonNullable<Json>,"ends_at": string,"id"?: string,"link"?: string | null,"location"?: string | null,"post_id"?: string | null,"published_at"?: string | null,"record_kinds"?: (string)[],"refund_days"?: number | null,"refund_policy"?: string,"registration_closes_at"?: string | null,"registration_opens_at"?: string | null,"scope"?: Database["public"]['Enums']["uni_event_scope"],"society_id"?: string | null,"starts_at": string,"status"?: string,"team_max"?: number | null,"team_min"?: number | null,"title": string,"type": Database["public"]['Enums']["uni_event_type"],"university_id": string,"updated_at"?: string,"volunteer_hours"?: boolean
+                  }
+                  Update: {
+                    "approval_mode"?: string,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"capacity"?: number | null,"completed_min"?: number | null,"cover_path"?: string | null,"created_at"?: string,"created_by"?: string | null,"description"?: string | null,"eligibility"?: NonNullable<Json>,"ends_at"?: string,"id"?: string,"link"?: string | null,"location"?: string | null,"post_id"?: string | null,"published_at"?: string | null,"record_kinds"?: (string)[],"refund_days"?: number | null,"refund_policy"?: string,"registration_closes_at"?: string | null,"registration_opens_at"?: string | null,"scope"?: Database["public"]['Enums']["uni_event_scope"],"society_id"?: string | null,"starts_at"?: string,"status"?: string,"team_max"?: number | null,"team_min"?: number | null,"title"?: string,"type"?: Database["public"]['Enums']["uni_event_type"],"university_id"?: string,"updated_at"?: string,"volunteer_hours"?: boolean
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "events_post_id_fkey"
+      columns: ["post_id"]
+isOneToOne: false
+      referencedRelation: "posts"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "events_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "events_university_id_fkey"
       columns: ["university_id"]
 isOneToOne: false
@@ -1575,6 +1907,92 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"induction_applications": {
+                  Row: {
+                    "answers": NonNullable<Json>,"applicant_id": string,"created_at": string,"decided_at": string | null,"decided_by": string | null,"id": string,"note": string | null,"role_id": string,"round_id": string,"status": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "answers"?: NonNullable<Json>,"applicant_id": string,"created_at"?: string,"decided_at"?: string | null,"decided_by"?: string | null,"id"?: string,"note"?: string | null,"role_id": string,"round_id": string,"status"?: string
+                  }
+                  Update: {
+                    "answers"?: NonNullable<Json>,"applicant_id"?: string,"created_at"?: string,"decided_at"?: string | null,"decided_by"?: string | null,"id"?: string,"note"?: string | null,"role_id"?: string,"round_id"?: string,"status"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "induction_applications_role_id_fkey"
+      columns: ["role_id"]
+isOneToOne: false
+      referencedRelation: "induction_roles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "induction_applications_round_id_fkey"
+      columns: ["round_id"]
+isOneToOne: false
+      referencedRelation: "induction_rounds"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"induction_questions": {
+                  Row: {
+                    "body": string,"position": number,"round_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body": string,"position": number,"round_id": string
+                  }
+                  Update: {
+                    "body"?: string,"position"?: number,"round_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "induction_questions_round_id_fkey"
+      columns: ["round_id"]
+isOneToOne: false
+      referencedRelation: "induction_rounds"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"induction_roles": {
+                  Row: {
+                    "filled": number,"id": string,"position": number,"round_id": string,"seats": number,"skill_ids": (string)[],"title": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "filled"?: number,"id"?: string,"position"?: number,"round_id": string,"seats": number,"skill_ids"?: (string)[],"title": string
+                  }
+                  Update: {
+                    "filled"?: number,"id"?: string,"position"?: number,"round_id"?: string,"seats"?: number,"skill_ids"?: (string)[],"title"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "induction_roles_round_id_fkey"
+      columns: ["round_id"]
+isOneToOne: false
+      referencedRelation: "induction_rounds"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"induction_rounds": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"deadline": string,"description": string | null,"id": string,"published_at": string | null,"society_id": string,"status": string,"title": string,"undecided_closed_at": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"deadline": string,"description"?: string | null,"id"?: string,"published_at"?: string | null,"society_id": string,"status"?: string,"title": string,"undecided_closed_at"?: string | null
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"deadline"?: string,"description"?: string | null,"id"?: string,"published_at"?: string | null,"society_id"?: string,"status"?: string,"title"?: string,"undecided_closed_at"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "induction_rounds_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"invoice_counters": {
                   Row: {
                     "last": number,"series": string,"year": number
@@ -1947,14 +2365,14 @@ isOneToOne: false
                   ]
                 },"notification_categories": {
                   Row: {
-                    "allow_instant": boolean,"category": string,"default_channel": Database["public"]['Enums']["email_channel"],"description": string,"label": string,"position": number
+                    "allow_instant": boolean,"category": string,"default_channel": Database["public"]['Enums']["email_channel"],"description": string,"label": string,"position": number,"push_default": boolean | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "allow_instant"?: boolean,"category": string,"default_channel": Database["public"]['Enums']["email_channel"],"description": string,"label": string,"position": number
+                    "allow_instant"?: boolean,"category": string,"default_channel": Database["public"]['Enums']["email_channel"],"description": string,"label": string,"position": number,"push_default"?: boolean | null
                   }
                   Update: {
-                    "allow_instant"?: boolean,"category"?: string,"default_channel"?: Database["public"]['Enums']["email_channel"],"description"?: string,"label"?: string,"position"?: number
+                    "allow_instant"?: boolean,"category"?: string,"default_channel"?: Database["public"]['Enums']["email_channel"],"description"?: string,"label"?: string,"position"?: number,"push_default"?: boolean | null
                   }
                   Relationships: [
                     
@@ -1979,16 +2397,36 @@ isOneToOne: false
       referencedColumns: ["category"]
     }
                   ]
-                },"notification_types": {
+                },"notification_push_prefs": {
                   Row: {
-                    "category": string,"emailed": boolean,"type": string
+                    "category": string,"push": boolean,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "category": string,"emailed"?: boolean,"type": string
+                    "category": string,"push": boolean,"updated_at"?: string,"user_id": string
                   }
                   Update: {
-                    "category"?: string,"emailed"?: boolean,"type"?: string
+                    "category"?: string,"push"?: boolean,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notification_push_prefs_category_fkey"
+      columns: ["category"]
+isOneToOne: false
+      referencedRelation: "notification_categories"
+      referencedColumns: ["category"]
+    }
+                  ]
+                },"notification_types": {
+                  Row: {
+                    "category": string,"emailed": boolean,"pushed": boolean,"type": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "category": string,"emailed"?: boolean,"pushed"?: boolean,"type": string
+                  }
+                  Update: {
+                    "category"?: string,"emailed"?: boolean,"pushed"?: boolean,"type"?: string
                   }
                   Relationships: [
                     {
@@ -2032,6 +2470,40 @@ isOneToOne: false
                   }
                   Relationships: [
                     
+                  ]
+                },"openings_seen": {
+                  Row: {
+                    "category": string,"seen_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "category": string,"seen_at"?: string,"user_id": string
+                  }
+                  Update: {
+                    "category"?: string,"seen_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"openings_weekly": {
+                  Row: {
+                    "built_at": string,"events": (string)[],"inductions": (string)[],"posts": NonNullable<Json>,"university_id": string,"ventures": (string)[],"week_start": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "built_at"?: string,"events"?: (string)[],"inductions"?: (string)[],"posts"?: NonNullable<Json>,"university_id": string,"ventures"?: (string)[],"week_start": string
+                  }
+                  Update: {
+                    "built_at"?: string,"events"?: (string)[],"inductions"?: (string)[],"posts"?: NonNullable<Json>,"university_id"?: string,"ventures"?: (string)[],"week_start"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "openings_weekly_university_id_fkey"
+      columns: ["university_id"]
+isOneToOne: true
+      referencedRelation: "universities"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"ops_audit_log": {
                   Row: {
@@ -2151,6 +2623,66 @@ isOneToOne: false
                   }
                   Update: {
                     "about"?: string | null,"billing_address"?: string | null,"billing_ntn"?: string | null,"city"?: string,"created_at"?: string,"created_by"?: string | null,"domain"?: string,"id"?: string,"industry"?: string,"linkedin_url"?: string | null,"locations"?: (string)[],"name"?: string,"province"?: string | null,"registration_doc_at"?: string | null,"registration_doc_bytes"?: number | null,"registration_doc_path"?: string | null,"registration_number"?: string | null,"signer_role"?: string,"size"?: string,"slug"?: string,"status"?: Database["public"]['Enums']["org_status"],"status_reason"?: string | null,"updated_at"?: string,"verified_at"?: string | null,"verified_by"?: string | null,"website"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"path_follows": {
+                  Row: {
+                    "created_at": string,"role": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"role": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"role"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "path_follows_role_fkey"
+      columns: ["role"]
+isOneToOne: false
+      referencedRelation: "paths"
+      referencedColumns: ["role"]
+    }
+                  ]
+                },"path_skills": {
+                  Row: {
+                    "after_days": number | null,"position": number,"role": string,"skill_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "after_days"?: number | null,"position": number,"role": string,"skill_id": string
+                  }
+                  Update: {
+                    "after_days"?: number | null,"position"?: number,"role"?: string,"skill_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "path_skills_role_fkey"
+      columns: ["role"]
+isOneToOne: false
+      referencedRelation: "paths"
+      referencedColumns: ["role"]
+    },{
+      foreignKeyName: "path_skills_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"paths": {
+                  Row: {
+                    "computed_at": string,"name": string,"pictogram": string,"position": number,"role": string,"seniors": number,"source": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "computed_at"?: string,"name": string,"pictogram": string,"position": number,"role": string,"seniors"?: number,"source"?: string
+                  }
+                  Update: {
+                    "computed_at"?: string,"name"?: string,"pictogram"?: string,"position"?: number,"role"?: string,"seniors"?: number,"source"?: string
                   }
                   Relationships: [
                     
@@ -2449,17 +2981,23 @@ isOneToOne: false
                   ]
                 },"posts": {
                   Row: {
-                    "audience": Database["public"]['Enums']["post_audience"],"author_id": string,"body": string,"created_at": string,"edited_at": string | null,"hidden_by_university_at": string | null,"id": string,"link_url": string | null,"pinned_until": string | null,"removed_at": string | null,"removed_by": string | null,"stage": Database["public"]['Enums']["post_stage"],"stage_changed_at": string,"type": Database["public"]['Enums']["post_type"],"university_id": string | null,"venture_id": string | null
+                    "audience": Database["public"]['Enums']["post_audience"],"author_id": string,"body": string,"created_at": string,"edited_at": string | null,"hidden_by_university_at": string | null,"id": string,"link_url": string | null,"pinned_until": string | null,"removed_at": string | null,"removed_by": string | null,"society_id": string | null,"stage": Database["public"]['Enums']["post_stage"],"stage_changed_at": string,"type": Database["public"]['Enums']["post_type"],"university_id": string | null,"venture_id": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "audience": Database["public"]['Enums']["post_audience"],"author_id": string,"body": string,"created_at"?: string,"edited_at"?: string | null,"hidden_by_university_at"?: string | null,"id"?: string,"link_url"?: string | null,"pinned_until"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"stage"?: Database["public"]['Enums']["post_stage"],"stage_changed_at"?: string,"type": Database["public"]['Enums']["post_type"],"university_id"?: string | null,"venture_id"?: string | null
+                    "audience": Database["public"]['Enums']["post_audience"],"author_id": string,"body": string,"created_at"?: string,"edited_at"?: string | null,"hidden_by_university_at"?: string | null,"id"?: string,"link_url"?: string | null,"pinned_until"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"society_id"?: string | null,"stage"?: Database["public"]['Enums']["post_stage"],"stage_changed_at"?: string,"type": Database["public"]['Enums']["post_type"],"university_id"?: string | null,"venture_id"?: string | null
                   }
                   Update: {
-                    "audience"?: Database["public"]['Enums']["post_audience"],"author_id"?: string,"body"?: string,"created_at"?: string,"edited_at"?: string | null,"hidden_by_university_at"?: string | null,"id"?: string,"link_url"?: string | null,"pinned_until"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"stage"?: Database["public"]['Enums']["post_stage"],"stage_changed_at"?: string,"type"?: Database["public"]['Enums']["post_type"],"university_id"?: string | null,"venture_id"?: string | null
+                    "audience"?: Database["public"]['Enums']["post_audience"],"author_id"?: string,"body"?: string,"created_at"?: string,"edited_at"?: string | null,"hidden_by_university_at"?: string | null,"id"?: string,"link_url"?: string | null,"pinned_until"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"society_id"?: string | null,"stage"?: Database["public"]['Enums']["post_stage"],"stage_changed_at"?: string,"type"?: Database["public"]['Enums']["post_type"],"university_id"?: string | null,"venture_id"?: string | null
                   }
                   Relationships: [
                     {
+      foreignKeyName: "posts_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "posts_university_id_fkey"
       columns: ["university_id"]
 isOneToOne: false
@@ -2495,14 +3033,14 @@ isOneToOne: false
                   ]
                 },"profiles": {
                   Row: {
-                    "availability": (string)[],"avatar_path": string | null,"bio": string | null,"campus": string | null,"chat_read_receipts": boolean,"city": string | null,"cover_path": string | null,"created_at": string,"delete_after": string | null,"department": string | null,"department_id": string | null,"full_name": string,"graduated_at": string | null,"graduation_year": number | null,"leaderboard_opt_out": boolean,"looking_for": (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete": boolean,"programme": string | null,"recruiter_visible": boolean,"remote_ok": boolean,"role": Database["public"]['Enums']["account_role"],"status": Database["public"]['Enums']["account_status"],"university_id": string | null,"updated_at": string,"user_id": string,"username": string | null,"visibility": Database["public"]['Enums']["profile_visibility"]
+                    "availability": (string)[],"avatar_path": string | null,"bio": string | null,"campus": string | null,"chat_read_receipts": boolean,"city": string | null,"cover_path": string | null,"created_at": string,"delete_after": string | null,"department": string | null,"department_id": string | null,"full_name": string,"graduated_at": string | null,"graduation_year": number | null,"leaderboard_opt_out": boolean,"looking_for": (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete": boolean,"programme": string | null,"recruiter_visible": boolean,"remote_ok": boolean,"role": Database["public"]['Enums']["account_role"],"status": Database["public"]['Enums']["account_status"],"university_id": string | null,"updated_at": string,"user_id": string,"username": string | null,"visibility": Database["public"]['Enums']["profile_visibility"],"yearbook_superlatives_opt_out": boolean
                   }
                   ComputedFields: never
                   Insert: {
-                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name": string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id": string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"]
+                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name": string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id": string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"],"yearbook_superlatives_opt_out"?: boolean
                   }
                   Update: {
-                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name"?: string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id"?: string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"]
+                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name"?: string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id"?: string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"],"yearbook_superlatives_opt_out"?: boolean
                   }
                   Relationships: [
                     {
@@ -2584,6 +3122,54 @@ isOneToOne: false
       referencedRelation: "universities"
       referencedColumns: ["id"]
     }
+                  ]
+                },"proof_tasks": {
+                  Row: {
+                    "active": boolean,"author_id": string | null,"brief": string,"checklist": NonNullable<Json>,"created_at": string,"difficulty": string,"id": string,"skill_id": string,"title": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"author_id"?: string | null,"brief": string,"checklist": NonNullable<Json>,"created_at"?: string,"difficulty": string,"id"?: string,"skill_id": string,"title": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "active"?: boolean,"author_id"?: string | null,"brief"?: string,"checklist"?: NonNullable<Json>,"created_at"?: string,"difficulty"?: string,"id"?: string,"skill_id"?: string,"title"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "proof_tasks_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"push_subscriptions": {
+                  Row: {
+                    "auth": string,"created_at": string,"endpoint": string,"failures": number,"id": string,"last_used_at": string | null,"p256dh": string,"user_agent": string | null,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "auth": string,"created_at"?: string,"endpoint": string,"failures"?: number,"id"?: string,"last_used_at"?: string | null,"p256dh": string,"user_agent"?: string | null,"user_id": string
+                  }
+                  Update: {
+                    "auth"?: string,"created_at"?: string,"endpoint"?: string,"failures"?: number,"id"?: string,"last_used_at"?: string | null,"p256dh"?: string,"user_agent"?: string | null,"user_id"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"pymk_dismissals": {
+                  Row: {
+                    "created_at": string,"dismissed_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"dismissed_id": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"dismissed_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    
                   ]
                 },"ranking_adjustments": {
                   Row: {
@@ -2669,6 +3255,124 @@ isOneToOne: false
                   }
                   Update: {
                     "aliases"?: (string)[],"created_at"?: string,"id"?: string,"name"?: string,"retired_at"?: string | null
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"record_claims": {
+                  Row: {
+                    "claimed_at": string | null,"created_at": string,"email_attendee_id": string | null,"email_hash": string,"event_id": string,"expires_at": string,"id": string,"matched_at": string | null,"sent_at": string | null,"user_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "claimed_at"?: string | null,"created_at"?: string,"email_attendee_id"?: string | null,"email_hash": string,"event_id": string,"expires_at": string,"id"?: string,"matched_at"?: string | null,"sent_at"?: string | null,"user_id"?: string | null
+                  }
+                  Update: {
+                    "claimed_at"?: string | null,"created_at"?: string,"email_attendee_id"?: string | null,"email_hash"?: string,"event_id"?: string,"expires_at"?: string,"id"?: string,"matched_at"?: string | null,"sent_at"?: string | null,"user_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "record_claims_email_attendee_id_fkey"
+      columns: ["email_attendee_id"]
+isOneToOne: false
+      referencedRelation: "event_email_attendees"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "record_claims_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"record_corrections": {
+                  Row: {
+                    "created_at": string,"decided_at": string | null,"decided_by": string | null,"decision_note": string | null,"entry_id": string,"id": string,"note": string,"status": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"decided_at"?: string | null,"decided_by"?: string | null,"decision_note"?: string | null,"entry_id": string,"id"?: string,"note": string,"status"?: string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"decided_at"?: string | null,"decided_by"?: string | null,"decision_note"?: string | null,"entry_id"?: string,"id"?: string,"note"?: string,"status"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "record_corrections_entry_id_fkey"
+      columns: ["entry_id"]
+isOneToOne: false
+      referencedRelation: "record_entries"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"record_entries": {
+                  Row: {
+                    "claim_email_hash": string | null,"code": string | null,"confirmed_by": string | null,"created_at": string,"envelope_hash": string | null,"evidence": NonNullable<Json>,"hidden": boolean,"id": string,"issued_at": string,"issued_by": string | null,"issuer_id": string | null,"issuer_name": string,"issuer_type": string,"key_id": string | null,"kind": string,"occurred_on": string,"payload": Json | null,"pinned_at": string | null,"revoked_at": string | null,"revoked_by": string | null,"revoked_category": string | null,"revoked_reason": string | null,"signature": string | null,"signed_at": string | null,"source": string,"source_id": string,"status": string,"superseded_by": string | null,"supersedes": string | null,"title": string,"user_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "claim_email_hash"?: string | null,"code"?: string | null,"confirmed_by"?: string | null,"created_at"?: string,"envelope_hash"?: string | null,"evidence"?: NonNullable<Json>,"hidden"?: boolean,"id"?: string,"issued_at"?: string,"issued_by"?: string | null,"issuer_id"?: string | null,"issuer_name": string,"issuer_type": string,"key_id"?: string | null,"kind": string,"occurred_on": string,"payload"?: Json | null,"pinned_at"?: string | null,"revoked_at"?: string | null,"revoked_by"?: string | null,"revoked_category"?: string | null,"revoked_reason"?: string | null,"signature"?: string | null,"signed_at"?: string | null,"source": string,"source_id": string,"status"?: string,"superseded_by"?: string | null,"supersedes"?: string | null,"title": string,"user_id"?: string | null
+                  }
+                  Update: {
+                    "claim_email_hash"?: string | null,"code"?: string | null,"confirmed_by"?: string | null,"created_at"?: string,"envelope_hash"?: string | null,"evidence"?: NonNullable<Json>,"hidden"?: boolean,"id"?: string,"issued_at"?: string,"issued_by"?: string | null,"issuer_id"?: string | null,"issuer_name"?: string,"issuer_type"?: string,"key_id"?: string | null,"kind"?: string,"occurred_on"?: string,"payload"?: Json | null,"pinned_at"?: string | null,"revoked_at"?: string | null,"revoked_by"?: string | null,"revoked_category"?: string | null,"revoked_reason"?: string | null,"signature"?: string | null,"signed_at"?: string | null,"source"?: string,"source_id"?: string,"status"?: string,"superseded_by"?: string | null,"supersedes"?: string | null,"title"?: string,"user_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "record_entries_issuer_id_fkey"
+      columns: ["issuer_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "record_entries_key_id_fkey"
+      columns: ["key_id"]
+isOneToOne: false
+      referencedRelation: "signing_keys"
+      referencedColumns: ["key_id"]
+    },{
+      foreignKeyName: "record_entries_superseded_by_fkey"
+      columns: ["superseded_by"]
+isOneToOne: false
+      referencedRelation: "record_entries"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "record_entries_supersedes_fkey"
+      columns: ["supersedes"]
+isOneToOne: false
+      referencedRelation: "record_entries"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"record_pdf_exports": {
+                  Row: {
+                    "bytes": number,"codes": (string)[],"created_at": string,"entry_id": string | null,"holder_name": string,"id": string,"kind": string,"pdf_hash": string,"user_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "bytes": number,"codes": (string)[],"created_at"?: string,"entry_id"?: string | null,"holder_name": string,"id": string,"kind": string,"pdf_hash": string,"user_id"?: string | null
+                  }
+                  Update: {
+                    "bytes"?: number,"codes"?: (string)[],"created_at"?: string,"entry_id"?: string | null,"holder_name"?: string,"id"?: string,"kind"?: string,"pdf_hash"?: string,"user_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "record_pdf_exports_entry_id_fkey"
+      columns: ["entry_id"]
+isOneToOne: false
+      referencedRelation: "record_entries"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"record_share_links": {
+                  Row: {
+                    "created_at": string,"expires_at": string,"id": string,"label": string | null,"last_viewed_at": string | null,"revoked_at": string | null,"token_hash": string,"user_id": string,"view_count": number
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"expires_at": string,"id"?: string,"label"?: string | null,"last_viewed_at"?: string | null,"revoked_at"?: string | null,"token_hash": string,"user_id": string,"view_count"?: number
+                  }
+                  Update: {
+                    "created_at"?: string,"expires_at"?: string,"id"?: string,"label"?: string | null,"last_viewed_at"?: string | null,"revoked_at"?: string | null,"token_hash"?: string,"user_id"?: string,"view_count"?: number
                   }
                   Relationships: [
                     
@@ -3007,6 +3711,192 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"societies": {
+                  Row: {
+                    "about": string,"category": string,"cover_path": string | null,"created_at": string,"created_by": string | null,"id": string,"logo_path": string | null,"membership_mode": string,"name": string,"name_key": string,"paid_paused": boolean,"slug": string,"status": Database["public"]['Enums']["society_status"],"status_reason": string | null,"university_id": string,"updated_at": string,"verified_at": string | null,"verified_by": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "about": string,"category": string,"cover_path"?: string | null,"created_at"?: string,"created_by"?: string | null,"id"?: string,"logo_path"?: string | null,"membership_mode"?: string,"name": string,"name_key": string,"paid_paused"?: boolean,"slug": string,"status"?: Database["public"]['Enums']["society_status"],"status_reason"?: string | null,"university_id": string,"updated_at"?: string,"verified_at"?: string | null,"verified_by"?: string | null
+                  }
+                  Update: {
+                    "about"?: string,"category"?: string,"cover_path"?: string | null,"created_at"?: string,"created_by"?: string | null,"id"?: string,"logo_path"?: string | null,"membership_mode"?: string,"name"?: string,"name_key"?: string,"paid_paused"?: boolean,"slug"?: string,"status"?: Database["public"]['Enums']["society_status"],"status_reason"?: string | null,"university_id"?: string,"updated_at"?: string,"verified_at"?: string | null,"verified_by"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "societies_university_id_fkey"
+      columns: ["university_id"]
+isOneToOne: false
+      referencedRelation: "universities"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"society_audit_log": {
+                  Row: {
+                    "action": string,"actor_id": string | null,"after": NonNullable<Json>,"before": NonNullable<Json>,"created_at": string,"id": number,"society_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "action": string,"actor_id"?: string | null,"after"?: NonNullable<Json>,"before"?: NonNullable<Json>,"created_at"?: string,"id"?: never,"society_id": string
+                  }
+                  Update: {
+                    "action"?: string,"actor_id"?: string | null,"after"?: NonNullable<Json>,"before"?: NonNullable<Json>,"created_at"?: string,"id"?: never,"society_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "society_audit_log_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"society_follows": {
+                  Row: {
+                    "created_at": string,"society_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"society_id": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"society_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "society_follows_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"society_invites": {
+                  Row: {
+                    "answered_at": string | null,"created_at": string,"id": string,"invited_by": string | null,"invitee_id": string,"kind": string,"society_id": string,"status": string,"term_end": string | null,"term_start": string | null,"title": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "answered_at"?: string | null,"created_at"?: string,"id"?: string,"invited_by"?: string | null,"invitee_id": string,"kind": string,"society_id": string,"status"?: string,"term_end"?: string | null,"term_start"?: string | null,"title"?: string | null
+                  }
+                  Update: {
+                    "answered_at"?: string | null,"created_at"?: string,"id"?: string,"invited_by"?: string | null,"invitee_id"?: string,"kind"?: string,"society_id"?: string,"status"?: string,"term_end"?: string | null,"term_start"?: string | null,"title"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "society_invites_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"society_join_requests": {
+                  Row: {
+                    "created_at": string,"society_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"society_id": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"society_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "society_join_requests_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"society_members": {
+                  Row: {
+                    "joined_at": string,"role": Database["public"]['Enums']["society_role"],"society_id": string,"team_title": string | null,"title": string | null,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "joined_at"?: string,"role"?: Database["public"]['Enums']["society_role"],"society_id": string,"team_title"?: string | null,"title"?: string | null,"user_id": string
+                  }
+                  Update: {
+                    "joined_at"?: string,"role"?: Database["public"]['Enums']["society_role"],"society_id"?: string,"team_title"?: string | null,"title"?: string | null,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "society_members_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"society_payment_methods": {
+                  Row: {
+                    "account_number": string | null,"account_title": string | null,"action": string,"bank_name": string | null,"confirmed_at": string | null,"confirmed_by": string | null,"effective_at": string | null,"ended_at": string | null,"id": string,"kind": string | null,"proposed_at": string,"proposed_by": string | null,"replaces_id": string | null,"society_id": string,"status": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "account_number"?: string | null,"account_title"?: string | null,"action"?: string,"bank_name"?: string | null,"confirmed_at"?: string | null,"confirmed_by"?: string | null,"effective_at"?: string | null,"ended_at"?: string | null,"id"?: string,"kind"?: string | null,"proposed_at"?: string,"proposed_by"?: string | null,"replaces_id"?: string | null,"society_id": string,"status"?: string
+                  }
+                  Update: {
+                    "account_number"?: string | null,"account_title"?: string | null,"action"?: string,"bank_name"?: string | null,"confirmed_at"?: string | null,"confirmed_by"?: string | null,"effective_at"?: string | null,"ended_at"?: string | null,"id"?: string,"kind"?: string | null,"proposed_at"?: string,"proposed_by"?: string | null,"replaces_id"?: string | null,"society_id"?: string,"status"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "society_payment_methods_replaces_id_fkey"
+      columns: ["replaces_id"]
+isOneToOne: false
+      referencedRelation: "society_payment_methods"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "society_payment_methods_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"society_requests": {
+                  Row: {
+                    "claimed_at": string | null,"claimed_by": string | null,"created_at": string,"decided_at": string | null,"id": string,"office_bearer": boolean,"proof_path": string | null,"proof_url": string | null,"requester_id": string,"society_id": string,"staff_note": string | null,"status": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "claimed_at"?: string | null,"claimed_by"?: string | null,"created_at"?: string,"decided_at"?: string | null,"id"?: string,"office_bearer": boolean,"proof_path"?: string | null,"proof_url"?: string | null,"requester_id": string,"society_id": string,"staff_note"?: string | null,"status"?: string,"updated_at"?: string
+                  }
+                  Update: {
+                    "claimed_at"?: string | null,"claimed_by"?: string | null,"created_at"?: string,"decided_at"?: string | null,"id"?: string,"office_bearer"?: boolean,"proof_path"?: string | null,"proof_url"?: string | null,"requester_id"?: string,"society_id"?: string,"staff_note"?: string | null,"status"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "society_requests_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"society_terms": {
+                  Row: {
+                    "confirmed_at": string | null,"confirmed_by": string | null,"created_at": string,"ended_at": string | null,"ended_notified_at": string | null,"id": string,"role": Database["public"]['Enums']["society_role"],"society_id": string,"term_end": string,"term_start": string,"title": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "confirmed_at"?: string | null,"confirmed_by"?: string | null,"created_at"?: string,"ended_at"?: string | null,"ended_notified_at"?: string | null,"id"?: string,"role": Database["public"]['Enums']["society_role"],"society_id": string,"term_end": string,"term_start": string,"title": string,"user_id": string
+                  }
+                  Update: {
+                    "confirmed_at"?: string | null,"confirmed_by"?: string | null,"created_at"?: string,"ended_at"?: string | null,"ended_notified_at"?: string | null,"id"?: string,"role"?: Database["public"]['Enums']["society_role"],"society_id"?: string,"term_end"?: string,"term_start"?: string,"title"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "society_terms_society_id_fkey"
+      columns: ["society_id"]
+isOneToOne: false
+      referencedRelation: "societies"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"staff_roles": {
                   Row: {
                     "granted_at": string,"granted_by": string | null,"role": Database["public"]['Enums']["staff_role"],"user_id": string
@@ -3093,6 +3983,136 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"swap_notes": {
+                  Row: {
+                    "author_id": string,"body": string,"created_at": string,"decided_at": string | null,"id": string,"session_id": string,"status": string,"swap_id": string,"teacher_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "author_id": string,"body": string,"created_at"?: string,"decided_at"?: string | null,"id"?: string,"session_id": string,"status"?: string,"swap_id": string,"teacher_id": string
+                  }
+                  Update: {
+                    "author_id"?: string,"body"?: string,"created_at"?: string,"decided_at"?: string | null,"id"?: string,"session_id"?: string,"status"?: string,"swap_id"?: string,"teacher_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "swap_notes_session_id_fkey"
+      columns: ["session_id"]
+isOneToOne: true
+      referencedRelation: "swap_sessions"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "swap_notes_swap_id_fkey"
+      columns: ["swap_id"]
+isOneToOne: false
+      referencedRelation: "swaps"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"swap_offers": {
+                  Row: {
+                    "created_at": string,"note": string | null,"skill_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"note"?: string | null,"skill_id": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"note"?: string | null,"skill_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "swap_offers_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"swap_sessions": {
+                  Row: {
+                    "asked_at": string | null,"confirmed_at": string | null,"confirmed_minutes": number | null,"created_at": string,"id": string,"minutes": number,"no_show_reason": string | null,"place": string,"proposed_by": string,"reminded_at": string | null,"responded_at": string | null,"starts_at": string,"status": string,"swap_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "asked_at"?: string | null,"confirmed_at"?: string | null,"confirmed_minutes"?: number | null,"created_at"?: string,"id"?: string,"minutes": number,"no_show_reason"?: string | null,"place": string,"proposed_by": string,"reminded_at"?: string | null,"responded_at"?: string | null,"starts_at": string,"status"?: string,"swap_id": string
+                  }
+                  Update: {
+                    "asked_at"?: string | null,"confirmed_at"?: string | null,"confirmed_minutes"?: number | null,"created_at"?: string,"id"?: string,"minutes"?: number,"no_show_reason"?: string | null,"place"?: string,"proposed_by"?: string,"reminded_at"?: string | null,"responded_at"?: string | null,"starts_at"?: string,"status"?: string,"swap_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "swap_sessions_swap_id_fkey"
+      columns: ["swap_id"]
+isOneToOne: false
+      referencedRelation: "swaps"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"swap_wants": {
+                  Row: {
+                    "created_at": string,"note": string | null,"skill_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"note"?: string | null,"skill_id": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"note"?: string | null,"skill_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "swap_wants_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"swaps": {
+                  Row: {
+                    "close_reason": string | null,"closed_at": string | null,"closed_by": string | null,"decided_at": string | null,"expires_at": string,"id": string,"learner_id": string,"mutual_of": string | null,"note": string | null,"offered_skill_id": string | null,"preferred_times": string | null,"requested_at": string,"skill_id": string,"status": string,"taught_entry_id": string | null,"teacher_id": string,"thread_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "close_reason"?: string | null,"closed_at"?: string | null,"closed_by"?: string | null,"decided_at"?: string | null,"expires_at": string,"id"?: string,"learner_id": string,"mutual_of"?: string | null,"note"?: string | null,"offered_skill_id"?: string | null,"preferred_times"?: string | null,"requested_at"?: string,"skill_id": string,"status"?: string,"taught_entry_id"?: string | null,"teacher_id": string,"thread_id"?: string | null
+                  }
+                  Update: {
+                    "close_reason"?: string | null,"closed_at"?: string | null,"closed_by"?: string | null,"decided_at"?: string | null,"expires_at"?: string,"id"?: string,"learner_id"?: string,"mutual_of"?: string | null,"note"?: string | null,"offered_skill_id"?: string | null,"preferred_times"?: string | null,"requested_at"?: string,"skill_id"?: string,"status"?: string,"taught_entry_id"?: string | null,"teacher_id"?: string,"thread_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "swaps_mutual_of_fkey"
+      columns: ["mutual_of"]
+isOneToOne: false
+      referencedRelation: "swaps"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "swaps_offered_skill_id_fkey"
+      columns: ["offered_skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "swaps_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "swaps_taught_entry_id_fkey"
+      columns: ["taught_entry_id"]
+isOneToOne: false
+      referencedRelation: "record_entries"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "swaps_thread_id_fkey"
+      columns: ["thread_id"]
+isOneToOne: false
+      referencedRelation: "chat_threads"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"sync_jobs": {
                   Row: {
                     "commits_analysed": number,"created_at": string,"error": string | null,"finished_at": string | null,"id": number,"pending": number,"repos_done": number,"repos_total": number,"skills_found": number,"stage": string | null,"status": Database["public"]['Enums']["sync_status"],"trigger": string,"updated_at": string,"user_id": string
@@ -3124,6 +4144,70 @@ isOneToOne: false
       columns: ["university_id"]
 isOneToOne: false
       referencedRelation: "universities"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"task_attempts": {
+                  Row: {
+                    "code_check_id": string | null,"done_at": string | null,"id": string,"note": string | null,"offered_at": string | null,"record_entry_id": string | null,"repo_full_name": string | null,"repo_id": number | null,"round": number,"route": string | null,"skill_id": string,"started_at": string,"status": string,"submitted_at": string | null,"task_id": string,"updated_at": string,"user_id": string,"verified_by": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "code_check_id"?: string | null,"done_at"?: string | null,"id"?: string,"note"?: string | null,"offered_at"?: string | null,"record_entry_id"?: string | null,"repo_full_name"?: string | null,"repo_id"?: number | null,"round"?: number,"route"?: string | null,"skill_id": string,"started_at"?: string,"status"?: string,"submitted_at"?: string | null,"task_id": string,"updated_at"?: string,"user_id": string,"verified_by"?: string | null
+                  }
+                  Update: {
+                    "code_check_id"?: string | null,"done_at"?: string | null,"id"?: string,"note"?: string | null,"offered_at"?: string | null,"record_entry_id"?: string | null,"repo_full_name"?: string | null,"repo_id"?: number | null,"round"?: number,"route"?: string | null,"skill_id"?: string,"started_at"?: string,"status"?: string,"submitted_at"?: string | null,"task_id"?: string,"updated_at"?: string,"user_id"?: string,"verified_by"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "task_attempts_code_check_id_fkey"
+      columns: ["code_check_id"]
+isOneToOne: false
+      referencedRelation: "code_checks"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_attempts_record_entry_id_fkey"
+      columns: ["record_entry_id"]
+isOneToOne: false
+      referencedRelation: "record_entries"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_attempts_skill_id_fkey"
+      columns: ["skill_id"]
+isOneToOne: false
+      referencedRelation: "skills"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_attempts_task_id_fkey"
+      columns: ["task_id"]
+isOneToOne: false
+      referencedRelation: "proof_tasks"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_attempts_user_id_repo_id_fkey"
+      columns: ["user_id","repo_id"]
+isOneToOne: false
+      referencedRelation: "github_user_repos"
+      referencedColumns: ["user_id","repo_id"]
+    }
+                  ]
+                },"task_reviews": {
+                  Row: {
+                    "attempt_id": string,"checklist": Json | null,"decided_at": string | null,"id": string,"note": string | null,"offered_at": string,"responded_at": string | null,"reviewer_id": string,"round": number,"status": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "attempt_id": string,"checklist"?: Json | null,"decided_at"?: string | null,"id"?: string,"note"?: string | null,"offered_at"?: string,"responded_at"?: string | null,"reviewer_id": string,"round": number,"status"?: string
+                  }
+                  Update: {
+                    "attempt_id"?: string,"checklist"?: Json | null,"decided_at"?: string | null,"id"?: string,"note"?: string | null,"offered_at"?: string,"responded_at"?: string | null,"reviewer_id"?: string,"round"?: number,"status"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "task_reviews_attempt_id_fkey"
+      columns: ["attempt_id"]
+isOneToOne: false
+      referencedRelation: "task_attempts"
       referencedColumns: ["id"]
     }
                   ]
@@ -3599,14 +4683,14 @@ isOneToOne: false
                   ]
                 },"user_skills": {
                   Row: {
-                    "active_days": number,"ai_assisted": boolean,"ai_lines": number,"hits": number,"last_used_at": string | null,"level": number,"lines": number,"peer_verified": boolean,"repos": number,"skill_id": string,"updated_at": string,"user_id": string
+                    "active_days": number,"ai_assisted": boolean,"ai_lines": number,"hits": number,"l2_at": string | null,"last_used_at": string | null,"level": number,"lines": number,"peer_verified": boolean,"repos": number,"skill_id": string,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "active_days"?: number,"ai_assisted"?: boolean,"ai_lines"?: number,"hits"?: number,"last_used_at"?: string | null,"level": number,"lines"?: number,"peer_verified"?: boolean,"repos"?: number,"skill_id": string,"updated_at"?: string,"user_id": string
+                    "active_days"?: number,"ai_assisted"?: boolean,"ai_lines"?: number,"hits"?: number,"l2_at"?: string | null,"last_used_at"?: string | null,"level": number,"lines"?: number,"peer_verified"?: boolean,"repos"?: number,"skill_id": string,"updated_at"?: string,"user_id": string
                   }
                   Update: {
-                    "active_days"?: number,"ai_assisted"?: boolean,"ai_lines"?: number,"hits"?: number,"last_used_at"?: string | null,"level"?: number,"lines"?: number,"peer_verified"?: boolean,"repos"?: number,"skill_id"?: string,"updated_at"?: string,"user_id"?: string
+                    "active_days"?: number,"ai_assisted"?: boolean,"ai_lines"?: number,"hits"?: number,"l2_at"?: string | null,"last_used_at"?: string | null,"level"?: number,"lines"?: number,"peer_verified"?: boolean,"repos"?: number,"skill_id"?: string,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -3901,6 +4985,126 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"volunteer_logs": {
+                  Row: {
+                    "created_at": string,"event_id": string,"hours": number,"logged_by": string | null,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"event_id": string,"hours": number,"logged_by"?: string | null,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"event_id"?: string,"hours"?: number,"logged_by"?: string | null,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "volunteer_logs_event_id_fkey"
+      columns: ["event_id"]
+isOneToOne: false
+      referencedRelation: "events"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"yearbook_awards": {
+                  Row: {
+                    "declined_at": string | null,"status": string,"title": string,"title_key": string,"told_at": string,"winner_id": string,"yearbook_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "declined_at"?: string | null,"status"?: string,"title": string,"title_key": string,"told_at"?: string,"winner_id": string,"yearbook_id": string
+                  }
+                  Update: {
+                    "declined_at"?: string | null,"status"?: string,"title"?: string,"title_key"?: string,"told_at"?: string,"winner_id"?: string,"yearbook_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "yearbook_awards_yearbook_id_fkey"
+      columns: ["yearbook_id"]
+isOneToOne: false
+      referencedRelation: "yearbooks"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"yearbook_notes": {
+                  Row: {
+                    "approved_at": string | null,"body": string,"created_at": string,"hidden_at": string | null,"id": string,"page_id": string,"removed_at": string | null,"removed_by": string | null,"updated_at": string,"writer_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "approved_at"?: string | null,"body": string,"created_at"?: string,"hidden_at"?: string | null,"id"?: string,"page_id": string,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"writer_id": string
+                  }
+                  Update: {
+                    "approved_at"?: string | null,"body"?: string,"created_at"?: string,"hidden_at"?: string | null,"id"?: string,"page_id"?: string,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"writer_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "yearbook_notes_page_id_fkey"
+      columns: ["page_id"]
+isOneToOne: false
+      referencedRelation: "yearbook_pages"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"yearbook_pages": {
+                  Row: {
+                    "created_at": string,"department": string | null,"highlights": (string)[],"id": string,"photo_path": string | null,"quote": string | null,"removed_at": string | null,"removed_by": string | null,"updated_at": string,"user_id": string,"visible": boolean,"yearbook_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"department"?: string | null,"highlights"?: (string)[],"id"?: string,"photo_path"?: string | null,"quote"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"user_id": string,"visible"?: boolean,"yearbook_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"department"?: string | null,"highlights"?: (string)[],"id"?: string,"photo_path"?: string | null,"quote"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"user_id"?: string,"visible"?: boolean,"yearbook_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "yearbook_pages_yearbook_id_fkey"
+      columns: ["yearbook_id"]
+isOneToOne: false
+      referencedRelation: "yearbooks"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"yearbook_votes": {
+                  Row: {
+                    "nominee_id": string,"title_key": string,"updated_at": string,"voter_id": string,"yearbook_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "nominee_id": string,"title_key": string,"updated_at"?: string,"voter_id": string,"yearbook_id": string
+                  }
+                  Update: {
+                    "nominee_id"?: string,"title_key"?: string,"updated_at"?: string,"voter_id"?: string,"yearbook_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "yearbook_votes_yearbook_id_fkey"
+      columns: ["yearbook_id"]
+isOneToOne: false
+      referencedRelation: "yearbooks"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"yearbooks": {
+                  Row: {
+                    "batch": number,"created_at": string,"freezes_at": string,"frozen_at": string | null,"id": string,"opens_at": string,"reveal_at": string,"revealed_at": string | null,"university_id": string,"vote_closes_at": string,"vote_opens_at": string,"winners_told_at": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "batch": number,"created_at"?: string,"freezes_at": string,"frozen_at"?: string | null,"id"?: string,"opens_at": string,"reveal_at": string,"revealed_at"?: string | null,"university_id": string,"vote_closes_at": string,"vote_opens_at": string,"winners_told_at"?: string | null
+                  }
+                  Update: {
+                    "batch"?: number,"created_at"?: string,"freezes_at"?: string,"frozen_at"?: string | null,"id"?: string,"opens_at"?: string,"reveal_at"?: string,"revealed_at"?: string | null,"university_id"?: string,"vote_closes_at"?: string,"vote_opens_at"?: string,"winners_told_at"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "yearbooks_university_id_fkey"
+      columns: ["university_id"]
+isOneToOne: false
+      referencedRelation: "universities"
+      referencedColumns: ["id"]
+    }
+                  ]
                 }
           }
           Views: {
@@ -3921,11 +5125,17 @@ isOneToOne: false
                 }
           }
           Functions: {
-            "accept_fair_invite":
+            "abandon_task":
+{ Args: { "p_attempt": string }; Returns: undefined
+                           },
+"accept_fair_invite":
 { Args: { "p_token_hash": string }; Returns: string
                            },
 "accept_org_invite":
 { Args: { "p_id": string }; Returns: string
+                           },
+"accept_task_review":
+{ Args: { "p_review": string }; Returns: undefined
                            },
 "accept_uni_invite":
 { Args: { "p_id": string }; Returns: string
@@ -3939,6 +5149,9 @@ isOneToOne: false
 "add_comment":
 { Args: { "p_body": string,"p_parent": string,"p_post": string }; Returns: string
                            },
+"add_event_staff":
+{ Args: { "p_event": string,"p_username": string }; Returns: undefined
+                           },
 "add_exam_period":
 { Args: { "p_ends": string,"p_reason": string,"p_starts": string,"p_university": string }; Returns: string
                            },
@@ -3951,11 +5164,17 @@ isOneToOne: false
 "add_venture_deliverable":
 { Args: { "p_label": string,"p_url": string,"p_venture": string }; Returns: string
                            },
+"answer_cohost":
+{ Args: { "p_accept": boolean,"p_event": string,"p_society": string }; Returns: undefined
+                           },
 "answer_fair_call":
 { Args: { "p_queue": string }; Returns: string
                            },
 "answer_hire_outcome":
 { Args: { "p_answer": string,"p_hire": string }; Returns: undefined
+                           },
+"answer_society_invite":
+{ Args: { "p_accept": boolean,"p_invite": string }; Returns: undefined
                            },
 "answer_survey":
 { Args: { "p_answer": boolean,"p_latency_ms": number,"p_post": string }; Returns: undefined
@@ -3985,6 +5204,9 @@ isOneToOne: false
 { Args: { "p_ids": (string)[] }; Returns: {
               "full_name": string,"user_id": string,"username": string
             }[]
+                           },
+"apply_induction":
+{ Args: { "p": Json,"p_round": string }; Returns: string
                            },
 "apply_to_job":
 { Args: { "p_job": string,"p_note"?: string }; Returns: string
@@ -4039,20 +5261,50 @@ isOneToOne: false
 "cancel_friend_request":
 { Args: { "p_request": string }; Returns: undefined
                            },
+"cancel_registration":
+{ Args: { "p_event": string }; Returns: undefined
+                           },
 "cancel_rsvp":
 { Args: { "p_id": string }; Returns: undefined
+                           },
+"cancel_society_event":
+{ Args: { "p_event": string,"p_reason": string }; Returns: undefined
                            },
 "cancel_subscription":
 { Args: { "p_resume"?: boolean,"p_subject": string }; Returns: undefined
                            },
+"cancel_swap_request":
+{ Args: { "p_swap": string }; Returns: undefined
+                           },
+"cancel_swap_session":
+{ Args: { "p_session": string }; Returns: undefined
+                           },
+"cast_yearbook_vote":
+{ Args: { "p_title": string,"p_username": string }; Returns: undefined
+                           },
+"check_in_email":
+{ Args: { "p_email": string,"p_event": string,"p_session": string }; Returns: Json
+                           },
 "check_in_event":
 { Args: { "p_id": string,"p_token": string }; Returns: string
+                           },
+"check_in_person":
+{ Args: { "p_event": string,"p_session": string,"p_user": string }; Returns: Json
+                           },
+"check_in_scan":
+{ Args: { "p_event": string,"p_payload": string,"p_session": string }; Returns: Json
+                           },
+"check_in_search":
+{ Args: { "p_event": string,"p_query": string }; Returns: Json
                            },
 "checkout_session":
 { Args: { "p_id": string }; Returns: Json
                            },
 "choose_seats":
 { Args: { "p_keep": (string)[] }; Returns: undefined
+                           },
+"choose_task_code_check":
+{ Args: { "p_attempt": string }; Returns: string
                            },
 "claim_appeal":
 { Args: { "p_claim": boolean,"p_id": string }; Returns: undefined
@@ -4072,8 +5324,14 @@ isOneToOne: false
 "claim_ranking_flag":
 { Args: { "p_claim": boolean,"p_id": string }; Returns: undefined
                            },
+"claim_record_entries":
+{ Args: Record<PropertyKey, never>; Returns: number
+                           },
 "claim_review_flag":
 { Args: { "p_claim": boolean,"p_flag": number }; Returns: undefined
+                           },
+"claim_society":
+{ Args: { "p_claim"?: boolean,"p_society": string }; Returns: undefined
                            },
 "close_contact_chat":
 { Args: { "p_id": string }; Returns: undefined
@@ -4083,6 +5341,9 @@ isOneToOne: false
                            },
 "close_review_request":
 { Args: { "p_request": string }; Returns: undefined
+                           },
+"closeout_page":
+{ Args: { "p_event": string }; Returns: Json
                            },
 "code_check_case":
 { Args: { "p_id": string }; Returns: {
@@ -4117,11 +5378,29 @@ isOneToOne: false
 "confirm_contribution":
 { Args: { "p_entry": string }; Returns: boolean
                            },
+"confirm_payment_method":
+{ Args: { "p_accept": boolean,"p_method": string }; Returns: undefined
+                           },
+"confirm_record_entry":
+{ Args: { "p_entry": string }; Returns: undefined
+                           },
+"confirm_refund":
+{ Args: { "p_payment": string,"p_received": boolean }; Returns: undefined
+                           },
+"confirm_swap_session":
+{ Args: { "p_happened": boolean,"p_minutes": number,"p_note": string,"p_reason": string,"p_session": string }; Returns: undefined
+                           },
+"confirm_term":
+{ Args: { "p_term": string }; Returns: undefined
+                           },
 "confirm_university_request":
 { Args: { "p_token": string }; Returns: Json
                            },
 "correct_contribution":
 { Args: { "p_description": string,"p_evidence_url"?: string,"p_hours"?: number,"p_kind": Database["public"]['Enums']["contribution_kind"],"p_original": string,"p_skill_ids"?: (string)[] }; Returns: string
+                           },
+"correct_record_entry":
+{ Args: { "p": Json,"p_entry": string,"p_note"?: string }; Returns: string
                            },
 "create_add_on_checkout":
 { Args: { "p_currency": string,"p_gateway": string,"p_job": string,"p_key": string,"p_kind": string,"p_quantity": number }; Returns: Json
@@ -4143,6 +5422,9 @@ isOneToOne: false
                            },
 "create_post":
 { Args: { "p": Json }; Returns: string
+                           },
+"create_record_share_link":
+{ Args: { "p_days": number,"p_label": string,"p_token_hash": string }; Returns: string
                            },
 "create_share_link":
 { Args: { "p_days": number,"p_label": string,"p_token_hash": string }; Returns: string
@@ -4188,14 +5470,41 @@ isOneToOne: false
 "decide_final_year_batch":
 { Args: { "p_approve": boolean,"p_id": string,"p_reason": string }; Returns: undefined
                            },
+"decide_induction_application":
+{ Args: { "p_action": string,"p_application": string,"p_note"?: string }; Returns: undefined
+                           },
+"decide_join_request":
+{ Args: { "p_accept": boolean,"p_society": string,"p_user": string }; Returns: undefined
+                           },
 "decide_org":
 { Args: { "p_action": string,"p_org": string,"p_reason": string }; Returns: undefined
+                           },
+"decide_registration":
+{ Args: { "p_accept": boolean,"p_event": string,"p_user": string }; Returns: string
+                           },
+"decide_society":
+{ Args: { "p_action": string,"p_reason": string,"p_society": string }; Returns: undefined
+                           },
+"decide_swap_note":
+{ Args: { "p_approve": boolean,"p_note": string }; Returns: undefined
                            },
 "decide_uni_claim":
 { Args: { "p_approve": boolean,"p_id": string,"p_reason": string }; Returns: undefined
                            },
 "decide_uni_domain":
 { Args: { "p_approve": boolean,"p_id": string,"p_reason": string }; Returns: undefined
+                           },
+"decide_yearbook_note":
+{ Args: { "p_approve": boolean,"p_note": string }; Returns: undefined
+                           },
+"decline_record_mistake":
+{ Args: { "p_correction": string,"p_note": string }; Returns: undefined
+                           },
+"decline_task_review":
+{ Args: { "p_review": string }; Returns: undefined
+                           },
+"decline_yearbook_award":
+{ Args: { "p_title": string }; Returns: undefined
                            },
 "delete_comment":
 { Args: { "p_comment": string }; Returns: undefined
@@ -4224,6 +5533,9 @@ isOneToOne: false
 "delete_programme":
 { Args: { "p_id": string }; Returns: undefined
                            },
+"delete_push_subscription":
+{ Args: { "p_endpoint": string }; Returns: undefined
+                           },
 "delete_saved_search":
 { Args: { "p_id": string }; Returns: undefined
                            },
@@ -4244,6 +5556,9 @@ isOneToOne: false
                            },
 "disconnect_github":
 { Args: Record<PropertyKey, never>; Returns: boolean
+                           },
+"dismiss_suggestion":
+{ Args: { "p_username": string }; Returns: undefined
                            },
 "dispute_hire_fee":
 { Args: { "p_id": string,"p_kind": string,"p_reason": string }; Returns: undefined
@@ -4266,6 +5581,9 @@ isOneToOne: false
 "end_supervision":
 { Args: { "p_venture": string }; Returns: undefined
                            },
+"end_swap":
+{ Args: { "p_swap": string }; Returns: undefined
+                           },
 "endorse":
 { Args: { "p_endorsee": string,"p_items": Json,"p_note"?: string,"p_venture": string }; Returns: number
                            },
@@ -4279,11 +5597,29 @@ isOneToOne: false
               "created_at": string,"endorser_avatar_path": string,"endorser_id": string,"endorser_kind": string,"endorser_name": string,"endorser_username": string,"former_faculty": boolean,"has_evidence": boolean,"hidden": boolean,"id": string,"note": string,"skill_id": string,"skill_name": string,"venture_id": string,"venture_title": string
             }[]
                            },
+"event_attendees_rows":
+{ Args: { "p_event": string }; Returns: Json
+                           },
 "event_checkin_code":
 { Args: { "p_id": string }; Returns: Json
                            },
 "event_detail":
 { Args: { "p_id": string }; Returns: Json
+                           },
+"event_edit_payload":
+{ Args: { "p_event": string }; Returns: Json
+                           },
+"event_headcount":
+{ Args: { "p_event": string,"p_session"?: string }; Returns: Json
+                           },
+"event_manage":
+{ Args: { "p_event": string }; Returns: Json
+                           },
+"event_page":
+{ Args: { "p_event": string }; Returns: Json
+                           },
+"event_ticket":
+{ Args: { "p_event": string }; Returns: Json
                            },
 "events_list":
 { Args: { "p_when"?: string }; Returns: Json
@@ -4325,6 +5661,15 @@ isOneToOne: false
                            },
 "finish_hackathon":
 { Args: { "p_id": string }; Returns: undefined
+                           },
+"fix_attendance":
+{ Args: { "p_event": string,"p_present": boolean,"p_reason": string,"p_session": string,"p_user": string }; Returns: undefined
+                           },
+"follow_path":
+{ Args: { "p_follow": boolean,"p_role": string }; Returns: undefined
+                           },
+"follow_society":
+{ Args: { "p_on": boolean,"p_society": string }; Returns: undefined
                            },
 "follow_venture":
 { Args: { "p_follow": boolean,"p_venture": string }; Returns: boolean
@@ -4380,8 +5725,14 @@ isOneToOne: false
 "import_faculty_csv":
 { Args: { "p_rows": Json,"p_university": string }; Returns: number
                            },
+"induction_round_page":
+{ Args: { "p_round": string }; Returns: Json
+                           },
 "invite_fair_company":
 { Args: { "p_email": string,"p_fair": string,"p_token_hash": string }; Returns: string
+                           },
+"invite_officer":
+{ Args: { "p_society": string,"p_term_end": string,"p_term_start": string,"p_title": string,"p_username": string }; Returns: string
                            },
 "invite_org_member":
 { Args: { "p_email": string,"p_role": Database["public"]['Enums']["org_role"],"p_token_hash": string }; Returns: string
@@ -4407,6 +5758,9 @@ isOneToOne: false
 "is_staff":
 { Args: { "p_role"?: Database["public"]['Enums']["staff_role"] }; Returns: boolean
                            },
+"issue_event_entries":
+{ Args: { "p_event": string }; Returns: Json
+                           },
 "job_applicants":
 { Args: { "p_job": string }; Returns: Json
                            },
@@ -4427,6 +5781,9 @@ isOneToOne: false
                            },
 "join_fair_queue":
 { Args: { "p_booth": string }; Returns: number
+                           },
+"join_society":
+{ Args: { "p_society": string }; Returns: string
                            },
 "judge_hackathon":
 { Args: { "p_id": string }; Returns: Json
@@ -4451,11 +5808,17 @@ isOneToOne: false
 "leave_fair_booth":
 { Args: { "p_booth": string }; Returns: undefined
                            },
+"leave_society":
+{ Args: { "p_society": string }; Returns: undefined
+                           },
 "leave_venture":
 { Args: { "p_venture": string }; Returns: undefined
                            },
 "lift_sanction":
 { Args: { "p_id": string,"p_reason": string }; Returns: undefined
+                           },
+"link_task_repo":
+{ Args: { "p_attempt": string,"p_repo": number }; Returns: undefined
                            },
 "link_venture_repo":
 { Args: { "p_repo"?: number,"p_venture": string }; Returns: undefined
@@ -4471,17 +5834,29 @@ isOneToOne: false
 "log_security_event":
 { Args: { "p_ip_hash": string,"p_kind": string,"p_user_agent": string }; Returns: undefined
                            },
+"log_volunteer_hours":
+{ Args: { "p_event": string,"p_hours": number,"p_user": string }; Returns: undefined
+                           },
 "mark_all_notifications_read":
 { Args: Record<PropertyKey, never>; Returns: number
                            },
 "mark_notification_read":
 { Args: { "p_id": string }; Returns: undefined
                            },
+"mark_openings_seen":
+{ Args: { "p_category": string }; Returns: undefined
+                           },
+"mark_refund_sent":
+{ Args: { "p_note": string,"p_payment": string }; Returns: undefined
+                           },
 "mark_thread_read":
 { Args: { "p_thread": string }; Returns: undefined
                            },
 "may_use_simulated":
 { Args: Record<PropertyKey, never>; Returns: boolean
+                           },
+"message_registrants":
+{ Args: { "p_body": string,"p_event": string }; Returns: number
                            },
 "mfa_backup_codes_remaining":
 { Args: Record<PropertyKey, never>; Returns: number
@@ -4572,6 +5947,9 @@ isOneToOne: false
               "actor_avatar_path": string,"actor_name": string,"actor_username": string,"category": string,"created_at": string,"data": Json,"entity_id": string,"entity_type": string,"id": string,"read_at": string,"type": string
             }[]
                            },
+"my_officer_societies":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "my_org":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
@@ -4581,7 +5959,16 @@ isOneToOne: false
 "my_org_invites":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
+"my_paths":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "my_profile_viewers":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"my_push_settings":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"my_record":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
 "my_record_viewers":
@@ -4606,10 +5993,22 @@ isOneToOne: false
               "active_days": number,"ai_assisted": boolean,"ai_lines": number,"hits": number,"last_used_at": string,"level": number,"lines": number,"repos": number,"skill_id": string
             }[]
                            },
+"my_society_invites":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"my_society_requests":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"my_task":
+{ Args: { "p_attempt": string }; Returns: Json
+                           },
 "my_threads":
 { Args: Record<PropertyKey, never>; Returns: {
               "avatar_path": string,"id": string,"last_message": string,"last_message_at": string,"last_sender_is_me": boolean,"muted": boolean,"title": string,"type": Database["public"]['Enums']["chat_thread_type"],"unread": number,"username": string,"venture_id": string
             }[]
+                           },
+"my_tickets":
+{ Args: Record<PropertyKey, never>; Returns: Json
                            },
 "my_uni":
 { Args: Record<PropertyKey, never>; Returns: Json
@@ -4635,10 +6034,25 @@ isOneToOne: false
 "notes_for":
 { Args: { "p_student": string }; Returns: Json
                            },
+"offer_handover":
+{ Args: { "p_society": string,"p_username": string }; Returns: string
+                           },
+"open_record_share":
+{ Args: { "p_token_hash": string,"p_viewer_key": string }; Returns: Json
+                           },
 "open_shared_cv":
 { Args: { "p_token_hash": string,"p_viewer_key": string }; Returns: {
               "code": string,"expires_at": string,"issued_at": string,"key_id": string,"signature": string,"snapshot": Json,"snapshot_hash": string,"state": string,"username": string
             }[]
+                           },
+"openings":
+{ Args: { "p_after"?: number,"p_category": string,"p_matched_only"?: boolean,"p_q"?: string,"p_sort"?: string }; Returns: Json
+                           },
+"openings_overview":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"openings_this_week":
+{ Args: Record<PropertyKey, never>; Returns: Json
                            },
 "opportunities":
 { Args: { "p_after"?: number,"p_tab": string }; Returns: {
@@ -4760,6 +6174,9 @@ isOneToOne: false
 "ops_plans":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
+"ops_proof_tasks":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "ops_queue":
 { Args: { "p_status"?: string }; Returns: {
               "claimed_by_me": boolean,"claimed_by_name": string,"excerpt": string,"id": string,"last_reported_at": string,"opened_at": string,"owner_name": string,"reasons": (Database["public"]['Enums']["report_reason"])[],"reports": number,"soft_signal": boolean,"status": Database["public"]['Enums']["report_case_status"],"target_type": Database["public"]['Enums']["report_target"]
@@ -4770,6 +6187,9 @@ isOneToOne: false
                            },
 "ops_recompute_skills":
 { Args: { "p_reason": string,"p_user": string }; Returns: undefined
+                           },
+"ops_record_entry":
+{ Args: { "p_code": string }; Returns: Json
                            },
 "ops_refund":
 { Args: { "p_amount": number,"p_payment": string,"p_reason": string }; Returns: undefined
@@ -4804,6 +6224,9 @@ isOneToOne: false
 "ops_sanctions":
 { Args: { "p_active"?: boolean }; Returns: Json
                            },
+"ops_save_proof_task":
+{ Args: { "p": Json,"p_id": string,"p_reason": string }; Returns: string
+                           },
 "ops_set_config":
 { Args: { "p_expected": number,"p_key": string,"p_reason": string,"p_value": Json }; Returns: number
                            },
@@ -4824,6 +6247,12 @@ isOneToOne: false
                            },
 "ops_skills":
 { Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"ops_societies":
+{ Args: { "p_status"?: string }; Returns: Json
+                           },
+"ops_society_case":
+{ Args: { "p_society": string }; Returns: Json
                            },
 "ops_spam_reviews":
 { Args: { "p_status"?: string }; Returns: Json
@@ -4894,8 +6323,23 @@ isOneToOne: false
 "org_response_stats":
 { Args: { "p_org": string }; Returns: Json
                            },
+"path_skill_drawer":
+{ Args: { "p_role"?: string,"p_skill": string }; Returns: Json
+                           },
+"path_view":
+{ Args: { "p_role": string }; Returns: Json
+                           },
+"payment_details_page":
+{ Args: { "p_society": string }; Returns: Json
+                           },
+"payments_review":
+{ Args: { "p_event": string }; Returns: Json
+                           },
 "pending_friend_request_count":
 { Args: Record<PropertyKey, never>; Returns: number
+                           },
+"people_you_may_know":
+{ Args: { "p_limit"?: number }; Returns: Json
                            },
 "pin_comment":
 { Args: { "p_comment": string,"p_pin": boolean }; Returns: undefined
@@ -4909,9 +6353,12 @@ isOneToOne: false
 "pinned_university_announcement":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
+"portals_state":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "post_cards":
 { Args: { "p_ids": (string)[] }; Returns: {
-              "audience": Database["public"]['Enums']["post_audience"],"author_avatar_path": string,"author_id": string,"author_muted": boolean,"author_name": string,"author_username": string,"body": string,"can_edit": boolean,"comment_count": number,"created_at": string,"edited_at": string,"event": Json,"id": string,"is_mine": boolean,"link": Json,"media": Json,"pinned_until": string,"poll": Json,"stage": Database["public"]['Enums']["post_stage"],"type": Database["public"]['Enums']["post_type"],"venture": Json
+              "audience": Database["public"]['Enums']["post_audience"],"author_avatar_path": string,"author_id": string,"author_muted": boolean,"author_name": string,"author_username": string,"body": string,"can_edit": boolean,"comment_count": number,"created_at": string,"edited_at": string,"event": Json,"id": string,"is_mine": boolean,"link": Json,"media": Json,"pinned_until": string,"poll": Json,"society": Json,"stage": Database["public"]['Enums']["post_stage"],"type": Database["public"]['Enums']["post_type"],"venture": Json
             }[]
                            },
 "post_comment_list":
@@ -4938,14 +6385,32 @@ isOneToOne: false
               "id": string,"is_owner": boolean,"joined_at": string,"status": Database["public"]['Enums']["venture_status"],"team_role": Database["public"]['Enums']["venture_team_role"],"title": string,"type": Database["public"]['Enums']["venture_type"]
             }[]
                            },
+"propose_payment_method":
+{ Args: { "p": Json,"p_society": string }; Returns: string
+                           },
+"propose_swap_session":
+{ Args: { "p_minutes": number,"p_place": string,"p_starts_at": string,"p_swap": string }; Returns: string
+                           },
 "public_plans":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
 "public_pricing_extras":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
+"publish_event":
+{ Args: { "p_event": string }; Returns: undefined
+                           },
+"publish_induction_round":
+{ Args: { "p_round": string }; Returns: undefined
+                           },
 "publish_job":
 { Args: { "p_id": string }; Returns: undefined
+                           },
+"push_public_key":
+{ Args: Record<PropertyKey, never>; Returns: string
+                           },
+"raise_payment_issue":
+{ Args: { "p_registration": string }; Returns: undefined
                            },
 "ranking_flag_case":
 { Args: { "p_id": string }; Returns: Json
@@ -4975,6 +6440,12 @@ isOneToOne: false
 "record_github_webhook":
 { Args: { "p_action"?: string,"p_delivery_id": string,"p_event": string,"p_installation_id"?: number,"p_payload": Json }; Returns: boolean
                            },
+"record_highlights":
+{ Args: { "p_user": string }; Returns: Json
+                           },
+"record_pdf_export":
+{ Args: { "p_bytes": number,"p_codes": (string)[],"p_entry": string,"p_export": string,"p_kind": string,"p_mac": string,"p_pdf_hash": string }; Returns: undefined
+                           },
 "record_service_signal":
 { Args: { "p_kind": string,"p_value"?: number }; Returns: undefined
                            },
@@ -4983,6 +6454,9 @@ isOneToOne: false
                            },
 "record_views":
 { Args: { "p_ids": (string)[] }; Returns: number
+                           },
+"record_waiting":
+{ Args: Record<PropertyKey, never>; Returns: number
                            },
 "record_web_vitals":
 { Args: { "p_metrics": Json,"p_route": string }; Returns: undefined
@@ -4993,11 +6467,20 @@ isOneToOne: false
 "recruit_candidate_for_code":
 { Args: { "p_code": string }; Returns: string
                            },
+"register_event":
+{ Args: { "p": Json,"p_event": string }; Returns: Json
+                           },
+"remove_event_staff":
+{ Args: { "p_event": string,"p_user": string }; Returns: undefined
+                           },
 "remove_exam_period":
 { Args: { "p_id": string,"p_reason": string }; Returns: undefined
                            },
 "remove_from_shortlist":
 { Args: { "p_item": string }; Returns: undefined
+                           },
+"remove_officer":
+{ Args: { "p_society": string,"p_user": string }; Returns: undefined
                            },
 "remove_org_member":
 { Args: { "p_user": string }; Returns: undefined
@@ -5023,6 +6506,9 @@ isOneToOne: false
 "reorder_shortlist":
 { Args: { "p_items": (string)[],"p_list": string }; Returns: undefined
                            },
+"report_record_mistake":
+{ Args: { "p_entry": string,"p_note": string }; Returns: string
+                           },
 "request_account_deletion":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
@@ -5040,6 +6526,12 @@ isOneToOne: false
                            },
 "request_review":
 { Args: { "p_teacher": string,"p_venture": string }; Returns: string
+                           },
+"request_society":
+{ Args: { "p": Json }; Returns: string
+                           },
+"request_swap":
+{ Args: { "p_note": string,"p_offer"?: string,"p_skill": string,"p_teacher": string,"p_times": string }; Returns: string
                            },
 "request_teacher_role":
 { Args: { "p_department": string,"p_title": string }; Returns: Database["public"]['Enums']["teacher_status"]
@@ -5074,11 +6566,20 @@ isOneToOne: false
 "respond_supervision":
 { Args: { "p_accept": boolean,"p_venture": string }; Returns: undefined
                            },
+"respond_swap":
+{ Args: { "p_accept": boolean,"p_swap": string }; Returns: undefined
+                           },
+"respond_swap_session":
+{ Args: { "p_accept": boolean,"p_session": string }; Returns: undefined
+                           },
 "respond_team_invite":
 { Args: { "p_accept": boolean,"p_team": string }; Returns: undefined
                            },
 "restart_tour":
 { Args: { "p_tour": string }; Returns: undefined
+                           },
+"resubmit_society":
+{ Args: { "p": Json,"p_society": string }; Returns: undefined
                            },
 "review_credential":
 { Args: { "p_approve": boolean,"p_id": string,"p_issuer"?: string,"p_reason": string }; Returns: undefined
@@ -5098,11 +6599,17 @@ isOneToOne: false
               "claimed_by_me": boolean,"claimed_by_name": string,"commits": number,"created_at": string,"id": number,"kind": Database["public"]['Enums']["review_flag_kind"],"student_name": string,"student_username": string
             }[]
                            },
+"review_payment":
+{ Args: { "p_approve": boolean,"p_payment": string,"p_reason": string }; Returns: undefined
+                           },
 "review_ranking_flag":
 { Args: { "p_id": string,"p_reason": string,"p_uphold": boolean }; Returns: undefined
                            },
 "review_requests_for":
 { Args: { "p_venture": string }; Returns: Json
+                           },
+"review_task":
+{ Args: { "p_confirm": boolean,"p_note": string,"p_review": string,"p_ticks": Json }; Returns: undefined
                            },
 "review_teacher_flag":
 { Args: { "p_id": string,"p_reason": string,"p_upheld": boolean }; Returns: undefined
@@ -5120,6 +6627,12 @@ isOneToOne: false
 { Args: { "p_invite": string }; Returns: boolean
                            },
 "revoke_org_invite":
+{ Args: { "p_id": string }; Returns: undefined
+                           },
+"revoke_record_entry":
+{ Args: { "p_category": string,"p_entry": string,"p_reason": string }; Returns: undefined
+                           },
+"revoke_record_share_link":
 { Args: { "p_id": string }; Returns: undefined
                            },
 "revoke_share_link":
@@ -5163,6 +6676,9 @@ isOneToOne: false
 "save_competition":
 { Args: { "p": Json,"p_id": string }; Returns: string
                            },
+"save_cv_activities":
+{ Args: { "p_entries": (string)[] }; Returns: undefined
+                           },
 "save_cv_settings":
 { Args: { "p_sections": (string)[],"p_show_email": boolean,"p_show_percentile": boolean,"p_visibility": Database["public"]['Enums']["cv_visibility"] }; Returns: undefined
                            },
@@ -5187,6 +6703,9 @@ isOneToOne: false
 "save_idea":
 { Args: { "p": Json,"p_id": string }; Returns: string
                            },
+"save_induction_round":
+{ Args: { "p": Json,"p_society": string }; Returns: string
+                           },
 "save_job":
 { Args: { "p": Json,"p_id": string }; Returns: string
                            },
@@ -5196,11 +6715,23 @@ isOneToOne: false
 "save_programme":
 { Args: { "p_department": string,"p_name": string }; Returns: string
                            },
+"save_push_subscription":
+{ Args: { "p_auth": string,"p_endpoint": string,"p_p256dh": string,"p_user_agent"?: string }; Returns: undefined
+                           },
 "save_recruiter_prefs":
 { Args: { "p_availability": (string)[],"p_city": string,"p_remote": boolean }; Returns: undefined
                            },
 "save_search":
 { Args: { "p_filters": Json,"p_frequency": string,"p_name": string }; Returns: string
+                           },
+"save_society_event":
+{ Args: { "p": Json,"p_society": string }; Returns: string
+                           },
+"save_swap_offer":
+{ Args: { "p_note": string,"p_on": boolean,"p_skill": string }; Returns: undefined
+                           },
+"save_swap_want":
+{ Args: { "p_note": string,"p_on": boolean,"p_skill": string }; Returns: undefined
                            },
 "save_teacher_settings":
 { Args: { "p_cap": number,"p_digest": boolean,"p_opt_in": boolean,"p_skills": (string)[] }; Returns: undefined
@@ -5213,6 +6744,9 @@ isOneToOne: false
                            },
 "save_venture_role":
 { Args: { "p_role"?: string,"p_skill_ids": (string)[],"p_slots": number,"p_title": string,"p_venture": string }; Returns: string
+                           },
+"save_yearbook_page":
+{ Args: { "p_clear_photo"?: boolean,"p_highlights": (string)[],"p_photo"?: string,"p_quote": string,"p_visible": boolean }; Returns: undefined
                            },
 "saved_searches_list":
 { Args: Record<PropertyKey, never>; Returns: Json
@@ -5247,6 +6781,9 @@ isOneToOne: false
 "see_tip":
 { Args: { "p_tip": string }; Returns: undefined
                            },
+"self_check_in":
+{ Args: { "p_event": string,"p_token": string }; Returns: Json
+                           },
 "send_contact_request":
 { Args: { "p_message": string,"p_role": string,"p_student": string }; Returns: string
                            },
@@ -5256,10 +6793,13 @@ isOneToOne: false
             }[]
                            },
 "send_message":
-{ Args: { "p_body": string,"p_media"?: Json,"p_reply_to"?: string,"p_thread": string }; Returns: string
+{ Args: { "p_body": string,"p_media"?: Json,"p_reply_to"?: string,"p_shared_post"?: string,"p_thread": string }; Returns: string
                            },
 "set_branding_image":
 { Args: { "p_kind": string,"p_path": string }; Returns: undefined
+                           },
+"set_event_result":
+{ Args: { "p_event": string,"p_label": string,"p_place": number,"p_team": string,"p_user": string }; Returns: undefined
                            },
 "set_idea_status":
 { Args: { "p_id": string,"p_open": boolean }; Returns: undefined
@@ -5273,6 +6813,9 @@ isOneToOne: false
 "set_member_role":
 { Args: { "p_member": string,"p_role": Database["public"]['Enums']["venture_team_role"],"p_venture": string }; Returns: undefined
                            },
+"set_membership_mode":
+{ Args: { "p_mode": string,"p_society": string }; Returns: undefined
+                           },
 "set_my_university":
 { Args: { "p_university_id": string }; Returns: boolean
                            },
@@ -5282,7 +6825,19 @@ isOneToOne: false
 "set_org_member_role":
 { Args: { "p_role": Database["public"]['Enums']["org_role"],"p_user": string }; Returns: undefined
                            },
+"set_push_pref":
+{ Args: { "p_category": string,"p_on": boolean }; Returns: undefined
+                           },
 "set_read_receipts":
+{ Args: { "p_on": boolean }; Returns: undefined
+                           },
+"set_record_display":
+{ Args: { "p_entry": string,"p_hidden": boolean,"p_pinned": boolean }; Returns: undefined
+                           },
+"set_society_images":
+{ Args: { "p_cover": string,"p_logo": string,"p_society": string }; Returns: undefined
+                           },
+"set_superlatives_opt_out":
 { Args: { "p_on": boolean }; Returns: undefined
                            },
 "set_ui_state":
@@ -5294,17 +6849,50 @@ isOneToOne: false
 "set_venture_questions":
 { Args: { "p_questions": (string)[],"p_venture": string }; Returns: undefined
                            },
+"share_post":
+{ Args: { "p_note"?: string,"p_post": string,"p_threads": (string)[] }; Returns: (string)[]
+                           },
+"share_targets":
+{ Args: { "p_q"?: string }; Returns: Json
+                           },
 "shortlist_get":
 { Args: { "p_list": string }; Returns: Json
                            },
 "shortlists_list":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
+"sign_yearbook":
+{ Args: { "p_body": string,"p_username": string }; Returns: string
+                           },
 "signin_failed":
 { Args: { "p_email": string,"p_ip_hash": string }; Returns: Json
                            },
 "signin_status":
 { Args: { "p_email": string,"p_ip_hash": string }; Returns: Json
+                           },
+"societies_directory":
+{ Args: { "p_category"?: string,"p_query"?: string }; Returns: Json
+                           },
+"society_event_code":
+{ Args: { "p_event": string }; Returns: Json
+                           },
+"society_event_list":
+{ Args: { "p_society": string }; Returns: Json
+                           },
+"society_events":
+{ Args: { "p_type"?: string,"p_when"?: string }; Returns: Json
+                           },
+"society_manage":
+{ Args: { "p_society": string }; Returns: Json
+                           },
+"society_name_check":
+{ Args: { "p_name": string }; Returns: Json
+                           },
+"society_page":
+{ Args: { "p_slug": string }; Returns: Json
+                           },
+"society_record_page":
+{ Args: { "p_society": string }; Returns: Json
                            },
 "start_code_check":
 { Args: { "p_id": string }; Returns: string
@@ -5314,6 +6902,9 @@ isOneToOne: false
                            },
 "start_review":
 { Args: { "p_venture": string }; Returns: string
+                           },
+"start_task":
+{ Args: { "p_task": string }; Returns: string
                            },
 "start_trial":
 { Args: Record<PropertyKey, never>; Returns: string
@@ -5335,11 +6926,17 @@ isOneToOne: false
 "submit_credential":
 { Args: { "p": Json }; Returns: string
                            },
+"submit_event_feedback":
+{ Args: { "p_comment": string,"p_event": string,"p_rating": number }; Returns: undefined
+                           },
 "submit_feedback":
 { Args: { "p_body": string,"p_device": string,"p_page": string,"p_screenshot": string,"p_type": Database["public"]['Enums']["feedback_type"],"p_version": string }; Returns: string
                            },
 "submit_org_document":
 { Args: { "p_path": string }; Returns: undefined
+                           },
+"submit_receipt":
+{ Args: { "p_hash": string,"p_path": string,"p_phash": string,"p_registration": string,"p_transaction_id": string }; Returns: undefined
                            },
 "submit_repo":
 { Args: { "p_team": string,"p_url": string }; Returns: undefined
@@ -5351,7 +6948,10 @@ isOneToOne: false
 { Args: { "p_comments"?: string,"p_request": string,"p_rubric": Json }; Returns: string
                            },
 "submit_sales_lead":
-{ Args: { "p_email": string,"p_message": string,"p_name": string,"p_organisation": string,"p_role": string }; Returns: string
+{ Args: { "p_email": string,"p_kind"?: string,"p_message": string,"p_name": string,"p_organisation": string,"p_role": string }; Returns: string
+                           },
+"submit_task":
+{ Args: { "p_attempt": string }; Returns: string
                            },
 "submit_uni_claim":
 { Args: { "p": Json }; Returns: string
@@ -5370,11 +6970,26 @@ isOneToOne: false
               "answered_at": string,"can_change": boolean,"dimension": string,"my_answer": boolean,"post_id": string,"public_line": Json,"question": string,"question_id": number
             }[]
                            },
+"swap_notes_for":
+{ Args: { "p_user": string }; Returns: Json
+                           },
+"swap_page":
+{ Args: { "p_swap": string }; Returns: Json
+                           },
+"swap_teachers":
+{ Args: { "p_skill": string }; Returns: Json
+                           },
+"swaps_page":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "talent_explore":
 { Args: { "p_filters": Json,"p_offset"?: number }; Returns: Json
                            },
 "talent_facets":
 { Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"task_review_page":
+{ Args: { "p_review": string }; Returns: Json
                            },
 "teacher_claim_code_check":
 { Args: { "p_claim": boolean,"p_id": string }; Returns: undefined
@@ -5432,7 +7047,7 @@ isOneToOne: false
                            },
 "thread_messages":
 { Args: { "p_before"?: string,"p_limit"?: number,"p_thread": string }; Returns: {
-              "body": string,"created_at": string,"deleted": boolean,"edited_at": string,"id": string,"link": Json,"media_height": number,"media_path": string,"media_width": number,"pinned": boolean,"reactions": Json,"reply_excerpt": string,"reply_sender_id": string,"reply_to_id": string,"sender_id": string
+              "body": string,"created_at": string,"deleted": boolean,"edited_at": string,"id": string,"link": Json,"media_height": number,"media_path": string,"media_width": number,"pinned": boolean,"reactions": Json,"reply_excerpt": string,"reply_sender_id": string,"reply_to_id": string,"sender_id": string,"shared": boolean,"shared_post_id": string
             }[]
                            },
 "thread_people":
@@ -5444,6 +7059,9 @@ isOneToOne: false
 { Args: { "p_thread": string }; Returns: {
               "excerpt": string,"message_id": string,"pinned_at": string,"sender_id": string
             }[]
+                           },
+"ticket_payment":
+{ Args: { "p_event": string }; Returns: Json
                            },
 "tiers_for":
 { Args: { "p_users": (string)[] }; Returns: {
@@ -5476,6 +7094,9 @@ isOneToOne: false
                            },
 "unblock_user":
 { Args: { "p_username": string }; Returns: undefined
+                           },
+"undo_share":
+{ Args: { "p_messages": (string)[] }; Returns: number
                            },
 "unfriend":
 { Args: { "p_username": string }; Returns: undefined
@@ -5597,6 +7218,9 @@ isOneToOne: false
 "update_company_page":
 { Args: { "p": Json }; Returns: undefined
                            },
+"update_society":
+{ Args: { "p": Json,"p_society": string }; Returns: undefined
+                           },
 "update_venture":
 { Args: { "p": Json,"p_venture": string }; Returns: undefined
                            },
@@ -5635,6 +7259,12 @@ isOneToOne: false
               "code": string,"expires_at": string,"issued_at": string,"key_id": string,"pdf_checked": boolean,"pdf_matches": boolean,"public_key": string,"revoked_at": string,"signature": string,"snapshot": Json,"snapshot_hash": string,"superseded_at": string
             }[]
                            },
+"verify_record_entry":
+{ Args: { "p_code": string }; Returns: Json
+                           },
+"verify_record_transcript":
+{ Args: { "p_id": string }; Returns: Json
+                           },
 "vote_poll":
 { Args: { "p_position": number,"p_post": string }; Returns: undefined
                            },
@@ -5643,10 +7273,25 @@ isOneToOne: false
                            },
 "withdraw_job_application":
 { Args: { "p_id": string }; Returns: undefined
+                           },
+"yearbook_ballot":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"yearbook_home":
+{ Args: { "p_q"?: string }; Returns: Json
+                           },
+"yearbook_me":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"yearbook_nominees":
+{ Args: { "p_q"?: string }; Returns: Json
+                           },
+"yearbook_page":
+{ Args: { "p_username": string }; Returns: Json
                            }
           }
           Enums: {
-            "account_role": "student"|"faculty"|"recruiter"|"university_admin","account_status": "active"|"graduate"|"deleting","anti_gaming_kind": "ring"|"rapid_gain","appeal_decision_type": "sanction"|"report_case"|"cv_revocation"|"credential"|"code_check","appeal_status": "pending"|"upheld"|"overturned","application_stage": "applied"|"screening"|"interview"|"offer"|"hired"|"rejected"|"withdrawn","application_status": "pending"|"accepted"|"declined"|"withdrawn"|"closed","billing_subject": "user"|"org"|"university","chat_thread_type": "dm"|"group","code_check_status": "preparing"|"ready"|"in_progress"|"submitted"|"passed"|"failed"|"unavailable"|"expired","competition_status": "draft"|"in_review"|"rejected"|"approved"|"live"|"frozen"|"judged","contact_status": "pending"|"accepted"|"declined"|"expired","contribution_kind": "code"|"design"|"research"|"docs"|"management"|"other","contribution_source": "manual"|"github","credential_status": "pending"|"approved"|"rejected"|"expired","cv_visibility": "private"|"link"|"recruiters","domain_kind": "student"|"faculty"|"both","email_channel": "instant_email"|"digest"|"off","entitlement_kind": "bool"|"int"|"limit"|"enum","fair_queue_status": "waiting"|"called"|"talking"|"done"|"skipped"|"left","fair_status": "draft"|"published"|"cancelled","feedback_status": "received"|"reviewing"|"planned"|"shipped"|"wont_do","feedback_type": "bug"|"idea"|"confusing"|"praise","friend_request_status": "pending"|"accepted"|"declined","github_commit_status": "pending"|"counted"|"held"|"excluded","github_repo_kind": "owned"|"collaborator"|"fork"|"template","grant_source": "plan"|"add_on"|"sponsorship"|"trial"|"admin","idea_audience": "university"|"global","idea_difficulty": "intro"|"intermediate"|"advanced","idea_status": "open"|"closed","job_run_status": "running"|"succeeded"|"failed","job_status": "draft"|"live"|"closed"|"paused","looking_for_option": "internship"|"job"|"teammates"|"project"|"mentorship","org_role": "admin"|"recruiter"|"billing","org_status": "pending"|"verified"|"suspended"|"rejected","post_audience": "university"|"global","post_stage": "seed"|"limited"|"full"|"global_boost"|"demoted"|"held","post_type": "general"|"invite"|"announcement"|"event"|"poll"|"shipped","profile_visibility": "friends"|"university"|"global","ranking_adjustment_kind": "penalty"|"rapid_gain","ranking_tier": "raw"|"spark"|"flare"|"shine"|"radiant"|"luminary","report_case_status": "open"|"dismissed"|"removed"|"warned","report_reason": "spam"|"harassment"|"inappropriate"|"misinformation"|"impersonation"|"other","report_target": "post"|"comment"|"message"|"profile"|"venture","review_flag_kind": "burst"|"backdating"|"cross_account_duplicate","review_flag_status": "open"|"cleared"|"upheld","review_request_status": "open"|"submitted"|"declined"|"expired"|"cancelled","rsvp_status": "going"|"interested","sales_lead_status": "new"|"contacted"|"won"|"lost","sanction_kind": "warn"|"suspend"|"ban"|"throttle","skill_category": "language"|"framework"|"library"|"tool"|"platform"|"practice","staff_role": "moderator"|"trust_reviewer"|"accounts"|"super_admin","subscription_status": "trialing"|"active"|"past_due"|"expired"|"cancelled","supervisor_status": "invited"|"active"|"ended","sync_status": "queued"|"running"|"done"|"failed"|"cancelled","teacher_status": "pending"|"approved"|"revoked","uni_admin_role": "owner"|"admin"|"career"|"coordinator"|"comms","uni_event_scope": "university"|"global","uni_event_type": "talk"|"workshop"|"hackathon"|"competition"|"other","uni_hide_status": "hidden"|"restored"|"removed","uni_request_status": "pending"|"approved"|"rejected","venture_invite_status": "pending"|"accepted"|"declined"|"revoked","venture_stage": "idea"|"prototype"|"launched"|"revenue","venture_status": "recruiting"|"in_progress"|"completed"|"abandoned","venture_team_role": "lead"|"developer"|"designer"|"researcher"|"other","venture_type": "project"|"startup","venture_visibility": "public"|"university"|"unlisted"
+            "account_role": "student"|"faculty"|"recruiter"|"university_admin","account_status": "active"|"graduate"|"deleting","anti_gaming_kind": "ring"|"rapid_gain"|"swap_ring"|"swap_repeat","appeal_decision_type": "sanction"|"report_case"|"cv_revocation"|"credential"|"code_check"|"record_revocation","appeal_status": "pending"|"upheld"|"overturned","application_stage": "applied"|"screening"|"interview"|"offer"|"hired"|"rejected"|"withdrawn","application_status": "pending"|"accepted"|"declined"|"withdrawn"|"closed","billing_subject": "user"|"org"|"university","chat_thread_type": "dm"|"group","code_check_status": "preparing"|"ready"|"in_progress"|"submitted"|"passed"|"failed"|"unavailable"|"expired","competition_status": "draft"|"in_review"|"rejected"|"approved"|"live"|"frozen"|"judged","contact_status": "pending"|"accepted"|"declined"|"expired","contribution_kind": "code"|"design"|"research"|"docs"|"management"|"other","contribution_source": "manual"|"github","credential_status": "pending"|"approved"|"rejected"|"expired","cv_visibility": "private"|"link"|"recruiters","domain_kind": "student"|"faculty"|"both","email_channel": "instant_email"|"digest"|"off","entitlement_kind": "bool"|"int"|"limit"|"enum","fair_queue_status": "waiting"|"called"|"talking"|"done"|"skipped"|"left","fair_status": "draft"|"published"|"cancelled","feedback_status": "received"|"reviewing"|"planned"|"shipped"|"wont_do","feedback_type": "bug"|"idea"|"confusing"|"praise","friend_request_status": "pending"|"accepted"|"declined","github_commit_status": "pending"|"counted"|"held"|"excluded","github_repo_kind": "owned"|"collaborator"|"fork"|"template","grant_source": "plan"|"add_on"|"sponsorship"|"trial"|"admin","idea_audience": "university"|"global","idea_difficulty": "intro"|"intermediate"|"advanced","idea_status": "open"|"closed","job_run_status": "running"|"succeeded"|"failed","job_status": "draft"|"live"|"closed"|"paused","looking_for_option": "internship"|"job"|"teammates"|"project"|"mentorship","org_role": "admin"|"recruiter"|"billing","org_status": "pending"|"verified"|"suspended"|"rejected","post_audience": "university"|"global","post_stage": "seed"|"limited"|"full"|"global_boost"|"demoted"|"held","post_type": "general"|"invite"|"announcement"|"event"|"poll"|"shipped","profile_visibility": "friends"|"university"|"global","ranking_adjustment_kind": "penalty"|"rapid_gain","ranking_tier": "raw"|"spark"|"flare"|"shine"|"radiant"|"luminary","report_case_status": "open"|"dismissed"|"removed"|"warned","report_reason": "spam"|"harassment"|"inappropriate"|"misinformation"|"impersonation"|"other","report_target": "post"|"comment"|"message"|"profile"|"venture"|"society"|"event"|"event_registration"|"record_entry"|"swap"|"yearbook_page"|"yearbook_note","review_flag_kind": "burst"|"backdating"|"cross_account_duplicate","review_flag_status": "open"|"cleared"|"upheld","review_request_status": "open"|"submitted"|"declined"|"expired"|"cancelled","rsvp_status": "going"|"interested","sales_lead_status": "new"|"contacted"|"won"|"lost","sanction_kind": "warn"|"suspend"|"ban"|"throttle","skill_category": "language"|"framework"|"library"|"tool"|"platform"|"practice","society_role": "president"|"officer"|"member","society_status": "pending"|"more_info"|"verified"|"rejected"|"suspended","staff_role": "moderator"|"trust_reviewer"|"accounts"|"super_admin","subscription_status": "trialing"|"active"|"past_due"|"expired"|"cancelled","supervisor_status": "invited"|"active"|"ended","sync_status": "queued"|"running"|"done"|"failed"|"cancelled","teacher_status": "pending"|"approved"|"revoked","uni_admin_role": "owner"|"admin"|"career"|"coordinator"|"comms","uni_event_scope": "university"|"global","uni_event_type": "talk"|"workshop"|"hackathon"|"competition"|"other"|"social"|"volunteering","uni_hide_status": "hidden"|"restored"|"removed","uni_request_status": "pending"|"approved"|"rejected","venture_invite_status": "pending"|"accepted"|"declined"|"revoked","venture_stage": "idea"|"prototype"|"launched"|"revenue","venture_status": "recruiting"|"in_progress"|"completed"|"abandoned","venture_team_role": "lead"|"developer"|"designer"|"researcher"|"other","venture_type": "project"|"startup","venture_visibility": "public"|"university"|"unlisted"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -5766,7 +7411,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "account_role": ["student", "faculty", "recruiter", "university_admin"],"account_status": ["active", "graduate", "deleting"],"anti_gaming_kind": ["ring", "rapid_gain"],"appeal_decision_type": ["sanction", "report_case", "cv_revocation", "credential", "code_check"],"appeal_status": ["pending", "upheld", "overturned"],"application_stage": ["applied", "screening", "interview", "offer", "hired", "rejected", "withdrawn"],"application_status": ["pending", "accepted", "declined", "withdrawn", "closed"],"billing_subject": ["user", "org", "university"],"chat_thread_type": ["dm", "group"],"code_check_status": ["preparing", "ready", "in_progress", "submitted", "passed", "failed", "unavailable", "expired"],"competition_status": ["draft", "in_review", "rejected", "approved", "live", "frozen", "judged"],"contact_status": ["pending", "accepted", "declined", "expired"],"contribution_kind": ["code", "design", "research", "docs", "management", "other"],"contribution_source": ["manual", "github"],"credential_status": ["pending", "approved", "rejected", "expired"],"cv_visibility": ["private", "link", "recruiters"],"domain_kind": ["student", "faculty", "both"],"email_channel": ["instant_email", "digest", "off"],"entitlement_kind": ["bool", "int", "limit", "enum"],"fair_queue_status": ["waiting", "called", "talking", "done", "skipped", "left"],"fair_status": ["draft", "published", "cancelled"],"feedback_status": ["received", "reviewing", "planned", "shipped", "wont_do"],"feedback_type": ["bug", "idea", "confusing", "praise"],"friend_request_status": ["pending", "accepted", "declined"],"github_commit_status": ["pending", "counted", "held", "excluded"],"github_repo_kind": ["owned", "collaborator", "fork", "template"],"grant_source": ["plan", "add_on", "sponsorship", "trial", "admin"],"idea_audience": ["university", "global"],"idea_difficulty": ["intro", "intermediate", "advanced"],"idea_status": ["open", "closed"],"job_run_status": ["running", "succeeded", "failed"],"job_status": ["draft", "live", "closed", "paused"],"looking_for_option": ["internship", "job", "teammates", "project", "mentorship"],"org_role": ["admin", "recruiter", "billing"],"org_status": ["pending", "verified", "suspended", "rejected"],"post_audience": ["university", "global"],"post_stage": ["seed", "limited", "full", "global_boost", "demoted", "held"],"post_type": ["general", "invite", "announcement", "event", "poll", "shipped"],"profile_visibility": ["friends", "university", "global"],"ranking_adjustment_kind": ["penalty", "rapid_gain"],"ranking_tier": ["raw", "spark", "flare", "shine", "radiant", "luminary"],"report_case_status": ["open", "dismissed", "removed", "warned"],"report_reason": ["spam", "harassment", "inappropriate", "misinformation", "impersonation", "other"],"report_target": ["post", "comment", "message", "profile", "venture"],"review_flag_kind": ["burst", "backdating", "cross_account_duplicate"],"review_flag_status": ["open", "cleared", "upheld"],"review_request_status": ["open", "submitted", "declined", "expired", "cancelled"],"rsvp_status": ["going", "interested"],"sales_lead_status": ["new", "contacted", "won", "lost"],"sanction_kind": ["warn", "suspend", "ban", "throttle"],"skill_category": ["language", "framework", "library", "tool", "platform", "practice"],"staff_role": ["moderator", "trust_reviewer", "accounts", "super_admin"],"subscription_status": ["trialing", "active", "past_due", "expired", "cancelled"],"supervisor_status": ["invited", "active", "ended"],"sync_status": ["queued", "running", "done", "failed", "cancelled"],"teacher_status": ["pending", "approved", "revoked"],"uni_admin_role": ["owner", "admin", "career", "coordinator", "comms"],"uni_event_scope": ["university", "global"],"uni_event_type": ["talk", "workshop", "hackathon", "competition", "other"],"uni_hide_status": ["hidden", "restored", "removed"],"uni_request_status": ["pending", "approved", "rejected"],"venture_invite_status": ["pending", "accepted", "declined", "revoked"],"venture_stage": ["idea", "prototype", "launched", "revenue"],"venture_status": ["recruiting", "in_progress", "completed", "abandoned"],"venture_team_role": ["lead", "developer", "designer", "researcher", "other"],"venture_type": ["project", "startup"],"venture_visibility": ["public", "university", "unlisted"]
+            "account_role": ["student", "faculty", "recruiter", "university_admin"],"account_status": ["active", "graduate", "deleting"],"anti_gaming_kind": ["ring", "rapid_gain", "swap_ring", "swap_repeat"],"appeal_decision_type": ["sanction", "report_case", "cv_revocation", "credential", "code_check", "record_revocation"],"appeal_status": ["pending", "upheld", "overturned"],"application_stage": ["applied", "screening", "interview", "offer", "hired", "rejected", "withdrawn"],"application_status": ["pending", "accepted", "declined", "withdrawn", "closed"],"billing_subject": ["user", "org", "university"],"chat_thread_type": ["dm", "group"],"code_check_status": ["preparing", "ready", "in_progress", "submitted", "passed", "failed", "unavailable", "expired"],"competition_status": ["draft", "in_review", "rejected", "approved", "live", "frozen", "judged"],"contact_status": ["pending", "accepted", "declined", "expired"],"contribution_kind": ["code", "design", "research", "docs", "management", "other"],"contribution_source": ["manual", "github"],"credential_status": ["pending", "approved", "rejected", "expired"],"cv_visibility": ["private", "link", "recruiters"],"domain_kind": ["student", "faculty", "both"],"email_channel": ["instant_email", "digest", "off"],"entitlement_kind": ["bool", "int", "limit", "enum"],"fair_queue_status": ["waiting", "called", "talking", "done", "skipped", "left"],"fair_status": ["draft", "published", "cancelled"],"feedback_status": ["received", "reviewing", "planned", "shipped", "wont_do"],"feedback_type": ["bug", "idea", "confusing", "praise"],"friend_request_status": ["pending", "accepted", "declined"],"github_commit_status": ["pending", "counted", "held", "excluded"],"github_repo_kind": ["owned", "collaborator", "fork", "template"],"grant_source": ["plan", "add_on", "sponsorship", "trial", "admin"],"idea_audience": ["university", "global"],"idea_difficulty": ["intro", "intermediate", "advanced"],"idea_status": ["open", "closed"],"job_run_status": ["running", "succeeded", "failed"],"job_status": ["draft", "live", "closed", "paused"],"looking_for_option": ["internship", "job", "teammates", "project", "mentorship"],"org_role": ["admin", "recruiter", "billing"],"org_status": ["pending", "verified", "suspended", "rejected"],"post_audience": ["university", "global"],"post_stage": ["seed", "limited", "full", "global_boost", "demoted", "held"],"post_type": ["general", "invite", "announcement", "event", "poll", "shipped"],"profile_visibility": ["friends", "university", "global"],"ranking_adjustment_kind": ["penalty", "rapid_gain"],"ranking_tier": ["raw", "spark", "flare", "shine", "radiant", "luminary"],"report_case_status": ["open", "dismissed", "removed", "warned"],"report_reason": ["spam", "harassment", "inappropriate", "misinformation", "impersonation", "other"],"report_target": ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry", "swap", "yearbook_page", "yearbook_note"],"review_flag_kind": ["burst", "backdating", "cross_account_duplicate"],"review_flag_status": ["open", "cleared", "upheld"],"review_request_status": ["open", "submitted", "declined", "expired", "cancelled"],"rsvp_status": ["going", "interested"],"sales_lead_status": ["new", "contacted", "won", "lost"],"sanction_kind": ["warn", "suspend", "ban", "throttle"],"skill_category": ["language", "framework", "library", "tool", "platform", "practice"],"society_role": ["president", "officer", "member"],"society_status": ["pending", "more_info", "verified", "rejected", "suspended"],"staff_role": ["moderator", "trust_reviewer", "accounts", "super_admin"],"subscription_status": ["trialing", "active", "past_due", "expired", "cancelled"],"supervisor_status": ["invited", "active", "ended"],"sync_status": ["queued", "running", "done", "failed", "cancelled"],"teacher_status": ["pending", "approved", "revoked"],"uni_admin_role": ["owner", "admin", "career", "coordinator", "comms"],"uni_event_scope": ["university", "global"],"uni_event_type": ["talk", "workshop", "hackathon", "competition", "other", "social", "volunteering"],"uni_hide_status": ["hidden", "restored", "removed"],"uni_request_status": ["pending", "approved", "rejected"],"venture_invite_status": ["pending", "accepted", "declined", "revoked"],"venture_stage": ["idea", "prototype", "launched", "revenue"],"venture_status": ["recruiting", "in_progress", "completed", "abandoned"],"venture_team_role": ["lead", "developer", "designer", "researcher", "other"],"venture_type": ["project", "startup"],"venture_visibility": ["public", "university", "unlisted"]
           }
         }
 } as const

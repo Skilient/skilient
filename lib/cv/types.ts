@@ -3,7 +3,7 @@
  * strings only. Client-safe (no server imports).
  */
 /** Every section, in the default order (projects first, decisions 2026-10-19). */
-export const CV_SECTIONS = ["summary", "projects", "open_source", "skills", "endorsements", "credentials", "education"] as const;
+export const CV_SECTIONS = ["summary", "projects", "open_source", "skills", "activities", "endorsements", "credentials", "education"] as const;
 export type CvSection = (typeof CV_SECTIONS)[number];
 
 export type CvTier = "raw" | "spark" | "flare" | "shine" | "radiant" | "luminary";
@@ -63,4 +63,9 @@ export interface CvSnapshotV1 {
   education: { university: string; department: string | null; graduation_year: number | null };
   /** University awards (phase 9), in the next version after they are granted. Never part of ranking. */
   awards?: { name: string; university: string; awarded: string }[];
+  /**
+   * "Leadership and activities" (phase 16, PRD 5.30): Record entries the student picked, printed
+   * plainly; `line` and `code` are for the verify page's evidence, never the CV. Absent in older CVs.
+   */
+  activities?: { kind: string; label: string; issuer: string; when: string; line: string; code: string }[];
 }

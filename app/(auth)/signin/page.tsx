@@ -12,6 +12,7 @@ const ERRORS: Record<string, string> = {
   google: "Google sign-in didn't finish. Try again, or use your email and password.",
   domain: "Your email's domain is no longer on Skilient's university list. Contact support to move your account.",
   link_expired: "That link has expired or was already used. Sign in, or ask for a new one.",
+  portal_closed: "Recruiter and university accounts aren't open on Skilient right now. Talk to us from the Recruiters or Universities page.",
 };
 
 export default async function SigninPage({ searchParams }: PageProps<"/signin">) {

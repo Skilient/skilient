@@ -3,6 +3,9 @@
 -- C accounts staff, X a student (not staff).
 begin;
 select plan(34);
+-- Phase 14 turned the recruiter and university portals off by flag; this file tests them open.
+insert into public.platform_config (key, version, value, reason)
+values ('portals.enabled', 1000, '{"recruiter": true, "university": true, "faculty": true}', 'pgTAP: portals open');
 
 insert into public.universities (id, name, city, slug, live_at) values
   ('95000000-0000-0000-0000-0000000000a1', 'Closed University', 'Lahore', 'closed-university', null),

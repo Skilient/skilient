@@ -12,14 +12,14 @@ export function LiveAt({ stats }: { stats: LandingStats }) {
   const numbers = NUMBER_KEYS.filter((k) => typeof stats[k] === "number" && (stats[k] as number) >= 200);
   if (!stats.universities.length && !numbers.length) return null;
   return (
-    <section aria-labelledby="live-at-title" className="border-b border-border-muted" data-testid="live-at">
+    <section aria-labelledby="live-at-title" data-testid="live-at">
       <div className="mx-auto flex max-w-page flex-col gap-8 px-[var(--page-gutter)] py-12 sm:py-16">
         {stats.universities.length ? (
           <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:gap-8">
-            <h2 id="live-at-title" className="shrink-0 text-h4 text-text-secondary">
+            <h2 id="live-at-title" className="neu-mono shrink-0 text-text-secondary">
               {liveAt.heading}
             </h2>
-            <ul className="live-list flex flex-wrap items-baseline font-display text-h2 leading-snug">
+            <ul className="live-list flex flex-wrap items-baseline text-h3 font-semibold leading-snug">
               {stats.universities.map((u) => (
                 <li key={u}>{u}</li>
               ))}
@@ -33,9 +33,9 @@ export function LiveAt({ stats }: { stats: LandingStats }) {
         {numbers.length ? (
           <dl className="grid gap-6 sm:grid-cols-3" data-testid="live-numbers">
             {numbers.map((k) => (
-              <div key={k} className="flex flex-col-reverse gap-1">
+              <div key={k} className="neu-tile flex flex-col-reverse gap-1 p-6">
                 <dt className="text-body text-text-secondary">{liveAt.numbers[k]}</dt>
-                <dd className="font-display text-h1 tabular-nums">{(stats[k] as number).toLocaleString("en-PK")}</dd>
+                <dd className="neu-figure text-[3rem] leading-none font-semibold">{(stats[k] as number).toLocaleString("en-PK")}</dd>
               </div>
             ))}
           </dl>

@@ -130,11 +130,12 @@ export async function unsubscribeUniversityRequest(_prev: ActionResult | null, f
 const leadSchema = z.object({
   name: z.string().trim().min(2, "Enter your name.").max(80, "Keep your name under 80 characters."),
   role: z.string().trim().min(2, "Enter your role.").max(80, "Keep your role under 80 characters."),
-  organisation: z.string().trim().min(2, "Enter your university.").max(200, "Keep the name under 200 characters."),
+  organisation: z.string().trim().min(2, "Enter your organisation.").max(200, "Keep the name under 200 characters."),
   email: z.email("Enter a valid email address.").trim().toLowerCase().max(254),
   message: z.string().trim().min(10, "Tell us a little about what you need.").max(2000, "Keep your message under 2,000 characters."),
   website: z.string().max(0).optional(),
   turnstileToken: z.string().max(4096).optional(),
+  kind: z.enum(["university", "recruiter"]).default("university"),
 });
 
 const LEADS_PER_IP = 5;
@@ -143,7 +144,7 @@ const LEADS_ALL = 200;
 export async function submitSalesLead(_prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
   const ctx = await actionContext("marketing.submit_sales_lead");
   const values = Object.fromEntries(
-    ["name", "role", "organisation", "email", "message", "website", "turnstileToken"].map((k) => [k, formData.get(k) ?? undefined]),
+    ["name", "role", "organisation", "email", "message", "website", "turnstileToken", "kind"].map((k) => [k, formData.get(k) ?? undefined]),
   );
   const parsed = leadSchema.safeParse(values);
   if (!parsed.success) {
@@ -178,6 +179,7 @@ export async function submitSalesLead(_prev: ActionResult | null, formData: Form
     p_organisation: input.organisation,
     p_email: input.email,
     p_message: input.message,
+    p_kind: input.kind,
   });
   if (error) {
     // One open lead per address: the visitor already reached us, so this reads as sent.

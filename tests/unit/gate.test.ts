@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { decideRoute, homeFor, isPublicPath, onboardingPath, requiresTwoFactor, safeNext, type GateInput, type GateState } from "@/lib/auth/gate";
+import { DEFAULT_PORTALS, closedPortalDecision, decideRoute, homeFor, isPortalPath, isPublicPath, onboardingPath, requiresTwoFactor, safeNext, type GateInput, type GateState } from "@/lib/auth/gate";
 
 const done: GateState = {
   has_profile: true,
@@ -194,5 +194,54 @@ describe("the marketing site (PRD 5.1)", () => {
   });
   it("doesn't open app routes that merely share a prefix", () => {
     for (const p of ["/uni", "/universitiesx", "/feed", "/pricing-admin"]) expect(isPublicPath(p)).toBe(false);
+  });
+});
+
+describe("closed portals (phase 14, decisions 2026-11-02)", () => {
+  const student: GateState = { ...done, portals: DEFAULT_PORTALS };
+  const open = { recruiter: true, university: true, faculty: true };
+
+  it("404s every recruiter and university route while their portals are off", () => {
+    for (const p of ["/recruit", "/recruit/search", "/org/settings", "/companies/acme", "/uni", "/uni/people", "/fairs/f1", "/fairs/invite", "/openings/jobs", "/openings/jobs/j1", "/openings/applications/a1", "/openings/contact-requests/c1", "/openings/job-fairs"]) {
+      expect(decideRoute(at(p, { state: student, aal: "aal2" }))).toEqual({ type: "not-found" });
+    }
+  });
+  it("404s them for signed-out visitors too, from the flag the proxy reads", () => {
+    expect(decideRoute(at("/recruit", { signedIn: false, state: null, portals: DEFAULT_PORTALS }))).toEqual({ type: "not-found" });
+    expect(decideRoute(at("/uni", { signedIn: false, state: null, portals: DEFAULT_PORTALS }))).toEqual({ type: "not-found" });
+  });
+  it("sends organisation sign-up and claim routes to Talk to us", () => {
+    expect(decideRoute(at("/signup/recruiter", { signedIn: false, state: null, portals: DEFAULT_PORTALS }))).toEqual({ type: "redirect", to: "/recruiters#talk" });
+    expect(decideRoute(at("/org/join?token=x", { state: student }))).toEqual({ type: "redirect", to: "/recruiters#talk" });
+    expect(decideRoute(at("/uni/claim", { state: student }))).toEqual({ type: "redirect", to: "/universities#talk" });
+    expect(decideRoute(at("/uni/join", { signedIn: false, state: null, portals: DEFAULT_PORTALS }))).toEqual({ type: "redirect", to: "/universities#talk" });
+  });
+  it("keeps the faculty portal open", () => {
+    const faculty: GateState = { ...done, role: "faculty", portals: DEFAULT_PORTALS };
+    expect(decideRoute(at("/teach", { state: faculty }))).toEqual({ type: "next" });
+    expect(closedPortalDecision("/teach/ideas", DEFAULT_PORTALS)).toBeNull();
+  });
+  it("signs out an account whose own portal is closed", () => {
+    for (const role of ["recruiter", "university_admin"]) {
+      expect(decideRoute(at("/chat", { state: { ...done, role, portals: DEFAULT_PORTALS }, aal: "aal2" }))).toEqual({
+        type: "sign-out",
+        to: "/signin?error=portal_closed",
+      });
+    }
+  });
+  it("leaves student routes alone", () => {
+    for (const p of ["/feed", "/events", "/u/nutech", "/competitions/c1", "/openings", "/openings/venture-roles", "/universities-x"]) {
+      expect(closedPortalDecision(p, DEFAULT_PORTALS)).toBeNull();
+    }
+    expect(isPortalPath("/feed")).toBe(false);
+    expect(isPortalPath("/recruit")).toBe(true);
+  });
+  it("restores everything when the flag is switched back on", () => {
+    expect(decideRoute(at("/recruit/search", { state: { ...done, role: "recruiter", portals: open }, aal: "aal2" }))).toEqual({ type: "next" });
+    expect(decideRoute(at("/uni/claim", { state: { ...done, role: "university_admin", portals: open }, aal: "aal2" }))).toEqual({ type: "next" });
+    expect(decideRoute(at("/signup/recruiter", { signedIn: false, state: null, portals: open }))).toEqual({ type: "next" });
+  });
+  it("lists /features with the marketing pages", () => {
+    expect(isPublicPath("/features")).toBe(true);
   });
 });

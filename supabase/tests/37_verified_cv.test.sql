@@ -143,8 +143,8 @@ select is(pg_temp.s()->'person'->'email', 'null'::jsonb, 'no email unless the st
 select is(position('BSCS Hons Unchecked' in pg_temp.s()::text), 0, 'the free-text programme appears nowhere');
 select is(pg_temp.s()->'standing', '{"tier": "spark", "top_percent": 12}'::jsonb, 'tier and top 12% (percentile 0.88)');
 select is(pg_temp.s()->'sections', to_jsonb(private.cv_all_sections()), 'every section, in the standard order, by default');
-select is(pg_temp.s()->'sections', '["summary", "projects", "open_source", "skills", "endorsements", "credentials", "education"]'::jsonb,
-  'projects come before skills by default');
+select is(pg_temp.s()->'sections', '["summary", "projects", "open_source", "skills", "activities", "endorsements", "credentials", "education"]'::jsonb,
+  'projects come before skills by default; Leadership and activities follow skills (phase 16)');
 select ok(pg_temp.s()->>'summary' like 'Computer Science student at %, class of 2027, with verified work in %, % and % across 3 team projects, 2 of them completed.%',
   'summary: department, university, class, top three skills, team projects');
 select ok(pg_temp.s()->>'summary' like '% 2 merged pull requests to other developers'' repositories. Spark tier on Skilient, top 12%.',

@@ -30,7 +30,7 @@ export const FULL_SNAPSHOT: CvSnapshotV1 = {
     email: null,
   },
   standing: { tier: "flare", top_percent: 18 },
-  sections: ["summary", "projects", "open_source", "skills", "endorsements", "credentials", "education"],
+  sections: ["summary", "projects", "open_source", "skills", "activities", "endorsements", "credentials", "education"],
   summary:
     "Computer Science student at National University of Technology, class of 2027, with verified work in React, TypeScript and PostgreSQL across 4 team projects, 2 of them completed. 3 merged pull requests to other developers' repositories. Flare tier on Skilient, top 18%.",
   skills: [
@@ -84,4 +84,9 @@ export const FULL_SNAPSHOT: CvSnapshotV1 = {
     { title: "Google Data Analytics", issuer: "Google", issued: "2025-11", expires: null },
   ],
   education: { university: "National University of Technology", department: "Computer Science", graduation_year: 2027 },
+  // The Record (phase 16): the same sample entries as the landing story (content/marketing.ts theRecord).
+  activities: [
+    { kind: "office_bearer", label: "General Secretary", issuer: "CS Society", when: "Sep 2025 – Jun 2026", line: "General Secretary · Sep 2025 – Jun 2026", code: "7RCD0K2M4P" },
+    { kind: "result", label: "2nd place, Campus Hackathon", issuer: "CS Society", when: "Nov 2026", line: "2nd of 14 teams", code: "7RCD0Q8T1W" },
+  ],
 };

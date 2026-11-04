@@ -143,6 +143,8 @@ test.describe("Ops shell", () => {
       "/ops/metrics",
       "/ops/evidence",
       "/ops/feedback",
+      "/ops/societies",
+      "/ops/record",
       "/ops/teachers",
       "/ops/orgs",
       "/ops/universities",

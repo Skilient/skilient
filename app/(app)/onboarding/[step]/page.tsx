@@ -7,6 +7,7 @@ import { emailDomain } from "@/lib/auth/email-domain";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { getGithubOverview, GITHUB_OUTCOMES } from "@/lib/data/github";
 import { getClassmates } from "@/lib/data/profiles";
+import { getPortals } from "@/lib/data/portals";
 import { githubApp } from "@/lib/github/config";
 import type { LookingFor } from "@/lib/profile/options";
 import { createClient } from "@/lib/supabase/server";
@@ -76,6 +77,7 @@ export default async function OnboardingStepPage({ params, searchParams }: PageP
       <LookingForStep
         lookingFor={(profile?.looking_for ?? []) as LookingFor[]}
         recruiterVisible={profile?.recruiter_visible ?? false}
+        recruiterPortal={(await getPortals()).recruiter}
       />
     );
   } else {

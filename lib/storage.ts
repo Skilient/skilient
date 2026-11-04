@@ -1,6 +1,6 @@
 import { readPublicEnv } from "@/lib/env";
 
-export type ImageBucket = "avatars" | "covers" | "post-media";
+export type ImageBucket = "avatars" | "covers" | "post-media" | "society-media";
 
 /** Public URL of a profile or post image (the buckets are public-read; paths are unguessable uuids). */
 export function publicImageUrl(bucket: ImageBucket, path: string | null | undefined): string | null {

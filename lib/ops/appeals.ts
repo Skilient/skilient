@@ -2,11 +2,11 @@
  * Client-safe wording for sanctions and appeals (PRD 5.26). Staff names never reach the person
  * a decision is about.
  */
-export type AppealType = "sanction" | "report_case" | "cv_revocation" | "credential" | "code_check";
+export type AppealType = "sanction" | "report_case" | "cv_revocation" | "credential" | "code_check" | "record_revocation";
 export type AppealStatus = "pending" | "upheld" | "overturned";
 export type SanctionKind = "warn" | "suspend" | "ban" | "throttle";
 
-export const APPEAL_TYPES = ["sanction", "report_case", "cv_revocation", "credential", "code_check"] as const satisfies readonly AppealType[];
+export const APPEAL_TYPES = ["sanction", "report_case", "cv_revocation", "credential", "code_check", "record_revocation"] as const satisfies readonly AppealType[];
 
 export const APPEAL_STATUS_LABELS: Record<AppealStatus, string> = {
   pending: "Waiting for a decision",
@@ -16,7 +16,18 @@ export const APPEAL_STATUS_LABELS: Record<AppealStatus, string> = {
 
 export const SANCTION_LABELS: Record<SanctionKind, string> = { warn: "Warning", suspend: "Suspension", ban: "Ban", throttle: "Throttle" };
 
-const TARGET_NOUNS: Record<string, string> = { post: "post", comment: "comment", message: "message", profile: "profile", venture: "venture" };
+const TARGET_NOUNS: Record<string, string> = {
+  post: "post",
+  comment: "comment",
+  message: "message",
+  profile: "profile",
+  venture: "venture",
+  society: "society",
+  event: "event",
+  event_registration: "ticket payment",
+  record_entry: "Record entry",
+  swap: "skill swap",
+};
 
 type Summary = Record<string, unknown>;
 const s = (v: unknown) => (typeof v === "string" && v.trim() ? v : null);
@@ -39,6 +50,8 @@ export function decisionTitle(type: AppealType, summary: Summary): string {
       return `Credential not approved: ${s(summary.title) ?? "credential"}`;
     case "code_check":
       return `Code check not passed: ${s(summary.skill) ?? "skill"}`;
+    case "record_revocation":
+      return `Record entry revoked: ${s(summary.title) ?? "an entry"}${s(summary.issuer) ? ` (${s(summary.issuer)})` : ""}`;
   }
 }
 

@@ -315,7 +315,7 @@ export function describeNotification(n: NotificationInput): NotificationText {
     case "contact_request": {
       const org = str(n.data.org_name) ?? "A company";
       const role = str(n.data.role_title) ?? "a role";
-      return { text: `${org} would like to talk to you about ${role}.`, href: `/opportunities/contact-requests/${n.entityId}`, subject: `${org} wants to talk to you on Skilient` };
+      return { text: `${org} would like to talk to you about ${role}.`, href: `/openings/contact-requests/${n.entityId}`, subject: `${org} wants to talk to you on Skilient` };
     }
     case "contact_accepted": {
       const threadId = str(n.data.thread_id);
@@ -348,7 +348,7 @@ export function describeNotification(n: NotificationInput): NotificationText {
       const org = str(n.data.org_name) ?? "The company";
       const stage = str(n.data.stage);
       const reason = str(n.data.reason);
-      const href = `/opportunities/applications/${n.entityId}`;
+      const href = `/openings/applications/${n.entityId}`;
       if (stage === "rejected") return { text: `${org} didn't take your application for ${job} forward.${reason ? ` ${reason}` : ""}`, href, subject: `An update on your application to ${job}` };
       if (stage === "hired") return { text: `${org} hired you for ${job}. Congratulations.`, href, subject: `${org} hired you` };
       return { text: `Your application to ${job} at ${org} moved to ${stage ?? "the next stage"}.`, href, subject: `Your application to ${job} moved to ${stage ?? "the next stage"}` };
@@ -356,7 +356,7 @@ export function describeNotification(n: NotificationInput): NotificationText {
     case "job_invite": {
       const job = str(n.data.job_title) ?? "a job";
       const org = str(n.data.org_name) ?? "A company";
-      return { text: `${org} invited you to apply for ${job}.`, href: `/opportunities/jobs/${n.entityId}`, subject: `${org} invited you to apply` };
+      return { text: `${org} invited you to apply for ${job}.`, href: `/openings/jobs/${n.entityId}`, subject: `${org} invited you to apply` };
     }
     case "hire_outcome_due":
       return { text: "Is a hire from three months ago meeting expectations? Answer in one tap.", href: "/recruit", subject: "One question about your hire" };
@@ -437,6 +437,240 @@ export function describeNotification(n: NotificationInput): NotificationText {
       return { text: `${str(n.data.university) ?? "Your university"} now sponsors your Student Pro.${n.data.paying ? " You can cancel your own plan at the end of its period." : ""}`, href: "/settings/billing", subject: "Your university sponsors Student Pro" };
     case "billing_sponsorship_ending":
       return { text: `${str(n.data.university) ?? "Your university"}'s Student Pro sponsorship ends on ${str(n.data.ends) ?? "soon"}. You can continue Pro yourself.`, href: "/settings/billing", subject: "Sponsored Student Pro is ending" };
+    // Societies and events (PRD 5.31)
+    case "society_decided": {
+      const name = str(n.data.society) ?? "Your society";
+      const href = `/societies/${str(n.data.slug) ?? ""}`;
+      if (n.data.status === "verified") return { text: `${name} is verified. You're its President: invite your officers and set it up.`, href, subject: `${name} is verified` };
+      if (n.data.status === "more_info") return { text: `Skilient needs more information about ${name}: ${str(n.data.reason) ?? ""}`, href, subject: "Your society request needs more information" };
+      if (n.data.status === "suspended") return { text: `${name} was suspended: ${str(n.data.reason) ?? ""}`, href, subject: `${name} was suspended` };
+      if (n.data.status === "rejected") return { text: `${name} wasn't approved: ${str(n.data.reason) ?? ""}`, href: "/societies", subject: "Your society request wasn't approved" };
+      return { text: `${name} is active again.`, href, subject: `${name} is active again` };
+    }
+    case "society_invite":
+      return n.data.kind === "handover"
+        ? { text: `${who} offered you the presidency of ${str(n.data.society) ?? "a society"}.`, href: "/societies", subject: `Take over ${str(n.data.society) ?? "a society"}?` }
+        : { text: `${who} invited you to be ${str(n.data.title) ?? "an officer"} of ${str(n.data.society) ?? "a society"}.`, href: "/societies", subject: `Officer invitation from ${str(n.data.society) ?? "a society"}` };
+    case "society_invite_answered":
+      return {
+        text: `${who} ${n.data.accepted ? "accepted" : "declined"} ${n.data.kind === "handover" ? "the presidency" : "your officer invitation"} for ${str(n.data.society) ?? "your society"}.`,
+        href: `/societies/${str(n.data.slug) ?? ""}/manage`,
+        subject: "An invitation was answered",
+      };
+    case "society_join_request":
+      return { text: `${who} asked to join ${str(n.data.society) ?? "your society"}.`, href: `/societies/${str(n.data.slug) ?? ""}/manage#membership`, subject: "New join request" };
+    case "society_joined":
+      return { text: `You're a member of ${str(n.data.society) ?? "a society"}.`, href: `/societies/${str(n.data.slug) ?? ""}`, subject: `Welcome to ${str(n.data.society) ?? "the society"}` };
+    case "society_post":
+      return { text: `${str(n.data.society) ?? "A society you follow"} posted.`, href: `/post/${n.entityId}`, subject: `New post from ${str(n.data.society) ?? "a society"}` };
+    case "induction_published":
+      return {
+        text: `${str(n.data.society) ?? "A society"} opened inductions: ${str(n.data.round) ?? "a new round"}.`,
+        href: `/societies/${str(n.data.slug) ?? ""}/inductions/${n.entityId}`,
+        subject: `${str(n.data.society) ?? "A society"} is taking members`,
+      };
+    case "induction_applied":
+      return {
+        text: `${who} applied to ${str(n.data.round) ?? "your induction round"}.`,
+        href: `/societies/${str(n.data.slug) ?? ""}/inductions/${n.entityId}`,
+        subject: "New induction application",
+      };
+    case "induction_decided":
+      return n.data.accepted
+        ? { text: `${str(n.data.society) ?? "The society"} accepted you in ${str(n.data.round) ?? "its induction round"}. You're a member.`, href: `/societies/${str(n.data.slug) ?? ""}`, subject: "You're in" }
+        : { text: `${str(n.data.society) ?? "The society"} didn't take you in ${str(n.data.round) ?? "this round"}${n.data.expired ? " (no decision before it closed)" : ""}. Thanks for applying.`, href: `/societies/${str(n.data.slug) ?? ""}`, subject: "Your induction application" };
+    // The Record (phase 16, PRD 5.30)
+    case "record_entry":
+      return {
+        text: `New on your Record: ${str(n.data.title) ?? "an entry"} · ${str(n.data.issuer) ?? "Skilient"}${str(n.data.date) ? ` · ${str(n.data.date)}` : ""}${n.data.corrected ? " (corrected)" : ""}.`,
+        href: "/me/record",
+        subject: "New on your Record",
+      };
+    case "record_revoked":
+      return {
+        text: `${str(n.data.issuer) ?? "The issuer"} revoked ${str(n.data.title) ?? "an entry"} on your Record: ${str(n.data.reason) ?? "no reason given"}. You can appeal within 30 days.`,
+        href: "/me/record?status=revoked",
+        subject: "An entry on your Record was revoked",
+      };
+    case "record_confirm":
+      return {
+        text: `Confirm a Record entry for another officer of ${str(n.data.society) ?? "your society"}: ${str(n.data.title) ?? "an entry"}.`,
+        href: `/societies/${str(n.data.slug) ?? ""}/manage#record`,
+        subject: "A Record entry needs a second officer",
+      };
+    case "record_mistake":
+      return {
+        text: `${who} reported a mistake on ${str(n.data.title) ?? "a Record entry"} from ${str(n.data.society) ?? "your society"}.`,
+        href: `/societies/${str(n.data.slug) ?? ""}/manage#record`,
+        subject: "A mistake reported on a Record entry",
+      };
+    case "record_mistake_declined":
+      return {
+        text: `${str(n.data.issuer) ?? "The issuer"} kept ${str(n.data.title) ?? "your entry"} as it is: ${str(n.data.note) ?? ""}`.trim(),
+        href: "/me/record",
+        subject: "Your Record entry stays as it is",
+      };
+    // Paths, proof tasks and the skill swap (phase 17, PRD 5.32)
+    case "task_done":
+      return {
+        text: `Your ${str(n.data.skill) ?? ""} proof task is done: ${str(n.data.title) ?? "the task"}, verified by ${n.data.by === "github" ? "GitHub" : n.data.by === "peer" ? "a peer review" : "a code check"}. It's on your Record.`,
+        href: `/me/tasks/${n.entityId}`,
+        subject: "Your proof task is done",
+      };
+    case "task_needs_changes":
+      return {
+        text: `A peer sent your ${str(n.data.skill) ?? ""} task back with a note: ${str(n.data.title) ?? "the task"}.`,
+        href: `/me/tasks/${n.entityId}`,
+        subject: "Your proof task needs changes",
+      };
+    case "task_review_offer":
+      return {
+        text: `Can you check ${str(n.data.student) ?? "a student"}'s ${str(n.data.skill) ?? ""} task? ${str(n.data.title) ?? ""}`.trim(),
+        href: `/me/tasks/reviews/${n.entityId}`,
+        subject: `Can you check ${str(n.data.student) ?? "a student"}'s ${str(n.data.skill) ?? ""} task?`,
+      };
+    case "swap_request":
+      return {
+        text: `${who} asked you to teach ${str(n.data.skill) ?? "a skill"} in a skill swap${str(n.data.offered) ? `, offering ${str(n.data.offered)} back` : ""}.`,
+        href: "/swaps?tab=teach",
+        subject: `${who} asked you to teach ${str(n.data.skill) ?? "a skill"}`,
+      };
+    case "swap_accepted":
+      return {
+        text: `${who} accepted your skill swap for ${str(n.data.skill) ?? "a skill"}${n.data.mutual ? " (mutual)" : ""}. Propose a first session.`,
+        href: `/swaps/${n.entityId}`,
+        subject: "Your skill swap was accepted",
+      };
+    case "swap_declined":
+      return {
+        text: n.data.expired
+          ? `Your skill swap request for ${str(n.data.skill) ?? "a skill"} expired without an answer. Try another teacher.`
+          : `${who} can't teach ${str(n.data.skill) ?? "it"} right now. Try another teacher.`,
+        href: "/swaps?tab=learn",
+        subject: "Your skill swap request",
+      };
+    case "swap_session_proposed":
+      return { text: `${who} proposed a ${str(n.data.skill) ?? "skill swap"} session: ${str(n.data.when) ?? "a new time"}.`, href: `/swaps/${n.entityId}`, subject: "A session was proposed" };
+    case "swap_session_accepted":
+      return { text: `${who} accepted the ${str(n.data.skill) ?? "skill swap"} session on ${str(n.data.when) ?? "the proposed time"}.`, href: `/swaps/${n.entityId}`, subject: "Session booked" };
+    case "swap_session_reminder":
+      return {
+        text: `Reminder: your ${str(n.data.skill) ?? "skill swap"} session is ${str(n.data.when) ?? "soon"}${str(n.data.place) ? ` at ${str(n.data.place)}` : ""}.`,
+        href: `/swaps/${n.entityId}`,
+        subject: "Your skill swap session is coming up",
+      };
+    case "swap_session_ask":
+      return { text: `Did your ${str(n.data.skill) ?? "skill swap"} session with ${who} happen?`, href: `/swaps/${n.entityId}`, subject: "Did your session happen?" };
+    case "swap_note":
+      return { text: `${who} left you a thank-you note for ${str(n.data.skill) ?? "a session"}. Approve it to show it on your profile.`, href: `/swaps/${n.entityId}`, subject: "A thank-you note" };
+    case "swap_closed":
+      return {
+        text: `Your ${str(n.data.skill) ?? "skill"} swap closed${n.data.reason === "inactive" ? " after 30 days without a session" : ""}.${n.data.taught ? " Your Record gets a Taught entry." : ""}`,
+        href: `/swaps/${n.entityId}`,
+        subject: "Your skill swap closed",
+      };
+    case "ranking_formula":
+      return {
+        text: "Your score now includes the Record: office-bearer terms, competition results and volunteer hours, up to 100 points. Attendance never counts, and no score goes down.",
+        href: "/me/score",
+        subject: "Ranking formula v2",
+      };
+    case "term_ended":
+      return { text: `A term ended at ${str(n.data.society) ?? "your society"}: confirm your officers' terms.`, href: `/societies/${str(n.data.slug) ?? ""}/manage#terms`, subject: "Confirm your officers' terms" };
+    case "event_published":
+      return { text: `${str(n.data.society) ?? "A society you follow"} published ${str(n.data.event) ?? "an event"}.`, href: `/events/${n.entityId}`, subject: `New event: ${str(n.data.event) ?? "from a society"}` };
+    case "event_registration": {
+      const ev = str(n.data.event) ?? "the event";
+      const status = n.data.status;
+      const text =
+        status === "confirmed"
+          ? `You're registered for ${ev}. Your ticket is ready.`
+          : status === "held"
+            ? `Your seat for ${ev} is held for 24 hours. Pay the society and upload the receipt.`
+            : status === "waitlisted"
+              ? `You're number ${n.data.position ?? "?"} on the waitlist for ${ev}.`
+              : `Your registration for ${ev} is waiting for the host's approval.`;
+      return { text, href: `/events/${n.entityId}/ticket`, subject: `Registration: ${ev}` };
+    }
+    case "event_promoted":
+      return n.data.paid
+        ? { text: `A seat opened at ${str(n.data.event) ?? "your event"}: it's held for you for 24 hours. Pay and upload the receipt.`, href: `/events/${n.entityId}/ticket`, subject: "A seat opened up" }
+        : { text: `A seat opened at ${str(n.data.event) ?? "your event"}: you're in. Your ticket is ready.`, href: `/events/${n.entityId}/ticket`, subject: "You're off the waitlist" };
+    case "event_decided": {
+      const ev = str(n.data.event) ?? "the event";
+      if (n.data.status === "declined") return { text: `The host didn't accept your registration for ${ev}.`, href: `/events/${n.entityId}`, subject: `Registration: ${ev}` };
+      if (n.data.status === "held") return { text: `You're approved for ${ev}: your seat is held for 24 hours while you pay.`, href: `/events/${n.entityId}/ticket`, subject: `Approved: ${ev}` };
+      if (n.data.status === "waitlisted") return { text: `You're approved for ${ev} and number ${n.data.position ?? "?"} on the waitlist.`, href: `/events/${n.entityId}/ticket`, subject: `Approved: ${ev}` };
+      return { text: `You're approved for ${ev}. Your ticket is ready.`, href: `/events/${n.entityId}/ticket`, subject: `Approved: ${ev}` };
+    }
+    case "event_reminder":
+      return {
+        text: `${n.data.when === "1h" ? "In an hour" : "Tomorrow"}: ${str(n.data.event) ?? "an event you registered for"}. Have your ticket ready.`,
+        href: `/events/${n.entityId}/ticket`,
+        subject: `Reminder: ${str(n.data.event) ?? "your event"}`,
+      };
+    case "event_changed":
+      return { text: `${str(n.data.event) ?? "An event you registered for"} changed its time or place. Check the details.`, href: `/events/${n.entityId}`, subject: `Changed: ${str(n.data.event) ?? "your event"}` };
+    case "event_cancelled":
+      return {
+        text: `${str(n.data.event) ?? "An event you registered for"} was cancelled${str(n.data.reason) ? `: ${str(n.data.reason)}` : "."}${n.data.paid ? " The society will refund you." : ""}`,
+        href: `/events/${n.entityId}`,
+        subject: `Cancelled: ${str(n.data.event) ?? "your event"}`,
+      };
+    case "event_message":
+      return { text: `${str(n.data.event) ?? "An event"}: ${str(n.data.body) ?? ""}`, href: `/events/${n.entityId}`, subject: `Message about ${str(n.data.event) ?? "your event"}` };
+    case "event_cohost":
+      return { text: `${str(n.data.society) ?? "A society"} asked your society to co-host ${str(n.data.event) ?? "an event"}.`, href: `/events/${n.entityId}`, subject: "Co-host an event?" };
+    case "event_staff_added":
+      return { text: `You're on the check-in team for ${str(n.data.event) ?? "an event"}.`, href: `/events/${n.entityId}/check-in`, subject: "You're helping at an event" };
+    case "payment_review":
+      return {
+        text: n.data.issue
+          ? `${who} says they paid (${str(n.data.reference_code) ?? "a ticket"}) and nobody has confirmed it.`
+          : `${who} uploaded a receipt for ${str(n.data.event) ?? "your event"} (${str(n.data.reference_code) ?? ""}).`,
+        href: `/events/${n.entityId}/manage?tab=payments`,
+        subject: "A receipt to check",
+      };
+    case "payment_decided":
+      return n.data.approved
+        ? { text: `Your payment for ${str(n.data.event) ?? "the event"} is confirmed. Your ticket is ready.`, href: `/events/${n.entityId}/ticket`, subject: "Payment confirmed" }
+        : { text: `Your receipt for ${str(n.data.event) ?? "the event"} wasn't accepted: ${str(n.data.reason) ?? ""}. Upload a new one within 24 hours.`, href: `/events/${n.entityId}/ticket`, subject: "Receipt not accepted" };
+    case "hold_expired":
+      return { text: `Your held seat for ${str(n.data.event) ?? "the event"} was released: no receipt arrived in time.`, href: `/events/${n.entityId}`, subject: "Your held seat was released" };
+    case "refund_requested":
+      return { text: `${who} cancelled and asked for a refund (${str(n.data.reference_code) ?? ""}).`, href: `/events/${n.entityId}/manage?tab=payments`, subject: "Refund requested" };
+    case "refund_sent":
+      return { text: `${str(n.data.event) ?? "The society"} says your refund was sent. Tell us if it arrived.`, href: `/events/${n.entityId}/ticket`, subject: "Refund sent" };
+    case "refund_answered":
+      return {
+        text: n.data.received ? `${who} confirmed the refund arrived (${str(n.data.reference_code) ?? ""}).` : `${who} says the refund didn't arrive (${str(n.data.reference_code) ?? ""}). Skilient will look at it.`,
+        href: `/events/${n.entityId}/manage?tab=payments`,
+        subject: n.data.received ? "Refund received" : "Refund not received",
+      };
+    case "payment_details_proposed":
+      return {
+        text: `${who} proposed a change to ${str(n.data.society) ?? "your society"}'s payment details. Another officer must confirm it.`,
+        href: `/societies/${str(n.data.slug) ?? ""}/manage/payments`,
+        subject: "Payment details change to confirm",
+      };
+    case "payment_details_confirmed":
+      return {
+        text: `${who} ${n.data.accepted ? "confirmed" : "rejected"} a change to ${str(n.data.society) ?? "your society"}'s payment details.`,
+        href: `/societies/${str(n.data.slug) ?? ""}/manage/payments`,
+        subject: n.data.accepted ? "Payment details changed" : "Payment details change rejected",
+      };
+    case "yearbook_open":
+      return { text: `Your yearbook is open: the batch of ${n.data.batch ?? "your year"} can sign each other's pages now.`, href: "/yearbook", subject: "Your yearbook is open" };
+    case "yearbook_note":
+      return { text: `${who} signed your yearbook. Approve the note to show it to your batch.`, href: "/yearbook/me", subject: `${who} signed your yearbook` };
+    case "yearbook_vote_open":
+      return { text: "The superlative vote is open: one secret vote per title, for someone in your department.", href: "/yearbook/vote", subject: "Vote your batch's superlatives" };
+    case "yearbook_award":
+      return {
+        text: `Your batch voted you "${str(n.data.title) ?? "a superlative"}". Only you know until the reveal; you can decline it before then.`,
+        href: "/yearbook/me",
+        subject: "Your batch voted you a superlative",
+      };
     default:
       return { text: "You have a new notification.", href: "/notifications", subject: "New activity on Skilient" };
   }

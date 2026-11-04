@@ -92,6 +92,7 @@ const TYPE_LABELS: Record<(typeof APPEAL_TYPES)[number], string> = {
   cv_revocation: "Verified CV revocation",
   credential: "Credential rejection",
   code_check: "Code-check grade",
+  record_revocation: "Record entry revocation",
 };
 
 /** For a banned account, whose appeal arrives by email. */

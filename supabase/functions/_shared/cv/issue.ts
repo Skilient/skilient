@@ -6,6 +6,7 @@
  * web APIs only.
  */
 import { safeEqual, type Db, type Log } from "../github/types.ts";
+import { drainRecordQueue } from "./record.ts";
 import { generateSigningKey, isoSeconds, newCode, signEnvelope, type CvEnvelope } from "./sign.ts";
 
 export type IssueSource = "first" | "monthly" | "on_demand" | "reissue";
@@ -135,6 +136,8 @@ export async function handleCvSign(deps: CvDeps, authorization: string | null, b
   if (secret && safeEqual(token, secret.secret)) {
     if (action === "rotate") return { status: 200, body: await rotateKey(deps) };
     if (action === "drain") return { status: 200, body: await drainQueue(deps) };
+    // The Record (PRD 5.30): entries queued on record_jobs, signed with the same key.
+    if (action === "record_drain") return { status: 200, body: await drainRecordQueue(deps) };
     return { status: 400, body: { error: "invalid_input" } };
   }
 

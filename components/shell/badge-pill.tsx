@@ -6,7 +6,7 @@ export function BadgePill({ count, className, testId }: { count: number; classNa
   if (count <= 0) return null;
   return (
     <span
-      className={cn("rounded-full bg-primary px-1.5 text-caption font-semibold text-text-on-primary tabular-nums", className)}
+      className={cn("min-w-5 rounded-full bg-primary px-1.5 text-center font-mono text-[0.6875rem] leading-5 font-medium text-text-on-primary tabular-nums", className)}
       data-testid={testId}
     >
       {badgeLabel(count)}

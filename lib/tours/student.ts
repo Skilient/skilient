@@ -10,9 +10,9 @@ export const studentTour: TourDefinition = {
   startPath: "/feed",
   steps: [
     { anchor: "nav-home", title: "Home", body: "Your university feed: posts, announcements and your progress card." },
-    { anchor: "nav-opportunities", title: "Opportunities", body: "Jobs, recruiter requests, competitions and hackathons matched to your verified skills." },
+    { anchor: "nav-openings", title: "Openings", body: "Competitions, hackathons and project ideas matched to your verified skills." },
     { anchor: "nav-ventures", title: "Ventures", body: "Projects you build with others. Finished ventures count most toward your rank." },
-    { anchor: "nav-chat", title: "Chat", body: "Messages with friends, teammates and recruiters." },
+    { anchor: "nav-chat", title: "Chat", body: "Messages with friends and teammates." },
     { anchor: "nav-me", title: "Me", body: "Your profile, skills, CV and score. See exactly how your rank is calculated." },
     { anchor: "nav-explore", title: "Explore", body: "Search people, ventures and skills at your university and beyond." },
     { anchor: "nav-leaderboard", title: "Leaderboard", body: "Where you stand at your university and overall. Only rank and tier are public, never points." },

@@ -542,3 +542,22 @@ GitHub, payments) to the coming-soon page.
     link starts with `https://www.skilient.com`; open a CV verify link; `https://skilient.com` lands on www.
 11. **Afterwards:** Search Console and share previews (Phase 12 slice 4), and back up the CV key file from the new address
     (Phase 5). CV PDFs exported before the switch print skilient.vercel.app links and are test-only (decisions.md 2026-10-01).
+
+## Student-first track (2026-11-02)
+
+- [ ] **Agreement and privacy notice for paid tickets** (phase 15): with counsel, add that students pay societies
+      directly, that Skilient isn't a party to ticket payments or refunds, and that payment receipts are stored for 90 days
+      after the event. This needs a new agreement version (re-accept).
+- [ ] **Web push keys** (phase 18, PRD 5.34): all three live in Vault on the hosted project (nothing in Vercel; the
+      browser gets the public key from `push_public_key()`). Until they exist, pushes are skipped and the bell still
+      has everything. Steps:
+      1. `node scripts/restore/vapid-keys.mjs` prints `<public> <private>` (base64url). Keep the private key nowhere else.
+      2. In the Supabase SQL editor run, with your values:
+         `select vault.create_secret('<public>', 'vapid_public_key', 'Web push public key');`
+         `select vault.create_secret('<private>', 'vapid_private_key', 'Web push private key');`
+         `select vault.create_secret('https://www.skilient.com', 'vapid_subject', 'Web push contact');` (a `mailto:`
+         address works too; push services use it to reach us about problems).
+      3. Never rotate them casually: every subscribed device would stop getting pushes until it subscribes again.
+      The restore drill makes its own pair for the scratch project (`reseed-vault.sql`, `verify.mjs`).
+- [ ] **Storage plan:** society documents, payment receipts (deleted 90 days after each event), event covers, yearbook photos and
+      Record PDFs add to storage; check the Supabase plan's quota before the closed beta.

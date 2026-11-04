@@ -18,7 +18,7 @@ export function AddFriendButton({ username, name }: { username: string; name: st
         size="sm"
         variant="secondary"
         loading={pending}
-        aria-label={`Add ${name} as a friend`}
+        aria-label={`Add friend: ${name}`}
         onClick={() =>
           startTransition(async () => {
             const result = await sendFriendRequest(username);

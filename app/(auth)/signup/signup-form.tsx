@@ -19,10 +19,13 @@ export function SignupForm({
   agreement,
   role = "student",
   defaultEmail = "",
+  recruiterPortal = false,
 }: {
   siteKey: string | null;
   agreement: Agreement | null;
   role?: "student" | "faculty" | "university_admin";
+  /** The recruiter portal is open (phase 14): only then does the form point hiring visitors to it. */
+  recruiterPortal?: boolean;
   /** Prefilled from the landing page's email field (?email=). */
   defaultEmail?: string;
 }) {
@@ -268,8 +271,8 @@ export function SignupForm({
             </p>
             <p className="text-center text-body-sm text-text-muted">
               Hiring?{" "}
-              <Link href="/signup/recruiter" className="font-semibold text-text-primary underline underline-offset-4">
-                Create a recruiter account
+              <Link href={recruiterPortal ? "/signup/recruiter" : "/recruiters#talk"} className="font-semibold text-text-primary underline underline-offset-4">
+                {recruiterPortal ? "Create a recruiter account" : "Talk to us"}
               </Link>
             </p>
           </div>

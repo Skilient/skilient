@@ -1,22 +1,292 @@
 /*
- * Skilient design tokens — Editorial system (PRD 9.2–9.4).
- * Components use the semantic tokens only, never ramp steps directly.
- * Light values sit on :root and .light, dark values on .dark, so a subtree can
- * be forced into either theme (the UI gallery renders both side by side).
+ * Skilient design tokens: the neumorphism system (app/(marketing)/CLAUDE.md), promoted to the whole
+ * app in phase 14 (decisions 2026-11-02, "How the app looks"). One surface, one light source top
+ * left, signal orange as the only accent.
+ *
+ * Four blocks:
+ *   1. the raw palette for light (`:root`, `.light`) and dark (`.dark`);
+ *   2. everything derived from it (PRD 9 semantic names re-pointed, elevation, radii, fonts),
+ *      declared on `:root, .light, .dark` so a forced subtree (the UI gallery) recomputes it;
+ *   3. app density (radii 24/20/14, smaller shadows on phones);
+ *   4. `.classic`: the PRD 9 Editorial values, kept for /ops (decision 15).
+ * Every text pair is checked by tests/unit/tokens-contrast.test.ts. Components use the semantic
+ * names (bg-bg-surface, text-text-secondary, bg-primary) or the neu classes in app/styles/neu.css.
  */
 
+/* 1. Raw palette ----------------------------------------------------------- */
 :root,
 .light {
   color-scheme: light;
 
-  /* Surfaces */
+  --surface: #e6e1d8; /* the one background */
+  --surface-hi: #f0ece5; /* lit from the top left */
+  --surface-lo: #dcd5c9;
+  --surface-sunk: #d9d2c6; /* hover tint, selected rows */
+  --paper: #f1eee8;
+  --concrete: #b7b3ab; /* hairlines, disabled */
+  --hairline: #cfc8bc;
+  --hairline-strong: #9d978d;
+  --jute: #c6a16a; /* warm secondary, Raw tier */
+  --mustard: #d6a21e; /* Shine tier */
+  --signal: #e1592b; /* THE accent, fills only: ink on signal 4.65:1 */
+  --signal-hover: #e66a40;
+  --signal-pressed: #c94a20;
+  --signal-tint: #eaab93; /* Spark tier */
+  --signal-wash: #e7c9b8; /* a tinted surface: selected, primary-subtle */
+  --signal-ink: #9c3713; /* orange as text or an icon: 5.43:1 on the surface, 4.71 on sunk rows */
+  --ink: #1b1b19; /* on surface 13.25:1 */
+  --ink-hover: #34322e;
+  --on-ink: #e6e1d8;
+  --ink-accent: #e1592b; /* orange on the ink card: 4.65:1 */
+  --muted: #5c564d; /* the brief's #6F695F is 4.18:1; darkened to 5.57:1 */
+  --faint: #8a8378; /* large or decorative text only */
+  --synergy: #2c6cb8; /* focus ring and teams only: 4.09:1 (non-text) */
+  --error-ink: #a81f34; /* 5.6:1, kept apart from orange */
+  --success-ink: #2a6236;
+  --warning-ink: #764c00;
+
+  /* Tier finishes (the ramp climbs in brightness) and tier text that passes on the surface. */
+  --tier-raw: #c6a16a;
+  --tier-spark: #eaab93;
+  --tier-flare: #e1592b;
+  --tier-shine: #d6a21e;
+  --tier-radiant: #e9a35f;
+  --tier-luminary: #b48ad8;
+  --tier-raw-text: #6b5432;
+  --tier-spark-text: #974a30;
+  --tier-flare-text: #a93e17;
+  --tier-shine-text: #6f5000;
+  --tier-radiant-text: #85460f;
+  --tier-luminary-text: #6a3e8a;
+
+  /* Shadow colours: warm shade down-right, white light up-left. */
+  --shade: rgb(188 178 162 / 0.75);
+  --shade-soft: rgb(188 178 162 / 0.7);
+  --shade-in: rgb(188 178 162 / 0.8);
+  --light: rgb(255 255 255 / 0.95);
+  --light-soft: rgb(255 255 255 / 0.9);
+  --shade-signal: rgb(180 68 29 / 0.55);
+  --shade-signal-in: rgb(142 52 18 / 0.7);
+  --shade-ink: rgb(120 108 90 / 0.55);
+  --rim-hi: rgb(255 255 255 / 0.7);
+  --rim-lo: rgb(188 178 162 / 0.35);
+  --scrim: rgb(27 27 25 / 0.3);
+
+  /* Chart series (signal, ink, jute, synergy: one accent plus steps) */
+  --series-1: #e1592b;
+  --series-2: #1b1b19;
+  --series-3: #a07a3e;
+  --series-4: #2c6cb8;
+
+  /* The charpai weave: background texture only, low contrast. */
+  --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.5' stroke='%23000' stroke-opacity='.09'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
+  --weave-on-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.05' stroke='%23000' stroke-opacity='.5'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.dark {
+  color-scheme: dark;
+
+  --surface: #2a2723;
+  --surface-hi: #322e29;
+  --surface-lo: #24211d;
+  --surface-sunk: #34302a;
+  --paper: #34302a;
+  --concrete: #57524a;
+  --hairline: #3d3933;
+  --hairline-strong: #6c665c;
+  --jute: #c6a16a;
+  --mustard: #d6a21e;
+  --signal: #f0703f; /* on surface 5.02:1; ink on signal 5.83:1 */
+  --signal-hover: #f4855a;
+  --signal-pressed: #d85d2e;
+  --signal-tint: #c98a72;
+  --signal-wash: #4a3226;
+  --signal-ink: #f58a60; /* 5.42:1 on sunk rows */
+  --ink: #ede8df; /* on surface 12.18:1 */
+  --ink-hover: #d9d3c8;
+  --on-ink: #1b1b19;
+  --ink-accent: #a93e17; /* the ink card is light in dark mode */
+  --muted: #b3ab9f; /* 6.54:1 */
+  --faint: #8c857a;
+  --synergy: #6fa6e8; /* 5.87:1 */
+  --error-ink: #f47a8c; /* 5.4:1 */
+  --success-ink: #7cc790;
+  --warning-ink: #e8b04a;
+
+  --tier-raw: #c6a16a;
+  --tier-spark: #c98a72;
+  --tier-flare: #f0703f;
+  --tier-shine: #d6a21e;
+  --tier-radiant: #e9a35f;
+  --tier-luminary: #c7a3ea;
+  --tier-raw-text: #d6b98a;
+  --tier-spark-text: #e7a58c;
+  --tier-flare-text: #f0703f;
+  --tier-shine-text: #e3b640;
+  --tier-radiant-text: #efb57a;
+  --tier-luminary-text: #d2b5f0;
+
+  --shade: rgb(0 0 0 / 0.5);
+  --shade-soft: rgb(0 0 0 / 0.5);
+  --shade-in: rgb(0 0 0 / 0.55);
+  --light: rgb(255 255 255 / 0.05);
+  --light-soft: rgb(255 255 255 / 0.05);
+  --shade-signal: rgb(0 0 0 / 0.55);
+  --shade-signal-in: rgb(120 40 10 / 0.7);
+  --shade-ink: rgb(0 0 0 / 0.55);
+  --rim-hi: rgb(255 255 255 / 0.06);
+  --rim-lo: rgb(0 0 0 / 0.35);
+  --scrim: rgb(0 0 0 / 0.45);
+
+  --series-1: #f0703f;
+  --series-2: #ede8df;
+  --series-3: #c6a16a;
+  --series-4: #6fa6e8;
+
+  --weave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.035' stroke='%23000' stroke-opacity='.45'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
+  --weave-on-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='%23fff' fill-opacity='.45' stroke='%23000' stroke-opacity='.08'%3E%3Crect x='-0.5' y='2.5' width='13' height='7' rx='3.5'/%3E%3Crect x='14.5' y='-0.5' width='7' height='13' rx='3.5'/%3E%3Crect x='2.5' y='11.5' width='7' height='13' rx='3.5'/%3E%3Crect x='11.5' y='14.5' width='13' height='7' rx='3.5'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* 2. Derived tokens (recomputed in every themed scope) ---------------------- */
+:root,
+.light,
+.dark {
+  /* PRD 9 semantic names, re-pointed to the one surface. */
+  --bg-page: var(--surface);
+  --bg-surface: var(--surface);
+  --bg-elevated: var(--surface);
+  --bg-muted: var(--surface-lo);
+  --bg-subtle: var(--surface-sunk);
+
+  --text-primary: var(--ink);
+  --text-secondary: var(--muted);
+  --text-muted: var(--muted);
+  --text-subtle: var(--faint);
+  --text-disabled: var(--faint);
+  --text-on-primary: #1b1b19; /* ink on signal, both themes */
+  --text-on-accent: var(--on-ink);
+  --text-on-verified: var(--on-ink);
+
+  --border-default: var(--hairline);
+  --border-strong: var(--hairline-strong);
+  --border-muted: var(--hairline);
+
+  --interactive-primary: var(--signal);
+  --interactive-primary-hover: var(--signal-hover);
+  --interactive-primary-active: var(--signal-pressed);
+  --interactive-primary-subtle: var(--signal-wash);
+  /* No second hue: the accent is ink (secondary actions, links). */
+  --interactive-accent: var(--ink);
+  --interactive-accent-hover: var(--ink-hover);
+  --interactive-accent-subtle: var(--surface-sunk);
+  --focus-ring: var(--synergy);
+
+  /* Proof is ink: the seal, verified marks, endorsement rows. */
+  --verified: var(--ink);
+  --verified-subtle: var(--surface-sunk);
+
+  --success: var(--success-ink);
+  --warning: var(--warning-ink);
+  --error: var(--error-ink);
+  --text-error: var(--error-ink);
+  --info: var(--synergy);
+
+  /* Elevation (Figma effect styles Neu/*). Distances come from block 3. */
+  --raised-l: var(--e-l) var(--e-l) var(--e-l-blur) var(--shade), calc(var(--e-l) * -1) calc(var(--e-l) * -1) var(--e-l-blur) var(--light);
+  --raised-m: var(--e-m) var(--e-m) var(--e-m-blur) var(--shade), calc(var(--e-m) * -1) calc(var(--e-m) * -1) var(--e-m-blur) var(--light);
+  --raised-s: var(--e-s) var(--e-s) var(--e-s-blur) var(--shade-soft), calc(var(--e-s) * -1) calc(var(--e-s) * -1) var(--e-s-blur) var(--light-soft);
+  --pressed: inset var(--e-p) var(--e-p) var(--e-p-blur) var(--shade-in), inset calc(var(--e-p) * -1) calc(var(--e-p) * -1) var(--e-p-blur) var(--light);
+  --pressed-s: inset 2px 2px 5px var(--shade-in), inset -2px -2px 5px var(--light);
+  --raised-signal: var(--e-m) var(--e-m) var(--e-m-blur) var(--shade-signal), calc(var(--e-m) * -1) calc(var(--e-m) * -1) var(--e-m-blur) var(--light);
+  --pressed-signal: inset var(--e-p) var(--e-p) var(--e-p-blur) var(--shade-signal-in);
+  --raised-ink: var(--e-m) var(--e-m) calc(var(--e-m-blur) + 6px) var(--shade-ink), calc(var(--e-m) * -1) calc(var(--e-m) * -1) calc(var(--e-m-blur) + 6px) var(--light-soft);
+  --rim: inset 1px 1px 0 var(--rim-hi), inset -1px -1px 0 var(--rim-lo);
+
+  /* Skins: what a primitive draws with. Neu here; .classic swaps them for PRD 9 hairlines. */
+  --control-border: transparent;
+  --card-border: transparent;
+  --control-shadow: var(--pressed);
+  --card-shadow: var(--raised-m), var(--rim);
+  --chip-shadow: var(--raised-s);
+  --button-shadow: var(--raised-m);
+  --button-shadow-primary: var(--raised-signal);
+  --button-shadow-pressed: var(--pressed);
+  --button-shadow-primary-pressed: var(--pressed-signal);
+
+  /* The PRD 9 shadow utilities (shadow-1..4, inset-shadow-1) follow the neu steps. */
+  --elevation-1: var(--raised-s);
+  --elevation-2: var(--raised-m);
+  --elevation-3: var(--raised-m);
+  --elevation-4: var(--raised-l);
+  --elevation-inset: var(--pressed-s);
+
+  /* Fonts: Space Grotesk for the interface (headings too), Spectral only for belief moments
+     (font-serif), JetBrains Mono for proof. The CV keeps Barlow (lib/cv/document.ts). */
+  --font-ui: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-display-face: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* 3. App density ------------------------------------------------------------ */
+:root {
+  /* Radii: card 24, tile 20, well 14 (marketing uses 32/24/16 inside .neu). */
+  --r-card: 24px;
+  --r-tile: 20px;
+  --r-well: 14px;
+  --r-tag: 6px;
+  --r-sm: 6px; /* tags, status chips */
+  --r-md: 14px; /* inputs, small tiles */
+  --r-lg: 20px; /* cards */
+  --r-xl: 24px; /* sheets, dialogs */
+
+  /* Shadow distances: mostly raised-s and raised-m; raised-l only for sheets and dialogs. */
+  --e-s: 3px;
+  --e-s-blur: 8px;
+  --e-m: 6px;
+  --e-m-blur: 14px;
+  --e-l: 12px;
+  --e-l-blur: 28px;
+  --e-p: 4px;
+  --e-p-blur: 9px;
+
+  /* Motion (PRD 9.4; the brief: pressing animates in 120–160 ms ease-out) */
+  --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --motion-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --motion-ease-sharp: cubic-bezier(0.4, 0, 0.6, 1);
+  --duration-instant: 0ms;
+  --duration-fast: 120ms;
+  --duration-press: 140ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --duration-stamp: 500ms;
+
+  /* Layout */
+  --page-gutter: clamp(1rem, 5vw, 2.5rem);
+  --page-max: 1280px;
+}
+
+/* Doubled blurred shadows are a paint cost on a mid-range Android: smaller on phones. */
+@media (max-width: 767px) {
+  :root {
+    --e-s: 2px;
+    --e-s-blur: 5px;
+    --e-m: 4px;
+    --e-m-blur: 9px;
+    --e-l: 8px;
+    --e-l-blur: 18px;
+    --e-p: 3px;
+    --e-p-blur: 6px;
+  }
+}
+
+/* 4. Classic (PRD 9 Editorial): /ops keeps its dense look ------------------- */
+.classic,
+.light .classic {
   --bg-page: #f0efed;
   --bg-surface: #faf9f7;
   --bg-elevated: #ffffff;
   --bg-muted: #e4e3df;
   --bg-subtle: #eaeae7;
-
-  /* Text */
   --text-primary: #0e0d0b;
   --text-secondary: #484744;
   --text-muted: #636260;
@@ -25,13 +295,9 @@
   --text-on-primary: #ffffff;
   --text-on-accent: #ffffff;
   --text-on-verified: #ffffff;
-
-  /* Borders */
   --border-default: #cecdca;
   --border-strong: #aeada8;
   --border-muted: #dddcd8;
-
-  /* Interactive */
   --interactive-primary: #c03910;
   --interactive-primary-hover: #9e2e08;
   --interactive-primary-active: #7a2204;
@@ -40,20 +306,13 @@
   --interactive-accent-hover: #003fa8;
   --interactive-accent-subtle: #ebf2ff;
   --focus-ring: #c03910;
-
-  /* Proof */
   --verified: #076c6a;
   --verified-subtle: #e8f8f6;
-
-  /* Status (never brand) */
   --success: #0a8844;
   --warning: #c47800;
   --error: #c41010;
-  /* Error as text: same as status in light; lifted in dark to stay ≥ 4.5:1 on every surface */
   --text-error: #c41010;
   --info: #006ace;
-
-  /* Tiers: dot/border · chip text */
   --tier-raw: #5e6e84;
   --tier-raw-text: #3e4e64;
   --tier-spark: #1e60c0;
@@ -66,31 +325,42 @@
   --tier-radiant-text: #b83808;
   --tier-luminary: #5e3e00;
   --tier-luminary-text: #5e3e00;
-
-  /* Elevation: warm #0E0D0B at low opacity */
   --elevation-1: 0 1px 2px rgb(14 13 11 / 0.05), 0 1px 3px rgb(14 13 11 / 0.04);
   --elevation-2: 0 2px 6px rgb(14 13 11 / 0.06), 0 4px 14px rgb(14 13 11 / 0.06);
   --elevation-3: 0 4px 12px rgb(14 13 11 / 0.08), 0 8px 28px rgb(14 13 11 / 0.09);
   --elevation-4: 0 8px 24px rgb(14 13 11 / 0.1), 0 20px 52px rgb(14 13 11 / 0.12);
   --elevation-inset: inset 0 1px 2px rgb(14 13 11 / 0.06);
-
-  /* Chart series (categorical, fixed order; validated for CVD and contrast, phase 11) */
   --series-1: #0a58e0;
   --series-2: #e04020;
   --series-3: #0a9290;
   --series-4: #eda100;
+  --r-sm: 3px;
+  --r-md: 6px;
+  --r-lg: 10px;
+  --r-xl: 16px;
+  --r-card: 10px;
+  --r-tile: 10px;
+  --r-well: 6px;
+  --control-border: var(--border-default);
+  --card-border: var(--border-default);
+  --control-shadow: none;
+  --card-shadow: none;
+  --chip-shadow: none;
+  --button-shadow: none;
+  --button-shadow-primary: none;
+  --button-shadow-pressed: none;
+  --button-shadow-primary-pressed: none;
+  --font-ui: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
+  --font-display-face: var(--font-spectral), Georgia, "Times New Roman", serif;
 }
 
-.dark {
-  color-scheme: dark;
-
+.dark .classic,
+.classic.dark {
   --bg-page: #0a0a09;
   --bg-surface: #131311;
   --bg-elevated: #1d1d1a;
-  /* PRD 9.5 fix: frames had bg/muted == bg/elevated; moved so disabled fills don't read as raised cards */
   --bg-muted: #171715;
   --bg-subtle: #252523;
-
   --text-primary: #e7e7e3;
   --text-secondary: #b8b7b2;
   --text-muted: #8a8a84;
@@ -99,11 +369,9 @@
   --text-on-primary: #0a0a09;
   --text-on-accent: #0a0a09;
   --text-on-verified: #0a0a09;
-
   --border-default: #2a2a26;
   --border-strong: #3a3a35;
   --border-muted: #232320;
-
   --interactive-primary: #e04020;
   --interactive-primary-hover: #ec5430;
   --interactive-primary-active: #c03910;
@@ -112,16 +380,13 @@
   --interactive-accent-hover: #4090f0;
   --interactive-accent-subtle: #081830;
   --focus-ring: #e04020;
-
   --verified: #10c4b8;
   --verified-subtle: #032e2e;
-
   --success: #14b860;
   --warning: #f5a000;
   --error: #e83030;
   --text-error: #f04848;
   --info: #3a94f8;
-
   --tier-raw: #9aaec6;
   --tier-raw-text: #c0d0e4;
   --tier-spark: #6298f0;
@@ -134,34 +399,13 @@
   --tier-radiant-text: #ff9870;
   --tier-luminary: #d0a020;
   --tier-luminary-text: #ecc840;
-
-  /* Dark mode builds depth from fills and borders; shadows only from level 3 */
   --elevation-1: none;
   --elevation-2: none;
   --elevation-3: 0 4px 12px rgb(0 0 0 / 0.4), 0 8px 28px rgb(0 0 0 / 0.45);
   --elevation-4: 0 8px 24px rgb(0 0 0 / 0.5), 0 20px 52px rgb(0 0 0 / 0.55);
   --elevation-inset: inset 0 1px 2px rgb(0 0 0 / 0.3);
-
-  /* Chart series (dark steps of the same ramps, validated against the dark surface) */
   --series-1: #2878f8;
   --series-2: #e04020;
   --series-3: #10aaaa;
   --series-4: #c98500;
-}
-
-:root {
-  /* Motion (PRD 9.4): no bounce, no spring */
-  --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --motion-ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
-  --motion-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
-  --motion-ease-sharp: cubic-bezier(0.4, 0, 0.6, 1);
-  --duration-instant: 0ms;
-  --duration-fast: 120ms;
-  --duration-base: 200ms;
-  --duration-slow: 300ms;
-  --duration-stamp: 500ms;
-
-  /* Layout */
-  --page-gutter: clamp(1rem, 5vw, 2.5rem);
-  --page-max: 1280px;
 }

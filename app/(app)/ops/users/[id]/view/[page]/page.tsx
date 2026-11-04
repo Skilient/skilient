@@ -16,7 +16,7 @@ const LABELS: Record<ViewPage, string> = {
   profile: "Profile",
   me: "Me",
   cv: "CV",
-  opportunities: "Opportunities",
+  opportunities: "Openings",
   privacy: "Privacy",
   notifications: "Notifications",
 };

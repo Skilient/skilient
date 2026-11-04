@@ -14,27 +14,19 @@ import { removeContentImages, storeContentImages } from "@/lib/images/content-im
  */
 
 const uuid = z.uuid();
-const httpsUrl = z.string().trim().max(500).refine((v) => v === "" || /^https:\/\/[^\s]+$/.test(v), "Use a full https:// link.");
 const body = z.string().trim().min(1, "Write something first.").max(2000, "Keep it under 2,000 characters.");
 
 const postInput = z.discriminatedUnion("type", [
-  z.object({ type: z.literal("general"), audience: z.enum(["university", "global"]), body }),
+  z.object({ type: z.literal("general"), audience: z.enum(["university", "global"]), body, societyId: uuid.optional() }),
   z.object({ type: z.literal("invite"), audience: z.enum(["university", "global"]), body, ventureId: uuid }),
   z.object({ type: z.literal("announcement"), body, pinDays: z.number().int().min(0).max(7) }),
-  z.object({
-    type: z.literal("event"),
-    audience: z.enum(["university", "global"]),
-    body,
-    startsAt: z.iso.datetime({ offset: true, message: "Pick a date and time." }),
-    place: z.string().trim().max(120).optional(),
-    url: httpsUrl.optional(),
-  }).refine((e) => (e.place ?? "").length >= 2 || (e.url ?? "").length > 0, { message: "Add a place or a link.", path: ["place"] }),
   z.object({
     type: z.literal("poll"),
     audience: z.enum(["university", "global"]),
     body,
     options: z.array(z.string().trim().min(1, "Fill in every option.").max(80)).min(2, "Add at least 2 options.").max(4, "Up to 4 options."),
     days: z.number().int().min(1).max(7),
+    societyId: uuid.optional(),
   }),
 ]);
 export type CreatePostInput = z.input<typeof postInput>;
@@ -54,9 +46,9 @@ export async function createPost(formData: FormData): Promise<ActionResult<{ id:
     return fail("invalid_input", "Check the highlighted fields.", { fields: fieldErrors(parsed.error.issues) });
   }
   const input = parsed.data;
-  if (files.length && !["general", "invite", "event"].includes(input.type)) {
+  if (files.length && !["general", "invite"].includes(input.type)) {
     ctx.done("refused", { error_code: "invalid_input" });
-    return fail("invalid_input", "Images go on general, invite and event posts.");
+    return fail("invalid_input", "Images go on general and invite posts.");
   }
   const session = await signedIn(ctx);
   if (!session) return NO_SESSION;
@@ -72,7 +64,7 @@ export async function createPost(formData: FormData): Promise<ActionResult<{ id:
   if (input.type !== "announcement") p.audience = input.audience;
   if (input.type === "invite") p.venture_id = input.ventureId;
   if (input.type === "announcement") p.pin_days = input.pinDays;
-  if (input.type === "event") p.event = { starts_at: input.startsAt, place: input.place || null, url: input.url || null };
+  if ((input.type === "general" || input.type === "poll") && input.societyId) p.society_id = input.societyId;
   if (input.type === "poll") p.poll = { options: input.options, days: input.days };
 
   const { data, error } = await supabase.rpc("create_post", { p: p as never });

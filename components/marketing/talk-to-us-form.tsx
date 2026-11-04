@@ -6,19 +6,19 @@ import { FormAlert } from "@/components/auth/form-alert";
 import { Turnstile } from "@/components/auth/turnstile";
 import { Button } from "@/components/ui/button";
 import { FieldError, HelperText, Input, Label, Textarea } from "@/components/ui/field";
-import { universitiesPage } from "@/content/marketing";
+import { recruitersPage, universitiesPage } from "@/content/marketing";
 import { submitSalesLead } from "@/lib/actions/marketing";
 import type { ActionResult } from "@/lib/actions/result";
-
-const copy = universitiesPage.talk;
 
 type Name = "name" | "role" | "organisation" | "email" | "message";
 
 /**
- * "Talk to us" on /universities (PRD 5.1): a server action through useActionState, so it posts
- * with JavaScript off too. Honeypot, Turnstile and 5 an hour per network are checked on the server.
+ * "Talk to us" on /universities and /recruiters (PRD 5.1, phase 14): a server action through
+ * useActionState, so it posts with JavaScript off too. Honeypot, Turnstile and 5 an hour per
+ * network are checked on the server; `kind` tells /ops/leads which page it came from.
  */
-export function TalkToUsForm({ siteKey }: { siteKey: string | null }) {
+export function TalkToUsForm({ siteKey, kind }: { siteKey: string | null; kind: "university" | "recruiter" }) {
+  const copy = kind === "recruiter" ? recruitersPage.talk : universitiesPage.talk;
   const [state, action, pending] = useActionState<ActionResult | null, FormData>(submitSalesLead, null);
   const [token, setToken] = useState<string | null>(null);
   const fields = state && !state.ok ? (state.fields ?? {}) : {};
@@ -48,7 +48,8 @@ export function TalkToUsForm({ siteKey }: { siteKey: string | null }) {
   );
 
   return (
-    <form action={action} className="flex flex-col gap-5" data-testid="talk-form" noValidate>
+    <form action={action} method="post" className="flex flex-col gap-5" data-testid="talk-form" noValidate>
+      <input type="hidden" name="kind" value={kind} />
       {state && !state.ok && !Object.keys(fields).length ? <FormAlert requestId={state.requestId}>{state.message}</FormAlert> : null}
       <div className="grid gap-5 sm:grid-cols-2">
         {field("name", copy.name, { autoComplete: "name", maxLength: 80 })}

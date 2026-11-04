@@ -14,7 +14,7 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, ComponentPropsWithout
     return (
       <SelectPrimitive.Trigger
         ref={ref}
-        className={cn(controlBase, "flex h-10 items-center justify-between gap-2 text-left data-[placeholder]:text-text-secondary", className)}
+        className={cn(controlBase, "flex h-12 items-center justify-between gap-2 text-left data-[placeholder]:text-text-secondary", className)}
         {...props}
       >
         {children}
@@ -33,7 +33,7 @@ export function SelectContent({ className, children, ...props }: ComponentPropsW
         position="popper"
         sideOffset={4}
         className={cn(
-          "z-50 max-h-72 min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-md border border-border-default bg-bg-elevated shadow-3",
+          "z-50 max-h-72 min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-md border border-[var(--card-border)] bg-bg-elevated shadow-4",
           className,
         )}
         {...props}
@@ -48,7 +48,7 @@ export function SelectItem({ className, children, ...props }: ComponentPropsWith
   return (
     <SelectPrimitive.Item
       className={cn(
-        "relative flex h-9 cursor-default items-center rounded-sm pr-3 pl-8 text-body text-text-primary outline-none select-none",
+        "relative flex min-h-11 cursor-default items-center rounded-md pr-3 pl-8 text-body text-text-primary outline-none select-none",
         "data-[highlighted]:bg-bg-subtle data-[disabled]:text-text-disabled",
         className,
       )}

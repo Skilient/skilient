@@ -9,7 +9,7 @@ import { createClient } from "@/lib/supabase/server";
  * checks the role and the two-factor session.
  */
 
-export type RankingFlagKind = "ring" | "rapid_gain";
+export type RankingFlagKind = "ring" | "rapid_gain" | "swap_ring" | "swap_repeat";
 export type RankingFlagStatus = "open" | "cleared" | "upheld";
 
 export interface RankingFlagRow {

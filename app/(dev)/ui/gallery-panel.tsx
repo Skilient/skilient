@@ -1,10 +1,22 @@
 "use client";
 
-import { Plus } from "@phosphor-icons/react/dist/ssr";
+import { Code, Plus } from "@phosphor-icons/react/dist/ssr";
 import { useState } from "react";
 import {
   Avatar,
+  AvatarStack,
   Badge,
+  CommandMenu,
+  DomainCard,
+  Ladder,
+  RecordEntry,
+  Seal,
+  StatTile,
+  Stepper,
+  TabCount,
+  Ticket,
+  TimedButton,
+  VentureCard,
   Button,
   Checkbox,
   Dialog,
@@ -42,7 +54,7 @@ import { cn } from "@/lib/cn";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="flex flex-col gap-4 rounded-lg border border-border-default bg-bg-surface p-5 shadow-1">
+    <section className="neu-card flex flex-col gap-4 p-5">
       <h3 className="text-h3 text-text-primary">{title}</h3>
       {children}
     </section>
@@ -53,6 +65,7 @@ export function GalleryPanel({ theme }: { theme: "light" | "dark" }) {
   const p = (id: string) => `${theme}-${id}`;
   const toast = useToast();
   const [stampKey, setStampKey] = useState(0);
+  const [timed, setTimed] = useState<"idle" | "running" | "done">("idle");
 
   return (
     <div className={cn(theme, "flex flex-col gap-6 bg-bg-page p-5 text-text-primary")} data-theme-panel={theme}>
@@ -276,6 +289,70 @@ export function GalleryPanel({ theme }: { theme: "light" | "dark" }) {
           action={<Button size="sm">Start a venture</Button>}
         />
         <ErrorState description="We couldn't load your feed." requestId="7f3a9c1e-1234" action={<Button variant="secondary" size="sm">Try again</Button>} />
+      </Section>
+
+      <Section title="Phase 14 objects">
+        <div className="flex flex-wrap items-center gap-4">
+          <Seal size={40} label="Verified" />
+          <Avatar name="Ayesha Khan" tier="flare" verified size="lg" />
+          <AvatarStack people={[{ name: "Ayesha Khan", tier: "flare" }, { name: "Ali Raza", tier: "spark" }, { name: "Sana Malik", tier: "shine" }, { name: "Omar Farooq" }, { name: "Hira Shah" }]} />
+          {TIERS.map((t) => (
+            <TierBadge key={t} tier={t} size="md" />
+          ))}
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <TimedButton
+            state={timed}
+            doneLabel="Verified"
+            doneAt="2026-11-02T09:32:00Z"
+            onClick={() => {
+              setTimed("running");
+              setTimeout(() => setTimed("done"), 1200);
+            }}
+          >
+            Verify
+          </TimedButton>
+          <Button variant="tertiary">Tertiary</Button>
+          <CommandMenu items={[{ key: "feed", label: "Home", description: "Your feed", href: "/feed", group: "Places" }]} className="max-w-xs" />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <DomainCard name="CS Society" tone="signal" pictogram={<Code weight="bold" className="size-6" />} meta={[{ label: "members", value: 128 }, { label: "open roles", value: 3 }]} updated="updated 2 h ago" />
+          <VentureCard
+            title="Campus Rides"
+            href="/ventures"
+            kind="Startup"
+            members={[{ name: "Ayesha Khan", tier: "flare", role: "Lead" }, { name: "Ali Raza", tier: "spark" }, { name: "Sana Malik" }]}
+            open={2}
+            highlight="Shipped the driver app beta to 40 students"
+            lastActive="active 3 h ago"
+            action={<Button size="sm">Join</Button>}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+          <StatTile label="Score" value="612" hint="+18 this week" />
+          <StatTile label="Verified skills" value="9" hint="from GitHub · 1 Nov" />
+          <StatTile label="Ventures" value="3" hint="1 completed" />
+        </div>
+        <Ladder
+          label="tiers reached"
+          steps={[
+            { key: "raw", label: "Raw", state: "done", meta: "Sep 2026" },
+            { key: "spark", label: "Spark", state: "done", meta: "Oct 2026" },
+            { key: "flare", label: "Flare", state: "current", meta: "now" },
+            { key: "shine", label: "Shine", state: "next", meta: "88 to go" },
+            { key: "radiant", label: "Radiant", state: "later" },
+            { key: "luminary", label: "Luminary", state: "later" },
+          ]}
+        />
+        <Stepper steps={["Basics", "When and where", "Who", "Form", "Review"]} current={2} />
+        <Ticket title="Build with React" host="CS Society" when="Sat 14 Nov · 16:00" where="NUTECH, Hall B" type="Free" code="TKT-7F3A-91" />
+        <ul>
+          <RecordEntry issuer="CS Society" title="Attended: Build with React" date="14 Nov 2026" evidence="Checked in 16:04" code="REC-2Q8K-7L" />
+          <RecordEntry issuer="Skilient" title="Taught React · 4.5 h" date="2 Dec 2026" status="signing" />
+        </ul>
+        <p className="flex items-center gap-2 text-body-sm">
+          Requests <TabCount>{4}</TabCount>
+        </p>
       </Section>
     </div>
   );

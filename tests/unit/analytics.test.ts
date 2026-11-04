@@ -60,16 +60,16 @@ describe("what PostHog may see (PRD 10)", () => {
     ]) {
       expect(isRecordingBlocked(path), path).toBe(true);
     }
-    for (const path of ["/", "/feed", "/explore", "/ventures/2b9e/team", "/settings/profile", "/verify", "/chatter", "/opportunities/jobs"]) {
+    for (const path of ["/", "/feed", "/explore", "/ventures/2b9e/team", "/settings/profile", "/verify", "/chatter", "/openings/jobs"]) {
       expect(isRecordingBlocked(path), path).toBe(false);
     }
   });
 
-  it("keeps heatmaps on marketing pages, Home, Opportunities and onboarding only", () => {
-    for (const path of ["/", "/recruiters", "/pricing", "/feed", "/opportunities", "/opportunities/jobs", "/onboarding/3"]) {
+  it("keeps heatmaps on marketing pages, Home, Openings and onboarding only", () => {
+    for (const path of ["/", "/recruiters", "/features", "/feed", "/openings", "/openings/jobs", "/onboarding/3"]) {
       expect(isHeatmapPage(path), path).toBe(true);
     }
-    for (const path of ["/explore", "/chat", "/post/1", "/opportunities/jobs/1", "/me"]) {
+    for (const path of ["/explore", "/chat", "/post/1", "/openings/jobs/1", "/me"]) {
       expect(isHeatmapPage(path), path).toBe(false);
     }
   });
@@ -158,8 +158,9 @@ describe("what PostHog may see (PRD 10)", () => {
 
 describe("event list", () => {
   const dir = "supabase/migrations";
+  // Every migration: feature migrations (phase 15 onward) track their own events.
   const sql = readdirSync(dir)
-    .filter((f) => f.endsWith("_analytics.sql"))
+    .filter((f) => f.endsWith(".sql"))
     .map((f) => readFileSync(`${dir}/${f}`, "utf8"))
     .join("\n");
 

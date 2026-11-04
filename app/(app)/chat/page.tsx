@@ -6,6 +6,7 @@ export default function ChatIndexPage() {
   return (
     <div className="hidden md:block">
       <EmptyState
+        object="chai"
         icon={<ChatsCircle aria-hidden className="size-8" />}
         title="Pick a conversation"
         description="Messages with friends and your venture teams show on the left."

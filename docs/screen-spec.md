@@ -240,3 +240,48 @@ No like, reaction, save or share controls on posts anywhere.
 | Chat search | `/chat/search` | Search + results | Across all threads, jump to message | No results |
 
 Route note: this spec merges `/projects` and `/startups` into `/ventures` with tabs, and moves `/profile/edit` to `/settings/profile`. Keep redirects from the old routes.
+
+### 3.14 Student-first screens (decided 2026-11-02)
+
+PRD 5.30–5.34. These screens follow the neumorphism brief (`app/(marketing)/CLAUDE.md` on the marketing branch; one surface, raised = pressable, pressed = active, signal orange as the only accent) once phase 14 brings it to the app. Every screen has loading, empty and error states (empty and error are different), works in light and dark, and is keyboard-operable. No like, reaction or save controls anywhere; the only post action added is Share (to chat).
+
+| Screen | Route | Layout | Key elements | States |
+| --- | --- | --- | --- | --- |
+| Openings | `/openings` | Bento grid of domain cards (one page, no carousels) | Per card: colour band, pictogram, latest opening (title, host, deadline in mono), count, updated time, new dot | Card empty (render + one action), all empty, portals-off cards hidden |
+| Openings category | `/openings/[category]` | Filters + list | Full items, sort by deadline or newest, skill/path matches first | No matches, closed items |
+| This week | `/openings/this-week` | Sections | Informative posts, upcoming events, new inductions, new ventures | Quiet week |
+| Societies directory | `/societies` | Search + domain-card grid | Own university first, category filter, Request a society | None at this university yet |
+| Request a society | `/societies/new` | Stepper (Basics, Look, Proof, Review) | Live name check, proof upload, office-bearer confirmation | Pending, more info needed, rejected with reason |
+| Society page | `/societies/[slug]` | Cover + header + tabs (About, Events, Inductions, Posts, Members) | Logo, verified seal, roll call of office bearers (names first), Follow / Join, setup checklist (officers) | Pending (owner only), suspended, inductions-only join |
+| Society manage | `/societies/[slug]/manage` | Settings layout | Officers and terms, handover, membership mode, members and requests, term confirmations | No officers yet |
+| Induction round | `/societies/[slug]/inductions/[id]` | Header + roles + apply sheet | Roles with seats, questions, deadline in mono; officer view: applicants, shortlist, accept/decline | Closed, already applied, accepted, declined |
+| Create event | `/societies/[slug]/events/new` | Stepper (Basics, When and where, Who, Form, Record, Review) with "N steps left" | Sessions, ticket types and capacity, eligibility, form builder, what attendees earn | Draft saved, validation error |
+| Event page | `/events/[id]` | Cover + details + register | Agenda, host societies, seats left, what you'll earn, friends going | Not eligible (flat button + reason), registration not open, full (waitlist), cancelled, ended |
+| Register | Sheet on event page | Form | Questions, ticket type (free or price in PKR with the refund policy), team create/join; for paid: society payment details, reference code, "You pay the society directly", receipt upload | Confirmed, pending approval, waitlisted #N, held 24 h awaiting receipt, payment under review, receipt rejected (reason, re-upload), hold expired |
+| Ticket | `/events/[id]/ticket` | Ticket object | Signed QR, brightness hint, session list, cancel (refund request if within policy) | Offline (cached), cancelled, refund requested / sent / received, checked in |
+| My tickets | `/me/tickets` | List | Upcoming and past tickets | None yet (next eligible event) |
+| Event manage | `/events/[id]/manage` | Stat tiles + tabs (Registrations, Payments, Waitlist, Staff, Messages, Close-out) | Approve/decline, message registrants, add staff, edit with change notice | Draft, live, ended, cancelled |
+| Check-in | `/events/[id]/check-in` | Full-screen scanner + headcount | Camera scan with green/amber/red result and time, search by name, add by email, session picker | No camera permission (search only), offline (retry), not staff |
+| Close-out | `/events/[id]/manage?tab=closeout` | Checklist | Fix attendance (reason), results, volunteer hours, issue preview and Issue | Auto-issued at 72 h, already issued |
+| Events | `/events` | Calendar + list toggle | Own university first, friends going, filters by type | Nothing scheduled |
+| My Record | `/me/record` | Spectral heading + stat tiles + ledger by academic year | Entry rows: issuer, title, date, evidence, seal, code; filter by kind; pin/hide; certificate; share; transcript PDF | Empty (ledger render + next event), signing, revoked, superseded |
+| Record share | `/record/[username]?t=` | Ledger | Entries the student didn't hide, verify links | Expired or revoked link |
+| Verify an entry | `/verify/[code]` | Existing verify layout | Entry, issuer, evidence, signature check, status | Revoked (date and reason category), superseded (new code) |
+| Claim entries | `/onboarding/done` addition | Card | "N entries waiting", Claim | None waiting |
+| Paths | `/me/paths` | Role cards, then the ladder | Up to 2 followed paths, squares (proved, in progress, next, later), "4 of 11 proved · next" | Starter path, no GitHub, all proved |
+| Skill drawer | Sheet from a square | Sections | Why it's here, your evidence, tasks, swap teachers, openings that need it | No tasks for this skill |
+| Proof task | `/me/tasks/[id]` | Brief + checklist + status | Link repository, submit, status steps, peer note | Verifying, awaiting peer, needs changes, done |
+| Review a task | `/reviews/tasks/[id]` | Checklist + repo link | Confirm / Needs changes (note) | Already reviewed, no longer needed |
+| Skill swap | `/swaps` | Tabs (Learn, Teach, My swaps) | Offers and wants, matches with level and hours, requests | No teachers yet, no requests |
+| Swap | `/swaps/[id]` | Header + sessions | Propose session, confirm happened (learner), thank-you note, end swap | Pending, expired, closed, no-show |
+| Yearbook | `/yearbook` | Portrait grid by department + search | Pages, superlative reveal | Not final year (explains when it opens), frozen |
+| Yearbook page | `/yearbook/[username]` | Book page | Photo, quote, highlights, approved notes, Sign | Hidden page, already signed, frozen |
+| My yearbook | `/yearbook/me` | Settings + notes inbox | Photo, quote, visibility, approve/hide notes | No notes yet |
+| Superlatives vote | `/yearbook/vote` | List of titles | One vote per title, department search | Closed, opted out, revealed |
+| Share sheet | From a post's Share | Sheet | Recent DMs and venture chats, search, note, Send, Undo toast | No chats yet, rate limited |
+| People you may know | Section on `/friends` and `/explore` | Cards | Reason line, Add friend, dismiss | No suggestions |
+| Society review (ops) | `/ops/societies` (+ `[id]`) | Queue + case | Proof document, claim, approve / ask for more / reject | Empty queue |
+| Payment details | `/societies/[slug]/manage/payments` | Settings layout | Up to 3 methods (bank transfer, JazzCash, Easypaisa), propose change, second-officer confirm, change history | No details (paid tickets disabled with reason), change awaiting confirmation |
+| Payments review | `/events/[id]/manage?tab=payments` | Queue of review cards | Receipt image or PDF, amount, reference code, transaction ID, duplicate flag, Approve / Reject (reason); refunds to mark sent | Nothing to review, all refunds marked |
+
+Route note: `/opportunities/*` redirects to `/openings/*`. `/pricing` redirects to `/features` (marketing).

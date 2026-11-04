@@ -1,6 +1,8 @@
 "use client";
 
-import { ImageSquare, X } from "@phosphor-icons/react";
+import { CalendarPlus, ImageSquare, X } from "@phosphor-icons/react";
+import type { Route } from "next";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { FormAlert } from "@/components/auth/form-alert";
@@ -10,11 +12,11 @@ import { prepareImages } from "@/lib/images/downscale";
 import { useMounted } from "@/lib/hooks/use-mounted";
 import { cn } from "@/lib/cn";
 
-type Kind = "general" | "event" | "poll" | "invite" | "announcement";
+type Kind = "general" | "poll" | "invite" | "announcement";
 
+/** Events are created by society officers from the society (PRD 5.31), not in the composer. */
 const KINDS: { value: Kind; label: string }[] = [
   { value: "general", label: "Post" },
-  { value: "event", label: "Event" },
   { value: "poll", label: "Poll" },
   { value: "invite", label: "Venture invite" },
   { value: "announcement", label: "Announcement" },
@@ -42,6 +44,8 @@ type ComposerProps = {
   isStaff: boolean;
   /** A graduate posts to the Global Feed only (PRD 5.25). */
   graduate?: boolean;
+  /** Verified societies the user is an officer of: they may post as the society (PRD 5.31). */
+  societies?: { id: string; name: string; slug: string }[];
 };
 
 /**
@@ -60,21 +64,21 @@ export function Composer(props: ComposerProps) {
  * Composer (PRD 5.6, 5.28). The text draft saves to this browser as you type (images
  * aren't kept). Every limit is checked again on the server.
  */
-function ComposerForm({ userId, defaultAudience, ventures, isStaff, graduate = false, draft }: ComposerProps & { draft: Draft | null }) {
+function ComposerForm({ userId, defaultAudience, ventures, isStaff, graduate = false, societies = [], draft }: ComposerProps & { draft: Draft | null }) {
   const router = useRouter();
   const id = useId();
   const draftKey = `sk:draft:${userId}`;
   const fileInput = useRef<HTMLInputElement>(null);
-  const restoredKind =
-    draft?.kind && (draft.kind !== "announcement" || isStaff) && (draft.kind !== "invite" || ventures.length) ? draft.kind : "general";
+  const restoredKind: Kind =
+    draft?.kind && KINDS.some((k) => k.value === draft.kind) && (draft.kind !== "announcement" || isStaff) && (draft.kind !== "invite" || ventures.length)
+      ? draft.kind
+      : "general";
   const [kind, setKind] = useState<Kind>(restoredKind);
   const [audience, setAudience] = useState<"university" | "global">(draft?.audience ?? defaultAudience);
   const [body, setBody] = useState(draft?.body ?? "");
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
   const [ventureId, setVentureId] = useState(ventures[0]?.id ?? "");
-  const [startsAt, setStartsAt] = useState("");
-  const [place, setPlace] = useState("");
-  const [link, setLink] = useState("");
+  const [asSociety, setAsSociety] = useState("");
   const [options, setOptions] = useState(["", ""]);
   const [days, setDays] = useState(3);
   const [pinDays, setPinDays] = useState(0);
@@ -95,11 +99,14 @@ function ComposerForm({ userId, defaultAudience, ventures, isStaff, graduate = f
   useEffect(() => () => images.forEach((i) => URL.revokeObjectURL(i.url)), [images]);
 
   const kinds = KINDS.filter((k) => (k.value !== "announcement" || isStaff) && (k.value !== "invite" || ventures.length > 0));
-  const allowsImages = kind === "general" || kind === "invite" || kind === "event";
+  const allowsImages = kind === "general" || kind === "invite";
   const selectedVenture = ventures.find((v) => v.id === ventureId);
-  const globalAllowed = kind !== "invite" || selectedVenture?.visibility === "public";
-  const universityAllowed = !graduate;
-  const effective: "university" | "global" = graduate ? "global" : globalAllowed ? audience : "university";
+  const canPostAsSociety = societies.length > 0 && (kind === "general" || kind === "poll");
+  const society = canPostAsSociety ? societies.find((x) => x.id === asSociety) : undefined;
+  // A society posts to its own university's feed.
+  const globalAllowed = !society && (kind !== "invite" || selectedVenture?.visibility === "public");
+  const universityAllowed = !graduate || Boolean(society);
+  const effective: "university" | "global" = society ? "university" : graduate ? "global" : globalAllowed ? audience : "university";
 
   async function addFiles(list: FileList | null) {
     if (!list?.length) return;
@@ -126,12 +133,7 @@ function ComposerForm({ userId, defaultAudience, ventures, isStaff, graduate = f
     const data: Record<string, unknown> = { type: kind, body, audience: effectiveAudience };
     if (kind === "invite") data.ventureId = ventureId;
     if (kind === "announcement") data.pinDays = pinDays;
-    if (kind === "event") {
-      const when = startsAt ? new Date(startsAt) : null;
-      data.startsAt = when && !Number.isNaN(when.getTime()) ? when.toISOString() : "";
-      data.place = place;
-      data.url = link;
-    }
+    if (society) data.societyId = society.id;
     if (kind === "poll") {
       data.options = options;
       data.days = days;
@@ -148,9 +150,6 @@ function ComposerForm({ userId, defaultAudience, ventures, isStaff, graduate = f
       setBody("");
       setImages([]);
       setOptions(["", ""]);
-      setStartsAt("");
-      setPlace("");
-      setLink("");
       try {
         localStorage.removeItem(draftKey);
       } catch {
@@ -188,6 +187,34 @@ function ComposerForm({ userId, defaultAudience, ventures, isStaff, graduate = f
 
       {error && !error.fields ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
 
+      {canPostAsSociety ? (
+        <div className="flex flex-wrap items-end gap-3">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor={`${id}-as`}>Post as</Label>
+            <select
+              id={`${id}-as`}
+              value={asSociety}
+              onChange={(e) => setAsSociety(e.target.value)}
+              className="h-10 rounded-md border border-border-default bg-bg-subtle px-3 text-body"
+              data-testid="post-as"
+            >
+              <option value="">Yourself</option>
+              {societies.map((x) => (
+                <option key={x.id} value={x.id}>
+                  {x.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          {society ? (
+            <Link href={`/societies/${society.slug}/events/new` as Route} className="inline-flex min-h-10 items-center gap-1.5 text-body-sm font-semibold underline-offset-4 hover:underline">
+              <CalendarPlus aria-hidden weight="bold" className="size-4" />
+              Create an event instead
+            </Link>
+          ) : null}
+        </div>
+      ) : null}
+
       {kind === "invite" ? (
         <div className="flex flex-col gap-1.5">
           <Label htmlFor={`${id}-venture`}>Venture</Label>
@@ -208,7 +235,7 @@ function ComposerForm({ userId, defaultAudience, ventures, isStaff, graduate = f
       ) : null}
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor={`${id}-body`}>{kind === "poll" ? "Question" : kind === "event" ? "What's happening" : "What's on your mind?"}</Label>
+        <Label htmlFor={`${id}-body`}>{kind === "poll" ? "Question" : "What's on your mind?"}</Label>
         <Textarea
           id={`${id}-body`}
           value={body}
@@ -225,25 +252,6 @@ function ComposerForm({ userId, defaultAudience, ventures, isStaff, graduate = f
           </span>
         </div>
       </div>
-
-      {kind === "event" ? (
-        <div className="grid gap-3 sm:grid-cols-3">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor={`${id}-when`}>Date and time</Label>
-            <Input id={`${id}-when`} type="datetime-local" value={startsAt} onChange={(e) => setStartsAt(e.target.value)} aria-invalid={fieldError("startsAt") ? true : undefined} />
-            {fieldError("startsAt") ? <FieldError>{fieldError("startsAt")}</FieldError> : null}
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor={`${id}-place`}>Place</Label>
-            <Input id={`${id}-place`} value={place} maxLength={120} onChange={(e) => setPlace(e.target.value)} aria-invalid={fieldError("place") ? true : undefined} />
-            {fieldError("place") ? <FieldError>{fieldError("place")}</FieldError> : null}
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor={`${id}-link`}>Or a link</Label>
-            <Input id={`${id}-link`} type="url" inputMode="url" placeholder="https://" value={link} onChange={(e) => setLink(e.target.value)} />
-          </div>
-        </div>
-      ) : null}
 
       {kind === "poll" ? (
         <fieldset className="flex flex-col gap-2">

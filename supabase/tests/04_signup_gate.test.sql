@@ -3,6 +3,9 @@
 -- account gets its profile, onboarding state, agreement acceptance and signup event.
 begin;
 select plan(26);
+-- Phase 14 turned the recruiter and university portals off by flag; this file tests them open.
+insert into public.platform_config (key, version, value, reason)
+values ('portals.enabled', 1000, '{"recruiter": true, "university": true, "faculty": true}', 'pgTAP: portals open');
 
 create function pg_temp.hook(p_email text, p_provider text default 'email', p_meta jsonb default '{}')
 returns jsonb language sql as $$

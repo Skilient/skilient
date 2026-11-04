@@ -111,7 +111,7 @@ test.describe("Billing", () => {
     expect(count).toBe(0);
   });
 
-  test("an organisation on Explore meets the upgrade sheet, then buys Starter and credits", async ({ browser }) => {
+  test("an organisation on Explore meets the upgrade sheet, then buys Starter and credits", { tag: "@portals" }, async ({ browser }) => {
     test.setTimeout(240_000);
     const db = adminClient();
     const domain = `bill-${Math.random().toString(36).slice(2, 8)}.example.com`;
@@ -160,7 +160,7 @@ test.describe("Billing", () => {
     await expect(rp.getByTestId("invoice-table")).toContainText("Invoice");
   });
 
-  test("staff see accounts, revenue and gateway readiness; a university owner sees the licence page", async ({ browser }) => {
+  test("staff see accounts, revenue and gateway readiness; a university owner sees the licence page", { tag: "@portals" }, async ({ browser }) => {
     test.setTimeout(240_000);
     const db = adminClient();
     const staff = await createStudent({ domain: "nutech.edu.pk", fullName: "Sana Staff" });

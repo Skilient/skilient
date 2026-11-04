@@ -1,4 +1,5 @@
 import {
+  Certificate,
   Buildings,
   ChartLine,
   CalendarX,
@@ -17,6 +18,7 @@ import {
   Tray,
   UserList,
   UsersFour,
+  UsersThree,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon } from "@phosphor-icons/react";
 
@@ -43,10 +45,12 @@ export const OPS_AREAS: OpsArea[] = [
   { key: "inbox", label: "Inbox", href: "/ops", icon: Tray, group: "Work", roles: [], match: [] },
   { key: "reports", label: "Reports", href: "/ops/reports", icon: Flag, group: "Work", roles: ["moderator"], match: ["/ops/reports"] },
   { key: "evidence", label: "Evidence", href: "/ops/evidence", icon: SealCheck, group: "Work", roles: ["trust_reviewer"], match: ["/ops/evidence"] },
+  { key: "record", label: "Record entries", href: "/ops/record", icon: Certificate, group: "Work", roles: ["trust_reviewer", "moderator"], match: ["/ops/record"] },
   { key: "appeals", label: "Appeals", href: "/ops/appeals", icon: Scales, group: "Work", roles: [], match: ["/ops/appeals"] },
   { key: "sanctions", label: "Sanctions", href: "/ops/sanctions", icon: Prohibit, group: "Work", roles: ["moderator", "accounts"], match: ["/ops/sanctions"] },
   { key: "users", label: "Users", href: "/ops/users", icon: UserList, group: "Work", roles: [], match: ["/ops/users"] },
   { key: "feedback", label: "Feedback", href: "/ops/feedback", icon: ChatText, group: "Work", roles: [], match: ["/ops/feedback"] },
+  { key: "societies", label: "Societies", href: "/ops/societies", icon: UsersThree, group: "Organisations", roles: ["trust_reviewer"], match: ["/ops/societies"] },
   { key: "teachers", label: "Teachers", href: "/ops/teachers", icon: IdentificationBadge, group: "Organisations", roles: ["accounts", "trust_reviewer"], match: ["/ops/teachers"] },
   { key: "orgs", label: "Organisations", href: "/ops/orgs", icon: Buildings, group: "Organisations", roles: ["accounts"], match: ["/ops/orgs"] },
   { key: "universities", label: "Universities", href: "/ops/universities", icon: GraduationCap, group: "Organisations", roles: ["accounts", "moderator"], match: ["/ops/universities"] },
@@ -93,4 +97,5 @@ export const QUEUE_LABELS: Record<string, string> = {
   billing_tasks: "Billing tasks",
   feedback: "Feedback",
   appeals: "Appeals",
+  societies: "Society requests",
 };

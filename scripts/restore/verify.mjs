@@ -12,7 +12,7 @@ const SKIP = new Set(["auth.schema_migrations", "storage.migrations"]);
 export const REQUIRED_SECRETS = [
   "project_url", "cv_export_secret", "github_worker_secret", "notify_worker_secret", "link_preview_worker_secret",
   "storage_cleanup_worker_secret", "cv_worker_secret", "webhook_worker_secret", "competition_freeze_secret",
-  "billing_worker_secret", "analytics_worker_secret",
+  "billing_worker_secret", "analytics_worker_secret", "vapid_public_key", "vapid_private_key", "vapid_subject",
 ];
 
 async function snapshot(url) {

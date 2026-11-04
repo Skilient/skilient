@@ -1,8 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { decideRoute, isPublicPath, type GateState } from "@/lib/auth/gate";
+import { decideRoute, isPortalPath, isPublicPath, type GateState, type Portals } from "@/lib/auth/gate";
 import { CSP_REPORT_PATH } from "@/lib/security/csp-report";
 import { buildCsp, newNonce, NONCE_HEADER, reportingEndpoints } from "@/lib/security/headers";
-import { hasVerifiedFactor, redirectWithCookies, refreshSession } from "@/lib/supabase/proxy";
+import { hasVerifiedFactor, redirectWithCookies, refreshSession, rewriteWithCookies } from "@/lib/supabase/proxy";
 import { newRequestId, REQUEST_ID_HEADER } from "@/lib/request-id";
 
 export async function proxy(request: NextRequest) {
@@ -27,13 +27,16 @@ export async function proxy(request: NextRequest) {
   });
 
   // Rebuilt on every call so refreshed auth cookies (set on request.cookies) reach the render.
-  const makeResponse = () => {
+  const requestHeaders = () => {
     const headers = new Headers(request.headers);
     headers.set(REQUEST_ID_HEADER, requestId);
     headers.set(NONCE_HEADER, nonce);
     // Next.js reads the nonce for its own scripts from the request's CSP header.
     headers.set("content-security-policy", csp);
-    const res = NextResponse.next({ request: { headers } });
+    return headers;
+  };
+  const makeResponse = () => {
+    const res = NextResponse.next({ request: { headers: requestHeaders() } });
     res.headers.set(REQUEST_ID_HEADER, requestId);
     res.headers.set("content-security-policy", csp);
     res.headers.set("reporting-endpoints", reportingEndpoints(CSP_REPORT_PATH));
@@ -56,6 +59,13 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  // A signed-out visitor on a portal path: the gate still needs to know whether the portal is open.
+  let portals: Portals | null = null;
+  if (!state && isPortalPath(pathname)) {
+    const { data } = await session.supabase.rpc("portals_state");
+    portals = (data as Portals | null) ?? null;
+  }
+
   const decision = decideRoute({
     pathname,
     path: `${pathname}${search}`,
@@ -63,16 +73,18 @@ export async function proxy(request: NextRequest) {
     aal: session.claims?.aal ?? null,
     hasVerifiedFactor: hasVerifiedFactor(user),
     state,
+    portals,
   });
 
   if (decision.type === "next") return session.response;
+  if (decision.type === "not-found") return rewriteWithCookies(request, session.response, "/_closed", requestHeaders());
   if (decision.type === "sign-out") await session.supabase.auth.signOut({ scope: "local" });
   return redirectWithCookies(request, session.response, decision.to);
 }
 
 export const config = {
   matcher: [
-    // Everything except static assets, image optimisation and the PostHog proxy (/ingest).
-    "/((?!_next/static|_next/image|ingest/|brand/|icon.svg|manifest.webmanifest|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|ico)$).*)",
+    // Everything except static assets, image optimisation, the PostHog proxy (/ingest) and the PWA files (sw.js, offline.html).
+    "/((?!_next/static|_next/image|ingest/|brand/|icon.svg|manifest.webmanifest|sw.js|offline.html|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|ico)$).*)",
   ],
 };

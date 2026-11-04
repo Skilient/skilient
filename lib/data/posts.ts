@@ -16,7 +16,7 @@ type Enums = Database["public"]["Enums"];
 export type PostType = Enums["post_type"];
 export type PostAudience = Enums["post_audience"];
 export type FeedScope = "university" | "global";
-export const FEED_FILTERS = ["all", "ventures", "events", "announcements", "shipped"] as const;
+export const FEED_FILTERS = ["all", "ventures", "events", "societies", "announcements", "shipped"] as const;
 export type FeedFilter = (typeof FEED_FILTERS)[number];
 
 export interface PostImage {
@@ -60,6 +60,13 @@ export interface PostVenture {
   team: { name: string; username: string | null }[] | null;
 }
 
+export interface PostSociety {
+  id: string;
+  slug: string;
+  name: string;
+  logoUrl: string | null;
+}
+
 export interface PostCardData {
   id: string;
   type: PostType;
@@ -81,6 +88,8 @@ export interface PostCardData {
   poll: PostPoll | null;
   /** Null when the linked venture is gone or no longer visible to you. */
   venture: PostVenture | null;
+  /** A post made as a society by one of its officers (PRD 5.31): the byline is the society. */
+  society: PostSociety | null;
   commentCount: number;
   link: PostLink | null;
   authorMuted: boolean;
@@ -165,6 +174,12 @@ function mapCard(r: CardRow, now: number): PostCardData {
           roles: (v.roles ?? []) as PostVenture["roles"],
           team: (v.team ?? null) as PostVenture["team"],
         }
+      : null,
+    society: r.society
+      ? (() => {
+          const so = r.society as Record<string, string | null>;
+          return { id: String(so.id), slug: String(so.slug), name: String(so.name), logoUrl: publicImageUrl("society-media", so.logo_path) };
+        })()
       : null,
     commentCount: r.comment_count ?? 0,
     link: r.link

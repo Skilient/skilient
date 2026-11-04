@@ -17,7 +17,7 @@ export interface ClientEventProps {
   uni_not_live: { source: "hero" | "final"; known: boolean };
   /** "Request your university" was sent. */
   uni_requested: { known: boolean };
-  /** A call to action on an organisation page (/recruiters, /universities, /faculty, /pricing, /about). */
+  /** A call to action on an organisation page (/recruiters, /universities, /faculty, /features, /about). */
   org_cta_click: { cta: string; page: string };
 }
 
@@ -53,6 +53,25 @@ export const SERVER_EVENTS = [
   "hire_confirmed",
   "subscription_started",
   "subscription_cancelled",
+  "society_requested",
+  "society_verified",
+  "event_published",
+  "event_registered",
+  "event_checked_in",
+  "record_entry_sealed",
+  "record_entries_claimed",
+  "path_followed",
+  "proof_task_started",
+  "proof_task_done",
+  "proof_task_reviewed",
+  "swap_requested",
+  "swap_accepted",
+  "swap_session_confirmed",
+  "swap_closed",
+  "yearbook_signed",
+  "yearbook_voted",
+  "post_shared",
+  "push_enabled",
 ] as const;
 
 export type ServerEvent = (typeof SERVER_EVENTS)[number];

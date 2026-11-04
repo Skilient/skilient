@@ -18,8 +18,8 @@ export default async function VerifyIndexPage({ searchParams }: PageProps<"/veri
   if (code) redirect(`/verify/${code}` as Route);
   return (
     <VerifyColumn>
-      <div className="rounded-lg border border-border-default bg-bg-surface p-6 shadow-1 sm:p-8">
-        <h1 className="font-display text-h2">Check a verified CV</h1>
+      <div className="neu-card p-6 sm:p-8">
+        <h1 className="neu-h2">Check a verified CV</h1>
         <p className="mt-2 text-body text-text-secondary">
           Every Skilient CV carries a 10-character code in its footer. Enter it to see whether the CV is genuine and current.
         </p>

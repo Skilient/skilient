@@ -1,0 +1,49 @@
+# Skilient paths (PRD 5.32): the 8 roles a student can follow on /me/paths.
+#
+# Each role is a set of skills from skills.yaml (by id). The order here is the **starter path**:
+# what a role shows until at least `min_seniors` students at `min_tier` or higher hold
+# `min_share` of its skills at L2; after that, private.compute_paths() orders the same set by the
+# median day each senior first reached L2 (weekly cron `paths-weekly`).
+#
+# The migration 20261113000001_paths_tasks.sql loads this file into platform_config `paths.seed`
+# (staff can edit it in /ops/config afterwards; the schema check keeps it well formed). The unit
+# test tests/unit/paths-seed.test.ts fails if the two drift or an id isn't in skills.yaml.
+
+min_seniors: 10
+min_share: 0.6
+min_tier: shine
+max_follows: 2
+
+roles:
+  - role: frontend
+    name: Frontend
+    pictogram: browser
+    skills: [html, css, javascript, typescript, react, tailwindcss, redux, tanstack-query, nextjs, vitest, playwright]
+  - role: backend
+    name: Backend
+    pictogram: database
+    skills: [javascript, nodejs, express, sql, postgresql, typescript, nestjs, redis, docker, automated-testing, api-documentation]
+  - role: mobile
+    name: Mobile
+    pictogram: device-mobile
+    skills: [dart, flutter, firebase, kotlin, android, jetpack-compose, swift, swiftui, ios, react-native, expo]
+  - role: data
+    name: Data
+    pictogram: chart-line
+    skills: [python, sql, pandas, numpy, jupyter, matplotlib, seaborn, scipy, plotly, postgresql]
+  - role: machine-learning
+    name: Machine learning
+    pictogram: brain
+    skills: [python, numpy, pandas, jupyter, matplotlib, scikit-learn, tensorflow, pytorch, keras, opencv, hugging-face-transformers]
+  - role: devops
+    name: DevOps
+    pictogram: cloud
+    skills: [shell, docker, docker-compose, github-actions, continuous-integration, nginx, kubernetes, terraform, ansible, aws, helm]
+  - role: ui-ux
+    name: UI/UX
+    pictogram: pen-nib
+    skills: [html, css, javascript, tailwindcss, bootstrap, react, material-ui, storybook, d3, threejs]
+  - role: product
+    name: Product
+    pictogram: compass
+    skills: [javascript, typescript, react, nextjs, nodejs, postgresql, supabase, vercel, automated-testing, api-documentation]

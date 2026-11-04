@@ -11,7 +11,7 @@
  */
 import type { Db, Fetch, Log } from "../github/types.ts";
 import { describeNotification } from "./describe.ts";
-import { digestEmail, instantEmail, opsAlertEmail, teacherDigestEmail, universityLaunchEmail, type EmailMessage } from "./email.ts";
+import { digestEmail, instantEmail, opsAlertEmail, teacherDigestEmail, recordClaimEmail, universityLaunchEmail, type EmailMessage } from "./email.ts";
 import { notificationEmailCategory, SECURITY_NOTIFICATION_TYPES, type BrevoConfig, type EmailCategory } from "../email/brevo.ts";
 import { sendQueuedEmail, deliveryIdentity } from "../email/delivery.ts";
 
@@ -47,7 +47,7 @@ interface QueueRow {
   msg_id: number | string;
   read_ct: number;
   enqueued_at: string;
-  message: { kind?: string; notification_id?: string; user_id?: string; request_id?: string };
+  message: { kind?: string; notification_id?: string; user_id?: string; request_id?: string; claim_id?: string };
 }
 
 export interface NotifyRunResult {
@@ -174,6 +174,20 @@ export async function runNotifyWorker(opts: {
       }
       email = universityLaunchEmail(r.email, cfg.appUrl, r.university);
       key = `university-launch-${row.message.request_id}`;
+    } else if (kind === "record_claim" && row.message.claim_id) {
+      // A walk-in's held Record entry (PRD 5.30): one email per person per event, marked sent in SQL.
+      const [r] = await db.query<{ email: string; event_title: string; society: string }>(
+        "select email, event_title, society from private.record_claim_email($1::uuid)",
+        [row.message.claim_id],
+      );
+      if (!r) {
+        await archive(row.msg_id);
+        result.skipped++;
+        log("notify.skipped", { outcome: "ok", reason: "not_wanted", kind: "record_claim" });
+        continue;
+      }
+      email = recordClaimEmail(r.email, cfg.appUrl, r.event_title, r.society);
+      key = `record-claim-${row.message.claim_id}`;
     } else {
       await archive(row.msg_id);
       result.skipped++;

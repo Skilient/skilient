@@ -1,16 +1,168 @@
 /*
- * Marketing site styles (docs/marketing-design-plan.md). Tokens only; motion per plan B3.
+ * Marketing site styles. Visual system: app/(marketing)/CLAUDE.md (neumorphism, one surface, one
+ * light source top-left, signal orange as the only accent), shared with the app since phase 14.
+ * This file holds what only the public site uses. Contrast-checked pairs are noted (WCAG 2.2).
  * Without JavaScript (no html[data-js]) every state shown here is the end state.
  */
 
+/* ------------------------------------------------------------------------- */
+/* Tokens live in app/styles/tokens.css and the component classes in           */
+/* app/styles/neu.css (phase 14). The public site widens the radii and keeps   */
+/* Spectral for its headlines.                                                 */
+/* ------------------------------------------------------------------------- */
+.neu {
+  --r-card: 32px;
+  --r-tile: 24px;
+  --r-well: 16px;
+  --font-display-face: var(--font-spectral), Georgia, "Times New Roman", serif;
+  font-family: var(--font-ui);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------------------- */
+/* Background texture (app/(marketing)/CLAUDE.md: weave and mesh, low contrast, */
+/* never under body text). The page's weave shows only outside the content     */
+/* column, so on a 1280 px screen it lives in the gutters and on wider ones in  */
+/* the margins.                                                                 */
+/* ------------------------------------------------------------------------- */
+.neu {
+  position: relative;
+  isolation: isolate;
+  /* Nothing scrolls sideways; clip (not hidden) so sticky scenes still pin. */
+  overflow-x: clip;
+}
+/* No scrollbars on the marketing pages (Ahmed, 2026-10-31); scrolling itself is untouched. */
+html:has(.neu) {
+  scrollbar-width: none;
+}
+html:has(.neu)::-webkit-scrollbar {
+  display: none;
+}
+.neu::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--weave);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    #000 0,
+    #000 calc(50% - 680px),
+    transparent calc(50% - 600px),
+    transparent calc(50% + 600px),
+    #000 calc(50% + 680px),
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000 0,
+    #000 calc(50% - 680px),
+    transparent calc(50% - 600px),
+    transparent calc(50% + 600px),
+    #000 calc(50% + 680px),
+    #000 100%
+  );
+}
+/* A decorative weave field; callers add a mask so it fades where text begins. */
+.neu-weave {
+  background-image: var(--weave);
+}
+.neu-ink .neu-weave {
+  background-image: var(--weave-on-ink);
+}
+/* The hero's one orange gradient, with the weave fading out around the phone. */
+.hero-backdrop {
+  background-image:
+    radial-gradient(circle at 22% 58%, color-mix(in srgb, var(--signal) 34%, transparent), color-mix(in srgb, var(--signal-tint) 14%, transparent) 32%, transparent 52%),
+    var(--weave);
+  background-size:
+    100% 100%,
+    24px 24px;
+  background-repeat: no-repeat, repeat;
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 45%, transparent 80%);
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 45%, transparent 80%);
+}
+/* Focus: a 2 px synergy ring, offset 2 px, never the error colour. */
+.neu :focus-visible {
+  outline: 2px solid var(--synergy);
+  outline-offset: 2px;
+}
+
+/* The shared ui Button's primary variant (forms on the marketing pages) gets the same object. */
+.neu button.bg-primary {
+  border-radius: 999px;
+  background: var(--signal);
+  color: var(--text-on-primary);
+  box-shadow: var(--raised-signal);
+  transition:
+    box-shadow 140ms ease-out,
+    background-color 140ms ease-out;
+}
+.neu button.bg-primary:hover {
+  background: var(--interactive-primary-hover);
+}
+.neu button.bg-primary:active {
+  background: var(--signal-pressed);
+  box-shadow: var(--pressed-signal);
+}
+/* The shared ui Button's secondary and ghost variants, inside the marketing scope. */
+.neu button.border-border-default {
+  border-color: transparent;
+  border-radius: 999px;
+  box-shadow: var(--raised-s);
+}
+.neu button.border-border-default:active {
+  box-shadow: var(--pressed-s);
+}
+
+/* ------------------------------------------------------------------------- */
+/* Inputs: an inset well, 56 px; focus is the blue ring, error the red one     */
+/* ------------------------------------------------------------------------- */
+.neu :is(input[type="email"], input[type="text"], input[type="url"], input[type="tel"], input:not([type]), textarea, select) {
+  min-height: 3.5rem;
+  border: 0;
+  border-radius: var(--r-well);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--pressed);
+  padding-inline: 1.125rem;
+}
+.neu textarea {
+  padding-block: 0.875rem;
+}
+.neu :is(input, textarea, select)::placeholder {
+  color: var(--muted);
+}
+.neu :is(input, textarea, select):focus-visible {
+  outline: 2px solid var(--synergy);
+  outline-offset: 2px;
+  box-shadow: var(--pressed);
+}
+.neu :is(input, textarea, select)[aria-invalid="true"] {
+  outline: 2px solid var(--error-ink);
+  outline-offset: 2px;
+}
+.neu :is(input, textarea, select)[aria-invalid="true"]:focus-visible {
+  outline-color: var(--synergy);
+  box-shadow: var(--pressed), 0 0 0 6px color-mix(in srgb, var(--error-ink) 35%, transparent);
+}
+
 /* The hero headline: two lines at 1280 px in an 8-column measure (decisions 2026-10-02). */
 .text-hero {
-  font-family: var(--font-display);
+  font-family: var(--font-display-face);
   font-size: clamp(2.25rem, 1.1rem + 2.6vw, 2.75rem);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.022em;
   text-wrap: balance;
+}
+/* The headline's italic turn. */
+.text-hero em {
+  font-family: var(--font-spectral-italic), var(--font-display-face);
+  font-style: italic;
+  color: var(--signal-ink);
 }
 
 /* Detection result: crossfade in (150 ms). */
@@ -42,8 +194,14 @@
     opacity: 0;
   }
 }
-.site-menu::backdrop {
-  background: rgb(14 13 11 / 0.4);
+.site-menu {
+  box-shadow: var(--raised-l);
+  border: 0;
+}
+.site-menu::backdrop,
+.request-sheet::backdrop {
+  background: rgb(27 27 25 / 0.3);
+  backdrop-filter: blur(6px);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -53,9 +211,10 @@
   width: 100%;
   max-width: 100%;
   margin: auto 0 0;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  box-shadow: var(--elevation-4);
+  border: 0;
+  border-radius: var(--r-card) var(--r-card) 0 0;
+  background: var(--surface);
+  box-shadow: var(--raised-l);
   opacity: 1;
   transition:
     opacity 200ms linear,
@@ -70,130 +229,21 @@
     opacity: 0;
   }
 }
-.request-sheet::backdrop {
-  background: rgb(14 13 11 / 0.45);
-}
 @media (min-width: 640px) {
   .request-sheet {
     width: min(32rem, calc(100vw - 2rem));
     margin: auto;
-    border-radius: var(--radius-lg);
+    border-radius: var(--r-card);
   }
-}
-
-/* ------------------------------------------------------------------------- */
-/* Hero phone and the focal sequence                                          */
-/* ------------------------------------------------------------------------- */
-.hero-phone {
-  width: min(100%, 22rem);
-  padding: 10px 10px 0;
-  border: 1px solid var(--border-strong);
-  border-bottom: 0;
-  border-radius: 2.25rem 2.25rem 0 0;
-  background: var(--bg-elevated);
-}
-.hero-screen {
-  position: relative;
-  height: 26rem;
-  overflow: hidden;
-  border-radius: 1.6rem 1.6rem 0 0;
-  background: var(--bg-page);
-}
-@media (max-width: 639px) {
-  .hero-top {
-    display: none;
-  }
-  /* Narrower on phones, so the headline (painted first) stays the page's largest element. */
-  .hero-phone {
-    width: min(100%, 17.5rem);
-  }
-  .hero-screen {
-    height: 22rem;
-  }
-}
-@media (min-width: 1024px) {
-  .hero-screen {
-    height: 35rem;
-  }
-}
-.hero-feed {
-  display: flex;
-  flex-direction: column;
-  gap: 2.05%;
-}
-.hero-card {
-  position: relative;
-}
-.hero-card-a {
-  order: 1;
-}
-.hero-card-b {
-  order: 2;
-}
-.hero-a-stack {
-  display: grid;
-}
-.hero-a-stack > * {
-  grid-area: 1 / 1;
-  position: relative;
-}
-.hero-a-before,
-.hero-roll {
-  display: none;
-}
-.hero-tap {
-  position: absolute;
-  width: 11%;
-  aspect-ratio: 1;
-  border: 2px solid var(--text-primary);
-  border-radius: 9999px;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-.hero-roll {
-  position: absolute;
-  overflow: hidden;
-  background: var(--bg-surface);
-}
-.hero-roll-track {
-  display: flex;
-  flex-direction: column;
-  height: 200%;
-}
-.hero-roll-track > * {
-  height: 50%;
-}
-.hero-roll-track picture,
-.hero-roll-track img {
-  height: 100%;
-}
-
-/* With JavaScript: the start state until the sequence runs. */
-[data-js] .hero-screen:not([data-state="done"]) .hero-card-a {
-  order: 2;
-}
-[data-js] .hero-screen:not([data-state="done"]) .hero-card-b {
-  order: 1;
-}
-[data-js] .hero-screen[data-state="start"] .hero-a-before,
-[data-js] .hero-screen[data-state="answered"] .hero-a-before {
-  display: block;
-}
-[data-js] .hero-screen[data-state="start"] .hero-a-after {
-  opacity: 0;
-}
-[data-js] .hero-roll {
-  display: block;
 }
 
 /* ------------------------------------------------------------------------- */
 /* Live at                                                                    */
 /* ------------------------------------------------------------------------- */
 .live-list > li:not(:last-child)::after {
-  content: "/";
+  content: "·";
   margin-inline: 0.6em;
-  color: var(--interactive-primary);
+  color: var(--signal-ink);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -206,75 +256,10 @@ a:hover > .cta-arrow,
 .org-row:hover .cta-arrow {
   transform: translateX(4px);
 }
-.org-row:hover > span:first-child {
+.org-row:hover > span:nth-child(2) {
   text-decoration: underline;
   text-underline-offset: 6px;
   text-decoration-thickness: 2px;
-}
-
-/* How it works: native scroll-snap; a quiet scrollbar in the theme. */
-.how-rail {
-  scrollbar-width: thin;
-  scroll-padding-inline: var(--page-gutter);
-}
-
-/* ------------------------------------------------------------------------- */
-/* Tier ladder: the one scroll-linked element (plan B3)                      */
-/* ------------------------------------------------------------------------- */
-.tier-track,
-.tier-fill {
-  left: 7px;
-  top: 8px;
-  bottom: 8px;
-  width: 2px;
-}
-.tier-fill {
-  transform-origin: top;
-}
-@media (min-width: 768px) {
-  .tier-track,
-  .tier-fill {
-    left: 8px;
-    right: 0;
-    top: 7px;
-    bottom: auto;
-    width: auto;
-    height: 2px;
-  }
-  .tier-fill {
-    transform-origin: left;
-  }
-}
-@keyframes tier-fill-y {
-  from {
-    transform: scaleY(0);
-  }
-}
-@keyframes tier-fill-x {
-  from {
-    transform: scaleX(0);
-  }
-}
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .tier-fill {
-      animation: tier-fill-y linear both;
-      animation-timeline: view();
-      animation-range: entry 35% cover 60%;
-    }
-    @media (min-width: 768px) {
-      .tier-fill {
-        animation-name: tier-fill-x;
-      }
-    }
-  }
-}
-
-/* ------------------------------------------------------------------------- */
-/* Verified CV specimen: the sheet is cut by its frame, not faded            */
-/* ------------------------------------------------------------------------- */
-.cv-specimen {
-  border-bottom: 1px solid var(--border-default);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -302,56 +287,23 @@ a:hover > .cta-arrow,
 @media (prefers-reduced-motion: reduce) {
   .faq-item::details-content,
   .faq-caret,
-  .cta-arrow {
+  .cta-arrow,
+  .neu-btn,
+  .neu-btn-2,
+  .neu-icon-btn,
+  .faq-item {
     transition: none;
   }
 }
 
-/* ------------------------------------------------------------------------- */
-/* Plan tables: monthly / yearly with CSS radios (no JavaScript)              */
-/* ------------------------------------------------------------------------- */
-.period-toggle {
-  display: inline-flex;
-  padding: 3px;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  background: var(--bg-surface);
+/* FAQ items are raised tiles; an open one is pressed in. */
+.faq-item {
+  border-radius: var(--r-tile);
+  background: var(--surface);
+  box-shadow: var(--raised-s);
+  transition: box-shadow 140ms ease-out;
 }
-.period-toggle label {
-  position: relative;
-  display: inline-flex;
-  cursor: pointer;
+.faq-item[open] {
+  box-shadow: var(--pressed);
 }
-.period-toggle input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-.period-toggle span {
-  padding: 0.5rem 1rem;
-  border-radius: calc(var(--radius-md) - 2px);
-  font-weight: 600;
-  color: var(--text-secondary);
-  transition:
-    background-color 200ms var(--motion-ease-standard),
-    color 200ms var(--motion-ease-standard);
-}
-.period-toggle input:checked + span {
-  background: var(--bg-page);
-  color: var(--text-primary);
-  box-shadow: inset 0 0 0 1px var(--border-strong);
-}
-.period-toggle input:focus-visible + span {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-.plan-table:has(.period-year:checked) .when-month,
-.plan-table:not(:has(.period-year:checked)) .when-year {
-  display: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .period-toggle span {
-    transition: none;
-  }
-}
+

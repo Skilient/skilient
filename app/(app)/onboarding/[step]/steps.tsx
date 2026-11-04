@@ -212,10 +212,10 @@ export function SkillsStep() {
 
 // Step 5 ------------------------------------------------------------------------------
 
-export function LookingForStep(props: { lookingFor: LookingFor[]; recruiterVisible: boolean }) {
+export function LookingForStep(props: { lookingFor: LookingFor[]; recruiterVisible: boolean; recruiterPortal: boolean }) {
   return (
     <StepForm action={saveLookingForStep}>
-      {() => <LookingForFields defaultValues={props.lookingFor} defaultRecruiterVisible={props.recruiterVisible} />}
+      {() => <LookingForFields defaultValues={props.lookingFor} defaultRecruiterVisible={props.recruiterVisible} showRecruiter={props.recruiterPortal} />}
     </StepForm>
   );
 }

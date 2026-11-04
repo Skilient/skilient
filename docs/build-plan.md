@@ -219,6 +219,63 @@ Legend: 📖 = PRD files to read (in `docs/prd/`), ✅ = done-when checks.
 (`docs/alerts.md`). Slice 3: ASVS L1 filed (`docs/security/asvs-l1.md`), ZAP baseline with no High findings on the
 local build (`docs/security/zap.md`; the run against production is a pre-launch step), CSP clean on every page for
 every role (`tests/e2e/csp-sweep.spec.ts`). The first box also needs the design gates (slices 6–8).*
+*2026-11-02: the design gates and the load test run after the Student-first track, on the new design (decisions.md "Student-first scope").*
+
+---
+
+## Student-first track (decided 2026-11-02)
+
+Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-spec.md` §3.14. Questions: `docs/student-first-questions.md` (build on the defaults until answered). **Each phase is built in one go: one session and one PR per phase, no slices** (Ahmed, 2026-11-02); the boxes are its parts. These phases come before the rest of phase 13; phase 13's design gates run on the new design. Every new table follows the checklist in the plan (RLS + pgTAP refusal, `refuse_if_restricted`, report target, storage cleanup, analytics, `config_keys`, audited staff writes, `OPS_AREAS`, CSP sweep routes, axe E2E in both themes, notification types).
+
+## Phase 14 — New look
+
+📖 `docs/student-first-plan.md` (Portals, How the app looks), `09-design-system-and-ux.md`, `screen-spec.md` §1–2, the brief `app/(marketing)/CLAUDE.md` on `claude/wonderful-feynman-rmrfgy`
+
+- [x] portals flag (`platform_config` `portals.enabled`, gate, signup refusal, student surfaces), marketing CTAs to "Talk to us", `/pricing` → `/features`, and the migration that deletes every recruiter and university-official account through `private.delete_account` (counts listed in the PR)
+- [x] design system in the app (merge the marketing branch, root neu tokens with PRD 9 names re-pointed, Space Grotesk, rebuilt `components/ui/` primitives and the new ones, `/ui` gallery, token contrast test, ops `.classic`)
+- [x] shell (rail, header with ⌘K, phone dock, Openings in nav) and core screens (post card with `⋯`, Me, Score, Ventures team tray, chat, notifications, onboarding, empty states with renders)
+
+✅ Recruiter and official signup refused and their routes 404 while the flag is off, restored when on · no recruiter or official account remains, and faculty with a university seat keep their account · every existing screen renders on the new tokens in light and dark with axe clean · every token pair passes the contrast test · Lighthouse mobile ≥ 90 on `/feed`
+
+## Phase 15 — Societies and events
+
+📖 `05-31-societies-and-events.md`, `05-28-…` (Feed), `05-23-university-portal.md` (events, check-in), `05-12-moderation-and-admin.md`
+
+- [x] societies (request, ops verification, page, officers and handover, membership modes, induction rounds, posts as the society, term confirmations)
+- [x] events (stepper, sessions, ticket types, eligibility, form builder, teams, approval, waitlist, signed tickets, reminders, change notices; event posts officer-only)
+- [x] check-in (scanner, search, add by email, per session, live headcount), close-out (attendance fixes, results, volunteer hours, issue preview), CSV export, feedback
+- [x] paid tickets paid directly to the society (payment details with second-officer confirmation, reference codes, 24-hour holds, receipt upload and officer review, duplicate flags, refund policy and refunds marked by the society, disputes into reports)
+
+✅ A society goes from request to verified to its first induction round · no oversell under parallel registrations · a ticket checks in once and the second scan shows the first time · a student can't create an event · close-out lists every checked-in attendee for issuing · a paid ticket confirms only on an officer's receipt approval and an unpaid hold frees after 24 hours · a payment-details change needs a second officer · receipts are private to the student, the officers and staff on a report
+
+## Phase 16 — The Record
+
+📖 `05-30-the-record.md`, `05-18-verified-cv.md`, `05-26-…` (appeals)
+
+- [x] entries, `record_entry` signing through `cv-sign`, `/verify/[code]` for entries, issuing from close-out, term confirmations and venture completions, revocation and supersede, ranking formula v2 (`score_record`, reference students in `docs/ranking-reference.md`)
+- [x] `/me/record`, certificate and transcript PDFs, share links, CV "Leadership and activities", claim by email after signup, mistake reports and appeals
+- [x] landing story features The Record (marketing)
+
+✅ A checked-in attendee gets a sealed entry that verifies, and a revoked one shows revoked · no officer issues to themselves alone · a claim works only for the same verified email · the transcript PDF verifies every entry on it · formula v2 reproduces the hand-worked Record scores and attendance never adds rank
+
+## Phase 17 — Growth
+
+📖 `05-32-paths-and-proof-tasks.md`, `05-05-github-skill-extraction-and-verification.md`, `05-13-ranking-system-formula-v1.md` (anti-gaming)
+
+- [x] paths (weekly compute, starter path, ladder, skill drawer) and proof tasks (bank in `/ops/config`, repository link, GitHub then peer then code check, Record entry)
+- [x] skill swap (offers, wants, matches, requests, DM unlock, sessions, learner confirmation, thank-you notes, Taught entry, limits)
+
+✅ A path switches from starter to data order at 10 seniors · a task proved by GitHub completes without a peer · a peer can't review a friend's task · one confirmed swap issues exactly one Taught entry
+
+## Phase 18 — Community
+
+📖 `05-34-openings-sharing-and-reach.md`, `05-33-yearbook.md`, `05-09-chat.md`
+
+- [x] Openings (grid in one SQL call, category pages, This week, redirects from `/opportunities`)
+- [x] yearbook (pages, notes with owner approval, superlatives, reveal, freeze, page PDF)
+- [x] share-to-chat, people you may know, PWA (manifest, service worker, cached ticket) and web push
+
+✅ Openings shows every card's latest item with loading, empty and error states · unapproved yearbook notes and votes are unreadable to others · a shared post the recipient can't see renders as unavailable · an event reminder arrives as a push and stops when the category is off
 
 ---
 

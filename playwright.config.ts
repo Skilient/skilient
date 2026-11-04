@@ -3,8 +3,16 @@ import { defineConfig, devices } from "@playwright/test";
 const PORT = Number(process.env.PORT ?? 3100);
 const baseURL = process.env.E2E_BASE_URL ?? `http://127.0.0.1:${PORT}`;
 
+// Phase 14: the recruiter and university portals are off by flag. Their specs carry the @portals tag
+// and run in their own pass (`pnpm test:e2e:portals`, E2E_PORTALS=1), which switches the flag on in
+// globalSetup and off again in globalTeardown; the main pass leaves them out.
+const portalsPass = process.env.E2E_PORTALS === "1";
+
 export default defineConfig({
   testDir: "tests/e2e",
+  globalSetup: "./tests/e2e/portals-setup.ts",
+  globalTeardown: "./tests/e2e/portals-teardown.ts",
+  ...(portalsPass ? { grep: /@portals/ } : { grepInvert: /@portals/ }),
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   // headless_shell has crashed with a SIGILL/CFI violation on marketing-pages.spec.ts:132 on GitHub's

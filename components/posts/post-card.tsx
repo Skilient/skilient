@@ -8,6 +8,7 @@ import { EventBlock } from "@/components/posts/event-block";
 import { InsightsButton } from "@/components/posts/insights-button";
 import { PollBlock } from "@/components/posts/poll-block";
 import { PostMenu } from "@/components/posts/post-menu";
+import { ShareSheet } from "@/components/posts/share-sheet";
 import { SurveyStrip } from "@/components/posts/survey-strip";
 import { useQualifiedView } from "@/components/posts/view-tracker";
 import { FoldedPost, ViewerActions } from "@/components/posts/viewer-actions";
@@ -26,8 +27,9 @@ const TYPE_LABEL: Partial<Record<PostCardData["type"], string>> = {
 };
 
 /**
- * One post (PRD 5.28). No like, reaction, save or share controls exist; the micro-survey
- * strip (slice 5) and comments (slice 4) attach below the body.
+ * One post (PRD 5.28, phase 14): a raised card, the author's name first, the survey strip in a
+ * well, and Comment and Share as the visible actions; Not for me, Mute and Report sit in the `⋯`
+ * menu. No like, reaction or save controls exist. Share sends the post into a chat (phase 18).
  */
 export function PostCard({ post, headingLevel = 2, showCommentsLink = true }: { post: PostCardData; headingLevel?: 2 | 3; showCommentsLink?: boolean }) {
   const [gone, setGone] = useState(false);
@@ -45,18 +47,22 @@ export function PostCard({ post, headingLevel = 2, showCommentsLink = true }: { 
   return (
     <article
       ref={ref}
-      className={cn("flex flex-col gap-3 rounded-lg border border-border-default bg-bg-surface p-4 sm:p-5", pinned && "border-primary")}
+      className={cn("neu-card flex flex-col gap-3 p-4 sm:p-5", pinned && "ring-2 ring-primary/60")}
       aria-labelledby={`post-${post.id}-by`}
       data-testid="post"
       data-post-id={post.id}
       data-type={post.type}
     >
       <header className="flex items-start gap-3">
-        <Avatar name={post.author.name} src={post.author.avatarUrl} size="md" />
+        <Avatar name={post.society?.name ?? post.author.name} src={post.society ? post.society.logoUrl : post.author.avatarUrl} size="md" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <Heading id={`post-${post.id}-by`} className="text-body font-semibold">
-              {post.author.username ? (
+              {post.society ? (
+                <Link href={`/societies/${post.society.slug}` as Route} className="underline-offset-4 hover:underline" data-testid="post-society">
+                  {post.society.name}
+                </Link>
+              ) : post.author.username ? (
                 <Link href={`/profile/${post.author.username}` as Route} className="underline-offset-4 hover:underline">
                   {post.author.name}
                 </Link>
@@ -64,7 +70,7 @@ export function PostCard({ post, headingLevel = 2, showCommentsLink = true }: { 
                 post.author.name
               )}
             </Heading>
-            {post.author.tier ? <TierBadge tier={post.author.tier} /> : null}
+            {post.society ? <span className="text-caption text-text-secondary">by {post.author.name}</span> : post.author.tier ? <TierBadge tier={post.author.tier} /> : null}
           </div>
           <p className="flex flex-wrap items-center gap-x-2 text-caption text-text-secondary">
             <Link href={`/post/${post.id}` as Route} className="inline-flex min-h-6 items-center hover:underline">
@@ -122,25 +128,28 @@ export function PostCard({ post, headingLevel = 2, showCommentsLink = true }: { 
       {post.link && !post.images.length ? <LinkPreview link={post.link} /> : null}
 
       {post.survey ? (
-        <SurveyStrip postId={post.id} survey={post.survey} shownAt={shownAt} qualified={qualified} publicLine={<PublicLine parts={post.publicLine} />} />
+        <div className="neu-well-s p-3">
+          <SurveyStrip postId={post.id} survey={post.survey} shownAt={shownAt} qualified={qualified} publicLine={<PublicLine parts={post.publicLine} />} />
+        </div>
       ) : post.publicLine.length ? (
         <p className="text-body-sm text-text-secondary">
           <PublicLine parts={post.publicLine} />
         </p>
       ) : null}
 
-      <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-border-muted pt-2">
-        {showCommentsLink ? (
-          <Link
-            href={`/post/${post.id}#comments` as Route}
-            className="inline-flex min-h-9 items-center gap-1.5 rounded-md px-2 text-body-sm text-text-secondary hover:bg-bg-subtle hover:text-text-primary"
-          >
-            <ChatCircle aria-hidden weight="bold" className="size-4" />
-            {post.commentCount === 0 ? "Comment" : `${post.commentCount} ${post.commentCount === 1 ? "comment" : "comments"}`}
-          </Link>
-        ) : (
-          <span />
-        )}
+      <footer className="proof-line flex-wrap justify-between gap-2 pt-3">
+        <div className="flex flex-wrap items-center gap-2">
+          {showCommentsLink ? (
+            <Link
+              href={`/post/${post.id}#comments` as Route}
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-4 text-body-sm font-semibold text-text-primary shadow-[var(--raised-s)] active:shadow-[var(--pressed-s)]"
+            >
+              <ChatCircle aria-hidden weight="bold" className="size-4" />
+              {post.commentCount === 0 ? "Comment" : `${post.commentCount} ${post.commentCount === 1 ? "comment" : "comments"}`}
+            </Link>
+          ) : null}
+          <ShareSheet postId={post.id} />
+        </div>
         {post.isMine ? (
           <div className="flex flex-wrap items-center gap-1">
             {(SURVEYED_TYPES as readonly string[]).includes(post.type) ? <InsightsButton postId={post.id} /> : null}
@@ -170,7 +179,7 @@ function LinkPreview({ link }: { link: NonNullable<PostCardData["link"]> }) {
       href={link.url}
       target="_blank"
       rel="noopener noreferrer nofollow ugc"
-      className="flex overflow-hidden rounded-md border border-border-default hover:border-border-strong"
+      className="neu-well-s flex overflow-hidden hover:shadow-[var(--pressed)]"
       data-testid="link-preview"
     >
       {/* No third-party preview image: the CSP allows images only from Skilient, and loading
@@ -214,7 +223,7 @@ function VentureBlock({ post }: { post: PostCardData }) {
   const href = `/ventures/${v.id}` as Route;
   if (post.type === "shipped") {
     return (
-      <div className="flex flex-col gap-2 rounded-md border border-border-default bg-bg-subtle p-3" data-testid="shipped">
+      <div className="neu-well-s flex flex-col gap-2 p-4" data-testid="shipped">
         <Link href={href} className="text-h4 underline-offset-4 hover:underline">
           {v.title}
         </Link>
@@ -247,7 +256,7 @@ function VentureBlock({ post }: { post: PostCardData }) {
         : null;
   const open = v.roles.reduce((n, r) => n + r.open, 0);
   return (
-    <div className="flex flex-col gap-3 rounded-md border border-border-default bg-bg-subtle p-3" data-testid="invite">
+    <div className="neu-well-s flex flex-col gap-3 p-4" data-testid="invite">
       <div>
         <Link href={href} className="text-h4 underline-offset-4 hover:underline">
           {v.title}

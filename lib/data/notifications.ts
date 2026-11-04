@@ -80,3 +80,18 @@ export async function getNotificationSettings(): Promise<NotificationSetting[]> 
     allowInstant: s.allow_instant,
   }));
 }
+
+export interface PushSettings {
+  /** Devices subscribed to push on this account. */
+  devices: number;
+  categories: { category: string; label: string; push: boolean }[];
+}
+
+/** Web push (PRD 5.34): subscribed devices and the per-category switch. */
+export async function getPushSettings(): Promise<PushSettings> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("my_push_settings");
+  if (error) throw new Error(`my_push_settings failed: ${error.code}`);
+  const raw = (data ?? {}) as { devices?: number; categories?: PushSettings["categories"] };
+  return { devices: Number(raw.devices ?? 0), categories: raw.categories ?? [] };
+}

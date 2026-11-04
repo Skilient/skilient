@@ -9,7 +9,7 @@ import { adminClient, currentAgreementVersion, hasBackend, PASSWORD, signInWithP
  * by SQL) a record view is logged; a student RSVPs and opens the ecosphere. Every new screen is
  * checked with axe in both themes.
  */
-test.describe("University portal", () => {
+test.describe("University portal", { tag: "@portals" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
   test.beforeEach(({}, info) => {
     test.skip(info.project.name !== "desktop", "account flows run once, on desktop");

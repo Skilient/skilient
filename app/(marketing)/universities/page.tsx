@@ -1,68 +1,74 @@
 import type { Metadata } from "next";
 import { CtaLink, OrgHero } from "@/components/marketing/org-parts";
-import { PlanTable } from "@/components/marketing/plan-table";
 import { Section, SectionHeading } from "@/components/marketing/sections/section";
+import type { OrbitItem } from "@/components/marketing/story/orbit";
+import { DashboardPanel, EcospherePanel, FairPanel, ProPanel, RecordsPanel } from "@/components/marketing/story/panels-universities";
+import { PinnedStory } from "@/components/marketing/story/pinned-story";
 import { TalkToUsForm } from "@/components/marketing/talk-to-us-form";
-import { pricingPage, universitiesPage as copy } from "@/content/marketing";
-import { getPublicPlans } from "@/lib/data/marketing";
+import { universitiesPage as copy } from "@/content/marketing";
+import type { ObjectName } from "@/lib/marketing/objects";
 import { turnstileSiteKey } from "@/lib/security/turnstile";
 
 export const metadata: Metadata = { title: copy.title, description: copy.description, alternates: { canonical: "/universities" } };
 
+const ORBIT: OrbitItem[] = [
+  { name: "ticket", x: 4, y: 6, w: 34, d: 0.4, r: -8 },
+  { name: "campus", x: 18, y: 28, w: 56, d: 1, r: -3, eager: true },
+  { name: "booth", x: 60, y: 54, w: 36, d: 0.7, r: 6 },
+];
+
+type Id = (typeof copy.sections)[number]["id"];
+const PANELS: Record<Id, React.ReactNode> = {
+  ecosphere: <EcospherePanel />,
+  dashboards: <DashboardPanel />,
+  records: <RecordsPanel />,
+  events: <FairPanel />,
+  pro: <ProPanel />,
+};
+const OBJECTS: Partial<Record<Id, ObjectName>> = { ecosphere: "campus", dashboards: "commit", records: "seal", events: "booth" };
+
 /**
- * /universities (PRD 5.1, 5.23; docs/marketing-design-plan.md B7): an editorial long read with a
- * contents column, the licence plans from `plans`, and "Talk to us" (a sales lead in /ops/leads).
+ * /universities (PRD 5.1, 5.23; decisions 2026-11-01): the reader runs careers at Ayesha's
+ * university (a sample). Ecosphere, dashboards, records, fairs and Student Pro as pinned chapters,
+ * then "Talk to us" (a sales lead in /ops/leads). University accounts aren't open yet (phase 14), so
+ * the licence table waits with them.
  */
-export default async function UniversitiesPage() {
-  const plans = await getPublicPlans();
+export default function UniversitiesPage() {
   return (
     <>
-      <OrgHero headline={copy.headline} intro={copy.intro} art="universities" cta={<CtaLink href={copy.cta.href} testId="org-cta" track="talk_to_us">{copy.cta.label}</CtaLink>} />
+      <OrgHero
+        headline={copy.headline}
+        intro={copy.intro}
+        orbit={ORBIT}
+        orbitAlt={copy.orbitAlt}
+        cta={
+          <CtaLink href={copy.cta.href} testId="org-cta" track="talk_to_us">
+            {copy.cta.label}
+          </CtaLink>
+        }
+      />
 
-      <section aria-label="What your university gets" className="border-b border-border-muted">
-        <div className="mx-auto grid max-w-page gap-10 px-[var(--page-gutter)] py-16 sm:py-20 md:grid-cols-12 md:gap-6">
-          <nav aria-label="On this page" className="hidden md:col-span-3 md:block">
-            <ol className="sticky top-8 flex flex-col gap-3 border-l border-border-default pl-4 text-body">
-              {copy.sections.map((s) => (
-                <li key={s.id}>
-                  <a href={`#${s.id}`} className="text-text-secondary underline-offset-4 hover:text-text-primary hover:underline">
-                    {s.heading}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
-          <div className="flex flex-col gap-14 md:col-span-8 md:col-start-5">
-            {copy.sections.map((s) => (
-              <article key={s.id} id={s.id} aria-labelledby={`${s.id}-title`} className="flex scroll-mt-8 flex-col gap-4">
-                <h2 id={`${s.id}-title`} className="font-display text-h2">
-                  {s.heading}
-                </h2>
-                <p className="max-w-[62ch] text-body-lg text-text-secondary">{s.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <PinnedStory
+        label="Your campus on Skilient, in five chapters"
+        chapters={copy.sections.map((s) => ({
+          id: s.id,
+          kicker: copy.kickers[s.id],
+          title: copy.titles[s.id],
+          body: s.text,
+          proof: copy.proofs[s.id],
+          panel: PANELS[s.id],
+          object: OBJECTS[s.id],
+        }))}
+      />
 
-      <Section id="plans" labelledBy="plans-title" className="border-b border-border-muted bg-bg-surface">
-        <div className="flex flex-col gap-3">
-          <SectionHeading id="plans-title">{copy.plans.heading}</SectionHeading>
-          <p className="max-w-[62ch] text-body-lg text-text-secondary">{copy.plans.text}</p>
-        </div>
-        <div className="mt-10">
-          <PlanTable id="universities" plans={plans.filter((p) => p.audience === "university")} free={pricingPage.universities.free} />
-        </div>
-      </Section>
-
-      <Section id="talk" labelledBy="talk-title">
+      <Section id="talk" labelledBy="talk-title" className="epilogue" step="Epilogue · Talk to us">
         <div className="grid gap-10 md:grid-cols-12 md:gap-6">
           <div className="flex flex-col gap-4 md:col-span-4">
             <SectionHeading id="talk-title">{copy.talk.heading}</SectionHeading>
             <p className="text-body-lg text-text-secondary">{copy.talk.text}</p>
           </div>
           <div className="md:col-span-7 md:col-start-6">
-            <TalkToUsForm siteKey={turnstileSiteKey()} />
+            <TalkToUsForm siteKey={turnstileSiteKey()} kind="university" />
           </div>
         </div>
       </Section>

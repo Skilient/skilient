@@ -1,21 +1,19 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/marketing/hero";
 import { LiveAt } from "@/components/marketing/live-at";
-import { CvPreview } from "@/components/marketing/sections/cv-preview";
 import { Faq } from "@/components/marketing/sections/faq";
-import { FeedBlock } from "@/components/marketing/sections/feed-block";
-import { FinalCta } from "@/components/marketing/sections/final-cta";
 import { ForOrgs } from "@/components/marketing/sections/for-orgs";
-import { HowItWorks } from "@/components/marketing/sections/how-it-works";
-import { OpportunitiesBlock } from "@/components/marketing/sections/opportunities-block";
-import { OurRules } from "@/components/marketing/sections/our-rules";
 import { PricingTeaser } from "@/components/marketing/sections/pricing-teaser";
-import { TierLadder } from "@/components/marketing/sections/tier-ladder";
-import { TrustGap } from "@/components/marketing/sections/trust-gap";
-import { VenturesBlock } from "@/components/marketing/sections/ventures-block";
+import { StoryChapters } from "@/components/marketing/story/chapters";
+import { Climb } from "@/components/marketing/story/climb";
+import { Finale } from "@/components/marketing/story/finale";
+import { Prologue } from "@/components/marketing/story/prologue";
+import { Rules } from "@/components/marketing/story/rules";
+import { StorySignedFound } from "@/components/marketing/story/signed-found";
+import { StoryRecord } from "@/components/marketing/story/the-record";
 import type { InitialEmailState } from "@/components/marketing/uni-email-field";
 import { hero } from "@/content/marketing";
-import { getLandingStats, getPublicPlans, getViewer } from "@/lib/data/marketing";
+import { getLandingStats, getViewer } from "@/lib/data/marketing";
 import { turnstileSiteKey } from "@/lib/security/turnstile";
 
 export const metadata: Metadata = {
@@ -25,12 +23,14 @@ export const metadata: Metadata = {
 };
 
 /**
- * The landing page (PRD 5.1, screen spec 3.1, docs/marketing-design-plan.md B6): fifteen sections,
- * each its own layout family. `?email` and `?state` come back from /join when the field was sent
- * without JavaScript.
+ * The landing page (PRD 5.1, decisions 2026-10-31): one story told as you scroll. The hero's proof
+ * objects, a prologue on the problem, Ayesha's eight chapters (the eighth, The Record, since phase 16) (the record pins and fills on large
+ * screens), the rules, the invitation in the reader's voice, then a calm epilogue for
+ * organisations, pricing and questions. `?email` and `?state` come back from /join when the field
+ * was sent without JavaScript.
  */
 export default async function LandingPage({ searchParams }: PageProps<"/">) {
-  const [viewer, stats, plans, sp] = await Promise.all([getViewer(), getLandingStats(), getPublicPlans(), searchParams]);
+  const [viewer, stats, sp] = await Promise.all([getViewer(), getLandingStats(), searchParams]);
   const email = typeof sp.email === "string" ? sp.email.trim().slice(0, 254) : "";
   const state: InitialEmailState = sp.state === "personal" || sp.state === "invalid" ? sp.state : null;
   const home = viewer?.home ?? null;
@@ -39,18 +39,16 @@ export default async function LandingPage({ searchParams }: PageProps<"/">) {
     <>
       <Hero home={home} siteKey={siteKey} defaultEmail={email} initialState={state} />
       <LiveAt stats={stats} />
-      <TrustGap />
-      <HowItWorks />
-      <FeedBlock />
-      <VenturesBlock />
-      <TierLadder />
-      <CvPreview />
-      <OpportunitiesBlock />
-      <OurRules />
+      <Prologue />
+      <StoryChapters />
+      <Climb />
+      <StorySignedFound />
+      <StoryRecord />
+      <Rules />
+      <Finale home={home} siteKey={siteKey} />
       <ForOrgs />
-      <PricingTeaser plans={plans} />
+      <PricingTeaser />
       <Faq />
-      <FinalCta home={home} siteKey={siteKey} />
     </>
   );
 }

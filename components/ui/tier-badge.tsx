@@ -12,28 +12,36 @@ export const tierLabel: Record<Tier, string> = {
   luminary: "Luminary",
 };
 
-// Full class names so Tailwind can see them.
-const tierClass: Record<Tier, { dot: string; chip: string }> = {
-  raw: { dot: "bg-tier-raw", chip: "border-tier-raw text-tier-raw-text" },
-  spark: { dot: "bg-tier-spark", chip: "border-tier-spark text-tier-spark-text" },
-  flare: { dot: "bg-tier-flare", chip: "border-tier-flare text-tier-flare-text" },
-  shine: { dot: "bg-tier-shine", chip: "border-tier-shine text-tier-shine-text" },
-  radiant: { dot: "bg-tier-radiant", chip: "border-tier-radiant text-tier-radiant-text" },
-  luminary: { dot: "bg-tier-luminary", chip: "border-tier-luminary text-tier-luminary-text" },
-};
+/** The step mark every tier wears: the ladder you climb (Ascent). */
+function StepMark({ size = 12 }: { size?: number }) {
+  return (
+    <svg aria-hidden width={size} height={size} viewBox="0 0 12 12" className="shrink-0">
+      <path d="M1 11h3V8h3V5h3V1" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
-export function TierBadge({ tier, className }: { tier: Tier; className?: string }) {
-  const c = tierClass[tier];
+/**
+ * The raised tier object (the brief §2 "Tier ramp"): the same step shape for all six tiers; only
+ * the finish changes, foil and glow for Radiant and Luminary alone. Ink text passes on every finish.
+ */
+export function TierFinish({ tier, name, size = "md", className }: { tier: Tier; name?: string; size?: "sm" | "md"; className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex h-6 items-center gap-1.5 rounded-full border bg-bg-surface px-2.5 text-caption font-semibold",
-        c.chip,
+        "tier-finish inline-flex items-center gap-1.5 rounded-[var(--r-tag)] font-semibold text-[#1b1b19]",
+        `tier-finish-${tier}`,
+        size === "sm" ? "h-6 px-2 text-[0.75rem]" : "h-8 px-3 text-[0.8125rem]",
         className,
       )}
     >
-      <span aria-hidden className={cn("size-2 rounded-full", c.dot)} />
-      {tierLabel[tier]}
+      <StepMark size={size === "sm" ? 10 : 12} />
+      {name}
     </span>
   );
+}
+
+/** A tier badge with its name. In /ops (.classic) it keeps the PRD 9 outlined chip. */
+export function TierBadge({ tier, size = "sm", className }: { tier: Tier; size?: "sm" | "md"; className?: string }) {
+  return <TierFinish tier={tier} name={tierLabel[tier]} size={size} className={className} />;
 }

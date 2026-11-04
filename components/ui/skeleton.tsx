@@ -1,8 +1,9 @@
 import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/cn";
 
+/** Loading is a static well, not a pulse (the brief: nothing loops for its own sake). */
 export function Skeleton({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div aria-hidden className={cn("animate-pulse rounded-md bg-bg-subtle", className)} {...props} />;
+  return <div aria-hidden className={cn("rounded-md bg-bg-surface shadow-[var(--pressed-s)]", className)} {...props} />;
 }
 
 /** Accessible loading block: skeleton lines plus a screen-reader status. */

@@ -44,14 +44,14 @@ export function NotificationRow({
           });
         }}
         className={cn(
-          "flex items-start gap-3 px-4 py-3 hover:bg-bg-subtle focus-visible:bg-bg-subtle",
-          !read && "bg-primary-subtle/40",
+          "flex min-h-14 items-start gap-3 px-4 py-3 hover:bg-bg-subtle focus-visible:bg-bg-subtle",
+          !read && "bg-primary-subtle/50",
         )}
       >
         <Avatar name={actorName ?? "Skilient"} src={actorAvatarUrl} size="sm" />
         <span className="min-w-0 flex-1">
           <span className={cn("block text-body", !read && "font-semibold")}>{text}</span>
-          <span className="block text-caption text-text-secondary">
+          <span className="neu-mono block text-text-secondary">
             <time dateTime={createdAt}>{timeLabel}</time>
             {!read ? <span className="sr-only">, unread</span> : null}
           </span>

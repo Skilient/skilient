@@ -23,8 +23,9 @@ export default async function OpsLayout({ children }: LayoutProps<"/ops">) {
   const share = usage ? usage.total / usage.quota : 0;
   const held = STAFF_ROLES.filter((r) => roles.has(r));
   const shown = held.includes("super_admin") ? (["super_admin"] as const) : held;
+  // /ops keeps the dense PRD 9 Editorial look (phase 14, decision 15): `.classic` re-points the tokens.
   return (
-    <div className="flex w-full flex-col">
+    <div className="classic flex min-h-dvh w-full flex-col">
       <div
         className="flex flex-wrap items-center justify-between gap-3 border-b border-border-strong bg-bg-subtle px-[var(--page-gutter)] py-2"
         data-testid="staff-marker"

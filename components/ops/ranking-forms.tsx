@@ -12,7 +12,7 @@ import { cn } from "@/lib/cn";
  * Clear or uphold a ranking flag, with a reason for the audit log (PRD 5.13 anti-gaming).
  * What each choice does depends on the kind of flag.
  */
-export function RankingFlagReviewForm({ id, kind }: { id: string; kind: "ring" | "rapid_gain" }) {
+export function RankingFlagReviewForm({ id, kind }: { id: string; kind: "ring" | "rapid_gain" | "swap_ring" | "swap_repeat" }) {
   const uid = useId();
   const [uphold, setUphold] = useState<boolean | null>(null);
   const [reason, setReason] = useState("");
@@ -24,7 +24,12 @@ export function RankingFlagReviewForm({ id, kind }: { id: string; kind: "ring" |
           clear: "Real teammates: their endorsements count again from the next nightly run.",
           uphold: "A ring: these endorsements stay at 0 for good.",
         }
-      : {
+      : kind === "swap_ring" || kind === "swap_repeat"
+        ? {
+            clear: "Real teaching: nothing changes.",
+            uphold: "Not real teaching: revoke their Taught entries in /ops/record (codes on the swaps' pages) and consider a sanction.",
+          }
+        : {
           clear: "The gain is genuine: it counts from the next nightly run.",
           uphold: "The gain doesn't stand: a negative adjustment of the same size cancels it.",
         };

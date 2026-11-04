@@ -10,6 +10,25 @@ export const securityHeaders: { key: string; value: string }[] = [
   { key: "X-Content-Type-Options", value: "nosniff" },
 ];
 
+/**
+ * The door scanner (PRD 5.31) reads tickets with the camera, on that one page only; every other page
+ * keeps the camera, microphone and location off.
+ */
+export const CHECK_IN_SOURCE = "/events/:id/check-in";
+export const checkInHeaders: { key: string; value: string }[] = securityHeaders.map((h) =>
+  h.key === "Permissions-Policy" ? { key: h.key, value: "camera=(self), microphone=(), geolocation=()" } : h,
+);
+
+/**
+ * The PWA service worker (PRD 5.34) at /sw.js: never served from the HTTP cache, so an update reaches
+ * every device on its next visit; its scope is the whole app.
+ */
+export const serviceWorkerHeaders: { key: string; value: string }[] = [
+  { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
+  { key: "Service-Worker-Allowed", value: "/" },
+  { key: "Content-Type", value: "application/javascript; charset=utf-8" },
+];
+
 /** Request header carrying the per-request CSP nonce from proxy.ts to the render. */
 export const NONCE_HEADER = "x-nonce";
 
@@ -59,7 +78,11 @@ export function buildCsp({ nonce, supabaseUrl, sentryDsn, dev = false, reportPat
     "font-src": ["'self'"],
     "connect-src": ["'self'", supabase, supabaseWs, sentry, TURNSTILE_ORIGIN, dev && "ws:"],
     "frame-src": [TURNSTILE_ORIGIN],
+    // The PWA service worker (/sw.js) and the web app manifest (PRD 5.34). Push messages arrive
+    // through the browser's push service; the page never connects to it, so connect-src is unchanged
+    // (only the notify-worker, server side, calls push endpoints).
     "worker-src": ["'self'", "blob:"],
+    "manifest-src": ["'self'"],
     "object-src": ["'none'"],
     "base-uri": ["'self'"],
     // Google sign-in without JavaScript posts the form, then redirects through Supabase to Google;

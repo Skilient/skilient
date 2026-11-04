@@ -36,6 +36,7 @@ export default async function NotificationsPage({ searchParams }: PageProps<"/no
 
       {items.length === 0 ? (
         <EmptyState
+          object={before ? undefined : "envelope"}
           icon={<BellSimple aria-hidden className="size-8" />}
           title={before ? "Nothing older" : "You're all caught up"}
           description={
@@ -66,7 +67,7 @@ function Group({ title, items }: { title: string; items: NotificationItem[] }) {
       <h2 id={id} className="text-h4">
         {title}
       </h2>
-      <ul className="divide-y divide-border-muted overflow-hidden rounded-lg border border-border-default bg-bg-surface">
+      <ul className="neu-tile neu-list divide-y divide-border-muted overflow-hidden">
         {items.map((n) => (
           <NotificationRow
             key={n.id}

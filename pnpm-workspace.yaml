@@ -1,3 +1,8 @@
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
+
+# Security overrides for transitive dependencies (CI runs `pnpm audit --audit-level critical --prod`).
+overrides:
+  # GHSA-cg2g-xh64-v4q7: posthog-js allows ^3.4.13; 3.4.17 is the patched release.
+  dompurify: ">=3.4.17"

@@ -32,16 +32,21 @@ const NEVER_RECORDED: RegExp[] = [
   /^\/cv\//,
   /^\/verify\/./,
   /^\/request-university\/(confirm|unsubscribe)(\/|$)/,
-  /^\/events\/[^/]+\/(check-in|attend)(\/|$)/,
+  // Society events (PRD 5.31): the door, the ticket page (receipt upload), event manage (Payments shows
+  // receipts) and a society's payment details.
+  /^\/events\/[^/]+\/(check-in|attend|ticket|manage)(\/|$)/,
+  /^\/societies\/[^/]+\/manage\/payments(\/|$)/,
+  // The yearbook (PRD 5.33): notes the owner hasn't approved, and the secret ballot.
+  /^\/yearbook(\/|$)/,
   /^\/ui(\/|$)/,
 ];
 
-/** PRD 10: heatmaps on marketing pages, Home, Opportunities and onboarding. */
+/** PRD 10: heatmaps on marketing pages, Home, Openings and onboarding. */
 const HEATMAP_PAGES: RegExp[] = [
   /^\/$/,
-  /^\/(recruiters|universities|faculty|pricing|about|request-university|verify)$/,
+  /^\/(recruiters|universities|faculty|features|about|request-university|verify)$/,
   /^\/feed$/,
-  /^\/opportunities(\/[^/]+)?$/,
+  /^\/openings(\/[^/]+)?$/,
   /^\/onboarding(\/|$)/,
 ];
 
@@ -56,6 +61,7 @@ const ALLOWED_EVENTS = new Set<string>(["$pageview", "$identify", "$snapshot", "
 const NAMED_SEGMENTS: [RegExp, string][] = [
   [/^\/profile\/[^/]+/, "/profile/:username"],
   [/^\/cv\/[^/]+/, "/cv/:username"],
+  [/^\/record\/[^/]+/, "/record/:username"],
   [/^\/verify\/[^/]+/, "/verify/:code"],
 ];
 

@@ -39,5 +39,5 @@ export const STATUS_TEXT: Record<VerifyStatus, { title: string; body: string }> 
     title: "Altered",
     body: "The file you checked doesn't match the CV issued under this code. The genuine CV is shown below so you can compare.",
   },
-  not_found: { title: "Not found", body: "No CV has this code. Check the code and try again." },
+  not_found: { title: "Not found", body: "No CV or Record entry has this code. Check the code and try again." },
 };

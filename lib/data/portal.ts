@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cache } from "react";
+import type { Portals } from "@/lib/auth/gate";
 import type { Tier } from "@/components/ui/tier-badge";
 import { pktDate } from "@/lib/format/time";
 import type { TipId } from "@/lib/tips";
@@ -109,6 +110,23 @@ export const OPPORTUNITY_TABS = [
   { key: "ideas", label: "Project ideas" },
 ] as const;
 export type OpportunityTab = (typeof OPPORTUNITY_TABS)[number]["key"];
+
+/** Tabs and item kinds that belong to a portal, hidden while it is closed (phase 14). */
+const RECRUITER_TABS: readonly OpportunityTab[] = ["jobs", "contact_requests", "applications", "job_fairs"];
+const UNIVERSITY_TABS: readonly OpportunityTab[] = ["job_fairs"];
+const RECRUITER_KINDS = new Set(["job", "contact_request", "application", "job_fair", "fair"]);
+
+/** The Opportunities tabs a student sees with these portals open. */
+export function visibleOpportunityTabs(portals: Portals) {
+  return OPPORTUNITY_TABS.filter(
+    (t) => (portals.recruiter || !RECRUITER_TABS.includes(t.key)) && (portals.university || !UNIVERSITY_TABS.includes(t.key)),
+  );
+}
+
+/** For you mixes kinds: drop the closed portals' items. */
+export function visibleOpportunities<T extends { kind: string }>(items: T[], portals: Portals): T[] {
+  return portals.recruiter && portals.university ? items : items.filter((o) => !RECRUITER_KINDS.has(o.kind));
+}
 
 export interface Opportunity {
   id: string;

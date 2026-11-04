@@ -4,27 +4,28 @@ import * as SwitchPrimitive from "@radix-ui/react-switch";
 import { forwardRef, type ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/cn";
 
-export const Switch = forwardRef<HTMLButtonElement, ComponentPropsWithoutRef<typeof SwitchPrimitive.Root>>(
-  function Switch({ className, ...props }, ref) {
-    return (
-      <SwitchPrimitive.Root
-        ref={ref}
+/** An inset track with a raised knob; the track turns orange when on (colour pairs with position). */
+export const Switch = forwardRef<HTMLButtonElement, ComponentPropsWithoutRef<typeof SwitchPrimitive.Root>>(function Switch({ className, ...props }, ref) {
+  return (
+    <SwitchPrimitive.Root
+      ref={ref}
+      className={cn(
+        "relative inline-flex h-7 w-12 shrink-0 items-center rounded-full border border-[var(--control-border)] bg-bg-surface p-1 shadow-[var(--pressed-s)]",
+        "transition-colors duration-[200ms] ease-standard",
+        "data-[state=checked]:bg-primary data-[state=checked]:shadow-[var(--pressed-signal)]",
+        "disabled:cursor-not-allowed disabled:opacity-60",
+        // A 44 px hit area around the 28 px track (Fitts).
+        "before:absolute before:-inset-2 before:content-['']",
+        className,
+      )}
+      {...props}
+    >
+      <SwitchPrimitive.Thumb
         className={cn(
-          "inline-flex h-6 w-10 shrink-0 items-center rounded-full border border-border-strong bg-bg-muted p-0.5",
-          "transition-colors duration-[200ms] ease-standard",
-          "data-[state=checked]:border-primary data-[state=checked]:bg-primary",
-          "disabled:cursor-not-allowed disabled:opacity-60",
-          className,
+          "block size-5 rounded-full bg-[var(--surface-hi)] shadow-[var(--raised-s)] transition-transform duration-[200ms] ease-standard",
+          "data-[state=checked]:translate-x-5",
         )}
-        {...props}
-      >
-        <SwitchPrimitive.Thumb
-          className={cn(
-            "block size-4.5 rounded-full bg-text-secondary shadow-1 transition-transform duration-[200ms] ease-standard",
-            "data-[state=checked]:translate-x-4 data-[state=checked]:bg-text-on-primary",
-          )}
-        />
-      </SwitchPrimitive.Root>
-    );
-  },
-);
+      />
+    </SwitchPrimitive.Root>
+  );
+});

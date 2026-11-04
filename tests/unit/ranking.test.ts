@@ -16,8 +16,8 @@ describe("ranking labels (PRD 5.17)", () => {
     expect(REQUIREMENT_LABELS.top_share(14.2, 10)).toBe("Be in the top 10% of ranked students (you're in the top 14.2%)");
   });
 
-  it("caps add up to the 2,500-point maximum", () => {
-    expect(Object.values(COMPONENT_INFO).reduce((sum, c) => sum + c.max, 0)).toBe(2500);
+  it("caps add up to the 2,600-point maximum (formula v2 adds the Record, PRD 5.30)", () => {
+    expect(Object.values(COMPONENT_INFO).reduce((sum, c) => sum + c.max, 0)).toBe(2600);
   });
 
   it("formats points without trailing zeros", () => {

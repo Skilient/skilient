@@ -52,6 +52,20 @@ export function redirectWithCookies(request: NextRequest, from: NextResponse, to
   return res;
 }
 
+/**
+ * Renders a path that has no page (an underscore folder is never a route), so the visitor gets the
+ * app's not-found page with a 404 while the URL stays as typed. Used for closed portals (phase 14).
+ */
+export function rewriteWithCookies(request: NextRequest, from: NextResponse, to: string, requestHeaders: Headers): NextResponse {
+  const res = NextResponse.rewrite(new URL(to, request.url), { request: { headers: requestHeaders }, status: 404 });
+  for (const cookie of from.cookies.getAll()) res.cookies.set(cookie);
+  for (const key of ["cache-control", "expires", "pragma", "x-request-id", "content-security-policy", "reporting-endpoints"]) {
+    const value = from.headers.get(key);
+    if (value) res.headers.set(key, value);
+  }
+  return res;
+}
+
 export function hasVerifiedFactor(user: User | null): boolean {
   return !!user?.factors?.some((f) => f.status === "verified");
 }

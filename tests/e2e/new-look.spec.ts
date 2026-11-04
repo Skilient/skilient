@@ -106,7 +106,8 @@ test.describe("New look: the shell", () => {
     const problems = watchConsole(page);
     await signedIn(page);
     await page.goto("/feed");
-    await expect(page.getByTestId("nav-openings")).toHaveAttribute("aria-label", "Openings");
+    // The badge may count openings other tests created ("Openings, 3 waiting").
+    await expect(page.getByTestId("nav-openings")).toHaveAttribute("aria-label", /^Openings(, \d+ waiting)?$/);
     await page.keyboard.press("Control+k");
     const menu = page.getByTestId("command-menu");
     await expect(menu).toBeVisible();

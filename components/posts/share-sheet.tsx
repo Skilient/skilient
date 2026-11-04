@@ -3,18 +3,19 @@
 import { PaperPlaneTilt } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect, useId, useState, useTransition } from "react";
-import { Avatar, Button, Checkbox, Dialog, DialogFooter, DialogTrigger, FieldError, Input, SheetContent, Textarea, useToast } from "@/components/ui";
+import { Avatar, Button, Checkbox, Dialog, DialogFooter, DialogTrigger, FieldError, Input, SheetContent, Textarea } from "@/components/ui";
+import { clockTime } from "@/lib/format/time";
 import { loadShareTargets, sharePost, undoShare, type ShareTarget } from "@/lib/actions/community";
 
 const MAX = 5;
 
 /**
  * Share to chat (PRD 5.34): a sheet of the student's recent DMs and venture chats, with search. Pick up
- * to 5, add an optional note, Send, then a toast "Sent to Hira · 14:02 · Undo" for 10 seconds. The
+ * to 5, add an optional note, Send, then "Sent to Hira · 14:02 · Undo" beside the button for 10 seconds (inline,
+ * so no app-wide toast provider is needed). The
  * recipient sees the post only if they may (can_view_post); shares are never counted on the post.
  */
 export function ShareSheet({ postId }: { postId: string }) {
-  const toast = useToast();
   const ids = { q: useId(), note: useId(), list: useId() };
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
@@ -23,6 +24,14 @@ export function ShareSheet({ postId }: { postId: string }) {
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const [sent, setSent] = useState<{ label: string; at: string; ids: string[] } | null>(null);
+  const [note2, setNote2] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!sent) return;
+    const t = setTimeout(() => setSent(null), 10_000);
+    return () => clearTimeout(t);
+  }, [sent]);
 
   useEffect(() => {
     if (!open) return;
@@ -55,23 +64,26 @@ export function ShareSheet({ postId }: { postId: string }) {
         return;
       }
       const names = picked.map((t) => t.title);
-      const sent = r.data;
       setOpen(false);
       reset();
-      toast({
-        title: `Sent to ${names.length > 2 ? `${names[0]} and ${names.length - 1} others` : names.join(" and ")}`,
-        tone: "success",
-        duration: 10_000,
-        undo: {
-          onUndo: async () => {
-            const u = await undoShare({ messages: sent });
-            toast(u.ok ? { title: "Share taken back", tone: "info" } : { title: u.message, tone: "error" });
-          },
-        },
+      setNote2(null);
+      setSent({
+        label: `Sent to ${names.length > 2 ? `${names[0]} and ${names.length - 1} others` : names.join(" and ")}`,
+        at: clockTime(new Date().toISOString()),
+        ids: r.data,
       });
     });
 
+  const undo = () =>
+    startTransition(async () => {
+      if (!sent) return;
+      const u = await undoShare({ messages: sent.ids });
+      setSent(null);
+      setNote2(u.ok ? "Share taken back." : u.message);
+    });
+
   return (
+    <span className="inline-flex flex-wrap items-center gap-2">
     <Dialog
       open={open}
       onOpenChange={(next) => {
@@ -154,5 +166,20 @@ export function ShareSheet({ postId }: { postId: string }) {
         </div>
       </SheetContent>
     </Dialog>
+      <span role="status" aria-live="polite" className="inline-flex items-center gap-2 text-body-sm" data-testid="share-status">
+        {sent ? (
+          <>
+            <span>
+              {sent.label} · <span className="neu-mono">{sent.at}</span>
+            </span>
+            <Button size="sm" variant="ghost" onClick={undo} disabled={pending}>
+              Undo
+            </Button>
+          </>
+        ) : note2 ? (
+          <span className="text-text-secondary">{note2}</span>
+        ) : null}
+      </span>
+    </span>
   );
 }

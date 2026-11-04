@@ -190,7 +190,7 @@ test.describe("Community: Openings, yearbook, share, push", () => {
     await sheet.getByRole("checkbox", { name: b.fullName }).click();
     await sheet.getByLabel("Add a note (optional)").fill("Worth a read");
     await sheet.getByTestId("share-send").click();
-    await expect(aPage.getByText(`Sent to ${b.fullName}`, { exact: true })).toBeVisible();
+    await expect(aPage.getByTestId("share-status").filter({ visible: true })).toContainText(`Sent to ${b.fullName}`);
     await expect(aPage.getByRole("button", { name: "Undo" })).toBeVisible();
 
     const bPage = await pageFor(browser, b);

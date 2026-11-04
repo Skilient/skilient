@@ -159,11 +159,12 @@ test.describe("CSP sweep", { tag: "@desktop-only" }, () => {
       const candidates = (data ?? []).filter((r) => !["nutech.edu.pk", "nu.edu.pk", "preston.edu.pk"].includes(r.domain) && !busy.has(r.university_id));
       let official: TestStudent | null = null;
       for (const row of candidates) {
-        const { data: claimed } = await db.from("universities").update({ claimed_at: new Date().toISOString() }).eq("id", row.university_id).is("owner_id", null).is("claimed_at", null).select("id");
+        const who = await account(`sweep-${Math.random().toString(36).slice(2, 8)}@${row.domain}`, "Rida Sweep", { role: "university_admin", university_id: row.university_id });
+        // Take the university only if it is still unowned (other chunks and uni.spec.ts look for one too).
+        const { data: claimed } = await db.from("universities").update({ owner_id: who.id, claimed_at: new Date().toISOString() }).eq("id", row.university_id).is("owner_id", null).select("id");
         if (!claimed?.length) continue;
-        official = await account(`sweep-${Math.random().toString(36).slice(2, 8)}@${row.domain}`, "Rida Sweep", { role: "university_admin", university_id: row.university_id });
-        await db.from("university_admins").insert({ user_id: official.id, university_id: row.university_id, role: "owner" });
-        await db.from("universities").update({ owner_id: official.id }).eq("id", row.university_id);
+        await db.from("university_admins").insert({ user_id: who.id, university_id: row.university_id, role: "owner" });
+        official = who;
         break;
       }
       if (!official) throw new Error("no unclaimed university");

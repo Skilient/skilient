@@ -189,16 +189,32 @@ export async function settle(page: Page): Promise<void> {
 
 async function settleOnce(page: Page): Promise<void> {
   const within = { timeout: 10_000 };
-  await page.waitForFunction(() => document.readyState === "complete", undefined, within);
+  // A timeout names the page and the condition that never held, not just "waitForFunction".
+  const step = async (what: string, wait: () => Promise<unknown>) => {
+    try {
+      await wait();
+    } catch (error) {
+      if (error instanceof Error && error.name === "TimeoutError") throw new Error(`${new URL(page.url()).pathname} never settled: ${what}`);
+      throw error;
+    }
+  };
+  await step("document load", () => page.waitForFunction(() => document.readyState === "complete", undefined, within));
   await page.evaluate(async () => {
     await document.fonts.ready;
     await new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
   });
-  await page.waitForFunction(() => !document.querySelector('[aria-busy="true"]'), undefined, within);
-  await page.waitForFunction(
-    () => document.getAnimations().every((a) => a.playState !== "running" || a.effect?.getComputedTiming().endTime === Infinity),
-    undefined,
-    within,
+  await step("a region stayed aria-busy (loading buttons are an action, not the page)", () => page.waitForFunction(() => !document.querySelector('[aria-busy="true"]:not(button)'), undefined, within));
+  await step("a time-based animation kept running", () =>
+    page.waitForFunction(
+      // Only time-based animations: scroll-driven ones (animation-timeline: view()/scroll()) report "running"
+      // but move only when the page scrolls, and infinite loops never finish.
+      () =>
+        document
+          .getAnimations()
+          .every((a) => a.playState !== "running" || !(a.timeline instanceof DocumentTimeline) || a.effect?.getComputedTiming().endTime === Infinity),
+      undefined,
+      within,
+    ),
   );
 }
 

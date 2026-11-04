@@ -11,11 +11,14 @@ export * from "@playwright/test";
  * and Playwright starts a trace chunk on every live context at the start of each later test, so a long
  * shard traced more and more stale pages as it went (decisions 2026-11-04, "CI speed").
  */
-export const test = base.extend<{ closeStrayContexts: void }>({
+export const test = base.extend<{ keepContexts: boolean; closeStrayContexts: void }>({
+  /** A serial describe that hands one page from test to test sets this and closes it in afterAll. */
+  keepContexts: [false, { option: true }],
   closeStrayContexts: [
-    async ({ browser }, use) => {
+    async ({ browser, keepContexts }, use) => {
       const before = new Set(browser.contexts());
       await use();
+      if (keepContexts) return;
       await Promise.all(browser.contexts().filter((c) => !before.has(c)).map((c) => c.close().catch(() => undefined)));
     },
     { auto: true },

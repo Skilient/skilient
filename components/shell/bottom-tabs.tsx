@@ -29,7 +29,6 @@ export function BottomTabs() {
                 <Link
                   href={item.href as Route}
                   aria-current={active ? "page" : undefined}
-                  aria-label={count > 0 ? `${item.label}, ${count} ${item.badge === "chat" ? "unread" : "waiting"}` : undefined}
                   data-tour={`nav-${item.key}`}
                   data-testid={`tab-${item.key}`}
                   className={cn(
@@ -39,9 +38,12 @@ export function BottomTabs() {
                 >
                   <span className="relative">
                     <Icon aria-hidden weight={active ? "fill" : "bold"} className={cn("size-6", active && "text-[var(--signal-ink)]")} />
-                    <BadgePill count={count} className="absolute -top-1.5 left-3.5" />
+                    <BadgePill count={count} decorative className="absolute -top-1.5 left-3.5" />
                   </span>
                   {item.label}
+                  {/* The name comes from the content, starting with the visible label (WCAG 2.5.3): an aria-label
+                      beside a visible count failed axe's label-content-name-mismatch whenever the badge showed. */}
+                  {count > 0 ? <span className="sr-only"> {count} {item.badge === "chat" ? "unread" : "waiting"}</span> : null}
                 </Link>
               </Tooltip>
             </li>

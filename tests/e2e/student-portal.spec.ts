@@ -137,6 +137,23 @@ test.describe("Student portal", () => {
     await expect(page).toHaveURL(/\/me$/);
     await expect(page.getByRole("link", { name: "Feedback", exact: false }).first()).toBeVisible();
     await axe(page, "me (phone)");
+
+    // With a count on a tab its name still starts with the visible label (WCAG 2.5.3). This failed axe only
+    // when other tests had left openings at the university, so it is set up here on purpose.
+    const db = adminClient();
+    const { data: profile } = await db.from("profiles").select("university_id").eq("user_id", me.id).single();
+    const tag = Math.random().toString(36).slice(2, 8);
+    const { data: society, error } = await db
+      .from("societies")
+      .insert({ university_id: profile!.university_id, slug: `e2e-dock-${tag}`, name: `Dock Society ${tag}`, name_key: `dock society ${tag}`, category: "technology", about: "A society for the dock badge check.", status: "verified", verified_at: new Date().toISOString() })
+      .select("id")
+      .single();
+    if (error) throw new Error(error.message);
+    const { error: roundError } = await db.from("induction_rounds").insert({ society_id: society!.id, title: `Dock intake ${tag}`, deadline: new Date(Date.now() + 9 * 86_400_000).toISOString(), status: "open", published_at: new Date().toISOString() });
+    if (roundError) throw new Error(roundError.message);
+    await page.reload();
+    await expect(page.getByTestId("tab-openings")).toHaveAccessibleName(/^Openings \d+ waiting$/);
+    await axe(page, "me with an Openings count (phone)");
   });
 
   test("feedback: send, follow its status, read the reply", { tag: "@desktop-only" }, async ({ page }) => {

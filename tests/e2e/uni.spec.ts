@@ -12,6 +12,11 @@ import { adminClient, currentAgreementVersion, hasBackend, PASSWORD, signInWithP
 test.describe("University portal", { tag: ["@portals", "@desktop-only"] }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
   test.describe.configure({ mode: "serial", timeout: 240_000 });
+  // ownerPage carries the owner's two-factor session from one test to the next.
+  test.use({ keepContexts: true });
+  test.afterAll(async () => {
+    await ownerPage?.context().close();
+  });
 
   const RULES = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 

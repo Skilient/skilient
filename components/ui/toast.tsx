@@ -17,6 +17,8 @@ export interface ToastInput {
   undo?: { label?: string; onUndo: () => void };
   /** When it happened; defaults to when the toast was shown. */
   at?: Date;
+  /** How long it stays, in ms (default 6 s); an undo window sets its own. */
+  duration?: number;
 }
 
 interface ToastItem extends ToastInput {

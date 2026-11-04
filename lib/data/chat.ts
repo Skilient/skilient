@@ -3,6 +3,7 @@ import "server-only";
 import { clockTime, shortTime } from "@/lib/format/time";
 import { publicImageUrl } from "@/lib/storage";
 import { createClient } from "@/lib/supabase/server";
+import { getSharedPreviews, type SharedPreview } from "@/lib/data/share";
 
 /**
  * Chat reads (PRD 5.9). Every function returns only threads the caller is in; images come
@@ -79,6 +80,8 @@ export interface ChatMessage {
   reactions: Reaction[];
   pinned: boolean;
   link: ChatLink | null;
+  /** A shared post (PRD 5.34), built for the reader; unavailable when they can't see it. */
+  shared: SharedPreview | null;
 }
 
 export interface ChatPin {
@@ -175,7 +178,10 @@ export async function getThread(id: string, before: string | null = null): Promi
       : Promise.resolve({ data: null }),
   ]);
   const me = people.data.find((p) => p.is_me)?.user_id;
-  const signed = await signChatImages(rows.map((m) => m.media_path).filter((p): p is string => Boolean(p)));
+  const [signed, previews] = await Promise.all([
+    signChatImages(rows.map((m) => m.media_path).filter((p): p is string => Boolean(p))),
+    getSharedPreviews(rows.map((m) => m.shared_post_id).filter((p): p is string => Boolean(p))),
+  ]);
   return {
     thread: row,
     people: people.data.map((p) => ({
@@ -202,6 +208,7 @@ export async function getThread(id: string, before: string | null = null): Promi
         reactions: toReactions(m.reactions),
         pinned: m.pinned,
         link: toLink(m.link),
+        shared: m.shared ? ((m.shared_post_id ? previews.get(m.shared_post_id) : null) ?? { available: false as const }) : null,
       }))
       .reverse(),
     hasOlder: rows.length === PAGE,

@@ -1,4 +1,5 @@
 import { resetAnalytics } from "@/lib/analytics/client";
+import { clearAppCaches } from "@/lib/pwa/client";
 
 /**
  * Cross-tab auth messages. Supabase broadcasts its own client-side events; these cover
@@ -29,6 +30,8 @@ export const LOCAL_KEY_PREFIX = "sk:";
 /** Sign-out leaves nothing of the previous user in this browser (PRD 5.2: zero residue). */
 export function clearClientState() {
   resetAnalytics();
+  // Tickets the service worker kept for offline use (PRD 5.34) belong to the signed-out account.
+  void clearAppCaches();
   try {
     window.sessionStorage.clear();
     for (const key of Object.keys(window.localStorage)) {

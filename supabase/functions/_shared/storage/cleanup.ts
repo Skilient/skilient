@@ -24,6 +24,7 @@ const BUCKETS = new Set([
   "society-documents",
   "society-media",
   "event-receipts",
+  "yearbook-photos",
 ]);
 // Every bucket stores WebP re-encodes, except credentials, which also keeps PDFs as uploaded,
 // and cv-exports, which holds only CV PDFs (deleted after 30 days; decisions.md 2026-10-01).

@@ -71,7 +71,7 @@ test.describe("Code checks", () => {
     // The drawer offers a check for an L2 skill; requesting opens the check.
     await signInWithPassword(page, student.email, student.password);
     await page.goto(`/profile/${student.username}/skills`);
-    await page.getByRole("button", { name: /^Python, level 2/ }).click();
+    await page.getByRole("button", { name: /^Python\b.*, level 2:/ }).click();
     const drawer = page.getByRole("dialog", { name: "Python" });
     await drawer.getByRole("button", { name: "Request a code check" }).click();
     await expect(page).toHaveURL(/\/me\/code-checks\/[0-9a-f-]{36}$/);
@@ -145,7 +145,7 @@ test.describe("Code checks", () => {
     await expect(page.getByText("Clear explanation; think about where the warnings go.")).toBeVisible();
     await axe(page, "code check (passed)");
     await page.goto(`/profile/${student.username}/skills`);
-    await expect(page.getByRole("button", { name: /^Python, level 4/ })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Python\b.*, level 4:/ })).toBeVisible();
 
     expect(problems).toEqual([]);
   });

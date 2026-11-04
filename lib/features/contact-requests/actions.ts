@@ -36,10 +36,10 @@ export async function respondContactRequest(id: string, accept: boolean, reason 
     input: { id, accept, reason },
     fn: "respond_contact_request",
     args: (v) => ({ p_id: v.id, p_accept: v.accept, p_reason: v.reason || null }),
-    revalidate: ["/opportunities/contact_requests", "/chat"],
+    revalidate: ["/openings/contact-requests", "/chat"],
   });
 }
 
 export async function closeContactChat(id: string): Promise<ActionResult> {
-  return rpcAction({ name: "student.close_contact_chat", schema: uuid, input: id, fn: "close_contact_chat", args: (v) => ({ p_id: v }), revalidate: ["/chat", "/opportunities/contact_requests"] });
+  return rpcAction({ name: "student.close_contact_chat", schema: uuid, input: id, fn: "close_contact_chat", args: (v) => ({ p_id: v }), revalidate: ["/chat", "/openings/contact-requests"] });
 }

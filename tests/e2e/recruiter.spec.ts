@@ -214,8 +214,8 @@ test.describe("Recruiter portal", { tag: "@portals" }, () => {
     // --- The student answers ---------------------------------------------------------------
     const s1page = await (await browser.newContext()).newPage();
     await signInWithPassword(s1page, s1.email, s1.password);
-    await s1page.goto("/opportunities/contact_requests");
-    await expect(s1page.getByTestId("opportunity-list")).toContainText("React intern");
+    await s1page.goto("/openings/contact-requests");
+    await expect(s1page.getByTestId("opening-list")).toContainText("React intern");
     await s1page.getByRole("link", { name: "React intern" }).click();
     await expect(s1page.getByTestId("contact-message")).toContainText("verified work caught our eye");
     expect(await s1page.content()).not.toContain("Rita Recruiter");
@@ -247,7 +247,7 @@ test.describe("Recruiter portal", { tag: "@portals" }, () => {
     await expect(s1page.getByText("Great, can you do Thursday at 3?")).toBeVisible();
     await axeBothThemes(rp, "recruiter chat");
     const { data: request } = await db.from("contact_requests").select("id").eq("org_id", orgId).single();
-    await s1page.goto(`/opportunities/contact-requests/${request!.id}`);
+    await s1page.goto(`/openings/contact-requests/${request!.id}`);
     await s1page.getByTestId("close-chat").click();
     await expect(s1page.getByText("You closed this conversation.")).toBeVisible();
     await rp.reload();
@@ -284,12 +284,12 @@ test.describe("Recruiter portal", { tag: "@portals" }, () => {
     const jobUrl = rp.url();
     const jobId = jobUrl.split("/").pop()!;
 
-    await s1page.goto(`/opportunities/jobs/${jobId}`);
+    await s1page.goto(`/openings/jobs/${jobId}`);
     await expect(s1page.getByTestId("job-pay")).toContainText("PKR 40,000 to 60,000 per month");
     await axeBothThemes(s1page, "job (student)");
     await s1page.getByLabel(/Note to the recruiter/).fill("I built a React dashboard for my society.");
     await s1page.getByTestId("apply-submit").click();
-    await s1page.waitForURL(/\/opportunities\/applications\/[0-9a-f-]{36}$/);
+    await s1page.waitForURL(/\/openings\/applications\/[0-9a-f-]{36}$/);
     await expect(s1page.getByTestId("stage")).toHaveText("Applied");
 
     await rp.goto(`/recruit/jobs/${jobId}/applicants`);

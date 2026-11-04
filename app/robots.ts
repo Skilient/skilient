@@ -5,7 +5,7 @@ import { siteUrl } from "@/lib/cv/site";
 const PRIVATE = [
   "/agreement", "/api/", "/appeals", "/auth/", "/billing", "/chat", "/companies", "/competitions", "/cv/", "/events", "/explore",
   "/fairs", "/feed", "/feedback", "/friends", "/ideas", "/join", "/leaderboard", "/me", "/moderation", "/notifications",
-  "/onboarding", "/opportunities", "/ops", "/org", "/post", "/profile", "/recruit", "/requests", "/settings", "/teach",
+  "/onboarding", "/openings", "/ops", "/org", "/post", "/profile", "/recruit", "/requests", "/settings", "/teach",
   "/u/", "/uni", "/ventures", "/verify/", "/request-university/",
 ];
 

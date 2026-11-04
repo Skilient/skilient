@@ -179,7 +179,7 @@ test.describe("GitHub connection", () => {
     await expect(page.getByRole("heading", { name: "Languages" })).toBeVisible();
     await expect(page.getByText("Some of your activity is being reviewed (1 commit)")).toBeVisible();
     await axe(page, "profile/skills (owner)");
-    await page.getByRole("button", { name: /^FastAPI, level 1/ }).click();
+    await page.getByRole("button", { name: /^FastAPI\b.*, level 1/ }).click();
     const drawer = page.getByRole("dialog", { name: "FastAPI" });
     await expect(drawer.getByText("Active days", { exact: true })).toBeVisible();
     await expect(drawer.getByText("To reach L2, commit it on 2 more days (1 of 3) and import or add it in 2 more commits (1 of 3).")).toBeVisible();
@@ -199,7 +199,7 @@ test.describe("GitHub connection", () => {
     const other = await (await browser.newContext()).newPage();
     await signInWithPassword(other, classmate.email, classmate.password);
     await other.goto(`/profile/${student.username}/skills`);
-    await other.getByRole("button", { name: /^Python, level 2: Written by them/ }).click();
+    await other.getByRole("button", { name: /^Python\b.*, level 2: Written by them/ }).click();
     const theirs = other.getByRole("dialog", { name: "Python" });
     await expect(theirs.getByText("The commits behind this level are private to Sana.")).toBeVisible();
     // The owner-only counts (exact labels: the L2 rule itself mentions "lines of code").

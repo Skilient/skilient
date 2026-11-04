@@ -97,7 +97,7 @@ export default async function ProfileOverviewPage({ params }: PageProps<"/profil
                 evidence={h.line ? <span>{h.line}</span> : null}
                 action={
                   <span className="flex items-center gap-2">
-                    <Link href={`/verify/${h.code}` as Route} className="font-mono text-body-sm underline underline-offset-4" aria-label={`Verify ${h.title}`}>
+                    <Link href={`/verify/${h.code}` as Route} className="font-mono text-body-sm underline underline-offset-4" aria-label={`${formatCode(h.code)}: verify ${h.title}`}>
                       {formatCode(h.code)}
                     </Link>
                     {p.isOwner ? null : <ReportButton targetType="record_entry" targetId={h.id} compact />}

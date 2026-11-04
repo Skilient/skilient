@@ -36,15 +36,17 @@ const NEVER_RECORDED: RegExp[] = [
   // receipts) and a society's payment details.
   /^\/events\/[^/]+\/(check-in|attend|ticket|manage)(\/|$)/,
   /^\/societies\/[^/]+\/manage\/payments(\/|$)/,
+  // The yearbook (PRD 5.33): notes the owner hasn't approved, and the secret ballot.
+  /^\/yearbook(\/|$)/,
   /^\/ui(\/|$)/,
 ];
 
-/** PRD 10: heatmaps on marketing pages, Home, Opportunities and onboarding. */
+/** PRD 10: heatmaps on marketing pages, Home, Openings and onboarding. */
 const HEATMAP_PAGES: RegExp[] = [
   /^\/$/,
   /^\/(recruiters|universities|faculty|features|about|request-university|verify)$/,
   /^\/feed$/,
-  /^\/opportunities(\/[^/]+)?$/,
+  /^\/openings(\/[^/]+)?$/,
   /^\/onboarding(\/|$)/,
 ];
 

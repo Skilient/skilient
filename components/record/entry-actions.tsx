@@ -80,7 +80,7 @@ export function EntryActions({
       <Button
         size="sm"
         variant="tertiary"
-        aria-label={`Copy the verify link for ${entry.title}`}
+        aria-label={`${copied ? "Copied" : "Copy link"}: the verify link for ${entry.title}`}
         onClick={async () => {
           await navigator.clipboard?.writeText(verify).catch(() => undefined);
           setCopied(true);

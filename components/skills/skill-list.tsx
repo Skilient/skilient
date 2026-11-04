@@ -67,10 +67,13 @@ export function SkillList({
                       opener.current = e.currentTarget;
                       setOpen(s);
                     }}
-                    aria-label={`${s.name}, level ${s.level}: ${isOwner ? LEVELS[s.level].own : LEVELS[s.level].other}${s.peerVerified ? ", peer-verified" : ""}${s.aiAssisted ? ", AI-assisted" : ""}. Details`}
                     className="rounded-sm transition-colors duration-[120ms] hover:[&>span]:border-border-strong"
                   >
+                    {/* Named from its content (visible chip first, WCAG 2.5.3), the rest for screen readers only. */}
                     <SkillChip name={s.name} level={s.level} peerVerified={s.peerVerified} aiAssisted={s.aiAssisted} />
+                    <span className="sr-only">
+                      {`, level ${s.level}: ${isOwner ? LEVELS[s.level].own : LEVELS[s.level].other}${s.peerVerified ? ", peer-verified" : ""}${s.aiAssisted ? ", AI-assisted" : ""}. Details`}
+                    </span>
                   </button>
                 </li>
               ))}

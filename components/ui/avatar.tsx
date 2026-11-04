@@ -40,9 +40,12 @@ export function Avatar({
   size = "md",
   tier,
   verified = false,
+  decorative = false,
   className,
 }: {
   name: string;
+  /** Inside a control that already names the person (a profile link, the account menu): hidden from assistive tech, so the control's own label is its whole name (WCAG 2.5.3). */
+  decorative?: boolean;
   src?: string | null;
   size?: keyof typeof sizes;
   tier?: Tier | null;
@@ -51,7 +54,7 @@ export function Avatar({
 }) {
   const s = sizes[size];
   return (
-    <span className={cn("relative inline-flex shrink-0 align-middle", className)}>
+    <span className={cn("relative inline-flex shrink-0 align-middle", className)} aria-hidden={decorative || undefined}>
       <AvatarPrimitive.Root
         className={cn(
           "inline-flex items-center justify-center overflow-hidden rounded-full bg-bg-muted shadow-[var(--chip-shadow)]",
@@ -60,9 +63,15 @@ export function Avatar({
         )}
       >
         {src ? <AvatarPrimitive.Image src={src} alt={name} className="size-full object-cover" /> : null}
-        <AvatarPrimitive.Fallback delayMs={src ? 300 : 0} className={cn("font-semibold", tier ? "text-[#1b1b19]" : "text-text-secondary")} aria-label={name}>
-          {initials(name)}
-        </AvatarPrimitive.Fallback>
+        {/* The initials are drawn by CSS (::before), not page text: inside a labelled control (the account menu, a
+            profile link) they would otherwise be visible text missing from the control's name (WCAG 2.5.3). */}
+        <AvatarPrimitive.Fallback
+          delayMs={src ? 300 : 0}
+          role={decorative ? undefined : "img"}
+          aria-label={decorative ? undefined : name}
+          data-initials={initials(name)}
+          className={cn("font-semibold before:content-[attr(data-initials)]", tier ? "text-[#1b1b19]" : "text-text-secondary")}
+        />
       </AvatarPrimitive.Root>
       {verified ? <Seal size={s.seal} label="Verified" className="absolute -right-1 -bottom-1" /> : null}
     </span>

@@ -40,6 +40,9 @@ import { prepareImages } from "@/lib/images/downscale";
 import { linkify } from "@/lib/format/linkify";
 import { clockTime } from "@/lib/format/time";
 import { ReportButton, type EarlierMessage } from "@/components/reports/report-button";
+import { SharedPostCard } from "@/components/chat/shared-post-card";
+import { PushOffer } from "@/components/pwa/push-offer";
+import { loadSharedPreviews } from "@/lib/actions/community";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/cn";
 
@@ -64,15 +67,17 @@ interface Row {
   edited_at: string | null;
   deleted_at: string | null;
   reply_to_id: string | null;
+  shared_post_id?: string | null;
+  shared?: boolean;
 }
 
 /** How long a "typing" ping shows, and how often we send one (PRD 5.28: at most every 3 s). */
 const TYPING_SHOWN_MS = 4_000;
 const TYPING_EVERY_MS = 3_000;
 
-function excerptOf(m: Pick<ChatMessage, "body" | "deleted">): string {
+function excerptOf(m: Pick<ChatMessage, "body" | "deleted"> & { shared?: ChatMessage["shared"] }): string {
   if (m.deleted) return "Message deleted";
-  return m.body ? m.body.slice(0, 140) : "Image";
+  return m.body ? m.body.slice(0, 140) : m.shared ? "Shared a post" : "Image";
 }
 
 /**
@@ -156,8 +161,22 @@ export function Conversation({
       changes = supabase
         .channel(`chat:${thread.id}`)
         .on("postgres_changes", { event: "*", schema: "public", table: "chat_messages", filter: `thread_id=eq.${thread.id}` }, async (payload) => {
+          if (payload.eventType === "DELETE") {
+            // A share taken back with Undo (PRD 5.34) disappears as if never sent.
+            const gone = (payload.old as Partial<Row>)?.id;
+            if (gone) setItems((prev) => prev.filter((m) => m.id !== gone));
+            return;
+          }
           const row = payload.new as Row;
           if (!row?.id) return;
+          let shared: ChatMessage["shared"] = null;
+          if (row.shared && !row.deleted_at) {
+            shared = { available: false };
+            if (row.shared_post_id) {
+              const previews = await loadSharedPreviews({ ids: [row.shared_post_id] });
+              if (previews.ok) shared = previews.data[row.shared_post_id] ?? { available: false };
+            }
+          }
           let imageUrl: string | null = null;
           if (row.media_path && !row.deleted_at) {
             const signed = await signImages([row.media_path]);
@@ -178,11 +197,18 @@ export function Conversation({
               edited: row.edited_at !== null,
               deleted: row.deleted_at !== null,
               status: "sent" as const,
+              shared,
             };
             if (at >= 0) {
               const copy = [...prev];
               const old = copy[at];
-              copy[at] = { ...old, ...base, imageUrl: base.imageUrl ?? (base.deleted ? null : old.imageUrl), link: base.deleted ? null : old.link };
+              copy[at] = {
+                ...old,
+                ...base,
+                imageUrl: base.imageUrl ?? (base.deleted ? null : old.imageUrl),
+                link: base.deleted ? null : old.link,
+                shared: base.deleted ? null : (old.shared ?? base.shared),
+              };
               return copy;
             }
             const next: Item = {
@@ -254,6 +280,9 @@ export function Conversation({
     ping("typing", { userId: meId });
   }, [ping, meId]);
 
+  // PRD 5.34: push is offered after a first meaningful action; sending a message is one.
+  const [sentOne, setSentOne] = useState(false);
+
   async function send(body: string, image: File | null, quoted: ReplyTarget | null, clientId = crypto.randomUUID()) {
     const now = new Date().toISOString();
     setItems((prev) => [
@@ -274,6 +303,7 @@ export function Conversation({
         reactions: [],
         pinned: false,
         link: null,
+        shared: null,
         status: "sending",
       },
     ]);
@@ -284,6 +314,7 @@ export function Conversation({
     if (quoted) form.set("replyTo", quoted.id);
     if (image) form.set("image", image);
     const result = await sendMessage(form).catch(() => null);
+    if (result?.ok) setSentOne(true);
     setItems((prev) => {
       if (!result?.ok) {
         return prev.map((m) => (m.clientId === clientId ? { ...m, status: "failed" as const, retry: { body, image, replyTo: quoted } } : m));
@@ -380,6 +411,11 @@ export function Conversation({
           </Button>
         </div>
       </header>
+      {sentOne ? (
+        <div className="border-b border-border-muted p-3">
+          <PushOffer reason="Get new messages on your phone even when Skilient isn't open." />
+        </div>
+      ) : null}
 
       {searching ? <ThreadSearch threadId={thread.id} onPick={jumpTo} onClose={() => setSearching(false)} /> : null}
 
@@ -648,7 +684,8 @@ function MessageBubble({
             )}
           </p>
         ) : null}
-        {m.link && !m.imageUrl && !editing ? <LinkPreview link={m.link} /> : null}
+        {m.shared ? <SharedPostCard shared={m.shared} /> : null}
+        {m.link && !m.imageUrl && !editing && !m.shared ? <LinkPreview link={m.link} /> : null}
       </div>
       {m.reactions.length ? (
         <ul className="flex flex-wrap gap-1" aria-label="Reactions" data-testid="reactions">

@@ -59,7 +59,7 @@ test.describe("L3 and L4 levels", () => {
 
     // Not yet L3: nobody confirmed it.
     await page.goto(`/profile/${b.username}/skills`);
-    await expect(page.getByRole("button", { name: /^React, level 3/ })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: /^React\b.*, level 3:/ })).toHaveCount(0);
 
     // A confirms from the Contributions tab.
     const aContext = await browser.newContext();
@@ -71,7 +71,7 @@ test.describe("L3 and L4 levels", () => {
 
     // B's React is L3, and the drawer shows why.
     await page.reload();
-    await page.getByRole("button", { name: /^React, level 3/ }).click();
+    await page.getByRole("button", { name: /^React\b.*, level 3:/ }).click();
     const drawer = page.getByRole("dialog", { name: "React" });
     await expect(drawer.getByText("Confirmed contribution")).toBeVisible();
     await expect(drawer.getByText(`Built the room booking screen ${tag}`)).toBeVisible();
@@ -87,11 +87,11 @@ test.describe("L3 and L4 levels", () => {
     expect((await aApi.rpc("endorse", { p_endorsee: b.id, p_venture: v1, p_items: [{ skill: "react", evidence: entries![0].id }] })).error).toBeNull();
     expect((await cApi.rpc("endorse", { p_endorsee: b.id, p_venture: v2, p_items: [{ skill: "react", evidence: e2 }] })).error).toBeNull();
     await page.reload();
-    await expect(page.getByRole("button", { name: /^React, level 4: .*peer-verified/ })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^React\b.*, level 4: .*peer-verified/ })).toBeVisible();
 
     // A classmate sees the level, not the proofs.
     await aPage.goto(`/profile/${b.username}/skills`);
-    await aPage.getByRole("button", { name: /^React, level 4/ }).click();
+    await aPage.getByRole("button", { name: /^React\b.*, level 4/ }).click();
     await expect(aPage.getByRole("dialog", { name: "React" }).getByText("Confirmed contribution")).toHaveCount(0);
 
     await aContext.close();

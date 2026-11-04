@@ -3,13 +3,14 @@ import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AddByUsername } from "@/components/friends/add-by-username";
+import { PeopleYouMayKnow } from "@/components/friends/people-you-may-know";
 import { FriendRow, personMeta } from "@/components/friends/friend-row";
 import { ConfirmAction } from "@/components/ventures/confirm-action";
 import { EmptyState } from "@/components/ui";
 import { cancelFriendRequest, respondFriendRequest, unblockUser, unfriend } from "@/lib/actions/friends";
 import { muteUser } from "@/lib/actions/posts";
 import { getCurrentUser } from "@/lib/auth/current-user";
-import { getBlocks, getFriendRequests, getFriends } from "@/lib/data/friends";
+import { getBlocks, getFriendRequests, getFriends, getPeopleYouMayKnow } from "@/lib/data/friends";
 import { getMutes } from "@/lib/data/posts";
 import { cn } from "@/lib/cn";
 
@@ -32,7 +33,7 @@ export default async function FriendsPage({ searchParams }: PageProps<"/friends"
   const sp = await searchParams;
   const tab: Tab = TABS.some((t) => t.key === sp.tab) ? (sp.tab as Tab) : "friends";
 
-  const [friends, requests, blocks, mutes] = await Promise.all([getFriends(), getFriendRequests(), getBlocks(), getMutes()]);
+  const [friends, requests, blocks, mutes, suggestions] = await Promise.all([getFriends(), getFriendRequests(), getBlocks(), getMutes(), getPeopleYouMayKnow(6)]);
   const received = requests.filter((r) => r.direction === "received");
   const sent = requests.filter((r) => r.direction === "sent");
   const counts: Record<Tab, number> = { friends: friends.length, received: received.length, sent: sent.length, blocked: blocks.length };
@@ -47,6 +48,8 @@ export default async function FriendsPage({ searchParams }: PageProps<"/friends"
       </div>
 
       <AddByUsername />
+
+      {tab === "friends" ? <PeopleYouMayKnow initial={suggestions} /> : null}
 
       <nav aria-label="Friends" className="border-b border-border-default">
         <ul className="-mb-px flex gap-1 overflow-x-auto">

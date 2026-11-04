@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -8,11 +8,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsol
  * holds the query; people from other universities are found with their friendship state
  * and can be added; blocked people never appear; filters narrow and can be cleared.
  */
-test.describe("Explore", () => {
+test.describe("Explore", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     await expect(page).toHaveTitle(/\S/);

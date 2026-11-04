@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { randomBytes } from "node:crypto";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import postgres from "postgres";
 import { createClient } from "@supabase/supabase-js";
 import { createStudent, hasBackend, signInWithPassword, watchConsole } from "./support";
@@ -61,8 +61,7 @@ test.describe("Marketing: organisation pages, pricing and about", () => {
     await expect(page.getByTestId("about-incubation")).toContainText("NUTECH Entrepreneurial and Incubation Center");
   });
 
-  test("the nav and footer link to every built page", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "the desktop nav shows every link");
+  test("the nav and footer link to every built page", { tag: "@desktop-only" }, async ({ page }) => {
     await page.goto("/");
     const main = page.getByRole("navigation", { name: "Main" });
     for (const [label, href] of [
@@ -85,8 +84,7 @@ test.describe("Marketing: organisation stories", () => {
   ] as const;
 
   for (const story of STORIES) {
-    test(`${story.path}: every chapter in order and nothing hidden without JavaScript`, async ({ browser }, info) => {
-      test.skip(info.project.name !== "desktop", "one browser is enough");
+    test(`${story.path}: every chapter in order and nothing hidden without JavaScript`, { tag: "@desktop-only" }, async ({ browser }) => {
       const page = await (await browser.newContext({ javaScriptEnabled: false })).newPage();
       await page.goto(story.path);
       const headings = await page.locator("main h2").allTextContents();
@@ -102,8 +100,7 @@ test.describe("Marketing: organisation stories", () => {
     });
   }
 
-  test("on a large screen the stage changes scene as the chapters pass", async ({ browser }, info) => {
-    test.skip(info.project.name !== "desktop", "one browser is enough");
+  test("on a large screen the stage changes scene as the chapters pass", { tag: "@desktop-only" }, async ({ browser }) => {
     const page = await (await browser.newContext({ viewport: { width: 1280, height: 720 } })).newPage();
     await page.goto("/recruiters");
     await expect(page.locator(".pin-stage")).toBeVisible();
@@ -120,8 +117,7 @@ test.describe("Marketing: organisation stories", () => {
     await expect.poll(() => page.locator(".pin-scene").first().locator(".pin-out").evaluate((e) => Number(getComputedStyle(e).opacity))).toBe(0);
   });
 
-  test("/about: the manifesto, the roll call and the values are all there under reduced motion", async ({ browser }, info) => {
-    test.skip(info.project.name !== "desktop", "one browser is enough");
+  test("/about: the manifesto, the roll call and the values are all there under reduced motion", { tag: "@desktop-only" }, async ({ browser }) => {
     const page = await (await browser.newContext({ reducedMotion: "reduce" })).newPage();
     await page.goto("/about");
     await expect(page.locator(".rules-line")).toHaveCount(4);
@@ -207,8 +203,7 @@ test.describe("Marketing: Talk to us", () => {
     await page.getByRole("button", { name: "Send" }).click();
   }
 
-  test("a message becomes one lead, and sending again reads as sent", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
+  test("a message becomes one lead, and sending again reads as sent", { tag: "@desktop-only" }, async ({ page }) => {
     await resetLimit();
     const email = `amna.${randomBytes(4).toString("hex")}@nutech.edu.pk`;
     await page.goto("/universities#talk");
@@ -225,8 +220,7 @@ test.describe("Marketing: Talk to us", () => {
     expect(rows[0]!.university).toMatch(/National University of Technology/);
   });
 
-  test("messages are limited to 5 an hour per network", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
+  test("messages are limited to 5 an hour per network", { tag: "@desktop-only" }, async ({ page }) => {
     await resetLimit();
     const tag = randomBytes(4).toString("hex");
     let limited = false;
@@ -243,8 +237,7 @@ test.describe("Marketing: Talk to us", () => {
     expect(limited).toBe(true);
   });
 
-  test("signed-in visitors get Open Skilient on the organisation pages", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
+  test("signed-in visitors get Open Skilient on the organisation pages", { tag: "@desktop-only" }, async ({ page }) => {
     const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Maham Pages" });
     await signInWithPassword(page, student.email, student.password);
     await page.goto("/faculty");
@@ -255,8 +248,7 @@ test.describe("Marketing: Talk to us", () => {
     await expect(page.getByTestId("org-cta").first()).toHaveAttribute("href", "#talk");
   });
 
-  test("/recruiters takes a recruiter lead into the same queue", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
+  test("/recruiters takes a recruiter lead into the same queue", { tag: "@desktop-only" }, async ({ page }) => {
     await resetLimit();
     const email = `hira.${randomBytes(4).toString("hex")}@indus-${randomBytes(2).toString("hex")}.com`;
     await page.goto("/recruiters#talk");
@@ -273,8 +265,7 @@ test.describe("Marketing: Talk to us", () => {
 });
 
 test.describe("Marketing: search, sharing and legal pages", () => {
-  test("robots, the sitemap, canonicals, Open Graph cards and structured data", async ({ page, request }, info) => {
-    test.skip(info.project.name !== "desktop", "one browser is enough");
+  test("robots, the sitemap, canonicals, Open Graph cards and structured data", { tag: "@desktop-only" }, async ({ page, request }) => {
     const robots = await (await request.get("/robots.txt")).text();
     expect(robots).toContain("Disallow: /feed");
     expect(robots).toContain("Disallow: /ops");
@@ -323,8 +314,8 @@ test.describe("Marketing: search, sharing and legal pages", () => {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
   });
 
-  test("signed-in pages are noindex", async ({ page }, info) => {
-    test.skip(!hasBackend || info.project.name !== "desktop", "needs the local Supabase stack; once is enough");
+  test("signed-in pages are noindex", { tag: "@desktop-only" }, async ({ page }) => {
+    test.skip(!hasBackend, "needs the local Supabase stack; once is enough");
     const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Nida Noindex" });
     await signInWithPassword(page, student.email, student.password);
     await page.goto("/feed");

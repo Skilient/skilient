@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -10,11 +10,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watch
  * one and warns on the other; the owner is told and the removed message is gone;
  * every decision is in the audit log; students can't open /ops.
  */
-test.describe("Reports and /ops", () => {
+test.describe("Reports and /ops", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     await expect(page).toHaveTitle(/\S/);

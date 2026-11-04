@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 for (const colorScheme of ["light", "dark"] as const) {
   test.describe(`UI gallery (${colorScheme} device theme)`, () => {

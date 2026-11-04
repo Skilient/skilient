@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -10,11 +10,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsol
  * events (RSVP), filter chips, the 30 s cooldown, invite posts with Apply, and venture
  * update images. No like, save or share control exists anywhere.
  */
-test.describe("Posts", () => {
+test.describe("Posts", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     // Next streams page metadata: wait for the <title> before checking the document.

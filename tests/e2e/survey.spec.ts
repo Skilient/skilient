@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { createStudent, hasBackend, signInWithPassword, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -9,11 +9,8 @@ import { createStudent, hasBackend, signInWithPassword, watchConsole, type TestS
  * answering settles into "Answered" with a 10-minute Change; an answer before a qualified
  * view is refused over the API; a free author's Insights explains the upgrade.
  */
-test.describe("Micro-survey", () => {
+test.describe("Micro-survey", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     // Next streams page metadata: wait for the <title> before checking the document.

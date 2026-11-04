@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsole } from "./support";
 
 /**
@@ -7,11 +7,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsol
  * new posts arrive as a pill (not mid-scroll), and updates from followed ventures come
  * after the ranked posts.
  */
-test.describe("Ranked feed", () => {
+test.describe("Ranked feed", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();

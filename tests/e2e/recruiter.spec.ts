@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "./fixtures";
 import { adminClient, currentAgreementVersion, codeFrom, createStudent, hasBackend, latestEmail, PASSWORD, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -9,11 +9,8 @@ import { adminClient, currentAgreementVersion, codeFrom, createStudent, hasBacke
  * student, who then chats with the company; jobs need pay, applications move through the pipeline;
  * a student can hide from one company. Key screens are checked with axe in both themes.
  */
-test.describe("Recruiter portal", { tag: "@portals" }, () => {
+test.describe("Recruiter portal", { tag: ["@portals", "@desktop-only"] }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   const RULES = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 

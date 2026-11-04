@@ -6,7 +6,7 @@ import { useId, useMemo, useState, useTransition, type FormEvent } from "react";
 import { AgreementSheet } from "@/components/agreement/agreement-sheet";
 import { FormAlert } from "@/components/auth/form-alert";
 import { PasswordField } from "@/components/auth/password-field";
-import { Turnstile } from "@/components/auth/turnstile";
+import { humanCheckBlock, Turnstile, type TurnstileStatus } from "@/components/auth/turnstile";
 import { Button, Checkbox, Field, FieldError, Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui";
 import { signUp, startGoogleSignIn } from "@/lib/actions/auth";
 import type { ActionError } from "@/lib/actions/result";
@@ -37,6 +37,7 @@ export function SignupForm({
   const [showPickerNote, setShowPickerNote] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [token, setToken] = useState<string | null>(null);
+  const [check, setCheck] = useState<TurnstileStatus>("pending");
   const [resetKey, setResetKey] = useState(0);
   const [error, setError] = useState<ActionError | null>(null);
   const [pending, startTransition] = useTransition();
@@ -55,6 +56,12 @@ export function SignupForm({
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    // A submit before the human check has a token would only come back refused and burn the widget.
+    const blocked = humanCheckBlock(siteKey, token, check);
+    if (blocked) {
+      setError({ ok: false, code: "captcha", message: blocked });
+      return;
+    }
     const form = new FormData(event.currentTarget);
     if (token) form.set("turnstileToken", token);
     if (chosen) form.set("universityId", chosen.id);
@@ -232,7 +239,7 @@ export function SignupForm({
         {fields.acceptAgreement ? <FieldError id={`${agreeId}-error`}>{fields.acceptAgreement}</FieldError> : null}
       </div>
 
-      {siteKey ? <Turnstile siteKey={siteKey} onToken={setToken} resetKey={resetKey} action="signup" /> : null}
+      {siteKey ? <Turnstile siteKey={siteKey} onToken={setToken} onStatus={setCheck} resetKey={resetKey} action="signup" /> : null}
 
       <Button type="submit" size="lg" loading={pending} disabled={googlePending}>
         Create account

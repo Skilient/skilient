@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 import { createStudent, hasBackend, signInWithPassword } from "./support";
 
 /**
@@ -40,8 +40,7 @@ test.describe("Portals off", () => {
     expect(official.error?.message).toMatch(/University accounts aren.t open yet/);
   });
 
-  test("a student sees 404s and no recruiter parts", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
+  test("a student sees 404s and no recruiter parts", { tag: "@desktop-only" }, async ({ page }) => {
     const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Portal Student" });
     await signInWithPassword(page, student.email, student.password);
     for (const path of ["/recruit", "/uni", "/openings/jobs", "/openings/contact-requests", "/openings/applications/x", "/fairs/invite"]) {

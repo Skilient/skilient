@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Browser, type Page } from "@playwright/test";
-import { SWEEP, sweepPath, type SweepFixtures, type SweepRole } from "./sweep-routes";
-import { adminClient, createStudent, hasBackend, PASSWORD, currentAgreementVersion, signInWithPassword, uniqueEmail, watchConsole, type TestStudent } from "./support";
+import { expect, test, type Browser, type Page } from "./fixtures";
+import { chunkTitle, sweepChunks, sweepPath, type SweepFixtures, type SweepRole, type SweepRoute } from "./sweep-routes";
+import { adminClient, createStudent, hasBackend, PASSWORD, currentAgreementVersion, settle, signInWithPassword, uniqueEmail, watchConsole, type TestStudent } from "./support";
 
 /**
  * Phase 14 "New look" (decisions 2026-11-02, "How the app looks"): the shell (two-tier sidebar,
@@ -47,48 +47,53 @@ async function faculty(): Promise<TestStudent> {
   return { id: data.user.id, email, password: PASSWORD, fullName: "Dr Look", username: "" };
 }
 
-async function axeSweep(browser: Browser, who: TestStudent | null, role: SweepRole, fixtures: Partial<SweepFixtures>, colorScheme: "light" | "dark") {
+/**
+ * axe on one chunk of a role's pages in one theme, in its own context. Each page is judged once it has
+ * settled (fonts, hydration, nothing busy, finite animations done) so contrast is measured on end states.
+ */
+async function axeSweep(browser: Browser, who: TestStudent | null, routes: SweepRoute[], fixtures: Partial<SweepFixtures>, colorScheme: "light" | "dark") {
   const failures: string[] = [];
-  {
-    const page = await (await browser.newContext({ colorScheme })).newPage();
+  const context = await browser.newContext({ colorScheme });
+  try {
+    const page = await context.newPage();
     if (who) await signInWithPassword(page, who.email, who.password);
-    for (const entry of SWEEP.filter((s) => s.role === role)) {
+    for (const entry of routes) {
       const path = sweepPath(entry, fixtures);
       await page.goto(path, { waitUntil: "load" });
-      await page.waitForLoadState("networkidle", { timeout: 3_000 }).catch(() => undefined);
-      // Let first-paint motion settle so contrast is measured on the end state.
-      await page.waitForTimeout(200);
+      await settle(page);
       const results = await new AxeBuilder({ page }).withTags(RULES).analyze();
       for (const v of results.violations) failures.push(`${path} (${colorScheme}) ${v.id}: ${v.nodes.slice(0, 3).map((n) => n.target.join(" ")).join(", ")}`);
     }
-    await page.context().close();
+  } finally {
+    await context.close();
   }
   expect(failures).toEqual([]);
 }
 
-test.describe("New look: axe on every screen, light and dark", () => {
+test.describe("New look: axe on every screen, light and dark", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "runs once, on desktop");
-  });
 
-  // One test per role and theme, so each stays well inside its timeout on a busy CI shard.
-  for (const scheme of ["light", "dark"] as const) {
-    test(`visitor pages (${scheme})`, async ({ browser }) => {
-      test.setTimeout(400_000);
-      await axeSweep(browser, null, "visitor", {}, scheme);
-    });
-
-    test(`student pages (${scheme})`, async ({ browser }) => {
-      test.setTimeout(600_000);
+  // One test per chunk of SWEEP_CHUNK pages, role and theme, each with its own account and session, so the
+  // sweep spreads over shards and workers (it was one 3.6-minute test per role and theme).
+  const people: Record<"visitor" | "student" | "faculty", () => Promise<{ who: TestStudent | null; fixtures: Partial<SweepFixtures> }>> = {
+    visitor: async () => ({ who: null, fixtures: {} }),
+    student: async () => {
       const { student, fixtures } = await studentWithContent();
-      await axeSweep(browser, student, "student", fixtures, scheme);
-    });
-
-    test(`faculty pages (${scheme})`, async ({ browser }) => {
-      test.setTimeout(400_000);
-      await axeSweep(browser, await faculty(), "faculty", {}, scheme);
-    });
+      return { who: student, fixtures };
+    },
+    faculty: async () => ({ who: await faculty(), fixtures: {} }),
+  };
+  for (const scheme of ["light", "dark"] as const) {
+    for (const role of ["visitor", "student", "faculty"] as const satisfies readonly SweepRole[]) {
+      const chunks = sweepChunks(role);
+      for (const [index, routes] of chunks.entries()) {
+        test(`${chunkTitle(role, chunks, index)} (${scheme})`, async ({ browser }) => {
+          test.setTimeout(120_000);
+          const { who, fixtures } = await people[role]();
+          await axeSweep(browser, who, routes, fixtures, scheme);
+        });
+      }
+    }
   }
 });
 
@@ -101,8 +106,7 @@ test.describe("New look: the shell", () => {
     return { student, fixtures };
   }
 
-  test("⌘K jumps anywhere; the rail and its levels follow the place", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "the rail is desktop and tablet");
+  test("⌘K jumps anywhere; the rail and its levels follow the place", { tag: "@desktop-only" }, async ({ page }) => {
     const problems = watchConsole(page);
     await signedIn(page);
     await page.goto("/feed");
@@ -125,8 +129,7 @@ test.describe("New look: the shell", () => {
     expect(problems).toEqual([]);
   });
 
-  test("the phone dock has the five places, Openings among them", async ({ page }, info) => {
-    test.skip(info.project.name !== "phone", "the dock is for phones");
+  test("the phone dock has the five places, Openings among them", { tag: "@phone-only" }, async ({ page }) => {
     await signedIn(page);
     await page.goto("/feed");
     for (const key of ["home", "openings", "ventures", "chat", "me"]) await expect(page.getByTestId(`tab-${key}`)).toBeVisible();
@@ -136,8 +139,7 @@ test.describe("New look: the shell", () => {
     await expect(page.getByTestId("tab-ventures")).toHaveAttribute("aria-current", "page");
   });
 
-  test("a post: Comment and Share stay visible; Not for me, Mute and Report sit in ⋯", async ({ browser }, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
+  test("a post: Comment and Share stay visible; Not for me, Mute and Report sit in ⋯", { tag: "@desktop-only" }, async ({ browser }) => {
     const author = await signedIn(await (await browser.newContext()).newPage());
     const reader = await createStudent({ domain: "nutech.edu.pk", fullName: "Rafay Reader" });
     const page = await (await browser.newContext()).newPage();

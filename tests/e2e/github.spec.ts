@@ -1,6 +1,6 @@
 import { createHmac, randomInt, randomUUID } from "node:crypto";
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -9,11 +9,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsol
  * exchange runs in the github-link Edge Function (covered by tests/worker with a fake
  * GitHub); here it has no App secrets, so a correct callback ends in "couldn't connect".
  */
-test.describe("GitHub connection", () => {
+test.describe("GitHub connection", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     // Next streams page metadata: wait for the <title> before checking the document.
@@ -228,12 +225,9 @@ test.describe("GitHub connection", () => {
   });
 });
 
-test.describe("GitHub webhook", () => {
+test.describe("GitHub webhook", { tag: "@desktop-only" }, () => {
   const secret = process.env.GITHUB_WEBHOOK_SECRET;
   test.skip(!hasBackend || !secret, "needs the local stack and a webhook secret");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "runs once");
-  });
 
   test("refuses a bad signature, records a delivery once and ignores its replay", async ({ request }) => {
     const body = JSON.stringify({ action: "removed", installation: { id: 1 }, repositories_removed: [{ id: 1 }] });

@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { createStudent, hasBackend, signInWithPassword, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -8,11 +8,8 @@ import { createStudent, hasBackend, signInWithPassword, watchConsole, type TestS
  * to one of their entries, with a note; the endorsee is notified, sees it on their profile and
  * hides it, after which others no longer see it. Limits are refused through the raw API too.
  */
-test.describe("Endorsements", () => {
+test.describe("Endorsements", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     // Next streams page metadata: wait for the <title> before checking the document.

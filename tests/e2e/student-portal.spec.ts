@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -23,8 +23,7 @@ test.describe("Student portal", () => {
     return api.auth.signInWithPassword({ email: student.email, password: student.password }).then(() => api);
   }
 
-  test("the shell, the tour by keyboard, the progress card and the tips", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "runs once, on desktop");
+  test("the shell, the tour by keyboard, the progress card and the tips", { tag: "@desktop-only" }, async ({ page }) => {
     test.setTimeout(150_000);
     const problems = watchConsole(page);
     const me = await createStudent({ domain: "nutech.edu.pk", fullName: "Tour Taker", tour: true });
@@ -126,8 +125,7 @@ test.describe("Student portal", () => {
     expect(problems).toEqual([]);
   });
 
-  test("the phone shell: five places in the dock, a header and a shorter tour", async ({ page }, info) => {
-    test.skip(info.project.name !== "phone", "phone only");
+  test("the phone shell: five places in the dock, a header and a shorter tour", { tag: "@phone-only" }, async ({ page }) => {
     test.setTimeout(90_000);
     const me = await createStudent({ domain: "nutech.edu.pk", fullName: "Phone Tabs", tour: true });
     await signInWithPassword(page, me.email, me.password);
@@ -141,8 +139,7 @@ test.describe("Student portal", () => {
     await axe(page, "me (phone)");
   });
 
-  test("feedback: send, follow its status, read the reply", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "runs once, on desktop");
+  test("feedback: send, follow its status, read the reply", { tag: "@desktop-only" }, async ({ page }) => {
     test.setTimeout(90_000);
     const me = await createStudent({ domain: "nutech.edu.pk", fullName: "Fiona Feedback" });
     await signInWithPassword(page, me.email, me.password);
@@ -161,8 +158,7 @@ test.describe("Student portal", () => {
     await expect(list).toContainText("We'll explain Momentum on the score page.");
   });
 
-  test("a graduate posts to the Global Feed only", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "runs once, on desktop");
+  test("a graduate posts to the Global Feed only", { tag: "@desktop-only" }, async ({ page }) => {
     test.setTimeout(90_000);
     const grad = await createStudent({ domain: "nutech.edu.pk", fullName: "Gul Graduate" });
     const db = adminClient();
@@ -178,8 +174,7 @@ test.describe("Student portal", () => {
     await expect(page.getByRole("radio", { name: "Global" })).toBeChecked();
   });
 
-  test("deleting an account: cooling-off, locked to one page, cancel restores it", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "runs once, on desktop");
+  test("deleting an account: cooling-off, locked to one page, cancel restores it", { tag: "@desktop-only" }, async ({ page }) => {
     test.setTimeout(90_000);
     const me = await createStudent({ domain: "nutech.edu.pk", fullName: "Dana Delete" });
     await signInWithPassword(page, me.email, me.password);

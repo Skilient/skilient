@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "./fixtures";
 import { adminClient, currentAgreementVersion, createStudent, hasBackend, PASSWORD, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -10,11 +10,8 @@ import { adminClient, currentAgreementVersion, createStudent, hasBackend, PASSWO
  * Starter and credits; Explore's refusal opens the upgrade sheet. Staff see the billing tools and gateway
  * readiness, a university owner sees the licence page. Every new screen is checked with axe in both themes.
  */
-test.describe("Billing", () => {
+test.describe("Billing", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   const RULES = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 

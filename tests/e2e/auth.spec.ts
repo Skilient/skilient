@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 import {
   codeFrom,
   createStudent,
@@ -39,8 +39,7 @@ test.describe("auth", () => {
     await page.getByRole("checkbox", { name: /I agree/ }).check();
   }
 
-  test("sign up with a university email, confirm with the code, land in onboarding", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account-creating flow runs once");
+  test("sign up with a university email, confirm with the code, land in onboarding", { tag: "@desktop-only" }, async ({ page }) => {
     const problems = watchConsole(page);
     const email = uniqueEmail("nutech.edu.pk");
     const started = Date.now();
@@ -67,24 +66,21 @@ test.describe("auth", () => {
     await expect(page.getByText("Your university isn't on Skilient yet.")).toBeVisible();
   });
 
-  test("the server refuses a personal email even without the form's check", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "runs once");
+  test("the server refuses a personal email even without the form's check", { tag: "@desktop-only" }, async ({ page }) => {
     await fillSignup(page, `someone-${Date.now()}@gmail.com`);
     await page.getByRole("button", { name: "Create account" }).click();
     await expect(page.getByText("Use your university email.").first()).toBeVisible();
     await expect(page).toHaveURL(/\/signup$/);
   });
 
-  test("a duplicate email is told to sign in instead", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account-creating flow runs once");
+  test("a duplicate email is told to sign in instead", { tag: "@desktop-only" }, async ({ page }) => {
     const existing = await createStudent({ domain: "nu.edu.pk", fullName: "Dup Licate" });
     await fillSignup(page, existing.email);
     await page.getByRole("button", { name: "Create account" }).click();
     await expect(page.getByRole("main").getByRole("alert")).toContainText("This email is already registered. Sign in instead.");
   });
 
-  test("confirming from the email link in a second tab advances the first", async ({ page, context }, info) => {
-    test.skip(info.project.name !== "desktop", "account-creating flow runs once");
+  test("confirming from the email link in a second tab advances the first", { tag: "@desktop-only" }, async ({ page, context }) => {
     const email = uniqueEmail("nu.edu.pk");
     const started = Date.now();
     await fillSignup(page, email, "Tab Two");
@@ -101,8 +97,7 @@ test.describe("auth", () => {
     await expect(page).toHaveURL(/\/onboarding\/university$/, { timeout: 15_000 });
   });
 
-  test("reset password by email, then sign in with the new one", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account-changing flow runs once");
+  test("reset password by email, then sign in with the new one", { tag: "@desktop-only" }, async ({ page }) => {
     const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Reset Person" });
     const started = Date.now();
     await page.goto("/forgot-password");
@@ -132,8 +127,7 @@ test.describe("auth", () => {
     await expect(page).toHaveURL(/\/feed$/);
   });
 
-  test("change the password in settings: current password checked, other devices signed out", async ({ page, browser }, info) => {
-    test.skip(info.project.name !== "desktop", "account-changing flow runs once");
+  test("change the password in settings: current password checked, other devices signed out", { tag: "@desktop-only" }, async ({ page, browser }) => {
     const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Change Person" });
     await signInWithPassword(page, student.email, student.password);
     const cookies = await page.context().cookies();
@@ -166,8 +160,7 @@ test.describe("auth", () => {
     await expect(page).toHaveURL(/\/feed$/);
   });
 
-  test("sign out, then sign in as another student: zero residue, other tabs follow", async ({ page, context }, info) => {
-    test.skip(info.project.name !== "desktop", "account flow runs once");
+  test("sign out, then sign in as another student: zero residue, other tabs follow", { tag: "@desktop-only" }, async ({ page, context }) => {
     const a = await createStudent({ domain: "nutech.edu.pk", fullName: "Aisha Alpha" });
     const b = await createStudent({ domain: "nu.edu.pk", fullName: "Bilal Bravo" });
 
@@ -199,8 +192,7 @@ test.describe("auth", () => {
     await expectNoResidue(page, a);
   });
 
-  test("wrong passwords slow sign-in down but never lock it, and the emailed code always works", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "runs once");
+  test("wrong passwords slow sign-in down but never lock it, and the emailed code always works", { tag: "@desktop-only" }, async ({ page }) => {
     const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Slow Down" });
     await page.goto("/signin");
     await page.getByLabel("University email").fill(student.email);
@@ -244,8 +236,7 @@ test.describe("auth", () => {
     await expect(page).toHaveURL(/\/feed$/);
   });
 
-  test("asking for a code never reveals whether an account exists", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "runs once");
+  test("asking for a code never reveals whether an account exists", { tag: "@desktop-only" }, async ({ page }) => {
     await page.goto("/signin/code");
     await page.getByLabel("University email").fill(uniqueEmail("nu.edu.pk", "nobody"));
     await page.getByRole("button", { name: "Email me a code" }).click();
@@ -254,8 +245,7 @@ test.describe("auth", () => {
     await expect(page.getByRole("heading", { name: "Sign in with a code" })).toBeVisible();
   });
 
-  test("two-factor: backup codes at set-up, a second authenticator, and signing in with a backup code", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "runs once");
+  test("two-factor: backup codes at set-up, a second authenticator, and signing in with a backup code", { tag: "@desktop-only" }, async ({ page }) => {
     test.setTimeout(60_000);
     const student = await createStudent({ domain: "nu.edu.pk", fullName: "Totp Tester" });
     await signInWithPassword(page, student.email, student.password);
@@ -320,8 +310,7 @@ test.describe("auth", () => {
     await expect(page.getByText("Signed in with a backup code (two-factor turned off)")).toBeVisible();
   });
 
-  test("a new device shows up in recent activity", async ({ browser }, info) => {
-    test.skip(info.project.name !== "desktop", "runs once");
+  test("a new device shows up in recent activity", { tag: "@desktop-only" }, async ({ browser }) => {
     const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Two Devices" });
     for (const _ of [1, 2]) {
       const context = await browser.newContext();
@@ -336,8 +325,7 @@ test.describe("auth", () => {
     }
   });
 
-  test("route gates: signed-out, agreement, signed-in on auth pages", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "runs once");
+  test("route gates: signed-out, agreement, signed-in on auth pages", { tag: "@desktop-only" }, async ({ page }) => {
     await page.goto("/settings/security");
     await expect(page).toHaveURL(/\/signin\?next=%2Fsettings%2Fsecurity$/);
 

@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -10,11 +10,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsol
  * unread; a non-member can't read, join or post through the API or the page; the venture
  * Chat tab opens the team's group chat for members.
  */
-test.describe("Chat", () => {
+test.describe("Chat", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     await expect(page).toHaveTitle(/\S/);

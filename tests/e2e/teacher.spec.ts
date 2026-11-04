@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "./fixtures";
 import { adminClient, currentAgreementVersion, createStudent, hasBackend, PASSWORD, signInWithPassword, totp, uniqueEmail, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -7,11 +7,8 @@ import { adminClient, currentAgreementVersion, createStudent, hasBackend, PASSWO
  * project idea, a student starts a venture from it, the teacher accepts supervision, comments,
  * confirms an entry and reviews the venture. An unapproved teacher has student permissions only.
  */
-test.describe("Teacher portal", () => {
+test.describe("Teacher portal", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     await expect(page).toHaveTitle(/\S/);

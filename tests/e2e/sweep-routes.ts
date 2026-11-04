@@ -109,3 +109,27 @@ export function sweepPath(entry: SweepRoute, fixtures: Partial<SweepFixtures>): 
       return encodeURIComponent(value ?? (name === "step" ? "1" : name === "type" ? "user" : PLACEHOLDER_ID));
     });
 }
+
+/**
+ * Routes per sweep test. The axe and CSP sweeps used to open every page of a role in one test (the student
+ * light-theme axe pass alone took 3.6 minutes), which pinned a whole shard to one long test and made shard
+ * times depend on where that test landed. Each chunk is now its own test with its own account and session,
+ * so chunks spread over shards and workers (decisions 2026-11-04, "CI speed").
+ */
+export const SWEEP_CHUNK = 12;
+
+/** One role's routes in SWEEP order, split into chunks of at most `size`; together they are exactly the role's routes. */
+export function sweepChunks(role: SweepRole, size = SWEEP_CHUNK): SweepRoute[][] {
+  const routes = SWEEP.filter((s) => s.role === role);
+  const count = Math.max(1, Math.ceil(routes.length / size));
+  // Even chunks (13 routes become 7 + 6, not 12 + 1).
+  const even = Math.ceil(routes.length / count);
+  return Array.from({ length: count }, (_, i) => routes.slice(i * even, (i + 1) * even)).filter((c) => c.length);
+}
+
+/** A stable, readable test title for a chunk: "student pages 3/8 (/me/score … /onboarding)". */
+export function chunkTitle(role: SweepRole, chunks: SweepRoute[][], index: number): string {
+  const chunk = chunks[index];
+  const span = chunk.length > 1 ? `${chunk[0].route} … ${chunk[chunk.length - 1].route}` : chunk[0].route;
+  return `${role} pages ${index + 1}/${chunks.length} (${span})`;
+}

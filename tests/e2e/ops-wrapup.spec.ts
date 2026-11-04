@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "./fixtures";
 import { adminClient, currentAgreementVersion, createStudent, hasBackend, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -7,11 +7,8 @@ import { adminClient, currentAgreementVersion, createStudent, hasBackend, signIn
  * accounts staff can open; accounts staff onboard a university from the list (assign an owner
  * who has two-factor, add a domain) and read its tabs. axe in both themes on each new page.
  */
-test.describe("Org documents and university onboarding", { tag: "@portals" }, () => {
+test.describe("Org documents and university onboarding", { tag: ["@portals", "@desktop-only"] }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   const RULES = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
   const PASSWORD = "Wrapup-e2e-Passw0rd!";

@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 import { fakePostHog, type FakePostHog } from "./posthog-fake";
 import { createStudent, hasBackend, signInWithPassword, watchConsole } from "./support";
 

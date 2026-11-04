@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { createStudent, hasBackend, signInWithPassword, watchConsole } from "./support";
 
 /**
@@ -8,11 +8,8 @@ import { createStudent, hasBackend, signInWithPassword, watchConsole } from "./s
  * the team; members log, correct and confirm contributions; completing needs a deliverable
  * and peer-verified work from 2 members, then locks the log.
  */
-test.describe("Ventures", () => {
+test.describe("Ventures", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     // Next streams page metadata: wait for the <title> before checking the document.

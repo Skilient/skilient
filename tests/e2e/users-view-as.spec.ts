@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -7,11 +7,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watch
  * as the student (read-only, logged, the student is told), then resets the student's two-factor
  * after an identity check. axe in both themes on each new page.
  */
-test.describe("Users, view-as and two-factor reset", () => {
+test.describe("Users, view-as and two-factor reset", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   const RULES = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 

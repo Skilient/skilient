@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 test("pages carry security headers and a request id", async ({ request }) => {
   const res = await request.get("/");

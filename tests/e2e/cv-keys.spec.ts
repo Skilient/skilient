@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 import { hasBackend } from "./support";
 
 /**
@@ -6,11 +6,8 @@ import { hasBackend } from "./support";
  * each a raw Ed25519 key (base64url) with its dates. Keys themselves come from pgTAP
  * 37_verified_cv and the cv-sign worker test.
  */
-test.describe("CV signing keys", () => {
+test.describe("CV signing keys", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "runs once, on desktop");
-  });
 
   test("the key file is public JSON", async ({ request }) => {
     const res = await request.get("/.well-known/skilient-cv-keys.json");

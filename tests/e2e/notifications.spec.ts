@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { createStudent, hasBackend, signInWithPassword, watchConsole } from "./support";
 
 /**
@@ -9,11 +9,8 @@ import { createStudent, hasBackend, signInWithPassword, watchConsole } from "./s
  * accept; mark all read; email settings per category (no instant email for team news);
  * nobody can write a notification through the API.
  */
-test.describe("Notifications", () => {
+test.describe("Notifications", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     // Next streams page metadata: wait for the <title> before checking the document.

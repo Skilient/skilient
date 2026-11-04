@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { createStudent, hasBackend, signInWithPassword, watchConsole } from "./support";
 
 /**
@@ -7,11 +7,8 @@ import { createStudent, hasBackend, signInWithPassword, watchConsole } from "./s
  * pin by the post author, delete leaving a placeholder; "Not for me" and Mute with Undo,
  * and muted people listed under Friends → Blocked.
  */
-test.describe("Comments, hide and mute", () => {
+test.describe("Comments, hide and mute", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     // Next streams page metadata: wait for the <title> before checking the document.

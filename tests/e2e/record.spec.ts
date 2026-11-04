@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { PDFParse } from "pdf-parse";
 import postgres from "postgres";
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "./fixtures";
 import { rotateKey } from "../../supabase/functions/_shared/cv/issue.ts";
 import { drainRecordQueue } from "../../supabase/functions/_shared/cv/record.ts";
 import { formatCode } from "../../supabase/functions/_shared/cv/sign.ts";
@@ -21,11 +21,8 @@ import { adminClient, createStudent, currentAgreementVersion, hasBackend, signIn
 const DB_URL = process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 const RULES = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 
-test.describe("The Record", () => {
+test.describe("The Record", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
   test.use({ timezoneId: "Asia/Karachi" });
 
   let sql: ReturnType<typeof postgres>;

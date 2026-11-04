@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -7,11 +7,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watch
  * sees the banner and appeals; the moderator who decided can't take the appeal; a second
  * moderator overturns it and the suspension is gone. axe in both themes on each new page.
  */
-test.describe("Sanctions and appeals", () => {
+test.describe("Sanctions and appeals", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   const RULES = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 

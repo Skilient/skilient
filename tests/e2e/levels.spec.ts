@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { createStudent, hasBackend, signInWithPassword, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -8,11 +8,8 @@ import { createStudent, hasBackend, signInWithPassword, watchConsole, type TestS
  * confirms it and the skill shows L3 with the confirmation behind it; two teammates from two
  * ventures vouch for it tied to entries that show it, and it becomes L4.
  */
-test.describe("L3 and L4 levels", () => {
+test.describe("L3 and L4 levels", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     await expect(page).toHaveTitle(/\S/);

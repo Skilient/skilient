@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsole } from "./support";
 
 /**
@@ -9,11 +9,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsol
  * hides both people from each other and is undone from the Blocked tab. Direct API writes
  * to the friend tables are refused.
  */
-test.describe("Friends and blocks", () => {
+test.describe("Friends and blocks", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     // Next streams page metadata: wait for the <title> before checking the document.

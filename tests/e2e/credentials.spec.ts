@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -10,11 +10,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watch
  * approves one as a recognised issuer and rejects the other with a reason; the student and
  * a classmate see the outcome. Files stay private to the student and the reviewer.
  */
-test.describe("Credentials", () => {
+test.describe("Credentials", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     await expect(page).toHaveTitle(/\S/);

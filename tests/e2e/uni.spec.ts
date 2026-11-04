@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "./fixtures";
 import { adminClient, currentAgreementVersion, hasBackend, PASSWORD, signInWithPassword, totp, type TestStudent } from "./support";
 
 /**
@@ -9,11 +9,8 @@ import { adminClient, currentAgreementVersion, hasBackend, PASSWORD, signInWithP
  * by SQL) a record view is logged; a student RSVPs and opens the ecosphere. Every new screen is
  * checked with axe in both themes.
  */
-test.describe("University portal", { tag: "@portals" }, () => {
+test.describe("University portal", { tag: ["@portals", "@desktop-only"] }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
   test.describe.configure({ mode: "serial", timeout: 240_000 });
 
   const RULES = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];

@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { randomInt } from "node:crypto";
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -10,11 +10,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watch
  * The nightly run that raises these flags is tested in pgTAP (34_ranking_nightly); here the
  * flags are recorded directly, as the run would leave them.
  */
-test.describe("Ranking in /ops", () => {
+test.describe("Ranking in /ops", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     await expect(page).toHaveTitle(/\S/);

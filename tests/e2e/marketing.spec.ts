@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { randomBytes } from "node:crypto";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import postgres from "postgres";
 import { adminClient, createStudent, hasBackend, signInWithPassword, watchConsole } from "./support";
 
@@ -24,8 +24,7 @@ async function axeBothThemes(page: Page, label: string) {
 }
 
 test.describe("Marketing: hero", () => {
-  test("fits the first screen at 1280×720 and 390×844, headline in two lines on desktop", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "sizes are set explicitly");
+  test("fits the first screen at 1280×720 and 390×844, headline in two lines on desktop", { tag: "@desktop-only" }, async ({ page }) => {
     for (const [width, height] of [
       [1280, 720],
       [390, 844],
@@ -57,8 +56,7 @@ test.describe("Marketing: hero", () => {
     expect(problems).toEqual([]);
   });
 
-  test("the orbit arrives once on load; under reduced motion it is simply there", async ({ browser }, info) => {
-    test.skip(info.project.name !== "desktop", "one browser is enough");
+  test("the orbit arrives once on load; under reduced motion it is simply there", { tag: "@desktop-only" }, async ({ browser }) => {
     const motion = await (await browser.newContext({ viewport: { width: 1280, height: 720 } })).newPage();
     await motion.goto("/");
     const objects = motion.locator(".orbit-in");
@@ -93,8 +91,7 @@ test.describe("Marketing: landing story", () => {
     "Questions",
   ];
 
-  test("every chapter is there, in order, with JavaScript off", async ({ browser }, info) => {
-    test.skip(info.project.name !== "desktop", "one browser is enough");
+  test("every chapter is there, in order, with JavaScript off", { tag: "@desktop-only" }, async ({ browser }) => {
     const page = await (await browser.newContext({ javaScriptEnabled: false })).newPage();
     await page.goto("/");
     const headings = await page.locator("main h2").allTextContents();
@@ -110,8 +107,7 @@ test.describe("Marketing: landing story", () => {
     await expect(page.getByText("Your account becomes a graduate account.")).toBeVisible();
   });
 
-  test("on a large screen the record fills as the chapters pass, and the climb rises", async ({ browser }, info) => {
-    test.skip(info.project.name !== "desktop", "one browser is enough");
+  test("on a large screen the record fills as the chapters pass, and the climb rises", { tag: "@desktop-only" }, async ({ browser }) => {
     const page = await (await browser.newContext({ viewport: { width: 1280, height: 720 } })).newPage();
     await page.goto("/");
     const stage = page.locator(".story-a .story-stage");
@@ -138,8 +134,7 @@ test.describe("Marketing: landing story", () => {
     await expect(page.locator(".climb-stop-here")).toContainText("Ayesha is here");
   });
 
-  test("reduced motion shows every scene in place; the FAQ works from the keyboard", async ({ browser }, info) => {
-    test.skip(info.project.name !== "desktop", "one browser is enough");
+  test("reduced motion shows every scene in place; the FAQ works from the keyboard", { tag: "@desktop-only" }, async ({ browser }) => {
     const page = await (await browser.newContext({ viewport: { width: 1280, height: 720 }, reducedMotion: "reduce" })).newPage();
     await page.goto("/");
     // Nothing pins: the scenes are in normal flow, the climb lists all six tiers.
@@ -157,8 +152,7 @@ test.describe("Marketing: landing story", () => {
     await expect(page.getByText("Not yet: recruiters can’t sign up, search or contact students on Skilient.", { exact: false })).toBeVisible();
   });
 
-  test("the pricing teaser names Student Pro without a price and links to /features", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "one browser is enough");
+  test("the pricing teaser names Student Pro without a price and links to /features", { tag: "@desktop-only" }, async ({ page }) => {
     await page.goto("/");
     const teaser = page.getByTestId("pricing-teaser");
     await expect(teaser).toContainText("Student Pro");
@@ -168,8 +162,7 @@ test.describe("Marketing: landing story", () => {
 });
 
 test.describe("Marketing: without JavaScript", () => {
-  test("content shows its end state and the email field posts to /join", async ({ browser }, info) => {
-    test.skip(info.project.name !== "desktop", "one browser is enough");
+  test("content shows its end state and the email field posts to /join", { tag: "@desktop-only" }, async ({ browser }) => {
     const page = await (await browser.newContext({ javaScriptEnabled: false })).newPage();
     await page.goto("/");
     await expect(page.locator("#hero-title")).toBeVisible();
@@ -197,8 +190,7 @@ test.describe("Marketing: without JavaScript", () => {
     await expect(page.getByRole("heading", { level: 1, name: "Request your university" })).toBeVisible();
   });
 
-  test("the phone menu opens without JavaScript", async ({ browser }, info) => {
-    test.skip(info.project.name !== "phone", "the menu is for small screens");
+  test("the phone menu opens without JavaScript", { tag: "@phone-only" }, async ({ browser }) => {
     const page = await (await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } })).newPage();
     await page.goto("/");
     await page.getByRole("button", { name: "Menu" }).click();
@@ -216,8 +208,7 @@ test.describe("Marketing: university email detection and requests", () => {
     await sql.end();
   }
 
-  test("live, personal, unknown and not-live domains; a request is sent once", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
+  test("live, personal, unknown and not-live domains; a request is sent once", { tag: "@desktop-only" }, async ({ page }) => {
     const problems = watchConsole(page);
     await resetRequestLimit();
     // A university that isn't live yet.
@@ -277,8 +268,7 @@ test.describe("Marketing: university email detection and requests", () => {
     expect(problems).toEqual([]);
   });
 
-  test("requests are limited to 5 an hour per network; bad email links say so", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
+  test("requests are limited to 5 an hour per network; bad email links say so", { tag: "@desktop-only" }, async ({ page }) => {
     await resetRequestLimit();
     const tag = randomBytes(4).toString("hex");
     let limited = false;
@@ -304,8 +294,7 @@ test.describe("Marketing: university email detection and requests", () => {
     await expect(page.getByText("That link has expired or was already used.")).toBeVisible();
   });
 
-  test("signed-in visitors see Open Skilient instead of the field", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
+  test("signed-in visitors see Open Skilient instead of the field", { tag: "@desktop-only" }, async ({ page }) => {
     const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Maham Open" });
     await signInWithPassword(page, student.email, student.password);
     await page.goto("/");

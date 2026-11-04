@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { createHash, randomInt } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watchConsole, type TestStudent } from "./support";
 
 /**
@@ -14,11 +14,8 @@ import { adminClient, createStudent, hasBackend, signInWithPassword, totp, watch
  * tested in tests/worker/code-check.test.ts). Here the worker's pick and the first view are
  * recorded directly, and the pages show their "couldn't load the code" state for the snippet.
  */
-test.describe("Code checks", () => {
+test.describe("Code checks", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     await expect(page).toHaveTitle(/\S/);

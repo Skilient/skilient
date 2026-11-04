@@ -2,7 +2,7 @@ import { mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "./fixtures";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
 import {
@@ -22,11 +22,8 @@ import {
  * onboard; neither can read the other's university data (UI and direct API); plus resume,
  * visibility, image re-encode and axe on the new screens.
  */
-test.describe("onboarding and profiles", () => {
+test.describe("onboarding and profiles", { tag: "@desktop-only" }, () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
-  test.beforeEach(({}, info) => {
-    test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
-  });
 
   async function axe(page: Page, label: string) {
     // Next streams page metadata: wait for the <title> before checking the document.

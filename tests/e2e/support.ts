@@ -166,6 +166,28 @@ export async function signInWithPassword(page: Page, email: string, password: st
   await page.waitForURL((url) => url.pathname !== "/signin");
 }
 
+/**
+ * Waits until a freshly loaded page is ready to be checked (axe, CSP, screenshots): the document and its
+ * fonts have loaded, React has had two frames to commit hydration, nothing is aria-busy, and every finite
+ * animation has finished (so contrast is measured on end states). Replaces the sweeps' old
+ * `waitForLoadState("networkidle")` cap plus a fixed 200 ms sleep, which spent up to 3-5 s on every page
+ * that keeps a connection open and still raced late animations (decisions 2026-11-04, "CI speed").
+ */
+export async function settle(page: Page): Promise<void> {
+  const within = { timeout: 10_000 };
+  await page.waitForFunction(() => document.readyState === "complete", undefined, within);
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
+  });
+  await page.waitForFunction(() => !document.querySelector('[aria-busy="true"]'), undefined, within);
+  await page.waitForFunction(() =>
+    document.getAnimations().every((a) => a.playState !== "running" || a.effect?.getComputedTiming().endTime === Infinity),
+    undefined,
+    within,
+  );
+}
+
 /** Collects CSP violations and page errors so a test can assert there were none. */
 export function watchConsole(page: Page): string[] {
   const problems: string[] = [];

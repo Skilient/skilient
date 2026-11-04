@@ -60,7 +60,7 @@ function AccountMenu() {
         className="inline-flex size-11 items-center justify-center rounded-full"
         data-testid="account-menu"
       >
-        <Avatar name={user.fullName} src={user.avatarUrl} size="sm" />
+        <Avatar name={user.fullName} src={user.avatarUrl} size="sm" decorative />
       </button>
       {open ? (
         <div id={id} className="absolute top-13 right-0 z-40 flex w-64 flex-col gap-1 rounded-lg bg-bg-elevated p-2 shadow-[var(--raised-l)]">

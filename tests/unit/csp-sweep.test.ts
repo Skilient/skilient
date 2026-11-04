@@ -31,7 +31,7 @@ describe("CSP sweep coverage", () => {
   it("fills segments from fixtures, literals or a made-up id", () => {
     const fixtures = { username: "amna", venture: "v1" };
     expect(sweepPath({ route: "/profile/[username]/skills", role: "student", params: { username: "username" } }, fixtures)).toBe("/profile/amna/skills");
-    expect(sweepPath({ route: "/opportunities/[tab]", role: "student", params: { tab: "=jobs" } }, fixtures)).toBe("/opportunities/jobs");
+    expect(sweepPath({ route: "/openings/[category]", role: "student", params: { category: "=jobs" } }, fixtures)).toBe("/openings/jobs");
     expect(sweepPath({ route: "/u/[slug]/[[...page]]", role: "student", params: { slug: "uniSlug" } }, { uniSlug: "nutech" })).toBe("/u/nutech");
     expect(sweepPath({ route: "/post/[id]", role: "student" }, fixtures)).toMatch(/^\/post\/0{8}-/);
   });

@@ -84,3 +84,25 @@ export async function getPendingFriendRequestCount(): Promise<number> {
   const { data } = await supabase.rpc("pending_friend_request_count");
   return data ?? 0;
 }
+
+export interface Suggestion {
+  username: string;
+  name: string;
+  avatarUrl: string | null;
+  meta: string;
+  reason: string;
+}
+
+/** People you may know (PRD 5.34): one SQL call; reasons come from the sources that matched. */
+export async function getPeopleYouMayKnow(limit = 6): Promise<Suggestion[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("people_you_may_know", { p_limit: limit });
+  if (error) throw new Error(`people_you_may_know failed: ${error.code}`);
+  return ((data ?? []) as unknown as { username: string; name: string; avatar_path: string | null; department: string | null; graduation_year: number | null; reason: string }[]).map((s) => ({
+    username: s.username,
+    name: s.name,
+    avatarUrl: publicImageUrl("avatars", s.avatar_path),
+    meta: [s.department, s.graduation_year ? `Batch of ${s.graduation_year}` : null].filter(Boolean).join(" · "),
+    reason: s.reason,
+  }));
+}

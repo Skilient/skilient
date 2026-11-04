@@ -106,7 +106,8 @@ test.describe("New look: the shell", () => {
     const problems = watchConsole(page);
     await signedIn(page);
     await page.goto("/feed");
-    await expect(page.getByTestId("nav-openings")).toHaveAttribute("aria-label", "Openings");
+    // The badge may count openings other tests created ("Openings, 3 waiting").
+    await expect(page.getByTestId("nav-openings")).toHaveAttribute("aria-label", /^Openings(, \d+ waiting)?$/);
     await page.keyboard.press("Control+k");
     const menu = page.getByTestId("command-menu");
     await expect(menu).toBeVisible();
@@ -135,7 +136,7 @@ test.describe("New look: the shell", () => {
     await expect(page.getByTestId("tab-ventures")).toHaveAttribute("aria-current", "page");
   });
 
-  test("a post: Comment and a disabled Share stay visible; Not for me, Mute and Report sit in ⋯", async ({ browser }, info) => {
+  test("a post: Comment and Share stay visible; Not for me, Mute and Report sit in ⋯", async ({ browser }, info) => {
     test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
     const author = await signedIn(await (await browser.newContext()).newPage());
     const reader = await createStudent({ domain: "nutech.edu.pk", fullName: "Rafay Reader" });
@@ -143,7 +144,8 @@ test.describe("New look: the shell", () => {
     await signInWithPassword(page, reader.email, reader.password);
     await page.goto(`/post/${author.fixtures.post}`);
     const card = page.getByTestId("post").first();
-    await expect(card.getByTestId("post-share")).toHaveAttribute("aria-disabled", "true");
+    // Share opens the share-to-chat sheet (phase 18).
+    await expect(card.getByTestId("post-share")).toHaveAttribute("aria-haspopup", "dialog");
     await expect(card.getByRole("button", { name: "Not for me" })).toHaveCount(0);
     await card.getByRole("button", { name: "More for this post" }).click();
     await expect(card.getByRole("button", { name: "More for this post" })).toHaveAttribute("aria-expanded", "true");

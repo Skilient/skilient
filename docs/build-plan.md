@@ -252,9 +252,9 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 
 📖 `05-30-the-record.md`, `05-18-verified-cv.md`, `05-26-…` (appeals)
 
-- [ ] entries, `record_entry` signing through `cv-sign`, `/verify/[code]` for entries, issuing from close-out, term confirmations and venture completions, revocation and supersede, ranking formula v2 (`score_record`, reference students in `docs/ranking-reference.md`)
-- [ ] `/me/record`, certificate and transcript PDFs, share links, CV "Leadership and activities", claim by email after signup, mistake reports and appeals
-- [ ] landing story features The Record (marketing)
+- [x] entries, `record_entry` signing through `cv-sign`, `/verify/[code]` for entries, issuing from close-out, term confirmations and venture completions, revocation and supersede, ranking formula v2 (`score_record`, reference students in `docs/ranking-reference.md`)
+- [x] `/me/record`, certificate and transcript PDFs, share links, CV "Leadership and activities", claim by email after signup, mistake reports and appeals
+- [x] landing story features The Record (marketing)
 
 ✅ A checked-in attendee gets a sealed entry that verifies, and a revoked one shows revoked · no officer issues to themselves alone · a claim works only for the same verified email · the transcript PDF verifies every entry on it · formula v2 reproduces the hand-worked Record scores and attendance never adds rank
 
@@ -262,8 +262,8 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 
 📖 `05-32-paths-and-proof-tasks.md`, `05-05-github-skill-extraction-and-verification.md`, `05-13-ranking-system-formula-v1.md` (anti-gaming)
 
-- [ ] paths (weekly compute, starter path, ladder, skill drawer) and proof tasks (bank in `/ops/config`, repository link, GitHub then peer then code check, Record entry)
-- [ ] skill swap (offers, wants, matches, requests, DM unlock, sessions, learner confirmation, thank-you notes, Taught entry, limits)
+- [x] paths (weekly compute, starter path, ladder, skill drawer) and proof tasks (bank in `/ops/config`, repository link, GitHub then peer then code check, Record entry)
+- [x] skill swap (offers, wants, matches, requests, DM unlock, sessions, learner confirmation, thank-you notes, Taught entry, limits)
 
 ✅ A path switches from starter to data order at 10 seniors · a task proved by GitHub completes without a peer · a peer can't review a friend's task · one confirmed swap issues exactly one Taught entry
 
@@ -271,9 +271,9 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 
 📖 `05-34-openings-sharing-and-reach.md`, `05-33-yearbook.md`, `05-09-chat.md`
 
-- [ ] Openings (grid in one SQL call, category pages, This week, redirects from `/opportunities`)
-- [ ] yearbook (pages, notes with owner approval, superlatives, reveal, freeze, page PDF)
-- [ ] share-to-chat, people you may know, PWA (manifest, service worker, cached ticket) and web push
+- [x] Openings (grid in one SQL call, category pages, This week, redirects from `/opportunities`)
+- [x] yearbook (pages, notes with owner approval, superlatives, reveal, freeze, page PDF)
+- [x] share-to-chat, people you may know, PWA (manifest, service worker, cached ticket) and web push
 
 ✅ Openings shows every card's latest item with loading, empty and error states · unapproved yearbook notes and votes are unreadable to others · a shared post the recipient can't see renders as unavailable · an event reminder arrives as a push and stops when the category is off
 

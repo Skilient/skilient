@@ -194,7 +194,7 @@ export const opportunities = {
 };
 
 /**
- * The landing story (decisions 2026-10-31): Ayesha, the sample student, from day one to found.
+ * The landing story (decisions 2026-10-31): Ayesha, the sample student, from day one to a CV she shares.
  * The chapters are her story; the finale speaks to "you". Every number on her record is the
  * sample CV's (lib/cv/sample.ts), and she is labelled a sample wherever her record shows.
  */
@@ -270,26 +270,50 @@ export const story = {
     chips: ["Ed25519 signature", "Issued 1 Oct 2026", "QR + 10-character code"],
     link: "Verify a CV",
   },
-  found: {
-    kicker: "Found",
-    title: "Recruiters find her. They ask first.",
-    body: "Companies search verified skills, not keywords. A recruiter sends a contact request that names the company and the role, and Ayesha accepts or declines. Only then do they see her name. Jobs show their pay range, and competitions and fairs reach her through her university.",
-    request: {
-      label: "Contact request",
-      role: "Frontend intern (React)",
-      company: "Indus Softworks",
-      meta: "Software · 51–200 people · Islamabad",
-      verified: "Verified company",
-      accept: "Accept",
-      decline: "Decline",
+  // Chapter 7 claims only what is live (decisions 2026-11-03): the recruiter portal is off, so
+  // Ayesha shares her signed CV herself, with a link that expires.
+  shared: {
+    kicker: "Shared",
+    title: "She sends a link. Anyone can check it.",
+    body: "Ayesha applies for an internship and a scholarship. With each application she sends a link to her signed CV that expires in 30 days and that she can revoke at any time. Whoever opens it sees the CV, checks its code at skilient.com/verify, and sees the evidence behind every item. She sees how many times each link was opened.",
+    link: {
+      label: "Share link",
+      title: "Internship application",
+      line: "Signed CV · expires in 30 days",
+      url: "skilient.com/cv/ayeshakhan?t=…",
+      signed: "Signed",
+      copy: "Copy link",
+      copied: "Copied · 14:32",
+      revoke: "Revoke",
     },
-    chips: ["Jobs show their pay", "Competitions and hackathons", "University job fairs"],
+    chips: ["Links that expire", "Revoke any time", "A view count on every link"],
   },
   finale: {
     kicker: "Your turn",
     body: "Ayesha’s record is a sample. Yours starts with your university email.",
   },
   epilogue: "For organisations, pricing and questions",
+};
+
+/**
+ * The Record on the landing story (phase 16, PRD 5.30): Ayesha's co-curricular transcript. Every
+ * line here is live: verified societies issue at close-out, terms are confirmed by a second
+ * officer, each entry has a code at /verify, and the transcript is one signed PDF. Sample entries.
+ */
+export const theRecord = {
+  kicker: "The Record",
+  title: "Her society work is signed too.",
+  body: "When Ayesha checks in at the CS Society’s workshop, the society issues her entry through Skilient: no Canva certificate to fake. Her term as General Secretary is confirmed by a second officer. Each entry has a code anyone can check, and her whole Record prints as one signed transcript next to the academic one.",
+  chips: ["Issued by verified societies", "A code on every entry", "Transcript PDF with a QR"],
+  rule: "Office terms, results and volunteer hours move rank a little. Attendance never does, and a paid ticket buys a seat, not rank.",
+  link: "Verify an entry",
+  heading: "Ayesha’s Record",
+  year: "2026–27",
+  entries: [
+    { issuer: "CS Society", title: "Office bearer: General Secretary", date: "30 Jun 2026", line: "General Secretary · Sep 2025 – Jun 2026", code: "7RCD0-K2M4P" },
+    { issuer: "CS Society", title: "Result: Campus Hackathon", date: "15 Nov 2026", line: "2nd of 14 teams", code: "7RCD0-Q8T1W" },
+    { issuer: "CS Society", title: "Attended: Build with React", date: "12 Nov 2026", line: "Checked in 10:04", code: "7RCD0-H3V9N" },
+  ],
 };
 
 /** Section 10. */
@@ -324,11 +348,11 @@ export const faq = {
   items: [
     {
       q: "Who can join?",
-      a: "Students and faculty with an email address from a university on Skilient. Recruiters join with a company email, and their company is verified before they can contact anyone.",
+      a: "Students and faculty with an email address from a university on Skilient. Recruiters and university staff can’t sign up yet.",
     },
     {
       q: "Is it free?",
-      a: "Yes. Proving your skills, your rank and tier, your verified CV and being found by recruiters are free. Student Pro adds conveniences such as PDF export and more CV layouts. It never changes your rank.",
+      a: "Yes. Proving your skills, your rank and tier, your verified CV and your Record are free. Student Pro adds conveniences such as PDF export of your CV and more CV layouts. It never changes your rank.",
     },
     {
       q: "What do you read from my GitHub?",
@@ -336,15 +360,15 @@ export const faq = {
     },
     {
       q: "Can my university see my activity?",
-      a: "Yes, if your university is on a Growth or Campus plan: its staff can open your student record. Every view is logged, and with Student Pro you can see who viewed it and when. On other plans it never sees individual records; the Basic plan shows only totals for groups of five or more.",
+      a: "No. University staff can’t sign up to Skilient yet, so nobody at your university sees your activity through Skilient. Officers of a society you belong to see the Record entries their society issued you, and faculty who supervise your venture see its work.",
     },
     {
       q: "What happens when I graduate?",
-      a: "Your account becomes a graduate account. You keep your profile, CV, skills and evidence, chat and friends, stay visible to recruiters and can still apply to jobs. You can no longer post in your university feed or join university-only ventures.",
+      a: "Your account becomes a graduate account. You keep your profile, CV, Record, skills and evidence, chat and friends, and you can still share your CV and Record. You can no longer post in your university feed or join university-only ventures.",
     },
     {
-      q: "How do recruiters contact me?",
-      a: "Through a contact request that names the company and the role. You accept or decline. Only after you accept do they see your name, and you talk in a chat labelled with the company. You choose in Settings whether recruiters can find you at all.",
+      q: "Can recruiters find me on Skilient?",
+      a: "Not yet: recruiters can’t sign up, search or contact students on Skilient. You decide who sees your work. Send a link to your signed CV or your Record with an application; it expires, you can revoke it, and anyone who opens it can check it at skilient.com/verify.",
     },
   ],
 };
@@ -589,51 +613,6 @@ export const facultyPage = {
   },
 };
 
-/** /pricing (PRD 4a). Prices and limits come from `plans`. */
-export const pricingPage = {
-  title: "Pricing",
-  description: "Proof is free for every student. Student Pro, recruiter plans and university licences, in PKR.",
-  headline: "Proof is free. Polish is optional.",
-  intro: "Verification, rank, tiers, your verified CV and being found by recruiters are free for every student, always. Money never buys rank or visibility.",
-  audiences: [
-    { id: "students", label: "Students" },
-    { id: "recruiters", label: "Recruiters" },
-    { id: "universities", label: "Universities" },
-  ],
-  monthly: "Monthly",
-  yearly: "Yearly",
-  billing: "Billing period",
-  free: "Free",
-  custom: "Custom",
-  perMonth: "a month",
-  perYear: "a year",
-  trial: "{days}-day free trial",
-  students: {
-    heading: "Students",
-    freeLabel: "Every student",
-    freeItems: ["Verified skills, rank, tier and leaderboards", "Your verified CV, refreshed on the 1st of each month", "Share your CV link from Spark tier", "Be found by recruiters, if you choose"],
-    sponsored: "Free through your university on a Growth or Campus licence.",
-  },
-  recruiters: {
-    heading: "Recruiters",
-    explore: { label: "Explore", items: ["Browse students by tier, skill and university, names hidden", "One job post"] },
-    addOns: "Add-ons on every plan",
-    sponsoredPost: "Sponsored job post: {price} for {days} days. Labelled “Sponsored” and never ranked above other results in talent search.",
-    credits: "Extra contact credits: {price} each.",
-    hireFee: "Hiring fee per recorded hire: {intern} for an intern, {fullTime} for a full-time hire. Waived on Growth and Enterprise.",
-  },
-  universities: {
-    heading: "Universities",
-    free: { label: "Every university", items: ["Your ecosphere: feed, announcements, rankings, faculty, exam periods", "One admin seat"] },
-    note: "Licences are yearly and invoiced.",
-  },
-  faq: [
-    { q: "Does paying change my rank?", a: "No. Rank, tiers, leaderboards and recruiter search never use payment. Student Pro adds conveniences such as PDF export, more CV layouts and seeing who viewed your CV." },
-    { q: "How do I pay?", a: "In PKR by card, JazzCash or Easypaisa. University licences are invoiced and paid by bank transfer or a payment link." },
-    { q: "Can I cancel?", a: "Yes, any time from Settings. You keep the plan until the end of the period you paid for." },
-  ],
-};
-
 /**
  * /features (phase 14, decisions 2026-11-02): what students, Student Pro, faculty and organisations
  * get, with no prices. /pricing redirects here.
@@ -656,6 +635,7 @@ export const featuresPage = {
       { title: "Ventures with classmates", text: "Start a project or a startup, recruit a team by role, and finish it together. Completed work stays on your record.", proof: "Roles · team · completion" },
       { title: "Rank, tiers and leaderboards", text: "Six tiers from Raw to Luminary, earned only by verified work. Leaderboards for your university, department and batch.", proof: "Raw → Luminary" },
       { title: "A CV that verifies itself", text: "Your CV is signed and refreshed every month. Anyone can check its code at skilient.com/verify.", proof: "Signed · Ed25519" },
+      { title: "The Record", text: "Every society event you attend, office you hold, result you place and hour you volunteer, signed by the society through Skilient. Print it as a transcript next to your academic one.", proof: "Verified societies · a code per entry" },
       { title: "Your campus, in one place", text: "A university feed, chat with friends and teammates, events and the people in your batch.", proof: "Feed · chat · events" },
     ],
   },

@@ -272,6 +272,9 @@ test.describe("Societies and events", () => {
     await expect(page.getByTestId("check-in-result")).toHaveAttribute("data-result", "green");
     await expect(page.getByTestId("check-in-result")).toContainText(`Ayesha First ${tag}`);
     await expect(watcher.getByTestId("headcount")).toContainText("1 checked in of 1");
+    // The form is busy until the headcount refresh started by the first scan finishes; Enter on a busy form does nothing.
+    const scanForm = page.locator("form").filter({ has: page.getByTestId("ticket-code") });
+    await expect(scanForm.getByRole("button", { name: "Check in" })).toBeEnabled();
     await page.getByTestId("ticket-code").fill(payload);
     await page.getByTestId("ticket-code").press("Enter");
     await expect(page.getByTestId("check-in-result")).toHaveAttribute("data-result", "amber");

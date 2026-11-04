@@ -79,17 +79,17 @@ select is((pg_temp.audit('config.set', 'feed.score')).after -> 'value' ->> 'base
 select throws_ok($$update public.platform_config set value = '{}' where key = 'feed.score'$$, null, null, 'versions can''t be edited');
 
 -- A ranking weight change shows up only after the next recompute.
-select is(private.ranking_run_all(), 'done', 'a nightly run with formula v1');
-select is((select count(*)::integer from public.ranking_scores where formula_version <> 1), 0, 'every published score uses formula v1');
+select is(private.ranking_run_all(), 'done', 'a nightly run with formula v2 (phase 16)');
+select is((select count(*)::integer from public.ranking_scores where formula_version <> 2), 0, 'every published score uses formula v2');
 set local role authenticated;
 select pg_temp.as_user('A');
-select is(public.ops_set_config('ranking.formula', jsonb_set(pg_temp.cfg('ranking.formula'), '{caps,skills}', '450'), 'Skills cap too generous', 1),
-  2, 'a super admin lowers the skills cap (formula v2)');
+select is(public.ops_set_config('ranking.formula', jsonb_set(pg_temp.cfg('ranking.formula'), '{caps,skills}', '450'), 'Skills cap too generous', 2),
+  3, 'a super admin lowers the skills cap (formula v3)');
 reset role;
-select is((select count(*)::integer from public.ranking_scores where formula_version = 2), 0, 'published scores don''t change when it is saved');
+select is((select count(*)::integer from public.ranking_scores where formula_version = 3), 0, 'published scores don''t change when it is saved');
 select is(private.ranking_run_all(now() + interval '1 day'), 'done', 'the next nightly run');
-select ok((select count(*) from public.ranking_scores) > 0 and (select count(*)::integer from public.ranking_scores where formula_version <> 2) = 0,
-  'publishes every score with formula v2');
+select ok((select count(*) from public.ranking_scores) > 0 and (select count(*)::integer from public.ranking_scores where formula_version <> 3) = 0,
+  'publishes every score with formula v3');
 
 -- ---------------------------------------------------------------------------
 -- Plan prices

@@ -1,4 +1,4 @@
-# Ranking reference students (formula v1)
+# Ranking reference students (formula v1, and v2's Record)
 
 PRD 5.13 "Done when": pgTAP fixtures reproduce hand-calculated scores for 10 reference
 students. This page is the hand calculation; `supabase/tests/32_ranking_reference.test.sql`
@@ -121,3 +121,45 @@ V2 units: R5 3 confirmed = 3; R6 GitHub on 3 days = 3. Median 3; both shares 1.
 | R8 | 0 | 0 | 7.50 | 60.00 | 375.00 | 0 | **442.50** |
 | R9 | 0 | 15.00 | 0 | 0 | 10.00 | −300 | **0.00** |
 | R10 | 0 | 500.00 | 375.00 | 0 | 0 | 0 | **875.00** |
+
+## Formula v2: the Record (PRD 5.30)
+
+Formula v2 (`ranking.formula` version 2) keeps every v1 weight and adds **Record**, a Proof
+component of at most 100 points. R1–R10 have no Record entries, so every number above stands
+under v2 (pgTAP `32` checks their Record is 0). R11–R13 have only Record entries.
+
+| Rule | Formula v2 |
+| --- | --- |
+| What counts | Sealed entries issued by a verified society: office-bearer terms, results, volunteer hours. Attended, Completed and every Skilient entry (venture completed, taught, proof task) count 0. Revoked and superseded entries drop out. |
+| Office bearer | President 35, other officers 25; one term per society per academic year (September–August of the term's end), the higher one. |
+| Result | 1st 30, 2nd 20, 3rd 15, any lower placing (finalist) 10; only with at least 5 entrants (people or teams). |
+| Volunteer | 2 points per hour, at most 20 points per academic year across societies, filled in date order. |
+| Caps | At most 50 points per society, then at most 100 in total. |
+| Hold | A society's entries count from 30 days after it was verified. |
+
+Societies: SA (CS) SB (Debating) and SD (Film) verified 1 Jan 2026; SC (Robotics) verified
+20 Nov 2026, 19 days before the as-of date.
+
+### R11 — one term a year, small competitions, the volunteer and society caps: **85.00**
+- SA: President 2025–26 (AY 2025) **35**; General Secretary Sep 2025–Jan 2026 is the same society and year, so it doesn't count. 1st of 12 teams **30**. 65 → capped at **50**.
+- SB: 2nd of 4 entrants: fewer than 5, **0**. 3rd of 8 **15**. Attended **0**. Volunteer 6 h on 10 Oct = **12**, then 5 h on 20 Nov = 10, but AY 2026 has 8 left of its 20 → **8**. SB = **35**.
+- Record 50 + 35 = **85.00**. Total **85.00**.
+
+### R12 — the 30-day hold and the cap of 100: **100.00**
+- SA: President AY 2025 35 + Officer AY 2026 25 = 60 → **50**.
+- SB: President AY 2025 35 + 1st of 5 (exactly 5 entrants) 30 = 65 → **50**.
+- SC: Officer term ending 1 Dec — SC was verified 19 days ago, so it is held: **0** (it counts from 20 Dec).
+- SD: 5th of 20, a finalist **10**.
+- 50 + 50 + 10 = 110 → capped at **100.00**. Total **100.00**. On 21 Dec SC's 25 joins, and it is still 100.
+
+### R13 — attendance never counts: **6.00**
+- SA: Attended twice and Completed once **0**; 1st of 10, revoked **0**.
+- SB: Volunteer 4 h superseded by a correction to 3 h: only the correction counts, **6**.
+- Skilient: Venture completed **0** (it already scores in Work when the venture qualifies).
+- Total **6.00**.
+
+| Student | Record | Total |
+| --- | ---: | ---: |
+| R11 | 85.00 | **85.00** |
+| R12 | 100.00 | **100.00** |
+| R13 | 6.00 | **6.00** |

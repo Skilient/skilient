@@ -296,59 +296,6 @@ a:hover > .cta-arrow,
   }
 }
 
-/* ------------------------------------------------------------------------- */
-/* Plan tables: monthly / yearly with CSS radios (no JavaScript)              */
-/* ------------------------------------------------------------------------- */
-.period-toggle {
-  display: inline-flex;
-  padding: 5px;
-  border-radius: 999px;
-  background: var(--surface);
-  box-shadow: var(--pressed);
-}
-.period-toggle label {
-  position: relative;
-  display: inline-flex;
-  cursor: pointer;
-}
-.period-toggle input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-.period-toggle span {
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  padding: 0 1.25rem;
-  border-radius: 999px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  transition:
-    background-color 200ms var(--motion-ease-standard),
-    color 200ms var(--motion-ease-standard),
-    box-shadow 140ms ease-out;
-}
-.period-toggle input:checked + span {
-  background: var(--surface);
-  color: var(--ink);
-  box-shadow: var(--raised-s);
-}
-.period-toggle input:focus-visible + span {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-.plan-table:has(.period-year:checked) .when-month,
-.plan-table:not(:has(.period-year:checked)) .when-year {
-  display: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .period-toggle span {
-    transition: none;
-  }
-}
-
 /* FAQ items are raised tiles; an open one is pressed in. */
 .faq-item {
   border-radius: var(--r-tile);

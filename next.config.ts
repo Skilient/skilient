@@ -1,6 +1,7 @@
 import { withSentryConfig } from "@sentry/nextjs/config";
 import type { NextConfig } from "next";
-import { CHECK_IN_SOURCE, checkInHeaders, securityHeaders } from "./lib/security/headers";
+import { OPPORTUNITY_REDIRECTS } from "./lib/openings/redirects";
+import { CHECK_IN_SOURCE, checkInHeaders, securityHeaders, serviceWorkerHeaders } from "./lib/security/headers";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -15,6 +16,7 @@ const nextConfig: NextConfig = {
     "/api/ops/pdf-check": ["./node_modules/@sparticuz/chromium/bin/**", "./lib/cv/fonts/*.woff2"],
     "/api/billing/invoice/**": ["./node_modules/@sparticuz/chromium/bin/**", "./lib/cv/fonts/*.woff2"],
     "/api/uni/export": ["./node_modules/@sparticuz/chromium/bin/**", "./lib/cv/fonts/*.woff2"],
+    "/api/yearbook/pdf": ["./node_modules/@sparticuz/chromium/bin/**", "./lib/cv/fonts/*.woff2"],
   },
   experimental: {
     // Profile images (PRD 5.4: covers up to 8 MB) are uploaded through a server action.
@@ -25,6 +27,8 @@ const nextConfig: NextConfig = {
     return [
       { source: "/:path*", headers: securityHeaders },
       { source: CHECK_IN_SOURCE, headers: checkInHeaders },
+      // The PWA service worker (PRD 5.34): always revalidated, scoped to the whole app.
+      { source: "/sw.js", headers: serviceWorkerHeaders },
     ];
   },
   // PostHog EU behind our own origin (PRD 10; phase 13 question 3): the CSP stays 'self' and ad
@@ -53,6 +57,8 @@ const nextConfig: NextConfig = {
       { source: "/startups/:path*", destination: "/ventures/:path*", permanent: true },
       // Phase 14 (decisions 2026-11-02): no prices on the public site; /features lists what each audience gets.
       { source: "/pricing", destination: "/features", permanent: true },
+      // Phase 18 (PRD 5.34): Opportunities is now Openings.
+      ...OPPORTUNITY_REDIRECTS.map((r) => ({ ...r, permanent: true })),
     ];
   },
 };

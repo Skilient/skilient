@@ -8,6 +8,7 @@ export const COMPONENT_INFO = {
   skills: { label: "Verified skills", layer: "Proof", max: 500, hint: "Skills at L2 and above, with a bonus for spanning 3 or more categories." },
   endorsements: { label: "Endorsements", layer: "Proof", max: 375, hint: "Teammates vouching for your skills, weighted by their tier." },
   credentials: { label: "Credentials", layer: "Proof", max: 125, hint: "Certificates approved by Skilient, more for recognised issuers." },
+  record: { label: "Record", layer: "Proof", max: 100, hint: "Office-bearer terms, competition results and volunteer hours from verified societies. Attendance never counts." },
   momentum: { label: "Momentum", layer: "Momentum", max: 375, hint: "Post quality, active weeks and helping your teams. It fades when you're inactive." },
 } as const;
 

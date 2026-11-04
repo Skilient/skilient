@@ -58,6 +58,20 @@ export const SERVER_EVENTS = [
   "event_published",
   "event_registered",
   "event_checked_in",
+  "record_entry_sealed",
+  "record_entries_claimed",
+  "path_followed",
+  "proof_task_started",
+  "proof_task_done",
+  "proof_task_reviewed",
+  "swap_requested",
+  "swap_accepted",
+  "swap_session_confirmed",
+  "swap_closed",
+  "yearbook_signed",
+  "yearbook_voted",
+  "post_shared",
+  "push_enabled",
 ] as const;
 
 export type ServerEvent = (typeof SERVER_EVENTS)[number];

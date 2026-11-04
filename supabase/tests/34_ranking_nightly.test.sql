@@ -87,14 +87,14 @@ insert into public.user_skills (user_id, skill_id, level) values (pg_temp.u('A')
 
 -- Committed batches of 5 (a formula version with a small batch size).
 insert into public.platform_config (key, version, value, reason, effective_at)
-select 'ranking.formula', 2, jsonb_set(value, '{batch_size}', '5'), 'pgTAP: small batches', now()
+select 'ranking.formula', 3, jsonb_set(value, '{batch_size}', '5'), 'pgTAP: small batches', now()
   from private.ranking_formula();
 
 -- ---------------------------------------------------------------------------
 -- Day 1 (Monday 2 November): the first run
 -- ---------------------------------------------------------------------------
 select is(pg_temp.day('2026-11-02'), 'done', 'the run finishes');
-select is((select row(students, steps, formula_version)::text from public.ranking_runs where run_on = '2026-11-02'), '(16,6,2)',
+select is((select row(students, steps, formula_version)::text from public.ranking_runs where run_on = '2026-11-02'), '(16,6,3)',
   '16 students in batches of 5: rings, 4 student steps, tiers');
 select is((select row(status, rows)::text from public.job_runs where job = 'ranking-nightly' order by started_at desc limit 1),
   '(succeeded,16)', 'the run is recorded in job_runs');
@@ -215,7 +215,7 @@ select is((select row(held, (components->'work'->>'points')::numeric)::text from
   '(f,180.38)', 'P''s completion (150 x 0.925 x 1.3) counts at once: completions are exempt');
 select is((select count(*)::integer from public.ranking_snapshots where week = '2026-11-08'), 16, 'Sunday: a snapshot of every student');
 select is((select components from public.ranking_snapshots where week = '2026-11-08' and user_id = pg_temp.u('A')),
-  '{"work": 0, "total": 215.00, "skills": 456.50, "credentials": 0, "momentum": 0.00, "adjustments": -241.50, "endorsements": 0}'::jsonb,
+  '{"work": 0, "total": 215.00, "record": 0, "skills": 456.50, "credentials": 0, "momentum": 0.00, "adjustments": -241.50, "endorsements": 0}'::jsonb,
   'snapshots keep the points per component');
 select is((select stage from public.ranking_runs where run_on = '2026-11-08'), 'done', 'the Sunday run passes through the snapshot');
 
@@ -229,12 +229,12 @@ select is((select held from public.ranking_scores where user_id = pg_temp.u('P')
 -- Day 9: a new formula version is applied to everyone without holds
 -- ---------------------------------------------------------------------------
 insert into public.platform_config (key, version, value, reason, effective_at)
-select 'ranking.formula', 3, value, 'pgTAP: a new version', now() from private.ranking_formula();
+select 'ranking.formula', 4, value, 'pgTAP: a new version', now() from private.ranking_formula();
 delete from public.user_skills where user_id = pg_temp.u('B');
 insert into public.user_skills (user_id, skill_id, level)
 select pg_temp.u('B'), s, 4 from unnest(array['html', 'css', 'javascript', 'typescript', 'java', 'go', 'rust', 'kotlin']) s;
 select is(pg_temp.day('2026-11-10'), 'done', 'day 9 runs');
-select is((select row(formula_version, held, total >= 200)::text from public.ranking_scores where user_id = pg_temp.u('B')), '(3,f,t)',
+select is((select row(formula_version, held, total >= 200)::text from public.ranking_scores where user_id = pg_temp.u('B')), '(4,f,t)',
   'B''s 200-point gain lands with the formula change, not held');
 select is((select held from public.ranking_scores where user_id = pg_temp.u('P')), true, 'an open flag still holds P');
 

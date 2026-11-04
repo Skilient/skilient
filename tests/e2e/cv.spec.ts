@@ -62,6 +62,8 @@ test.describe("Verified CV", () => {
   }
 
   test("issue, share, verify, supersede and revoke", async ({ page, browser }) => {
+    // Many steps and two-theme axe runs on long pages (phase 16 added the Record section to /me/cv).
+    test.setTimeout(120_000);
     const errors = watchConsole(page);
     const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Ayesha Verified" });
     await spark(student);

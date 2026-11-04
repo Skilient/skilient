@@ -5,32 +5,32 @@ import { Chapter } from "./chapters";
 import { ObjectImage } from "./object-image";
 import { Record, SignRow } from "./record";
 
-const { signed, found } = story;
+const { signed, shared } = story;
 
-/** The recruiter's contact request (sample company from the product captures), arriving over the record. */
-function RequestCard({ className }: { className?: string }) {
-  const q = found.request;
+/** A share link to her signed CV (sample), arriving over the record; she copies it to send. */
+function ShareCard({ className }: { className?: string }) {
+  const q = shared.link;
   return (
     <div className={`request-card neu-card ${className ?? ""}`}>
       <span className="neu-mono text-text-secondary">{q.label}</span>
-      <span className="text-body font-semibold">{q.role}</span>
+      <span className="text-body font-semibold">{q.title}</span>
       <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-body-sm">
-        <span className="font-semibold">{q.company}</span>
+        <span className="font-semibold">{q.line}</span>
         <span className="request-verified neu-mono">
           <SealCheck aria-hidden weight="fill" className="size-3.5" />
-          {q.verified}
+          {q.signed}
         </span>
       </span>
-      <span className="neu-mono text-text-secondary">{q.meta}</span>
+      <span className="neu-mono text-text-secondary">{q.url}</span>
       <span className="mt-2 flex items-center gap-2">
         <span className="request-accept">
-          <span className="request-accept-idle">{q.accept}</span>
+          <span className="request-accept-idle">{q.copy}</span>
           <span className="request-accept-done">
             <Check aria-hidden weight="bold" className="size-3.5" />
-            Accepted · 14:32
+            {q.copied}
           </span>
         </span>
-        <span className="request-decline">{q.decline}</span>
+        <span className="request-decline">{q.revoke}</span>
       </span>
     </div>
   );
@@ -38,8 +38,8 @@ function RequestCard({ className }: { className?: string }) {
 
 /**
  * Chapters 6 and 7. The finished record pins again; the seal falls onto its last empty row and
- * stamps it (the page's one moment of light), then a recruiter's contact request slides in over
- * it and is accepted. Driven by `--story-b` (app/(marketing)/story.css).
+ * stamps it (the page's one moment of light), then a share link to the signed CV slides in over
+ * it and is copied to send. Driven by `--story-b` (app/(marketing)/story.css).
  */
 export function StorySignedFound() {
   return (
@@ -79,15 +79,15 @@ export function StorySignedFound() {
             }
           />
           <Chapter
-            id="found"
+            id="shared"
             number={7}
-            kicker={found.kicker}
-            title={found.title}
+            kicker={shared.kicker}
+            title={shared.title}
             body={
               <>
-                {found.body}
+                {shared.body}
                 <span className="mt-5 flex flex-wrap gap-2">
-                  {found.chips.map((c) => (
+                  {shared.chips.map((c) => (
                     <span key={c} className="neu-mono neu-well-s rounded-full px-3 py-1.5 text-text-secondary">
                       {c}
                     </span>
@@ -95,7 +95,7 @@ export function StorySignedFound() {
                 </span>
               </>
             }
-            visual={<RequestCard className="request-inline" />}
+            visual={<ShareCard className="request-inline" />}
           />
         </div>
         <div aria-hidden className="story-stage">
@@ -107,7 +107,7 @@ export function StorySignedFound() {
               <span className="stamp-big">
                 <ObjectImage name="seal" />
               </span>
-              <RequestCard className="request-stage" />
+              <ShareCard className="request-stage" />
             </Record>
           </div>
         </div>

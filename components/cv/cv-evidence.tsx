@@ -38,8 +38,9 @@ export function CvEvidence({ snapshot: s }: { snapshot: CvSnapshotV1 }) {
   const projects = shown.has("projects") ? s.projects : [];
   const levels = [...new Set(skills.map((k) => Math.min(4, Math.max(2, k.level))))].sort((a, b) => b - a) as ShownLevel[];
   const tier = s.standing.tier;
+  const activities = shown.has("activities") ? (s.activities ?? []) : [];
   const others = (["open_source", "endorsements", "credentials"] as const).some((k) => shown.has(k) && s[k].length > 0);
-  if (!tier && !projects.length && !skills.length && !others) return null;
+  if (!tier && !projects.length && !skills.length && !others && !activities.length) return null;
 
   return (
     <section aria-labelledby="evidence-h" className="rounded-lg border border-border-default bg-bg-surface p-5 sm:p-6" data-testid="cv-evidence">
@@ -145,6 +146,23 @@ export function CvEvidence({ snapshot: s }: { snapshot: CvSnapshotV1 }) {
       {shown.has("endorsements") && s.endorsements.length ? (
         <Block title="Endorsements">
           <p className="mt-2 text-body-sm">Each endorsement comes from someone on that project and is tied to one of the student&rsquo;s confirmed contributions.</p>
+        </Block>
+      ) : null}
+
+      {activities.length ? (
+        <Block title="Leadership and activities">
+          <p className="mt-2 text-body-sm">Each is a signed entry on the student&rsquo;s Record, issued by a verified society or by Skilient. Its code opens the entry.</p>
+          <ul className="mt-2 flex flex-col gap-1 text-body-sm" data-testid="activities-evidence">
+            {activities.map((a) => (
+              <li key={a.code}>
+                <span className="font-semibold">{a.label}</span>
+                {a.line ? ` · ${a.line}` : ""} ·{" "}
+                <a href={`/verify/${a.code}`} className="font-mono underline underline-offset-4">
+                  {a.code.slice(0, 5)}-{a.code.slice(5)}
+                </a>
+              </li>
+            ))}
+          </ul>
         </Block>
       ) : null}
 

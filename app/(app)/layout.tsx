@@ -3,6 +3,7 @@ import { after } from "next/server";
 import { AnalyticsIdentity } from "@/components/analytics/analytics-identity";
 import { CurrentUserProvider } from "@/components/providers/current-user-provider";
 import { UpgradeSheetHost } from "@/components/billing/upgrade-sheet";
+import { ServiceWorkerRegistrar } from "@/components/pwa/service-worker";
 import { AppShell } from "@/components/shell/app-shell";
 import { RestrictionBanner } from "@/components/shell/restriction-banner";
 import { getCurrentUser } from "@/lib/auth/current-user";
@@ -42,6 +43,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
       </AppShell>
       <UpgradeSheetHost />
       <AnalyticsIdentity />
+      <ServiceWorkerRegistrar />
     </CurrentUserProvider>
   );
 }

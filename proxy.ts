@@ -84,7 +84,7 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Everything except static assets, image optimisation and the PostHog proxy (/ingest).
-    "/((?!_next/static|_next/image|ingest/|brand/|icon.svg|manifest.webmanifest|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|ico)$).*)",
+    // Everything except static assets, image optimisation, the PostHog proxy (/ingest) and the PWA files (sw.js, offline.html).
+    "/((?!_next/static|_next/image|ingest/|brand/|icon.svg|manifest.webmanifest|sw.js|offline.html|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|ico)$).*)",
   ],
 };

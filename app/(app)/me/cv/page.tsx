@@ -11,6 +11,8 @@ import { qrDataUri } from "@/lib/cv/qr";
 import { siteUrl } from "@/lib/cv/site";
 import { verifyUrl } from "@/lib/cv/document";
 import { getMyCv } from "@/lib/data/cv";
+import { getCvActivityChoices } from "@/lib/data/record";
+import { CvActivitiesPicker } from "@/components/record/cv-activities-picker";
 import { formatCode } from "@/supabase/functions/_shared/cv/sign.ts";
 
 export const metadata: Metadata = { title: "Your verified CV", robots: { index: false } };
@@ -20,7 +22,7 @@ export const metadata: Metadata = { title: "Your verified CV", robots: { index: 
  * rail: sections and order, share links (Spark+), versions, PDF export (Pro) and views.
  */
 export default async function MyCvPage() {
-  const cv = await getMyCv();
+  const [cv, activities] = await Promise.all([getMyCv(), getCvActivityChoices()]);
   if (cv.state === "not_eligible") {
     return (
       <main className="mx-auto w-full max-w-[680px] px-[var(--page-gutter)] py-8">
@@ -84,6 +86,13 @@ export default async function MyCvPage() {
             What your CV shows
           </h2>
           <CvSettingsForm initial={cv.settings} applyLabel={cv.nextRefreshLabel} />
+        </section>
+
+        <section id="activities" aria-labelledby="activities-h" className="rounded-lg border border-border-default bg-bg-surface p-5">
+          <h2 id="activities-h" className="mb-3 text-h3">
+            Leadership and activities
+          </h2>
+          <CvActivitiesPicker entries={activities.entries} selected={activities.selected} max={activities.max} applyLabel={cv.nextRefreshLabel} />
         </section>
 
         <section aria-labelledby="links-h" className="rounded-lg border border-border-default bg-bg-surface p-5">

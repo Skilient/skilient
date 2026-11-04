@@ -30,13 +30,13 @@ describe("describeNotification", () => {
   it("tells a student which company wrote, never which recruiter", () => {
     const d = describeNotification({ ...base, type: "contact_request", actorName: null, entityId: "r1", data: { org_name: "Acme", role_title: "React intern" } });
     expect(d.text).toBe("Acme would like to talk to you about React intern.");
-    expect(d.href).toBe("/opportunities/contact-requests/r1");
+    expect(d.href).toBe("/openings/contact-requests/r1");
   });
 
   it("gives a rejected applicant a generic reason", () => {
     const d = describeNotification({ ...base, type: "application_stage", actorName: null, entityId: "a1", data: { job_title: "Intern", org_name: "Acme", stage: "rejected", reason: "The position has been filled." } });
     expect(d.text).toContain("The position has been filled.");
-    expect(d.href).toBe("/opportunities/applications/a1");
+    expect(d.href).toBe("/openings/applications/a1");
   });
 
   it("names what was moderated, never who", () => {
@@ -152,5 +152,33 @@ describe("phase 15 notifications (societies and events)", () => {
     const d = describeNotification({ actorName: null, type: "event_registration", entityType: "event", entityId: "e1", data: { event: "Hack night", status: "held" } });
     expect(d.text).toContain("held for 24 hours");
     expect(d.href).toBe("/events/e1/ticket");
+  });
+});
+
+describe("phase 16 notifications (The Record)", () => {
+  it("words every new type and links somewhere real", async () => {
+    const { readFileSync } = await import("node:fs");
+    const sql = readFileSync("supabase/migrations/20261112000001_the_record.sql", "utf8");
+    const types = [...sql.matchAll(/\('([a-z_]+)', 'record', (?:true|false)\)/g)].map((m) => m[1]);
+    expect(types.length).toBe(6);
+    for (const type of types) {
+      const d = describeNotification({
+        actorName: "Amna Khan",
+        type,
+        entityType: "record_entry",
+        entityId: "r1",
+        data: { title: "Build with React", issuer: "CS Society", society: "CS Society", slug: "cs-society", reason: "Left early", note: "It was right", date: "12 Nov 2026" },
+      });
+      expect(d.text, type).not.toBe("You have a new notification.");
+      expect(d.href.startsWith("/"), type).toBe(true);
+      expect(d.href, type).not.toContain("//");
+      expect(d.subject.length, type).toBeGreaterThan(5);
+      expect(d.text, type).not.toMatch(/—/);
+    }
+  });
+
+  it("tells the student a new entry arrived", () => {
+    const d = describeNotification({ actorName: null, type: "record_entry", entityType: "record_entry", entityId: "r1", data: { title: "Build with React", issuer: "CS Society", date: "12 Nov 2026" } });
+    expect(d.text).toBe("New on your Record: Build with React · CS Society · 12 Nov 2026.");
   });
 });

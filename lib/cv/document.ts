@@ -24,6 +24,7 @@ export const SECTION_HEADINGS: Record<CvSection, string> = {
   skills: "Skills",
   projects: "Projects",
   open_source: "Open-source work",
+  activities: "Leadership and activities",
   endorsements: "Endorsements",
   credentials: "Credentials",
   education: "Education",
@@ -166,6 +167,12 @@ function sectionBody(s: CvSnapshotV1, section: CvSection): SectionBody | null {
           ` endorsed ${e.skill} on ${e.venture}, ${cvDate(e.date.slice(0, 7))}${e.note ? `: “${e.note}”` : "."}`,
         ]),
       };
+    case "activities": {
+      // Record entries (phase 16): what, who issued it, when. The evidence is on the verify page.
+      const a = s.activities ?? [];
+      if (!a.length) return null;
+      return { kind: "list", items: a.map((x): Seg[] => [{ strong: x.label }, `, ${x.issuer}, ${x.when}`]) };
+    }
     case "credentials":
       if (!s.credentials.length) return null;
       return {

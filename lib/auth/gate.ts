@@ -49,12 +49,11 @@ const PORTAL_ROUTES: { prefix: string; needs: (keyof Portals)[] }[] = [
   { prefix: "/uni", needs: ["university"] },
   { prefix: "/fairs", needs: ["university", "recruiter"] },
   { prefix: "/teach", needs: ["faculty"] },
-  // The student side of the recruiter portal (Opportunities tabs and their detail pages).
-  { prefix: "/opportunities/jobs", needs: ["recruiter"] },
-  { prefix: "/opportunities/applications", needs: ["recruiter"] },
-  { prefix: "/opportunities/contact_requests", needs: ["recruiter"] },
-  { prefix: "/opportunities/contact-requests", needs: ["recruiter"] },
-  { prefix: "/opportunities/job_fairs", needs: ["university", "recruiter"] },
+  // The student side of the recruiter portal (Openings categories and their detail pages).
+  { prefix: "/openings/jobs", needs: ["recruiter"] },
+  { prefix: "/openings/applications", needs: ["recruiter"] },
+  { prefix: "/openings/contact-requests", needs: ["recruiter"] },
+  { prefix: "/openings/job-fairs", needs: ["university", "recruiter"] },
 ];
 
 /** True when the path belongs to a portal, so the gate needs the flag even for a signed-out visitor. */
@@ -161,7 +160,7 @@ export function isPublicPath(pathname: string): boolean {
     pathname.startsWith("/opengraph-image") ||
     // PRD 5.1: there is no /demo, and it answers 404 rather than a sign-in redirect.
     matches(pathname, "/demo") ||
-    ["/auth", "/api", "/ui", "/verify", "/cv", "/.well-known", ...MARKETING_PATHS].some((p) => matches(pathname, p))
+    ["/auth", "/api", "/ui", "/verify", "/cv", "/record", "/.well-known", ...MARKETING_PATHS].some((p) => matches(pathname, p))
   );
 }
 

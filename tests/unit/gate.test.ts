@@ -202,7 +202,7 @@ describe("closed portals (phase 14, decisions 2026-11-02)", () => {
   const open = { recruiter: true, university: true, faculty: true };
 
   it("404s every recruiter and university route while their portals are off", () => {
-    for (const p of ["/recruit", "/recruit/search", "/org/settings", "/companies/acme", "/uni", "/uni/people", "/fairs/f1", "/fairs/invite", "/opportunities/jobs", "/opportunities/jobs/j1", "/opportunities/applications/a1", "/opportunities/contact-requests/c1", "/opportunities/job_fairs"]) {
+    for (const p of ["/recruit", "/recruit/search", "/org/settings", "/companies/acme", "/uni", "/uni/people", "/fairs/f1", "/fairs/invite", "/openings/jobs", "/openings/jobs/j1", "/openings/applications/a1", "/openings/contact-requests/c1", "/openings/job-fairs"]) {
       expect(decideRoute(at(p, { state: student, aal: "aal2" }))).toEqual({ type: "not-found" });
     }
   });
@@ -230,7 +230,7 @@ describe("closed portals (phase 14, decisions 2026-11-02)", () => {
     }
   });
   it("leaves student routes alone", () => {
-    for (const p of ["/feed", "/events", "/u/nutech", "/competitions/c1", "/opportunities/for_you", "/universities-x"]) {
+    for (const p of ["/feed", "/events", "/u/nutech", "/competitions/c1", "/openings", "/openings/venture-roles", "/universities-x"]) {
       expect(closedPortalDecision(p, DEFAULT_PORTALS)).toBeNull();
     }
     expect(isPortalPath("/feed")).toBe(false);

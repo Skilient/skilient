@@ -73,7 +73,7 @@ export function ApplyForm({ jobId, unmet }: { jobId: string; unmet: string[] }) 
     setError(null);
     startTransition(async () => {
       const r = await applyToJob(jobId, note);
-      if (r.ok) router.push(`/opportunities/applications/${r.data}`);
+      if (r.ok) router.push(`/openings/applications/${r.data}`);
       else setError(r.message);
     });
   }

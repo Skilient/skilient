@@ -60,16 +60,16 @@ describe("what PostHog may see (PRD 10)", () => {
     ]) {
       expect(isRecordingBlocked(path), path).toBe(true);
     }
-    for (const path of ["/", "/feed", "/explore", "/ventures/2b9e/team", "/settings/profile", "/verify", "/chatter", "/opportunities/jobs"]) {
+    for (const path of ["/", "/feed", "/explore", "/ventures/2b9e/team", "/settings/profile", "/verify", "/chatter", "/openings/jobs"]) {
       expect(isRecordingBlocked(path), path).toBe(false);
     }
   });
 
-  it("keeps heatmaps on marketing pages, Home, Opportunities and onboarding only", () => {
-    for (const path of ["/", "/recruiters", "/features", "/feed", "/opportunities", "/opportunities/jobs", "/onboarding/3"]) {
+  it("keeps heatmaps on marketing pages, Home, Openings and onboarding only", () => {
+    for (const path of ["/", "/recruiters", "/features", "/feed", "/openings", "/openings/jobs", "/onboarding/3"]) {
       expect(isHeatmapPage(path), path).toBe(true);
     }
-    for (const path of ["/explore", "/chat", "/post/1", "/opportunities/jobs/1", "/me"]) {
+    for (const path of ["/explore", "/chat", "/post/1", "/openings/jobs/1", "/me"]) {
       expect(isHeatmapPage(path), path).toBe(false);
     }
   });

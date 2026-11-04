@@ -65,7 +65,7 @@ export default async function CompanyPage({ params }: PageProps<"/companies/[slu
           <ul className="flex flex-col gap-2" data-testid="company-roles">
             {company.roles.map((r) => (
               <li key={r.id} className="rounded-lg border border-border-default bg-bg-surface p-3">
-                <Link href={`/opportunities/jobs/${r.id}` as Route} className="text-h4 underline-offset-4 hover:underline">{r.title}</Link>
+                <Link href={`/openings/jobs/${r.id}` as Route} className="text-h4 underline-offset-4 hover:underline">{r.title}</Link>
                 <p className="text-body-sm text-text-secondary">{JOB_TYPE_LABELS[r.type]} · {r.remote ? "Remote" : r.location} · apply by {dayLabel(r.deadline)}</p>
               </li>
             ))}

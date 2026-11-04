@@ -4,10 +4,12 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { AddFriendButton } from "@/components/explore/add-friend-button";
 import { ExploreControls } from "@/components/explore/explore-controls";
+import { PeopleYouMayKnow } from "@/components/friends/people-you-may-know";
 import { VentureCard } from "@/components/ventures/venture-card";
 import { Avatar, EmptyState, Skeleton, SkillChip, TierBadge } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { EXPLORE_PAGE, listUniversities, searchPeople, searchVentures, type ExploreFilters, type PersonResult } from "@/lib/data/explore";
+import { getPeopleYouMayKnow } from "@/lib/data/friends";
 import { listTaxonomy } from "@/lib/data/skills";
 import { getIdeas } from "@/lib/data/teach";
 import { DIFFICULTY_LABELS } from "@/lib/teach/constants";
@@ -65,11 +67,21 @@ export default async function ExplorePage({ searchParams }: PageProps<"/explore"
           ))}
         </ul>
       </nav>
+      {tab === "people" && !state.q && from === 0 ? (
+        <Suspense fallback={<Skeleton className="h-32 w-full" />}>
+          <Suggestions />
+        </Suspense>
+      ) : null}
       <Suspense key={JSON.stringify({ ...state, from })} fallback={<ResultsSkeleton />}>
         <Results state={state} filters={{ q: state.q, department: state.department || null, batch: state.batch ? Number(state.batch) : null, skill: state.skill || null, university: state.university || null, from }} />
       </Suspense>
     </main>
   );
+}
+
+/** People you may know (PRD 5.34) above the people results, before any search. */
+async function Suggestions() {
+  return <PeopleYouMayKnow initial={await getPeopleYouMayKnow(4)} />;
 }
 
 /** Project ideas from teachers (PRD 5.21): open ones at the viewer's university and global ones, newest first. */

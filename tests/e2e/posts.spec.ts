@@ -62,10 +62,10 @@ test.describe("Posts", () => {
     await expect(page.getByRole("link", { name: "University Feed" })).toHaveAttribute("aria-current", "page");
     await expect(page.getByTestId("composer")).toBeVisible();
     await axe(page, "feed (empty)");
-    // Nothing to like, save or react to (PRD 5.28 done-when). Share-to-chat is allowed since
-    // 2026-11-02 and stays a disabled stub until phase 18.
+    // Nothing to like, save or react to (PRD 5.28 done-when). Share-to-chat (phase 18) is the only
+    // addition, and it opens a sheet; no count is shown anywhere.
     await expect(page.getByRole("button", { name: /like|save|react/i })).toHaveCount(0);
-    for (const share of await page.getByRole("button", { name: /share/i }).all()) await expect(share).toHaveAttribute("aria-disabled", "true");
+    for (const share of await page.getByRole("button", { name: /share/i }).all()) await expect(share).toHaveAttribute("aria-haspopup", "dialog");
 
     // A University post with an image; the draft survives a reload until posted.
     await page.getByTestId("composer").getByLabel("What's on your mind?").fill(text);

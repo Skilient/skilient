@@ -114,7 +114,7 @@ export function Sidebar() {
               className="flex min-w-0 flex-1 items-center gap-2 rounded-[14px] p-2 hover:shadow-[var(--raised-s)]"
               aria-label={`${user.fullName}, your profile`}
             >
-              <Avatar name={user.fullName} src={user.avatarUrl} size="sm" />
+              <Avatar name={user.fullName} src={user.avatarUrl} size="sm" decorative />
               <span className="truncate text-body-sm font-semibold" data-testid="current-user-name">
                 {user.fullName}
               </span>

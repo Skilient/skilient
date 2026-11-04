@@ -8,11 +8,13 @@ import { VerifyColumn } from "@/components/marketing/verify-column";
 import { siteUrl } from "@/lib/cv/site";
 import { STATUS_TEXT, type VerifyStatus } from "@/lib/cv/status";
 import { verifyCode } from "@/lib/data/cv";
+import { verifyAllowed, verifyRecordCode } from "@/lib/data/record";
+import { EntryVerifyCard } from "@/components/record/entry-verify";
 import { getCandidateForCode } from "@/lib/features/talent/data";
 import { cn } from "@/lib/cn";
 import { formatCode } from "@/supabase/functions/_shared/cv/sign.ts";
 
-export const metadata: Metadata = { title: "Verify a CV", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Verify a CV or Record entry", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 
 const ICONS: Record<VerifyStatus, typeof CheckCircle> = {
@@ -58,6 +60,25 @@ function StatusCard({ status, children }: { status: VerifyStatus; children?: Rea
 export default async function VerifyPage({ params, searchParams }: PageProps<"/verify/[code]">) {
   const { code: raw } = await params;
   const pdf = (await searchParams).pdf;
+  // Record entries share the code namespace (PRD 5.30): an entry's code shows the entry.
+  const entry = await verifyRecordCode(decodeURIComponent(raw));
+  if (entry) {
+    if (!(await verifyAllowed())) {
+      return (
+        <VerifyColumn>
+          <section className="rounded-lg border border-border-strong bg-bg-surface p-6" role="alert">
+            <h1 className="font-display text-h2">Too many checks</h1>
+            <p className="mt-2 text-body">You can check up to 30 codes a minute. Try again in a minute.</p>
+          </section>
+        </VerifyColumn>
+      );
+    }
+    return (
+      <VerifyColumn>
+        <EntryVerifyCard result={entry as Exclude<typeof entry, { status: "rate_limited" | "not_found" }>} />
+      </VerifyColumn>
+    );
+  }
   const result = await verifyCode(decodeURIComponent(raw), typeof pdf === "string" ? pdf.toLowerCase() : null);
 
   if (result.status === "rate_limited") {

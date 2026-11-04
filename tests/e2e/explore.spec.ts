@@ -54,7 +54,7 @@ test.describe("Explore", () => {
     await axe(page, "explore (people)");
 
     // Add friend from the result; the state sticks after a reload.
-    await row.getByRole("button", { name: `Add ${found.fullName} as a friend` }).click();
+    await row.getByRole("button", { name: `Add friend: ${found.fullName}` }).click();
     await expect(row.getByTestId("friendship")).toHaveText("Request sent");
     await page.reload();
     await expect(page.getByTestId("person-result").filter({ hasText: found.fullName }).getByTestId("friendship")).toHaveText("Request sent");

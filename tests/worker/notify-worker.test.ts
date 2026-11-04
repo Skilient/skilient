@@ -274,6 +274,49 @@ describe("notify-worker", () => {
     }
   });
 
+  it("sends one Record claim email per walk-in and event, and none once the address has an account", async () => {
+    const tag = randomUUID().slice(0, 8);
+    const [soc] = await sql<{ id: string }[]>`
+      insert into public.societies (university_id, slug, name, name_key, category, about, status, verified_at)
+      select p.university_id, ${`nw-soc-${tag}`}, ${`Worker Society ${tag}`}, ${`worker society ${tag}`}, 'technology',
+             'A society for the notify worker test.', 'verified', now() - interval '60 days'
+        from public.profiles p where p.user_id = ${users.a} returning id`;
+    const [ev] = await sql<{ id: string }[]>`
+      insert into public.events (university_id, society_id, type, title, starts_at, ends_at, location, status)
+      select university_id, ${soc.id}, 'workshop', 'Build with React', now() - interval '5 hours', now() - interval '3 hours', 'Hall B', 'ended'
+        from public.societies where id = ${soc.id} returning id`;
+    const walkIn = `nw-walk-${tag}@nutech.edu.pk`;
+    try {
+      const [att] = await sql<{ id: string }[]>`insert into public.event_email_attendees (event_id, email) values (${ev.id}, ${walkIn}) returning id`;
+      const [claim] = await sql<{ id: string }[]>`
+        insert into public.record_claims (email_hash, event_id, email_attendee_id, expires_at)
+        values (private.email_hash(${walkIn}), ${ev.id}, ${att.id}, now() + interval '180 days') returning id`;
+      await sql`select pgmq.send('notification_emails', ${sql.json({ kind: "record_claim", claim_id: claim.id })})`;
+      await sql`select pgmq.send('notification_emails', ${sql.json({ kind: "record_claim", claim_id: claim.id })})`;
+      const brevo = fakeBrevo();
+      expect(await runNotifyWorker({ db, cfg, fetch: brevo.impl, log })).toMatchObject({ sent: 1, skipped: 1 });
+      expect(brevo.sent).toHaveLength(1);
+      expect(brevo.sent[0].body.messageVersions[0].to).toEqual([{ email: walkIn }]);
+      expect(brevo.sent[0].body.subject).toBe("Your entry for Build with React is waiting");
+      expect(brevo.sent[0].body.textContent).toContain(`https://app.example.test/signup?email=${encodeURIComponent(walkIn)}`);
+      // A second walk-in who signed up before the email went out gets nothing.
+      const later = `nw-later-${tag}@nutech.edu.pk`;
+      const [att2] = await sql<{ id: string }[]>`insert into public.event_email_attendees (event_id, email) values (${ev.id}, ${later}) returning id`;
+      const [claim2] = await sql<{ id: string }[]>`
+        insert into public.record_claims (email_hash, event_id, email_attendee_id, expires_at)
+        values (private.email_hash(${later}), ${ev.id}, ${att2.id}, now() + interval '180 days') returning id`;
+      const laterUser = randomUUID();
+      await sql`insert into auth.users (id, email) values (${laterUser}, ${later})`;
+      await sql`select pgmq.send('notification_emails', ${sql.json({ kind: "record_claim", claim_id: claim2.id })})`;
+      const brevo2 = fakeBrevo();
+      expect(await runNotifyWorker({ db, cfg, fetch: brevo2.impl, log })).toMatchObject({ sent: 0, skipped: 1 });
+      await sql`delete from auth.users where id = ${laterUser}`;
+    } finally {
+      await sql`delete from public.events where id = ${ev.id}`;
+      await sql`delete from public.societies where id = ${soc.id}`;
+    }
+  });
+
   it("sends operational alerts to every recipient, even past the daily notification cap", async () => {
     const alert = (key: string) =>
       sql`select pgmq.send('notification_emails', ${sql.json({

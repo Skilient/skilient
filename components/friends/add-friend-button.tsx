@@ -28,7 +28,7 @@ export function AddFriendButton({ username, fullName }: { username: string; full
         variant="secondary"
         size="sm"
         loading={busy}
-        aria-label={`Add ${fullName} as a friend`}
+        aria-label={`Add friend: ${fullName}`}
         onClick={() =>
           startTransition(async () => {
             setError(null);

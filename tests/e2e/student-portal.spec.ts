@@ -36,7 +36,7 @@ test.describe("Student portal", () => {
       await expect(page.getByTestId(`nav-${key}`)).toHaveAttribute("aria-describedby", /.+/);
     }
     await page.getByTestId("nav-openings").hover();
-    await expect(page.getByRole("tooltip")).toContainText("matched to your skills");
+    await expect(page.getByRole("tooltip")).toContainText("each card with its newest opening");
 
     // The tour starts by itself, and runs from the keyboard alone.
     const popover = page.getByTestId("tour-popover");
@@ -89,27 +89,23 @@ test.describe("Student portal", () => {
     await expect(card).toHaveCount(0);
 
     // First-visit tips: shown once, dismissed for good.
-    await page.goto("/opportunities/for_you");
+    await page.goto("/openings");
     const tip = page.getByTestId("tip-opportunities");
     await expect(tip).toBeVisible();
     await tip.getByRole("button", { name: "Show me more" }).click();
-    await expect(tip).toContainText("Sponsored roles are marked on the Jobs tab only");
+    await expect(tip).toContainText("This week is rebuilt every night");
     await tip.getByRole("button", { name: /Dismiss/ }).click();
     await expect(tip).toHaveCount(0);
     await page.reload();
     await expect(page.getByTestId("tip-opportunities")).toHaveCount(0);
 
-    // The hub: seven tabs, each with a teaching empty state; "For you" never shows sponsorship.
-    await expect(page.getByRole("heading", { name: "Nothing matched yet" })).toBeVisible();
-    await axe(page, "opportunities");
-    for (const tab of ["jobs", "contact_requests", "applications", "competitions", "job_fairs", "ideas"]) {
-      await page.goto(`/opportunities/${tab}`);
-      // Jobs and competitions are shared lists: other accounts' postings may fill them, so either state is right.
-      const shared = tab === "jobs" || tab === "competitions";
-      const state = shared ? page.getByRole("main").getByRole("heading", { level: 3 }).or(page.getByTestId("opportunity-list")) : page.getByRole("main").getByRole("heading", { level: 3 });
-      await expect(state.first()).toBeVisible();
+    // Openings (phase 18): every category page shows its list or its empty state; shared lists may be filled by others.
+    await axe(page, "openings");
+    for (const slug of ["venture-roles", "inductions", "events", "ideas", "paths", "swaps"]) {
+      await page.goto(`/openings/${slug}`);
+      await expect(page.getByTestId("opening-list").or(page.locator("[data-empty-state]")).first()).toBeVisible();
     }
-    await page.goto("/opportunities/bogus");
+    await page.goto("/openings/bogus");
     await expect(page.getByRole("heading", { name: "We couldn't find that page" })).toBeVisible();
 
     // Me pages.

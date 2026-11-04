@@ -8,10 +8,10 @@ import { AVAILABILITY } from "@/lib/recruit/constants";
 const uuid = z.uuid();
 
 export async function blockCompany(orgId: string): Promise<ActionResult> {
-  return rpcAction({ name: "student.block_company", schema: uuid, input: orgId, fn: "block_company", args: (v) => ({ p_org: v }), revalidate: ["/settings/privacy", "/opportunities"] });
+  return rpcAction({ name: "student.block_company", schema: uuid, input: orgId, fn: "block_company", args: (v) => ({ p_org: v }), revalidate: ["/settings/privacy", "/openings"] });
 }
 export async function unblockCompany(orgId: string): Promise<ActionResult> {
-  return rpcAction({ name: "student.unblock_company", schema: uuid, input: orgId, fn: "unblock_company", args: (v) => ({ p_org: v }), revalidate: ["/settings/privacy", "/opportunities"] });
+  return rpcAction({ name: "student.unblock_company", schema: uuid, input: orgId, fn: "unblock_company", args: (v) => ({ p_org: v }), revalidate: ["/settings/privacy", "/openings"] });
 }
 
 const prefsSchema = z.object({

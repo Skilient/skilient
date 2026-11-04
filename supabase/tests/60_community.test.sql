@@ -1,5 +1,5 @@
 -- Phase 18 (PRD 5.33, 5.34): Openings, the yearbook, share-to-chat, people you may know and push.
--- A, B, C, D, E, F, G students in the batch of 2027 at NUTECH (Computer Science), H in 2028,
+-- A, B, C, D, E, F, G students in the batch of 2027 at a test university (Computer Science), H in 2028,
 -- X at another university. A–B friends, A–C society co-members; D and E have no tie to A.
 begin;
 select * from no_plan();
@@ -21,17 +21,21 @@ create function pg_temp.queued_push() returns integer language sql security defi
 create function pg_temp.can_report(p_type public.report_target, p_id uuid) returns boolean language sql security definer as $$ select private.can_report(p_type, p_id) $$;
 grant execute on all functions in schema pg_temp to authenticated;
 
-insert into public.universities (id, name, city, slug)
-values ('99180000-0000-0000-0000-0000000000a1', 'Community Other University', 'Lahore', 'community-other-university');
-insert into public.university_domains (university_id, domain, kind) values ('99180000-0000-0000-0000-0000000000a1', 'community-other.edu.pk', 'both');
+-- Two universities of the test's own, so data left by other runs (E2E at NUTECH) never changes a count here.
+insert into public.universities (id, name, city, slug) values
+  ('99180000-0000-0000-0000-0000000000a0', 'Community Test University', 'Islamabad', 'community-test-university'),
+  ('99180000-0000-0000-0000-0000000000a1', 'Community Other University', 'Lahore', 'community-other-university');
+insert into public.university_domains (university_id, domain, kind) values
+  ('99180000-0000-0000-0000-0000000000a0', 'community-test.edu.pk', 'both'),
+  ('99180000-0000-0000-0000-0000000000a1', 'community-other.edu.pk', 'both');
 insert into auth.users (id, email, raw_user_meta_data, email_confirmed_at)
 select pg_temp.u(x.k), x.e, jsonb_build_object('full_name', x.n), now()
-  from (values ('A', 'ca@nutech.edu.pk', 'Ali Ahmed'), ('B', 'cb@nutech.edu.pk', 'Hira Batool'), ('C', 'cc@nutech.edu.pk', 'Sara Co'),
-               ('D', 'cd@nutech.edu.pk', 'Daniyal Dee'), ('E', 'ce@nutech.edu.pk', 'Esha Ee'), ('F', 'cf@nutech.edu.pk', 'Faiz Ef'),
-               ('G', 'cg@nutech.edu.pk', 'Gul Gee'), ('H', 'ch@nutech.edu.pk', 'Hamza Junior'), ('X', 'cx@community-other.edu.pk', 'Xara Elsewhere'),
-               ('M', 'cm@nutech.edu.pk', 'Mod Erator')) as x(k, e, n);
+  from (values ('A', 'ca@community-test.edu.pk', 'Ali Ahmed'), ('B', 'cb@community-test.edu.pk', 'Hira Batool'), ('C', 'cc@community-test.edu.pk', 'Sara Co'),
+               ('D', 'cd@community-test.edu.pk', 'Daniyal Dee'), ('E', 'ce@community-test.edu.pk', 'Esha Ee'), ('F', 'cf@community-test.edu.pk', 'Faiz Ef'),
+               ('G', 'cg@community-test.edu.pk', 'Gul Gee'), ('H', 'ch@community-test.edu.pk', 'Hamza Junior'), ('X', 'cx@community-other.edu.pk', 'Xara Elsewhere'),
+               ('M', 'cm@community-test.edu.pk', 'Mod Erator')) as x(k, e, n);
 insert into auth.users (id, email, raw_user_meta_data, email_confirmed_at)
-select pg_temp.u('V' || i), 'cv' || i || '@nutech.edu.pk', jsonb_build_object('full_name', 'Voter ' || i), now() from generate_series(1, 6) i;
+select pg_temp.u('V' || i), 'cv' || i || '@community-test.edu.pk', jsonb_build_object('full_name', 'Voter ' || i), now() from generate_series(1, 6) i;
 update public.profiles set onboarding_complete = true, username = 'c18_' || right(user_id::text, 2), department = 'Computer Science', graduation_year = 2027
  where user_id::text like '99180000-%';
 update public.profiles set graduation_year = 2028 where user_id = pg_temp.u('H');
@@ -102,6 +106,8 @@ select is((select (x ->> 'informative')::integer from jsonb_array_elements(publi
 reset role;
 select pg_temp.as_user('X');
 select is(jsonb_array_length(public.openings_this_week() -> 'posts'), 0, 'another university''s week is its own');
+select is((select count(*)::integer from public.openings_weekly where university_id = '99180000-0000-0000-0000-0000000000a0'), 0,
+          'and its row isn''t readable directly');
 reset role;
 
 -- ===========================================================================
@@ -134,6 +140,9 @@ select throws_ok($$ select public.sign_yearbook('c18_01', 'Hello from a stranger
 reset role;
 select pg_temp.as_user('H');
 select throws_ok($$ select public.sign_yearbook('c18_01', 'Hello from a junior') $$, 'P0002', null, 'another batch: not their yearbook');
+select is((select count(*)::integer from public.yearbooks), 0, 'another batch can''t read the book');
+select is((select count(*)::integer from public.yearbook_pages), 0, 'or its pages');
+select is((select count(*)::integer from public.yearbook_notes), 0, 'or its notes');
 reset role;
 select ok(exists (select 1 from public.notifications where user_id = pg_temp.u('A') and type = 'yearbook_note'), 'the owner is told');
 
@@ -319,6 +328,16 @@ select public.save_push_subscription('https://fcm.googleapis.com/fcm/send/c18-d'
 reset role;
 select pg_temp.as_user('A');
 select is((select count(*)::integer from public.push_subscriptions), 0, 'nobody reads another person''s devices');
+reset role;
+select pg_temp.as_user('D');
+select public.set_push_pref('growth', false);
+reset role;
+select pg_temp.as_user('A');
+select is((select count(*)::integer from public.notification_push_prefs), 0, 'or their push preferences');
+select throws_ok($$ insert into public.push_subscriptions (user_id, endpoint, p256dh, auth) values (auth.uid(), 'https://fcm.googleapis.com/x', repeat('A', 87), repeat('B', 22)) $$,
+                 '42501', null, 'subscriptions are written only through save_push_subscription');
+select throws_ok($$ insert into public.yearbook_votes (yearbook_id, voter_id, title_key, nominee_id) values (gen_random_uuid(), auth.uid(), 'best_teammate', auth.uid()) $$,
+                 '42501', null, 'votes are written only through cast_yearbook_vote');
 reset role;
 select pgmq.purge_queue('notification_push');
 select private.notify(pg_temp.u('D'), null, 'event_reminder', 'event', gen_random_uuid(), '{"event": "Build with React", "when": "1h"}');

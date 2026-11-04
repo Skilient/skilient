@@ -62,10 +62,10 @@ test.describe("Micro-survey", { tag: "@desktop-only" }, () => {
       await expect(rPage.getByTestId("post").filter({ hasText: text }).getByTestId("survey-strip").locator("p").first()).toHaveText(question);
     }
 
-    // Answer once the post has been on screen for 1.5 s; then change it. (The feed is ranked,
+    // Answer once the post has qualified as a view (on screen for 1.5 s; the strip says so); then change it. (The feed is ranked,
     // so other tests' posts can push this one below the fold: bring it on screen first.)
     await rPage.getByTestId("post").filter({ hasText: text }).scrollIntoViewIfNeeded();
-    await rPage.waitForTimeout(1_800);
+    await expect(rPage.getByTestId("post").filter({ hasText: text }).getByTestId("survey-strip")).toHaveAttribute("data-ready", "true");
     await rPage.getByTestId("post").filter({ hasText: text }).getByRole("button", { name: "Yes", exact: true }).click();
     const answered = rPage.getByTestId("post").filter({ hasText: text }).getByTestId("survey-answered");
     await expect(answered).toContainText("Answered");
@@ -73,7 +73,10 @@ test.describe("Micro-survey", { tag: "@desktop-only" }, () => {
     await answered.getByRole("button", { name: "Change" }).click();
     await rPage.getByTestId("post").filter({ hasText: text }).getByRole("button", { name: "No", exact: true }).click();
     await expect(rPage.getByTestId("post").filter({ hasText: text }).getByTestId("survey-answered")).toBeVisible();
-    await rPage.reload();
+    // The answer is stored: the post's own page shows it after a fresh load. (Not the feed: it is ranked,
+    // and on a shard's busy database an answered post can sit below the first page.)
+    const postPath = new URL((await rPage.getByTestId("post").filter({ hasText: text }).getByRole("link", { name: "Comment" }).getAttribute("href"))!, "http://x").pathname;
+    await rPage.goto(postPath);
     await expect(rPage.getByTestId("post").filter({ hasText: text }).getByTestId("survey-answered")).toContainText("Answered");
 
     // Over the API: an answer before any view is refused; a second answer can only change.

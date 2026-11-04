@@ -74,7 +74,12 @@ export function SurveyStrip({
   }
 
   return (
-    <div className="flex flex-col gap-1 rounded-md border border-border-default bg-bg-subtle px-3 py-1.5" data-testid="survey-strip">
+    <div
+      className="flex flex-col gap-1 rounded-md border border-border-default bg-bg-subtle px-3 py-1.5"
+      data-testid="survey-strip"
+      // Ready once the post has qualified as a view (on screen 1.5 s): only then is an answer accepted.
+      data-ready={qualified && shownAt !== null}
+    >
       <div className="flex items-center justify-between gap-3">
         <p className="text-body-sm font-semibold" id={`survey-${postId}`}>
           {survey.question}

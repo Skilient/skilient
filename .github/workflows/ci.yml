@@ -263,6 +263,8 @@ jobs:
         run: |
           df -h /
           echo "peak used: $(awk '{print $2}' "$RUNNER_TEMP/disk.log" | sort -n | tail -1), lowest free: $(awk '{print $3}' "$RUNNER_TEMP/disk.log" | sort -n | head -1)"
+          echo "used / free each minute (the SDK cleanup lands in the first minutes):"
+          awk 'NR % 6 == 1' "$RUNNER_TEMP/disk.log"
           docker system df
           du -sh .next .next/cache node_modules ~/.cache/ms-playwright test-results playwright-report "$(pnpm store path)" 2>/dev/null || true
           docker ps -q | xargs -r -n1 docker inspect -f '{{.Name}} {{.LogPath}}' | while read -r name log; do echo "$name log $(sudo du -sh "$log" | cut -f1)"; done

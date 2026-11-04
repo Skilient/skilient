@@ -86,7 +86,7 @@ for (const colorScheme of ["light", "dark"] as const) {
     test("is keyboard-operable and has no axe violations when open", async ({ page }) => {
       await page.goto("/ui");
       // Docker is L1, so three levels are "not yet": their text must keep full contrast.
-      const trigger = page.locator('[data-theme-panel="light"]').getByRole("button", { name: /^Docker, level 1/ });
+      const trigger = page.locator('[data-theme-panel="light"]').getByRole("button", { name: /^Docker\b.*, level 1/ });
       await trigger.focus();
       await page.keyboard.press("Enter");
       const drawer = page.getByRole("dialog", { name: "Docker" });

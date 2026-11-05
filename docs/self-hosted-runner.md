@@ -12,8 +12,8 @@ them up. They are started by hand (`workflow_dispatch`) in a private repository,
 
 - Linux x64, online and awake for the whole run (drill about 15–30 minutes from Pakistan; load test about an hour).
 - **Docker**, usable by your user without `sudo`: `supabase db dump` runs PostgreSQL 17 in a container.
-- **PostgreSQL client 17** (`psql`). Dumps from `pg_dump` 17 can contain `\restrict` lines that older `psql` builds
-  don't understand.
+- **PostgreSQL client** (`psql`) 17, or 16.10 or newer. Dumps from `pg_dump` 17 can contain `\restrict` lines that
+  older `psql` builds don't understand.
 - `git`, `curl`, `tar`. Node 22 and pnpm are installed by the workflows themselves.
 - Port **3100** free while the drill runs (it starts the app there to check `/api/health`).
 
@@ -33,14 +33,12 @@ sudo usermod -aG docker "$USER"
 
 Check: `docker run --rm hello-world` and `psql --version` (17.x) both work without `sudo`.
 
-On **Fedora** (Ahmed's machine), `psql` 17 from the PostgreSQL project's repository, linked onto the path, and Docker
-from Docker's repository (Fedora ships Podman, and the Supabase CLI expects Docker):
+On **Fedora** (Ahmed's machine, Fedora 42): Fedora's own `psql` (16.13 there; anything from 16.10 or 17 up reads
+`\restrict` lines; the PostgreSQL project's repository has no Fedora 42 build), and Docker from Docker's repository
+(Fedora ships Podman, and the Supabase CLI expects Docker):
 
 ```bash
-sudo dnf install -y git curl tar dnf-plugins-core https://download.postgresql.org/pub/repos/yum/reporpms/F-$(rpm -E %fedora)-x86_64/pgdg-fedora-repo-latest.noarch.rpm
-```
-```bash
-sudo dnf install -y postgresql17 && sudo ln -sf /usr/pgsql-17/bin/psql /usr/local/bin/psql
+sudo dnf install -y git curl tar dnf-plugins-core postgresql
 ```
 ```bash
 sudo dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo

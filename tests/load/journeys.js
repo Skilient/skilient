@@ -58,6 +58,8 @@ const ramping = (name, vus) => ({
 });
 
 export const options = {
+  // Grafana Cloud runs the script from Mumbai, next to Vercel bom1 and Supabase ap-south-1 (a local `k6 run` ignores this).
+  cloud: { name: "Skilient busy hour", distribution: { mumbai: { loadZone: "amazon:in:mumbai", percent: 100 } } },
   setupTimeout: "5m",
   teardownTimeout: "5m",
   thresholds: THRESHOLDS,

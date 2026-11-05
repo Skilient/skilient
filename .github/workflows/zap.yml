@@ -36,7 +36,9 @@ env:
 jobs:
   baseline:
     name: ZAP baseline (fail on High)
-    runs-on: ubuntu-latest
+    # Manual runs go to the self-hosted runner (GitHub-hosted minutes are used up and the budget is $0, decisions
+    # 2026-11-05); the weekly and pull-request runs stay on GitHub's runners.
+    runs-on: ${{ github.event_name == 'workflow_dispatch' && fromJSON('["self-hosted","linux","skilient"]') || 'ubuntu-latest' }}
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

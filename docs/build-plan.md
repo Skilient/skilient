@@ -222,6 +222,8 @@ every role (`tests/e2e/csp-sweep.spec.ts`). The first box also needs the design 
 *2026-11-02: the design gates and the load test run after the Student-first track, on the new design (decisions.md "Student-first scope").*
 *2026-11-04: both design gates on every screen at 390 and 1280 px in both themes (`tests/e2e/design-gates.spec.ts`, `docs/design-gates.md`), so the first box is ticked. The k6 journeys, the load seeder and the manual workflow are written and passed a local smoke run (`docs/load-test.md`); the k6 box stays open until Ahmed's 300-user, 30-minute run against the scratch project passes. The PostHog/alerts box still waits on the outside alerts tested with Ahmed's accounts, and the restore drill on its first run. Launch-gate technical items rechecked with portals off (decisions.md "Phase 13 finish").*
 
+*2026-11-05: restore drill passed (run 8). Load test smoke runs #5–#9 found and fixed four problems (sign-out under load, scheduled-job load, the first feed page, Vercel Hobby blocking non-browser traffic) and showed the Nano database runs out of memory at about 9 users (`docs/load-test.md` Results). The full 300-user run is on hold until the compute size is decided (decisions 2026-11-05).*
+
 ---
 
 ## Student-first track (decided 2026-11-02)

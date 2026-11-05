@@ -95,9 +95,18 @@ jobs:
 
       - name: Restore into scratch
         run: |
+          # Grants on server parameters (GRANT SET ON PARAMETER log_min_messages TO supabase_realtime_admin) belong to
+          # Supabase's own roles, which a fresh project already has; only a superuser may make them, and the hosted
+          # postgres user isn't one. Restore every other role line (timeouts, custom roles) and list what was skipped.
+          grep -viE '^(GRANT|REVOKE) .* ON PARAMETER ' dump/roles.sql > dump/roles-restore.sql || true
+          {
+            echo "Platform parameter grants skipped (already on a fresh project):"
+            grep -iE '^(GRANT|REVOKE) .* ON PARAMETER ' dump/roles.sql | sed 's/^/- /' || echo "- none"
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
           start=$(date +%s)
           psql --single-transaction --variable ON_ERROR_STOP=1 \
-            --file dump/roles.sql --file dump/schema.sql \
+            --file dump/roles-restore.sql --file dump/schema.sql \
             --command 'SET session_replication_role = replica' \
             --file dump/data.sql --dbname "$SCRATCH_DB_URL"
           echo "RESTORE_SECONDS=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"

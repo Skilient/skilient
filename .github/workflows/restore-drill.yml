@@ -30,7 +30,8 @@ jobs:
   drill:
     name: Production → scratch
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    # The schema restore sends about 9,000 statements one at a time from a US runner to Mumbai (~35 minutes).
+    timeout-minutes: 180
     # Same environment as the migrate job, so the same secrets are visible.
     environment: production
     env:
@@ -90,6 +91,10 @@ jobs:
           pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/roles.sql --role-only
           pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/schema.sql
           pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/data.sql --use-copy --data-only
+          # pgmq queues are tables pgmq.create() makes at run time: the schema dump leaves them out (they belong to the
+          # extension) but the data dump has their rows. Record production's queues so the restore can create them.
+          psql "$PROD_DB_URL" -v ON_ERROR_STOP=1 -Atc "select format('select pgmq.%s(%L);', case when is_unlogged then 'create_unlogged' else 'create' end, queue_name) from pgmq.meta where not is_partitioned order by queue_name" > dump/queues.sql
+          echo "Queues: $(wc -l < dump/queues.sql)"
           echo "DUMP_SECONDS=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"
           ls -la dump
 
@@ -104,11 +109,21 @@ jobs:
             grep -iE '^(GRANT|REVOKE) .* ON PARAMETER ' dump/roles.sql | sed 's/^/- /' || echo "- none"
             echo
           } >> "$GITHUB_STEP_SUMMARY"
+          # Queue rows are in-flight jobs (the workers rebuild what's missing on their next tick); the queues
+          # themselves are created from production's list before the data goes in.
+          awk 'BEGIN { skip = 0 }
+               /^COPY "?pgmq"?\./ { skip = 1; dropped++; next }
+               skip && /^\\\.$/ { skip = 0; next }
+               skip { next }
+               /pg_catalog\.setval\(.?"?pgmq"?\./ { next }
+               { print }
+               END { print "-- dropped " dropped+0 " pgmq tables" > "/dev/stderr" }' dump/data.sql > dump/data-restore.sql
+          printf 'Queues re-created: %s. Queue rows (in-flight jobs) not restored.\n\n' "$(wc -l < dump/queues.sql)" >> "$GITHUB_STEP_SUMMARY"
           start=$(date +%s)
           psql --single-transaction --variable ON_ERROR_STOP=1 \
-            --file dump/roles-restore.sql --file dump/schema.sql \
+            --file dump/roles-restore.sql --file dump/schema.sql --file dump/queues.sql \
             --command 'SET session_replication_role = replica' \
-            --file dump/data.sql --dbname "$SCRATCH_DB_URL"
+            --file dump/data-restore.sql --dbname "$SCRATCH_DB_URL"
           echo "RESTORE_SECONDS=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"
 
       - name: Re-create Vault secrets and deploy Edge Functions on scratch

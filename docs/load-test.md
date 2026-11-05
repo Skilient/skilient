@@ -90,8 +90,10 @@ k6 run -e LOAD_SCALE=0.01 -e LOAD_RAMP=10s -e LOAD_HOLD=1m -e SUPABASE_URL=… -
 5,000 students at one university (the busiest case: every feed, search and leaderboard read covers the whole
 population), about 14 friends each, 30 days of posts (20,000) and comments, a DM thread per k6 chat pair,
 300 ventures, 10 verified societies with two officers each, 120 event-day events (starting 90 minutes after the
-seed, so check-in is open; a re-run moves them and clears the last run's registrations), and two past events per
-society whose attendees hold sealed Record entries (about 40% of students per event).
+seed, so check-in is open; a re-run moves them and clears the last run's registrations), and past events whose
+attendees hold sealed Record entries: the first 1,000 students (the accounts k6 signs in as) hold about two each. The
+Record step tops up anyone in that range without an entry, so a re-run or a larger `LOAD_USERS` never leaves the
+k6 accounts with empty ledgers, and it seals with eight drainers at once.
 
 ## Results
 

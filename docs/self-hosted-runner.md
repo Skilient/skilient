@@ -31,7 +31,7 @@ Docker: install Docker Engine (docs.docker.com/engine/install), then let your us
 sudo usermod -aG docker "$USER"
 ```
 
-Check: `docker run --rm hello-world` and `psql --version` (17.x) both work without `sudo`.
+Check: `docker run --rm hello-world` and `psql --version` (17.x, or 16.10 or newer) both work without `sudo`.
 
 On **Fedora** (Ahmed's machine, Fedora 42): Fedora's own `psql` (16.13 there; anything from 16.10 or 17 up reads
 `\restrict` lines; the PostgreSQL project's repository has no Fedora 42 build), and Docker from Docker's repository

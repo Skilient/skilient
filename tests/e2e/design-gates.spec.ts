@@ -45,7 +45,9 @@ async function gate(page: Page, path: string, theme: "light" | "dark", width: nu
       text: document.body.innerText,
       // Buttons and button-like links whose label is wider than the button (clipped by nowrap + overflow-hidden).
       clipped: [...document.querySelectorAll<HTMLElement>("button, a[role=button], a.rounded-full")]
-        .filter((el) => el.offsetParent !== null && el.scrollWidth > el.clientWidth + 1)
+        // Text labels only: switches and checkboxes are buttons whose thumb overflows on purpose.
+        .filter((el) => el.offsetParent !== null && !el.getAttribute("role")?.match(/switch|checkbox/) && (el.textContent ?? "").trim() !== "")
+        .filter((el) => el.scrollWidth > el.clientWidth + 1)
         .map((el) => (el.getAttribute("aria-label") || el.textContent || el.tagName).trim().slice(0, 40)),
     };
   });

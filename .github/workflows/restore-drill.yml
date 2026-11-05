@@ -105,6 +105,10 @@ jobs:
           # Scheduled jobs (cron.job) are in neither dump; record them, with their on/off state, the same way.
           psql "$PROD_DB_URL" -v ON_ERROR_STOP=1 -Atc "select format('select cron.schedule(%L, %L, %L);', jobname, schedule, command) || case when active then '' else format(' select cron.alter_job(jobid, active := false) from cron.job where jobname = %L;', jobname) end from cron.job where jobname is not null order by jobname" > dump/cron.sql
           echo "Cron jobs: $(wc -l < dump/cron.sql)"
+          # Our objects on Supabase-managed schemas are in neither dump either: the access policies on storage and
+          # realtime tables, and our triggers on auth/storage/realtime tables (on_auth_user_created and the rest).
+          psql "$PROD_DB_URL" -v ON_ERROR_STOP=1 -At -f scripts/restore/managed-objects.sql > dump/managed-objects.sql
+          echo "Policies and triggers on managed schemas: $(wc -l < dump/managed-objects.sql)"
           echo "DUMP_SECONDS=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"
           ls -la dump
 
@@ -149,7 +153,7 @@ jobs:
             --file dump/roles-restore.sql --file dump/schema.sql --file dump/queues.sql \
             --command 'SET session_replication_role = replica' \
             --file dump/data-restore.sql --command 'SET session_replication_role = origin' \
-            --file dump/cron.sql --file dump/migrations-schema.sql --file dump/migrations-data.sql --dbname "$SCRATCH_DB_URL"
+            --file dump/managed-objects.sql --file dump/cron.sql --file dump/migrations-schema.sql --file dump/migrations-data.sql --dbname "$SCRATCH_DB_URL"
           echo "RESTORE_SECONDS=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"
 
       - name: Re-create Vault secrets and deploy Edge Functions on scratch

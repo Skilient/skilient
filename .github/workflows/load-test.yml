@@ -22,7 +22,7 @@ on:
         options: [full, smoke]
         default: full
       where:
-        description: "cloud = Grafana Cloud k6 from Mumbai (timings count); github = this runner in the US (functional check only)"
+        description: "cloud = Grafana Cloud k6 from Mumbai (free plan: 100 VUs, smoke only); github = k6 on the self-hosted runner in Pakistan (the full 300-user run)"
         type: choice
         options: [cloud, github]
         default: cloud
@@ -41,7 +41,9 @@ concurrency:
 jobs:
   load:
     name: Scratch project under load
-    runs-on: ubuntu-latest
+    # GitHub-hosted minutes are used up and the budget is $0 (decisions 2026-11-05), so this runs on Ahmed's own
+    # Linux machine registered as a self-hosted runner with the label `skilient` (docs/self-hosted-runner.md).
+    runs-on: [self-hosted, linux, skilient]
     timeout-minutes: 120
     environment: production
     env:
@@ -78,10 +80,12 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Postgres client and k6
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client > /dev/null
-          curl -fsSL -o /tmp/k6.tgz https://github.com/grafana/k6/releases/download/v0.57.0/k6-v0.57.0-linux-amd64.tar.gz
-          echo "49b1072c29d3682a1ea2ec98df9d17f2bd1cfabb27c1c5e01050766848925c74  /tmp/k6.tgz" | sha256sum -c -
-          tar -xzf /tmp/k6.tgz -C /tmp && sudo mv /tmp/k6-v0.57.0-linux-amd64/k6 /usr/local/bin/k6 && k6 version
+          command -v psql || (sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client > /dev/null)
+          # k6 into the job's temp folder: no root needed on the runner machine.
+          curl -fsSL -o "$RUNNER_TEMP/k6.tgz" https://github.com/grafana/k6/releases/download/v0.57.0/k6-v0.57.0-linux-amd64.tar.gz
+          echo "49b1072c29d3682a1ea2ec98df9d17f2bd1cfabb27c1c5e01050766848925c74  $RUNNER_TEMP/k6.tgz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/k6.tgz" -C "$RUNNER_TEMP" && echo "$RUNNER_TEMP/k6-v0.57.0-linux-amd64" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/k6-v0.57.0-linux-amd64/k6" version
 
       - name: Connection string and keys for the scratch project
         run: |
@@ -122,13 +126,17 @@ jobs:
           HOLD: ${{ inputs.profile == 'smoke' && '2m' || '30m' }}
           RAMP: ${{ inputs.profile == 'smoke' && '20s' || '5m' }}
         run: |
+          # The pipe into tee must not hide k6's exit code: a crossed threshold fails the job.
+          set -o pipefail
           args=(-e SUPABASE_URL="$SUPABASE_URL" -e SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" -e APP_URL="$LOAD_APP_URL"
                 -e LOAD_PASSWORD="$LOAD_PASSWORD" -e LOAD_FIXTURES=./fixtures.json -e LOAD_SCALE="$SCALE" -e LOAD_HOLD="$HOLD" -e LOAD_RAMP="$RAMP")
           if [ "$WHERE" = "cloud" ]; then
             # Grafana Cloud k6 runs the script from Mumbai (ap-south-1), next to the app and the database.
             K6_CLOUD_PROJECT_ID="$K6_CLOUD_PROJECT_ID" k6 cloud run "${args[@]}" tests/load/journeys.js | tee k6-output.txt
           else
-            echo "::warning::Running from a GitHub runner in the US: timings include about 250 ms of round trip and don't count against PRD 10."
+            # The full run goes from Ahmed's machine in Pakistan: PRD 10 measures TTFB "from Pakistan", and Grafana's free
+            # plan caps a test at 100 VUs (decisions 2026-11-05). The browser scenario needs Chromium installed there.
+            echo "Running k6 on the self-hosted runner ($(hostname)): timings include this machine's round trip to Mumbai."
             K6_BROWSER_ARGS=no-sandbox k6 run "${args[@]}" --summary-export k6-summary.json tests/load/journeys.js | tee k6-output.txt
           fi
 

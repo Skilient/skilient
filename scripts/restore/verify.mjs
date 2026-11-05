@@ -30,7 +30,13 @@ async function snapshot(url) {
       counts[t.name] = Number(n);
     }
     const migrations = (await sql`select version from supabase_migrations.schema_migrations order by version`).map((r) => r.version);
-    const [{ policies }] = await sql`select count(*)::int as policies from pg_policies where schemaname in ('public', 'private', 'storage')`;
+    const [{ policies }] = await sql`select count(*)::int as policies from pg_policies where schemaname in ('public', 'private', 'storage', 'realtime')`;
+    // Our triggers on Supabase-managed tables (auth.users and the like): neither dump carries them.
+    const [{ managedTriggers }] = await sql`
+      select count(*)::int as "managedTriggers" from pg_trigger t
+        join pg_class c on c.oid = t.tgrelid join pg_namespace n on n.oid = c.relnamespace
+        join pg_proc p on p.oid = t.tgfoid join pg_namespace pn on pn.oid = p.pronamespace
+       where not t.tgisinternal and n.nspname in ('auth', 'storage', 'realtime') and pn.nspname in ('public', 'private')`;
     const [{ functions }] = await sql`
       select count(*)::int as functions from pg_proc p join pg_namespace n on n.oid = p.pronamespace where n.nspname in ('public', 'private')`;
     const [{ cron }] = await sql`select count(*)::int as cron from cron.job`;
@@ -43,6 +49,7 @@ async function snapshot(url) {
       policies,
       functions,
       cron,
+      managedTriggers,
       vault,
       readable,
       usable,
@@ -64,6 +71,9 @@ const [prod, restored] = await Promise.all([snapshot(prodUrl), snapshot(scratchU
 const counts = compareCounts(prod.counts, restored.counts);
 const problems = compareCatalog(prod, restored);
 if (restored.cron !== prod.cron) problems.push(`cron jobs: production ${prod.cron}, restore ${restored.cron}`);
+if (restored.managedTriggers !== prod.managedTriggers) {
+  problems.push(`triggers on auth/storage/realtime tables: production ${prod.managedTriggers}, restore ${restored.managedTriggers}`);
+}
 const unusable = REQUIRED_SECRETS.filter((n) => !restored.usable.includes(n));
 if (unusable.length) problems.push(`Vault secrets missing or unreadable in the restore: ${unusable.join(", ")} (scripts/restore/reseed-vault.sql)`);
 const badTables = counts.filter((c) => !c.ok);
@@ -81,6 +91,7 @@ const summary = [
   `| Policies | ${prod.policies} | ${restored.policies} |`,
   `| Functions | ${prod.functions} | ${restored.functions} |`,
   `| Cron jobs | ${prod.cron} | ${restored.cron} |`,
+  `| Our triggers on auth/storage/realtime | ${prod.managedTriggers} | ${restored.managedTriggers} |`,
   `| Vault secrets readable | ${prod.readable}/${prod.vault} | ${restored.readable}/${restored.vault} |`,
   "",
   problems.length ? `**${problems.length} problem(s):**\n\n${problems.map((p) => `- ${p}`).join("\n")}` : "**Everything matches.**",

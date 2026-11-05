@@ -36,7 +36,9 @@ env:
 jobs:
   baseline:
     name: ZAP baseline (fail on High)
-    runs-on: ubuntu-latest
+    # Manual runs go to the self-hosted runner (GitHub-hosted minutes are used up and the budget is $0, decisions
+    # 2026-11-05); the weekly and pull-request runs stay on GitHub's runners.
+    runs-on: ${{ github.event_name == 'workflow_dispatch' && fromJSON('["self-hosted","linux","skilient"]') || 'ubuntu-latest' }}
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -71,8 +73,8 @@ jobs:
         env:
           TARGET: ${{ inputs.target != '' && inputs.target || 'http://127.0.0.1:3100' }}
         run: |
-          mkdir -p zap && chmod 777 zap && cp .zap/rules.tsv zap/
-          docker run --rm --network host -v "$PWD/zap:/zap/wrk:rw" "$ZAP_IMAGE" \
+          mkdir -p zap && chmod 777 zap && cp .zap/rules.tsv zap/ && chmod 644 zap/rules.tsv
+          docker run --rm --network host -v "$PWD/zap:/zap/wrk:rw,z" "$ZAP_IMAGE" \
             zap-baseline.py -t "$TARGET" -m 3 -c rules.tsv -J report.json -r report.html -I
       - name: Fail on High findings
         run: node scripts/zap-gate.mjs zap/report.json

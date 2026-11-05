@@ -29,8 +29,11 @@ env:
 jobs:
   drill:
     name: Production → scratch
-    runs-on: ubuntu-latest
-    timeout-minutes: 90
+    # GitHub-hosted minutes are used up and the budget is $0 (decisions 2026-11-05), so this runs on Ahmed's own
+    # Linux machine registered as a self-hosted runner with the label `skilient` (docs/self-hosted-runner.md).
+    runs-on: [self-hosted, linux, skilient]
+    # The schema restore sends about 9,000 statements one at a time from a US runner to Mumbai (~35 minutes).
+    timeout-minutes: 180
     # Same environment as the migrate job, so the same secrets are visible.
     environment: production
     env:
@@ -58,7 +61,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Postgres client
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client > /dev/null
+        # Already installed on the runner machine (docs/self-hosted-runner.md); installed only if missing.
+        run: command -v psql || (sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client > /dev/null)
 
       - name: Connection strings and keys
         run: |
@@ -90,23 +94,76 @@ jobs:
           pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/roles.sql --role-only
           pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/schema.sql
           pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/data.sql --use-copy --data-only
+          # The CLI's migration history (supabase_migrations) is left out of both dumps as Supabase-managed. Without it
+          # a restored project doesn't know its migrations are applied, and the next `db push` would replay them all.
+          pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/migrations-schema.sql -s supabase_migrations
+          pnpm exec supabase db dump --db-url "$PROD_DB_URL" -f dump/migrations-data.sql -s supabase_migrations --use-copy --data-only
+          # pgmq queues are tables pgmq.create() makes at run time: the schema dump leaves them out (they belong to the
+          # extension) but the data dump has their rows. Record production's queues so the restore can create them.
+          psql "$PROD_DB_URL" -v ON_ERROR_STOP=1 -Atc "select format('select pgmq.%s(%L);', case when is_unlogged then 'create_unlogged' else 'create' end, queue_name) from pgmq.meta where not is_partitioned order by queue_name" > dump/queues.sql
+          echo "Queues: $(wc -l < dump/queues.sql)"
+          # Scheduled jobs (cron.job) are in neither dump; record them, with their on/off state, the same way.
+          psql "$PROD_DB_URL" -v ON_ERROR_STOP=1 -Atc "select format('select cron.schedule(%L, %L, %L);', jobname, schedule, command) || case when active then '' else format(' select cron.alter_job(jobid, active := false) from cron.job where jobname = %L;', jobname) end from cron.job where jobname is not null order by jobname" > dump/cron.sql
+          echo "Cron jobs: $(wc -l < dump/cron.sql)"
+          # Our objects on Supabase-managed schemas are in neither dump either: the access policies on storage and
+          # realtime tables, and our triggers on auth/storage/realtime tables (on_auth_user_created and the rest).
+          psql "$PROD_DB_URL" -v ON_ERROR_STOP=1 -At -f scripts/restore/managed-objects.sql > dump/managed-objects.sql
+          echo "Policies and triggers on managed schemas: $(wc -l < dump/managed-objects.sql)"
           echo "DUMP_SECONDS=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"
           ls -la dump
 
       - name: Restore into scratch
         run: |
+          # Grants on server parameters (GRANT SET ON PARAMETER log_min_messages TO supabase_realtime_admin) belong to
+          # Supabase's own roles, which a fresh project already has; only a superuser may make them, and the hosted
+          # postgres user isn't one. Restore every other role line (timeouts, custom roles) and list what was skipped.
+          grep -viE '^(GRANT|REVOKE) .* ON PARAMETER ' dump/roles.sql > dump/roles-restore.sql || true
+          {
+            echo "Platform parameter grants skipped (already on a fresh project):"
+            grep -iE '^(GRANT|REVOKE) .* ON PARAMETER ' dump/roles.sql | sed 's/^/- /' || echo "- none"
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
+          # Platform tables the hosted postgres user may not write (storage.buckets_vectors and the like, owned by
+          # Supabase's own roles) can't be restored and are created empty by the platform. Ask scratch which tables
+          # outside our own schemas aren't writable, skip their rows, and list them with the rows they had: the
+          # compare step below still reports any auth or storage table whose count differs.
+          grep -oE '^COPY "[^"]+"\."[^"]+"' dump/data.sql | sed -E 's/^COPY //' | grep -vE '^"(public|private|pgmq)"\.' | sort -u > dump/platform-tables.txt
+          psql "$SCRATCH_DB_URL" -v ON_ERROR_STOP=1 -At -v list="$(cat dump/platform-tables.txt)" > dump/skip-tables.txt <<'SQL'
+          select t from unnest(string_to_array(:'list', E'\n')) t
+           where to_regclass(t) is null or not has_table_privilege(t, 'INSERT');
+          SQL
+          # Queue rows are in-flight jobs (the workers rebuild what's missing on their next tick); the queues
+          # themselves are created from production's list before the data goes in.
+          awk 'FNR == NR { skipt[$0] = 1; next }
+               BEGIN { skip = 0 }
+               /^COPY / { t = $2; if (t ~ /^"?pgmq"?\./ || (t in skipt)) { skip = 1; cur = t; rows[cur] = 0; next } }
+               skip && /^\\\.$/ { skip = 0; next }
+               skip { rows[cur]++; next }
+               /pg_catalog\.setval\(.?"?pgmq"?\./ { next }
+               { print }
+               END { for (t in rows) printf "%s %d\n", t, rows[t] > "dump/skipped-rows.txt" }' dump/skip-tables.txt dump/data.sql > dump/data-restore.sql
+          {
+            printf 'Queues re-created: %s. Queue rows (in-flight jobs) not restored. Cron jobs re-scheduled: %s.\n\n' "$(wc -l < dump/queues.sql)" "$(wc -l < dump/cron.sql)"
+            echo "Platform tables skipped (not writable on a hosted project), with the rows production had:"
+            grep -v '"pgmq"' dump/skipped-rows.txt | sort | sed 's/^/- /' || echo "- none"
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
           start=$(date +%s)
           psql --single-transaction --variable ON_ERROR_STOP=1 \
-            --file dump/roles.sql --file dump/schema.sql \
+            --file dump/roles-restore.sql --file dump/schema.sql --file dump/queues.sql \
             --command 'SET session_replication_role = replica' \
-            --file dump/data.sql --dbname "$SCRATCH_DB_URL"
+            --file dump/data-restore.sql --command 'SET session_replication_role = origin' \
+            --file dump/managed-objects.sql --file dump/cron.sql --file dump/migrations-schema.sql --file dump/migrations-data.sql --dbname "$SCRATCH_DB_URL"
           echo "RESTORE_SECONDS=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"
 
       - name: Re-create Vault secrets and deploy Edge Functions on scratch
         run: |
           read -r VAPID_PUBLIC VAPID_PRIVATE < <(node scripts/restore/vapid-keys.mjs)
-          psql "$SCRATCH_DB_URL" -v ON_ERROR_STOP=1 -v project_url="$SCRATCH_URL" \
-            -v vapid_public_key="$VAPID_PUBLIC" -v vapid_private_key="$VAPID_PRIVATE" -f scripts/restore/reseed-vault.sql
+          echo "::add-mask::$VAPID_PRIVATE"
+          echo "::add-mask::$VAPID_PUBLIC"
+          # Output to /dev/null: the script's SELECTs echo the values they store (run 8 printed the VAPID key pair).
+          psql "$SCRATCH_DB_URL" -q -v ON_ERROR_STOP=1 -v project_url="$SCRATCH_URL" \
+            -v vapid_public_key="$VAPID_PUBLIC" -v vapid_private_key="$VAPID_PRIVATE" -f scripts/restore/reseed-vault.sql > /dev/null
           pnpm exec supabase functions deploy --project-ref "$SCRATCH_SUPABASE_PROJECT_REF" --use-api
 
       - name: New CV signing key on scratch (old CVs still verify with the restored public keys)

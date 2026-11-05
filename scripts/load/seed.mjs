@@ -52,12 +52,25 @@ const rand = seeded(13);
 const log = (step, fields = {}) => console.log(JSON.stringify({ job: "load.seed", step, ...fields }));
 
 /** Runs `fn` as the signed-in user, inside one transaction, the way PostgREST would. */
+/**
+ * Runs `fn` as the signed-in user, inside one transaction, the way PostgREST would. A transaction Postgres cancels to
+ * break a deadlock (40P01) or a serialization failure (40001) is retried after a short random pause, as any client
+ * should; each one is logged with Postgres's detail, so a run shows where parallel writes collide.
+ */
 async function asUser(uid, fn) {
-  return sql.begin(async (tx) => {
-    await tx`select set_config('request.jwt.claims', ${JSON.stringify({ sub: uid, role: "authenticated", aal: "aal1" })}, true)`;
-    await tx.unsafe("set local role authenticated");
-    return fn(tx);
-  });
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await sql.begin(async (tx) => {
+        await tx`select set_config('request.jwt.claims', ${JSON.stringify({ sub: uid, role: "authenticated", aal: "aal1" })}, true)`;
+        await tx.unsafe("set local role authenticated");
+        return fn(tx);
+      });
+    } catch (e) {
+      if (!["40P01", "40001"].includes(e?.code) || attempt >= 5) throw e;
+      log("retry", { code: e.code, attempt, detail: e.detail, where: e.where });
+      await new Promise((r) => setTimeout(r, 50 + Math.random() * 250 * attempt));
+    }
+  }
 }
 
 /** Runs `fn` over items with at most `n` in flight. */
@@ -228,15 +241,27 @@ async function main() {
   await sql`update public.events set starts_at = now() + interval '90 minutes', ends_at = now() + interval '270 minutes' where id in ${sql(eventIds)}`;
   log("events", { events: events.length });
 
-  // 9. The Record: two past events per society; a slice of students attended and holds sealed entries.
-  const [{ sealed }] = await sql`select count(*)::int as sealed from public.record_entries r join public.profiles p on p.user_id = r.user_id where p.username like 'load\\_%' and r.status = 'sealed'`;
-  if (sealed === 0) {
-    for (const [si, s] of societies.entries()) {
-      for (let k = 0; k < 2; k++) {
+  // 9. The Record: past events whose attendees hold sealed entries. A top-up, not all-or-nothing: the students k6 signs
+  // in as (the first RECORD_FOCUS) who hold no entry yet attend about two past events each, so a re-run after a partial
+  // seed, or a larger LOAD_USERS, still gives /me/record and the transcript PDF real ledgers to read.
+  const focus = students.slice(0, Math.min(USERS, Number(process.env.LOAD_RECORD_FOCUS ?? "1000")));
+  const holders = new Set(
+    (await sql`select distinct user_id from public.record_entries where user_id in ${sql(focus)} and status in ('pending', 'sealed')`).map((r) => r.user_id),
+  );
+  const missing = focus.filter((id) => !holders.has(id));
+  if (missing.length) {
+    const tag = Date.now().toString(36);
+    await pool(
+      societies.flatMap((s, si) => [0, 1].map((k) => ({ s, si, k }))),
+      4,
+      async ({ s, si, k }) => {
+        // One student in ten per event, over 20 events: about two entries each.
+        const attendees = missing.filter((_, n) => (n + si * 7 + k * 3) % 10 === 0);
+        if (!attendees.length) return;
         const start = new Date(Date.now() + 3600_000);
         const eventId = await asUser(s.officer, async (tx) => {
           const [{ id }] = await tx`select public.save_society_event(${s.id}, ${sql.json({
-            type: "workshop", title: `Load past event ${si + 1}.${k + 1}`, description: "Attended by load students.", location: "Lab 3",
+            type: "workshop", title: `Load past event ${si + 1}.${k + 1} ${tag}`, description: "Attended by load students.", location: "Lab 3",
             sessions: [{ starts_at: start.toISOString(), ends_at: new Date(start.getTime() + 2 * 3600_000).toISOString() }],
             ticket_types: [{ name: "Participant", capacity: 20000 }], eligibility: { scope: "university" }, approval_mode: "automatic", record_kinds: ["attended"],
           })}) as id`;
@@ -244,32 +269,39 @@ async function main() {
           return id;
         });
         const [ticket] = await sql`select id from public.event_ticket_types where event_id = ${eventId}`;
-        // About 40% of students per event, so most hold one to four entries.
-        const attendees = students.filter((_, n) => (n + si * 7 + k * 3) % 5 < 2);
-        await pool(attendees, 8, async (uid) => {
+        await pool(attendees, 2, async (uid) => {
           await asUser(uid, (tx) => tx`select public.register_event(${eventId}, ${sql.json({ ticket_type_id: ticket.id })})`);
         });
-        for (let i = 0; i < attendees.length; i += 200) {
+        for (let i = 0; i < attendees.length; i += 100) {
           await asUser(s.officer, async (tx) => {
-            for (const uid of attendees.slice(i, i + 200)) await tx`select public.check_in_person(${eventId}, null, ${uid})`;
+            for (const uid of attendees.slice(i, i + 100)) await tx`select public.check_in_person(${eventId}, null, ${uid})`;
           });
         }
         await sql`update public.event_sessions set starts_at = now() - interval '3 hours', ends_at = now() - interval '1 hour' where event_id = ${eventId}`;
         await sql`update public.events set starts_at = now() - interval '3 hours', ends_at = now() - interval '1 hour', status = 'ended' where id = ${eventId}`;
         await asUser(s.president, (tx) => tx`select public.issue_event_entries(${eventId})`);
-      }
-    }
-    // Seal them with the cv-sign worker's own code (needs an active signing key; the drill and E2E rotate one the same way).
+      },
+    );
+  }
+  log("record_issued", { students_topped_up: missing.length });
+  // Seal everything pending with the cv-sign worker's own code, eight drainers at once (pgmq hands each message to
+  // one reader). The project's own record-worker cron seals too, but at about 50 a minute.
+  const [{ pending }] = await sql`select count(*)::int as pending from public.record_entries where status = 'pending'`;
+  if (pending > 0) {
     const { rotateKey } = await import("../../supabase/functions/_shared/cv/issue.ts");
     const { drainRecordQueue } = await import("../../supabase/functions/_shared/cv/record.ts");
     const { dbFrom } = await import("../../supabase/functions/_shared/github/types.ts");
     const quiet = () => undefined;
     const [active] = await sql`select key_id from public.signing_keys where retired_at is null`;
     if (!active) await rotateKey({ db: dbFrom(sql), log: quiet });
-    for (let round = 0; round < 5000; round++) {
-      const r = await drainRecordQueue({ db: dbFrom(sql), log: quiet }, 200);
-      if (r.sealed + r.skipped + r.failed + r.dropped === 0) break;
-    }
+    await Promise.all(
+      Array.from({ length: 8 }, async () => {
+        for (let round = 0; round < 5000; round++) {
+          const r = await drainRecordQueue({ db: dbFrom(sql), log: quiet }, 25);
+          if (r.sealed + r.skipped + r.failed + r.dropped === 0) break;
+        }
+      }),
+    );
   }
   const [{ entries }] = await sql`select count(*)::int as entries from public.record_entries r join public.profiles p on p.user_id = r.user_id where p.username like 'load\\_%' and r.status = 'sealed'`;
   log("record", { sealed_entries: entries });
@@ -283,7 +315,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error(JSON.stringify({ job: "load.seed", outcome: "error", error: String(e?.message ?? e) }));
+    console.error(JSON.stringify({ job: "load.seed", outcome: "error", error: String(e?.message ?? e), code: e?.code, detail: e?.detail, where: e?.where, query: e?.query?.slice(0, 300) }));
     process.exitCode = 1;
   })
   .finally(() => sql.end());

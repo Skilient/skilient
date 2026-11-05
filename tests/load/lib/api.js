@@ -12,7 +12,6 @@ const COOKIE = __ENV.LOAD_COOKIE || "__Secure-skl-auth";
 // @supabase/ssr splits cookie values longer than this into name.0, name.1, …
 const CHUNK = 3180;
 
-export const pageTtfb = new Trend("page_ttfb", true);
 
 /** Signs in with the password grant (the same Auth call the sign-in form makes). Returns the session. */
 export function signIn(email) {
@@ -38,6 +37,11 @@ export function rpc(who, fn, args = {}) {
   return res;
 }
 
+/** One RPC as an http.batch entry. */
+export function rpcRequest(who, fn, args = {}) {
+  return ["POST", `${SUPABASE_URL}/rest/v1/rpc/${fn}`, JSON.stringify(args), { headers: json(who.token), tags: { name: `rpc.${fn}`, kind: "rpc" } }];
+}
+
 /** The same RPC without blocking the event loop (used while a Realtime socket is open). */
 export function rpcAsync(who, fn, args = {}) {
   return http.asyncRequest("POST", `${SUPABASE_URL}/rest/v1/rpc/${fn}`, JSON.stringify(args), { headers: json(who.token), tags: { name: `rpc.${fn}`, kind: "rpc" } });
@@ -49,17 +53,47 @@ export function select(who, path, name) {
   return res;
 }
 
-/** A signed-in page, as a browser's first request for it. Records TTFB; fails on a redirect away or an error. */
-export function page(who, path, name, extra) {
-  const res = http.get(`${APP_URL}${path}`, {
-    headers: { Cookie: who.cookie, Accept: "text/html", "Accept-Encoding": "gzip, br" },
-    redirects: 0,
-    tags: { name: `page.${name}`, kind: "page" },
-  });
-  pageTtfb.add(res.timings.waiting, { page: name });
-  check(res, { [`${name} page 200`]: (r) => r.status === 200 });
-  if (extra) extra.add(res.timings.duration, { page: name });
-  return res;
+/**
+ * A signed-in page's database work, without Vercel in between (decisions 2026-11-05: on Vercel Hobby the
+ * platform's DDoS mitigation challenges every non-browser request from one address, and only Pro can bypass
+ * it). It replays what the server does for that page, measured on the local stack: the proxy's getUser() and
+ * my_gate_state(), then the layout's getUser(), my_restriction(), tour_state(), touch_activity() and profile,
+ * with the page's own reads, in parallel as the render runs them. `calls` is a list of [rpc, args] or
+ * ["rest", path]. Real pages through Vercel are measured by the vitals scenario's browsers.
+ */
+export const pageData = new Trend("page_data", true);
+export function page(who, name, calls, extra) {
+  const auth = { apikey: PUBLISHABLE_KEY, Authorization: `Bearer ${who.token}` };
+  const start = Date.now();
+  const proxyUser = http.get(`${SUPABASE_URL}/auth/v1/user`, { headers: auth, tags: { name: "auth.get_user", kind: "auth" } });
+  const gate = http.post(`${SUPABASE_URL}/rest/v1/rpc/my_gate_state`, "{}", { headers: json(who.token), tags: { name: "rpc.my_gate_state", kind: "page" } });
+  const all = [
+    ["user"],
+    ["rpc", "my_restriction", {}],
+    ["rpc", "tour_state", { p_tour: "student" }],
+    ["rpc", "touch_activity", {}],
+    ["rest", `profiles?user_id=eq.${who.userId}&select=full_name,username`],
+    ...calls.map((c) => (c[0] === "rest" ? c : ["rpc", c[0], c[1] || {}])),
+  ];
+  const responses = http.batch(
+    all.map(([kind, what, args]) =>
+      kind === "user"
+        ? ["GET", `${SUPABASE_URL}/auth/v1/user`, null, { headers: auth, tags: { name: "auth.get_user", kind: "auth" } }]
+        : kind === "rest"
+          ? ["GET", `${SUPABASE_URL}/rest/v1/${what}`, null, { headers: json(who.token), tags: { name: `page.${name}.rest`, kind: "page" } }]
+          : ["POST", `${SUPABASE_URL}/rest/v1/rpc/${what}`, JSON.stringify(args), { headers: json(who.token), tags: { name: `rpc.${what}`, kind: "page" } }],
+    ),
+  );
+  const ms = Date.now() - start;
+  pageData.add(ms, { page: name });
+  if (extra) extra.add(ms, { page: name });
+  const failed = [proxyUser, gate, ...responses]
+    .map((r, i) => [r, i < 2 ? ["auth.get_user", "my_gate_state"][i] : all[i - 2][1] || "auth.get_user"])
+    .filter(([r]) => r.status < 200 || r.status >= 300);
+  if (!check(failed, { [`${name} page data`]: (f) => f.length === 0 })) {
+    console.warn(`page ${name}: ${failed.map(([r, what]) => `${what} ${r.status}`).join(", ")}`);
+  }
+  return responses.slice(5);
 }
 
 export function appPost(who, path, body, name) {

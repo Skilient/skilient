@@ -2,12 +2,16 @@
  * Busy-hour load test (PRD 10 "Load test before launch"; phase 13, docs/load-test.md).
  *
  * 300 concurrent students for 30 minutes, in the mix a results day or an event day brings:
- *   browse  150  feed first page and paging, survey answers, Openings and a category, My Record
+ *   browse  155  feed first page and paging, survey answers, Openings and a category, My Record
  *   social   60  chat with a friend (Realtime delivery), a comment on their post (their badge), the chat page
  *   search   40  Explore, people, ventures and chat search
  *   events   45  an event page, registering (some events have 25 seats), the ticket, an officer's scan
- *   pdf       5  the Record transcript PDF
- *   vitals    2  a throttled phone in a real browser: LCP, INP, CLS on /feed, /openings, /me/record, an event
+ *   vitals    2  a throttled phone in a real browser through Vercel: LCP, INP, CLS on /feed, /openings,
+ *                /me/record (and its transcript PDF), an event
+ *
+ * The 298 API users replay each page's database work straight against Supabase (lib/api.js page()); on
+ * Vercel Hobby the platform's DDoS mitigation challenges non-browser traffic from one address
+ * (decisions 2026-11-05), so only the browsers go through Vercel.
  *
  * Accounts and events come from scripts/load/seed.mjs (LOAD_FIXTURES). LOAD_SCALE shrinks every scenario
  * (0.01 is the local smoke run); LOAD_RAMP and LOAD_HOLD set the ramp and the steady stretch.
@@ -16,9 +20,10 @@
  */
 import exec from "k6/execution";
 import { browser } from "k6/browser";
+import http from "k6/http";
 import { check, sleep } from "k6";
 import { Counter, Trend } from "k6/metrics";
-import { APP_URL, appPost, page, rpc, rpcAsync, select, signIn } from "./lib/api.js";
+import { APP_URL, page, rpc, rpcAsync, rpcRequest, select, signIn } from "./lib/api.js";
 import { connect } from "./lib/realtime.js";
 import { THRESHOLDS } from "./lib/thresholds.js";
 import { partnerOf, userEmail, username } from "./lib/users.js";
@@ -27,7 +32,7 @@ const FIXTURES = JSON.parse(open(__ENV.LOAD_FIXTURES || "./fixtures.json"));
 const SCALE = Number(__ENV.LOAD_SCALE || "1");
 const RAMP = __ENV.LOAD_RAMP || "5m";
 const HOLD = __ENV.LOAD_HOLD || "30m";
-const MIX = { browse: 150, social: 60, search: 40, events: 45, pdf: 5 };
+const MIX = { browse: 155, social: 60, search: 40, events: 45 };
 const TOTAL = Object.values(MIX).reduce((a, b) => a + Math.max(1, Math.round(b * SCALE)), 0);
 const USERS = FIXTURES.users;
 
@@ -91,9 +96,33 @@ export function setup() {
 /** Feed, survey, Openings and My Record. */
 export function browse() {
   const who = as(me());
-  page(who, "/feed", "feed", feedFirstPage);
-  // The page rendered the first 20; load-more starts from its cursor (fetched here, not timed).
-  let rows = rpc(who, "feed_page", { p_audience: "university", p_filter: "all", p_limit: 20 }).json() || [];
+  // /feed: the first page of the ranked feed and the home widgets, then the cards for those posts.
+  const t0 = Date.now();
+  const [feed] = page(who, "feed", [
+    ["feed_page", { p_audience: "university", p_filter: "all", p_limit: 20 }],
+    ["next_best_action"],
+    ["todo_counts"],
+    ["followed_venture_updates", { p_limit: 10 }],
+    ["my_score"],
+    ["my_ecosphere"],
+    ["getting_started"],
+    ["my_uni_questions"],
+    ["my_officer_societies"],
+    ["is_staff"],
+    ["pinned_announcement"],
+    ["pinned_university_announcement"],
+    ["rest", "ui_state?select=key,value"],
+  ]);
+  let rows = (feed.status === 200 && feed.json()) || [];
+  const firstIds = rows.map((r) => r.post_id);
+  if (firstIds.length) {
+    const cards = http.batch([
+      rpcRequest(who, "post_cards", { p_ids: firstIds }),
+      rpcRequest(who, "survey_for_posts", { p_ids: firstIds.slice(0, 6) }),
+    ]);
+    for (const r of cards) check(r, { "feed cards ok": (x) => x.status === 200 });
+  }
+  feedFirstPage.add(Date.now() - t0);
   for (let i = 0; i < 2 && rows.length && rows[0].next_cursor; i++) {
     think(2, 5);
     const t0 = Date.now();
@@ -114,15 +143,21 @@ export function browse() {
     }
   }
   think(3, 6);
-  page(who, "/openings", "openings", openingsReady);
+  page(who, "openings", [["openings_overview"], ["rest", "tips_seen?select=tip_id"]], openingsReady);
   think(2, 4);
-  const category = ["events", "inductions", "venture-roles", "this-week"][exec.scenario.iterationInTest % 4];
-  page(who, `/openings/${category}`, "openings_category");
+  const category = ["events", "inductions", "venture_roles", "this_week"][exec.scenario.iterationInTest % 4];
+  page(
+    who,
+    "openings_category",
+    category === "this_week"
+      ? [["openings_this_week"]]
+      : [["openings", { p_category: category, p_sort: "newest", p_matched_only: false, p_q: null, p_after: 0 }]],
+  );
   think(3, 6);
-  page(who, "/me/record", "record", recordReady);
+  page(who, "record", [["my_record"]], recordReady);
   if (exec.scenario.iterationInTest % 3 === 0) {
     think(2, 4);
-    page(who, "/notifications", "notifications");
+    page(who, "notifications", [["my_notifications", { p_limit: 50 }]]);
   }
   think(4, 8);
 }
@@ -134,7 +169,7 @@ export async function social() {
   const b = as(bn);
   a.thread = a.thread || rpc(a, "get_or_create_dm", { p_username: username(bn) }).json();
   a.partnerPost = a.partnerPost || (select(a, `posts?author_id=eq.${b.userId}&select=id&order=created_at.desc&limit=1`, "rest.partner_post").json()[0] || {}).id;
-  page(a, `/chat/${a.thread}`, "chat_thread");
+  page(a, "chat_thread", [["my_threads"], ["thread_messages", { p_thread: a.thread, p_limit: 50 }]]);
 
   const rt = connect();
   if (!check(await rt.open(), { "realtime connected": (ok) => ok })) return;
@@ -172,7 +207,11 @@ export async function social() {
 /** Explore and the three searches. */
 export function search() {
   const who = as(me());
-  page(who, "/explore?q=Load", "explore");
+  page(who, "explore", [
+    ["search_people", { p_q: "Load", p_offset: 0 }],
+    ["rest", "universities?select=slug,name&limit=200"],
+    ["rest", "skills?select=id,name&limit=200"],
+  ]);
   const terms = ["Timetable", "Campus", "Lab", "Bus", "Study"];
   for (let i = 0; i < 3; i++) {
     think(2, 4);
@@ -204,7 +243,7 @@ export function events(data) {
   }
   const event = todo[Math.floor(Math.random() * todo.length)];
   state.done[`${n}:${event.id}`] = true;
-  page(who, `/events/${event.id}`, "event");
+  page(who, "event", [["event_page", { p_event: event.id }]]);
   think(3, 8);
   const reg = rpc(who, "register_event", { p_event: event.id, p: { ticket_type_id: event.ticket } });
   eventRegistered.add(reg.timings.duration);
@@ -212,8 +251,8 @@ export function events(data) {
   check(status, { "registered or waitlisted": (s) => ["confirmed", "waitlisted", "pending"].includes(s) });
   if (status === "confirmed") {
     think(2, 5);
-    page(who, `/events/${event.id}/ticket`, "ticket");
-    const ticket = rpc(who, "event_ticket", { p_event: event.id }).json();
+    const [ticketRes] = page(who, "ticket", [["event_ticket", { p_event: event.id }]]);
+    const ticket = ticketRes.status === 200 ? ticketRes.json() : {};
     const officer = data.officers[event.society];
     const scan = rpc(officer, "check_in_scan", { p_event: event.id, p_session: null, p_payload: ticket.payload });
     eventCheckedIn.add(scan.timings.duration);
@@ -224,21 +263,6 @@ export function events(data) {
     }
   }
   think(5, 12);
-}
-
-/** The Record transcript PDF (5 a minute per student, so each iteration moves to the next student). */
-export function pdf() {
-  const state = (sessions.pdf = sessions.pdf || { k: 0 });
-  const n = me() + state.k++ * TOTAL;
-  if (n > USERS) {
-    think(30, 60);
-    return;
-  }
-  const who = as(n);
-  page(who, "/me/record", "record", recordReady);
-  const res = appPost(who, "/api/record/pdf", { kind: "transcript" }, "route.record_pdf");
-  pdfReady.add(res.timings.duration);
-  think(20, 40);
 }
 
 /**
@@ -262,6 +286,16 @@ export async function vitals() {
     const event = FIXTURES.events[exec.scenario.iterationInTest % FIXTURES.events.length];
     for (const path of ["/feed", "/openings", "/me/record", `/events/${event.id}`]) {
       await tab.goto(`${APP_URL}${path}`, { waitUntil: "load" });
+      if (path === "/me/record") {
+        // The transcript PDF from the page, as the download button asks for it (the same Chromium path as the CV).
+        const [status, ms] = await tab.evaluate(async () => {
+          const t = performance.now();
+          const r = await fetch("/api/record/pdf", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ kind: "transcript" }) });
+          await r.arrayBuffer();
+          return [r.status, performance.now() - t];
+        });
+        if (check(status, { "record pdf 200": (s) => s === 200 })) pdfReady.add(ms);
+      }
       // One interaction per page so INP has something to measure: open the first menu or tab, then Escape.
       await tab.keyboard.press("Tab");
       await tab.keyboard.press("Tab");

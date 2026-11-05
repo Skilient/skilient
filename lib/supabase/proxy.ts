@@ -66,6 +66,35 @@ export function rewriteWithCookies(request: NextRequest, from: NextResponse, to:
   return res;
 }
 
+/**
+ * True when a failed Auth or database call says nothing about the session: the network, a timeout, a
+ * full connection pool or a 5xx. The proxy then answers 503 and keeps the session, instead of reading
+ * the failure as "no profile" and signing the student out (found by the phase 13 load test).
+ */
+export function isTransientError(error: { status?: number; name?: string; code?: string } | null | undefined): boolean {
+  if (!error) return false;
+  if (error.name === "AuthRetryableFetchError") return true;
+  const status = error.status;
+  // Postgres: statement timeout (57014), too many connections (53300), cannot connect now (57P03); PostgREST: no database or pool timeout (PGRST000-003).
+  if (error.code && ["57014", "53300", "57P03", "PGRST000", "PGRST001", "PGRST002", "PGRST003"].includes(error.code)) return true;
+  return status === undefined || status === 0 || status >= 500;
+}
+
+/** A 503 that keeps the refreshed auth cookies: the page is busy, the session is untouched. */
+export function busyWithCookies(from: NextResponse): NextResponse {
+  const body =
+    '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
+    "<title>Skilient is busy</title><h1>Skilient is busy</h1><p>We could not load this page just now. You are still signed in.</p>" +
+    '<p><a href="">Try again</a></p></html>';
+  const res = new NextResponse(body, { status: 503, headers: { "content-type": "text/html; charset=utf-8", "retry-after": "5", "cache-control": "no-store" } });
+  for (const cookie of from.cookies.getAll()) res.cookies.set(cookie);
+  for (const key of ["x-request-id", "content-security-policy", "reporting-endpoints"]) {
+    const value = from.headers.get(key);
+    if (value) res.headers.set(key, value);
+  }
+  return res;
+}
+
 export function hasVerifiedFactor(user: User | null): boolean {
   return !!user?.factors?.some((f) => f.status === "verified");
 }

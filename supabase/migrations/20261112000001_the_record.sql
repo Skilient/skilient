@@ -1905,7 +1905,8 @@ end;
 $$;
 
 -- The change is announced in-app to every scored student (PRD 5.13) and applied by the next nightly run.
-select private.notify(s.user_id, null, 'ranking_formula', 'ranking', null,
+-- notifications.entity_id is required: the entity is the student's own score (ranking_scores is one row per student).
+select private.notify(s.user_id, null, 'ranking_formula', 'ranking', s.user_id,
                       jsonb_build_object('version', 2, 'component', 'record', 'max', 100))
   from public.ranking_scores s;
 

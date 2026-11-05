@@ -45,7 +45,7 @@ describe("k6 thresholds", () => {
   it("map every PRD 10 load-testable target", () => {
     const keys = Object.keys(THRESHOLDS).join(" ");
     for (const metric of [
-      "http_req_failed", "checks", "page_ttfb", "feed_first_page", "feed_next_page", "survey_saved", "chat_delivered",
+      "http_req_failed", "checks", "page_data", "feed_first_page", "feed_next_page", "survey_saved", "chat_delivered",
       "search_results", "badge_update", "pdf_ready", "browser_web_vital_lcp", "browser_web_vital_inp", "browser_web_vital_cls",
       "openings_ready", "record_ready", "event_registered", "event_checked_in", "oversold",
     ]) {

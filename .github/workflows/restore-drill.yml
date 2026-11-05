@@ -29,7 +29,9 @@ env:
 jobs:
   drill:
     name: Production → scratch
-    runs-on: ubuntu-latest
+    # GitHub-hosted minutes are used up and the budget is $0 (decisions 2026-11-05), so this runs on Ahmed's own
+    # Linux machine registered as a self-hosted runner with the label `skilient` (docs/self-hosted-runner.md).
+    runs-on: [self-hosted, linux, skilient]
     # The schema restore sends about 9,000 statements one at a time from a US runner to Mumbai (~35 minutes).
     timeout-minutes: 180
     # Same environment as the migrate job, so the same secrets are visible.
@@ -59,7 +61,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Postgres client
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client > /dev/null
+        # Already installed on the runner machine (docs/self-hosted-runner.md); installed only if missing.
+        run: command -v psql || (sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client > /dev/null)
 
       - name: Connection strings and keys
         run: |

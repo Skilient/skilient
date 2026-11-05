@@ -52,12 +52,25 @@ const rand = seeded(13);
 const log = (step, fields = {}) => console.log(JSON.stringify({ job: "load.seed", step, ...fields }));
 
 /** Runs `fn` as the signed-in user, inside one transaction, the way PostgREST would. */
+/**
+ * Runs `fn` as the signed-in user, inside one transaction, the way PostgREST would. A transaction Postgres cancels to
+ * break a deadlock (40P01) or a serialization failure (40001) is retried after a short random pause, as any client
+ * should; each one is logged with Postgres's detail, so a run shows where parallel writes collide.
+ */
 async function asUser(uid, fn) {
-  return sql.begin(async (tx) => {
-    await tx`select set_config('request.jwt.claims', ${JSON.stringify({ sub: uid, role: "authenticated", aal: "aal1" })}, true)`;
-    await tx.unsafe("set local role authenticated");
-    return fn(tx);
-  });
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await sql.begin(async (tx) => {
+        await tx`select set_config('request.jwt.claims', ${JSON.stringify({ sub: uid, role: "authenticated", aal: "aal1" })}, true)`;
+        await tx.unsafe("set local role authenticated");
+        return fn(tx);
+      });
+    } catch (e) {
+      if (!["40P01", "40001"].includes(e?.code) || attempt >= 5) throw e;
+      log("retry", { code: e.code, attempt, detail: e.detail, where: e.where });
+      await new Promise((r) => setTimeout(r, 50 + Math.random() * 250 * attempt));
+    }
+  }
 }
 
 /** Runs `fn` over items with at most `n` in flight. */
@@ -283,7 +296,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error(JSON.stringify({ job: "load.seed", outcome: "error", error: String(e?.message ?? e) }));
+    console.error(JSON.stringify({ job: "load.seed", outcome: "error", error: String(e?.message ?? e), code: e?.code, detail: e?.detail, where: e?.where, query: e?.query?.slice(0, 300) }));
     process.exitCode = 1;
   })
   .finally(() => sql.end());

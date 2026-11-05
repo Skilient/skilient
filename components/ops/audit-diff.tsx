@@ -21,8 +21,8 @@ export function AuditDiff({ before, after }: { before: unknown; after: unknown }
               {r.key}
               {r.changed ? <span className="ml-1 font-sans font-normal text-text-secondary">(changed)</span> : null}
             </th>
-            <td className="max-w-[320px] py-1 pr-3 break-all">{r.before ?? "—"}</td>
-            <td className="max-w-[320px] py-1 break-all">{r.after ?? "—"}</td>
+            <td className="max-w-[320px] py-1 pr-3 break-all">{r.before ?? "Not set"}</td>
+            <td className="max-w-[320px] py-1 break-all">{r.after ?? "Not set"}</td>
           </tr>
         ))}
       </tbody>

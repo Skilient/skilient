@@ -47,7 +47,7 @@ export default async function OpsUniversityPage({ params, searchParams }: PagePr
         <Badge>Plan: {u.plan ?? "free"}</Badge>
       </header>
       <p className="text-body-sm text-text-secondary">
-        {u.city ?? "—"} · {u.students} students
+        {u.city ?? "City not set"} · {u.students} students
         {u.slug ? (
           <>
             {" "}
@@ -91,7 +91,7 @@ export default async function OpsUniversityPage({ params, searchParams }: PagePr
               testId="uni-admins"
               head={["Person", "Email", "Role", "Since"]}
               empty="No admins yet."
-              rows={u.admins.map((a) => [a.name ?? "—", <span key="e" className="font-mono text-code-sm">{a.email}</span>, a.department ? `${a.role} (${a.department})` : a.role, dayLabel(a.since)])}
+              rows={u.admins.map((a) => [a.name ?? "Not set", <span key="e" className="font-mono text-code-sm">{a.email}</span>, a.department ? `${a.role} (${a.department})` : a.role, dayLabel(a.since)])}
             />
             {u.invites ? <p className="text-caption text-text-secondary">{u.invites} invite(s) waiting.</p> : null}
           </section>
@@ -189,7 +189,7 @@ export default async function OpsUniversityPage({ params, searchParams }: PagePr
             </div>
             <div className="sm:col-span-2">
               <dt className="text-caption text-text-secondary">Welcome</dt>
-              <dd className="text-body-sm break-words">{u.ecosphere.welcome ?? "—"}</dd>
+              <dd className="text-body-sm break-words">{u.ecosphere.welcome ?? "Not set"}</dd>
             </div>
             <div>
               <dt className="text-caption text-text-secondary">Last changed</dt>

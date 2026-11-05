@@ -192,7 +192,7 @@ export function CheckInConsole({
 
       <div role="status" aria-live="assertive" className="min-h-16">
         {result ? (
-          <div className={cn("neu-card flex items-center gap-3 border-l-4 p-4", tone)} data-testid="check-in-result" data-result={result.result}>
+          <div className={cn("neu-card flex items-center gap-3 border-2 p-4", tone)} data-testid="check-in-result" data-result={result.result}>
             {result.result === "green" ? (
               <CheckCircle aria-hidden weight="fill" className="size-8 text-success" />
             ) : result.result === "amber" ? (

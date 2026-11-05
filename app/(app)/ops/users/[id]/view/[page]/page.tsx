@@ -23,7 +23,7 @@ const LABELS: Record<ViewPage, string> = {
 
 type Doc = Record<string, unknown>;
 const list = (v: unknown) => (Array.isArray(v) ? (v as Doc[]) : []);
-const txt = (v: unknown) => (v === null || v === undefined || v === "" ? "—" : String(v));
+const txt = (v: unknown) => (v === null || v === undefined || v === "" ? "Not set" : String(v));
 
 function Row({ k, children }: { k: string; children: ReactNode }) {
   return (
@@ -94,7 +94,7 @@ export default async function ViewAsPage({ params }: PageProps<"/ops/users/[id]/
           <div className="flex flex-col gap-4">
             <dl className="grid gap-3 sm:grid-cols-3">
               <Row k="Name">{txt(d.name)}</Row>
-              <Row k="Username">{d.username ? `@${String(d.username)}` : "—"}</Row>
+              <Row k="Username">{d.username ? `@${String(d.username)}` : "Not set"}</Row>
               <Row k="University">{txt(d.university)}</Row>
               <Row k="Department">{txt(d.department)}{d.graduation_year ? `, ${String(d.graduation_year)}` : ""}</Row>
               <Row k="Visibility">{txt(d.visibility)}</Row>
@@ -117,7 +117,7 @@ export default async function ViewAsPage({ params }: PageProps<"/ops/users/[id]/
               <p className="text-body-sm text-text-secondary">No score yet.</p>
             )}
             <Items rows={list(d.skills)} empty="No skills yet." render={(s) => `${txt(s.skill)} · L${txt(s.level)} · ${txt(s.repos)} repos`} />
-            <Items rows={list(d.work)} empty="No ventures." render={(v) => `${txt(v.title)} (${txt(v.role)}), joined ${v.joined_at ? dayLabel(String(v.joined_at)) : "—"}`} />
+            <Items rows={list(d.work)} empty="No ventures." render={(v) => `${txt(v.title)} (${txt(v.role)}), joined ${v.joined_at ? dayLabel(String(v.joined_at)) : "Not set"}`} />
           </div>
         ) : page === "cv" ? (
           <div className="flex flex-col gap-3">
@@ -125,7 +125,7 @@ export default async function ViewAsPage({ params }: PageProps<"/ops/users/[id]/
             <Items
               rows={list(d.records)}
               empty="No verified CV yet."
-              render={(r) => `${txt(r.code)} v${txt(r.version)}, issued ${r.issued_at ? dayLabel(String(r.issued_at)) : "—"}${r.revoked_at ? `, revoked (${txt(r.revoked_reason)})` : ""}`}
+              render={(r) => `${txt(r.code)} v${txt(r.version)}, issued ${r.issued_at ? dayLabel(String(r.issued_at)) : "Not set"}${r.revoked_at ? `, revoked (${txt(r.revoked_reason)})` : ""}`}
             />
           </div>
         ) : page === "opportunities" ? (

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: { type: "website", siteName: "Skilient", locale: "en_PK" },
   twitter: { card: "summary_large_image" },
   title: {
-    default: "Skilient — Prove it. Don't claim it.",
+    default: "Skilient: Prove it. Don't claim it.",
     template: "%s · Skilient",
   },
   description:

@@ -34,7 +34,8 @@ export function Card({ children, className, testId }: { children: ReactNode; cla
 export function DataTable({ head, rows, testId, empty }: { head: string[]; rows: ReactNode[][]; testId?: string; empty?: string }) {
   if (rows.length === 0) return <p className="text-body text-text-secondary">{empty ?? "Nothing here yet."}</p>;
   return (
-    <div className="overflow-x-auto rounded-lg border border-border-default bg-bg-surface">
+    // Scrolls sideways on phones, so it takes focus and arrow keys can scroll it (axe scrollable-region-focusable).
+    <div tabIndex={0} role="region" aria-label="Table, scrolls sideways" className="overflow-x-auto rounded-lg border border-border-default bg-bg-surface">
       <table className="w-full min-w-[520px] text-left text-body-sm" data-testid={testId}>
         <thead className="border-b border-border-default bg-bg-subtle text-caption text-text-secondary">
           <tr>

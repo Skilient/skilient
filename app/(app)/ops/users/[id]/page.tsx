@@ -76,10 +76,10 @@ export default async function OpsUserPage({ params, searchParams }: PageProps<"/
         <>
           <dl className="grid gap-x-6 gap-y-3 rounded-lg border border-border-default bg-bg-surface p-4 sm:grid-cols-3" data-testid="user-account">
             <Row k="Email">{a.email}{a.emailConfirmed ? "" : " (not confirmed)"}</Row>
-            <Row k="Username">{a.username ? `@${a.username}` : "—"}</Row>
+            <Row k="Username">{a.username ? `@${a.username}` : "Not set"}</Row>
             <Row k="Role">{a.role}{a.staffRoles.length ? ` · staff: ${a.staffRoles.join(", ")}` : ""}</Row>
-            <Row k="University">{a.university ?? "—"}</Row>
-            <Row k="Department">{a.department ?? "—"}{a.graduationYear ? `, ${a.graduationYear}` : ""}</Row>
+            <Row k="University">{a.university ?? "Not set"}</Row>
+            <Row k="Department">{a.department ?? "Not set"}{a.graduationYear ? `, ${a.graduationYear}` : ""}</Row>
             <Row k="Profile visibility">{a.visibility}</Row>
             <Row k="Joined">{a.joined}</Row>
             <Row k="Last sign-in">{a.lastSignIn ?? "Never"}</Row>
@@ -153,7 +153,7 @@ export default async function OpsUserPage({ params, searchParams }: PageProps<"/
             {r.score ? (
               <dl className="mt-2 grid gap-3 sm:grid-cols-4">
                 <Row k="Total">{r.score.total}{r.score.held ? " (held)" : ""}</Row>
-                <Row k="Tier">{r.score.tier ?? (r.score.ranked ? "—" : "Not ranked yet")}</Row>
+                <Row k="Tier">{r.score.tier ?? (r.score.ranked ? "Not set" : "Not ranked yet")}</Row>
                 <Row k="Proof / momentum / adjustments">{r.score.proof} / {r.score.momentum} / {r.score.adjustments}</Row>
                 <Row k="Computed">{r.score.computed} (formula v{r.score.formulaVersion})</Row>
               </dl>

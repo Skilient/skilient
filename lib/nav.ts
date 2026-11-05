@@ -83,6 +83,9 @@ export const PRIMARY_NAV: NavItem[] = [
       { label: "Inductions", href: "/openings/inductions", keywords: ["societies", "recruitment"] },
       { label: "Events", href: "/openings/events", match: ["/openings/events"] },
       { label: "Project ideas", href: "/openings/ideas", match: ["/openings/ideas", "/ideas"] },
+      // Every Openings card has its row, so its page never highlights "All openings" (design gates 2026-11-04).
+      { label: "Paths", href: "/openings/paths", keywords: ["what to learn"] },
+      { label: "Skill swaps", href: "/openings/swaps", keywords: ["learn", "teach"] },
     ],
   },
   {

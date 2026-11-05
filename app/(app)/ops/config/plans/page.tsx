@@ -6,7 +6,7 @@ import { staffRoles } from "@/lib/data/ops-trust";
 
 export const metadata: Metadata = { title: "Plan prices" };
 
-const fmt = (n: number | null, cur: string) => (n === null ? "—" : `${cur} ${n.toLocaleString("en-PK", { maximumFractionDigits: 2 })}`);
+const fmt = (n: number | null, cur: string) => (n === null ? "Not set" : `${cur} ${n.toLocaleString("en-PK", { maximumFractionDigits: 2 })}`);
 
 /** /ops/config/plans (PRD 5.26): plan prices; super admins change them (audited), for new subscriptions and renewals. */
 export default async function OpsPlansPage() {

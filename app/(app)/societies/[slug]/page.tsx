@@ -46,12 +46,11 @@ export default async function SocietyPageRoute({ params, searchParams }: PagePro
   return (
     <main className="mx-auto flex w-full max-w-page flex-col gap-6 px-[var(--page-gutter)] py-6" data-testid="society-page">
       <header className="neu-card flex flex-col overflow-hidden">
+        {/* No cover, no placeholder: an empty well read as a blank field (design gates 2026-11-04). */}
         {s.coverUrl ? (
           // eslint-disable-next-line @next/next/no-img-element -- society cover from the public bucket
           <img src={s.coverUrl} alt="" className="h-40 w-full object-cover sm:h-56" />
-        ) : (
-          <div aria-hidden className="neu-well h-24 sm:h-32" />
-        )}
+        ) : null}
         <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex items-start gap-4">
             <Avatar name={s.name} src={s.logoUrl} size="xl" />

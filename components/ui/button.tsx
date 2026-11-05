@@ -40,7 +40,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const buttonClass = (variant: ButtonVariant = "primary", size: ButtonSize = "md", className?: string) =>
   cn(
-    "relative inline-flex select-none items-center justify-center overflow-hidden rounded-full font-sans font-semibold whitespace-nowrap",
+    // shrink-0: a nowrap label in a flex row beside a full-width input was squeezed and clipped (design gates 2026-11-04).
+    "relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full font-sans font-semibold whitespace-nowrap",
     "transition-[box-shadow,background-color] duration-[140ms] ease-out",
     "disabled:cursor-not-allowed disabled:border-transparent disabled:bg-bg-surface disabled:text-text-disabled disabled:shadow-none",
     "aria-disabled:cursor-not-allowed aria-disabled:bg-bg-surface aria-disabled:text-text-disabled aria-disabled:shadow-none",

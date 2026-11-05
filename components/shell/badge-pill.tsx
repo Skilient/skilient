@@ -1,8 +1,12 @@
 import { badgeLabel } from "@/lib/nav";
 import { cn } from "@/lib/cn";
 
-/** The count on a nav item: text as well as colour. The link's own aria-label says "n unread". */
-export function BadgePill({ count, className, testId }: { count: number; className?: string; testId?: string }) {
+/**
+ * The count on a nav item: text as well as colour. Icon-only links say "n unread" in their own aria-label;
+ * a link with a visible label passes `srSuffix` instead, so its name starts with the words people see
+ * (WCAG 2.5.3, axe label-content-name-mismatch).
+ */
+export function BadgePill({ count, className, testId, srSuffix }: { count: number; className?: string; testId?: string; srSuffix?: string }) {
   if (count <= 0) return null;
   return (
     <span
@@ -10,6 +14,7 @@ export function BadgePill({ count, className, testId }: { count: number; classNa
       data-testid={testId}
     >
       {badgeLabel(count)}
+      {srSuffix ? <span className="sr-only"> {srSuffix}</span> : null}
     </span>
   );
 }

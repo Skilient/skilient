@@ -57,7 +57,11 @@ export function page(who, path, name, extra) {
     tags: { name: `page.${name}`, kind: "page" },
   });
   pageTtfb.add(res.timings.waiting, { page: name });
-  check(res, { [`${name} page 200`]: (r) => r.status === 200 });
+  if (!check(res, { [`${name} page 200`]: (r) => r.status === 200 })) {
+    // The status and where it sent the user (path only), so a failed run says why.
+    const to = (res.headers.Location || "").split("?")[0];
+    console.warn(`page ${name}: ${res.status}${to ? ` -> ${to}` : ""}${res.headers["X-Vercel-Mitigated"] ? " (vercel mitigated)" : ""}`);
+  }
   if (extra) extra.add(res.timings.duration, { page: name });
   return res;
 }

@@ -2,7 +2,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { decideRoute, isPortalPath, isPublicPath, type GateState, type Portals } from "@/lib/auth/gate";
 import { CSP_REPORT_PATH } from "@/lib/security/csp-report";
 import { buildCsp, newNonce, NONCE_HEADER, reportingEndpoints } from "@/lib/security/headers";
-import { hasVerifiedFactor, redirectWithCookies, refreshSession, rewriteWithCookies } from "@/lib/supabase/proxy";
+import { busyWithCookies, hasVerifiedFactor, isTransientError, redirectWithCookies, refreshSession, rewriteWithCookies } from "@/lib/supabase/proxy";
+import { log } from "@/lib/log";
 import { newRequestId, REQUEST_ID_HEADER } from "@/lib/request-id";
 
 export async function proxy(request: NextRequest) {
@@ -44,6 +45,10 @@ export async function proxy(request: NextRequest) {
   };
 
   const session = await refreshSession(request, makeResponse);
+  const busy = (step: string, error: { code?: string; status?: number }) => {
+    log("warn", "proxy.gate_unavailable", { request_id: requestId, action: step, outcome: "error", error_code: error.code ?? String(error.status ?? "") });
+    return busyWithCookies(session.response);
+  };
   const { pathname, search } = request.nextUrl;
   if (isPublicPath(pathname) || !session.supabase) return session.response;
 
@@ -51,10 +56,13 @@ export async function proxy(request: NextRequest) {
   let user = null;
   let state: GateState | null = null;
   if (session.claims) {
-    const { data } = await session.supabase.auth.getUser();
+    const { data, error } = await session.supabase.auth.getUser();
     user = data.user;
+    // A failed check is not a signed-out or profile-less account: answer 503 and keep the session.
+    if (!user && error && isTransientError(error)) return busy("auth.get_user", error);
     if (user) {
-      const { data: gate } = await session.supabase.rpc("my_gate_state");
+      const { data: gate, error: gateError } = await session.supabase.rpc("my_gate_state");
+      if (gateError) return busy("rpc.my_gate_state", gateError);
       state = (gate as GateState | null) ?? null;
     }
   }

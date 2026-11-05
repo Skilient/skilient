@@ -108,3 +108,12 @@ mostly the container itself: k6, Chromium, the Next server and the whole Supabas
 Removing the overlay's backdrop blur made no measurable difference. The opening code does no work beyond filtering
 about 20 items, so nothing was changed. The full run measures INP from a Grafana Cloud machine with nothing else on it.
 If it misses there, the follow-up starts with this menu.
+
+## Where the runs go from (2026-11-05)
+
+Grafana Cloud's free plan allows 100 virtual users per test (and 500 VU-hours a month), so only the smoke run goes
+from Grafana's Mumbai zone (`where: cloud`). **The full 300-user run goes from the self-hosted runner in Pakistan**
+(`where: github`): no VU cap, and it is the literal reading of PRD 10's "TTFB from Pakistan" (about 30–60 ms to
+Mumbai). That machine needs Chromium for the two browser users (`sudo dnf install -y chromium` on Fedora), about
+10 Mbps, and to stay awake for the 40 minutes. The run summary, `k6-summary.json` and the database report are the
+run's artifact.

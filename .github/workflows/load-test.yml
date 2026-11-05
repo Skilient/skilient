@@ -22,7 +22,7 @@ on:
         options: [full, smoke]
         default: full
       where:
-        description: "cloud = Grafana Cloud k6 from Mumbai (timings count); github = from the self-hosted runner itself (functional check)"
+        description: "cloud = Grafana Cloud k6 from Mumbai (free plan: 100 VUs, smoke only); github = k6 on the self-hosted runner in Pakistan (the full 300-user run)"
         type: choice
         options: [cloud, github]
         default: cloud
@@ -132,7 +132,9 @@ jobs:
             # Grafana Cloud k6 runs the script from Mumbai (ap-south-1), next to the app and the database.
             K6_CLOUD_PROJECT_ID="$K6_CLOUD_PROJECT_ID" k6 cloud run "${args[@]}" tests/load/journeys.js | tee k6-output.txt
           else
-            echo "::warning::Running from the self-hosted runner: timings include the round trip from that machine to Mumbai, so they only count against PRD 10 if it sits close to Mumbai."
+            # The full run goes from Ahmed's machine in Pakistan: PRD 10 measures TTFB "from Pakistan", and Grafana's free
+            # plan caps a test at 100 VUs (decisions 2026-11-05). The browser scenario needs Chromium installed there.
+            echo "Running k6 on the self-hosted runner ($(hostname)): timings include this machine's round trip to Mumbai."
             K6_BROWSER_ARGS=no-sandbox k6 run "${args[@]}" --summary-export k6-summary.json tests/load/journeys.js | tee k6-output.txt
           fi
 

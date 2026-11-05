@@ -126,6 +126,8 @@ jobs:
           HOLD: ${{ inputs.profile == 'smoke' && '2m' || '30m' }}
           RAMP: ${{ inputs.profile == 'smoke' && '20s' || '5m' }}
         run: |
+          # The pipe into tee must not hide k6's exit code: a crossed threshold fails the job.
+          set -o pipefail
           args=(-e SUPABASE_URL="$SUPABASE_URL" -e SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" -e APP_URL="$LOAD_APP_URL"
                 -e LOAD_PASSWORD="$LOAD_PASSWORD" -e LOAD_FIXTURES=./fixtures.json -e LOAD_SCALE="$SCALE" -e LOAD_HOLD="$HOLD" -e LOAD_RAMP="$RAMP")
           if [ "$WHERE" = "cloud" ]; then

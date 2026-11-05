@@ -17,12 +17,20 @@ the busy moment with a queue, because it is the one with a race for seats.
 
 | Scenario | VUs | What one iteration does |
 | --- | --- | --- |
-| browse | 150 | `/feed`, two "load more" pages (`feed_page` + `post_cards`), views and up to two survey answers per page, `/openings`, an Openings category, `/me/record`, sometimes `/notifications` |
+| browse | 155 | `/feed`, two "load more" pages (`feed_page` + `post_cards`), views and up to two survey answers per page, `/openings`, an Openings category, `/me/record`, sometimes `/notifications` |
 | social | 60 | the DM page, three messages to a friend timed until the friend's Realtime subscription has them, a comment on the friend's post timed until the friend's notification event and `nav_badges()` |
 | search | 40 | `/explore`, then `search_people`, `search_ventures`, `search_chats` |
 | events | 45 | an event page, `register_event` (one event in ten has 25 seats, so registrations race for the last seat and spill to the waitlist), the ticket page and `event_ticket`, then an officer's `check_in_scan`; one scan in ten is repeated and must not be green |
-| pdf | 5 | `/me/record`, then the transcript PDF (`/api/record/pdf`, the same Chromium path as the CV PDF) |
-| vitals | 2 | a real browser on Lighthouse's mobile profile (150 ms RTT, 1.6 Mbps, 4x CPU) through `/feed`, `/openings`, `/me/record` and an event, with one keyboard interaction each |
+| vitals | 2 | a real browser on Lighthouse's mobile profile (150 ms RTT, 1.6 Mbps, 4x CPU) through Vercel: `/feed`, `/openings`, `/me/record` (and its transcript PDF, the same Chromium path as the CV) and an event, with one keyboard interaction each |
+
+**Pages without Vercel (2026-11-05).** On Vercel Hobby the platform's DDoS mitigation challenges every
+non-browser request from one address, and only Pro can bypass it, so the 298 API users never request a page
+from Vercel. For each page they replay its database work straight against Supabase, as measured on the
+local stack: the proxy's `getUser()` and `my_gate_state()`, then in parallel the layout's `getUser()`,
+`my_restriction()`, `tour_state()`, `touch_activity()` and profile, and the page's own reads
+(`page()` in `tests/load/lib/api.js`). That loads the database, Auth and PostgREST as 300 students would;
+Vercel's rendering is measured by the two browsers only. Once the project is on Pro, a run through Vercel
+with a System Bypass for the runner's address covers the rest.
 
 Think times are 2–12 seconds between steps, so the mix is people reading, not a request flood.
 
@@ -33,14 +41,14 @@ The run fails if any threshold misses. PRD 10 measures at p75 unless a row says 
 | PRD 10 target | k6 metric | Threshold |
 | --- | --- | --- |
 | Errors ≤ 0.1% | `http_req_failed`, `checks` | rate < 0.001, > 0.999 |
-| TTFB from Pakistan ≤ 600 ms | `page_ttfb` (every page in the mix) | p75 < 600 ms |
-| Feed first page visible ≤ 1.5 s | `feed_first_page` (the whole `/feed` document) | p75 < 1.5 s |
+| TTFB from Pakistan ≤ 600 ms | `page_data` (each page's database work from the runner; the browsers' TTFB is `browser_web_vital_ttfb`) | p75 < 600 ms |
+| Feed first page visible ≤ 1.5 s | `feed_first_page` (the `/feed` database work and its first cards) | p75 < 1.5 s |
 | Next feed page ≤ 400 ms | `feed_next_page` (`feed_page` + `post_cards`) | p75 < 400 ms |
 | Survey saved ≤ 500 ms | `survey_saved` (`answer_survey`) | p75 < 500 ms |
 | Chat delivered ≤ 1 s p95 | `chat_delivered` (send until the recipient's Realtime event) | p95 < 1 s |
 | Search ≤ 300 ms p95 | `search_results` | p95 < 300 ms |
 | Badge update ≤ 2 s | `badge_update` (comment until the author's event and `nav_badges()`) | p75 < 2 s |
-| CV PDF ≤ 10 s p95 | `pdf_ready` (Record transcript) | p95 < 10 s |
+| CV PDF ≤ 10 s p95 | `pdf_ready` (Record transcript, from the browsers) | p95 < 10 s |
 | LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1 | `browser_web_vital_lcp/inp/cls` | p75 |
 | *Derived:* Openings and My Record first view | `openings_ready`, `record_ready` | p75 < 1.5 s (the feed's budget) |
 | *Derived:* register and check in | `event_registered`, `event_checked_in` | p75 < 500 ms (the survey's save budget) |

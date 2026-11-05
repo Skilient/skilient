@@ -8,9 +8,10 @@ export const THRESHOLDS = {
   // "Launch requires all targets met with no errors above 0.1%."
   http_req_failed: ["rate<0.001"],
   checks: ["rate>0.999"],
-  // Server response (TTFB) from Pakistan ≤ 600 ms, every signed-in page in the mix.
-  page_ttfb: ["p(75)<600"],
-  // Feed first page visible ≤ 1.5 s (the server-rendered /feed, fully downloaded; LCP below covers paint).
+  // Server response (TTFB) from Pakistan ≤ 600 ms: every signed-in page's database work (auth, gate, layout and
+  // the page's reads) from the runner, at 300 users; the browsers' own TTFB through Vercel is reported too.
+  page_data: ["p(75)<600"],
+  // Feed first page visible ≤ 1.5 s (the /feed page's database work and its first cards; LCP below covers paint).
   feed_first_page: ["p(75)<1500"],
   // Next feed page ≤ 400 ms (feed_page + post_cards, what the load-more action runs).
   feed_next_page: ["p(75)<400"],
@@ -22,7 +23,7 @@ export const THRESHOLDS = {
   search_results: ["p(95)<300"],
   // Notification badge update ≤ 2 s: a comment on your post until your Realtime event and nav_badges().
   badge_update: ["p(75)<2000"],
-  // CV PDF ≤ 10 s p95: the Record transcript, printed by the same Chromium path as the CV.
+  // CV PDF ≤ 10 s p95: the Record transcript from the browsers on /me/record, the same Chromium path as the CV.
   pdf_ready: ["p(95)<10000"],
   // Core Web Vitals on a throttled phone profile (k6 browser, the "vitals" scenario).
   browser_web_vital_lcp: ["p(75)<2500"],

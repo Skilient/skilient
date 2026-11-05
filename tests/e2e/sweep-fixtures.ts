@@ -31,8 +31,22 @@ export async function signedIn(browser: Browser, who: TestStudent | null, twoFac
   return page;
 }
 
-/** A student with a venture and a post, so profile, venture and post pages render real content. */
-export async function studentFixtures(): Promise<{ student: TestStudent; fixtures: Partial<SweepFixtures> }> {
+let cached: Promise<{ student: TestStudent; fixtures: Partial<SweepFixtures> }> | null = null;
+
+/**
+ * A student with a venture and a post, so profile, venture and post pages render real content. Made once per
+ * worker and reused by every sweep chunk: one post per chunk crowded other specs' posts off the NUTECH feed's
+ * first page (survey.spec.ts reloads a ranked feed and expects its post there).
+ */
+export function studentFixtures(): Promise<{ student: TestStudent; fixtures: Partial<SweepFixtures> }> {
+  cached ??= makeStudentFixtures().catch((e) => {
+    cached = null;
+    throw e;
+  });
+  return cached;
+}
+
+async function makeStudentFixtures(): Promise<{ student: TestStudent; fixtures: Partial<SweepFixtures> }> {
   const db = adminClient();
   const student = await createStudent({ domain: "nutech.edu.pk", fullName: "Sweep Student" });
   const { data: profile } = await db.from("profiles").select("university_id, universities(slug)").eq("user_id", student.id).single();

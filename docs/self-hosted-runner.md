@@ -33,6 +33,26 @@ sudo usermod -aG docker "$USER"
 
 Check: `docker run --rm hello-world` and `psql --version` (17.x) both work without `sudo`.
 
+On **Fedora** (Ahmed's machine), `psql` 17 from the PostgreSQL project's repository, linked onto the path, and Docker
+from Docker's repository (Fedora ships Podman, and the Supabase CLI expects Docker):
+
+```bash
+sudo dnf install -y git curl tar dnf-plugins-core https://download.postgresql.org/pub/repos/yum/reporpms/F-$(rpm -E %fedora)-x86_64/pgdg-fedora-repo-latest.noarch.rpm
+```
+```bash
+sudo dnf install -y postgresql17 && sudo ln -sf /usr/pgsql-17/bin/psql /usr/local/bin/psql
+```
+```bash
+sudo dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+```
+```bash
+sudo dnf install -y docker-ce docker-ce-cli containerd.io && sudo systemctl enable --now docker && sudo usermod -aG docker "$USER"
+```
+
+Log out and in again, then check as above. On Fedora, start the runner with `./run.sh` in a terminal: SELinux
+usually stops the systemd service from running the runner out of a home folder. The runner's own libraries:
+`sudo ./bin/installdependencies.sh` in the runner folder.
+
 ## Register the runner
 
 1. GitHub → **Skilient/skilient** → **Settings → Actions → Runners → New self-hosted runner** → **Linux**, **x64**.

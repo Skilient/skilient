@@ -6,7 +6,12 @@ The organisation's GitHub-hosted Actions minutes are used up until the cycle res
 runners.
 
 Both workflows ask for `runs-on: [self-hosted, linux, skilient]`, so only a runner with the `skilient` label picks
-them up. They are started by hand (`workflow_dispatch`) in a private repository, so no outside code runs on the machine.
+them up. They are started by hand (`workflow_dispatch`).
+
+**The repository is public** (2026-11-05), so a workflow in someone else's pull request could ask for this runner. Keep
+Settings → Actions → General → **Fork pull request workflows from outside collaborators** on **Require approval for all
+outside collaborators**, approve nothing from people you don't know, and stop `run.sh` when you're not running a drill or
+a load test.
 
 ## What the machine needs
 

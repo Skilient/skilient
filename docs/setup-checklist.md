@@ -452,18 +452,18 @@ commit; each goes where the line says.
 
 **Slice 1: PostHog**
 
-- [ ] **Project id.** PostHog → Settings → Project → "Project ID" (a number). Needed for deleting a person's data.
-- [ ] **Personal API key scope.** The personal API key (already created) needs `person:write`. PostHog → Settings → Personal
+- [x] **Project id.** PostHog → Settings → Project → "Project ID" (a number). Needed for deleting a person's data.
+- [x] **Personal API key scope.** The personal API key (already created) needs `person:write`. PostHog → Settings → Personal
       API keys → edit → scopes. Nothing else.
-- [ ] **Project settings.** Session replay → **Record user sessions: on**, sampling **100%** (the app samples 20% itself;
+- [x] **Project settings.** Session replay → **Record user sessions: on**, sampling **100%** (the app samples 20% itself;
       two sample rates would multiply), minimum duration 2 s, canvas and network capture off, console logs off.
       Autocapture → **off**. Heatmaps → on. **Discard client IP data: on**. Retention stays at the free plan's (check the
       numbers there; the PRD asks for 13 months of events and 30 days of recordings). Authorized URLs: the production origin
       only.
-- [ ] **Supabase Edge Function secrets** (Supabase → Edge Functions → Secrets), for `analytics-worker`:
+- [x] **Supabase Edge Function secrets** (Supabase → Edge Functions → Secrets), for `analytics-worker`:
       `POSTHOG_PROJECT_KEY` (the `phc_…` key, same as `NEXT_PUBLIC_POSTHOG_KEY`), `POSTHOG_HOST` = `https://eu.i.posthog.com`,
       `POSTHOG_API_HOST` = `https://eu.posthog.com`, `POSTHOG_PROJECT_ID` (above), `POSTHOG_PERSONAL_API_KEY`.
-- [ ] **Vercel env** (Production): `NEXT_PUBLIC_POSTHOG_KEY` (already set) must be the `phc_…` key. The app sends to
+- [x] **Vercel env** (Production): `NEXT_PUBLIC_POSTHOG_KEY` (already set) must be the `phc_…` key. The app sends to
       `/ingest` on our own domain, which forwards to PostHog EU; `NEXT_PUBLIC_POSTHOG_HOST` is no longer read by the browser.
 - [ ] **Check after deploy:** open the landing page and the feed, then PostHog → Activity: only named events and
       `$pageview`, no `$autocapture`; a replay of a feed session shows asterisks for text and grey boxes for photos; no replay
@@ -473,12 +473,12 @@ commit; each goes where the line says.
 **Later slices** (listed now so they can be set up in one go)
 
 - [ ] **Alert recipient** (slice 2): the email address that receives alerts; set it in `/ops/config` → `alerts.recipients`.
-- [ ] **Brevo webhook**: transactional email, unbatched, `https://www.skilient.com/api/webhooks/brevo`, events
+- [x] **Brevo webhook**: transactional email, unbatched, `https://www.skilient.com/api/webhooks/brevo`, events
       `delivered` and `hardBounce` (payload `hard_bounce`). Set an independent bearer token in Brevo's webhook auth and
       Vercel Production `BREVO_WEBHOOK_SECRET`. No secret: 404; invalid auth: 401. Event receipts deduplicate monitoring.
       Exact setup and manual checks: [email runbook](email-brevo-migration.md).
 - [ ] **Alert pipe test** (slice 2): after the recipient is set, run the test line in `docs/alerts.md` "After deploy".
-- [ ] **Sentry alert rules** (slice 2): "A new issue is created" (production) → email; an error-volume alert as the interim
+- [x] **Sentry alert rules** (slice 2): "A new issue is created" (production) → email; an error-volume alert as the interim
       5xx alert until Axiom.
 - [ ] **Grafana Cloud** (free; slices 2 and 5): a stack in the closest region. (a) Supabase metrics: create a dedicated
       secret API key in Supabase (Settings → API keys, named `grafana-metrics`) and add the Supabase integration with it;
@@ -507,7 +507,7 @@ commit; each goes where the line says.
         the database report into `docs/load-test.md` "Results". Phase 13's k6 box is ticked when the full run passes.
 - [ ] **security@ mailbox** (slice 3): `security@skilient.com` must receive mail; it's the contact in
       `/.well-known/security.txt`. See "Before phase 13".
-- [ ] **ZAP against production** (slice 3, before launch): Actions → ZAP baseline → Run workflow with `target` = the
+- [x] **ZAP against production** (slice 3, before launch; done 2026-11-05, 0 High): Actions → ZAP baseline → Run workflow with `target` = the
       production URL; add the result to `docs/security/zap.md`.
 - [ ] **Everyone signs in again** once slice 3 deploys (the session cookie is renamed `__Secure-skl-auth`); nothing to
       do, just expect it.

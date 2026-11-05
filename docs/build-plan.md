@@ -209,7 +209,7 @@ Legend: 📖 = PRD files to read (in `docs/prd/`), ✅ = done-when checks.
 - [x] ASVS L1 checklist filed · ZAP baseline with no high findings · CSP clean on every screen · both design gates on every screen in `docs/screen-spec.md`
 - [ ] PostHog events, replays (masked) and heatmaps; all alerts wired and tested
 - [ ] k6 load test at 300 concurrent users for 30 minutes meets every performance target
-- [ ] Restore drill into a scratch project
+- [x] Restore drill into a scratch project *(2026-11-05, run 8: everything matched, `/api/health` 200; `docs/restore-drill.md`)*
 
 ✅ Every technical item of the launch gate is green
 

@@ -141,8 +141,9 @@ select ok((select vt from pgmq.q_analytics
 
 select is((select jsonb_typeof(private.config('analytics.muted_events'))), 'array', 'the mute list exists, empty');
 select ok(exists (select 1 from public.config_keys where key = 'analytics.muted_events'), 'and is editable in /ops/config');
-select ok(exists (select 1 from cron.job where jobname = 'analytics-worker' and schedule = '* * * * *'),
-  'the worker is woken every minute');
+select ok(exists (select 1 from cron.job where jobname = 'wake-workers' and schedule = '* * * * *')
+          and pg_get_functiondef('private.wake_workers()'::regprocedure) like '%analytics%',
+  'the worker is woken every minute (by wake-workers)');
 
 select * from finish();
 rollback;

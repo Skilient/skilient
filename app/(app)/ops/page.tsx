@@ -95,7 +95,7 @@ export default async function OpsInboxPage({ searchParams }: PageProps<"/ops">) 
                         {i.age}
                         {i.overdue ? <Badge tone="warning" className="ml-2">Overdue</Badge> : null}
                       </td>
-                      <td className="px-3 py-2 align-top">{!i.claimable ? "—" : i.claimedByMe ? "You" : (i.claimedBy ?? "Nobody yet")}</td>
+                      <td className="px-3 py-2 align-top">{!i.claimable ? "Not claimable" : i.claimedByMe ? "You" : (i.claimedBy ?? "Nobody yet")}</td>
                       <td className="px-3 py-2 text-right align-top">
                         {i.claimable && (i.claimedByMe || !i.claimedBy) ? <InboxClaim queue={i.queue} id={i.id} mine={i.claimedByMe} label={label} /> : null}
                       </td>

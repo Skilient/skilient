@@ -28,7 +28,7 @@ function RailLink({ item, pathname }: { item: NavItem; pathname: string }) {
           data-tour={`nav-${item.key}`}
           data-testid={`nav-${item.key}`}
           className={cn(
-            "relative flex size-12 flex-col items-center justify-center rounded-[14px] transition-shadow duration-[140ms] ease-out",
+            "relative flex size-12 flex-col items-center [@media(max-height:880px)]:size-10 justify-center rounded-[14px] transition-shadow duration-[140ms] ease-out",
             active ? "bg-bg-surface text-[var(--signal-ink)] shadow-[var(--pressed)]" : "text-text-secondary shadow-[var(--raised-s)] hover:text-text-primary",
           )}
         >
@@ -56,19 +56,21 @@ export function Sidebar() {
   const level = place ? activeLevel(place, pathname) : null;
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden md:flex" aria-label="Sidebar">
-      <div className="flex w-[76px] flex-col items-center gap-4 bg-bg-surface py-4 shadow-[var(--raised-m)]">
+      {/* Short laptop screens (≤ 880 px tall) get 40 px buttons and tighter gaps, so all 13 fit without a cut-off
+          last item (design gates 2026-11-04); the list still scrolls below that. */}
+      <div className="flex w-[76px] flex-col items-center gap-4 bg-bg-surface py-4 [@media(max-height:880px)]:gap-2 [@media(max-height:880px)]:py-3 shadow-[var(--raised-m)]">
         <Link href="/feed" aria-label="Skilient home" className="flex size-11 items-center justify-center rounded-full">
           <Image src="/brand/skilient-icon.svg" alt="" width={28} height={28} className="size-7 dark:hidden" />
           <Image src="/brand/skilient-icon-white.svg" alt="" width={28} height={28} className="hidden size-7 dark:block" />
         </Link>
-        <nav aria-label="Main" className="flex min-h-0 flex-1 flex-col items-center gap-4 overflow-y-auto px-2 pt-1 pb-2">
-          <ul className="flex flex-col gap-3">
+        <nav aria-label="Main" className="flex min-h-0 flex-1 flex-col items-center gap-4 overflow-y-auto [@media(max-height:880px)]:gap-2 px-2 pt-1 pb-2">
+          <ul className="flex flex-col gap-3 [@media(max-height:880px)]:gap-2">
             {PRIMARY_NAV.map((item) => (
               <RailLink key={item.key} item={item} pathname={pathname} />
             ))}
           </ul>
           <span aria-hidden className="neu-hole h-1 w-8 shrink-0" />
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-3 [@media(max-height:880px)]:gap-2">
             {SECONDARY_NAV.map((item) => (
               <RailLink key={item.key} item={item} pathname={pathname} />
             ))}

@@ -48,8 +48,8 @@ export default async function OpsUsersPage({ searchParams }: PageProps<"/ops/use
                       {u.status !== "active" ? <Badge className="mt-1 ml-1">{u.status}</Badge> : null}
                     </td>
                     <td className="px-3 py-2 align-top">{u.role}</td>
-                    <td className="px-3 py-2 align-top">{u.university ?? "—"}</td>
-                    <td className="px-3 py-2 align-top font-mono">{u.githubLogin ?? "—"}</td>
+                    <td className="px-3 py-2 align-top">{u.university ?? "Not set"}</td>
+                    <td className="px-3 py-2 align-top font-mono">{u.githubLogin ?? "Not set"}</td>
                     <td className="px-3 py-2 align-top whitespace-nowrap">{u.joined}</td>
                   </tr>
                 ))}

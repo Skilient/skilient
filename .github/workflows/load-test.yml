@@ -1,0 +1,147 @@
+name: Load test
+
+# PRD 10 "Load test before launch"; phase 13 (docs/load-test.md). Manual only. Seeds synthetic load data into the
+# scratch project (scripts/load/seed.mjs) and/or runs the k6 busy-hour mix (tests/load/journeys.js) against it and a
+# deployed app pointed at it. The full run is 300 concurrent students for 30 minutes; the thresholds are every
+# PRD 10 target, and the job fails on any miss. Never production: the seeder refuses any project but the scratch one.
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "load the scratch project" to run'
+        required: true
+      step:
+        description: "What to do (run alone still refreshes the events, which must start 90 minutes out)"
+        type: choice
+        options: [seed-and-run, seed, run]
+        default: seed-and-run
+      profile:
+        description: "full = 300 users for 30 minutes; smoke = a few users for 2 minutes"
+        type: choice
+        options: [full, smoke]
+        default: full
+      where:
+        description: "cloud = Grafana Cloud k6 from Mumbai (timings count); github = this runner in the US (functional check only)"
+        type: choice
+        options: [cloud, github]
+        default: cloud
+      migrate:
+        description: "Apply migrations to the scratch project first (supabase db push)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: load-test
+  cancel-in-progress: false
+
+jobs:
+  load:
+    name: Scratch project under load
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    environment: production
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+      SCRATCH_SUPABASE_PROJECT_REF: ${{ secrets.SCRATCH_SUPABASE_PROJECT_REF }}
+      SCRATCH_SUPABASE_DB_PASSWORD: ${{ secrets.SCRATCH_SUPABASE_DB_PASSWORD }}
+      LOAD_PASSWORD: ${{ secrets.LOAD_PASSWORD }}
+      LOAD_APP_URL: ${{ secrets.LOAD_APP_URL }}
+      K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}
+      K6_CLOUD_PROJECT_ID: ${{ secrets.K6_CLOUD_PROJECT_ID }}
+    steps:
+      - name: Check the request and the secrets
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+          STEP: ${{ inputs.step }}
+          WHERE: ${{ inputs.where }}
+        run: |
+          [ "$CONFIRM" = "load the scratch project" ] || { echo "::error::Type exactly: load the scratch project"; exit 1; }
+          need="SUPABASE_ACCESS_TOKEN SUPABASE_PROJECT_REF SCRATCH_SUPABASE_PROJECT_REF SCRATCH_SUPABASE_DB_PASSWORD LOAD_PASSWORD"
+          [ "$STEP" = "seed" ] || need="$need LOAD_APP_URL"
+          [ "$STEP" = "seed" ] || [ "$WHERE" != "cloud" ] || need="$need K6_CLOUD_TOKEN K6_CLOUD_PROJECT_ID"
+          for v in $need; do
+            [ -n "${!v}" ] || { echo "::error::Secret $v is not set (docs/setup-checklist.md Phase 13, load test)"; exit 1; }
+          done
+          [ "$SCRATCH_SUPABASE_PROJECT_REF" != "$SUPABASE_PROJECT_REF" ] || { echo "::error::The scratch project is production"; exit 1; }
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Postgres client and k6
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client > /dev/null
+          curl -fsSL -o /tmp/k6.tgz https://github.com/grafana/k6/releases/download/v0.57.0/k6-v0.57.0-linux-amd64.tar.gz
+          echo "49b1072c29d3682a1ea2ec98df9d17f2bd1cfabb27c1c5e01050766848925c74  /tmp/k6.tgz" | sha256sum -c -
+          tar -xzf /tmp/k6.tgz -C /tmp && sudo mv /tmp/k6-v0.57.0-linux-amd64/k6 /usr/local/bin/k6 && k6 version
+
+      - name: Connection string and keys for the scratch project
+        run: |
+          db=$(node scripts/restore/db-url.mjs "$SCRATCH_SUPABASE_PROJECT_REF" SCRATCH_SUPABASE_DB_PASSWORD)
+          secret=$(node scripts/restore/keys.mjs "$SCRATCH_SUPABASE_PROJECT_REF" secret)
+          pub=$(node scripts/restore/keys.mjs "$SCRATCH_SUPABASE_PROJECT_REF" publishable)
+          for s in "$db" "$secret" "$pub"; do echo "::add-mask::$s"; done
+          {
+            echo "DATABASE_URL=$db"
+            echo "SUPABASE_URL=https://$SCRATCH_SUPABASE_PROJECT_REF.supabase.co"
+            echo "SUPABASE_SECRET_KEY=$secret"
+            echo "SUPABASE_PUBLISHABLE_KEY=$pub"
+          } >> "$GITHUB_ENV"
+
+      - name: Apply migrations to the scratch project
+        if: inputs.migrate
+        run: |
+          pnpm exec supabase link --project-ref "$SCRATCH_SUPABASE_PROJECT_REF" --password "$SCRATCH_SUPABASE_DB_PASSWORD"
+          pnpm exec supabase db push --password "$SCRATCH_SUPABASE_DB_PASSWORD"
+
+      - name: Seed synthetic load data (a run alone only resets the events and rewrites the fixtures)
+        env:
+          LOAD_CONFIRM_SCRATCH: ${{ secrets.SCRATCH_SUPABASE_PROJECT_REF }}
+          PRODUCTION_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+          LOAD_USERS: ${{ inputs.profile == 'smoke' && '200' || '5000' }}
+          LOAD_FIXTURES: tests/load/fixtures.json
+        run: node --no-warnings scripts/load/seed.mjs
+
+      - name: Reset pg_stat_statements
+        if: inputs.step != 'seed'
+        run: psql "$DATABASE_URL" -qtAc "select extensions.pg_stat_statements_reset()"
+
+      - name: k6 busy-hour run
+        if: inputs.step != 'seed'
+        env:
+          WHERE: ${{ inputs.where }}
+          SCALE: ${{ inputs.profile == 'smoke' && '0.02' || '1' }}
+          HOLD: ${{ inputs.profile == 'smoke' && '2m' || '30m' }}
+          RAMP: ${{ inputs.profile == 'smoke' && '20s' || '5m' }}
+        run: |
+          args=(-e SUPABASE_URL="$SUPABASE_URL" -e SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" -e APP_URL="$LOAD_APP_URL"
+                -e LOAD_PASSWORD="$LOAD_PASSWORD" -e LOAD_FIXTURES=./fixtures.json -e LOAD_SCALE="$SCALE" -e LOAD_HOLD="$HOLD" -e LOAD_RAMP="$RAMP")
+          if [ "$WHERE" = "cloud" ]; then
+            # Grafana Cloud k6 runs the script from Mumbai (ap-south-1), next to the app and the database.
+            K6_CLOUD_PROJECT_ID="$K6_CLOUD_PROJECT_ID" k6 cloud run "${args[@]}" tests/load/journeys.js | tee k6-output.txt
+          else
+            echo "::warning::Running from a GitHub runner in the US: timings include about 250 ms of round trip and don't count against PRD 10."
+            K6_BROWSER_ARGS=no-sandbox k6 run "${args[@]}" --summary-export k6-summary.json tests/load/journeys.js | tee k6-output.txt
+          fi
+
+      - name: Database report (pg_stat_statements)
+        if: always() && inputs.step != 'seed'
+        run: psql "$DATABASE_URL" -f scripts/load/db-report.sql | tee db-report.txt
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always() && inputs.step != 'seed'
+        with:
+          name: load-test-results
+          path: |
+            k6-output.txt
+            k6-summary.json
+            db-report.txt
+          retention-days: 30

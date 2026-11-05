@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle, Circle } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, CaretRight, CheckCircle, Circle } from "@phosphor-icons/react/dist/ssr";
 import type { Route } from "next";
 import Link from "next/link";
 import { DismissCardButton, DismissChecklistButton } from "@/components/home/progress-card-controls";
@@ -29,7 +29,7 @@ export function ProgressCard({ card }: { card: ProgressCardData }) {
     <section aria-labelledby="progress-h" className="flex flex-col gap-4 rounded-lg border border-border-default bg-bg-surface p-4 shadow-1" data-testid="progress-card">
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 flex-col gap-1">
-          <h2 id="progress-h" className="text-label text-text-secondary uppercase">
+          <h2 id="progress-h" className="text-h4">
             Your progress
           </h2>
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-body">
@@ -69,9 +69,7 @@ export function ProgressCard({ card }: { card: ProgressCardData }) {
             <span>
               Getting started: {checklist.done} of {checklist.total}
             </span>
-            <span aria-hidden className="text-text-muted group-open:rotate-90">
-              ›
-            </span>
+            <CaretRight aria-hidden weight="bold" className="size-4 text-text-muted transition-transform group-open:rotate-90 motion-reduce:transition-none" />
           </summary>
           <ul className="flex flex-col gap-1 px-3 pb-3">
             {checklist.items.map((item) => (

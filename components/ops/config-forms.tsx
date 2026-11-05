@@ -80,8 +80,8 @@ export function ConfigEditor({ configKey, current, version, applies }: { configK
               {changes.map((c) => (
                 <tr key={c.key} className="align-top">
                   <th scope="row" className="py-1 pr-3 font-semibold">{c.key}</th>
-                  <td className="py-1 pr-3 break-all line-through decoration-text-secondary">{c.before ?? "—"}</td>
-                  <td className="py-1 break-all">{c.after ?? "—"}</td>
+                  <td className="py-1 pr-3 break-all line-through decoration-text-secondary">{c.before ?? "Not set"}</td>
+                  <td className="py-1 break-all">{c.after ?? "Not set"}</td>
                 </tr>
               ))}
             </tbody>

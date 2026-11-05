@@ -16,7 +16,7 @@ export default async function TeachLayout({ children }: LayoutProps<"/teach">) {
   return (
     <div className="mx-auto flex w-full max-w-page flex-col gap-6 px-[var(--page-gutter)] py-6">
       <header className="flex flex-col gap-1">
-        <p className="text-caption font-semibold text-text-secondary uppercase">Teacher portal · {state.university}</p>
+        <p className="text-body-sm text-text-secondary">Teacher portal at {state.university}</p>
         <TeachNav />
       </header>
       {children}

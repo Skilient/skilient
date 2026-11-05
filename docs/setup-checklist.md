@@ -491,10 +491,20 @@ commit; each goes where the line says.
       afterwards.
 - [ ] **Scratch Supabase project** (slices 4 and 5): a second project in Mumbai (`ap-south-1`), same plan and compute size
       as production, named `skilient-scratch`. Repo secrets: `SCRATCH_SUPABASE_PROJECT_REF`, `SCRATCH_SUPABASE_DB_PASSWORD`.
-      For the load test also `SCRATCH_SUPABASE_URL`, `SCRATCH_SUPABASE_PUBLISHABLE_KEY` and `SCRATCH_SUPABASE_SECRET_KEY`.
-      Delete or pause it after the load test.
-- [ ] **Vercel preview for the load test** (slice 5): point the Preview environment's Supabase variables at the scratch
-      project for the run, then back.
+      The load test reads the scratch URL and keys through the Management API (`SUPABASE_ACCESS_TOKEN`), so no more
+      secrets are needed for it. Delete or pause it after the load test. A restore drill needs an empty project, so
+      run the drill before seeding load data, or recreate the project.
+- [ ] **Load test** (`docs/load-test.md`, decisions 2026-11-04):
+  - [ ] Repo secret `LOAD_PASSWORD`: a long random password for the synthetic `load-…@nutech.edu.pk` accounts
+        (they exist only on the scratch project).
+  - [ ] **A deployment pointed at the scratch project**: a Vercel Preview (region `bom1`) whose Supabase variables
+        (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY`) and
+        `CV_EXPORT_SECRET` (the scratch Vault's `cv_export_secret`) are the scratch project's. Its URL goes in the repo
+        secret `LOAD_APP_URL`. Point Preview back afterwards.
+  - [ ] On the scratch project only: Authentication → Rate Limits → sign-ins and sign-ups to **1,000 per 5 minutes**,
+        and Auth captcha **off** (k6 signs every virtual user in with the password grant from a few IPs).
+  - [ ] Run Actions → Load test with `profile: smoke` first, then `profile: full`, `where: cloud`. Paste the summary and
+        the database report into `docs/load-test.md` "Results". Phase 13's k6 box is ticked when the full run passes.
 - [ ] **security@ mailbox** (slice 3): `security@skilient.com` must receive mail; it's the contact in
       `/.well-known/security.txt`. See "Before phase 13".
 - [ ] **ZAP against production** (slice 3, before launch): Actions → ZAP baseline → Run workflow with `target` = the

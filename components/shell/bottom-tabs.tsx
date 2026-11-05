@@ -29,7 +29,6 @@ export function BottomTabs() {
                 <Link
                   href={item.href as Route}
                   aria-current={active ? "page" : undefined}
-                  aria-label={count > 0 ? `${item.label}, ${count} ${item.badge === "chat" ? "unread" : "waiting"}` : undefined}
                   data-tour={`nav-${item.key}`}
                   data-testid={`tab-${item.key}`}
                   className={cn(
@@ -37,11 +36,10 @@ export function BottomTabs() {
                     active ? "bg-bg-surface text-text-primary shadow-[var(--pressed-s)]" : "text-text-secondary",
                   )}
                 >
-                  <span className="relative">
-                    <Icon aria-hidden weight={active ? "fill" : "bold"} className={cn("size-6", active && "text-[var(--signal-ink)]")} />
-                    <BadgePill count={count} className="absolute -top-1.5 left-3.5" />
-                  </span>
+                  <Icon aria-hidden weight={active ? "fill" : "bold"} className={cn("size-6", active && "text-[var(--signal-ink)]")} />
                   {item.label}
+                  {/* After the label, so the name reads "Openings 4 waiting" (WCAG 2.5.3); drawn on the icon's corner. */}
+                  <BadgePill count={count} className="absolute top-0.5 left-[calc(50%+2px)]" srSuffix={item.badge === "chat" ? "unread" : "waiting"} />
                 </Link>
               </Tooltip>
             </li>

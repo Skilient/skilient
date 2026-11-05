@@ -55,3 +55,4 @@ size-limit.txt
 .ua/tmp/
 .ua/.trash-*/
 .ua/diff-overlay.json
+tests/load/fixtures.json

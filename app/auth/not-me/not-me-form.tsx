@@ -34,6 +34,8 @@ export function NotMeForm({ token }: { token: string }) {
         type="button"
         variant="danger"
         size="lg"
+        // The long label wraps inside the card instead of being clipped (design gates 2026-11-04).
+        className="h-auto min-h-12 py-2 text-center whitespace-normal"
         loading={pending}
         onClick={() => {
           const form = new FormData();

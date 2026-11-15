@@ -334,11 +334,11 @@
 }
 
 /* A step or panel arriving (the onboarding wizard): one short rise, never a loop, none when the
-   person prefers less motion. */
+   person prefers less motion. It moves but doesn't fade: text is at full contrast from its first
+   frame (and an accessibility check that runs mid-way measures the real colours). */
 @keyframes neu-rise {
   from {
-    opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(10px);
   }
 }
 @media (prefers-reduced-motion: no-preference) {

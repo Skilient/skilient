@@ -95,6 +95,31 @@ test.describe("Community: Openings, yearbook, share, push", () => {
     await expect(paths).toHaveAttribute("data-state", "empty");
     await expect(paths.getByRole("link", { name: "Choose a path" })).toBeVisible();
     await expect(page.getByTestId("opening-card-jobs")).toHaveCount(0);
+    // This week leads as the banner, and nothing in any card is cut off at any width (2026-11-15:
+    // a long action label used to push the text past the card's edge, where it was clipped).
+    await expect(grid.locator("li").first().getByTestId("opening-card-this_week")).toBeVisible();
+    const desktop = page.viewportSize()!;
+    for (const width of [390, 768, 1024, 1280, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      // The card hides overflow, so content wider than the card shows up as its scroll width.
+      // (A long host name is cut with an ellipsis on purpose: that happens inside the card.)
+      const clipped = await grid.locator("article").evaluateAll((cards) =>
+        cards.filter((card) => card.scrollWidth > card.clientWidth + 1).map((card) => card.querySelector("h3")?.textContent ?? "?"),
+      );
+      expect(clipped, `cards clipped at ${width}px`).toEqual([]);
+      // A row never ends with a gap: every row's cards reach the grid's right edge.
+      const ragged = await grid.evaluate((ul) => {
+        const right = ul.getBoundingClientRect().right;
+        const rows = new Map<number, number>();
+        for (const li of ul.children) {
+          const r = li.getBoundingClientRect();
+          rows.set(Math.round(r.top), Math.max(rows.get(Math.round(r.top)) ?? 0, r.right));
+        }
+        return [...rows.values()].filter((edge) => Math.abs(edge - right) > 2).length;
+      });
+      expect(ragged, `rows with a gap at ${width}px`).toBe(0);
+    }
+    await page.setViewportSize(desktop);
     await axeBothThemes(page, "openings");
 
     await inductions.getByRole("link", { name: "Society inductions" }).click();

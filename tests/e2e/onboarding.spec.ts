@@ -68,6 +68,10 @@ test.describe("onboarding and profiles", () => {
     // 1. University details
     await expect(page).toHaveURL(/\/onboarding\/university$/);
     await expect(page.getByText("Step 1 of 6")).toBeVisible();
+    // How long is left, and the profile taking shape beside the step (empty so far).
+    await expect(page.getByTestId("wizard-progress")).toContainText("about 6 min left");
+    const preview = page.getByTestId("profile-preview").filter({ visible: true });
+    await expect(preview.getByTestId("preview-count")).toHaveText("0 of 5");
     await axe(page, "step 1");
     await pick(page, "department", "Computer Science");
     await page.getByLabel("Programme").fill("BS Computer Science");
@@ -81,9 +85,15 @@ test.describe("onboarding and profiles", () => {
     await page.getByRole("dialog").getByRole("button", { name: "Save" }).click();
     await expect(page.getByRole("dialog")).toBeHidden({ timeout: 15_000 });
     const username = `e2e_${Date.now().toString(36)}${Math.floor(Math.random() * 1000)}`;
+    // Step 1 is in the preview now; the handle and intro appear in it as they are typed.
+    await expect(preview.getByTestId("preview-count")).toHaveText("1 of 5");
+    await expect(preview).toContainText("BS Computer Science");
     await page.getByLabel("Username").fill(username);
     await expect(page.getByText("Available")).toBeVisible();
+    await expect(preview.getByTestId("preview-username")).toHaveText(`@${username}`);
+    await expect(preview.getByTestId("preview-count")).toHaveText("2 of 5");
     await page.getByLabel("One-line intro (optional)").fill(bio);
+    await expect(preview.getByTestId("preview-bio")).toHaveText(bio);
     await axe(page, "step 2");
     await page.getByRole("button", { name: "Continue" }).click();
 

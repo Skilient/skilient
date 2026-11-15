@@ -35,8 +35,6 @@ test.describe("Student portal", () => {
     for (const key of ["home", "openings", "ventures", "chat", "me", "events", "explore", "leaderboard", "notifications", "feedback"]) {
       await expect(page.getByTestId(`nav-${key}`)).toHaveAttribute("aria-describedby", /.+/);
     }
-    await page.getByTestId("nav-openings").hover();
-    await expect(page.getByRole("tooltip")).toContainText("each card with its newest opening");
 
     // The tour starts by itself, lights one thing at a time, and runs from the keyboard alone.
     const popover = page.getByTestId("tour-popover");
@@ -89,6 +87,9 @@ test.describe("Student portal", () => {
     await expect(page.getByTestId("composer").locator("textarea").first()).toBeFocused();
     const db = adminClient();
     await expect.poll(async () => (await db.from("tour_progress").select("completed_at").eq("user_id", me.id).single()).data?.completed_at ?? null, { timeout: 30_000 }).not.toBeNull();
+    // With the tour out of the way the page can be used again: a nav tooltip on hover.
+    await page.getByTestId("nav-openings").hover();
+    await expect(page.getByRole("tooltip")).toContainText("each card with its newest opening");
     // Walking through Openings on the tour is not the student reading it: nothing was marked as seen.
     expect((await db.from("openings_seen").select("category").eq("user_id", me.id)).data).toEqual([]);
     // Finished: it doesn't start again.

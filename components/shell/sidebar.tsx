@@ -64,7 +64,8 @@ function LevelGroup({ id, heading, levels, active }: { id: string; heading: stri
                 href={l.href as Route}
                 aria-current={on ? "page" : undefined}
                 className={cn(
-                  "flex min-h-10 items-center gap-2 rounded-[12px] px-3 text-body-sm font-semibold transition-shadow duration-[140ms] ease-out",
+                  // Short laptop screens get tighter rows, so Me's ten levels fit without scrolling the panel.
+                  "flex min-h-10 items-center gap-2 rounded-[12px] px-3 text-body-sm font-semibold transition-shadow duration-[140ms] ease-out [@media(max-height:880px)]:min-h-8",
                   on ? "bg-bg-surface text-text-primary shadow-[var(--pressed-s)]" : "text-text-secondary hover:text-text-primary hover:shadow-[var(--raised-s)]",
                 )}
               >
@@ -123,7 +124,7 @@ export function Sidebar() {
               <p className="text-caption text-text-secondary">{place.description}</p>
             </div>
             {place.levels?.length ? (
-              <nav aria-label={`${place.label} sections`} className="flex flex-col gap-3">
+              <nav aria-label={`${place.label} sections`} className="flex flex-col gap-3 [@media(max-height:880px)]:gap-1.5">
                 {levelGroups(place).map((group, i) => (
                   <LevelGroup key={group.heading ?? i} id={`levels-${place.key}-${i}`} heading={group.heading} levels={group.levels} active={level} />
                 ))}

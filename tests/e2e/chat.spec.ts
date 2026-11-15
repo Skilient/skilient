@@ -130,4 +130,30 @@ test.describe("Chat", () => {
 
     expect(problems).toEqual([]);
   });
+
+  test("a DM whose other member deleted their account still loads, read-only", async ({ page }) => {
+    // The /chat crash of 2026-11-15: the thread list got a null title for this thread and threw.
+    const problems = watchConsole(page);
+    const a = await createStudent({ domain: "nutech.edu.pk", fullName: "Kiran Stays" });
+    const b = await createStudent({ domain: "nutech.edu.pk", fullName: "Leena Leaves" });
+    const [x, y] = a.id < b.id ? [a.id, b.id] : [b.id, a.id];
+    await adminClient().from("friendships").insert({ user_id_a: x, user_id_b: y });
+    const api = await apiAs(a);
+    const { data: thread, error } = await api.rpc("get_or_create_dm", { p_username: b.username });
+    expect(error).toBeNull();
+    expect((await api.rpc("send_message", { p_thread: thread as string, p_body: "Before you go" })).error).toBeNull();
+    expect((await adminClient().auth.admin.deleteUser(b.id)).error).toBeNull();
+
+    await signInWithPassword(page, a.email, a.password);
+    await page.goto("/chat");
+    await expect(page.getByRole("link", { name: /Deleted account/ })).toBeVisible();
+    await page.getByRole("link", { name: /Deleted account/ }).click();
+    await expect(page).toHaveURL(new RegExp(`/chat/${thread as string}$`));
+    await expect(page.getByTestId("message").filter({ hasText: "Before you go" })).toBeVisible();
+    await expect(page.getByTestId("chat-closed")).toBeVisible();
+    await expect(page.getByLabel("Message", { exact: true })).toHaveCount(0);
+    await axe(page, "chat thread (deleted member)");
+    expect(problems).toEqual([]);
+  });
+
 });

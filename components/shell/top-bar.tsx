@@ -18,7 +18,7 @@ const COMMANDS: CommandItem[] = ALL_NAV.flatMap((item) => [
   { key: item.key, label: item.label, description: item.description, href: item.href, group: "Places" },
   ...(item.levels ?? [])
     .filter((l) => l.href !== item.href)
-    .map((l) => ({ key: `${item.key}-${l.href}`, label: l.label, description: item.label, href: l.href, group: item.label, keywords: l.keywords })),
+    .map((l) => ({ key: `${item.key}-${l.href}`, label: l.label, description: item.label, href: l.href, group: item.label, keywords: l.group ? [...(l.keywords ?? []), l.group.toLowerCase()] : l.keywords })),
 ]);
 
 /** The account menu, top right (Jakob's law): profile, settings, theme, sign out. */

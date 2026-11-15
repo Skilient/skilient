@@ -106,9 +106,15 @@ test.describe("onboarding and profiles", () => {
     await axe(page, "step 6");
     await page.getByRole("button", { name: "Finish" }).click();
     await expect(page).toHaveURL(/\/onboarding\/done$/);
-    await expect(page.getByRole("heading", { name: /You're in/ })).toBeVisible();
-    await page.getByRole("link", { name: "Go to Home" }).click();
+    // Welcome to Skilient: the film can be skipped, and "Skip to Home" also skips the tour.
+    await expect(page.getByRole("heading", { name: /Welcome to Skilient/ })).toBeAttached();
+    await page.keyboard.press("Escape"); // any key ends the film
+    await expect(page.getByTestId("welcome-description")).toBeVisible();
+    await expect(page.getByTestId("start-tour")).toBeVisible();
+    await axe(page, "welcome");
+    await page.getByTestId("skip-to-home").click();
     await expect(page).toHaveURL(/\/feed$/);
+    await expect(page.getByTestId("tour-popover")).toHaveCount(0);
     return { email, username };
   }
 

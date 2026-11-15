@@ -1,7 +1,7 @@
 /**
  * Every analytics event Skilient sends (PRD 10 "Product analytics"; docs/analytics.md). Client-safe.
  *
- * Browser events are the landing events (PRD 5.1) and page views; their properties are typed here so
+ * Browser events are the landing events (PRD 5.1), the welcome screen's three and page views; their properties are typed here so
  * an unknown event or property fails typecheck. Server events are written by database triggers into
  * the outbox (supabase/migrations/*_analytics.sql) and sent by the analytics-worker; the list below
  * must match the migration (a unit test checks both ways). Properties are ids, enums, counts and
@@ -19,11 +19,26 @@ export interface ClientEventProps {
   uni_requested: { known: boolean };
   /** A call to action on an organisation page (/recruiters, /universities, /faculty, /features, /about). */
   org_cta_click: { cta: string; page: string };
+  /** The welcome screen after onboarding was shown (`replay`: opened again from Settings). */
+  welcome_viewed: { replay: boolean };
+  /** "Start the tour" on the welcome screen. */
+  welcome_tour_started: { replay: boolean };
+  /** "Skip to Home" on the welcome screen: the tour is recorded as skipped. */
+  welcome_skipped: Record<string, never>;
 }
 
 export type ClientEvent = keyof ClientEventProps;
 
-export const CLIENT_EVENTS = ["signup_start", "uni_detected", "uni_not_live", "uni_requested", "org_cta_click"] as const satisfies readonly ClientEvent[];
+export const CLIENT_EVENTS = [
+  "signup_start",
+  "uni_detected",
+  "uni_not_live",
+  "uni_requested",
+  "org_cta_click",
+  "welcome_viewed",
+  "welcome_tour_started",
+  "welcome_skipped",
+] as const satisfies readonly ClientEvent[];
 
 /** Events the database writes (the outbox). `$set` updates person properties (plan, tier, university). */
 export const SERVER_EVENTS = [

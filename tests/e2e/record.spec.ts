@@ -253,7 +253,7 @@ test.describe("The Record", () => {
     const other = await createStudent({ domain: "nutech.edu.pk", fullName: `Other Person ${tag}` });
     const otherPage = await pageFor(browser, other);
     await otherPage.goto("/onboarding/done");
-    await expect(otherPage.getByRole("heading", { name: /You're in/ })).toBeVisible();
+    await expect(otherPage.getByRole("heading", { name: /Welcome to Skilient/ })).toBeAttached();
     await expect(otherPage.getByTestId("claim-card")).toHaveCount(0);
 
     // The walk-in signs up with the same (verified) address: "1 entry waiting" → Claim.
@@ -266,6 +266,8 @@ test.describe("The Record", () => {
     const walker: TestStudent = { id, email: walkIn, password: PASSWORD, fullName: `Walk In ${tag}`, username: `e2e_w${tag}` };
     const page = await pageFor(browser, walker);
     await page.goto("/onboarding/done");
+    // The welcome film reveals the card near its end; skip to the end state.
+    await page.keyboard.press("Escape"); // any key ends the film
     await expect(page.getByTestId("claim-card")).toContainText("1 entry waiting");
     await axeBothThemes(page, "/onboarding/done (claim)");
     await page.getByTestId("claim-entries").click();

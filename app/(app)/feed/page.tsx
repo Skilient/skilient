@@ -159,7 +159,6 @@ export default async function FeedPage({ searchParams }: PageProps<"/feed">) {
         <aside
           aria-label="Your progress"
           className="sticky top-0 -mx-3 hidden max-h-dvh w-[344px] shrink-0 self-start overflow-y-auto px-3 py-8 min-[1244px]:block"
-          data-tour="progress"
         >
           <ProgressCard card={card} />
         </aside>

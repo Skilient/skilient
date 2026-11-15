@@ -36,6 +36,8 @@ export function ProgressCard({ card, variant = "column" }: { card: ProgressCardD
       aria-label={sheet ? "Your progress" : undefined}
       className={sheet ? "flex flex-col gap-4" : "neu-flat flex flex-col gap-4 p-4"}
       data-testid={sheet ? "progress-sheet" : "progress-card"}
+      // The tour's "Your progress" step lights the column; on narrow screens it lights the chip.
+      data-tour={sheet ? undefined : "progress"}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 flex-col gap-1">

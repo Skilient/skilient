@@ -59,6 +59,7 @@ function AccountMenu() {
         onClick={() => setOpen((o) => !o)}
         className="inline-flex size-11 items-center justify-center rounded-full"
         data-testid="account-menu"
+        data-tour="account-menu"
       >
         <Avatar name={user.fullName} src={user.avatarUrl} size="sm" decorative />
       </button>

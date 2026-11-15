@@ -7,6 +7,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useTransitio
 import { buttonClass } from "@/components/ui";
 import { saveTourProgress } from "@/lib/actions/learn";
 import { track } from "@/lib/analytics/client";
+import { declineTour } from "@/lib/tours/active";
 
 /** How long the film runs before everything is in place (welcome.css's last delay plus its rise). */
 const FILM_MS = 6200;
@@ -121,6 +122,7 @@ export function WelcomeActions({ delay }: { delay: number }) {
           track("welcome_skipped", {});
           startTransition(async () => {
             await saveTourProgress({ tour: "student", step: 0, outcome: "skipped" });
+            declineTour();
             router.push("/feed");
           });
         }}

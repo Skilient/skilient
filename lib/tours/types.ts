@@ -3,6 +3,12 @@ export interface TourStep {
   anchor: string;
   title: string;
   body: string;
+  /** The page this step is on: the tour goes there first. Without one, the step shows on whatever page the tour is on. */
+  path?: string;
+  /** A media query that must match for the step to exist at all (the sidebar's second tier, say, is desktop only). */
+  media?: string;
+  /** One thing to do next, on the last step: ends the tour as completed, then focuses the field inside this `data-tour` element. */
+  cta?: { label: string; focus: string };
 }
 
 export interface TourDefinition {

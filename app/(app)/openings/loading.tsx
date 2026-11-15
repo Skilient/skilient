@@ -1,6 +1,6 @@
-import { cardSpan, OpeningCardSkeleton } from "@/components/openings/opening-card";
+import { OpeningCardSkeleton } from "@/components/openings/opening-card";
 import { Skeleton } from "@/components/ui";
-import { OPENING_CATEGORIES } from "@/lib/openings/constants";
+import { cardSpan, GRID_ORDER } from "@/lib/openings/constants";
 
 /** Every card in its loading state while the one overview call runs. */
 export default function Loading() {
@@ -11,13 +11,15 @@ export default function Loading() {
       <span role="status" className="sr-only">
         Loading openings…
       </span>
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Opening categories">
-        {OPENING_CATEGORIES.slice(0, 7).map((category, i) => (
-          <li key={category} className={cardSpan(i)}>
-            <OpeningCardSkeleton category={category} className="h-full" />
-          </li>
-        ))}
-      </ul>
+      <div className="@container">
+        <ul className="grid grid-cols-1 gap-4 @xl:grid-cols-2 @4xl:grid-cols-3" aria-label="Opening categories">
+          {GRID_ORDER.slice(0, 7).map((category, i) => (
+            <li key={category} className={cardSpan(i, 7)}>
+              <OpeningCardSkeleton category={category} className="h-full" />
+            </li>
+          ))}
+        </ul>
+      </div>
     </main>
   );
 }

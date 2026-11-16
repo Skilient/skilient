@@ -202,6 +202,11 @@ select lives_ok($$ select public.review_ranking_flag(pg_temp.gain_flag('A'), tru
 reset role;
 select is((select points from public.ranking_adjustments where user_id = pg_temp.u('A') and kind = 'rapid_gain'), -241.50::numeric,
   'upholding records a negative adjustment equal to the held gain');
+-- The uphold happened "on day 5", but the row is stamped with the real time, and a ranking as of a
+-- simulated day only counts adjustments made by then. Put it on day 5, or the test breaks as soon
+-- as the real date passes the simulated one (it did on 7 November 2026).
+update public.ranking_adjustments set created_at = pg_temp.pkt('2026-11-06 13:00')
+ where user_id = pg_temp.u('A') and kind = 'rapid_gain';
 select is(pg_temp.day('2026-11-07'), 'done', 'day 6 runs');
 select is((select row(total, adjustments, held)::text from public.ranking_scores where user_id = pg_temp.u('A')), '(215.00,-241.50,f)',
   'the upheld gain is cancelled out');

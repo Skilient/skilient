@@ -4,17 +4,22 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useRef, useTransition, type ReactNode } from "react";
+import { useCurrentUser } from "@/components/providers/current-user-provider";
 import { buttonClass } from "@/components/ui";
 import { saveTourProgress } from "@/lib/actions/learn";
 import { track } from "@/lib/analytics/client";
-import { declineTour } from "@/lib/tours/active";
+import { markTourEnded } from "@/lib/tours/active";
 
 /** How long the film runs before everything is in place (welcome.css's last delay plus its rise). */
 const FILM_MS = 6200;
 /** The clouds closing before Home opens (welcome.css `w-close`). */
 const CLOSE_MS = 450;
-/** Per browser: a later visit shows the end state straight away. Not account state, so not in the database. */
-const SEEN_KEY = "skilient:welcome-seen";
+/**
+ * Per account in this browser: a later visit shows the end state straight away. A convenience, not
+ * account state, so it isn't in the database; keyed by account so the next student on a shared
+ * computer still gets their welcome.
+ */
+const seenKey = (userId: string) => `skilient:welcome-seen:${userId}`;
 
 const WelcomeContext = createContext<{ start: () => void } | null>(null);
 
@@ -31,6 +36,9 @@ function reducedMotion(): boolean {
 export function WelcomeRoot({ replay, children }: { replay: boolean; children: ReactNode }) {
   const root = useRef<HTMLElement>(null);
   const router = useRouter();
+  const userId = useCurrentUser()?.id ?? "";
+  /** Whether this account had seen the welcome before this visit: read once, so an effect that runs twice (React's development check) doesn't take its own first write for an earlier visit. */
+  const seenBefore = useRef<boolean | null>(null);
 
   const finish = useCallback((skipped: boolean) => {
     const el = root.current;
@@ -43,15 +51,17 @@ export function WelcomeRoot({ replay, children }: { replay: boolean; children: R
   }, []);
 
   useEffect(() => {
-    let seen = false;
-    try {
-      seen = window.localStorage.getItem(SEEN_KEY) === "1";
-      window.localStorage.setItem(SEEN_KEY, "1");
-    } catch {
-      // Private windows and blocked storage: the film simply plays each time.
+    if (seenBefore.current === null) {
+      seenBefore.current = false;
+      try {
+        seenBefore.current = window.localStorage.getItem(seenKey(userId)) === "1";
+        window.localStorage.setItem(seenKey(userId), "1");
+      } catch {
+        // Private windows and blocked storage: the film simply plays each time.
+      }
+      track("welcome_viewed", { replay });
     }
-    track("welcome_viewed", { replay });
-    if ((seen && !replay) || reducedMotion()) {
+    if ((seenBefore.current && !replay) || reducedMotion()) {
       finish(true);
       return;
     }
@@ -64,7 +74,7 @@ export function WelcomeRoot({ replay, children }: { replay: boolean; children: R
       window.removeEventListener("keydown", skip);
       window.removeEventListener("pointerdown", skip);
     };
-  }, [finish, replay]);
+  }, [finish, replay, userId]);
 
   const start = useCallback(() => {
     track("welcome_tour_started", { replay });
@@ -92,6 +102,7 @@ export function WelcomeRoot({ replay, children }: { replay: boolean; children: R
 export function WelcomeActions({ delay }: { delay: number }) {
   const welcome = useContext(WelcomeContext);
   const router = useRouter();
+  const userId = useCurrentUser()?.id ?? "";
   const [pending, startTransition] = useTransition();
   return (
     <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
@@ -122,7 +133,8 @@ export function WelcomeActions({ delay }: { delay: number }) {
           track("welcome_skipped", {});
           startTransition(async () => {
             await saveTourProgress({ tour: "student", step: 0, outcome: "skipped" });
-            declineTour();
+            // The shell read the tour's state before this click: the tab remembers it is over.
+            if (userId) markTourEnded(userId);
             router.push("/feed");
           });
         }}

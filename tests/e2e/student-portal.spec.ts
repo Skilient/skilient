@@ -193,6 +193,18 @@ test.describe("Student portal", () => {
     await expect(page.getByTestId("tour-progress")).toHaveText("Step 1 of 15");
     await page.getByTestId("tour-skip").click();
 
+    // A shared computer: the next student to sign in on this browser still gets their own welcome
+    // (the "seen" flag is kept per account), and their own tour.
+    const next = await createStudent({ domain: "nutech.edu.pk", fullName: "Nida Next", tour: true });
+    await page.context().clearCookies();
+    await signInWithPassword(page, next.email, next.password);
+    await expect(page.getByTestId("tour-progress")).toHaveText("Step 1 of 15");
+    await page.getByTestId("tour-skip").click();
+    await page.goto("/onboarding/done");
+    await expect(page.getByRole("heading", { name: /Welcome to Skilient, Nida/ })).toBeAttached();
+    await expect(page.getByTestId("welcome-skip-intro")).toBeVisible();
+    await expect(page.getByTestId("welcome")).not.toHaveAttribute("data-skip", "");
+
     // Less motion: no film at all, the end state from the start.
     const calm = await browser.newContext({ reducedMotion: "reduce" });
     const calmPage = await calm.newPage();

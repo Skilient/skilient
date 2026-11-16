@@ -18,8 +18,9 @@ import { GithubStep, LookingForStep, PeopleStep, ProfileStep, SkillsStep, Univer
 export const metadata: Metadata = { title: "Set up your profile" };
 
 /**
- * What each step gives the student, then why it's asked (the "why" lines are PRD 5.27's table).
- * Titles lead with the benefit since 2026-11-15: a step that says what you get is finished more often.
+ * What each step gives the student, then why it's asked. Rewritten 2026-11-15 from PRD 5.27's
+ * table: titles lead with the benefit, and the "why" lines no longer mention recruiters or job
+ * fairs while those portals are off (docs/decisions.md).
  */
 const STEPS = {
   1: { title: "Join your university", why: "Puts you in your university feed, leaderboards and events." },

@@ -7,10 +7,11 @@ import { arrow, autoUpdate, flip, FloatingArrow, FloatingFocusManager, FloatingP
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { Route } from "next";
+import { useCurrentUser } from "@/components/providers/current-user-provider";
 import { Button } from "@/components/ui";
 import { saveTourProgress } from "@/lib/actions/learn";
 import { TOURS, type TourStep } from "@/lib/tours";
-import { declineTour, setTourActive, tourActive, tourDeclined } from "@/lib/tours/active";
+import { markTourEnded, setTourActive, tourEnded, tourStep } from "@/lib/tours/active";
 
 export interface TourInitial {
   started: boolean;
@@ -48,10 +49,18 @@ function exists(step: TourStep): boolean {
  */
 export function TourHost({ tourId, initial }: { tourId: keyof typeof TOURS; initial: TourInitial }) {
   const tour = TOURS[tourId];
+  // The tab's own flags are kept per account (lib/tours/active.ts).
+  const userId = useCurrentUser()?.id ?? "";
   const pathname = usePathname();
   const params = useSearchParams();
   const router = useRouter();
-  const forced = params.get("tour") === "1";
+  // ?tour=1 forces a start, once: the address is cleaned up right after, but the router can take a
+  // moment to notice, and ending the tour in that moment must not start it again.
+  const forcedParam = params.get("tour") === "1";
+  const forceUsed = useRef(false);
+  useEffect(() => {
+    if (!forcedParam) forceUsed.current = false;
+  }, [forcedParam]);
   /** The declared index of the running step, or null when no tour is running. */
   const [index, setIndex] = useState<number | null>(null);
   /** The element the running step points at, once it is on screen. */
@@ -64,27 +73,35 @@ export function TourHost({ tourId, initial }: { tourId: keyof typeof TOURS; init
   // Start, or resume.
   useEffect(() => {
     if (index !== null || tour.steps.length === 0) return;
-    if ((ended.current || tourDeclined()) && !forced) return;
-    const resuming = !forced && tourActive();
-    if (pathname !== tour.startPath && !resuming) return;
+    if (!userId) return;
+    const forced = forcedParam && !forceUsed.current;
+    if ((ended.current || tourEnded(userId)) && !forced) return;
+    // The step this tab was showing before a reload, if a tour was running in it.
+    const resumeAt = forced ? null : tourStep(userId);
+    if (pathname !== tour.startPath && resumeAt === null) return;
     // Wait a frame so the shell's anchors are laid out.
     const frame = requestAnimationFrame(() => {
       ended.current = false;
       // Drop ?tour=1 so a reload doesn't force a restart.
-      if (forced) window.history.replaceState(null, "", pathname);
-      setTourActive(true);
+      if (forced) {
+        forceUsed.current = true;
+        window.history.replaceState(null, "", pathname);
+      }
+      // The tab's own note beats the account's saved step, which may still be a request in flight.
+      const at = forced ? 0 : Math.min(Math.max(resumeAt ?? initial.step, 0), tour.steps.length - 1);
+      setTourActive(userId, at);
       direction.current = 1;
-      setIndex(forced ? 0 : Math.min(Math.max(initial.step, 0), tour.steps.length - 1));
+      setIndex(at);
     });
     return () => cancelAnimationFrame(frame);
-  }, [pathname, forced, tour, initial.step, index]);
+  }, [pathname, forcedParam, tour, initial.step, index, userId]);
 
   const finish = useCallback(
     (outcome: "completed" | "skipped", at: number, focus?: string) => {
       ended.current = true;
-      setTourActive(false);
+      setTourActive(userId, null);
       // This component remounts when the shell does (the welcome screen has none); the tab remembers.
-      declineTour();
+      markTourEnded(userId);
       void saveTourProgress({ tour: tourId, step: at, outcome });
       const back = target?.el;
       setIndex(null);
@@ -99,7 +116,7 @@ export function TourHost({ tourId, initial }: { tourId: keyof typeof TOURS; init
         } else back?.focus?.();
       });
     },
-    [target, tourId],
+    [target, tourId, userId],
   );
 
   const go = useCallback(
@@ -111,9 +128,10 @@ export function TourHost({ tourId, initial }: { tourId: keyof typeof TOURS; init
       if (i >= tour.steps.length) return finish("completed", tour.steps.length - 1);
       if (i < 0) return;
       setIndex(i);
+      setTourActive(userId, i);
       void saveTourProgress({ tour: tourId, step: i, outcome: "progress" });
     },
-    [finish, tour.steps, tourId],
+    [finish, tour.steps, tourId, userId],
   );
 
   // Bring the running step's page and element on screen.
@@ -233,11 +251,17 @@ function CoachMark({
     onOpenChange: (open) => {
       if (!open) onSkip();
     },
-    elements: { reference: el },
     placement: "right",
     whileElementsMounted: autoUpdate,
     middleware: [offset(16), flip({ fallbackPlacements: ["bottom", "top", "left"] }), shift({ padding: 12, crossAxis: true }), arrow({ element: arrowRef })],
   });
+  // The element is only what the card is placed against, never its "reference" for focus: given a
+  // reference, the focus manager inserts a hidden span right after it, and a step that points into
+  // page content React hasn't hydrated yet (after a reload mid-tour) then breaks hydration: React
+  // finds a span where the next list item should be (error 418, 2026-11-16).
+  useEffect(() => {
+    refs.setPositionReference(el);
+  }, [refs, el]);
   const dismiss = useDismiss(context, { outsidePress: false });
   const role = useRole(context, { role: "dialog" });
   const { getFloatingProps } = useInteractions([dismiss, role]);

@@ -52,13 +52,11 @@ const RENDERS: Record<OpeningCategory, ObjectName> = {
   job_fairs: "booth",
 };
 
+/** A card action: never wider than its card, and a long label wraps instead of being cut off. */
+const ACTION = "relative z-10 h-auto min-h-10 max-w-full shrink self-start py-2 text-left whitespace-normal";
+
 export function OpeningIcon({ category }: { category: OpeningCategory }) {
   return <>{ICONS[CATEGORY_META[category].pictogram]}</>;
-}
-
-/** Bento sizes: the first two cards span two columns on wide screens. */
-export function cardSpan(index: number): string {
-  return index < 2 ? "lg:col-span-2" : "";
 }
 
 /**
@@ -73,6 +71,7 @@ export function OpeningCard({
   isNew,
   latest,
   emptyLine,
+  wide = false,
   className,
 }: {
   category: OpeningCategory;
@@ -81,6 +80,8 @@ export function OpeningCard({
   isNew: boolean;
   latest: { title: string; host: string | null; deadlineLabel: string | null; href: string } | null;
   emptyLine: string;
+  /** The full-width banner (This week): the action sits beside the line when there is room. */
+  wide?: boolean;
   className?: string;
 }) {
   const meta = CATEGORY_META[category];
@@ -104,26 +105,28 @@ export function OpeningCard({
           </span>
         ) : null}
         {empty ? (
-          <div className="flex items-center gap-4">
-            <span className="block w-16 shrink-0" aria-hidden>
-              <ObjectImage name={RENDERS[category]} sizes="64px" />
-            </span>
-            <div className="flex flex-col items-start gap-2">
-              <p className="text-body-sm text-text-secondary" data-testid="opening-empty">
+          // The line may wrap and the action sits on its own row: a nowrap button beside the text
+          // pushed the column wider than the card and got cut off (2026-11-15).
+          <div className={wide ? "flex flex-wrap items-center gap-x-6 gap-y-3" : "flex flex-col gap-3"}>
+            <div className={wide ? "flex min-w-0 flex-1 basis-64 items-center gap-3" : "flex min-w-0 items-center gap-3"}>
+              <span className="block w-14 shrink-0" aria-hidden>
+                <ObjectImage name={RENDERS[category]} sizes="56px" />
+              </span>
+              <p className="min-w-0 flex-1 text-body-sm text-text-secondary" data-testid="opening-empty">
                 {emptyLine}
               </p>
-              {/* Above the card's stretched link so it stays its own target. */}
-              <Link href={meta.action.href as Route} className={buttonClass("secondary", "sm", "relative z-10")}>
-                {meta.action.label}
-              </Link>
             </div>
+            {/* Above the card's stretched link so it stays its own target. */}
+            <Link href={meta.action.href as Route} className={buttonClass("secondary", "sm", ACTION)}>
+              {meta.action.label}
+            </Link>
           </div>
         ) : (
-          <div className="flex flex-col gap-1">
-            <p className="line-clamp-2 text-body font-semibold text-text-primary" data-testid="opening-latest">
+          <div className="flex min-w-0 flex-col gap-1">
+            <p className="line-clamp-2 text-body font-semibold break-words text-text-primary" data-testid="opening-latest">
               {latest.title}
             </p>
-            {latest.host ? <p className="text-body-sm text-text-secondary">{latest.host}</p> : null}
+            {latest.host ? <p className="truncate text-body-sm text-text-secondary">{latest.host}</p> : null}
             {latest.deadlineLabel ? <p className="neu-mono text-caption text-text-secondary">{latest.deadlineLabel}</p> : null}
           </div>
         )}
@@ -159,7 +162,7 @@ export function OpeningCardError({ category, className }: { category: OpeningCat
             <WarningCircle aria-hidden weight="bold" className="size-4" />
             This card didn&apos;t load.
           </p>
-          <Link href={categoryHref(category) as Route} className={buttonClass("secondary", "sm", "relative z-10")}>
+          <Link href={categoryHref(category) as Route} className={buttonClass("secondary", "sm", ACTION)}>
             Open {meta.label}
           </Link>
         </div>

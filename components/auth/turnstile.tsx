@@ -96,10 +96,7 @@ export function Turnstile({
           sitekey: siteKey,
           action,
           appearance: "always",
-<<<<<<< HEAD
-=======
           size: "flexible",
->>>>>>> 12eacf1 (local changes committed)
           theme: "auto",
           callback: (token: string) => {
             if (cancelled) return;

@@ -86,7 +86,7 @@ There are 103 screens, all live at launch. Each row gives the layout from phone 
 
 | Screen | Route | Layout | Key elements | States |
 | --- | --- | --- | --- | --- |
-| Feed | `/feed` | Main column + right rail (suggested ventures, people, upcoming events) | See 3.13 (University Feed / Global Feed tabs, filter chips All, Ventures, Events, Announcements, Shipped; survey strip) | Empty university feed, new posts pill, cooldown, end of feed |
+| Feed | `/feed` | Main column + right rail (Your progress, from 1244 px; 2026-11-15) | See 3.13 (University Feed / Global Feed tabs, filter chips All, Ventures, Events, Announcements, Shipped; survey strip) | Empty university feed, new posts pill, cooldown, end of feed |
 | Post detail | `/post/[id]` | Main column | Post, join status, report | Removed, not visible to you |
 | Profile | `/profile/[username]` | Cover + identity header; tabs: Overview, Ventures, Skills, Activity | Tier badge, provenance-marked skills, ventures with roles, endorsements, actions (Add friend, Message, Report) | Own, friend, stranger, restricted card, blocked |
 | Edit profile | `/settings/profile` | Settings layout: section list left, form right; sections stack on phone | Identity, avatar and cover crop, visibility, recruiter visibility, GitHub (App connection, repo exclusions, resync, held items), private L0 skills | Unsaved changes, upload progress, save error |
@@ -176,7 +176,7 @@ Superseded by 3.11 (Skilient ops at `/ops`). The rows below keep their layouts b
 
 | Screen | Route | Layout | Key elements | States |
 | --- | --- | --- | --- | --- |
-| Progress card | Top of `/feed` | Card above the composer | Tier, points, one next step, to-do count | New student, all caught up, dismissed today |
+| Progress card | Right of the feed (2026-11-15) | A flat tile in a sticky column from 1244 px; below that a chip above the feed that opens it in a sheet | Tier, points, one next step, to-do count, getting-started checklist with a done/total bar | New student, all caught up, dismissed today |
 | Opportunities | `/opportunities/[tab]` | Tabs + filter row + list | For you, Jobs, Contact requests, Applications, Competitions and hackathons, Job fairs, Project ideas | Empty per tab, no matches (suggests skills to level up) |
 | Application tracker | `/opportunities/applications/[id]` | Timeline | Stages with dates, company, role, generic rejection reason | Withdrawn, rejected, hired |
 | My skills | `/me/skills` | List grouped by category | Level, evidence, next-level guidance, private L0 list | No GitHub connected |
@@ -215,8 +215,8 @@ These rows take precedence over any earlier signup or onboarding row where they 
 | Agreement sheet | Overlay | Side sheet | Version, headings, close | — |
 | Re-accept agreement | `/agreement` | Full page | What changed, full text, accept | — |
 | Onboarding step | `/onboarding/[step]` | Wizard card + progress bar | One step per screen, Back / Continue / Skip (GitHub) | Resumed, validation error |
-| You're in | `/onboarding/done` | Celebration card | Checklist preview, Take the tour | — |
-| Tour coach mark | Overlay on Home | Spotlight + popover | Title, body, Step x of y, Next/Back/Skip | Mobile (anchored to tab bar), reduced motion |
+| Welcome to Skilient | `/onboarding/done` | Full window, no shell: clouds part on the mark, wordmark, description, what to expect (2026-11-15) | Start the tour, Skip to Home, Skip intro | Playing, end state (skipped, seen before), reduced motion, `?replay=1` |
+| Tour coach mark | Overlay across Home, Openings and Me (2026-11-15) | Spotlight + popover | Title, body, Step x of y with a fill, Next/Back/Skip tour; last step: Write your first post | Between pages (dimmed), mobile (dock and header anchors), reduced motion |
 | First-visit tip | Inline, top of page | Dismissible card | Two lines, Show me more | Expanded |
 | Feedback | `/feedback` | Form + My feedback list | Type, text, screenshot, status timeline, staff reply | Sent, empty list |
 | Ops feedback triage | `/ops/feedback` | Table + drawer | Status, reply, tags | — |

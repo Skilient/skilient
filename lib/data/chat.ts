@@ -31,7 +31,8 @@ export async function getThreads(): Promise<ThreadRow[]> {
   return (data ?? []).map((t) => ({
     id: t.id,
     type: t.type,
-    title: t.title,
+    // The other member of a DM may have deleted their account: never pass a null title on.
+    title: t.title ?? (t.type === "group" ? "Venture chat" : "Deleted account"),
     username: t.username,
     avatarUrl: publicImageUrl("avatars", t.avatar_path),
     ventureId: t.venture_id,

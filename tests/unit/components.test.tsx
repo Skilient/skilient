@@ -56,5 +56,8 @@ describe("ui primitives", () => {
     expect(initials("Ayesha Khan")).toBe("AK");
     expect(initials("Muhammad Ali Jinnah")).toBe("MJ");
     expect(initials("  ")).toBe("?");
+    // A DM whose other member deleted their account has no name (the /chat crash, 2026-11-15).
+    expect(initials(null)).toBe("?");
+    expect(initials(undefined)).toBe("?");
   });
 });

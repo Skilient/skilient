@@ -50,7 +50,8 @@ async function faculty(): Promise<TestStudent> {
 async function axeSweep(browser: Browser, who: TestStudent | null, role: SweepRole, fixtures: Partial<SweepFixtures>, colorScheme: "light" | "dark") {
   const failures: string[] = [];
   {
-    const page = await (await browser.newContext({ colorScheme })).newPage();
+    // Less motion: every screen is measured in its end state (the welcome film would otherwise be mid-way).
+    const page = await (await browser.newContext({ colorScheme, reducedMotion: "reduce" })).newPage();
     if (who) await signInWithPassword(page, who.email, who.password);
     for (const entry of SWEEP.filter((s) => s.role === role)) {
       const path = sweepPath(entry, fixtures);

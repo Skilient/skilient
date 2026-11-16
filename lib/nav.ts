@@ -38,6 +38,10 @@ export interface NavLevel {
   match?: string[];
   /** Extra words the command menu matches. */
   keywords?: string[];
+  /** A live count shown on the level's row (the same counts as the rail). */
+  badge?: BadgeKey;
+  /** The heading this level sits under in the sidebar. A place groups all of its levels or none. */
+  group?: string;
 }
 
 export interface NavItem {
@@ -77,15 +81,15 @@ export const PRIMARY_NAV: NavItem[] = [
     badge: "openings",
     match: ["/openings", "/competitions", "/ideas"],
     levels: [
-      { label: "All openings", href: "/openings", keywords: ["opportunities"] },
-      { label: "This week", href: "/openings/this-week", keywords: ["campus pulse"] },
-      { label: "Venture roles", href: "/openings/venture-roles", keywords: ["roles", "teams"] },
-      { label: "Inductions", href: "/openings/inductions", keywords: ["societies", "recruitment"] },
-      { label: "Events", href: "/openings/events", match: ["/openings/events"] },
-      { label: "Project ideas", href: "/openings/ideas", match: ["/openings/ideas", "/ideas"] },
+      { label: "All openings", href: "/openings", keywords: ["opportunities"], group: "Overview", badge: "openings" },
+      { label: "This week", href: "/openings/this-week", keywords: ["campus pulse"], group: "Overview" },
+      { label: "Venture roles", href: "/openings/venture-roles", keywords: ["roles", "teams"], group: "Build" },
+      { label: "Project ideas", href: "/openings/ideas", match: ["/openings/ideas", "/ideas"], group: "Build" },
+      { label: "Inductions", href: "/openings/inductions", keywords: ["societies", "recruitment"], group: "Join" },
+      { label: "Events", href: "/openings/events", match: ["/openings/events"], group: "Join" },
       // Every Openings card has its row, so its page never highlights "All openings" (design gates 2026-11-04).
-      { label: "Paths", href: "/openings/paths", keywords: ["what to learn"] },
-      { label: "Skill swaps", href: "/openings/swaps", keywords: ["learn", "teach"] },
+      { label: "Paths", href: "/openings/paths", keywords: ["what to learn"], group: "Grow" },
+      { label: "Skill swaps", href: "/openings/swaps", keywords: ["learn", "teach"], group: "Grow" },
     ],
   },
   {
@@ -98,7 +102,7 @@ export const PRIMARY_NAV: NavItem[] = [
     match: ["/ventures", "/requests"],
     levels: [
       { label: "All ventures", href: "/ventures", match: ["/ventures"] },
-      { label: "Requests", href: "/requests", keywords: ["applications", "invites"] },
+      { label: "Requests", href: "/requests", keywords: ["applications", "invites"], badge: "ventures" },
       { label: "New venture", href: "/ventures/new", match: [], keywords: ["start", "project", "startup"] },
     ],
   },
@@ -111,7 +115,7 @@ export const PRIMARY_NAV: NavItem[] = [
     badge: "chat",
     match: ["/chat"],
     levels: [
-      { label: "Messages", href: "/chat" },
+      { label: "Messages", href: "/chat", badge: "chat" },
       { label: "Chat settings", href: "/settings/chat", match: [] },
     ],
   },
@@ -123,16 +127,16 @@ export const PRIMARY_NAV: NavItem[] = [
     icon: UserCircle,
     match: ["/me", "/profile", "/settings", "/appeals", "/billing"],
     levels: [
-      { label: "Overview", href: "/me", match: ["/me", "/profile"] },
-      { label: "Record", href: "/me/record", keywords: ["transcript", "certificates", "entries", "activities"] },
-      { label: "Paths", href: "/me/paths", match: ["/me/paths", "/me/tasks"], keywords: ["roadmap", "what to learn", "proof tasks", "ladder"] },
-      { label: "Skills", href: "/me/skills" },
-      { label: "Work", href: "/me/work" },
-      { label: "CV", href: "/me/cv", keywords: ["resume", "verified"] },
-      { label: "Score", href: "/me/score", keywords: ["rank", "tier"] },
-      { label: "Credentials", href: "/me/credentials", keywords: ["certificates"] },
-      { label: "Tickets", href: "/me/tickets", keywords: ["events", "registrations", "qr"] },
-      { label: "Settings", href: "/settings", keywords: ["account", "privacy", "security"] },
+      { label: "Overview", href: "/me", match: ["/me", "/profile"], group: "You" },
+      { label: "Skills", href: "/me/skills", group: "You" },
+      { label: "Work", href: "/me/work", group: "You" },
+      { label: "Record", href: "/me/record", keywords: ["transcript", "certificates", "entries", "activities"], group: "Proof" },
+      { label: "Credentials", href: "/me/credentials", keywords: ["certificates"], group: "Proof" },
+      { label: "Score", href: "/me/score", keywords: ["rank", "tier"], group: "Proof" },
+      { label: "CV", href: "/me/cv", keywords: ["resume", "verified"], group: "Career" },
+      { label: "Paths", href: "/me/paths", match: ["/me/paths", "/me/tasks"], keywords: ["roadmap", "what to learn", "proof tasks", "ladder"], group: "Career" },
+      { label: "Tickets", href: "/me/tickets", keywords: ["events", "registrations", "qr"], group: "Account" },
+      { label: "Settings", href: "/settings", keywords: ["account", "privacy", "security"], group: "Account" },
     ],
   },
 ];
@@ -172,6 +176,18 @@ export function activeLevel(place: NavItem, pathname: string): NavLevel | null {
     }
   }
   return best;
+}
+
+/** A place's levels under their headings, in order. Ungrouped places come back as one group with no heading. */
+export function levelGroups(place: NavItem): { heading: string | null; levels: NavLevel[] }[] {
+  const out: { heading: string | null; levels: NavLevel[] }[] = [];
+  for (const level of place.levels ?? []) {
+    const heading = level.group ?? null;
+    const last = out[out.length - 1];
+    if (last && last.heading === heading) last.levels.push(level);
+    else out.push({ heading, levels: [level] });
+  }
+  return out;
 }
 
 /** The place the path is in (for the second tier), or null. */

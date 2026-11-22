@@ -1,6 +1,6 @@
 # Student-first plan (2026-11-02)
 
-The current plan. It replaces the "launch everything at once" scope of PRD 4 until Ahmed says otherwise. The feature detail is in PRD 5.30–5.34, the screens in `screen-spec.md` §3.14, the phases in `build-plan.md` ("Student-first track"), open questions in `student-first-questions.md`, and every decision in `decisions.md` ("Student-first scope").
+The current plan. It replaces the "launch everything at once" scope of PRD 4 until Ahmed says otherwise. The feature detail is in PRD 5.30–5.34, the screens in `screen-spec.md` §3.14, the phases in `build-plan.md` ("Student-first track"), and every decision in `decisions.md` ("Student-first scope").
 
 ## The goal
 
@@ -80,7 +80,7 @@ The app adopts the neumorphism brief from the marketing branch (`claude/wonderfu
 
 ## Phases
 
-Five build phases, **each built in one go: one session and one PR per phase, no slices** (Ahmed, 2026-11-02). The detail and "done when" lines are in `build-plan.md`. The session prompt for each phase is in `student-first-prompts.md`.
+Five build phases, **each built in one go: one session and one PR per phase, no slices** (Ahmed, 2026-11-02). The detail and "done when" lines are in `build-plan.md`.
 
 | Phase | What it builds |
 | --- | --- |

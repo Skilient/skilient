@@ -229,7 +229,7 @@ every role (`tests/e2e/csp-sweep.spec.ts`). The first box also needs the design 
 
 ## Student-first track (decided 2026-11-02)
 
-Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-spec.md` §3.14. Questions: `docs/student-first-questions.md` (build on the defaults until answered). **Each phase is built in one go: one session and one PR per phase, no slices** (Ahmed, 2026-11-02); the boxes are its parts. These phases come before the rest of phase 13; phase 13's design gates run on the new design. Every new table follows the checklist in the plan (RLS + pgTAP refusal, `refuse_if_restricted`, report target, storage cleanup, analytics, `config_keys`, audited staff writes, `OPS_AREAS`, CSP sweep routes, axe E2E in both themes, notification types).
+Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-spec.md` §3.14. Questions: all answered (`docs/decisions.md` "Student-first answers (2026-11-02)"). **Each phase is built in one go: one session and one PR per phase, no slices** (Ahmed, 2026-11-02); the boxes are its parts. These phases come before the rest of phase 13; phase 13's design gates run on the new design. Every new table follows the checklist in the plan (RLS + pgTAP refusal, `refuse_if_restricted`, report target, storage cleanup, analytics, `config_keys`, audited staff writes, `OPS_AREAS`, CSP sweep routes, axe E2E in both themes, notification types).
 
 ## Phase 14 — New look
 

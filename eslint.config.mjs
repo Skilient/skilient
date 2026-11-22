@@ -87,7 +87,6 @@ const eslintConfig = defineConfig([
     "supabase/functions/**",
     // Vendored agent skills (third-party); not app code.
     ".claude/**",
-    ".agents/**",
   ]),
   {
     files: ["**/*.{ts,tsx,js,mjs}"],

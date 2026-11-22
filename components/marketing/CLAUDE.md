@@ -7,7 +7,7 @@ The marketing pages follow the neumorphism UI rules in `app/(marketing)/CLAUDE.m
 - Scenes in `components/marketing/story/*`: the hero (`../hero.tsx`, orbit + `orbit-parallax.tsx`), `prologue.tsx`, `chapters.tsx` (chapters 1–4 with the pinned `Record` from `record.tsx`), `climb.tsx`, `signed-found.tsx`, `rules.tsx`, `finale.tsx`. Copy: `story` in `content/marketing.ts`.
 - Motion is CSS only, in `app/(marketing)/story.css`. Static first; the motion block applies under `[data-js]` + `@supports (animation-timeline: view())` + no reduced motion; pins only at ≥1024×600. Text never starts at a faint opacity (axe), only 0.
 - The `animation` shorthand resets `animation-timeline`: put the timeline in the same rule, after the shorthand.
-- Renders: edit `scripts/renders/objects.py`, run `blender -b -P scripts/renders/objects.py -- --out /tmp/renders/final` (add `--preview` for quick checks, `--project --only terraces-light` for the climb's step points), then `node scripts/renders/export.mjs /tmp/renders/final`.
+- Renders: the object images in `public/marketing/objects/` are final. The Blender script that made them (`scripts/renders/`) was removed on 2026-11-22; restore it from git history to render new ones.
 
 ## Organisation pages (decisions 2026-11-01)
 

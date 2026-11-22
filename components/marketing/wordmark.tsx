@@ -1,7 +1,7 @@
 import { cn } from "@/lib/cn";
 
 /**
- * The Skilient lockup (brand/, PRD 9.1) in the theme's colours: the ink version in light mode,
+ * The Skilient lockup (public/brand/, PRD 9.1) in the theme's colours: the ink version in light mode,
  * the reversed one in dark. Plain <img> so the SVG is cached and never inlined twice.
  */
 export function Wordmark({ className }: { className?: string }) {

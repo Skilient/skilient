@@ -1,8 +1,8 @@
 import manifest from "@/content/objects.json";
 
 /**
- * The clay + foil objects on the landing story (decisions 2026-10-31): rendered in Blender by
- * scripts/renders/objects.py, exported by scripts/renders/export.mjs. Decorative stills; motion is
+ * The clay + foil objects on the landing story (decisions 2026-10-31): rendered in Blender
+ * (the render scripts are in git history before 2026-11-22). Decorative stills; motion is
  * CSS. `shared` objects work on both themes; `light`/`dark` pairs are rendered in each surface.
  */
 

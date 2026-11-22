@@ -38,7 +38,7 @@ Proof, not claims. Skills come from evidence (code, teammates, faculty), never f
 ## Brand Commitments
 
 - Editorial system (PRD 9): ink #0E0D0B, vermillion #C03910 (action), deep teal only for verified proof, warm neutrals. Spectral (display, h1, h2), Barlow (h3 down, body), JetBrains Mono for real data only. Phosphor icons, one weight. No emoji.
-- Logo: Montserrat wordmark with the arrow-K, 14 SVGs in `brand/` and `public/brand/`.
+- Logo: Montserrat wordmark with the arrow-K, 14 SVGs in `public/brand/`.
 - Voice line: "Prove it. Don't claim it." Plain sentences, no em-dashes in UI copy, no eyebrows.
 - Imagery comes from Higgsfield, except product previews, which are real captures of the built app. No stock photos and no fake `<div>` screenshots.
 

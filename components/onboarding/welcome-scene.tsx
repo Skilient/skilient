@@ -66,7 +66,7 @@ function Bank({ depth, seed }: { depth: "far" | "mid" | "near"; seed: number }) 
   );
 }
 
-/** The Skilient mark (brand/skilient-icon.svg), in parts, so it can assemble: centre, nodes, links. */
+/** The Skilient mark (public/brand/skilient-icon.svg), in parts, so it can assemble: centre, nodes, links. */
 function Mark() {
   const link = { fill: "none", stroke: "var(--w-red)", strokeWidth: 28, pathLength: 1 } as const;
   return (

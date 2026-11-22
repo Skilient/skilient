@@ -10,9 +10,7 @@ Skilient is a university-gated social platform for Pakistani students: they prov
 - `docs/student-first-plan.md` — **the current scope (2026-11-02): students first.** Recruiter and university portals are off by flag, faculty stays; The Record, societies and events, paths, the yearbook and Openings come next (phases 14–18). Read it before planning any feature, and don't re-propose its rejected list.
 - `docs/decisions.md` — every product decision so far, dated, with reasons. Append new ones.
 - `docs/setup-checklist.md` — accounts and keys a human must create; never invent values.
-- `brand/` — final logo SVGs (Editorial: ink #0E0D0B, vermillion #C03910). Copy into `public/brand/` in phase 0.
-- `design/tokens-figma-ramps.json` — colour ramps from the Figma frames; semantic tokens are in PRD section 9.
-- `docs/reference/` — the original Figma frames (PDF).
+- `public/brand/` — final logo SVGs (Editorial: ink #0E0D0B, vermillion #C03910).
 
 Precedence when documents disagree: a feature section (5.x) beats section 6 (data model); 5.28 beats 5.6/5.7/5.9/5.15; 5.27 replaces 5.3; `docs/decisions.md` (newest entry) beats everything. If still unclear, ask — don't guess.
 

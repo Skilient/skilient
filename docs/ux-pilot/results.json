@@ -96,6 +96,78 @@
    "shortest": 10
   },
   {
+   "id": "T005",
+   "status": "Done",
+   "answers": [
+    "Sign in > 'Email me a sign-in code instead' > 'Email me a code'; the code arrived in 0.1 s locally ('Your Skilient sign-in code: 138030').",
+    "The code: no password to remember on a phone.",
+    "Yes, on Home. Sign out itself landed on the marketing page '/', not on Sign in."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T005-1.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T006",
+   "status": "Done",
+   "answers": [
+    "'That email and password don't match.' above the fields.",
+    "About 15 s here (email arrives instantly locally). The reset page doesn't carry over the email I'd typed on Sign in (R69).",
+    "Trusted: subject 'Reset your Skilient password', 'It works for 15 minutes and only once', the link goes to the Skilient site through a 'Continue' page. Nothing shows who sent it beyond the name.",
+    "'That reset link has expired or was already used. Ask for a new one.' on the reset form. Clear."
+   ],
+   "findings": [
+    "R69"
+   ],
+   "note": "After saving the new password the page showed Home while the address stayed /reset-password; no 'Password changed' message.",
+   "shots": [
+    "docs/ux-pilot/shots/T006-1.png",
+    "docs/ux-pilot/shots/T006-2.png",
+    "docs/ux-pilot/shots/T006-3.png"
+   ],
+   "clicks": 8,
+   "shortest": 7
+  },
+  {
+   "id": "T007",
+   "status": "Done",
+   "answers": [
+    "Yes: 'After your password, Skilient asks for a code from an authenticator app… keep backup codes for when you can't reach any of them. Optional for students.' It says what, less why.",
+    "Typing the key: the QR plus 'Can't scan it? Enter this key instead' was fine; saving 10 backup codes ('we won't show them again') is the real step.",
+    "Use a backup code: the sign-in step offers 'Use a backup code instead', and Settings says 'If you lose your phone, sign in with one of these… 10 of 10 left.' Without codes there's no path on screen."
+   ],
+   "findings": [],
+   "note": "Turning it off asks 'Turn off two-factor? … your backup codes will stop working.'",
+   "shots": [
+    "docs/ux-pilot/shots/T007-1.png",
+    "docs/ux-pilot/shots/T007-2.png"
+   ],
+   "clicks": 8,
+   "shortest": 7
+  },
+  {
+   "id": "T008",
+   "status": "Done",
+   "answers": [
+    "Accept the updated User Agreement: 'We've updated our User Agreement. Read what changed, then accept to keep using Skilient.'",
+    "Yes: 'What changed' is one sentence at the top, then the full text.",
+    "No: accept is the only way on; no decline or delete link on the page (R70)."
+   ],
+   "findings": [
+    "R70"
+   ],
+   "note": "The new version was published by plain SQL (no ops screen for it).",
+   "shots": [
+    "docs/ux-pilot/shots/T008-1.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
    "id": "T009",
    "status": "Done",
    "answers": [
@@ -824,6 +896,27 @@
    "shortest": 3
   },
   {
+   "id": "T045",
+   "status": "Partly done",
+   "answers": [
+    "19 settings, one per category, each autosaving with its own toast ('Saved: off for comments.' ×19).",
+    "Mostly; but 'Recruiter contact requests', 'Job applications' and 'Recruiting' are listed though the recruiter portal is off (R71). Event reminders sit under 'Societies and events'.",
+    "Nothing: 'Turn on for this device' answered 'Phone notifications aren't set up yet.', with no browser prompt (push keys aren't configured locally)."
+   ],
+   "findings": [
+    "R71"
+   ],
+   "note": "Push needs VAPID keys and the notify worker (not on this container).",
+   "shots": [
+    "docs/ux-pilot/shots/T045-1.png",
+    "docs/ux-pilot/shots/T045-2.png",
+    "docs/ux-pilot/shots/T045-3.png",
+    "docs/ux-pilot/shots/T045-4.png"
+   ],
+   "clicks": 21,
+   "shortest": 4
+  },
+  {
    "id": "T046",
    "status": "Partly done",
    "answers": [
@@ -1098,6 +1191,168 @@
    ],
    "clicks": 7,
    "shortest": 6
+  },
+  {
+   "id": "T061",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Unsaved changes' next to Save changes, then 'Saved.'. But leaving before saving dropped my intro with no warning (R72).",
+    "My university: 'Signed-in students and staff at your university, and your friends anywhere, see your full profile.' Others see name, department and batch.",
+    "A crop step for the photo appeared (good). Nothing missing."
+   ],
+   "findings": [
+    "R72"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T061-1.png"
+   ],
+   "clicks": 9,
+   "shortest": 7
+  },
+  {
+   "id": "T062",
+   "status": "Done",
+   "answers": [
+    "About 6 s: Settings > Privacy centre > 'Show me on leaderboards' switch ('Saved.'); 'Who viewed my CV: 0 views in the last 30 days' on the same page.",
+    "'your tier still shows on your profile and to recruiters' and 'whether recruiters can find you': there are no recruiters on Skilient now (P20).",
+    "The switch has no accessible name of its own (R73)."
+   ],
+   "findings": [
+    "R73",
+    "R14"
+   ],
+   "note": "Leaderboard then says 'You've left the leaderboards… Show me again'.",
+   "shots": [
+    "docs/ux-pilot/shots/T062-1.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T063",
+   "status": "Partly done",
+   "answers": [
+    "The list is 'Recent activity' (sign-ins with browser and time), not a list of signed-in devices; recognisable ('Chrome on Android').",
+    "'Sign out everywhere? Every device, including this one, will need to sign in again.' Then I was signed out too; there's no 'all other devices' (R74).",
+    "The other tab moved to the home page by itself after I signed out in the first."
+   ],
+   "findings": [
+    "R74"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T063-1.png"
+   ],
+   "clicks": 4,
+   "shortest": null
+  },
+  {
+   "id": "T064",
+   "status": "Done",
+   "answers": [
+    "Mostly: profile, posts, messages, endorsements, credentials and score are deleted; ventures pass to a teammate; signed CVs are revoked. Your own Record isn't named. 'There is no data export at launch.' (P36)",
+    "'Keep my account' on the page the account is locked to ('It will be permanently deleted on Tuesday, 8 December 2026… nobody else is told'). Safe.",
+    "Long: about 3,000 words in 12 sections; the headings are clear."
+   ],
+   "findings": [],
+   "note": "Start needed the username typed; no extra dialog.",
+   "shots": [
+    "docs/ux-pilot/shots/T064-1.png",
+    "docs/ux-pilot/shots/T064-2.png",
+    "docs/ux-pilot/shots/T064-3.png",
+    "docs/ux-pilot/shots/T064-4.png",
+    "docs/ux-pilot/shots/T064-5.png",
+    "docs/ux-pilot/shots/T064-6.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T065",
+   "status": "Done",
+   "answers": [
+    "Yes: 'A Skilient reviewer checks each one… Reviews usually take up to 3 days.'",
+    "'Waiting for review', 'Approved', 'Not approved' with 'Reviewer's note: The file is too blurry… Upload a clearer scan'. Clear.",
+    "Profile Overview > Credentials."
+   ],
+   "findings": [
+    "R75"
+   ],
+   "note": "Too-big file: no message when choosing it; 'PDFs can be up to 5 MB.' only after pressing Send. The same certificate can be sent again and shows up repeatedly (R75).",
+   "shots": [
+    "docs/ux-pilot/shots/T065-1.png",
+    "docs/ux-pilot/shots/T065-2.png",
+    "docs/ux-pilot/shots/T065-3.png",
+    "docs/ux-pilot/shots/T065-4.png",
+    "docs/ux-pilot/shots/T065-5.png",
+    "docs/ux-pilot/shots/T065-6.png",
+    "docs/ux-pilot/shots/T065-7.png",
+    "docs/ux-pilot/shots/T065-8.png",
+    "docs/ux-pilot/shots/T065-9.png"
+   ],
+   "clicks": 8,
+   "shortest": 6
+  },
+  {
+   "id": "T066",
+   "status": "Done",
+   "answers": [
+    "Polish and convenience: ATS PDF export, refresh CV any time, CV layouts and insights, company names on CV views, who viewed your record, full survey breakdown.",
+    "No: 'Your plan: Free', with a 7-day trial. 'Test mode' banner shows.",
+    "No: 'Proof stays free for everyone: verification, levels, ranking and being found.' But 'Company names on CV views' means nothing with no recruiters."
+   ],
+   "findings": [
+    "R14"
+   ],
+   "note": "What happens when the beta ends isn't stated anywhere on the page (R76).",
+   "shots": [
+    "docs/ux-pilot/shots/T066-1.png"
+   ],
+   "clicks": 1,
+   "shortest": 1
+  },
+  {
+   "id": "T067",
+   "status": "Done",
+   "answers": [
+    "Feedback in the rail (desktop) / /feedback; on the phone it isn't in the account menu.",
+    "Yes: 'Thank you. We read every one, and you'll see its status below.' with steps Received, Reviewing, Planned, Shipped.",
+    "Yes: the reply and 'Planned' showed under 'My feedback'. It attached '/feedback', not the score page I came from (P26)."
+   ],
+   "findings": [
+    "R77"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T067-1.png",
+    "docs/ux-pilot/shots/T067-2.png",
+    "docs/ux-pilot/shots/T067-3.png",
+    "docs/ux-pilot/shots/T067-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T068",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Reason given: Spam: the post asks people to report it… (rule 3, spam).' and 'Repeated test spam posts…'. Banner: 'Your account is suspended until Fri 27 Nov… You can read, appeal the decision or delete your account, but not post, message or apply. Appeal'.",
+    "Yes: the banner's Appeal link; each decision appealable once within 30 days, 'a different staff member reviews it'.",
+    "Fair: 'Decision reversed' with the reviewer's reason. Each decision needs its own appeal (post removal and suspension separately)."
+   ],
+   "findings": [],
+   "note": "Staff side played through the product's functions as two different staff accounts.",
+   "shots": [
+    "docs/ux-pilot/shots/T068-1.png",
+    "docs/ux-pilot/shots/T068-2.png",
+    "docs/ux-pilot/shots/T068-3.png",
+    "docs/ux-pilot/shots/T068-4.png",
+    "docs/ux-pilot/shots/T068-5.png",
+    "docs/ux-pilot/shots/T068-6.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
   }
  ],
  "cw": [
@@ -1268,6 +1523,30 @@
    "task": "T048",
    "q": 2,
    "why": "On a phone the Chat tab is off-screen."
+  },
+  {
+   "step": "F02.06",
+   "task": "T063",
+   "q": 3,
+   "why": "'Sign out of all devices' signs this device out too."
+  },
+  {
+   "step": "F02.05a",
+   "task": "T008",
+   "q": 4,
+   "why": "No way to decline; accept is the only path."
+  },
+  {
+   "step": "F11.06b",
+   "task": "T045",
+   "q": 4,
+   "why": "'Turn on for this device' fails with no next step."
+  },
+  {
+   "step": "F15.02b",
+   "task": "T061",
+   "q": 4,
+   "why": "Leaving unsaved loses the change without a prompt."
   }
  ],
  "findings": [
@@ -1886,6 +2165,116 @@
    "principles": "H03,TRU",
    "fix": "Confirm: 'You confirm Ali did this. This can't be undone.'",
    "same_as": ""
+  },
+  {
+   "id": "R68",
+   "severity": 3,
+   "where": "All pages (new students)",
+   "what": "Until a new student finishes or skips the tour, opening any page (Settings, Me, a notification or shared link) redirects to /feed to show tour step 1.",
+   "repro": "Sign up, leave the welcome screen without choosing, open /settings/privacy.",
+   "tasks": "T011,T064",
+   "principles": "NAV,H03,LRN",
+   "fix": "Start the tour only on /feed, and only by choice; never redirect a deep link.",
+   "same_as": ""
+  },
+  {
+   "id": "R69",
+   "severity": 1,
+   "where": "/forgot-password",
+   "what": "The email typed on Sign in isn't carried to Reset password.",
+   "repro": "Fail sign-in, tap Forgot password.",
+   "tasks": "T006",
+   "principles": "H06",
+   "fix": "Prefill the email.",
+   "same_as": ""
+  },
+  {
+   "id": "R70",
+   "severity": 2,
+   "where": "/agreement",
+   "what": "An updated agreement can only be accepted; no link to decline, export or delete the account.",
+   "repro": "Publish a new version, sign in.",
+   "tasks": "T008",
+   "principles": "COP,PRV",
+   "fix": "Add 'Don't agree? Delete your account' with what happens.",
+   "same_as": ""
+  },
+  {
+   "id": "R71",
+   "severity": 2,
+   "where": "/settings/notifications",
+   "what": "Lists Recruiter contact requests, Job applications and Recruiting while the recruiter portal is off; 19 autosave toasts when changing many.",
+   "repro": "Open notification settings.",
+   "tasks": "T045",
+   "principles": "COP,H08",
+   "fix": "Hide portal categories while portals are off; one 'Saved' toast.",
+   "same_as": ""
+  },
+  {
+   "id": "R72",
+   "severity": 2,
+   "where": "/settings/profile",
+   "what": "Leaving with unsaved changes drops them silently ('Unsaved changes' shows but there's no warning).",
+   "repro": "Type an intro, open Home.",
+   "tasks": "T061",
+   "principles": "H05,H03",
+   "fix": "Warn before leaving with unsaved changes.",
+   "same_as": ""
+  },
+  {
+   "id": "R73",
+   "severity": 2,
+   "where": "/settings/privacy",
+   "what": "The leaderboard switch has no accessible name.",
+   "repro": "Focus the switch with a screen reader.",
+   "tasks": "T062",
+   "principles": "ACC",
+   "fix": "aria-labelledby the 'Show me on leaderboards' label.",
+   "same_as": ""
+  },
+  {
+   "id": "R74",
+   "severity": 2,
+   "where": "/settings/security",
+   "what": "Devices are a recent-activity log, and 'Sign out of all devices' includes this one; you can't sign out the others only.",
+   "repro": "Settings > Security.",
+   "tasks": "T063",
+   "principles": "PRV,TRU",
+   "fix": "List active sessions with 'This device', and 'Sign out other devices'.",
+   "same_as": ""
+  },
+  {
+   "id": "R75",
+   "severity": 1,
+   "where": "/me/credentials",
+   "what": "Too-big files are only rejected after Send, and the same certificate can be submitted again and again.",
+   "repro": "Choose a 6 MB PDF; send one twice.",
+   "tasks": "T065",
+   "principles": "H05,H09",
+   "fix": "Check size on choosing; warn on duplicates.",
+   "same_as": ""
+  },
+  {
+   "id": "R76",
+   "severity": 1,
+   "where": "/settings/billing",
+   "what": "Nothing says what happens when the beta ends.",
+   "repro": "Read Billing.",
+   "tasks": "T066",
+   "principles": "TRU,COP",
+   "fix": "One line on the beta and its end date.",
+   "same_as": ""
+  },
+  {
+   "id": "R77",
+   "severity": 2,
+   "where": "/feedback",
+   "what": "The form attaches '/feedback' as the page, not the page the student came from; the phone account menu has no Feedback link.",
+   "repro": "Open Feedback from the score page.",
+   "tasks": "T067",
+   "principles": "H10",
+   "fix": "Pass ?from= and show it.",
+   "same_as": "P26"
   }
  ],
  "plan_fixes": [
@@ -1956,6 +2345,18 @@
   {
    "tasks": "T047",
    "change": "The plan expects a notification of acceptance (T048); check it on the bell; in this run the venture page changed first."
+  },
+  {
+   "tasks": "T045",
+   "change": "Push needs VAPID keys and the notify worker; run on staging and a real phone."
+  },
+  {
+   "tasks": "T063",
+   "change": "The product can't sign out 'everywhere except this phone'; reword to 'sign out of all devices' or wait for the feature."
+  },
+  {
+   "tasks": "T068",
+   "change": "Removal and restriction are two decisions, each with its own appeal; say 'appeal one of them'."
   }
  ],
  "production_recheck": []

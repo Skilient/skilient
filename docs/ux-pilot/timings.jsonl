@@ -328,3 +328,12 @@
 {"task":"T065","label":"open /profile/uxp_tester","route":"/me/credentials","device":"phone","pendingMs":null,"resultMs":760,"kind":"navigation","shown":"/profile/uxp_tester","at":"2026-11-23T23:42:07.534Z"}
 {"task":"T067","label":"open /me/score","route":"/profile/uxp_tester","device":"phone","pendingMs":null,"resultMs":849,"kind":"navigation","shown":"/me/score","at":"2026-11-23T23:42:13.940Z"}
 {"task":"T067","label":"send feedback","route":"/feedback","device":"phone","pendingMs":145,"resultMs":145,"kind":"settled","shown":"Feedback","at":"2026-11-23T23:42:53.445Z"}
+{"task":"T065","label":"open /me/credentials","route":"/feed","device":"phone","pendingMs":null,"resultMs":919,"kind":"navigation","shown":"/me/credentials","at":"2026-11-23T23:45:55.825Z"}
+{"task":"T065","label":"send too-big file","route":"/me/credentials","device":"phone","pendingMs":117,"resultMs":139,"kind":"message","shown":"true","at":"2026-11-23T23:46:01.557Z"}
+{"task":"T065","label":"send credential","route":"/me/credentials","device":"phone","pendingMs":75,"resultMs":75,"kind":"settled","shown":"Credentials","at":"2026-11-23T23:46:02.660Z"}
+{"task":"T065","label":"open /profile/uxp_tester","route":"/me/credentials","device":"phone","pendingMs":null,"resultMs":774,"kind":"navigation","shown":"/profile/uxp_tester","at":"2026-11-23T23:46:13.309Z"}
+{"task":"T067","label":"open /me/score","route":"/profile/uxp_tester","device":"phone","pendingMs":null,"resultMs":944,"kind":"navigation","shown":"/me/score","at":"2026-11-23T23:46:19.770Z"}
+{"task":"T067","label":"send feedback","route":"/feedback","device":"phone","pendingMs":144,"resultMs":144,"kind":"settled","shown":"Feedback","at":"2026-11-23T23:46:59.093Z"}
+{"task":"T068","label":"sign in restricted","route":"/signin","device":"phone","pendingMs":80,"resultMs":812,"kind":"settled","shown":"Welcome back","at":"2026-11-23T23:47:13.177Z"}
+{"task":"T068","label":"Appeal","route":"/appeals","device":"phone","pendingMs":null,"resultMs":151,"kind":"settled","shown":"Appeals","at":"2026-11-23T23:48:25.842Z"}
+{"task":"T068","label":"send appeal","route":"/appeals","device":"phone","pendingMs":85,"resultMs":775,"kind":"settled","shown":"Appeals","at":"2026-11-23T23:48:28.196Z"}

@@ -161,15 +161,13 @@ if (run("T067")) {
 if (run("T068")) {
   setTask("T068");
   // Staff remove helper C's '[UX test] report me' post (reported in T023) and suspend C for 3 days.
-  const [cse] = await sql`select c.id from public.report_cases c where c.target_id = ${ids.posts.reportMe}::text or c.target_id::text = ${ids.posts.reportMe} limit 1`.catch(() => [] as any);
+  const [cse] = await sql`select c.id from public.report_cases c where c.target_type::text = 'post' and c.target_id::text = ${ids.posts.reportMe} and c.status::text = 'open' limit 1`.catch((e) => (say("case q:", e.message), [] as any));
   say("T068 case:", cse?.id);
   if (cse) { await asUser(staff, `select public.claim_case($1, true)`, [cse.id], "aal2").catch((e: any) => say("claim:", e.message)); await asUser(staff, `select public.resolve_case($1, 'remove', $2, 'low')`, [cse.id, "Spam: the post asks people to report it and has no content for students (rule 3, spam)."], "aal2").catch((e: any) => say("resolve:", e.message)); }
   const [sx] = await sql`select 1 from public.sanctions where user_id = ${acc.helperC.id} and lifted_at is null`.catch(() => [] as any);
   if (!sx) await asUser(staff, `select public.sanction_user($1, 'suspend', now() + interval '3 days', $2, $3)`, [acc.helperC.id, "Repeated test spam posts in the University Feed.", cse?.id ?? null], "aal2").catch((e: any) => say("sanction:", e.message));
   const c = await page(await context(b, { device: "phone" }));
-  await c.goto("/signin"); await ready(c, 300);
-  await c.getByLabel("University email").fill(acc.helperC.email); await c.getByLabel("Password", { exact: true }).fill(acc.helperC.password);
-  const t = await timedClick(c, c.getByRole("button", { name: "Sign in", exact: true }), "sign in restricted", { timeout: 40_000 });
+  const ts = Date.now(); await signIn(c, acc.helperC); const t = { kind: "navigation", pendingMs: null, resultMs: Date.now() - ts, shown: new URL(c.url()).pathname };
   await ready(c, 800);
   say("T068 sign in:", T(t), "| at", new URL(c.url()).pathname, await mainText(c, 800));
   await shot(c, "T068");

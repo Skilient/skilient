@@ -447,6 +447,657 @@
    ],
    "clicks": null,
    "shortest": null
+  },
+  {
+   "id": "T026",
+   "status": "Done",
+   "answers": [
+    "University: the audience switch under the composer (University | Global) was already on University; I checked it before posting.",
+    "A 48 MB photo was accepted without a word (shrunk in the browser): 'Images (1/4)'. No limit was mentioned, which is fine.",
+    "At the top of my University Feed, marked 'just now · University'.",
+    "'Posted.' under the composer, but only 21.7 s after tapping Post on Fast 3G; until then the button stayed active and nothing said it was sending (R41)."
+   ],
+   "findings": [
+    "R41"
+   ],
+   "note": "Two photos ended up attached (the big one too): the task's 'one photo' needs the tester to remove one; no remove step was obvious.",
+   "shots": [
+    "docs/ux-pilot/shots/T026-1.png",
+    "docs/ux-pilot/shots/T026-2.png",
+    "docs/ux-pilot/shots/T026-3.png",
+    "docs/ux-pilot/shots/T026-4.png",
+    "docs/ux-pilot/shots/T026-5.png",
+    "docs/ux-pilot/shots/T026-6.png",
+    "docs/ux-pilot/shots/T026-7.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T027",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Add an option' adds a field; each option has a remove button (3 shown with 3 options).",
+    "'Closes after' select (1 to 7 days) under the options; stored 2 days, 3 options.",
+    "A batch-only audience: polls go to the whole university or globally, not to my batch."
+   ],
+   "findings": [],
+   "note": "Posted in 0.76 s.",
+   "shots": [
+    "docs/ux-pilot/shots/T027-1.png",
+    "docs/ux-pilot/shots/T027-2.png",
+    "docs/ux-pilot/shots/T027-3.png",
+    "docs/ux-pilot/shots/T027-4.png"
+   ],
+   "clicks": 7,
+   "shortest": 7
+  },
+  {
+   "id": "T028",
+   "status": "Done",
+   "answers": [
+    "Yes: the draft 'Half-written thought…' was still there after leaving Home. I expected it to be lost.",
+    "'Wait 30 seconds between posts.' under the composer (named the wait); my text stayed in the box.",
+    "Nothing: the Post button is disabled when the box is empty; no message says why."
+   ],
+   "findings": [
+    "R42"
+   ],
+   "note": "The 30 s limit counts the poll posted just before, so the first of the 'two quick posts' was refused.",
+   "shots": [
+    "docs/ux-pilot/shots/T028-1.png",
+    "docs/ux-pilot/shots/T028-2.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T029",
+   "status": "Done",
+   "answers": [
+    "'Edit' sits right on my own post (with Delete), not in a menu.",
+    "Yes, stated when editing: 'You can edit a post for 15 minutes after posting. It will show as edited.' Not before, when posting.",
+    "Yes: 'Delete this post? It's removed for everyone, with its images, votes and RSVPs. This can't be undone.' Cancel / Delete."
+   ],
+   "findings": [],
+   "note": "Save 1.4 s and delete 1.4 s on the throttled phone.",
+   "shots": [
+    "docs/ux-pilot/shots/T029-1.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T030",
+   "status": "Partly done",
+   "answers": [
+    "Nothing countable: no question under my own post and no public line yet; 'Insights' opens 'Post insights come with Student Pro.'",
+    "Because answers from my own question would be about me; nothing on the page says so.",
+    "Partly: 'See how readers answered every question… the full breakdown is part of Student Pro.' It doesn't say what the free public line is or where it shows. Not worth paying for from this sheet alone."
+   ],
+   "findings": [
+    "R43"
+   ],
+   "note": "Pinning works: 'Pin' on each comment, then 'Pinned by the author' and 'Unpin'. Helpers couldn't answer the post's question from SQL ('there's no question for you'): the question is assigned on view, so the setup needs helpers to open the post in the app.",
+   "shots": [
+    "docs/ux-pilot/shots/T030-1.png",
+    "docs/ux-pilot/shots/T030-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T031",
+   "status": "Done",
+   "answers": [
+    "No: the sheet says 'Nobody sees a share count' but nothing about notifying the friend.",
+    "Yes: the toast 'Sent to Fee Tracker · 04:02 Undo' stayed long enough; Undo gave 'Share taken back.' The '· 04:02' reads like a countdown but is the clock time (R44).",
+    "No; sending inside Skilient keeps it in the chat with a card.",
+    "Fresh account: 'No chats yet. Message a friend or join a venture first.' with Find friends. Good."
+   ],
+   "findings": [
+    "R44"
+   ],
+   "note": "The abandoned venture's chat (Hostel Mess Menu) is offered as a share target.",
+   "shots": [
+    "docs/ux-pilot/shots/T031-1.png",
+    "docs/ux-pilot/shots/T031-2.png",
+    "docs/ux-pilot/shots/T031-3.png",
+    "docs/ux-pilot/shots/T031-4.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T032",
+   "status": "Partly done",
+   "answers": [
+    "Yes: a shared post shows as a card 'Post by Ali Helper · 23 Nov' under the note.",
+    "Not seen: the helper couldn't share a post the tester can't see ('that post isn't available to share'), so F07.06a can't be produced this way.",
+    "Nothing stopped me: 5 posts to 4 chats each (20 shares in under a minute) all went through (R45)."
+   ],
+   "findings": [
+    "R45"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T032-1.png",
+    "docs/ux-pilot/shots/T032-2.png"
+   ],
+   "clicks": 20,
+   "shortest": null
+  },
+  {
+   "id": "T033",
+   "status": "Done",
+   "answers": [
+    "Each suggestion says why: 'Same batch' or 'Same department'. Made sense.",
+    "'No one has that username.' under the field.",
+    "Friends > Sent tab ('Sent 1')."
+   ],
+   "findings": [
+    "R46",
+    "R47"
+   ],
+   "note": "After one request, adding from suggestions said 'You're doing that too often. Try again later.' (R46). Danish stayed in suggestions with 'Add friend' after I'd sent him a request (R47). Dismiss removes a suggestion without confirmation or undo.",
+   "shots": [
+    "docs/ux-pilot/shots/T033-1.png",
+    "docs/ux-pilot/shots/T033-2.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T034",
+   "status": "Done",
+   "answers": [
+    "The Received tab count ('Received 1') and the progress sheet's '1 friend request'.",
+    "Yes: Received and Sent tabs with counts.",
+    "'You're already friends.' under the field."
+   ],
+   "findings": [],
+   "note": "Accept and Cancel gave no toast; the row just disappeared.",
+   "shots": [
+    "docs/ux-pilot/shots/T034-1.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T035",
+   "status": "Done",
+   "answers": [
+    "Friends rows have only Unfriend; Message is on the friend's profile (one more tap). Chat itself has no 'new message' button (R48).",
+    "No: Unfriend asks 'Unfriend Sana Spark? You'll go back to being strangers. Either of you can send a new request later.' On the profile, Message and Unfriend sit side by side with equal weight.",
+    "The friends-only profile and messaging."
+   ],
+   "findings": [
+    "R48"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T035-1.png"
+   ],
+   "clicks": 5,
+   "shortest": 3
+  },
+  {
+   "id": "T036",
+   "status": "Done",
+   "answers": [
+    "Their profile: Block next to Add friend and Report.",
+    "Yes: 'You'll stop seeing each other's profiles, posts and ventures, and any friendship or request between you ends. Chaudhry isn't told…'",
+    "Yes: Friends > Blocked > Unblock, with 'Your old friendship isn't restored'. They wouldn't know: their view of my profile is the generic 'We couldn't find that page'."
+   ],
+   "findings": [],
+   "note": "Block lands on Friends > Blocked, which also lists my muted people.",
+   "shots": [
+    "docs/ux-pilot/shots/T036-1.png",
+    "docs/ux-pilot/shots/T036-2.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T037",
+   "status": "Done",
+   "answers": [
+    "My message appeared at once with its time; no 'Sent' or 'Delivered' tick on a text message. A photo showed '· sending' until it went. Earlier messages show '· Seen' (read receipts).",
+    "Yes: 'Replying to Ali Helper · Thursday, 9am. Room 204.' above the box, and the sent reply quotes it.",
+    "'Message deleted' in its place, straight away, with no confirmation and no undo (R49).",
+    "Typing indicator and a tick for delivered. Reactions are there (👍 ❤️ 😂 🎉 😮 🙏)."
+   ],
+   "findings": [
+    "R49"
+   ],
+   "note": "Helper's reply arrived live (Realtime) within 4 s.",
+   "shots": [
+    "docs/ux-pilot/shots/T037-1.png",
+    "docs/ux-pilot/shots/T037-2.png"
+   ],
+   "clicks": 9,
+   "shortest": 7
+  },
+  {
+   "id": "T038",
+   "status": "Done",
+   "answers": [
+    "Nothing until I sent: then a toast 'Reconnecting… new messages will appear when you're back.' No offline banner.",
+    "By itself: it was stored once after the connection came back; no retry needed.",
+    "Yes: while offline my message looked exactly like a sent one, with its time and Edit/Delete, no 'sending' or 'not sent' mark (R50)."
+   ],
+   "findings": [
+    "R50"
+   ],
+   "note": "Offline simulated with the browser context's offline mode.",
+   "shots": [
+    "docs/ux-pilot/shots/T038-1.png",
+    "docs/ux-pilot/shots/T038-2.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T039",
+   "status": "Done",
+   "answers": [
+    "The search box at the top of Chat ('Search messages'): 'December' found both messages, newest chats first, without opening the chat. There is also 'Search this chat' inside a chat.",
+    "That I stop getting notified; it doesn't say for how long. Mute applied at once (button became 'Unmute'), with no choice of duration and no message (R51).",
+    "Settings > Chat: 'If you turn this off, you won't send them or see anyone else's.' Clear. 'Saved.'"
+   ],
+   "findings": [
+    "R51"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T039-1.png",
+    "docs/ux-pilot/shots/T039-2.png",
+    "docs/ux-pilot/shots/T039-3.png",
+    "docs/ux-pilot/shots/T039-4.png",
+    "docs/ux-pilot/shots/T039-5.png",
+    "docs/ux-pilot/shots/T039-6.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T040",
+   "status": "Done",
+   "answers": [
+    "Nothing stopped me with a message: a stranger's profile simply has no Message button (Add friend, Block, Report), and nothing says why or how to message them (R52).",
+    "Fair for safety, but it should say 'Only friends can message you. Add Danish as a friend first.'",
+    "Sure: the sheet names the message and lets me tick up to 10 earlier messages for context ('Moderators see only the reported message and the ones you tick'). The stored report has 1 context message.",
+    "Not here; the helper is an existing account."
+   ],
+   "findings": [
+    "R52"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T040-1.png",
+    "docs/ux-pilot/shots/T040-2.png",
+    "docs/ux-pilot/shots/T040-3.png",
+    "docs/ux-pilot/shots/T040-4.png"
+   ],
+   "clicks": 5,
+   "shortest": null
+  },
+  {
+   "id": "T041",
+   "status": "Partly done",
+   "answers": [
+    "Batch 2028 and Skill React filters changed the URL (?batch=2028&skill=react) but the list stayed 'People you may know'; results came only after typing 2+ letters of a name ('Iq'). I could only find her because I knew her name (P16).",
+    "On the profile: chips 'React L2 , level 2: Written by them.' vs 'Python L1: Found in their repos'. No 'claimed' skill exists to compare.",
+    "The GitHub link and 'Written by them'. Nothing shows how much code."
+   ],
+   "findings": [
+    "R53"
+   ],
+   "note": "Found only by name; the filters alone do nothing.",
+   "shots": [
+    "docs/ux-pilot/shots/T041-1.png",
+    "docs/ux-pilot/shots/T041-2.png",
+    "docs/ux-pilot/shots/T041-3.png",
+    "docs/ux-pilot/shots/T041-4.png"
+   ],
+   "clicks": 6,
+   "shortest": 3
+  },
+  {
+   "id": "T042",
+   "status": "Done",
+   "answers": [
+    "'No results. Try clearing the filters.' with 'Clear filters'. Good.",
+    "Name, university, department, batch, GitHub link and top skills (Iqra), or 'hasn't added an intro yet' (Danish). Nothing says some parts are hidden or why.",
+    "Add friend (or Accept/Decline when she'd sent me a request), Block, Report. No Message."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T042-1.png",
+    "docs/ux-pilot/shots/T042-2.png",
+    "docs/ux-pilot/shots/T042-3.png",
+    "docs/ux-pilot/shots/T042-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T043",
+   "status": "Done",
+   "answers": [
+    "Me > Profile 'How others see you' opens my own profile with 'Edit profile'; there's no preview as a friend or a stranger. 'Visible to: my university.' at the end (P18).",
+    "The GitHub username link; all skills incl. L1.",
+    "My tier (Spark) shows next to my name. Fine at Spark; at Raw I'd rather hide it."
+   ],
+   "findings": [
+    "R54"
+   ],
+   "note": "Searching for the blocked person: 'No results. Try other words, or part of a name.'",
+   "shots": [
+    "docs/ux-pilot/shots/T043-1.png",
+    "docs/ux-pilot/shots/T043-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T044",
+   "status": "Done",
+   "answers": [
+    "The decline 'Your application to Campus Lost & Found wasn't accepted this time.' It sits in one 'Today' list with chat messages; no grouping or filter (P19).",
+    "Yes: every chat message is also a notification ('Ali Helper sent you a message: …'), duplicating the Chat badge.",
+    "To /requests (Sent), which listed my application twice as 'Declined' (I'd applied twice). 'Mark all read' cleared the bell; the Chat tab kept '1 unread'.",
+    "Fresh account: 'You're all caught up. Friend requests, applications, invites and team news show up here.'"
+   ],
+   "findings": [
+    "R55"
+   ],
+   "note": "Notifications list first renders 'Loading…' on the throttled phone (~1 s).",
+   "shots": [
+    "docs/ux-pilot/shots/T044-1.png",
+    "docs/ux-pilot/shots/T044-2.png",
+    "docs/ux-pilot/shots/T044-3.png",
+    "docs/ux-pilot/shots/T044-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T046",
+   "status": "Partly done",
+   "answers": [
+    "No: no install offer on Home or in Settings (it's offered only on a ticket page and after a first chat message).",
+    "Manifest is set up as an app (display standalone, start /feed, service worker registered); actually adding to a home screen can't be done in this headless browser.",
+    "Not answerable here."
+   ],
+   "findings": [
+    "R56"
+   ],
+   "note": "Needs a real phone.",
+   "shots": [],
+   "clicks": null,
+   "shortest": null
+  },
+  {
+   "id": "T047",
+   "status": "Done",
+   "answers": [
+    "Openings > Venture roles: 'Backend developer · Matches your skills · Campus Lost & Found · 1 of 1 open · Node.js, SQL'. The skills shown per role decided it.",
+    "One place in this role, and it's still free. 'place' and 'open' in one phrase reads awkwardly.",
+    "The page now says 'Application sent · Withdraw'; Requests > Sent lists it. No toast or message after sending (1.65 s, R57).",
+    "'The owner sees your message, your answers and your profile card.' Clear."
+   ],
+   "findings": [
+    "R57"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T047-1.png",
+    "docs/ux-pilot/shots/T047-2.png",
+    "docs/ux-pilot/shots/T047-3.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T048",
+   "status": "Done",
+   "answers": [
+    "Not from a notification I saw: the venture page changed to 'You're on the team · Leave venture'.",
+    "'You're on the team', Leave venture, and a Chat tab. On the phone the tab row is 600 px wide in a 390 px screen: Reviews and Chat are off-screen and must be scrolled to (R58, P31).",
+    "Puts its updates in my Home ('Followed venture updates'); the button just became 'Following', nothing explained."
+   ],
+   "findings": [
+    "R58"
+   ],
+   "note": "Team chat opened with a push offer card ('Get new messages on your phone…').",
+   "shots": [
+    "docs/ux-pilot/shots/T048-1.png"
+   ],
+   "clicks": 6,
+   "shortest": 4
+  },
+  {
+   "id": "T049",
+   "status": "Done",
+   "answers": [
+    "Requests > Invites: 'You're invited to join Study Buddy Finder · Accept · Decline'. Accepting gave no message; the invite just vanished.",
+    "The Sent tab says only 'Declined' with no reason; neutral, a bit cold.",
+    "Nothing stopped me: the role page still shows 'Apply to a role', and a second application to the same role went through silently (R59)."
+   ],
+   "findings": [
+    "R59"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T049-1.png",
+    "docs/ux-pilot/shots/T049-2.png"
+   ],
+   "clicks": 6,
+   "shortest": 4
+  },
+  {
+   "id": "T050",
+   "status": "Done",
+   "answers": [
+    "Full venture: no. It shows '2 of 2 members' and the role 'Filled', but 'Apply to join' is still offered (R60). Other university's venture: it isn't listed or searchable at all, and its link says 'We couldn't find that page'.",
+    "No alternatives were suggested on either page."
+   ],
+   "findings": [
+    "R60"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T050-1.png",
+    "docs/ux-pilot/shots/T050-2.png"
+   ],
+   "clicks": 3,
+   "shortest": null
+  },
+  {
+   "id": "T051",
+   "status": "Done",
+   "answers": [
+    "Role skills use a type-ahead ('Add React') that isn't obvious; the question field has no visible label.",
+    "No: the manage page has separate Save buttons per section ('Save role', 'Save questions', 'Save details') and no unsaved marker; leaving after editing the title silently dropped my change (R61).",
+    "About 12 s and 13 actions after the empty-title check. Nothing asked twice."
+   ],
+   "findings": [
+    "R61"
+   ],
+   "note": "Empty title: 'Check the highlighted fields.' at the top and 'Give it a title of at least 3 characters.' under Title (aria-invalid + describedby), but focus doesn't move to the field (R62).",
+   "shots": [
+    "docs/ux-pilot/shots/T051-1.png",
+    "docs/ux-pilot/shots/T051-2.png",
+    "docs/ux-pilot/shots/T051-3.png"
+   ],
+   "clicks": 13,
+   "shortest": 11
+  },
+  {
+   "id": "T052",
+   "status": "Done",
+   "answers": [
+    "Composer kind 'Venture invite', then a Venture select ('Readers see its open roles and an Apply button').",
+    "Didn't check as another user; my own feed shows it with the roles and Apply.",
+    "Yes; the tour mentioned the composer, and the kind tabs are on Home."
+   ],
+   "findings": [],
+   "note": "The venture select listed '[UX test] Ayesha' twice (a stray half-made venture of the same name from an earlier attempt).",
+   "shots": [
+    "docs/ux-pilot/shots/T052-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T053",
+   "status": "Done",
+   "answers": [
+    "Mostly: message, the answer to my question and a link to the profile, inline on Requests. Skills or tier weren't on the application.",
+    "The team chat existed but said 'No messages yet. Say hello.'; nothing announced the new member.",
+    "No: Decline is instant, no confirmation and no reason field (R63). A short optional reason would help."
+   ],
+   "findings": [
+    "R63"
+   ],
+   "note": "Invite by username: 'Invite sent.' (1.6 s).",
+   "shots": [
+    "docs/ux-pilot/shots/T053-1.png",
+    "docs/ux-pilot/shots/T053-2.png",
+    "docs/ux-pilot/shots/T053-3.png",
+    "docs/ux-pilot/shots/T053-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T054",
+   "status": "Done",
+   "answers": [
+    "'Mark this venture in progress? It stays open to applications while any role has places.' It doesn't say whether it can be undone (it can't).",
+    "On the venture's Updates tab, and in followers' Home.",
+    "Update = what happened this week; deliverable = a link to what was made (needed to complete)."
+   ],
+   "findings": [
+    "R64"
+   ],
+   "note": "Update, repository and deliverable saved with no toast: the page just changed (R64).",
+   "shots": [
+    "docs/ux-pilot/shots/T054-1.png"
+   ],
+   "clicks": 9,
+   "shortest": 8
+  },
+  {
+   "id": "T055",
+   "status": "Done",
+   "answers": [
+    "Partly: 'Make Bushra Helper the owner? They'll manage the venture. You stay on the team as a member.' It doesn't say I can't take it back.",
+    "No: only the new owner can make me owner again; nothing says so."
+   ],
+   "findings": [],
+   "note": "A role select per member (Lead, Developer, Designer, Researcher, Member) is on the Team tab.",
+   "shots": [
+    "docs/ux-pilot/shots/T055-1.png",
+    "docs/ux-pilot/shots/T055-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T056",
+   "status": "Done",
+   "answers": [
+    "Yes: the manage page lists 'To complete it you need: at least 1 deliverable (you have 0) · peer-verified contributions from at least 2 members (you have 1)', and the dialog repeats the first missing item. The dialog says 'This can't be undone' before checking, then errors inside it.",
+    "Satisfying: 'This venture is complete' and a Shipped post.",
+    "A 'Shipped' post in the Global feed and on my profile's Ventures tab as Completed."
+   ],
+   "findings": [
+    "R65"
+   ],
+   "note": "After my entry was corrected, the helper couldn't confirm the correction ('confirm the entry, not a correction'), only the original (R65).",
+   "shots": [
+    "docs/ux-pilot/shots/T056-1.png",
+    "docs/ux-pilot/shots/T056-2.png",
+    "docs/ux-pilot/shots/T056-3.png",
+    "docs/ux-pilot/shots/T056-4.png"
+   ],
+   "clicks": 8,
+   "shortest": 6
+  },
+  {
+   "id": "T057",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Abandon this venture? Applications and invites close. The page stays up as a record. This can't be undone.'",
+    "No, and it says so."
+   ],
+   "findings": [
+    "R66"
+   ],
+   "note": "Abandoned ventures still appear first in Ventures 'Any status' and on the profile (R66).",
+   "shots": [
+    "docs/ux-pilot/shots/T057-1.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T058",
+   "status": "Done",
+   "answers": [
+    "Self-reported: I said I did it. Peer-verified: a teammate confirmed it.",
+    "Yes: 'Entries can't be deleted; you can correct one for 24 hours.' at the top of the form.",
+    "No: Confirm on a teammate's entry acts at once, no dialog; the label changes to 'Peer-verified'."
+   ],
+   "findings": [
+    "R67"
+   ],
+   "note": "Bad link: 'Use a full link starting with https://.' under the field, aria-invalid + describedby, input kept.",
+   "shots": [
+    "docs/ux-pilot/shots/T058-1.png",
+    "docs/ux-pilot/shots/T058-2.png",
+    "docs/ux-pilot/shots/T058-3.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T059",
+   "status": "Done",
+   "answers": [
+    "'Correct' on my entry: 'Your correction replaces what the timeline shows. The original stays on the record, and a teammate confirms the new version.'",
+    "Yes.",
+    "Nothing; the window has closed. The page doesn't say what to do then."
+   ],
+   "findings": [],
+   "note": "Entry shows 'Corrected'.",
+   "shots": [
+    "docs/ux-pilot/shots/T059-1.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T060",
+   "status": "Done",
+   "answers": [
+    "Ticked the skills the sheet offered (only the venture's skills, React and SQL); 'Choose up to 5. 20 endorsements left this month.' Fine.",
+    "Weight on their profile; tied to an entry it 'makes it evidence… raises the skill to L4'.",
+    "If it's for a skill they no longer want shown, or from a teammate they fell out with.",
+    "Supervisor and faculty reviews: 'A review from a teacher adds a Reviewed by faculty badge to this project on your CV.'"
+   ],
+   "findings": [],
+   "note": "Hide is instant and reversible ('Hidden from others · Show').",
+   "shots": [
+    "docs/ux-pilot/shots/T060-1.png",
+    "docs/ux-pilot/shots/T060-2.png",
+    "docs/ux-pilot/shots/T060-3.png"
+   ],
+   "clicks": 7,
+   "shortest": 6
   }
  ],
  "cw": [
@@ -539,6 +1190,84 @@
    "task": "T024",
    "q": 2,
    "why": "Arrow keys don't move within the ⋯ menu."
+  },
+  {
+   "step": "F06.07",
+   "task": "T026",
+   "q": 4,
+   "why": "For 21 s after Post nothing changes, so it looks like nothing happened."
+  },
+  {
+   "step": "F06.10",
+   "task": "T030",
+   "q": 4,
+   "why": "Insights shows a Pro pitch, not how the post is doing."
+  },
+  {
+   "step": "F07.05b",
+   "task": "T032",
+   "q": 4,
+   "why": "No feedback or limit when sharing a lot."
+  },
+  {
+   "step": "F08.06",
+   "task": "T035",
+   "q": 2,
+   "why": "No Message control on the Friends page."
+  },
+  {
+   "step": "F08.02",
+   "task": "T033",
+   "q": 4,
+   "why": "After sending, the person still shows 'Add friend' in suggestions."
+  },
+  {
+   "step": "F09.03a",
+   "task": "T040",
+   "q": 4,
+   "why": "No message or control says why you can't message a stranger."
+  },
+  {
+   "step": "F10.03",
+   "task": "T041",
+   "q": 2,
+   "why": "Filters look like they work but nothing changes until you type a name."
+  },
+  {
+   "step": "F09.05a",
+   "task": "T038",
+   "q": 4,
+   "why": "An offline message looks sent."
+  },
+  {
+   "step": "F11.02a",
+   "task": "T044",
+   "q": 3,
+   "why": "Chat messages in notifications bury the decision."
+  },
+  {
+   "step": "F12.04a",
+   "task": "T050",
+   "q": 3,
+   "why": "'Apply to join' on a full team suggests you can still join."
+  },
+  {
+   "step": "F12.04c",
+   "task": "T049",
+   "q": 4,
+   "why": "Reapplying after a decline goes through silently."
+  },
+  {
+   "step": "F13.04a",
+   "task": "T051",
+   "q": 4,
+   "why": "No sign whether edits on the manage page were saved."
+  },
+  {
+   "step": "F12.08",
+   "task": "T048",
+   "q": 2,
+   "why": "On a phone the Chat tab is off-screen."
   }
  ],
  "findings": [
@@ -860,6 +1589,303 @@
    "principles": "EMP,H01",
    "fix": "Let posts from a student's own university reach small universities without the seed gate, or fill quiet feeds with older posts.",
    "same_as": ""
+  },
+  {
+   "id": "R41",
+   "severity": 3,
+   "where": "/feed composer",
+   "what": "Posting with photos on Fast 3G took 21.7 s with no pending state: the Post button stays active, no progress, no 'Posting…'.",
+   "repro": "Phone on Fast 3G, attach two photos, tap Post.",
+   "tasks": "T026",
+   "principles": "H01,MOB,DOH",
+   "fix": "Disable Post, show 'Uploading 1 of 2…' with progress, keep the draft if it fails.",
+   "same_as": ""
+  },
+  {
+   "id": "R42",
+   "severity": 1,
+   "where": "/feed composer",
+   "what": "An empty post just disables Post; nothing says why.",
+   "repro": "Clear the composer.",
+   "tasks": "T028",
+   "principles": "H09",
+   "fix": "Keep Post enabled and say 'Write something first', or show a hint.",
+   "same_as": ""
+  },
+  {
+   "id": "R43",
+   "severity": 2,
+   "where": "/post/[id] own post",
+   "what": "Own post shows no answers count and no public line; 'Insights' only says it's a Student Pro feature, without saying what the free line is or when it appears.",
+   "repro": "Open your own post with a few answers.",
+   "tasks": "T030",
+   "principles": "H01,TRU,MOT",
+   "fix": "Show the public line (or 'appears after 3 answers') on own posts; describe Pro below it.",
+   "same_as": "F05.07a"
+  },
+  {
+   "id": "R44",
+   "severity": 1,
+   "where": "Share toast",
+   "what": "'Sent to Fee Tracker · 04:02 Undo' shows the clock time, which reads like an undo countdown.",
+   "repro": "Share a post.",
+   "tasks": "T031",
+   "principles": "COP,H04",
+   "fix": "Drop the time, or show 'Undo (10 s)'.",
+   "same_as": ""
+  },
+  {
+   "id": "R45",
+   "severity": 2,
+   "where": "Share sheet",
+   "what": "No limit on sharing: 20 shares to 4 chats in under a minute went through.",
+   "repro": "Share five posts to every chat quickly.",
+   "tasks": "T032",
+   "principles": "SAF",
+   "fix": "Rate-limit shares per minute, as posts and friend requests are.",
+   "same_as": "F07.05b"
+  },
+  {
+   "id": "R46",
+   "severity": 2,
+   "where": "/friends",
+   "what": "After one friend request, a second within seconds says 'You're doing that too often. Try again later.' without saying how long.",
+   "repro": "Send a request by username, then tap Add friend on a suggestion.",
+   "tasks": "T033",
+   "principles": "H09,H05",
+   "fix": "Say the wait ('Try again in 20 seconds') or allow a few in a row.",
+   "same_as": ""
+  },
+  {
+   "id": "R47",
+   "severity": 2,
+   "where": "/friends People you may know",
+   "what": "A person you just sent a request to stays in suggestions with 'Add friend'.",
+   "repro": "Request a suggested person by username.",
+   "tasks": "T033",
+   "principles": "H04,H01",
+   "fix": "Drop pending people from suggestions or show 'Requested'.",
+   "same_as": ""
+  },
+  {
+   "id": "R48",
+   "severity": 2,
+   "where": "/friends, /chat",
+   "what": "No Message button on the Friends list, and /chat has no way to start a new conversation; you must go through a profile.",
+   "repro": "Try to message a friend from Friends or Chat.",
+   "tasks": "T035",
+   "principles": "NAV,H07",
+   "fix": "Add Message to friend rows and a 'New message' picker in Chat.",
+   "same_as": ""
+  },
+  {
+   "id": "R49",
+   "severity": 2,
+   "where": "/chat/[id]",
+   "what": "Deleting your own message happens at once: no confirmation, no undo; it becomes 'Message deleted'.",
+   "repro": "Delete a message in a chat.",
+   "tasks": "T037",
+   "principles": "H03,H05",
+   "fix": "Undo toast for a few seconds.",
+   "same_as": ""
+  },
+  {
+   "id": "R50",
+   "severity": 2,
+   "where": "/chat/[id]",
+   "what": "Offline, a sent message looks identical to a delivered one (time, Edit, Delete); only a generic 'Reconnecting…' toast appears.",
+   "repro": "Go offline, send a message.",
+   "tasks": "T038",
+   "principles": "H01,MOB",
+   "fix": "Mark it 'Sending…' / 'Not sent yet' until the server has it.",
+   "same_as": ""
+  },
+  {
+   "id": "R51",
+   "severity": 1,
+   "where": "/chat/[id]",
+   "what": "Mute applies instantly with no duration choice or confirmation of what it changes.",
+   "repro": "Tap Mute in a venture chat.",
+   "tasks": "T039",
+   "principles": "H01,H06",
+   "fix": "Toast 'Muted. You won't be notified about this chat. Unmute any time.'",
+   "same_as": ""
+  },
+  {
+   "id": "R52",
+   "severity": 2,
+   "where": "/profile/[username] (stranger)",
+   "what": "A stranger's profile has no Message button and no line explaining that only friends can message.",
+   "repro": "Open a non-friend's profile.",
+   "tasks": "T040",
+   "principles": "H09,COP",
+   "fix": "Show a disabled Message with 'Only friends can message. Add friend first.'",
+   "same_as": ""
+  },
+  {
+   "id": "R53",
+   "severity": 3,
+   "where": "/explore People",
+   "what": "Batch, department and skill filters show nothing (only 'People you may know') until 2+ letters of a name are typed, so 'students in my batch with React' can't be found.",
+   "repro": "Explore > Batch 2028 + Skill React.",
+   "tasks": "T041",
+   "principles": "H06,NAV,TRU",
+   "fix": "Run filter-only searches; show matching people.",
+   "same_as": "P16"
+  },
+  {
+   "id": "R54",
+   "severity": 1,
+   "where": "/me > Profile",
+   "what": "'How others see you' opens your own editable profile; there's no preview as friend or stranger.",
+   "repro": "Me > Profile.",
+   "tasks": "T043",
+   "principles": "PRV",
+   "fix": "Add 'View as: Friend · University · Anyone'.",
+   "same_as": "P18"
+  },
+  {
+   "id": "R55",
+   "severity": 2,
+   "where": "/notifications",
+   "what": "Every chat message is also a notification; one flat list, no grouping or type filter.",
+   "repro": "Receive chat messages and a decision.",
+   "tasks": "T044",
+   "principles": "H08,NAV",
+   "fix": "Leave chat messages to the Chat badge; group by type.",
+   "same_as": "P19"
+  },
+  {
+   "id": "R56",
+   "severity": 1,
+   "where": "/feed, /settings",
+   "what": "Installing to the home screen isn't offered on Home or Settings.",
+   "repro": "Look for 'Add to home screen'.",
+   "tasks": "T046",
+   "principles": "MOB",
+   "fix": "Offer it once in the progress checklist or Settings.",
+   "same_as": ""
+  },
+  {
+   "id": "R57",
+   "severity": 1,
+   "where": "/ventures/[id] apply",
+   "what": "After sending an application there's no confirmation message; the button just changes to 'Application sent'.",
+   "repro": "Apply to a role.",
+   "tasks": "T047",
+   "principles": "H01",
+   "fix": "Toast 'Application sent to Ali. You'll get a notification when they decide.'",
+   "same_as": ""
+  },
+  {
+   "id": "R58",
+   "severity": 2,
+   "where": "/ventures/[id] tabs (phone)",
+   "what": "Seven tabs in a 600 px row on a 390 px screen; Reviews and Chat (and Manage) are off-screen.",
+   "repro": "Open a venture you're a member of on a phone.",
+   "tasks": "T048",
+   "principles": "MOB,NAV",
+   "fix": "Wrap or move secondary tabs into a 'More' menu.",
+   "same_as": "P31"
+  },
+  {
+   "id": "R59",
+   "severity": 2,
+   "where": "/ventures/[id]",
+   "what": "After a decline you can apply again to the same role straight away; duplicate applications pile up in Requests.",
+   "repro": "Get declined, apply again.",
+   "tasks": "T049,T044",
+   "principles": "H05,COP",
+   "fix": "Say 'Ali declined this on 24 Nov' and allow reapplying after a set time.",
+   "same_as": ""
+  },
+  {
+   "id": "R60",
+   "severity": 2,
+   "where": "/ventures/[id] (full)",
+   "what": "'Apply to join' is shown on a full venture (2 of 2, role Filled).",
+   "repro": "Open a full venture.",
+   "tasks": "T050",
+   "principles": "H05,H04",
+   "fix": "Replace with 'Team full · Follow for updates'.",
+   "same_as": ""
+  },
+  {
+   "id": "R61",
+   "severity": 2,
+   "where": "/ventures/[id]/manage",
+   "what": "Separate Save buttons per section and no unsaved warning; leaving after an edit silently drops it.",
+   "repro": "Change the title, open About.",
+   "tasks": "T051",
+   "principles": "H05,H01",
+   "fix": "Warn on leave, or autosave with 'Saved'.",
+   "same_as": ""
+  },
+  {
+   "id": "R62",
+   "severity": 1,
+   "where": "/ventures/new",
+   "what": "On an empty-title error focus stays on the button.",
+   "repro": "Submit with no title.",
+   "tasks": "T051",
+   "principles": "ACC,H09",
+   "fix": "Move focus to the first invalid field.",
+   "same_as": ""
+  },
+  {
+   "id": "R63",
+   "severity": 2,
+   "where": "/requests",
+   "what": "Accept and Decline act instantly with no confirmation, no reason and no toast.",
+   "repro": "Decline an applicant.",
+   "tasks": "T053",
+   "principles": "H03,COP,SAF",
+   "fix": "Confirm Decline with an optional reason; toast with Undo.",
+   "same_as": ""
+  },
+  {
+   "id": "R64",
+   "severity": 1,
+   "where": "/ventures/[id]/updates, deliverables, manage",
+   "what": "Posting an update, linking a repository and adding a deliverable show no confirmation.",
+   "repro": "Do any of them.",
+   "tasks": "T054",
+   "principles": "H01",
+   "fix": "'Posted.' / 'Saved.' toasts as elsewhere.",
+   "same_as": ""
+  },
+  {
+   "id": "R65",
+   "severity": 2,
+   "where": "/ventures/[id]/contributions",
+   "what": "After an entry is corrected, a teammate can't confirm the correction ('confirm the entry, not a correction').",
+   "repro": "Correct your entry, ask a teammate to confirm.",
+   "tasks": "T056,T059",
+   "principles": "H09,TRU",
+   "fix": "Let teammates confirm the current version.",
+   "same_as": ""
+  },
+  {
+   "id": "R66",
+   "severity": 2,
+   "where": "/ventures, /profile/[u]/ventures",
+   "what": "Abandoned ventures are listed first under 'Any status' and on profiles.",
+   "repro": "Open Ventures.",
+   "tasks": "T057",
+   "principles": "H04,TRU",
+   "fix": "Hide abandoned by default; show them under a filter.",
+   "same_as": "P22"
+  },
+  {
+   "id": "R67",
+   "severity": 1,
+   "where": "/ventures/[id]/contributions",
+   "what": "Confirming a teammate's entry is instant with no dialog, though it can't be undone and affects their score.",
+   "repro": "Confirm an entry.",
+   "tasks": "T058",
+   "principles": "H03,TRU",
+   "fix": "Confirm: 'You confirm Ali did this. This can't be undone.'",
+   "same_as": ""
   }
  ],
  "plan_fixes": [
@@ -906,6 +1932,30 @@
   {
    "tasks": "T025",
    "change": "Say which text-size setting (browser font size vs Android font scale); they behave differently."
+  },
+  {
+   "tasks": "T030",
+   "change": "Helpers must open the post in the app before answering (questions are assigned on view); and the free public line needs 3+ positive answers."
+  },
+  {
+   "tasks": "T032",
+   "change": "A helper can't share a post the tester can't see; make the second post university-only at the tester's university and then change the tester's view (e.g. the author deletes it) to test the unavailable card."
+  },
+  {
+   "tasks": "T026",
+   "change": "Say 'remove the big photo after you've seen what happens' so the post has one photo."
+  },
+  {
+   "tasks": "T046",
+   "change": "Run on a real phone (Android Chrome install prompt; iOS Share > Add to Home Screen); headless browsers can't."
+  },
+  {
+   "tasks": "T040",
+   "change": "Name the stranger to find ('find Danish Helper in Explore'); filters alone return nobody."
+  },
+  {
+   "tasks": "T047",
+   "change": "The plan expects a notification of acceptance (T048); check it on the bell; in this run the venture page changed first."
   }
  ],
  "production_recheck": []

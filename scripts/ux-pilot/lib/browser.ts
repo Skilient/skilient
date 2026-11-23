@@ -111,6 +111,14 @@ export async function signIn(p: Page, who: Account): Promise<void> {
     if (await btn.isVisible().catch(() => false)) await btn.click();
     await p.waitForURL((u) => !u.pathname.startsWith("/signin"), { timeout: 60_000 });
   }
+  if (p.url().includes("/agreement")) {
+    // A newer User Agreement (T008 publishes one): accept it, as the student would.
+    await p.waitForLoadState("networkidle").catch(() => undefined);
+    const cb = p.getByRole("checkbox").first();
+    if (await cb.isVisible().catch(() => false)) await cb.click();
+    await p.getByRole("button", { name: /accept|agree|continue/i }).last().click();
+    await p.waitForURL((u) => !u.pathname.startsWith("/agreement"), { timeout: 60_000 });
+  }
 }
 
 /** A signed-in page for one seeded account. */

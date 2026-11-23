@@ -46,7 +46,7 @@ The PRD is split into one file per section so a session reads only what it needs
 | [05-30-the-record.md](05-30-the-record.md) | 5.30 The Record: the signed co-curricular record (decided 2026-11-02) |
 | [05-31-societies-and-events.md](05-31-societies-and-events.md) | 5.31 Societies and society events (decided 2026-11-02) |
 | [05-32-paths-and-proof-tasks.md](05-32-paths-and-proof-tasks.md) | 5.32 Paths, proof tasks and the skill swap (decided 2026-11-02) |
-| [05-33-yearbook.md](05-33-yearbook.md) | 5.33 Digital yearbook (decided 2026-11-02) |
+| [05-33-yearbook.md](05-33-yearbook.md) | ~~5.33 Digital yearbook (decided 2026-11-02)~~ **Removed 2026-11-23**, see decisions.md |
 | [05-34-openings-sharing-and-reach.md](05-34-openings-sharing-and-reach.md) | 5.34 Openings, share-to-chat, people you may know and push (decided 2026-11-02) |
 | [06-data-model.md](06-data-model.md) | 6. Data model |
 | [07-architecture-and-tech-stack.md](07-architecture-and-tech-stack.md) | 7. Architecture and tech stack |

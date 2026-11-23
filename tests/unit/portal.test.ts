@@ -20,7 +20,7 @@ describe("navigation", () => {
     const at = (path: string) => [...PRIMARY_NAV, ...SECONDARY_NAV].filter((i) => isActive(i, path)).map((i) => i.key);
     expect(at("/feed")).toEqual(["home"]);
     expect(at("/openings/competitions")).toEqual(["openings"]);
-    expect(at("/yearbook/amna")).toEqual(["yearbook"]);
+    expect(at("/swaps/abc")).toEqual(["swaps"]);
     expect(at("/leaderboard")).toEqual(["leaderboard"]);
     expect(at("/me/score")).toEqual(["me"]);
     expect(at("/feedback")).toEqual(["feedback"]);

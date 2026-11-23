@@ -274,10 +274,10 @@ PRD 5.30–5.34. These screens follow the neumorphism brief (`app/(marketing)/CL
 | Review a task | `/reviews/tasks/[id]` | Checklist + repo link | Confirm / Needs changes (note) | Already reviewed, no longer needed |
 | Skill swap | `/swaps` | Tabs (Learn, Teach, My swaps) | Offers and wants, matches with level and hours, requests | No teachers yet, no requests |
 | Swap | `/swaps/[id]` | Header + sessions | Propose session, confirm happened (learner), thank-you note, end swap | Pending, expired, closed, no-show |
-| Yearbook | `/yearbook` | Portrait grid by department + search | Pages, superlative reveal | Not final year (explains when it opens), frozen |
-| Yearbook page | `/yearbook/[username]` | Book page | Photo, quote, highlights, approved notes, Sign | Hidden page, already signed, frozen |
-| My yearbook | `/yearbook/me` | Settings + notes inbox | Photo, quote, visibility, approve/hide notes | No notes yet |
-| Superlatives vote | `/yearbook/vote` | List of titles | One vote per title, department search | Closed, opted out, revealed |
+| ~~Yearbook~~ | ~~`/yearbook`~~ | Removed 2026-11-23, see decisions.md | | |
+| ~~Yearbook page~~ | ~~`/yearbook/[username]`~~ | Removed 2026-11-23, see decisions.md | | |
+| ~~My yearbook~~ | ~~`/yearbook/me`~~ | Removed 2026-11-23, see decisions.md | | |
+| ~~Superlatives vote~~ | ~~`/yearbook/vote`~~ | Removed 2026-11-23, see decisions.md | | |
 | Share sheet | From a post's Share | Sheet | Recent DMs and venture chats, search, note, Send, Undo toast | No chats yet, rate limited |
 | People you may know | Section on `/friends` and `/explore` | Cards | Reason line, Add friend, dismiss | No suggestions |
 | Society review (ops) | `/ops/societies` (+ `[id]`) | Queue + case | Proof document, claim, approve / ask for more / reject | Empty queue |

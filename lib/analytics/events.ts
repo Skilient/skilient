@@ -83,8 +83,6 @@ export const SERVER_EVENTS = [
   "swap_accepted",
   "swap_session_confirmed",
   "swap_closed",
-  "yearbook_signed",
-  "yearbook_voted",
   "post_shared",
   "push_enabled",
 ] as const;

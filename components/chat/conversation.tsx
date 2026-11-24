@@ -123,6 +123,8 @@ export function Conversation({
   const pingRef = useRef<((event: string, payload?: Record<string, unknown>) => void) | null>(null);
   const lastTypingSent = useRef(0);
   const byId = new Map(people.map((p) => [p.userId, p]));
+  // A DM whose other member deleted their account: only the caller is left in it.
+  const partnerGone = thread.type === "dm" && !people.some((p) => !p.isMe);
 
   const scrollDown = useCallback(() => {
     requestAnimationFrame(() => listRef.current?.lastElementChild?.scrollIntoView({ block: "end" }));
@@ -511,17 +513,24 @@ export function Conversation({
         {typingNames.length ? `${typingNames.join(", ")} ${typingNames.length === 1 ? "is" : "are"} typing…` : ""}
       </p>
 
-      <Composer
-        onSend={(body, image) => {
-          const quoted = replyTo;
-          setReplyTo(null);
-          return send(body, image, quoted);
-        }}
-        onTyping={onTyping}
-        replyTo={replyTo}
-        replyName={replyTo ? (replyTo.senderId === meId ? "yourself" : (byId.get(replyTo.senderId ?? "")?.name ?? "someone")) : null}
-        onCancelReply={() => setReplyTo(null)}
-      />
+      {partnerGone ? (
+        // The other person deleted their account: the history stays, nobody is left to write to.
+        <p className="neu-well m-4 p-3 text-body-sm text-text-secondary" data-testid="chat-closed">
+          This account was deleted. You can still read the conversation, but new messages can&apos;t be sent.
+        </p>
+      ) : (
+        <Composer
+          onSend={(body, image) => {
+            const quoted = replyTo;
+            setReplyTo(null);
+            return send(body, image, quoted);
+          }}
+          onTyping={onTyping}
+          replyTo={replyTo}
+          replyName={replyTo ? (replyTo.senderId === meId ? "yourself" : (byId.get(replyTo.senderId ?? "")?.name ?? "someone")) : null}
+          onCancelReply={() => setReplyTo(null)}
+        />
+      )}
     </section>
   );
 }

@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import { FirstVisitTip } from "@/components/learn/first-visit-tip";
 import { MarkOpeningsSeen } from "@/components/openings/mark-seen";
-import { cardSpan, OpeningCard, OpeningCardError } from "@/components/openings/opening-card";
+import { OpeningCard, OpeningCardError } from "@/components/openings/opening-card";
 import { emptyLine, getOpeningsOverview, type OpeningsOverview } from "@/lib/data/openings";
 import { getPortals } from "@/lib/data/portals";
 import { logger } from "@/lib/log";
-import { visibleCategories } from "@/lib/openings/constants";
+import { cardSpan, GRID_ORDER, gridOrder, visibleCategories } from "@/lib/openings/constants";
 
 export const metadata: Metadata = { title: "Openings" };
 
 /**
  * /openings (PRD 5.34, screen spec 3.14): one page of category cards (a bento grid, no carousels),
- * each featuring its latest opening, read in one SQL call (`openings_overview()`). Cards for the
+ * each featuring its latest opening, read in one SQL call (`openings_overview()`). This week leads as a
+ * full-width banner; the rest follow the sidebar's groups. Cards for the
  * recruiter and university portals appear only while those portals are on. Nothing is ordered by
  * payment. Loading is `loading.tsx`; if the one call fails, every card shows its error state.
  */
@@ -23,7 +24,9 @@ export default async function OpeningsPage() {
     logger.error("openings.overview", { outcome: "error", error_code: error instanceof Error ? error.message : "unknown" });
   }
   const failed = overview === null;
-  const categories = failed ? visibleCategories(await getPortals()) : [];
+  const visible = failed ? visibleCategories(await getPortals()) : [];
+  const categories = GRID_ORDER.filter((c) => visible.includes(c));
+  const cards = overview ? gridOrder(overview.cards) : [];
 
   return (
     <main className="mx-auto flex w-full max-w-page flex-col gap-6 px-[var(--page-gutter)] py-8" data-testid="openings-page">
@@ -39,19 +42,22 @@ export default async function OpeningsPage() {
           Nothing is open right now. Each card below says what would show up there and one thing you can do meanwhile.
         </p>
       ) : null}
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Opening categories" data-testid="openings-grid">
-        {failed
-          ? categories.map((category, i) => (
-              <li key={category} className={cardSpan(i)}>
-                <OpeningCardError category={category} className="h-full" />
-              </li>
-            ))
-          : overview!.cards.map((card, i) => (
-              <li key={card.category} className={cardSpan(i)}>
-                <OpeningCard {...card} emptyLine={emptyLine(card.category, overview!.university)} className="h-full" />
-              </li>
-            ))}
-      </ul>
+      {/* Sized by the grid's own width, not the window's: the sidebar takes 284 px of it (2026-11-15). */}
+      <div className="@container">
+        <ul className="grid grid-cols-1 gap-4 @xl:grid-cols-2 @4xl:grid-cols-3" aria-label="Opening categories" data-testid="openings-grid">
+          {failed
+            ? categories.map((category, i) => (
+                <li key={category} className={cardSpan(i, categories.length)}>
+                  <OpeningCardError category={category} className="h-full" />
+                </li>
+              ))
+            : cards.map((card, i) => (
+                <li key={card.category} className={cardSpan(i, cards.length)} data-tour={i === 0 ? "openings-this-week" : i === 1 ? "openings-card" : undefined}>
+                  <OpeningCard {...card} emptyLine={emptyLine(card.category, overview!.university)} wide={i === 0} className="h-full" />
+                </li>
+              ))}
+        </ul>
+      </div>
       {failed ? null : <MarkOpeningsSeen category="overview" />}
     </main>
   );

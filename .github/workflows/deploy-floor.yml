@@ -1,0 +1,22 @@
+# Compiles the Azure floor templates (deploy/) on every pull request that touches them.
+# No Azure login and no secrets: the compile needs neither. Deploys run from Ahmed's
+# machine for now; see deploy/README.md for why.
+name: Deploy floor (compile)
+
+on:
+  pull_request:
+    paths:
+      - 'deploy/**'
+      - '.github/workflows/deploy-floor.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile floor templates
+        run: az bicep build --file deploy/main.bicep --outfile "$RUNNER_TEMP/main.json"

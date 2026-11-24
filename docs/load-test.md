@@ -64,7 +64,7 @@ Measured elsewhere, not by this run:
 
 ## Running it
 
-Accounts and secrets (`docs/setup-checklist.md` Phase 13, "Load test"): the scratch project's ref and database
+Accounts and secrets (`docs/archive/supabase-era/setup-checklist.md` Phase 13, "Load test"): the scratch project's ref and database
 password (shared with the restore drill), `LOAD_PASSWORD`, `LOAD_APP_URL` (a Vercel deployment whose environment
 points at the scratch project, region `bom1`), and a Grafana Cloud k6 token and project id.
 

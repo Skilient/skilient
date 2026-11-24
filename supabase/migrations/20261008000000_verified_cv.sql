@@ -543,7 +543,7 @@ set search_path = ''
 as $$
 begin
   if private.cv_call_worker('{"action":"rotate"}'::jsonb) is null then
-    return 'not sent: set the Vault secret project_url first (docs/setup-checklist.md)';
+    return 'not sent: set the Vault secret project_url first (docs/archive/supabase-era/setup-checklist.md)';
   end if;
   return 'rotation requested: check /.well-known/skilient-cv-keys.json';
 end;

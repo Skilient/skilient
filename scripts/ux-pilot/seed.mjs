@@ -174,17 +174,28 @@ async function main() {
     [ids.tester, 8_801_001, "ayesha-uxp", "ayesha-uxp/fee-tracker", [["react", 2], ["sql", 2], ["javascript", 2], ["typescript", 1], ["css", 1], ["html", 1]]],
     [ids.helperA, 8_801_002, "ali-uxp", "ali-uxp/api", [["sql", 2], ["nodejs", 2], ["python", 1]]],
     [ids.officer2, 8_801_003, "iqra-uxp", "iqra-uxp/site", [["react", 2], ["typescript", 2]]],
+    [ids.otherUni, 8_801_004, "omar-uxp", "omar-uxp/notes-api", [["javascript", 2], ["nodejs", 2], ["sql", 2]]],
   ];
   for (const [uid, ghId, login, repo, skills] of gh) {
     await sql`insert into public.github_accounts (user_id, github_id, login) values (${uid}, ${ghId}, ${login}) on conflict do nothing`;
     await sql`insert into public.github_installations (installation_id, account_id, account_login, account_type) values (${ghId}, ${ghId}, ${login}, 'User') on conflict do nothing`;
     await sql`insert into public.github_repos (repo_id, full_name, owner_id, private, default_branch) values (${ghId}, ${repo}, ${ghId}, false, 'main') on conflict do nothing`;
     await sql`insert into public.github_user_repos (user_id, repo_id, installation_id, kind) values (${uid}, ${ghId}, ${ghId}, 'owned') on conflict do nothing`;
+    // Commit evidence through the worker's own private.record_commit, then the product's recompute: levels come from
+    // evidence (L2 = 3 active days and 150+ lines for a language, 3 package hits for a framework), so later recomputes keep them.
     for (const [skill, level] of skills) {
-      await sql`insert into public.user_skills (user_id, skill_id, level, active_days, lines, repos, last_used_at, l2_at)
-                values (${uid}, ${skill}, ${level}, ${level * 6}, ${level * 220}, 1, now() - interval '3 days', ${level >= 2 ? sql`now() - interval '40 days'` : null})
-                on conflict (user_id, skill_id) do update set level = excluded.level`;
+      const days = level >= 2 ? [12, 25, 40] : [18];
+      for (const d of days) {
+        const sha = createHmac("sha1", "uxp").update(`${uid}-${skill}-${d}`).digest("hex");
+        await sql`select private.record_commit(${uid}, ${ghId}, jsonb_build_object(
+                    'sha', ${sha}::text, 'committed_at', now() - make_interval(days => ${d}), 'authored_at', now() - make_interval(days => ${d}),
+                    'seen_via', 'harvest', 'meaningful_lines', 80,
+                    'detections', jsonb_build_array(jsonb_build_object('skill', ${skill}::text, 'kind', 'import', 'path', ${`src/${skill}/index.ts`}::text, 'lines', 80)),
+                    'blobs', '[]'::jsonb))`;
+      }
     }
+    await sql`select private.recompute_user_skills(${uid})`;
+    await sql`update public.user_skills set l2_at = coalesce(l2_at, now() - interval '40 days') where user_id = ${uid} and level >= 2`;
   }
   log("github");
 

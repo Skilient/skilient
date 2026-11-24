@@ -1353,6 +1353,336 @@
    ],
    "clicks": 5,
    "shortest": 4
+  },
+  {
+   "id": "T069",
+   "status": "Done",
+   "answers": [
+    "Authored: my own commits on 3 or more separate days with 150+ lines (the drawer's L2 rule). For SQL: 'Active days 3 · Lines of code 240 · Repositories 1'.",
+    "Yes: chips say 'L2 · You've written this' vs 'L1 · Found in your repos' vs 'L3 · Accepted by others'. There are no claimed skills to compare.",
+    "Yes: 'tag a venture contribution with it and have a teammate confirm it' is doable this week. The level rules speak in third person ('a repository they own') while the advice says 'you' (P33)."
+   ],
+   "findings": [
+    "R78"
+   ],
+   "note": "Drawer loads with 'Loading your evidence…'.",
+   "shots": [
+    "docs/ux-pilot/shots/T069-1.png",
+    "docs/ux-pilot/shots/T069-2.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T070",
+   "status": "Partly done",
+   "answers": [
+    "There's no way to add a skill myself, here or anywhere (R08).",
+    "No: switching a repository off took effect at once with no confirmation, and all my GitHub skills (JavaScript and SQL L2) vanished from /me/skills and paths at once. Switching it on brought them back (R79).",
+    "Probably the same: skills from that code would go. Nothing on the page says so; 'Disconnect' has its own confirm (not opened)."
+   ],
+   "findings": [
+    "R08",
+    "R79"
+   ],
+   "note": "Settings > GitHub also says 'Not synced yet.' because the sync worker doesn't run locally.",
+   "shots": [
+    "docs/ux-pilot/shots/T070-1.png",
+    "docs/ux-pilot/shots/T070-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T071",
+   "status": "Partly done",
+   "answers": [
+    "Can't compare: 'Connect GitHub' goes to github.com/apps/…/installations/new, which can't be reached locally.",
+    "Not observable (sync runs in a worker).",
+    "Simulating GitHub's cancel return brought me to Settings > GitHub with 'That GitHub link expired or was opened in another account. Start again below.', which blames a link, not the cancel (R80)."
+   ],
+   "findings": [
+    "R80"
+   ],
+   "note": "Real GitHub needs staging.",
+   "shots": [],
+   "clicks": 2,
+   "shortest": null
+  },
+  {
+   "id": "T072",
+   "status": "Done",
+   "answers": [
+    "'Starter path: the order switches to seniors' records once 10 of them qualify.' I'd trust it moderately; it's a fixed list until then.",
+    "What I've proved (dated squares 'done'), where I am ('you are here') and what's next ('next: Express'), '2 of 11 proved'.",
+    "After two, the third path's Follow button simply disappeared; only the line at the top says 'Follow up to 2 paths' (R81)."
+   ],
+   "findings": [
+    "R81"
+   ],
+   "note": "Next skill: Node.js (JavaScript and SQL done). Its drawer: 'Why it's here: Square 2…', proof tasks, and 'Learn it in a skill swap: Nobody at your university teaches it yet'.",
+   "shots": [
+    "docs/ux-pilot/shots/T072-1.png",
+    "docs/ux-pilot/shots/T072-2.png",
+    "docs/ux-pilot/shots/T072-3.png",
+    "docs/ux-pilot/shots/T072-4.png"
+   ],
+   "clicks": 6,
+   "shortest": 4
+  },
+  {
+   "id": "T073",
+   "status": "Partly done",
+   "answers": [
+    "Yes: brief, 'Done when' checklist, repository picker.",
+    "'Verifying with GitHub: We're rescanning your repository. If commits since you started show the skill, the task is done without a peer.' No expected time (R82).",
+    "Not reached locally: the GitHub check runs in a worker; the tick routed it to a peer after the wait (simulated)."
+   ],
+   "findings": [
+    "R82"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T073-1.png",
+    "docs/ux-pilot/shots/T073-2.png",
+    "docs/ux-pilot/shots/T073-3.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T074",
+   "status": "Done",
+   "answers": [
+    "Yes: 'What to change: … Add one test and a How to run section.'",
+    "'Resubmit' on the task page; it went back to 'Verifying with GitHub' and the reviewer's note disappeared from the page.",
+    "No code-check option is offered on the task page for this case."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T074-1.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T075",
+   "status": "Done",
+   "answers": [
+    "The page says 'Check it against the list' and shows the repository name; nothing says whether to run or read the code, and the repo isn't a link I could open (R83).",
+    "Mostly: four checklist items and a note. Enough for a starter task.",
+    "Fair enough as asked, but 'Thank you: reviews keep proof honest.' is the only reward; nothing on my profile.",
+    "'Decline' next to Accept before accepting: 'Declining is fine; you won't be asked about this task again.'"
+   ],
+   "findings": [
+    "R83"
+   ],
+   "note": "Confirm had no confirmation step.",
+   "shots": [
+    "docs/ux-pilot/shots/T075-1.png",
+    "docs/ux-pilot/shots/T075-2.png",
+    "docs/ux-pilot/shots/T075-3.png",
+    "docs/ux-pilot/shots/T075-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T076",
+   "status": "Partly done",
+   "answers": [
+    "The only one listed: 'Ali Helper · L3 SQL · new teacher · Joins, indexes and query plans'. The level and his note.",
+    "Yes: 'Offer a skill back (optional): No, just this / React / JavaScript. A mutual swap…'.",
+    "'No teachers at your university yet. We'll show them here when someone offers…' (Rust)."
+   ],
+   "findings": [
+    "R84"
+   ],
+   "note": "The 'Times that suit you' field didn't take my input from the script and was stored empty; the request went without times and without an error (R84).",
+   "shots": [
+    "docs/ux-pilot/shots/T076-1.png",
+    "docs/ux-pilot/shots/T076-2.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T077",
+   "status": "Done",
+   "answers": [
+    "Ali proposed '26 Nov · 30 min · Library, 2nd floor' and I accepted on the swap page.",
+    "Yes: 'Did your session with Ali happen? Yes / No', minutes, thank-you note.",
+    "Teacher: on /me/record as 'Taught: Taught SQL to Ayesha · 1 session · 0.3 h · Signing…' (wording doubled, R85).",
+    "End swap uses the browser's plain confirm box, unlike every other dialog (R85); otherwise nothing."
+   ],
+   "findings": [
+    "R85"
+   ],
+   "note": "The session time was moved into the past on the local DB to stand in for waiting.",
+   "shots": [
+    "docs/ux-pilot/shots/T077-1.png",
+    "docs/ux-pilot/shots/T077-2.png",
+    "docs/ux-pilot/shots/T077-3.png"
+   ],
+   "clicks": 7,
+   "shortest": 6
+  },
+  {
+   "id": "T078",
+   "status": "Done",
+   "answers": [
+    "231.55 points: Work 159 (a completed venture as creator), verified skills 45, endorsements 7.5; Spark, 19 points from Flare.",
+    "'Updated 24 Nov 2026' and 'Scores update every night at about 3 AM' agree; but my completed Fee Tracker venture today isn't in it yet, with nothing saying it will count tonight.",
+    "'1 of 6 tiers reached' while on Spark (R19); points with two decimals look gameable to the cent. The best action ('a confirmed contribution in 2 ventures') isn't a link (P02)."
+   ],
+   "findings": [
+    "R19",
+    "R20"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T078-1.png"
+   ],
+   "clicks": 2,
+   "shortest": 1
+  },
+  {
+   "id": "T079",
+   "status": "Partly done",
+   "answers": [
+    "I'd left the leaderboards in T062, so I only saw 'You've left the leaderboards… Show me again' and Bushra at the top.",
+    "Yes, points stay private.",
+    "I already did; I'd opt back in only at a higher tier."
+   ],
+   "findings": [],
+   "note": "Plan: T062 (opt out) runs before T079 in S06/S07 for the same tester; swap the order or use another account.",
+   "shots": [
+    "docs/ux-pilot/shots/T079-1.png"
+   ],
+   "clicks": 4,
+   "shortest": null
+  },
+  {
+   "id": "T080",
+   "status": "Done",
+   "answers": [
+    "Signed by Skilient and locked: 'Sealed · 05:01' with a code; the verify page says 'hasn't changed since'.",
+    "Likely yes: the PDF has a code, and the public verify page shows 'Valid', the issuer, date, evidence and 'Signature: Ed25519, checked'.",
+    "Yes, though 'Ed25519' and 'key cv-2026…' mean nothing to a committee; 'Issued by Skilient' for a venture completion is less convincing than a society's name."
+   ],
+   "findings": [],
+   "note": "Pin: instant, the entry shows under 'From the Record' on the profile. Certificate downloaded (62 KB).",
+   "shots": [
+    "docs/ux-pilot/shots/T080-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T081",
+   "status": "Done",
+   "answers": [
+    "Expires after: 7 days / 30 days / 90 days radio, then 'Make a share link' ('expires 1 Dec 2026').",
+    "Mostly: the committee view lists the entries I show; it doesn't say hidden entries are left out. 'Copy your link now: it won't be shown again.'",
+    "Yes for the visitor: 'This link isn't valid. It may have expired or been revoked.' But my page still showed the revoked link with 'Copy link' (R86), and Revoke had no confirmation."
+   ],
+   "findings": [
+    "R86"
+   ],
+   "note": "Transcript PDF downloaded.",
+   "shots": [
+    "docs/ux-pilot/shots/T081-1.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T082",
+   "status": "Done",
+   "answers": [
+    "The society: 'The society's officers see your note. If they correct it, a new entry replaces this one and this code reads superseded.'",
+    "It moved under 'Corrected entries (1)'; the new one '…(2 sessions)' has a new code.",
+    "'Issued in error · 24 Nov 2026: Issued to the wrong list…' with an Appeal button on the entry and on Appeals. Enough."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T082-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T083",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Your first entry is one event away.'",
+    "No: it suggested 'Security talk (registration closed)', an event you can no longer register for (R87)."
+   ],
+   "findings": [
+    "R87"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T083-1.png"
+   ],
+   "clicks": 1,
+   "shortest": 1
+  },
+  {
+   "id": "T084",
+   "status": "Partly done",
+   "answers": [
+    "Yes: nothing to type; sections are switches with up/down. Good for trust.",
+    "Yes: 'Spark tier on Skilient' is printed twice (header and summary) and can't be turned off (P23). The same certificate appears three times (R75).",
+    "Not yet: the changes apply only from the 1 December version ('Saved. Your CV changes on 1 December.'); refreshing now is Pro."
+   ],
+   "findings": [
+    "R88",
+    "R75"
+   ],
+   "note": "The section switches have no accessible names (R88). Done-when can't be met on the free plan within the session.",
+   "shots": [
+    "docs/ux-pilot/shots/T084-1.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T085",
+   "status": "Partly done",
+   "answers": [
+    "The PDF: 'ATS PDF export is a Student Pro feature, coming with plans.' The link worked for a Spark account.",
+    "Mostly: 'Your web CV and share links are free.' But 'coming with plans' while a trial exists confuses.",
+    "Privacy centre: '1 active share link', and on the CV page 'Views through your links: 0'."
+   ],
+   "findings": [],
+   "note": "'Share links are paused.' appears on the CV page next to the new link without explanation.",
+   "shots": [
+    "docs/ux-pilot/shots/T085-1.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T086",
+   "status": "Done",
+   "answers": [
+    "Genuine: 'Your PDF matches a PDF issued under this code.' Forged (one character changed): 'doesn't match… The genuine CV is shown below so you can compare.'",
+    "On /verify you must first type the code; the PDF check only appears after (R89)."
+   ],
+   "findings": [
+    "R89"
+   ],
+   "note": "A transferred venture shows the new owner as 'Creator' on their CV (R90).",
+   "shots": [
+    "docs/ux-pilot/shots/T086-1.png",
+    "docs/ux-pilot/shots/T086-2.png",
+    "docs/ux-pilot/shots/T086-3.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
   }
  ],
  "cw": [
@@ -1547,6 +1877,36 @@
    "task": "T061",
    "q": 4,
    "why": "Leaving unsaved loses the change without a prompt."
+  },
+  {
+   "step": "F19.08",
+   "task": "T070",
+   "q": 4,
+   "why": "Excluding a repository silently removes skills; nothing says it did."
+  },
+  {
+   "step": "F20.05",
+   "task": "T072",
+   "q": 2,
+   "why": "The third Follow button is just gone."
+  },
+  {
+   "step": "F21.04",
+   "task": "T075",
+   "q": 3,
+   "why": "'Check it' doesn't say how; no repo link."
+  },
+  {
+   "step": "F24.10",
+   "task": "T081",
+   "q": 4,
+   "why": "The revoked link still shows with Copy link."
+  },
+  {
+   "step": "F25.03",
+   "task": "T084",
+   "q": 4,
+   "why": "Changes don't show on the CV until 1 December."
   }
  ],
  "findings": [
@@ -2275,6 +2635,149 @@
    "principles": "H10",
    "fix": "Pass ?from= and show it.",
    "same_as": "P26"
+  },
+  {
+   "id": "R78",
+   "severity": 1,
+   "where": "Skill drawer",
+   "what": "Level rules switch to third person ('a repository they own') while the advice says 'you'.",
+   "repro": "Open any skill.",
+   "tasks": "T069",
+   "principles": "COP,H04",
+   "fix": "Use 'you' throughout.",
+   "same_as": "P33"
+  },
+  {
+   "id": "R79",
+   "severity": 2,
+   "where": "/settings/github",
+   "what": "Switching a repository off immediately removes every skill it proved (here all L2 skills), with no confirmation or explanation.",
+   "repro": "Switch off your only repository.",
+   "tasks": "T070",
+   "principles": "H05,H03,TRU",
+   "fix": "Confirm with 'JavaScript and SQL drop to L1 or disappear'; show the effect.",
+   "same_as": ""
+  },
+  {
+   "id": "R80",
+   "severity": 2,
+   "where": "/settings/github after GitHub cancel",
+   "what": "Returning from GitHub without installing says 'That GitHub link expired or was opened in another account.'",
+   "repro": "Cancel on GitHub's install page.",
+   "tasks": "T071",
+   "principles": "H09",
+   "fix": "'You didn't finish on GitHub. Connect again when you're ready.'",
+   "same_as": ""
+  },
+  {
+   "id": "R81",
+   "severity": 1,
+   "where": "/me/paths",
+   "what": "With 2 paths followed, other paths' Follow button disappears without explanation.",
+   "repro": "Follow two paths, look at a third.",
+   "tasks": "T072",
+   "principles": "H01,H09",
+   "fix": "Show Follow disabled with 'Unfollow one first (2 max)'.",
+   "same_as": ""
+  },
+  {
+   "id": "R82",
+   "severity": 2,
+   "where": "/me/tasks/[id]",
+   "what": "'Verifying with GitHub' gives no expected time or what happens if nothing is found.",
+   "repro": "Submit a task.",
+   "tasks": "T073",
+   "principles": "H01",
+   "fix": "'Usually within an hour; if your commits don't show it, a peer checks it.'",
+   "same_as": ""
+  },
+  {
+   "id": "R83",
+   "severity": 2,
+   "where": "/me/tasks/reviews/[id]",
+   "what": "The review page names the repository but doesn't link to it or say what 'checking' means (run, read).",
+   "repro": "Open a review request.",
+   "tasks": "T075",
+   "principles": "H06,TRU",
+   "fix": "Link the repository and the commits since the task started; one line on how to check.",
+   "same_as": ""
+  },
+  {
+   "id": "R84",
+   "severity": 2,
+   "where": "/swaps request",
+   "what": "The swap request was sent with empty preferred times and no error, though the form asks for times.",
+   "repro": "Send a request leaving Times empty.",
+   "tasks": "T076",
+   "principles": "H05,H09",
+   "fix": "Require at least one time, or say it's optional.",
+   "same_as": ""
+  },
+  {
+   "id": "R85",
+   "severity": 1,
+   "where": "/swaps/[id]",
+   "what": "End swap uses the browser's native confirm; the Taught entry reads 'Taught: Taught SQL to Ayesha'.",
+   "repro": "End a swap.",
+   "tasks": "T077",
+   "principles": "AES,COP",
+   "fix": "Use the app's dialog; title 'Taught SQL to Ayesha'.",
+   "same_as": ""
+  },
+  {
+   "id": "R86",
+   "severity": 2,
+   "where": "/me/record share",
+   "what": "After revoking a share link, the page keeps showing the revoked URL with 'Copy link'; Revoke has no confirmation.",
+   "repro": "Make a link, revoke it.",
+   "tasks": "T081",
+   "principles": "H03,H04",
+   "fix": "Clear the one-time link panel on revoke; confirm the revoke.",
+   "same_as": ""
+  },
+  {
+   "id": "R87",
+   "severity": 2,
+   "where": "/me/record (empty)",
+   "what": "The empty Record suggests an event whose registration has closed.",
+   "repro": "Open the Record with no entries.",
+   "tasks": "T083",
+   "principles": "EMP",
+   "fix": "Suggest only events open for registration.",
+   "same_as": ""
+  },
+  {
+   "id": "R88",
+   "severity": 2,
+   "where": "/me/cv sections",
+   "what": "The section show/hide switches have no accessible name.",
+   "repro": "Focus a section switch with a screen reader.",
+   "tasks": "T084",
+   "principles": "ACC",
+   "fix": "Label each with the section name.",
+   "same_as": ""
+  },
+  {
+   "id": "R89",
+   "severity": 1,
+   "where": "/verify",
+   "what": "The PDF check is only on the result page after a code; /verify doesn't say you can check a PDF.",
+   "repro": "Open /verify.",
+   "tasks": "T086",
+   "principles": "H06,TRU",
+   "fix": "Offer 'Check a PDF' on /verify and read the code from the file.",
+   "same_as": ""
+  },
+  {
+   "id": "R90",
+   "severity": 2,
+   "where": "Signed CV",
+   "what": "A venture handed to a teammate shows them as 'Creator' on their CV.",
+   "repro": "Transfer ownership, issue the new owner's CV.",
+   "tasks": "T086,T055",
+   "principles": "TRU",
+   "fix": "Keep 'Creator' for the founder; show 'Owner' or 'Lead' for later owners.",
+   "same_as": ""
   }
  ],
  "plan_fixes": [
@@ -2357,6 +2860,22 @@
   {
    "tasks": "T068",
    "change": "Removal and restriction are two decisions, each with its own appeal; say 'appeal one of them'."
+  },
+  {
+   "tasks": "T062,T079",
+   "change": "Same tester opts out of leaderboards (T062) before T079; run T079 first or reset the opt-out."
+  },
+  {
+   "tasks": "T073,T074,T075",
+   "change": "The GitHub check and peer routing are worker/cron driven; locally the wait is simulated, on staging allow the github_wait_minutes."
+  },
+  {
+   "tasks": "T084",
+   "change": "On the free plan CV changes apply at the next monthly refresh; the done-when can't be met in a session. Use a Pro trial or accept 'saved for the next version'."
+  },
+  {
+   "tasks": "T086",
+   "change": "Setup: the genuine PDF needs Pro (trial); the forged one is a print with one character changed."
   }
  ],
  "production_recheck": []

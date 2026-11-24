@@ -337,3 +337,81 @@
 {"task":"T068","label":"sign in restricted","route":"/signin","device":"phone","pendingMs":80,"resultMs":812,"kind":"settled","shown":"Welcome back","at":"2026-11-23T23:47:13.177Z"}
 {"task":"T068","label":"Appeal","route":"/appeals","device":"phone","pendingMs":null,"resultMs":151,"kind":"settled","shown":"Appeals","at":"2026-11-23T23:48:25.842Z"}
 {"task":"T068","label":"send appeal","route":"/appeals","device":"phone","pendingMs":85,"resultMs":775,"kind":"settled","shown":"Appeals","at":"2026-11-23T23:48:28.196Z"}
+{"task":"T069","label":"open /me/skills","route":"/feed","device":"phone","pendingMs":null,"resultMs":730,"kind":"navigation","shown":"/me/skills","at":"2026-11-24T00:02:34.695Z"}
+{"task":"T069","label":"open SQL details","route":"/me/skills","device":"phone","pendingMs":null,"resultMs":224,"kind":"toast","shown":"Loading your evidence…","at":"2026-11-24T00:02:38.651Z"}
+{"task":"T070","label":"open /me/skills","route":"/me/skills","device":"phone","pendingMs":null,"resultMs":1175,"kind":"navigation","shown":"/me/skills","at":"2026-11-24T00:02:41.088Z"}
+{"task":"T070","label":"open /settings/github","route":"/me/skills","device":"phone","pendingMs":null,"resultMs":775,"kind":"navigation","shown":"/settings/github","at":"2026-11-24T00:02:45.127Z"}
+{"task":"T070","label":"exclude repository","route":"/settings/github","device":"phone","pendingMs":55,"resultMs":721,"kind":"settled","shown":"GitHub","at":"2026-11-24T00:02:50.434Z"}
+{"task":"T072","label":"open /me/paths","route":"/settings/github","device":"phone","pendingMs":null,"resultMs":783,"kind":"navigation","shown":"/me/paths","at":"2026-11-24T00:02:59.310Z"}
+{"task":"T072","label":"open Backend path","route":"/me/paths","device":"phone","pendingMs":null,"resultMs":831,"kind":"navigation","shown":"/me/paths?role=backend","at":"2026-11-24T00:03:04.420Z"}
+{"task":"T072","label":"open next square","route":"/me/paths","device":"phone","pendingMs":null,"resultMs":91,"kind":"toast","shown":"Loading the skill…","at":"2026-11-24T00:03:05.229Z"}
+{"task":"T072","label":"follow backend","route":"/me/paths","device":"phone","pendingMs":55,"resultMs":55,"kind":"settled","shown":"Paths","at":"2026-11-24T00:03:07.346Z"}
+{"task":"T072","label":"follow data","route":"/me/paths","device":"phone","pendingMs":42,"resultMs":42,"kind":"settled","shown":"Paths","at":"2026-11-24T00:03:09.006Z"}
+{"task":"T073","label":"open /me/paths?role=backend","route":"/me/paths","device":"phone","pendingMs":null,"resultMs":807,"kind":"navigation","shown":"/me/paths","at":"2026-11-24T00:03:10.650Z"}
+{"task":"T073","label":"start task","route":"/me/paths","device":"phone","pendingMs":40,"resultMs":40,"kind":"settled","shown":"Paths","at":"2026-11-24T00:03:17.123Z"}
+{"task":"T070","label":"open /me/skills","route":"/feed","device":"phone","pendingMs":null,"resultMs":834,"kind":"navigation","shown":"/me/skills","at":"2026-11-24T00:04:49.283Z"}
+{"task":"T070","label":"open /settings/github","route":"/me/skills","device":"phone","pendingMs":null,"resultMs":1065,"kind":"navigation","shown":"/settings/github","at":"2026-11-24T00:04:54.071Z"}
+{"task":"T070","label":"exclude repository","route":"/settings/github","device":"phone","pendingMs":86,"resultMs":752,"kind":"settled","shown":"GitHub","at":"2026-11-24T00:04:59.474Z"}
+{"task":"T070","label":"open /me/skills","route":"/settings/github","device":"phone","pendingMs":null,"resultMs":797,"kind":"navigation","shown":"/me/skills","at":"2026-11-24T00:05:00.309Z"}
+{"task":"T070","label":"open /settings/github","route":"/me/skills","device":"phone","pendingMs":null,"resultMs":769,"kind":"navigation","shown":"/settings/github","at":"2026-11-24T00:05:04.240Z"}
+{"task":"T072","label":"open /me/paths","route":"/feed","device":"phone","pendingMs":null,"resultMs":789,"kind":"navigation","shown":"/me/paths","at":"2026-11-24T00:05:30.581Z"}
+{"task":"T072","label":"open Backend path","route":"/me/paths","device":"phone","pendingMs":null,"resultMs":828,"kind":"navigation","shown":"/me/paths?role=backend","at":"2026-11-24T00:05:36.222Z"}
+{"task":"T072","label":"open next square","route":"/me/paths","device":"phone","pendingMs":null,"resultMs":107,"kind":"toast","shown":"Loading the skill…","at":"2026-11-24T00:05:37.046Z"}
+{"task":"T072","label":"follow backend","route":"/me/paths","device":"phone","pendingMs":43,"resultMs":43,"kind":"settled","shown":"Paths","at":"2026-11-24T00:05:39.147Z"}
+{"task":"T072","label":"follow data","route":"/me/paths","device":"phone","pendingMs":46,"resultMs":46,"kind":"settled","shown":"Paths","at":"2026-11-24T00:05:40.777Z"}
+{"task":"T073","label":"open /me/paths?role=backend","route":"/me/paths","device":"phone","pendingMs":null,"resultMs":1190,"kind":"navigation","shown":"/me/paths","at":"2026-11-24T00:05:42.809Z"}
+{"task":"T073","label":"start task","route":"/me/paths","device":"phone","pendingMs":39,"resultMs":39,"kind":"settled","shown":"Paths","at":"2026-11-24T00:05:49.281Z"}
+{"task":"T073","label":"submit task","route":"/me/tasks/c68467df-23bf-4e29-a289-a98fa55e0eea","device":"phone","pendingMs":157,"resultMs":157,"kind":"settled","shown":"Build a REST endpoint with Node","at":"2026-11-24T00:05:51.967Z"}
+{"task":"T074","label":"open /me/tasks/c68467df-23bf-4e29-a289-a98fa55e0eea","route":"/me/tasks/c68467df-23bf-4e29-a289-a98fa55e0eea","device":"phone","pendingMs":null,"resultMs":768,"kind":"navigation","shown":"/me/tasks/c68467df-23bf-4e29-a289-a98fa55e0eea","at":"2026-11-24T00:05:54.354Z"}
+{"task":"T074","label":"resubmit task","route":"/me/tasks/c68467df-23bf-4e29-a289-a98fa55e0eea","device":"phone","pendingMs":84,"resultMs":84,"kind":"settled","shown":"Build a REST endpoint with Node","at":"2026-11-24T00:05:59.040Z"}
+{"task":"T075","label":"open /me/paths","route":"/me/tasks/c68467df-23bf-4e29-a289-a98fa55e0eea","device":"phone","pendingMs":null,"resultMs":825,"kind":"navigation","shown":"/me/paths","at":"2026-11-24T00:06:31.108Z"}
+{"task":"T076","label":"open /swaps","route":"/me/paths","device":"phone","pendingMs":null,"resultMs":808,"kind":"navigation","shown":"/swaps","at":"2026-11-24T00:06:36.358Z"}
+{"task":"T075","label":"open /me/paths","route":"/feed","device":"phone","pendingMs":null,"resultMs":772,"kind":"navigation","shown":"/me/paths","at":"2026-11-24T00:07:34.887Z"}
+{"task":"T076","label":"open /swaps","route":"/me/tasks/reviews/6b3fe0d2-874a-4f50-9e7a-d641f65936fd","device":"phone","pendingMs":null,"resultMs":1138,"kind":"navigation","shown":"/swaps","at":"2026-11-24T00:07:41.930Z"}
+{"task":"T076","label":"add SQL to wants","route":"/swaps","device":"phone","pendingMs":97,"resultMs":97,"kind":"settled","shown":"Skill swap","at":"2026-11-24T00:07:46.029Z"}
+{"task":"T076","label":"open swap request","route":"/swaps","device":"phone","pendingMs":null,"resultMs":113,"kind":"settled","shown":"Skill swap","at":"2026-11-24T00:07:48.738Z"}
+{"task":"T076","label":"send swap request","route":"/swaps","device":"phone","pendingMs":55,"resultMs":1305,"kind":"settled","shown":"Skill swap","at":"2026-11-24T00:07:51.798Z"}
+{"task":"T075","label":"open /me/paths","route":"/feed","device":"phone","pendingMs":null,"resultMs":850,"kind":"navigation","shown":"/me/paths","at":"2026-11-24T00:08:26.996Z"}
+{"task":"T075","label":"accept review","route":"/me/tasks/reviews/6b3fe0d2-874a-4f50-9e7a-d641f65936fd","device":"phone","pendingMs":76,"resultMs":76,"kind":"settled","shown":"Can you check Omar's JavaScript task?","at":"2026-11-24T00:08:37.818Z"}
+{"task":"T075","label":"confirm task","route":"/me/tasks/reviews/6b3fe0d2-874a-4f50-9e7a-d641f65936fd","device":"phone","pendingMs":54,"resultMs":54,"kind":"settled","shown":"Can you check Omar's JavaScript task?","at":"2026-11-24T00:08:40.116Z"}
+{"task":"T077","label":"open /swaps/b9d8e877-98c8-4e57-9749-8fc9866ecb81","route":"/me/tasks/reviews/6b3fe0d2-874a-4f50-9e7a-d641f65936fd","device":"phone","pendingMs":null,"resultMs":769,"kind":"navigation","shown":"/swaps/b9d8e877-98c8-4e57-9749-8fc9866ecb81","at":"2026-11-24T00:08:42.173Z"}
+{"task":"T077","label":"accept session time","route":"/swaps/b9d8e877-98c8-4e57-9749-8fc9866ecb81","device":"phone","pendingMs":74,"resultMs":74,"kind":"settled","shown":"Learning SQL from Ali","at":"2026-11-24T00:08:47.500Z"}
+{"task":"T077","label":"confirm session","route":"/swaps/b9d8e877-98c8-4e57-9749-8fc9866ecb81","device":"phone","pendingMs":64,"resultMs":64,"kind":"settled","shown":"Learning SQL from Ali","at":"2026-11-24T00:08:54.334Z"}
+{"task":"T077","label":"end swap","route":"/swaps/b9d8e877-98c8-4e57-9749-8fc9866ecb81","device":"phone","pendingMs":null,"resultMs":null,"kind":"none","shown":"","at":"2026-11-24T00:09:15.426Z"}
+{"task":"T078","label":"open /me/score","route":"/swaps/b9d8e877-98c8-4e57-9749-8fc9866ecb81","device":"phone","pendingMs":null,"resultMs":744,"kind":"navigation","shown":"/me/score","at":"2026-11-24T00:09:19.799Z"}
+{"task":"T079","label":"open /leaderboard","route":"/me/score","device":"phone","pendingMs":null,"resultMs":756,"kind":"navigation","shown":"/leaderboard","at":"2026-11-24T00:09:24.067Z"}
+{"task":"T077","label":"End swap","route":"/swaps/b9d8e877-98c8-4e57-9749-8fc9866ecb81","device":"phone","pendingMs":null,"resultMs":null,"kind":"none","shown":"","at":"2026-11-24T00:10:19.524Z"}
+{"task":"T077","label":"End swap","route":"/swaps/b9d8e877-98c8-4e57-9749-8fc9866ecb81","device":"phone","pendingMs":69,"resultMs":69,"kind":"settled","shown":"Learning SQL from Ali","at":"2026-11-24T00:10:45.232Z"}
+{"task":"T080","label":"open /me/record","route":"/feed","device":"phone","pendingMs":null,"resultMs":774,"kind":"navigation","shown":"/me/record","at":"2026-11-24T00:13:16.785Z"}
+{"task":"T080","label":"pin entry","route":"/me/record","device":"phone","pendingMs":141,"resultMs":141,"kind":"settled","shown":"Your Record","at":"2026-11-24T00:13:21.911Z"}
+{"task":"T080","label":"download certificate","route":"/me/record","device":"phone","pendingMs":52,"resultMs":52,"kind":"settled","shown":"Your Record","at":"2026-11-24T00:13:23.560Z"}
+{"task":"T080","label":"open /profile/uxp_tester","route":"/me/record","device":"phone","pendingMs":null,"resultMs":1155,"kind":"navigation","shown":"/profile/uxp_tester","at":"2026-11-24T00:13:27.011Z"}
+{"task":"T081","label":"open /me/record","route":"/profile/uxp_tester","device":"phone","pendingMs":null,"resultMs":759,"kind":"navigation","shown":"/me/record","at":"2026-11-24T00:13:33.232Z"}
+{"task":"T081","label":"make record share link","route":"/me/record","device":"phone","pendingMs":89,"resultMs":1375,"kind":"settled","shown":"Your Record","at":"2026-11-24T00:13:39.246Z"}
+{"task":"T081","label":"download transcript","route":"/me/record","device":"phone","pendingMs":64,"resultMs":64,"kind":"settled","shown":"Your Record","at":"2026-11-24T00:13:42.759Z"}
+{"task":"T081","label":"revoke share link","route":"/me/record","device":"phone","pendingMs":54,"resultMs":54,"kind":"settled","shown":"Your Record","at":"2026-11-24T00:13:43.863Z"}
+{"task":"T082","label":"open /me/record","route":"/me/record","device":"phone","pendingMs":null,"resultMs":787,"kind":"navigation","shown":"/me/record","at":"2026-11-24T00:13:46.805Z"}
+{"task":"T082","label":"report a mistake","route":"/me/record","device":"phone","pendingMs":null,"resultMs":197,"kind":"settled","shown":"Your Record","at":"2026-11-24T00:13:51.411Z"}
+{"task":"T082","label":"send mistake report","route":"/me/record","device":"phone","pendingMs":63,"resultMs":1360,"kind":"settled","shown":"Your Record","at":"2026-11-24T00:13:53.552Z"}
+{"task":"T082","label":"open /appeals","route":"/me/record","device":"phone","pendingMs":null,"resultMs":770,"kind":"navigation","shown":"/appeals","at":"2026-11-24T00:13:59.439Z"}
+{"task":"T084","label":"open /me/cv","route":"/appeals","device":"phone","pendingMs":null,"resultMs":808,"kind":"navigation","shown":"/me/cv","at":"2026-11-24T00:14:05.722Z"}
+{"task":"T084","label":"save CV settings","route":"/me/cv","device":"phone","pendingMs":77,"resultMs":689,"kind":"toast","shown":"Saved. Your CV changes on 1 December.","at":"2026-11-24T00:14:09.905Z"}
+{"task":"T084","label":"save activities","route":"/me/cv","device":"phone","pendingMs":128,"resultMs":754,"kind":"toast","shown":"Saved. Your CV shows them from the 1 December version.","at":"2026-11-24T00:14:11.898Z"}
+{"task":"T085","label":"open /me/cv","route":"/feed","device":"phone","pendingMs":null,"resultMs":756,"kind":"navigation","shown":"/me/cv","at":"2026-11-24T00:14:30.940Z"}
+{"task":"T085","label":"make CV share link","route":"/me/cv","device":"phone","pendingMs":74,"resultMs":778,"kind":"settled","shown":"Your verified CV","at":"2026-11-24T00:14:36.429Z"}
+{"task":"T085","label":"open /settings/privacy","route":"/me/cv","device":"phone","pendingMs":null,"resultMs":966,"kind":"navigation","shown":"/settings/privacy","at":"2026-11-24T00:14:38.657Z"}
+{"task":"T086","label":"open /verify","route":"/me/cv","device":"phone","pendingMs":null,"resultMs":1444,"kind":"navigation","shown":"/verify","at":"2026-11-24T00:14:53.719Z"}
+{"task":"T086","label":"check CV code","route":"/verify","device":"phone","pendingMs":90,"resultMs":1494,"kind":"navigation","shown":"/verify/VGM3K97ATA","at":"2026-11-24T00:14:59.502Z"}
+{"task":"T086","label":"check PDF cv-genuine.pdf","route":"/verify/VGM3K97ATA","device":"phone","pendingMs":64,"resultMs":714,"kind":"navigation","shown":"/verify/VGM3K97ATA?pdf=89250cb2b354333ad9a6497928e735ec775d53643ed9a605dcaf4a27ada356e7","at":"2026-11-24T00:15:25.410Z"}
+{"task":"T086","label":"check PDF cv-forged.pdf","route":"/verify/VGM3K97ATA","device":"phone","pendingMs":66,"resultMs":723,"kind":"navigation","shown":"/verify/VGM3K97ATA?pdf=62d87a3525b0d15b5822b110690e3cd3df1d745b7838986c64614d772851fbb2","at":"2026-11-24T00:15:32.124Z"}
+{"task":"T087","label":"open /openings/this-week","route":"/feed","device":"phone","pendingMs":null,"resultMs":800,"kind":"navigation","shown":"/openings/this-week","at":"2026-11-24T00:17:39.040Z"}
+{"task":"T087","label":"open /openings/events","route":"/openings/this-week","device":"phone","pendingMs":null,"resultMs":1120,"kind":"navigation","shown":"/openings/events","at":"2026-11-24T00:17:43.817Z"}
+{"task":"T088","label":"open /openings/ideas","route":"/openings/events","device":"phone","pendingMs":null,"resultMs":746,"kind":"navigation","shown":"/openings/ideas","at":"2026-11-24T00:17:49.473Z"}
+{"task":"T088","label":"open /explore?tab=ideas","route":"/openings/ideas","device":"phone","pendingMs":null,"resultMs":776,"kind":"navigation","shown":"/explore","at":"2026-11-24T00:17:54.074Z"}
+{"task":"T088","label":"open /ideas/73ab9a87-1c17-401d-b3c9-9dd1e70b7c90","route":"/explore","device":"phone","pendingMs":null,"resultMs":751,"kind":"navigation","shown":"/ideas/73ab9a87-1c17-401d-b3c9-9dd1e70b7c90","at":"2026-11-24T00:17:59.137Z"}
+{"task":"T088","label":"start venture on idea","route":"/ideas/73ab9a87-1c17-401d-b3c9-9dd1e70b7c90","device":"phone","pendingMs":null,"resultMs":227,"kind":"navigation","shown":"/ventures/new?idea=73ab9a87-1c17-401d-b3c9-9dd1e70b7c90","at":"2026-11-24T00:18:03.654Z"}
+{"task":"T088","label":"create venture from idea","route":"/ventures/new","device":"phone","pendingMs":44,"resultMs":641,"kind":"message","shown":"You're doing that too often. Try again later.","at":"2026-11-24T00:18:05.734Z"}
+{"task":"T089","label":"open /societies/ux-pilot-debating-society","route":"/ventures/new","device":"phone","pendingMs":null,"resultMs":770,"kind":"navigation","shown":"/societies/ux-pilot-debating-society","at":"2026-11-24T00:18:07.229Z"}
+{"task":"T089","label":"follow society","route":"/societies/ux-pilot-debating-society","device":"phone","pendingMs":42,"resultMs":42,"kind":"settled","shown":"UX Pilot Debating Society","at":"2026-11-24T00:18:11.982Z"}
+{"task":"T089","label":"request to join","route":"/societies/ux-pilot-debating-society","device":"phone","pendingMs":56,"resultMs":56,"kind":"settled","shown":"UX Pilot Debating Society","at":"2026-11-24T00:18:12.806Z"}
+{"task":"T089","label":"open /societies/ux-pilot-developers-club","route":"/societies/ux-pilot-debating-society","device":"phone","pendingMs":null,"resultMs":763,"kind":"navigation","shown":"/societies/ux-pilot-developers-club","at":"2026-11-24T00:18:14.398Z"}

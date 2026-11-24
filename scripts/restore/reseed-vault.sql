@@ -5,7 +5,7 @@
 --     -v vapid_public_key=<base64url> -v vapid_private_key=<base64url> -f reseed-vault.sql
 -- The VAPID pair (web push, PRD 5.34) is an EC key Postgres can't make: `node scripts/restore/vapid-keys.mjs`
 -- prints one. Devices subscribed on the source project don't get pushes from the scratch one.
--- Not recreated: GitHub tokens (students reconnect GitHub) and the CV signing key (rotate it: docs/restore-drill.md).
+-- Not recreated: GitHub tokens (students reconnect GitHub) and the CV signing key (rotate it: docs/archive/supabase-era/restore-drill.md).
 -- Never run this against production: it would change every worker secret and point the workers elsewhere.
 select set_config('restore.project_url', :'project_url', false);
 select set_config('restore.vapid_public_key', :'vapid_public_key', false);

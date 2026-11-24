@@ -1,0 +1,527 @@
+{
+ "principles": [
+  {
+   "code": "H01",
+   "verdict": "fail",
+   "pass_bar": "Pending state within 100 ms; result or progress within 1 s; every job shows status and an expected time.",
+   "measure": "pending within 100 ms 71%, result within 1 s 86% of 592 actions; 4 background jobs show no expected time",
+   "worst": 3,
+   "findings": [
+    "H22",
+    "R05",
+    "R06",
+    "R07",
+    "R12",
+    "R18",
+    "R22",
+    "R23",
+    "R26",
+    "R29",
+    "R40",
+    "R41",
+    "R43",
+    "R47",
+    "R50",
+    "R51",
+    "R57",
+    "R61",
+    "R64",
+    "R81",
+    "R82",
+    "R92",
+    "R93",
+    "R95",
+    "R98",
+    "R104",
+    "R106"
+   ],
+   "evidence": "results.json tasks and findings"
+  },
+  {
+   "code": "H02",
+   "verdict": "partial",
+   "pass_bar": "Each is explained where it first appears (subtitle, tooltip or tip).",
+   "measure": "16 of 26 product terms explained where they appear; L1/L4, corroborated, sealed, Taught unexplained",
+   "worst": 0,
+   "findings": [],
+   "evidence": "probes.json copy.terms"
+  },
+  {
+   "code": "H03",
+   "verdict": "fail",
+   "pass_bar": "Every one has a confirm, an undo or a stated way back.",
+   "measure": "19 of 31 destructive controls have a confirm, undo or way back",
+   "worst": 3,
+   "findings": [
+    "H10",
+    "R10",
+    "R23",
+    "R49",
+    "R63",
+    "R67",
+    "R68",
+    "R72",
+    "R79",
+    "R86",
+    "R100",
+    "R101",
+    "R108"
+   ],
+   "evidence": "probes.json destructive"
+  },
+  {
+   "code": "H04",
+   "verdict": "fail",
+   "pass_bar": "No concept has two names; no action has two labels.",
+   "measure": "6 concepts with two terms; 4 cross-page contradictions",
+   "worst": 3,
+   "findings": [
+    "H11",
+    "H18",
+    "H20",
+    "H32",
+    "R06",
+    "R08",
+    "R09",
+    "R19",
+    "R44",
+    "R47",
+    "R60",
+    "R66",
+    "R78",
+    "R86",
+    "R91",
+    "R94",
+    "R107"
+   ],
+   "evidence": "probes.json copy.terminology, invariants"
+  },
+  {
+   "code": "H05",
+   "verdict": "fail",
+   "pass_bar": "No duplicates from double clicks; leaving a dirty form warns; limits shown before submit.",
+   "measure": "no duplicate on double-click (composer); no leave warning on 3 forms; limits shown after submit for files and venture creation",
+   "worst": 3,
+   "findings": [
+    "H10",
+    "H13",
+    "H15",
+    "R01",
+    "R02",
+    "R10",
+    "R11",
+    "R38",
+    "R46",
+    "R49",
+    "R59",
+    "R60",
+    "R61",
+    "R72",
+    "R75",
+    "R79",
+    "R84",
+    "R94",
+    "R96",
+    "R97",
+    "R100",
+    "R103",
+    "R105",
+    "R107",
+    "R108"
+   ],
+   "evidence": "results.json tasks and findings"
+  },
+  {
+   "code": "H06",
+   "verdict": "partial",
+   "pass_bar": "All icon-only controls labelled; no next step without a link.",
+   "measure": "0 icon-only controls unnamed; 15 other controls unnamed; next steps without links (score requirements, 'Take this step')",
+   "worst": 3,
+   "findings": [
+    "H09",
+    "R20",
+    "R27",
+    "R51",
+    "R53",
+    "R69",
+    "R83",
+    "R89",
+    "R99",
+    "R103"
+   ],
+   "evidence": "results.json tasks and findings"
+  },
+  {
+   "code": "H07",
+   "verdict": "fail",
+   "pass_bar": "At least 90% of pages found in the top 3; state in URL; bulk actions where lists grow.",
+   "measure": "45% of student page titles in Ctrl K top 3 (26/58); state in URL for feed filters, Explore and Openings",
+   "worst": 3,
+   "findings": [
+    "H01",
+    "R34",
+    "R48"
+   ],
+   "evidence": "probes.json ctrlk"
+  },
+  {
+   "code": "H08",
+   "verdict": "partial",
+   "pass_bar": "One primary action per screen; main content visible without scrolling on a phone.",
+   "measure": "10 of 112 phone screens with 2+ primaries; first post / score below the fold on Home and Score",
+   "worst": 2,
+   "findings": [
+    "H08",
+    "H26",
+    "H27",
+    "H35",
+    "R55",
+    "R71"
+   ],
+   "evidence": "probes.json pages; screens"
+  },
+  {
+   "code": "H09",
+   "verdict": "partial",
+   "pass_bar": "All five, on every error tried.",
+   "measure": "field errors name cause and fix with aria-invalid + describedby on sign-up, feedback, contributions; offline post shows a server error; some messages after submit only",
+   "worst": 3,
+   "findings": [
+    "H13",
+    "H14",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R07",
+    "R42",
+    "R46",
+    "R52",
+    "R62",
+    "R65",
+    "R75",
+    "R80",
+    "R81",
+    "R84",
+    "R97",
+    "R102"
+   ],
+   "evidence": "probes.json errors"
+  },
+  {
+   "code": "H10",
+   "verdict": "partial",
+   "pass_bar": "Help or Feedback reachable in one tap from every page.",
+   "measure": "Feedback one tap on desktop (rail); not reachable from the phone dock or account menu",
+   "worst": 2,
+   "findings": [
+    "H37",
+    "R77"
+   ],
+   "evidence": "results.json tasks and findings"
+  },
+  {
+   "code": "ACC",
+   "verdict": "partial",
+   "pass_bar": "0 serious or critical axe issues; no sideways scroll; all five tasks keyboard-complete.",
+   "measure": "0 axe WCAG 2.2 AA violations on 336 page views; no sideways scroll at 390; 6 pages fail 320 px reflow; 26 clip under text spacing; keyboard task T024 completable",
+   "worst": 3,
+   "findings": [
+    "H04",
+    "H05",
+    "H06",
+    "H09",
+    "H12",
+    "R31",
+    "R32",
+    "R33",
+    "R62",
+    "R73",
+    "R88"
+   ],
+   "evidence": "probes.json pages, summary.ACC; T024"
+  },
+  {
+   "code": "MOB",
+   "verdict": "fail",
+   "pass_bar": "LCP 2.5 s or less, CLS 0.1 or less, response under 200 ms or progress shown.",
+   "measure": "LCP max 2792 ms (feed, cold); CLS ≤ 0.071; typing before hydration (~6.6 s) is wiped",
+   "worst": 3,
+   "findings": [
+    "H04",
+    "H13",
+    "H23",
+    "R01",
+    "R33",
+    "R41",
+    "R50",
+    "R56",
+    "R58",
+    "R102"
+   ],
+   "evidence": "probes.json performance; R01"
+  },
+  {
+   "code": "LRN",
+   "verdict": "partial",
+   "pass_bar": "No more than 1.5 times the shortest path.",
+   "measure": "5 of 104 tasks over 1.5x the shortest path (T002, T035, T041, T045, T078)",
+   "worst": 3,
+   "findings": [
+    "R08",
+    "R34",
+    "R68"
+   ],
+   "evidence": "results.json tasks clicks/shortest"
+  },
+  {
+   "code": "NAV",
+   "verdict": "fail",
+   "pass_bar": "Every student page within 3 clicks of Home; no orphans; current place always marked.",
+   "measure": "desktop: all crawled pages within 3 clicks; phone: Explore, Events, Societies, Tickets unreachable by visible links; Appeals orphaned; current place marked on all but 2 pages",
+   "worst": 3,
+   "findings": [
+    "H02",
+    "H03",
+    "R13",
+    "R48",
+    "R53",
+    "R55",
+    "R58",
+    "R68"
+   ],
+   "evidence": "probes.json crawl"
+  },
+  {
+   "code": "TRU",
+   "verdict": "fail",
+   "pass_bar": "No contradictions.",
+   "measure": "4 contradictions in 14 cross-page checks",
+   "worst": 3,
+   "findings": [
+    "H17",
+    "H18",
+    "H19",
+    "R09",
+    "R14",
+    "R19",
+    "R43",
+    "R53",
+    "R65",
+    "R66",
+    "R67",
+    "R74",
+    "R76",
+    "R79",
+    "R83",
+    "R89",
+    "R90",
+    "R104",
+    "R107"
+   ],
+   "evidence": "probes.json invariants"
+  },
+  {
+   "code": "PRV",
+   "verdict": "partial",
+   "pass_bar": "Exactly matches the setting for every viewer; privacy controls within 2 clicks.",
+   "measure": "45 viewer x setting cells all match the setting; one wrong 'why hidden' line; privacy controls 3 clicks from Home",
+   "worst": 2,
+   "findings": [
+    "H03",
+    "H17",
+    "R54",
+    "R70",
+    "R74"
+   ],
+   "evidence": "probes.json viewers"
+  },
+  {
+   "code": "AFF",
+   "verdict": "partial",
+   "pass_bar": "None found.",
+   "measure": "no pointer cursors on non-focusable elements; 2 visual affordance mix-ups (skill tag as button, Following as plain text)",
+   "worst": 2,
+   "findings": [
+    "H07",
+    "H29",
+    "H34",
+    "R26"
+   ],
+   "evidence": "probes.json pages; screens"
+  },
+  {
+   "code": "COP",
+   "verdict": "fail",
+   "pass_bar": "0 typos and 0 off-flag mentions; long sentences listed.",
+   "measure": "0 real typos in 2140 strings; 10 off-flag recruiter mentions; 26 long sentences outside legal pages",
+   "worst": 3,
+   "findings": [
+    "H19",
+    "H21",
+    "R04",
+    "R08",
+    "R14",
+    "R22",
+    "R44",
+    "R52",
+    "R59",
+    "R63",
+    "R70",
+    "R71",
+    "R76",
+    "R78",
+    "R85",
+    "R92",
+    "R96",
+    "R101",
+    "R109"
+   ],
+   "evidence": "probes.json copy"
+  },
+  {
+   "code": "EMP",
+   "verdict": "partial",
+   "pass_bar": "Every empty state has all three, and its action doesn't lead to another empty page.",
+   "measure": "25 of 26 empty states have title, explanation and action; 7 actions lead to another empty page",
+   "worst": 3,
+   "findings": [
+    "H16",
+    "R09",
+    "R40",
+    "R87",
+    "R91"
+   ],
+   "evidence": "probes.json empty"
+  },
+  {
+   "code": "MOT",
+   "verdict": "partial",
+   "pass_bar": "None found.",
+   "measure": "no pressure or shame wording; tier printed on the CV twice for every student (P23)",
+   "worst": 2,
+   "findings": [
+    "R43"
+   ],
+   "evidence": "results.json tasks and findings"
+  },
+  {
+   "code": "SAF",
+   "verdict": "pass",
+   "pass_bar": "2 taps or fewer; block works in every surface.",
+   "measure": "Report/Block one tap on comment, message, profile, venture, society, event; 2 on posts; block holds in all 12 surfaces checked both ways",
+   "worst": 2,
+   "findings": [
+    "H14",
+    "R29",
+    "R45",
+    "R63"
+   ],
+   "evidence": "probes.json viewers.reach, surfaces"
+  },
+  {
+   "code": "HCK",
+   "verdict": "partial",
+   "pass_bar": "Primary nav 7 or fewer (or grouped); any select over 15 options has type-ahead.",
+   "measure": "rail 13 items (desktop, grouped by level), phone dock 5; 5 native selects of 22–284 options with only first-letter type-ahead",
+   "worst": 1,
+   "findings": [
+    "H24",
+    "R15"
+   ],
+   "evidence": "results.json tasks and findings"
+  },
+  {
+   "code": "FIT",
+   "verdict": "fail",
+   "pass_bar": "All primary actions pass; no destructive action beside a primary one.",
+   "measure": "49 page views with targets under 24 px; Unfriend 8 px from Message",
+   "worst": 3,
+   "findings": [
+    "H06",
+    "H07",
+    "H28",
+    "R20",
+    "R31",
+    "R102"
+   ],
+   "evidence": "results.json tasks and findings"
+  },
+  {
+   "code": "JAK",
+   "verdict": "fail",
+   "pass_bar": "No difference caused a slip.",
+   "measure": "slips seen: offline chat message looks sent; no @-mention suggestions; Enter-in-place date links; native confirm boxes",
+   "worst": 2,
+   "findings": [
+    "R27"
+   ],
+   "evidence": "results.json tasks and findings"
+  },
+  {
+   "code": "DOH",
+   "verdict": "fail",
+   "pass_bar": "95% respond within 400 ms or show progress.",
+   "measure": "56% respond or show progress within 400 ms (bar 95%)",
+   "worst": 3,
+   "findings": [
+    "H22",
+    "R01",
+    "R41"
+   ],
+   "evidence": "probes.json performance; timings.jsonl"
+  },
+  {
+   "code": "PKE",
+   "verdict": "fail",
+   "pass_bar": "Each key moment has its own confirmation.",
+   "measure": "confirmed: post ('Posted.'), registration (ticket page), venture complete (Shipped), welcome; missing: application sent, society join, induction decision notification, event feedback, notice sent",
+   "worst": 1,
+   "findings": [
+    "H31",
+    "H32"
+   ],
+   "evidence": "tasks; screens"
+  },
+  {
+   "code": "TES",
+   "verdict": "partial",
+   "pass_bar": "No known data asked again.",
+   "measure": "no data asked twice in sign-up/onboarding; reset password doesn't carry the email from sign-in; event departments typed by hand though known",
+   "worst": 0,
+   "findings": [],
+   "evidence": "results.json tasks and findings"
+  },
+  {
+   "code": "MIL",
+   "verdict": "partial",
+   "pass_bar": "7 fields or fewer per step, or grouped under headings.",
+   "measure": "most steps ≤ 7 fields or grouped; teacher idea form 11 ungrouped; event stepper 7 steps",
+   "worst": 1,
+   "findings": [
+    "H25"
+   ],
+   "evidence": "results.json tasks and findings"
+  },
+  {
+   "code": "AES",
+   "verdict": "partial",
+   "pass_bar": "None found.",
+   "measure": "consistent neumorphic system in both themes; issues: multiple primary styles, blue selection, chat action noise, empty gaps, native dialogs",
+   "worst": 2,
+   "findings": [
+    "H08",
+    "H11",
+    "H27",
+    "H28",
+    "H29",
+    "H30",
+    "H33",
+    "H35",
+    "H36",
+    "R85"
+   ],
+   "evidence": "heuristics/screens"
+  }
+ ]
+}

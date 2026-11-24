@@ -1,7 +1,7 @@
 "use server";
 
 import type { Route } from "next";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import { z } from "zod";
 import { actionContext, type ActionContext } from "@/lib/actions/context";
 import { fail, fieldErrors, type ActionResult } from "@/lib/actions/result";
@@ -35,6 +35,14 @@ async function begin(action: string): Promise<{ ctx: ActionContext; supabase: Su
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) ctx.done("refused", { error_code: "no_session" });
+  if (user) {
+    // A step submitted again after Finish (Back from the welcome screen): nothing to save, go home.
+    const { data: profile } = await supabase.from("profiles").select("onboarding_complete").eq("user_id", user.id).maybeSingle();
+    if (profile?.onboarding_complete) {
+      ctx.done("refused", { error_code: "already_onboarded", user_id: user.id });
+      redirect("/feed", RedirectType.replace);
+    }
+  }
   return { ctx, supabase, userId: user?.id ?? null };
 }
 
@@ -187,5 +195,6 @@ export async function finishOnboarding(): Promise<ActionResult> {
     return fail("incomplete", "A few details are still missing: your username, department and batch. Go back and fill them in.");
   }
   ctx.done("ok", { user_id: userId, step: 6 });
-  redirect("/onboarding/done");
+  // Replace, so Back from the welcome screen doesn't reopen the finished wizard.
+  redirect("/onboarding/done", RedirectType.replace);
 }

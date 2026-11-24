@@ -1,0 +1,6542 @@
+{
+ "tasks": [
+  {
+   "id": "T001",
+   "session": "S01",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "A NUTECH email that has never been used on Skilient",
+   "task": "You've heard Skilient is a social platform only for university students. On your phone, open skilient.com, work out what it's for, then create your account.",
+   "done": "You're asked about your program and batch.",
+   "questions": [
+    "Before you signed up, what did you think Skilient would do for you? Write one sentence.",
+    "Was any field in the sign-up form unclear, or did it ask for something you didn't expect? Which one?",
+    "How did you know your code was on its way? How long did it take to arrive?",
+    "Did you open the User Agreement? What did you expect to find in it?"
+   ],
+   "principles": "LRN COP H01 MOB",
+   "steps": [
+    "F01.01",
+    "F01.02",
+    "F01.03",
+    "F01.04",
+    "F01.05",
+    "F01.06",
+    "F01.07",
+    "F01.08",
+    "F01.09"
+   ],
+   "flow": "F01"
+  },
+  {
+   "id": "T002",
+   "session": "S01",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester from the task before (already has an account)",
+   "task": "Try signing up three more times: once with a personal email (like Gmail), once with your university email but a typo in the part after @, and once with the email you already used.",
+   "done": "You've seen what Skilient says for each attempt.",
+   "questions": [
+    "Copy what the page said each time. Did it tell you what to do next?",
+    "When the email wasn't recognised, did you understand you could ask for your university to be added? Would you bother?",
+    "Did any message make you feel you'd done something wrong?",
+    "If you were asked to choose your university, was your university's name easy to find?"
+   ],
+   "principles": "H09 H05 COP",
+   "steps": [
+    "F01.03a",
+    "F01.04a",
+    "F01.04b",
+    "F01.04c"
+   ],
+   "flow": "F01"
+  },
+  {
+   "id": "T003",
+   "session": "S01",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "A tester who hasn't signed up yet and has a university Google account",
+   "task": "Sign up with 'Continue with Google'. Try a personal Google account first, then your university Google account.",
+   "done": "You're signed up through Google, or you've seen why you can't be.",
+   "questions": [
+    "Which way of signing up would you normally pick (email or Google), and why?",
+    "What did Skilient say about the personal Google account? Was it clear?",
+    "After Google, were you asked to confirm anything else? Was that expected?"
+   ],
+   "principles": "JAK H09 DOH",
+   "steps": [
+    "F01.03",
+    "F01.03b",
+    "F01.09"
+   ],
+   "flow": "F01",
+   "runs_on": [
+    "staging"
+   ],
+   "notes": [
+    "Google OAuth isn't configured on the local stack; use a university Google Workspace test account."
+   ]
+  },
+  {
+   "id": "T004",
+   "session": "S01",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "A second fresh NUTECH email",
+   "task": "Make mistakes on purpose while signing up: press sign up without ticking the agreement, use the password 'password1', then 'password123', type a wrong code twice, then open the email link on a different device. Close everything, come back later and sign in.",
+   "done": "You've seen each message and finished signing up.",
+   "questions": [
+    "For each mistake, did the message appear next to the right field?",
+    "Could you see each message on your phone without scrolling?",
+    "How did you get a new code, and how many tries did it take?",
+    "What happened when you opened the link on another device, and when you signed in later? Did you know what to do?"
+   ],
+   "principles": "H09 ACC MOB H05",
+   "steps": [
+    "F01.05a",
+    "F01.06a",
+    "F01.08a",
+    "F01.08b",
+    "F01.08c",
+    "F02.03b"
+   ],
+   "flow": "F01"
+  },
+  {
+   "id": "T005",
+   "session": "S06",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Sign out of Skilient. Sign back in without typing your password.",
+   "done": "You're back on Skilient, signed in.",
+   "questions": [
+    "How did you find a way in without your password?",
+    "Which sign-in method would you use day to day, and why?",
+    "After signing in, did you land where you expected?"
+   ],
+   "principles": "JAK H07 H06",
+   "steps": [
+    "F02.01",
+    "F02.02",
+    "F02.06"
+   ],
+   "flow": "F02"
+  },
+  {
+   "id": "T006",
+   "session": "S06",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Sign in with a typo in your password. Then pretend you've forgotten it and get back in with a new one. Open the reset email twice.",
+   "done": "You're signed in with your new password.",
+   "questions": [
+    "What did the page say for the wrong password?",
+    "How long did recovery take from start to finish?",
+    "Did you trust the reset email was really from Skilient? What made you trust or doubt it?",
+    "What happened when you opened the reset link the second time?"
+   ],
+   "principles": "H09 TRU H03",
+   "steps": [
+    "F02.03",
+    "F02.03a",
+    "F02.02a",
+    "F02.02b"
+   ],
+   "flow": "F02"
+  },
+  {
+   "id": "T007",
+   "session": "S06",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester installs an authenticator app (e.g. Google Authenticator) first",
+   "task": "Turn on two-step sign-in for your account using an authenticator app. Sign out and sign in again.",
+   "done": "You've signed in using the authenticator code.",
+   "questions": [
+    "Did Skilient explain why you'd want this?",
+    "Which step was hardest?",
+    "What would you do if you lost your phone? Does Skilient tell you?"
+   ],
+   "principles": "TRU H10 LRN",
+   "steps": [
+    "F02.04",
+    "F02.04a",
+    "F02.04b",
+    "F15.06"
+   ],
+   "flow": "F02"
+  },
+  {
+   "id": "T008",
+   "session": "S06",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Team publishes a new User Agreement version before the session",
+   "task": "Sign in. If Skilient asks you to do anything before you continue, do it.",
+   "done": "You're on Home.",
+   "questions": [
+    "What did Skilient ask you to do, and why?",
+    "Did you read 'What changed'? Was it short enough?",
+    "Did you feel you had a real choice?"
+   ],
+   "principles": "COP PRV H01",
+   "steps": [
+    "F02.05",
+    "F02.05a"
+   ],
+   "flow": "F02"
+  },
+  {
+   "id": "T009",
+   "session": "S01",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Continues straight from sign-up",
+   "task": "You've just confirmed your email. Set up your profile so classmates can find you. Skip anything you'd rather not do now.",
+   "done": "The welcome screen appears.",
+   "questions": [
+    "Under each step's title there's a line saying why it's asked. Which step still felt unnecessary?",
+    "Which step did you skip, and why?",
+    "If you connected GitHub: on the skills step, what do you think 'L1', 'L2' and 'claimed' mean?",
+    "At any point, how many steps did you think were left? Was that right?"
+   ],
+   "principles": "LRN MIL H01 COP",
+   "steps": [
+    "F03.01",
+    "F03.02",
+    "F03.03",
+    "F03.04",
+    "F03.04a",
+    "F03.05",
+    "F03.05a",
+    "F03.06",
+    "F03.07"
+   ],
+   "flow": "F03"
+  },
+  {
+   "id": "T010",
+   "session": "S01",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "A fresh account mid-onboarding",
+   "task": "Halfway through setting up, close the browser. Open Skilient again and finish. Try a username a friend already uses, and a very large photo.",
+   "done": "Setup is finished.",
+   "questions": [
+    "Where did Skilient bring you back to?",
+    "What did it say about the taken username? Did it suggest another?",
+    "Did going Back lose anything you'd typed?",
+    "What happened with the large photo?"
+   ],
+   "principles": "H03 H05 H09",
+   "steps": [
+    "F03.02a",
+    "F03.03a",
+    "F03.03b"
+   ],
+   "flow": "F03"
+  },
+  {
+   "id": "T011",
+   "session": "S01",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester with a GitHub account and at least one repository",
+   "task": "During setup, connect your GitHub account and choose which repositories Skilient may read.",
+   "done": "You see skills detected from your code.",
+   "questions": [
+    "Before connecting, did you understand what Skilient reads and what it never reads?",
+    "How did you feel about letting Skilient into your repositories?",
+    "Were the detected skills what you expected? Any missing or wrong?"
+   ],
+   "principles": "TRU PRV TES",
+   "steps": [
+    "F03.04",
+    "F03.04b",
+    "F03.05",
+    "F19.02",
+    "F19.03",
+    "F19.04"
+   ],
+   "flow": "F03",
+   "runs_on": [
+    "staging"
+   ],
+   "notes": [
+    "Needs the GitHub App and the github-worker."
+   ]
+  },
+  {
+   "id": "T012",
+   "session": "S01",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Ask one tester to turn on 'Reduce motion' in phone settings first",
+   "task": "When you reach the welcome screen, decide whether to take the tour.",
+   "done": "You're on Home.",
+   "questions": [
+    "What did the welcome screen tell you to expect?",
+    "Did you take the tour or skip it? Why?",
+    "How did you feel at that moment? One word.",
+    "(If 'Reduce motion' is on in your phone settings) Did anything move in a way that bothered you?"
+   ],
+   "principles": "PKE LRN AES ACC",
+   "steps": [
+    "F03.08",
+    "F03.09",
+    "F03.09a",
+    "F03.10"
+   ],
+   "flow": "F03"
+  },
+  {
+   "id": "T013",
+   "session": "S01",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Officer helper adds the tester's university email at a test event's check-in before the tester signs up",
+   "task": "A society added you to an event's attendance before you joined Skilient. Use the email you received to sign up, and get that entry.",
+   "done": "The entry is on your Record.",
+   "questions": [
+    "Did the email look trustworthy enough to click? Why?",
+    "After signing up, how did you find the waiting entry?",
+    "What do you think that entry proves, and to whom?"
+   ],
+   "principles": "TRU PKE LRN",
+   "steps": [
+    "F03.08a",
+    "F24.01"
+   ],
+   "flow": "F03",
+   "runs_on": [
+    "staging"
+   ],
+   "notes": [
+    "The claim email needs the notify worker. Locally, use the claim card on the welcome screen instead."
+   ]
+  },
+  {
+   "id": "T014",
+   "session": "S02",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester who hasn't taken the tour yet",
+   "task": "Take the tour. Then, without looking back, write what Home, Openings, Ventures, Chat and Me are each for.",
+   "done": "You've written one line for each area.",
+   "questions": [
+    "Write one line per area.",
+    "Which tour step did you skip through without reading?",
+    "Was the tour too long, too short, or about right?"
+   ],
+   "principles": "LRN NAV MIL",
+   "steps": [
+    "F04.01",
+    "F04.02",
+    "F04.02b",
+    "F04.10"
+   ],
+   "flow": "F04"
+  },
+  {
+   "id": "T015",
+   "session": "S02",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Without asking anyone, find what Skilient suggests you do next to improve your standing, and start doing it.",
+   "done": "You've started the suggested step.",
+   "questions": [
+    "Where did you find the suggestion?",
+    "Did you understand how many points each item gives and what points are for?",
+    "Did any checklist item seem impossible for you right now? Which one?"
+   ],
+   "principles": "MOT H01 EMP",
+   "steps": [
+    "F04.06",
+    "F04.06a",
+    "F04.07"
+   ],
+   "flow": "F04"
+  },
+  {
+   "id": "T016",
+   "session": "S02",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Desktop",
+   "setup": "Any signed-in tester",
+   "task": "On a computer: find the Skill swap page using only the search at the top (no menus), then your privacy settings the same way. Afterwards, hover over each icon in the left rail.",
+   "done": "You've reached both pages and read the rail tooltips.",
+   "questions": [
+    "What did you type to find each page? Did the first try work?",
+    "Which rail icons were you unsure about before hovering?",
+    "Did the tooltips help you tell the icons apart?"
+   ],
+   "principles": "H07 H06 NAV ACC",
+   "steps": [
+    "F04.03",
+    "F04.08"
+   ],
+   "flow": "F04"
+  },
+  {
+   "id": "T017",
+   "session": "S02",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Open three pages you haven't visited yet that show a first-visit tip: Openings, a venture page, your CV, your score or the Privacy centre. Read the tip that appears.",
+   "done": "You've seen three new pages.",
+   "questions": [
+    "Did a tip tell you something you didn't know?",
+    "On an empty page, was the suggested action the one you'd want?",
+    "Did you close a tip? Would you want it back later?"
+   ],
+   "principles": "H10 EMP",
+   "steps": [
+    "F04.04",
+    "F04.05"
+   ],
+   "flow": "F04"
+  },
+  {
+   "id": "T018",
+   "session": "S02",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "You skipped the tour earlier. Find a way to watch it again. Then hide your getting-started progress for today and find where it went.",
+   "done": "The tour is replaying, and you know where your progress went.",
+   "questions": [
+    "Where did you look first for the tour?",
+    "How long did it take?",
+    "Could you get the checklist back? Did you expect to?"
+   ],
+   "principles": "H03 H10 NAV",
+   "steps": [
+    "F04.02a",
+    "F04.09",
+    "F04.07a"
+   ],
+   "flow": "F04"
+  },
+  {
+   "id": "T019",
+   "session": "S02",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "At least 5 posts of different types at the tester's university. Include posts older than 2 hours (the feed's seed stage), or the tester sees almost none; the pilot seed ages them.",
+   "task": "Scroll your University Feed to the end. For each post, answer the question under it honestly.",
+   "done": "You reach the end of the feed.",
+   "questions": [
+    "What do you think your tick or cross does? Who sees it?",
+    "After you answered, what did the space under the post show? Did it look finished or broken?",
+    "Did you miss having a like button? What would you have done instead?",
+    "Did any question not fit the post it was under?"
+   ],
+   "principles": "H01 COP JAK AFF",
+   "steps": [
+    "F05.01",
+    "F05.04",
+    "F05.05",
+    "F05.05a",
+    "F05.07",
+    "F05.07a",
+    "F05.11",
+    "F05.12"
+   ],
+   "flow": "F05"
+  },
+  {
+   "id": "T020",
+   "session": "S02",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Answer a post's question, then change your answer. Come back after 10 minutes and try to change it again.",
+   "done": "You know whether you can still change it.",
+   "questions": [
+    "How did you change your answer? Was it obvious you could?",
+    "What happened after 15 minutes? Did Skilient say why?",
+    "Should answers be changeable? For how long?"
+   ],
+   "principles": "H03 H01 COP",
+   "steps": [
+    "F05.06",
+    "F05.06a",
+    "F05.06b"
+   ],
+   "flow": "F05"
+  },
+  {
+   "id": "T021",
+   "session": "S02",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester. Include posts older than 2 hours (the feed's seed stage), or the tester sees almost none; the pilot seed ages them.",
+   "task": "Look only at posts about events, then only Shipped projects. Then switch to the Global Feed.",
+   "done": "You've used two filters and both feeds.",
+   "questions": [
+    "How could you tell which filter was on?",
+    "In your words, what's the difference between the University and Global feeds?",
+    "What did you find in the Global Feed?"
+   ],
+   "principles": "AFF COP H04",
+   "steps": [
+    "F05.02",
+    "F05.02a",
+    "F05.03"
+   ],
+   "flow": "F05"
+  },
+  {
+   "id": "T022",
+   "session": "S02",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "A poll post and a post with a few comments at the tester's university",
+   "task": "Vote in a poll. Then read the comments on a post and reply to someone, mentioning them with @.",
+   "done": "Your vote and your reply are posted.",
+   "questions": [
+    "When did you see the poll results? Was that what you expected?",
+    "Could you tell which comment your reply belongs to?",
+    "Did the @mention suggest names as you typed?"
+   ],
+   "principles": "JAK H06",
+   "steps": [
+    "F05.08",
+    "F05.09"
+   ],
+   "flow": "F05"
+  },
+  {
+   "id": "T023",
+   "session": "S02",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper posts '[UX test] report me' at the tester's university",
+   "task": "One post isn't for you and one person posts too often: see less of each. Report the post titled '[UX test] report me' first, then mute its author.",
+   "done": "You've hidden one post, muted one person and reported the test post.",
+   "questions": [
+    "What do you think 'Not for me' and 'Mute' each do? Is the person told?",
+    "Were the report reasons clear?",
+    "After reporting, what did you expect to happen, and when?"
+   ],
+   "principles": "SAF H03 COP",
+   "steps": [
+    "F05.10",
+    "F05.10a",
+    "F05.04b"
+   ],
+   "flow": "F05"
+  },
+  {
+   "id": "T024",
+   "session": "S02",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Desktop",
+   "setup": "Any signed-in tester",
+   "task": "On a computer, use only the keyboard (Tab, Shift+Tab, Enter, Esc, arrow keys): answer a post's question, open its comments, open its ⋯ menu and close it again.",
+   "done": "You've done all three without the mouse.",
+   "questions": [
+    "Could you always see where you were on the page?",
+    "Was any control impossible to reach or to leave?",
+    "Did the tick and cross say what they do when focused?"
+   ],
+   "principles": "ACC FIT AFF",
+   "steps": [
+    "F05.05",
+    "F05.09",
+    "F05.10"
+   ],
+   "flow": "F05"
+  },
+  {
+   "id": "T025",
+   "session": "S02",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Switch your phone between light and dark mode, then set your browser's font size to the largest (Chrome: Settings > Accessibility > Text scaling), then your phone's text size. Browse Home, a venture page and your CV in each.",
+   "done": "You've seen all three pages both ways.",
+   "questions": [
+    "Was anything hard to read in either mode?",
+    "Did any text get cut off or overlap with large text?",
+    "Which mode looked better to you, and why?"
+   ],
+   "principles": "ACC MOB AES",
+   "steps": [
+    "F05.04",
+    "F04.10"
+   ],
+   "flow": "F05"
+  },
+  {
+   "id": "T026",
+   "session": "S03",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Share something useful with students at your university: a short post with one photo. Make sure only your university sees it. Try a very large photo first. Once you've seen what happens with it, remove the big photo so the post has one photo.",
+   "done": "Your post is in the feed.",
+   "questions": [
+    "Before posting, who did you think would see it? How did you check?",
+    "What happened with the large photo?",
+    "After posting, where did your post appear?",
+    "Did anything tell you the post worked?"
+   ],
+   "principles": "H01 COP PRV",
+   "steps": [
+    "F06.01",
+    "F06.02",
+    "F06.03",
+    "F06.04",
+    "F06.04a",
+    "F06.05",
+    "F06.07",
+    "F06.08",
+    "F06.12"
+   ],
+   "flow": "F06"
+  },
+  {
+   "id": "T027",
+   "session": "S03",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Ask your batch a question as a poll with three options that closes in two days.",
+   "done": "Your poll is posted.",
+   "questions": [
+    "Was it clear how to add or remove options?",
+    "Where did you set when it closes?",
+    "Was there anything you wanted that wasn't there?"
+   ],
+   "principles": "MIL H06",
+   "steps": [
+    "F06.02",
+    "F06.06"
+   ],
+   "flow": "F06"
+  },
+  {
+   "id": "T028",
+   "session": "S03",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Start writing a post, leave Home and come back. Then post twice quickly, and try posting with nothing in it.",
+   "done": "You've seen what happens each time.",
+   "questions": [
+    "Was your draft still there? Did you expect it to be?",
+    "What happened on the second post? Did it say how long to wait?",
+    "What did it say about the empty post?"
+   ],
+   "principles": "H05 H09 H01",
+   "steps": [
+    "F06.03a",
+    "F06.07a",
+    "F06.07b"
+   ],
+   "flow": "F06"
+  },
+  {
+   "id": "T029",
+   "session": "S03",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Fix a typo in the post you just made. Then delete it.",
+   "done": "The post is deleted.",
+   "questions": [
+    "Where did you find edit?",
+    "Was there a time limit, and did you know about it before?",
+    "Did deleting ask you to confirm?"
+   ],
+   "principles": "H03 H05",
+   "steps": [
+    "F06.09",
+    "F06.09a"
+   ],
+   "flow": "F06"
+  },
+  {
+   "id": "T030",
+   "session": "S03",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper comments on the tester's post. At least 3 helpers open the post in the app and answer its question positively (questions are assigned on view; the free public line needs 3+ positive answers).",
+   "task": "Find out how your post is doing: how many found it useful or interesting. If someone commented, pin the most helpful comment.",
+   "done": "You've found whatever Skilient shows you, and pinned a comment.",
+   "questions": [
+    "What did you find?",
+    "Why do you think there's no question under your own post?",
+    "Is it clear what Student Pro would add here? Would that be worth paying for?"
+   ],
+   "principles": "MOT TRU COP",
+   "steps": [
+    "F06.10",
+    "F06.10a",
+    "F06.10b",
+    "F06.11",
+    "F05.04a"
+   ],
+   "flow": "F06"
+  },
+  {
+   "id": "T031",
+   "session": "S03",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester has at least one friend and one venture chat; one tester with none",
+   "task": "Send an interesting post to a friend with a short note. Then send another post to your venture's chat and undo it.",
+   "done": "One post is sent and one is undone.",
+   "questions": [
+    "Did you know whether your friend would be notified?",
+    "Did you notice Undo in time? Was it long enough?",
+    "Would you rather copy a link? Why?",
+    "(Testers with no chats yet) What did the share sheet tell you?"
+   ],
+   "principles": "H03 JAK H01",
+   "steps": [
+    "F07.01",
+    "F07.02",
+    "F07.03",
+    "F07.03a",
+    "F07.04",
+    "F07.05",
+    "F07.05a",
+    "F07.07"
+   ],
+   "flow": "F07"
+  },
+  {
+   "id": "T032",
+   "session": "S03",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper shares two posts in chat: one normal, and one university-only post at the tester's university that its author then deletes (to show the unavailable card).",
+   "task": "Open the posts a friend sent you in chat. Then share several posts quickly to five chats in a row.",
+   "done": "You've opened both shared posts and seen what happens when you share a lot.",
+   "questions": [
+    "Could you tell a shared post apart from a normal message?",
+    "What did the unavailable post tell you?",
+    "What happened when you shared many posts fast?"
+   ],
+   "principles": "COP H04 H09",
+   "steps": [
+    "F07.06",
+    "F07.06a",
+    "F07.05b"
+   ],
+   "flow": "F07"
+  },
+  {
+   "id": "T033",
+   "session": "S03",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Add two classmates as friends: one whose username you know, and one from Skilient's suggestions. Remove a suggestion for someone you don't know. Mistype one username on purpose.",
+   "done": "Two requests are sent and one suggestion is gone.",
+   "questions": [
+    "Why did Skilient suggest each person? Did the reason make sense?",
+    "What happened when you mistyped a username?",
+    "Where can you see the requests you've sent?"
+   ],
+   "principles": "COP H01 PRV",
+   "steps": [
+    "F08.01",
+    "F08.02",
+    "F08.02a",
+    "F08.03",
+    "F08.03a"
+   ],
+   "flow": "F08"
+  },
+  {
+   "id": "T034",
+   "session": "S03",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper sends the tester a request; the tester has one unanswered outgoing request",
+   "task": "A helper has sent you a friend request, and you've sent one that nobody answered. Accept the first and cancel yours. Then try adding the helper again.",
+   "done": "You're friends with the helper and your other request is cancelled.",
+   "questions": [
+    "How did you learn about the incoming request?",
+    "Were Received and Sent easy to tell apart?",
+    "What happened when you tried to add someone who's already your friend?"
+   ],
+   "principles": "H04 NAV H01",
+   "steps": [
+    "F08.04",
+    "F08.05",
+    "F08.02b"
+   ],
+   "flow": "F08"
+  },
+  {
+   "id": "T035",
+   "session": "S03",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Message one of your friends starting from the Friends page. Then remove a friend you added by mistake.",
+   "done": "You've sent a message and removed one friend.",
+   "questions": [
+    "Where did you look for a way to message?",
+    "Was it too easy to remove a friend by accident?",
+    "What do you think the person loses when you remove them?"
+   ],
+   "principles": "H05 FIT COP",
+   "steps": [
+    "F08.06",
+    "F08.06a"
+   ],
+   "flow": "F08"
+  },
+  {
+   "id": "T036",
+   "session": "S03",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Someone (the helper account) is bothering you. Make sure they can't contact you or see you. Then undo it.",
+   "done": "The helper is blocked and then unblocked.",
+   "questions": [
+    "Where did you look first?",
+    "Did the confirmation explain what blocking does?",
+    "Could you undo it easily? Do you think they'd know?"
+   ],
+   "principles": "SAF H03 COP",
+   "steps": [
+    "F08.07",
+    "F08.07a",
+    "F08.08",
+    "F08.09"
+   ],
+   "flow": "F08"
+  },
+  {
+   "id": "T037",
+   "session": "S04",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper is the tester's friend and replies during the session",
+   "task": "Ask a friend (the helper) a question in chat and send a photo of your notes. Reply directly to their answer, react to it, then delete one of your messages.",
+   "done": "The conversation is done.",
+   "questions": [
+    "How could you tell your message was delivered?",
+    "Did your reply show which message it answered?",
+    "What did the deleted message look like afterwards?",
+    "What do you expect from WhatsApp that's missing here?"
+   ],
+   "principles": "JAK H01",
+   "steps": [
+    "F09.01",
+    "F09.03",
+    "F09.04",
+    "F09.05",
+    "F09.06",
+    "F09.06a",
+    "F09.09"
+   ],
+   "flow": "F09"
+  },
+  {
+   "id": "T038",
+   "session": "S04",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Turn on airplane mode, send a message, then turn the connection back on.",
+   "done": "Your message has been sent.",
+   "questions": [
+    "What did Skilient show while you were offline?",
+    "Did your message send by itself, or did you have to retry?",
+    "Did you ever think a message was sent when it wasn't?"
+   ],
+   "principles": "H01 H09 MOB DOH",
+   "steps": [
+    "F09.05a",
+    "F09.05b"
+   ],
+   "flow": "F09"
+  },
+  {
+   "id": "T039",
+   "session": "S04",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Find an old message that mentioned a date, without scrolling. Then mute your venture chat and turn off read receipts.",
+   "done": "You've found the message, muted the chat and turned receipts off.",
+   "questions": [
+    "Where did you search?",
+    "What do you expect muting to change?",
+    "What changes for the other person when you turn off read receipts?"
+   ],
+   "principles": "H07 PRV COP",
+   "steps": [
+    "F09.02",
+    "F09.07",
+    "F09.08",
+    "F15.05"
+   ],
+   "flow": "F09"
+  },
+  {
+   "id": "T040",
+   "session": "S04",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper sends a '[UX test]' message to the tester",
+   "task": "Try to message someone who isn't your friend: find Danish Helper in Explore. Then report a message from the helper marked '[UX test]'.",
+   "done": "You know why you couldn't message them, and the message is reported.",
+   "questions": [
+    "What stopped you, and did it say how you could message them?",
+    "Is that rule fair?",
+    "How sure were you that the right message got reported?",
+    "Do you have a chat called 'Deleted account'? What do you think it is?"
+   ],
+   "principles": "SAF COP H01",
+   "steps": [
+    "F09.03a",
+    "F09.07a",
+    "F09.02a"
+   ],
+   "flow": "F09"
+  },
+  {
+   "id": "T041",
+   "session": "S04",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Find a student at your university, in your batch, who has proved React skills. Look at their profile.",
+   "done": "You're on a matching student's profile.",
+   "questions": [
+    "How did you narrow the results?",
+    "Could you tell which skills were proved by code and which were only claimed?",
+    "What on the profile made you trust, or doubt, their skills?"
+   ],
+   "principles": "TRU H06 NAV",
+   "steps": [
+    "F10.01",
+    "F10.02",
+    "F10.03",
+    "F10.04",
+    "F10.05",
+    "F10.07",
+    "F10.09"
+   ],
+   "flow": "F10"
+  },
+  {
+   "id": "T042",
+   "session": "S04",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Search for a name that doesn't exist with three filters on. Then open the profile of someone who isn't your friend.",
+   "done": "You've seen the empty result and a stranger's profile.",
+   "questions": [
+    "What did the empty result suggest?",
+    "What could you see on the stranger's profile? Did it explain why some was hidden?",
+    "Which actions could you take?"
+   ],
+   "principles": "EMP PRV COP",
+   "steps": [
+    "F10.02a",
+    "F10.06",
+    "F10.06a",
+    "F10.08"
+   ],
+   "flow": "F10"
+  },
+  {
+   "id": "T043",
+   "session": "S04",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester blocked someone in an earlier task (or blocks the helper now)",
+   "task": "Look at your own profile the way others see it. Then search for the person you blocked earlier.",
+   "done": "You've checked your profile and the search.",
+   "questions": [
+    "How did you check what others see?",
+    "Was anything on your profile public that you didn't expect?",
+    "Your tier shows on your profile. How do you feel about that?"
+   ],
+   "principles": "PRV MOT",
+   "steps": [
+    "F10.07a",
+    "F10.06b"
+   ],
+   "flow": "F10"
+  },
+  {
+   "id": "T044",
+   "session": "S04",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper triggers a mix: chat messages, a friend request, a venture decision",
+   "task": "Check what happened on Skilient since your last visit. Open the most important thing, then clear the rest.",
+   "done": "Everything is marked read.",
+   "questions": [
+    "Which notification mattered most? Was it easy to spot?",
+    "Were any notifications repeats of something you'd seen elsewhere, like chat?",
+    "Where did tapping one take you?",
+    "(New accounts) What did the empty page say?"
+   ],
+   "principles": "H08 NAV H01",
+   "steps": [
+    "F11.01",
+    "F11.02",
+    "F11.02a",
+    "F11.03",
+    "F11.04"
+   ],
+   "flow": "F11"
+  },
+  {
+   "id": "T045",
+   "session": "S06",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Make Skilient email you only about requests and applications. Then get event reminders on your phone.",
+   "done": "Email and phone notifications are set the way you want.",
+   "questions": [
+    "How many settings did you have to change?",
+    "Were the categories named in words you'd use?",
+    "What did your browser ask you? Did you trust it?"
+   ],
+   "principles": "PRV COP HCK",
+   "steps": [
+    "F11.05",
+    "F11.06",
+    "F11.06a",
+    "F11.06b"
+   ],
+   "flow": "F11",
+   "runs_on": [
+    "staging",
+    "real phone"
+   ],
+   "notes": [
+    "Push needs VAPID keys, the notify worker and a real phone."
+   ]
+  },
+  {
+   "id": "T046",
+   "session": "S04",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Add Skilient to your phone's home screen and open it from there.",
+   "done": "Skilient opens from your home screen.",
+   "questions": [
+    "Did Skilient tell you this was possible?",
+    "Did it look and feel like an app?",
+    "Would you keep it on your home screen?"
+   ],
+   "principles": "MOB JAK",
+   "steps": [
+    "F11.07",
+    "F11.08"
+   ],
+   "flow": "F11",
+   "runs_on": [
+    "real phone"
+   ],
+   "notes": [
+    "Android Chrome install prompt, or iOS Share > Add to Home Screen; headless browsers can't."
+   ]
+  },
+  {
+   "id": "T047",
+   "session": "S05",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper venture with 2 open roles and 1 applicant question",
+   "task": "Find a project at your university that needs someone with your skills, and apply for a role, explaining why you fit.",
+   "done": "Your application is sent.",
+   "questions": [
+    "How did you decide which role fit you?",
+    "What does '1 of 1 place open' mean to you?",
+    "After applying, where would you check how it's going?",
+    "Who did you think would read your message?"
+   ],
+   "principles": "COP H01 NAV H02",
+   "steps": [
+    "F12.01",
+    "F12.02",
+    "F12.03",
+    "F12.04",
+    "F12.05",
+    "F12.06"
+   ],
+   "flow": "F12",
+   "notes": [
+    "Acceptance is checked in T048; look at the bell first, not the venture page."
+   ]
+  },
+  {
+   "id": "T048",
+   "session": "S05",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper accepts the tester's application during the session",
+   "task": "The owner (helper) accepted you. Find your new team's chat and say hello. Then follow a different public venture.",
+   "done": "You've posted in the team chat and followed another venture.",
+   "questions": [
+    "How did you learn you were accepted?",
+    "What changed on the venture page now you're a member? Could you see every tab on your phone?",
+    "What does following a venture do?"
+   ],
+   "principles": "H01 LRN NAV MOB",
+   "steps": [
+    "F12.07",
+    "F12.08",
+    "F12.09",
+    "F12.01a"
+   ],
+   "flow": "F12",
+   "notes": [
+    "In the pilot the venture page changed before any notification was seen; ask testers which they noticed first."
+   ]
+  },
+  {
+   "id": "T049",
+   "session": "S05",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper sends an invite and declines a pending application",
+   "task": "A helper invited you to a venture and declined another application of yours. Respond to the invite, then try applying again to the role that declined you.",
+   "done": "You've answered the invite and seen what happens on re-applying.",
+   "questions": [
+    "Where did you find the invite?",
+    "How did the decline message make you feel?",
+    "What happened when you tried to apply again?"
+   ],
+   "principles": "COP H04",
+   "steps": [
+    "F12.06a",
+    "F12.07a",
+    "F12.04c"
+   ],
+   "flow": "F12"
+  },
+  {
+   "id": "T050",
+   "session": "S05",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "A full helper venture, and a university-only venture at another university if one exists",
+   "task": "Try to join a venture that's full, and a university-only venture from another university.",
+   "done": "You've seen why you can't join either.",
+   "questions": [
+    "Did the page say why before you tapped anything?",
+    "Did it suggest anything else to do?"
+   ],
+   "principles": "H05 EMP",
+   "steps": [
+    "F12.04a",
+    "F12.04b"
+   ],
+   "flow": "F12"
+  },
+  {
+   "id": "T051",
+   "session": "S05",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone or desktop",
+   "setup": "Any signed-in tester",
+   "task": "Start a project called '[UX test] <your name>' looking for a designer and a backend developer, visible only to your university, with one question for applicants. Submit once with the title empty first.",
+   "done": "Your venture exists with two roles and a question.",
+   "questions": [
+    "Which fields were unclear?",
+    "On the manage page, did you always know whether your changes were saved? Did you lose anything?",
+    "How long did set-up take? Was anything asked twice?"
+   ],
+   "principles": "H05 H01 MIL",
+   "steps": [
+    "F13.01",
+    "F13.02",
+    "F13.02a",
+    "F13.03",
+    "F13.04",
+    "F13.04a"
+   ],
+   "flow": "F13"
+  },
+  {
+   "id": "T052",
+   "session": "S05",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Announce your project in the feed so students can apply.",
+   "done": "An invite post for your venture is in the feed.",
+   "questions": [
+    "How did you link the post to your venture?",
+    "How does the post look to others? How did you check?",
+    "Did you know you could do this from Home?"
+   ],
+   "principles": "NAV H06",
+   "steps": [
+    "F13.05",
+    "F06.02",
+    "F06.06"
+   ],
+   "flow": "F13"
+  },
+  {
+   "id": "T053",
+   "session": "S05",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Two helpers apply to the tester's venture",
+   "task": "Two people applied (helpers). Read their applications, accept one and decline the other. Then invite a classmate by username.",
+   "done": "One applicant is in, one is declined and an invite is sent.",
+   "questions": [
+    "Did you have enough information to decide?",
+    "What happened to the application chat after you accepted?",
+    "Did the declined person get a reason? Should they?"
+   ],
+   "principles": "COP H01 SAF",
+   "steps": [
+    "F13.06",
+    "F13.06a"
+   ],
+   "flow": "F13"
+  },
+  {
+   "id": "T054",
+   "session": "S05",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Your team has started work. Mark the venture as in progress, post a progress update, link your GitHub repository and add a deliverable link.",
+   "done": "The venture is In progress with an update and a deliverable.",
+   "questions": [
+    "What does 'Start building' mean to you? Can it be undone?",
+    "Where do updates appear for other people?",
+    "What's the difference between an update and a deliverable?"
+   ],
+   "principles": "COP H02",
+   "steps": [
+    "F13.07",
+    "F13.08"
+   ],
+   "flow": "F13"
+  },
+  {
+   "id": "T055",
+   "session": "S05",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester's venture has the helper as a member",
+   "task": "Give a teammate the role 'Designer', then make the helper the venture's owner.",
+   "done": "The helper owns the venture.",
+   "questions": [
+    "Did transferring ownership ask you to confirm and explain what you lose?",
+    "Could you get ownership back?"
+   ],
+   "principles": "H05 H03",
+   "steps": [
+    "F13.09"
+   ],
+   "flow": "F13"
+  },
+  {
+   "id": "T056",
+   "session": "S05",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Venture with the helper as a member and contributions to confirm",
+   "task": "Try to complete your venture now. If Skilient stops you, find out what's needed and do it.",
+   "done": "The venture is Completed.",
+   "questions": [
+    "Did the message say exactly what was missing?",
+    "How did completing feel?",
+    "Where did the finished venture show up afterwards?"
+   ],
+   "principles": "H09 PKE MOT",
+   "steps": [
+    "F13.10",
+    "F13.10a",
+    "F13.11",
+    "F13.12"
+   ],
+   "flow": "F13"
+  },
+  {
+   "id": "T057",
+   "session": "S05",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Abandon a test venture you no longer need.",
+   "done": "The venture is abandoned.",
+   "questions": [
+    "Did the confirmation explain what happens?",
+    "Can it be undone?"
+   ],
+   "principles": "H05",
+   "steps": [
+    "F13.10b"
+   ],
+   "flow": "F13"
+  },
+  {
+   "id": "T058",
+   "session": "S05",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper teammate logs an entry",
+   "task": "Record what you did for your team this week, with a link as evidence (try a bad link first). Then confirm a teammate's entry.",
+   "done": "Your entry is logged and a teammate's is confirmed.",
+   "questions": [
+    "In your words, what's the difference between 'self-reported' and 'peer-verified'?",
+    "Was it clear you can't edit an entry later?",
+    "Did anything make you hesitate before confirming someone else's work?"
+   ],
+   "principles": "TRU COP H05",
+   "steps": [
+    "F14.01",
+    "F14.02",
+    "F14.02a",
+    "F14.03",
+    "F14.04",
+    "F14.04a",
+    "F14.05"
+   ],
+   "flow": "F14"
+  },
+  {
+   "id": "T059",
+   "session": "S05",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "You made a mistake in your entry. Fix it.",
+   "done": "A correction is logged.",
+   "questions": [
+    "How did you fix it?",
+    "Did you understand why you can't edit it?",
+    "What would you do after 24 hours?"
+   ],
+   "principles": "H03 H09 TRU",
+   "steps": [
+    "F14.06",
+    "F14.06a"
+   ],
+   "flow": "F14"
+  },
+  {
+   "id": "T060",
+   "session": "S05",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Completed venture with the helper; helper endorses the tester",
+   "task": "Your venture is complete. Endorse each teammate for skills you saw them use. Then hide one endorsement you received and look at the Reviews tab.",
+   "done": "Endorsements are given and one is hidden.",
+   "questions": [
+    "How did you choose skills? Was the limit of 5 fine?",
+    "What do you think an endorsement adds to their profile?",
+    "Why might someone hide an endorsement?",
+    "What is the Reviews tab for?"
+   ],
+   "principles": "TRU HCK COP",
+   "steps": [
+    "F14.07",
+    "F14.08",
+    "F14.08a",
+    "F14.09",
+    "F14.10",
+    "F14.11"
+   ],
+   "flow": "F14"
+  },
+  {
+   "id": "T061",
+   "session": "S06",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Update your profile: new photo, a one-line bio and what you're looking for. Make your full profile visible only to people at your university. Try leaving the page before saving once.",
+   "done": "Your profile shows the changes.",
+   "questions": [
+    "Did you know when it was saved?",
+    "Which visibility option did you pick, and what do you think others now see?",
+    "Were there settings you expected but didn't find?"
+   ],
+   "principles": "H01 PRV",
+   "steps": [
+    "F15.01",
+    "F15.02",
+    "F15.02a",
+    "F15.02b",
+    "F15.03"
+   ],
+   "flow": "F15"
+  },
+  {
+   "id": "T062",
+   "session": "S06",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester who has already done T079 (or reset the leaderboard opt-out after this task)",
+   "task": "Make sure you don't appear on leaderboards. Then check who has viewed your CV.",
+   "done": "You're off the leaderboards and you've seen your CV views.",
+   "questions": [
+    "How long did it take to find these settings?",
+    "The page mentions recruiters. What do you think that means right now?",
+    "Was anything on this page confusing?"
+   ],
+   "principles": "PRV COP TRU HCK",
+   "steps": [
+    "F15.04"
+   ],
+   "flow": "F15"
+  },
+  {
+   "id": "T063",
+   "session": "S06",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Check which devices are signed into your account and sign out of all devices. Then sign in again and sign out here, with Skilient open in two tabs.",
+   "done": "You're signed out everywhere.",
+   "questions": [
+    "Could you recognise your devices in the list?",
+    "What made you trust it worked?",
+    "What happened in the other tab?"
+   ],
+   "principles": "TRU H01",
+   "steps": [
+    "F15.06",
+    "F15.06a",
+    "F15.09"
+   ],
+   "flow": "F15"
+  },
+  {
+   "id": "T064",
+   "session": "S06",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "A throwaway test account",
+   "task": "Find what data Skilient keeps about you and how to delete your account. Start deleting it, then cancel.",
+   "done": "Deletion is cancelled and your account still works.",
+   "questions": [
+    "Was it clear what happens to your Record, CV and ventures?",
+    "How did you cancel? Did you feel safe?",
+    "Was the privacy notice easy to read?"
+   ],
+   "principles": "PRV H03 COP",
+   "steps": [
+    "F15.07",
+    "F15.08",
+    "F15.08a",
+    "F15.10"
+   ],
+   "flow": "F15"
+  },
+  {
+   "id": "T065",
+   "session": "S06",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Staff approve or reject within the session (one rejection with a reason)",
+   "task": "Add a certificate you've earned (for example a course certificate PDF). Try a file that's too big first. Then check where it appears.",
+   "done": "The certificate is approved, or you know what to fix.",
+   "questions": [
+    "Did you know who reviews it and how long it takes?",
+    "What did each status mean?",
+    "Where did it appear once approved?"
+   ],
+   "principles": "H01 TRU COP",
+   "steps": [
+    "F16.01",
+    "F16.02",
+    "F16.02a",
+    "F16.03",
+    "F16.04",
+    "F16.04a",
+    "F16.05",
+    "F16.05a",
+    "F16.06"
+   ],
+   "flow": "F16"
+  },
+  {
+   "id": "T066",
+   "session": "S06",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Find out what Student Pro gives you, whether you have it now, and what happens when the beta ends.",
+   "done": "You can answer all three.",
+   "questions": [
+    "In one sentence, what does Pro add?",
+    "Do you have it now? How do you know?",
+    "Does anything feel like paying for a better rank?"
+   ],
+   "principles": "TRU COP MOT",
+   "steps": [
+    "F17.01",
+    "F17.02",
+    "F17.02a",
+    "F17.03",
+    "F17.03a",
+    "F17.04",
+    "F17.05"
+   ],
+   "flow": "F17"
+  },
+  {
+   "id": "T067",
+   "session": "S06",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Staff reply within a day",
+   "task": "Something on Skilient confused you today. Tell the team, with a screenshot. Check back later for a reply.",
+   "done": "Your feedback shows a status or a reply.",
+   "questions": [
+    "Where did you look for a way to give feedback?",
+    "Did you know what would happen next?",
+    "Would you check 'My feedback' again later?"
+   ],
+   "principles": "H10 H01",
+   "steps": [
+    "F18.01",
+    "F18.02",
+    "F18.03",
+    "F18.04"
+   ],
+   "flow": "F18"
+  },
+  {
+   "id": "T068",
+   "session": "S06",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Staff remove a '[UX test]' post and restrict a test account, then decide the appeal",
+   "task": "Staff removed one of your test posts and restricted your test account. Find out why, and appeal one of the two decisions.",
+   "done": "Your appeal of one decision has an outcome.",
+   "questions": [
+    "Was the reason specific enough?",
+    "Was the appeal easy to find?",
+    "Did the outcome feel fair, whatever it was?"
+   ],
+   "principles": "SAF TRU H09",
+   "steps": [
+    "F18.05",
+    "F18.05a",
+    "F18.06",
+    "F18.06a",
+    "F18.07",
+    "F18.07a",
+    "F18.08",
+    "F02.03c"
+   ],
+   "flow": "F18"
+  },
+  {
+   "id": "T069",
+   "session": "S07",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester with GitHub connected",
+   "task": "Look at your skills. Pick one and find out exactly why it has its level and what you'd need to do to reach the next level.",
+   "done": "You can explain one skill's level.",
+   "questions": [
+    "In your words, what does L2 mean?",
+    "Could you tell which skills came from code and which you claimed?",
+    "Is the next-level advice something you could do this week?"
+   ],
+   "principles": "COP TRU MOT",
+   "steps": [
+    "F19.05",
+    "F19.06",
+    "F19.06a",
+    "F19.09"
+   ],
+   "flow": "F19"
+  },
+  {
+   "id": "T070",
+   "session": "S07",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Add a skill Skilient hasn't detected (for example public speaking). Then stop Skilient reading one of your repositories.",
+   "done": "The claimed skill is added and one repository is excluded.",
+   "questions": [
+    "What happens to a claimed skill?",
+    "Was it clear what excluding a repository changes?",
+    "What do you think would happen to your skills if you disconnected GitHub?"
+   ],
+   "principles": "PRV H01 COP",
+   "steps": [
+    "F19.07",
+    "F19.08",
+    "F19.08a"
+   ],
+   "flow": "F19"
+  },
+  {
+   "id": "T071",
+   "session": "S07",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester who skipped GitHub in onboarding",
+   "task": "(If you skipped GitHub during set-up) Connect GitHub now from Settings. Cancel once on GitHub's page, then do it properly.",
+   "done": "Your repositories are syncing or synced.",
+   "questions": [
+    "Did GitHub's page match what Skilient said would happen?",
+    "How long did the sync take, and did you know it was working?",
+    "Where did you end up after cancelling?"
+   ],
+   "principles": "TRU DOH H01",
+   "steps": [
+    "F19.01",
+    "F19.02",
+    "F19.03",
+    "F19.03a",
+    "F19.04",
+    "F19.04a"
+   ],
+   "flow": "F19",
+   "runs_on": [
+    "staging"
+   ],
+   "notes": [
+    "Needs the GitHub App and the github-worker."
+   ]
+  },
+  {
+   "id": "T072",
+   "session": "S07",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "You want to become a backend developer. Find what you should learn next and why. Then try following three paths.",
+   "done": "You know your next skill and why.",
+   "questions": [
+    "What's a 'Starter path'? Did you trust the order?",
+    "What does the ladder tell you at a glance?",
+    "What happened with the third path?"
+   ],
+   "principles": "COP TRU H06",
+   "steps": [
+    "F20.01",
+    "F20.02",
+    "F20.03",
+    "F20.03a",
+    "F20.04",
+    "F20.05"
+   ],
+   "flow": "F20"
+  },
+  {
+   "id": "T073",
+   "session": "S07",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester with GitHub connected",
+   "task": "Start a proof task for your next skill and submit it with one of your repositories.",
+   "done": "The task is done, or waiting for a reviewer.",
+   "questions": [
+    "Was the checklist clear enough to do without asking anyone?",
+    "After submitting, did you know what was happening and how long it would take?",
+    "When it finished, what changed?"
+   ],
+   "principles": "H01 DOH PKE TES",
+   "steps": [
+    "F20.06",
+    "F20.06a",
+    "F20.06b",
+    "F20.07",
+    "F20.08",
+    "F20.09",
+    "F20.11",
+    "F20.12"
+   ],
+   "flow": "F20",
+   "runs_on": [
+    "staging"
+   ],
+   "notes": [
+    "The GitHub check is worker-driven; allow tasks.limits github_wait_minutes before judging the wait."
+   ]
+  },
+  {
+   "id": "T074",
+   "session": "S07",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper reviewer marks the task 'Needs changes'",
+   "task": "Your task came back with 'Needs changes'. Fix it and resubmit.",
+   "done": "The task is resubmitted.",
+   "questions": [
+    "Was the reviewer's note clear enough to act on?",
+    "How did you resubmit?",
+    "Would you rather take a code check instead? Why?"
+   ],
+   "principles": "H09 SAF",
+   "steps": [
+    "F20.09a",
+    "F20.10",
+    "F20.10a",
+    "F20.10b"
+   ],
+   "flow": "F20",
+   "runs_on": [
+    "staging"
+   ],
+   "notes": [
+    "Peer routing runs on the proof-tasks-tick cron."
+   ]
+  },
+  {
+   "id": "T075",
+   "session": "S07",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester has L2 in a skill; helper submits a task in that skill",
+   "task": "A student asked you to review their proof task. Review it fairly.",
+   "done": "You've confirmed it, asked for changes or declined.",
+   "questions": [
+    "What did 'checking' mean to you: run the code, read it, or something else?",
+    "Was the checklist enough to decide?",
+    "Reviewers get no Record entry. Is that fair?",
+    "How would you decline?"
+   ],
+   "principles": "COP TRU MOT",
+   "steps": [
+    "F21.01",
+    "F21.02",
+    "F21.03",
+    "F21.03a",
+    "F21.04",
+    "F21.04a",
+    "F21.04b",
+    "F21.05",
+    "F21.06"
+   ],
+   "flow": "F21",
+   "runs_on": [
+    "staging"
+   ],
+   "notes": [
+    "Peer routing runs on the proof-tasks-tick cron."
+   ]
+  },
+  {
+   "id": "T076",
+   "session": "S07",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper offers SQL at L2+",
+   "task": "You want to learn SQL from a senior. Find someone who can teach you and send a request with two times that suit you.",
+   "done": "Your request is sent.",
+   "questions": [
+    "What made you pick that teacher?",
+    "Was it clear what you'd owe in return?",
+    "If nobody was listed, what did Skilient suggest?"
+   ],
+   "principles": "TRU COP EMP",
+   "steps": [
+    "F22.01",
+    "F22.02",
+    "F22.03",
+    "F22.03a",
+    "F22.04"
+   ],
+   "flow": "F22"
+  },
+  {
+   "id": "T077",
+   "session": "S07",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Two testers paired; one has a skill at L2+",
+   "task": "Pair up: one of you teaches, one learns. Accept the request, agree a session time, meet for 15 minutes, then confirm it happened and close the swap.",
+   "done": "The teacher has a 'Taught' entry on their Record.",
+   "questions": [
+    "How did you agree on a time?",
+    "(Learner) Was 'Did your session happen?' easy to answer honestly?",
+    "(Teacher) Where did your Taught entry appear?",
+    "What would stop you from doing this again?"
+   ],
+   "principles": "MOT TRU H01",
+   "steps": [
+    "F22.04a",
+    "F22.05",
+    "F22.06",
+    "F22.06a",
+    "F22.07",
+    "F22.08",
+    "F22.09",
+    "F22.09a",
+    "F22.10",
+    "F22.11",
+    "F22.12"
+   ],
+   "flow": "F22"
+  },
+  {
+   "id": "T078",
+   "session": "S07",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Find out why your score is what it is, and the single best thing you could do this month to raise it.",
+   "done": "You can name one action.",
+   "questions": [
+    "Explain your score in one sentence.",
+    "Did the dates make sense (for example 'updated …')?",
+    "Did anything feel unfair or easy to game?"
+   ],
+   "principles": "TRU MOT COP",
+   "steps": [
+    "F23.01",
+    "F23.02",
+    "F23.02a",
+    "F23.03",
+    "F23.04"
+   ],
+   "flow": "F23"
+  },
+  {
+   "id": "T079",
+   "session": "S07",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester; run before T062 (which opts out of leaderboards)",
+   "task": "See where you stand in your department and batch, then across all universities.",
+   "done": "You've seen both boards.",
+   "questions": [
+    "How did you feel seeing your position?",
+    "You can't see other people's points. Is that good?",
+    "Would you opt out? Why?"
+   ],
+   "principles": "MOT PRV",
+   "steps": [
+    "F23.05",
+    "F23.05a",
+    "F23.06",
+    "F23.07",
+    "F23.04a"
+   ],
+   "flow": "F23"
+  },
+  {
+   "id": "T080",
+   "session": "S08",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester has at least 2 entries (from a test event or swap)",
+   "task": "Look at your Record. Pin your best entry to your profile, download its certificate, and check it at its verify link.",
+   "done": "You've seen the entry's verify page.",
+   "questions": [
+    "What does 'Sealed' mean to you?",
+    "Would a scholarship committee trust this certificate? Why?",
+    "Was the verify page convincing?"
+   ],
+   "principles": "TRU PKE COP AES",
+   "steps": [
+    "F24.01",
+    "F24.02",
+    "F24.03",
+    "F24.04",
+    "F24.05",
+    "F24.06",
+    "F24.06a"
+   ],
+   "flow": "F24"
+  },
+  {
+   "id": "T081",
+   "session": "S08",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Share your whole Record with a scholarship committee for one week only, and download the transcript. Then cancel the link.",
+   "done": "The link is revoked and you have the transcript PDF.",
+   "questions": [
+    "How did you set it to last a week?",
+    "Was it clear what the link shows (hidden entries too?)",
+    "Did revoking feel final?"
+   ],
+   "principles": "PRV H03 TRU",
+   "steps": [
+    "F24.08",
+    "F24.09",
+    "F24.10"
+   ],
+   "flow": "F24"
+  },
+  {
+   "id": "T082",
+   "session": "S08",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Officer helper corrects one entry and revokes another",
+   "task": "One of your entries has a mistake. Get it fixed.",
+   "done": "The corrected entry is on your Record.",
+   "questions": [
+    "Who did you think would fix it?",
+    "What happened to the old entry?",
+    "(If an entry was revoked) Was the reason enough? How would you appeal?"
+   ],
+   "principles": "H09 TRU",
+   "steps": [
+    "F24.07",
+    "F24.07a"
+   ],
+   "flow": "F24"
+  },
+  {
+   "id": "T083",
+   "session": "S08",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "A new account",
+   "task": "Open your Record before you've attended any event.",
+   "done": "You know how you'd get a first entry.",
+   "questions": [
+    "Is it clear how to get your first entry?",
+    "Does the suggested next step make sense to you?"
+   ],
+   "principles": "EMP",
+   "steps": [
+    "F24.02a"
+   ],
+   "flow": "F24"
+  },
+  {
+   "id": "T084",
+   "session": "S08",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Tester on a Pro trial (on the free plan CV changes apply at the next monthly refresh)",
+   "task": "Get your CV ready for an internship application: hide sections you don't want, put projects first, and include one society activity.",
+   "done": "Your CV shows what you chose.",
+   "questions": [
+    "Was it clear you can't type things into this CV? Is that good or bad?",
+    "Is anything printed that you'd rather not show (for example your tier)?",
+    "Would you send this CV as it is?"
+   ],
+   "principles": "TRU PRV MOT TES",
+   "steps": [
+    "F25.01",
+    "F25.02",
+    "F25.03"
+   ],
+   "flow": "F25"
+  },
+  {
+   "id": "T085",
+   "session": "S08",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Send your CV to an employer as a link that expires in 30 days, and as a PDF. Then check whether anyone has opened your links.",
+   "done": "You have a link and a PDF, or you know why not.",
+   "questions": [
+    "What stopped you, if anything, and did it explain why?",
+    "Is the line between free and Pro clear and fair?",
+    "Where did you see who opened your link?"
+   ],
+   "principles": "TRU PRV COP",
+   "steps": [
+    "F25.04",
+    "F25.04a",
+    "F25.05",
+    "F25.05a",
+    "F25.06",
+    "F25.06a",
+    "F25.07"
+   ],
+   "flow": "F25"
+  },
+  {
+   "id": "T086",
+   "session": "S08",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Helper on a Pro trial exports one genuine CV PDF, and prints a copy with a single character changed",
+   "task": "A classmate sent you two copies of their Skilient CV PDF. Check whether each one is genuine.",
+   "done": "You know which copy is genuine.",
+   "questions": [
+    "How did you check?",
+    "What did the page say for the edited copy? Was it clear?",
+    "Would you trust this more than a normal CV?"
+   ],
+   "principles": "TRU COP",
+   "steps": [
+    "F25.08",
+    "F25.08a",
+    "F25.09"
+   ],
+   "flow": "F25"
+  },
+  {
+   "id": "T087",
+   "session": "S09",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "You have a free afternoon this week. Use Skilient to find something worth joining or applying to.",
+   "done": "You've opened one opening's page.",
+   "questions": [
+    "Which card did you open first, and why?",
+    "Did the page feel full or empty? What did empty cards suggest?",
+    "How did you know what's new since your last visit?"
+   ],
+   "principles": "EMP NAV HCK H08",
+   "steps": [
+    "F26.01",
+    "F26.02",
+    "F26.03",
+    "F26.04",
+    "F26.04a",
+    "F26.06",
+    "F26.07",
+    "F26.07a",
+    "F26.09"
+   ],
+   "flow": "F26"
+  },
+  {
+   "id": "T088",
+   "session": "S09",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "A faculty helper posts a project idea. Tester hasn't created a venture today (daily create limit).",
+   "task": "Find a project idea from a teacher, filter and sort the list, and start a venture on the idea you like.",
+   "done": "A venture based on the idea exists, or you know why not.",
+   "questions": [
+    "Was it clear who posted the idea and what they expect?",
+    "Did filtering and sorting help?",
+    "What would you do next?"
+   ],
+   "principles": "COP NAV",
+   "steps": [
+    "F26.05",
+    "F26.05a",
+    "F26.08"
+   ],
+   "flow": "F26"
+  },
+  {
+   "id": "T089",
+   "session": "S09",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Three test societies with Open, By request and Inductions only modes",
+   "task": "Find a society you'd like to hear from. Follow it, then become a member of two societies.",
+   "done": "You follow one and are a member (or pending) in two.",
+   "questions": [
+    "What's the difference between following and being a member?",
+    "On a society page, what do 'Following' and 'Leave' mean? Did you press one by mistake?",
+    "When you asked to join, did you know what happens next?"
+   ],
+   "principles": "COP AFF H01 H02",
+   "steps": [
+    "F27.01",
+    "F27.02",
+    "F27.03",
+    "F27.04",
+    "F27.04a",
+    "F27.04b",
+    "F27.04c"
+   ],
+   "flow": "F27"
+  },
+  {
+   "id": "T090",
+   "session": "S09",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Officer helper opens a round and accepts or declines during the session",
+   "task": "A society is recruiting for its design team. Apply.",
+   "done": "Your application is sent and later decided.",
+   "questions": [
+    "Were the deadline and number of seats clear?",
+    "After applying, where would you check?",
+    "How did you hear the result?"
+   ],
+   "principles": "H01 COP",
+   "steps": [
+    "F27.05",
+    "F27.06",
+    "F27.06a",
+    "F27.06b",
+    "F27.07"
+   ],
+   "flow": "F27"
+  },
+  {
+   "id": "T091",
+   "session": "S09",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Officer helper posts a '[UX test]' society post",
+   "task": "Leave a society you joined by mistake, and report the society post titled '[UX test]'.",
+   "done": "You've left one society and reported the post.",
+   "questions": [
+    "Did leaving warn you about anything you'd lose?",
+    "Did the report reasons fit?",
+    "(If your university has no societies) What did Skilient suggest?"
+   ],
+   "principles": "H03 SAF EMP",
+   "steps": [
+    "F27.08",
+    "F27.09",
+    "F27.10",
+    "F27.01a"
+   ],
+   "flow": "F27"
+  },
+  {
+   "id": "T092",
+   "session": "S10",
+   "priority": "P1",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Officer tester; staff will review",
+   "task": "You're an office bearer of a society that isn't on Skilient. Request it (name it '[UX test] …'). Try an existing society's name first, and try sending a second request afterwards.",
+   "done": "Your request says Pending.",
+   "questions": [
+    "Did you have the proof it asked for? What would you use in real life?",
+    "Which step took longest?",
+    "After submitting, what did you expect, and when?"
+   ],
+   "principles": "MIL H01 COP",
+   "steps": [
+    "F28.01",
+    "F28.02",
+    "F28.02a",
+    "F28.03",
+    "F28.04",
+    "F28.05",
+    "F28.05a",
+    "F28.06"
+   ],
+   "flow": "F28"
+  },
+  {
+   "id": "T093",
+   "session": "S10",
+   "priority": "P2",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Staff ask for more info, then approve one request and reject another",
+   "task": "Staff asked for more information about your society request. Fix it and resubmit, then check the final decision.",
+   "done": "Your society is live, or you know why not.",
+   "questions": [
+    "Was the staff request clear?",
+    "When it was approved, did you know what to do first?",
+    "(If rejected) Was the reason fair?"
+   ],
+   "principles": "H09 LRN PKE",
+   "steps": [
+    "F28.07",
+    "F28.07a",
+    "F28.07b",
+    "F28.08",
+    "F28.09"
+   ],
+   "flow": "F28"
+  },
+  {
+   "id": "T094",
+   "session": "S09",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Officer helper publishes a free workshop with a 2-question form",
+   "task": "Find an upcoming workshop at your university and register as a participant. Get your ticket ready for the door.",
+   "done": "Your ticket is on screen.",
+   "questions": [
+    "Before registering, what did you think you'd get from attending?",
+    "Was the form short enough?",
+    "How would you find your ticket on the day with no internet?"
+   ],
+   "principles": "COP MOB PKE",
+   "steps": [
+    "F29.01",
+    "F29.02",
+    "F29.03",
+    "F29.04",
+    "F29.05",
+    "F29.06",
+    "F29.07",
+    "F29.09",
+    "F29.13"
+   ],
+   "flow": "F29"
+  },
+  {
+   "id": "T095",
+   "session": "S09",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Team event; three testers together",
+   "task": "Register for a hackathon as a team of three: one of you creates the team, the others join with its code.",
+   "done": "All three are registered as one team.",
+   "questions": [
+    "How did you share the team code?",
+    "Did everyone know they were registered?",
+    "What do you think happens if a teammate cancels?"
+   ],
+   "principles": "H01 COP",
+   "steps": [
+    "F29.05"
+   ],
+   "flow": "F29"
+  },
+  {
+   "id": "T096",
+   "session": "S09",
+   "priority": "P2",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Four helper events set up in those states",
+   "task": "Try to register for an event that's full, one for another batch only, one whose registration hasn't opened, and one that was cancelled. Join the waitlist for the full one.",
+   "done": "You're on the waitlist and know why you can't join the others.",
+   "questions": [
+    "Did each page say why before you pressed anything?",
+    "Did you know your waitlist position and what happens next?",
+    "Did you hit any dead end?"
+   ],
+   "principles": "H05 COP EMP",
+   "steps": [
+    "F29.04",
+    "F29.04a",
+    "F29.04b",
+    "F29.04c",
+    "F29.04d",
+    "F29.07a"
+   ],
+   "flow": "F29"
+  },
+  {
+   "id": "T097",
+   "session": "S09",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Run together with the officer check-in session (S11)",
+   "task": "On the day: get reminded, get checked in at the door with your ticket, and fill in the feedback form afterwards.",
+   "done": "Your Record shows the new entry.",
+   "questions": [
+    "Did you get the reminders? Where?",
+    "Did the QR scan first time? Did you notice the brightness hint?",
+    "How did it feel when the Record entry arrived?"
+   ],
+   "principles": "PKE MOB H01",
+   "steps": [
+    "F29.08",
+    "F29.10",
+    "F29.11",
+    "F29.12"
+   ],
+   "flow": "F29",
+   "runs_on": [
+    "staging"
+   ],
+   "notes": [
+    "Reminders need the notify worker; the door check-in is S11's officer."
+   ]
+  },
+  {
+   "id": "T098",
+   "session": "S09",
+   "priority": "P3",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "You can't make it anymore. Cancel your registration.",
+   "done": "Your registration is cancelled.",
+   "questions": [
+    "Was cancelling easy to find?",
+    "Did it tell you what happens to your seat or any refund?"
+   ],
+   "principles": "H03 COP",
+   "steps": [
+    "F29.09a"
+   ],
+   "flow": "F29"
+  },
+  {
+   "id": "T099",
+   "session": "S09",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Test society with confirmed payment details; the team refunds the PKR 100 afterwards",
+   "task": "Buy a PKR 100 ticket to the test society's paid event. Pay the society, upload your receipt, and wait for confirmation.",
+   "done": "Your paid ticket is confirmed.",
+   "questions": [
+    "Before paying, did you trust the payment details? What made you trust or doubt them?",
+    "Did you know where to put the reference code?",
+    "While it was under review, did you know your seat was safe?",
+    "How long did approval take, and how were you told?"
+   ],
+   "principles": "TRU H01 COP",
+   "steps": [
+    "F30.01",
+    "F30.02",
+    "F30.03",
+    "F30.04",
+    "F30.05",
+    "F30.06",
+    "F30.07",
+    "F29.06a"
+   ],
+   "flow": "F30"
+  },
+  {
+   "id": "T100",
+   "session": "S09",
+   "priority": "P1",
+   "role": "Student",
+   "device": "Phone",
+   "setup": "Officer helper rejects the first receipt, then approves; refund policy allows cancelling",
+   "task": "Your receipt was rejected. Upload the right one. Then cancel and get your refund.",
+   "done": "You've marked the refund as received (or not).",
+   "questions": [
+    "Was the rejection reason enough to fix it?",
+    "Who did you think was responsible for the refund: Skilient or the society?",
+    "Did you know what to do if the refund never arrived? Or if you never uploaded a receipt?"
+   ],
+   "principles": "TRU H09 SAF",
+   "steps": [
+    "F30.06a",
+    "F30.08",
+    "F30.09",
+    "F30.09a",
+    "F30.10",
+    "F30.03a"
+   ],
+   "flow": "F30"
+  },
+  {
+   "id": "T104",
+   "session": "S10",
+   "priority": "P1",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Approved test society; helper officer and a helper join request",
+   "task": "Your society is live. Finish its set-up: add a logo, invite a co-officer (helper) as General Secretary for this academic year (type the dates: 1 September to 30 June), choose how students join, and handle a join request.",
+   "done": "The checklist is done and the co-officer is on the roll call.",
+   "questions": [
+    "Did the checklist make the order obvious?",
+    "Was 'term' (start and end month) clear?",
+    "Which membership mode did you choose, and did the page explain the trade-off?"
+   ],
+   "principles": "LRN COP HCK",
+   "steps": [
+    "F32.01",
+    "F32.02",
+    "F32.03",
+    "F32.03a",
+    "F32.04",
+    "F32.05"
+   ],
+   "flow": "F32"
+  },
+  {
+   "id": "T105",
+   "session": "S10",
+   "priority": "P2",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Post an announcement as your society, not as yourself.",
+   "done": "A post with your society's name is in the feed.",
+   "questions": [
+    "How did you switch between posting as yourself and as the society?",
+    "How did you check what students see?"
+   ],
+   "principles": "H04 H01",
+   "steps": [
+    "F32.06"
+   ],
+   "flow": "F32"
+  },
+  {
+   "id": "T106",
+   "session": "S10",
+   "priority": "P1",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Two officer testers",
+   "task": "Set up how students pay your society for tickets (use a test JazzCash number). Your co-officer must confirm it.",
+   "done": "The payment details are confirmed and live.",
+   "questions": [
+    "Did you understand why a second officer has to confirm?",
+    "While waiting, could you tell the details weren't live yet?",
+    "(Co-officer) What would you check before confirming?"
+   ],
+   "principles": "TRU H01 SAF",
+   "steps": [
+    "F32.07",
+    "F32.07a",
+    "F32.07b"
+   ],
+   "flow": "F32"
+  },
+  {
+   "id": "T107",
+   "session": "S10",
+   "priority": "P2",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Test officers' term end date set in the past; staff can suspend a test society to show that state",
+   "task": "It's the end of term. Hand the presidency to your co-officer, then check that the new President can confirm your officers' terms.",
+   "done": "Your co-officer is President and your officers' terms are confirmed or waiting for them.",
+   "questions": [
+    "Did you know confirming a term issues a Record entry?",
+    "Did the handover warn you it can't be undone?",
+    "How will you know your own term was confirmed?"
+   ],
+   "principles": "H05 TRU COP",
+   "steps": [
+    "F32.08",
+    "F32.08a",
+    "F32.09",
+    "F32.10",
+    "F32.01a"
+   ],
+   "flow": "F32"
+  },
+  {
+   "id": "T108",
+   "session": "S10",
+   "priority": "P1",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Recruit 2 designers and 1 writer for your society, with one question for applicants, closing in a week. Try a deadline two months away first.",
+   "done": "The round is published.",
+   "questions": [
+    "Was anything about roles or seats confusing?",
+    "How did you check what students see?",
+    "Did you know who would be notified when you published?"
+   ],
+   "principles": "MIL H01 COP",
+   "steps": [
+    "F33.01",
+    "F33.02",
+    "F33.02a",
+    "F33.03"
+   ],
+   "flow": "F33"
+  },
+  {
+   "id": "T109",
+   "session": "S10",
+   "priority": "P1",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Three helper applications",
+   "task": "Three students applied (helpers). Shortlist two, accept one and decline one with a kind note.",
+   "done": "One applicant is accepted and one declined.",
+   "questions": [
+    "Could you compare applicants easily on your phone?",
+    "Did you know what the declined student would see?",
+    "What happens to the applicant you didn't decide on?"
+   ],
+   "principles": "HCK MOB SAF",
+   "steps": [
+    "F33.04",
+    "F33.05",
+    "F33.05a",
+    "F33.06",
+    "F33.07",
+    "F33.08"
+   ],
+   "flow": "F33"
+  },
+  {
+   "id": "T110",
+   "session": "S11",
+   "priority": "P1",
+   "role": "Society officer",
+   "device": "Desktop",
+   "setup": "Any signed-in tester",
+   "task": "Create a two-session React workshop for BSCS students only, 40 seats, free, with one form question. People who attend both sessions should earn 'Completed'. Save it as a draft first, then publish.",
+   "done": "The event is published.",
+   "questions": [
+    "Which step took longest, and why?",
+    "Did 'N steps left' help?",
+    "Was the Record step (what attendees earn) clear?",
+    "Did you skip something you later needed?"
+   ],
+   "principles": "MIL H01 COP",
+   "steps": [
+    "F34.01",
+    "F34.02",
+    "F34.03",
+    "F34.05",
+    "F34.06",
+    "F34.07",
+    "F34.08",
+    "F34.08a",
+    "F34.09",
+    "F34.10"
+   ],
+   "flow": "F34"
+  },
+  {
+   "id": "T111",
+   "session": "S11",
+   "priority": "P2",
+   "role": "Society officer",
+   "device": "Desktop",
+   "setup": "Society with and without confirmed payment details",
+   "task": "Add a paid PKR 200 'Participant' ticket and a free 'Audience' ticket to an event, with refunds allowed until 2 days before. Invite another society to co-host. Then duplicate a past event.",
+   "done": "Both tickets are set and a duplicate exists.",
+   "questions": [
+    "Did you understand that Skilient doesn't handle the money?",
+    "Was the refund policy wording clear?",
+    "Did duplicating copy what you expected?"
+   ],
+   "principles": "TRU COP H07",
+   "steps": [
+    "F34.04",
+    "F34.04a",
+    "F34.09a",
+    "F34.02a"
+   ],
+   "flow": "F34"
+  },
+  {
+   "id": "T112",
+   "session": "S11",
+   "priority": "P1",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Helpers register; one uploads the same receipt twice",
+   "task": "Five students registered, two of them paid. Review the payments: one receipt is a duplicate. Approve the valid ones and reject the other with a reason.",
+   "done": "Every payment is decided.",
+   "questions": [
+    "Could you check the amount and reference quickly?",
+    "Did the duplicate flag make sense?",
+    "Was the receipt readable on your phone?"
+   ],
+   "principles": "TRU MOB H05 FIT",
+   "steps": [
+    "F35.01",
+    "F35.03",
+    "F35.04",
+    "F35.04a",
+    "F35.04b",
+    "F35.04c"
+   ],
+   "flow": "F35"
+  },
+  {
+   "id": "T113",
+   "session": "S11",
+   "priority": "P2",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Manual-approval event with a pending registration",
+   "task": "Approve a pending registration, add a volunteer as check-in staff, and tell everyone the venue changed. Try lowering capacity below the number registered.",
+   "done": "Staff added and the change notice sent.",
+   "questions": [
+    "Did you know registrants were told about the change?",
+    "What happened when you lowered capacity?",
+    "Is there anything you'd want to message to only some registrants?"
+   ],
+   "principles": "H01 H05 COP",
+   "steps": [
+    "F35.02",
+    "F35.05",
+    "F35.06",
+    "F35.07",
+    "F35.08",
+    "F35.08a",
+    "F35.09"
+   ],
+   "flow": "F35"
+  },
+  {
+   "id": "T114",
+   "session": "S11",
+   "priority": "P2",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Cancel a test event that has paid registrations.",
+   "done": "The event shows Cancelled.",
+   "questions": [
+    "Did it explain the consequences before you confirmed?",
+    "Was it clear the society refunds, not Skilient?"
+   ],
+   "principles": "H05 TRU",
+   "steps": [
+    "F35.08b"
+   ],
+   "flow": "F35"
+  },
+  {
+   "id": "T115",
+   "session": "S11",
+   "priority": "P1",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Run with attendee testers from S09",
+   "task": "At the door, check in five attendees: scan three tickets (one of them twice), find one person by name, and add a walk-in by university email. Deny camera access once.",
+   "done": "Five people are checked in.",
+   "questions": [
+    "Could you tell green, amber and red apart at arm's length, outdoors?",
+    "How fast was each check-in?",
+    "What did you do for the person without a ticket?"
+   ],
+   "principles": "MOB ACC DOH FIT",
+   "steps": [
+    "F36.01",
+    "F36.02",
+    "F36.02a",
+    "F36.03",
+    "F36.03a",
+    "F36.03b",
+    "F36.03c",
+    "F36.04",
+    "F36.05",
+    "F36.06"
+   ],
+   "flow": "F36",
+   "runs_on": [
+    "real phone"
+   ],
+   "notes": [
+    "Needs a camera (BarcodeDetector) for scanning and the colour question."
+   ]
+  },
+  {
+   "id": "T116",
+   "session": "S11",
+   "priority": "P3",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Use self check-in for a room: show the rotating code and have two people scan it. Turn off Wi-Fi once.",
+   "done": "Both people are checked in.",
+   "questions": [
+    "Did attendees know what to do?",
+    "Could people outside the room misuse it?",
+    "What happened when the connection dropped?"
+   ],
+   "principles": "TRU H01",
+   "steps": [
+    "F36.07",
+    "F36.08",
+    "F36.02b"
+   ],
+   "flow": "F36",
+   "status": "dropped",
+   "notes": [
+    "Self check-in exists only for university events, not society events. Kept for the id; skip it until it's built."
+   ]
+  },
+  {
+   "id": "T117",
+   "session": "S11",
+   "priority": "P1",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Any signed-in tester",
+   "task": "Your event has ended. Add one attendee who was missed, enter 1st to 3rd place, log 2 volunteer hours (no more than the event's length) for a helper, and issue the entries. Include yourself as an attendee.",
+   "done": "Entries are issued.",
+   "questions": [
+    "Did the preview make you confident before issuing?",
+    "Was it clear issued entries can't be edited?",
+    "Did you know what happens if you don't close out?"
+   ],
+   "principles": "H05 TRU COP",
+   "steps": [
+    "F37.01",
+    "F37.02",
+    "F37.03",
+    "F37.04",
+    "F37.05",
+    "F37.05b",
+    "F37.06"
+   ],
+   "flow": "F37"
+  },
+  {
+   "id": "T118",
+   "session": "S11",
+   "priority": "P2",
+   "role": "Society officer",
+   "device": "Phone",
+   "setup": "Attendee helper reports a mistake",
+   "task": "An attendee reported a mistake in their entry. Correct it. Then download the attendee list and read the feedback summary.",
+   "done": "The correction is issued and you have the CSV.",
+   "questions": [
+    "Was it clear the old entry stays visible as 'Superseded'?",
+    "Did the CSV open correctly in your spreadsheet app?",
+    "Was the feedback summary useful?"
+   ],
+   "principles": "H09 TRU",
+   "steps": [
+    "F37.07",
+    "F37.07a",
+    "F37.08",
+    "F37.09",
+    "F37.05a"
+   ],
+   "flow": "F37"
+  }
+ ],
+ "flows": [
+  {
+   "id": "F01",
+   "title": "Sign up with a university email",
+   "steps": [
+    {
+     "id": "F01.01",
+     "kind": "start",
+     "text": "Lands on skilient.com, a shared link or a claim email"
+    },
+    {
+     "id": "F01.02",
+     "kind": "step",
+     "text": "Taps Open Skilient / Join"
+    },
+    {
+     "id": "F01.03",
+     "kind": "step",
+     "text": "Sign-up form: full name, university email, password, or Continue with Google"
+    },
+    {
+     "id": "F01.03a",
+     "kind": "branch",
+     "text": "Email already registered: sign in instead"
+    },
+    {
+     "id": "F01.03b",
+     "kind": "branch",
+     "text": "Google account isn't a university one: 'Only your university Google account works.'"
+    },
+    {
+     "id": "F01.04",
+     "kind": "decision",
+     "text": "University recognised from the email?"
+    },
+    {
+     "id": "F01.04a",
+     "kind": "branch",
+     "text": "Personal email (gmail, outlook): refused, use your university email"
+    },
+    {
+     "id": "F01.04b",
+     "kind": "branch",
+     "text": "Domain shared by more than one university: choose your university"
+    },
+    {
+     "id": "F01.04c",
+     "kind": "branch",
+     "text": "University not on Skilient yet: request it (waitlist)"
+    },
+    {
+     "id": "F01.05",
+     "kind": "step",
+     "text": "Ticks 'I agree to the User Agreement and Privacy Notice' (opens a side sheet)"
+    },
+    {
+     "id": "F01.05a",
+     "kind": "branch",
+     "text": "Not ticked: 'Accept the User Agreement to continue.'"
+    },
+    {
+     "id": "F01.06",
+     "kind": "step",
+     "text": "Taps Sign up; password is checked"
+    },
+    {
+     "id": "F01.06a",
+     "kind": "branch",
+     "text": "Short or breached password: the error names the fix"
+    },
+    {
+     "id": "F01.07",
+     "kind": "step",
+     "text": "Check your inbox: types the 6-digit code (or taps the link)"
+    },
+    {
+     "id": "F01.08",
+     "kind": "decision",
+     "text": "Code accepted?"
+    },
+    {
+     "id": "F01.08a",
+     "kind": "branch",
+     "text": "Wrong or expired code: 'Send a new code' (3 an hour)"
+    },
+    {
+     "id": "F01.08b",
+     "kind": "branch",
+     "text": "Too many attempts: wait, then retry"
+    },
+    {
+     "id": "F01.08c",
+     "kind": "branch",
+     "text": "Link opened in another browser: 'This page only works right after you sign up'"
+    },
+    {
+     "id": "F01.09",
+     "kind": "end",
+     "text": "Email confirmed; onboarding opens"
+    }
+   ]
+  },
+  {
+   "id": "F02",
+   "title": "Sign in and recover access",
+   "steps": [
+    {
+     "id": "F02.01",
+     "kind": "start",
+     "text": "Opens Sign in (signed out or on a new device)"
+    },
+    {
+     "id": "F02.02",
+     "kind": "step",
+     "text": "Email and password, or sign in with an emailed code, or Google"
+    },
+    {
+     "id": "F02.02a",
+     "kind": "branch",
+     "text": "Forgot password: emailed link, set a new password"
+    },
+    {
+     "id": "F02.02b",
+     "kind": "branch",
+     "text": "Reset link expired or used: ask for a new one"
+    },
+    {
+     "id": "F02.03",
+     "kind": "decision",
+     "text": "Sign-in accepted?"
+    },
+    {
+     "id": "F02.03a",
+     "kind": "branch",
+     "text": "Wrong email or password"
+    },
+    {
+     "id": "F02.03b",
+     "kind": "branch",
+     "text": "Email not confirmed yet: confirm first"
+    },
+    {
+     "id": "F02.03c",
+     "kind": "branch",
+     "text": "Account restricted: reason shown, with a way to appeal"
+    },
+    {
+     "id": "F02.04",
+     "kind": "decision",
+     "text": "Two-factor on?"
+    },
+    {
+     "id": "F02.04a",
+     "kind": "branch",
+     "text": "Enters the authenticator code"
+    },
+    {
+     "id": "F02.04b",
+     "kind": "branch",
+     "text": "Lost the authenticator: recovery path"
+    },
+    {
+     "id": "F02.05",
+     "kind": "decision",
+     "text": "New User Agreement version?"
+    },
+    {
+     "id": "F02.05a",
+     "kind": "branch",
+     "text": "Re-accept screen: 'What changed', then accept to continue"
+    },
+    {
+     "id": "F02.06",
+     "kind": "end",
+     "text": "Back where they left off (onboarding if unfinished)"
+    }
+   ]
+  },
+  {
+   "id": "F03",
+   "title": "Onboarding wizard and welcome",
+   "steps": [
+    {
+     "id": "F03.01",
+     "kind": "start",
+     "text": "Email confirmed: wizard opens at step 1 of 6"
+    },
+    {
+     "id": "F03.02",
+     "kind": "step",
+     "text": "1 'Join your university': program, batch, campus"
+    },
+    {
+     "id": "F03.02a",
+     "kind": "branch",
+     "text": "Leaves mid-way: resumes at the same step; Back always works"
+    },
+    {
+     "id": "F03.03",
+     "kind": "step",
+     "text": "2 'Get recognised by classmates': username, photo, one-line intro"
+    },
+    {
+     "id": "F03.03a",
+     "kind": "branch",
+     "text": "Username taken: the live check says so"
+    },
+    {
+     "id": "F03.03b",
+     "kind": "branch",
+     "text": "Photo upload fails or is too large"
+    },
+    {
+     "id": "F03.04",
+     "kind": "decision",
+     "text": "3 'Turn your code into proof': connect GitHub?"
+    },
+    {
+     "id": "F03.04a",
+     "kind": "branch",
+     "text": "Skip: 'Connect GitHub' joins the checklist and Skills shows a reminder"
+    },
+    {
+     "id": "F03.04b",
+     "kind": "branch",
+     "text": "Connect: install the GitHub App, pick repos, sync runs"
+    },
+    {
+     "id": "F03.05",
+     "kind": "step",
+     "text": "4 'See how proof works': detected skills with levels; add claimed skills"
+    },
+    {
+     "id": "F03.05a",
+     "kind": "branch",
+     "text": "No GitHub: no detected skills yet, only claimed ones"
+    },
+    {
+     "id": "F03.06",
+     "kind": "step",
+     "text": "5 'Get matched to what you want': what you're looking for"
+    },
+    {
+     "id": "F03.07",
+     "kind": "step",
+     "text": "6 'Find your people': classmates and open ventures"
+    },
+    {
+     "id": "F03.08",
+     "kind": "step",
+     "text": "Welcome to Skilient screen: what to expect"
+    },
+    {
+     "id": "F03.08a",
+     "kind": "branch",
+     "text": "Entries waiting from a claim email: Claim them onto the Record"
+    },
+    {
+     "id": "F03.09",
+     "kind": "decision",
+     "text": "Start the tour, Skip to Home or Skip intro?"
+    },
+    {
+     "id": "F03.09a",
+     "kind": "branch",
+     "text": "Reduced motion on: no animation"
+    },
+    {
+     "id": "F03.10",
+     "kind": "end",
+     "text": "Home: feed, composer and progress card"
+    }
+   ]
+  },
+  {
+   "id": "F04",
+   "title": "Learn the platform",
+   "steps": [
+    {
+     "id": "F04.01",
+     "kind": "start",
+     "text": "First visit to Home after the welcome"
+    },
+    {
+     "id": "F04.02",
+     "kind": "step",
+     "text": "Guided tour: coach marks 'Step x of y' across Home, Openings and Me"
+    },
+    {
+     "id": "F04.02a",
+     "kind": "branch",
+     "text": "Skips the tour: can replay it later (F04.09)"
+    },
+    {
+     "id": "F04.02b",
+     "kind": "branch",
+     "text": "Phone: marks anchor to the dock and header"
+    },
+    {
+     "id": "F04.03",
+     "kind": "step",
+     "text": "Nav tooltips: name and one line on hover, focus or long-press"
+    },
+    {
+     "id": "F04.04",
+     "kind": "step",
+     "text": "First-visit tip card: dismiss or 'Show me more'"
+    },
+    {
+     "id": "F04.05",
+     "kind": "step",
+     "text": "Teaching empty state: one line and one action"
+    },
+    {
+     "id": "F04.06",
+     "kind": "step",
+     "text": "Progress card: tier, points, one next step, 'Take this step'"
+    },
+    {
+     "id": "F04.06a",
+     "kind": "branch",
+     "text": "Dismissed for today; on a phone a chip opens it in a sheet"
+    },
+    {
+     "id": "F04.07",
+     "kind": "step",
+     "text": "Getting-started checklist: 6 items, points each"
+    },
+    {
+     "id": "F04.07a",
+     "kind": "branch",
+     "text": "Hide until tomorrow; it also hides when all items are done"
+    },
+    {
+     "id": "F04.08",
+     "kind": "step",
+     "text": "Command menu 'Search or jump to…' (Ctrl or ⌘ K)"
+    },
+    {
+     "id": "F04.09",
+     "kind": "step",
+     "text": "Replay tour or welcome from Settings"
+    },
+    {
+     "id": "F04.10",
+     "kind": "end",
+     "text": "Knows what each area is for and what to do next"
+    }
+   ]
+  },
+  {
+   "id": "F05",
+   "title": "Read the feed and answer the micro-survey",
+   "steps": [
+    {
+     "id": "F05.01",
+     "kind": "start",
+     "text": "Opens Home: University Feed by default"
+    },
+    {
+     "id": "F05.02",
+     "kind": "step",
+     "text": "Switches University Feed / Global Feed"
+    },
+    {
+     "id": "F05.02a",
+     "kind": "branch",
+     "text": "Global feed quiet while few universities are live"
+    },
+    {
+     "id": "F05.03",
+     "kind": "step",
+     "text": "Filter chips: All, Ventures, Events, Societies, Announcements, Shipped"
+    },
+    {
+     "id": "F05.04",
+     "kind": "step",
+     "text": "Reads a post: text, images, poll, venture invite, event or Shipped"
+    },
+    {
+     "id": "F05.04a",
+     "kind": "branch",
+     "text": "Own post: no strip; the author sees the public line or Insights"
+    },
+    {
+     "id": "F05.04b",
+     "kind": "branch",
+     "text": "Removed post, or not visible to you"
+    },
+    {
+     "id": "F05.05",
+     "kind": "step",
+     "text": "Survey strip: one question, tick (Yes) or cross (No)"
+    },
+    {
+     "id": "F05.05a",
+     "kind": "branch",
+     "text": "Answered too fast or the post was barely on screen: not counted"
+    },
+    {
+     "id": "F05.06",
+     "kind": "decision",
+     "text": "Changes their mind?"
+    },
+    {
+     "id": "F05.06a",
+     "kind": "branch",
+     "text": "Within 10 minutes: changes the answer"
+    },
+    {
+     "id": "F05.06b",
+     "kind": "branch",
+     "text": "After 10 minutes: the answer is final"
+    },
+    {
+     "id": "F05.07",
+     "kind": "step",
+     "text": "Strip settles: public line ('N find this informative') and 'Answered'"
+    },
+    {
+     "id": "F05.07a",
+     "kind": "branch",
+     "text": "Fewer than 3 positive answers: only 'Answered' shows"
+    },
+    {
+     "id": "F05.08",
+     "kind": "step",
+     "text": "Votes in a poll; results show after voting"
+    },
+    {
+     "id": "F05.09",
+     "kind": "step",
+     "text": "Opens comments: reads, replies (one level), @mentions"
+    },
+    {
+     "id": "F05.10",
+     "kind": "step",
+     "text": "⋯ menu: Not for me, Mute, Report"
+    },
+    {
+     "id": "F05.10a",
+     "kind": "branch",
+     "text": "Report: pick a reason, see a confirmation"
+    },
+    {
+     "id": "F05.11",
+     "kind": "step",
+     "text": "'New posts' pill; at the end 'You're all caught up.'"
+    },
+    {
+     "id": "F05.12",
+     "kind": "end",
+     "text": "Has read and rated what's new"
+    }
+   ]
+  },
+  {
+   "id": "F06",
+   "title": "Create and manage a post",
+   "steps": [
+    {
+     "id": "F06.01",
+     "kind": "start",
+     "text": "Composer on Home: 'What's on your mind?'"
+    },
+    {
+     "id": "F06.02",
+     "kind": "step",
+     "text": "Picks a type: Post, Poll or Venture invite"
+    },
+    {
+     "id": "F06.03",
+     "kind": "step",
+     "text": "Writes up to 2,000 characters; the draft saves"
+    },
+    {
+     "id": "F06.03a",
+     "kind": "branch",
+     "text": "Leaves mid-draft: the draft is restored"
+    },
+    {
+     "id": "F06.04",
+     "kind": "step",
+     "text": "Adds up to 4 images"
+    },
+    {
+     "id": "F06.04a",
+     "kind": "branch",
+     "text": "Image too large or the upload fails"
+    },
+    {
+     "id": "F06.05",
+     "kind": "step",
+     "text": "Chooses who sees it: University or Global"
+    },
+    {
+     "id": "F06.06",
+     "kind": "step",
+     "text": "Poll: 2–4 options and a duration; Venture invite: venture and roles"
+    },
+    {
+     "id": "F06.07",
+     "kind": "decision",
+     "text": "Post accepted?"
+    },
+    {
+     "id": "F06.07a",
+     "kind": "branch",
+     "text": "Cooldown: wait before posting again"
+    },
+    {
+     "id": "F06.07b",
+     "kind": "branch",
+     "text": "Empty or too long: error names the fix"
+    },
+    {
+     "id": "F06.08",
+     "kind": "step",
+     "text": "Post appears in the feed"
+    },
+    {
+     "id": "F06.09",
+     "kind": "step",
+     "text": "Edits within 15 minutes ('edited') or deletes"
+    },
+    {
+     "id": "F06.09a",
+     "kind": "branch",
+     "text": "After 15 minutes: edit is no longer offered"
+    },
+    {
+     "id": "F06.10",
+     "kind": "step",
+     "text": "Insights from the post menu"
+    },
+    {
+     "id": "F06.10a",
+     "kind": "branch",
+     "text": "Free plan: explains Student Pro; Pro: per-question breakdown"
+    },
+    {
+     "id": "F06.10b",
+     "kind": "branch",
+     "text": "Too few answers yet"
+    },
+    {
+     "id": "F06.11",
+     "kind": "step",
+     "text": "Reads comments on their post; pins one"
+    },
+    {
+     "id": "F06.12",
+     "kind": "end",
+     "text": "Post is live and the author knows how it's doing"
+    }
+   ]
+  },
+  {
+   "id": "F07",
+   "title": "Share a post to chat",
+   "steps": [
+    {
+     "id": "F07.01",
+     "kind": "start",
+     "text": "Taps Share on a post"
+    },
+    {
+     "id": "F07.02",
+     "kind": "step",
+     "text": "'Share to a chat' sheet: searches chats"
+    },
+    {
+     "id": "F07.03",
+     "kind": "step",
+     "text": "Picks up to 5 DMs or venture chats"
+    },
+    {
+     "id": "F07.03a",
+     "kind": "branch",
+     "text": "No chats yet: explains who you can share with"
+    },
+    {
+     "id": "F07.04",
+     "kind": "step",
+     "text": "Adds an optional note"
+    },
+    {
+     "id": "F07.05",
+     "kind": "step",
+     "text": "Send: toast 'Sent to … · Undo' for 10 seconds"
+    },
+    {
+     "id": "F07.05a",
+     "kind": "branch",
+     "text": "Undo within 10 seconds: not sent"
+    },
+    {
+     "id": "F07.05b",
+     "kind": "branch",
+     "text": "Rate limited: try again later"
+    },
+    {
+     "id": "F07.06",
+     "kind": "step",
+     "text": "Recipient sees the post card in chat"
+    },
+    {
+     "id": "F07.06a",
+     "kind": "branch",
+     "text": "Recipient can't see the post: 'This post isn't available'"
+    },
+    {
+     "id": "F07.07",
+     "kind": "end",
+     "text": "Post shared; nobody sees a share count"
+    }
+   ]
+  },
+  {
+   "id": "F08",
+   "title": "Friends and blocking",
+   "steps": [
+    {
+     "id": "F08.01",
+     "kind": "start",
+     "text": "Opens Friends (or someone's profile)"
+    },
+    {
+     "id": "F08.02",
+     "kind": "step",
+     "text": "Adds a friend by @username: Send request"
+    },
+    {
+     "id": "F08.02a",
+     "kind": "branch",
+     "text": "Username not found"
+    },
+    {
+     "id": "F08.02b",
+     "kind": "branch",
+     "text": "Already friends, or a request is pending"
+    },
+    {
+     "id": "F08.03",
+     "kind": "step",
+     "text": "People you may know: reason line; Add friend or dismiss"
+    },
+    {
+     "id": "F08.03a",
+     "kind": "branch",
+     "text": "A dismissed suggestion never returns"
+    },
+    {
+     "id": "F08.04",
+     "kind": "step",
+     "text": "Sent tab: cancels a request"
+    },
+    {
+     "id": "F08.05",
+     "kind": "step",
+     "text": "Received tab: Accept or Decline"
+    },
+    {
+     "id": "F08.06",
+     "kind": "step",
+     "text": "Friends tab: Message or Unfriend"
+    },
+    {
+     "id": "F08.06a",
+     "kind": "branch",
+     "text": "Unfriend: friends-only profile and DM access end"
+    },
+    {
+     "id": "F08.07",
+     "kind": "step",
+     "text": "Blocks from a profile or chat (confirm)"
+    },
+    {
+     "id": "F08.07a",
+     "kind": "branch",
+     "text": "Blocked: hidden from each other everywhere; DMs and swaps end"
+    },
+    {
+     "id": "F08.08",
+     "kind": "step",
+     "text": "Blocked tab: Unblock"
+    },
+    {
+     "id": "F08.09",
+     "kind": "end",
+     "text": "Friends list matches who they want"
+    }
+   ]
+  },
+  {
+   "id": "F09",
+   "title": "Chat",
+   "steps": [
+    {
+     "id": "F09.01",
+     "kind": "start",
+     "text": "Opens Chat (dock or rail) with an unread badge"
+    },
+    {
+     "id": "F09.02",
+     "kind": "step",
+     "text": "Chat list: DMs and venture chats; search messages"
+    },
+    {
+     "id": "F09.02a",
+     "kind": "branch",
+     "text": "'Deleted account' thread"
+    },
+    {
+     "id": "F09.03",
+     "kind": "step",
+     "text": "Opens a thread"
+    },
+    {
+     "id": "F09.03a",
+     "kind": "branch",
+     "text": "Not friends and no accepted application: can't DM"
+    },
+    {
+     "id": "F09.04",
+     "kind": "step",
+     "text": "Types and sends text; attaches an image"
+    },
+    {
+     "id": "F09.05",
+     "kind": "step",
+     "text": "Delivery state: sending, then sent"
+    },
+    {
+     "id": "F09.05a",
+     "kind": "branch",
+     "text": "Failed: Retry"
+    },
+    {
+     "id": "F09.05b",
+     "kind": "branch",
+     "text": "Connection lost: 'Reconnecting' banner"
+    },
+    {
+     "id": "F09.06",
+     "kind": "step",
+     "text": "Replies to a message, reacts, edits or deletes their own"
+    },
+    {
+     "id": "F09.06a",
+     "kind": "branch",
+     "text": "Deleted message placeholder"
+    },
+    {
+     "id": "F09.07",
+     "kind": "step",
+     "text": "Thread controls: mute, search, pin (venture owner), report"
+    },
+    {
+     "id": "F09.07a",
+     "kind": "branch",
+     "text": "Blocked: the DM closes"
+    },
+    {
+     "id": "F09.08",
+     "kind": "step",
+     "text": "Chat settings: read receipts on or off"
+    },
+    {
+     "id": "F09.09",
+     "kind": "end",
+     "text": "Conversation done"
+    }
+   ]
+  },
+  {
+   "id": "F10",
+   "title": "Explore people and profiles",
+   "steps": [
+    {
+     "id": "F10.01",
+     "kind": "start",
+     "text": "Opens Explore (or the command menu)"
+    },
+    {
+     "id": "F10.02",
+     "kind": "step",
+     "text": "Searches by name, department or title"
+    },
+    {
+     "id": "F10.02a",
+     "kind": "branch",
+     "text": "No results: suggests clearing filters"
+    },
+    {
+     "id": "F10.03",
+     "kind": "step",
+     "text": "Filters: department, batch, skill, university"
+    },
+    {
+     "id": "F10.04",
+     "kind": "step",
+     "text": "Tabs: People, Projects, Startups, Project ideas"
+    },
+    {
+     "id": "F10.05",
+     "kind": "step",
+     "text": "Opens a profile"
+    },
+    {
+     "id": "F10.06",
+     "kind": "decision",
+     "text": "Full profile visible to them?"
+    },
+    {
+     "id": "F10.06a",
+     "kind": "branch",
+     "text": "Visibility is friends or university only: restricted card"
+    },
+    {
+     "id": "F10.06b",
+     "kind": "branch",
+     "text": "Blocked: not found"
+    },
+    {
+     "id": "F10.07",
+     "kind": "step",
+     "text": "Profile: identity, tier, skills with provenance, ventures, activity"
+    },
+    {
+     "id": "F10.07a",
+     "kind": "branch",
+     "text": "Own profile: link to edit it"
+    },
+    {
+     "id": "F10.08",
+     "kind": "step",
+     "text": "Actions: Add friend, Message, Report, Block"
+    },
+    {
+     "id": "F10.09",
+     "kind": "end",
+     "text": "Found the right person or project"
+    }
+   ]
+  },
+  {
+   "id": "F11",
+   "title": "Notifications and push",
+   "steps": [
+    {
+     "id": "F11.01",
+     "kind": "start",
+     "text": "Bell shows a count"
+    },
+    {
+     "id": "F11.02",
+     "kind": "step",
+     "text": "Notifications: Today / Earlier, unread dots"
+    },
+    {
+     "id": "F11.02a",
+     "kind": "branch",
+     "text": "Nothing yet: explains what will show here"
+    },
+    {
+     "id": "F11.03",
+     "kind": "step",
+     "text": "Taps one: goes to its target"
+    },
+    {
+     "id": "F11.04",
+     "kind": "step",
+     "text": "Mark all read"
+    },
+    {
+     "id": "F11.05",
+     "kind": "step",
+     "text": "Email settings: per type instant, digest or off"
+    },
+    {
+     "id": "F11.06",
+     "kind": "step",
+     "text": "Push offered after a meaningful action ('Get reminded on your phone?')"
+    },
+    {
+     "id": "F11.06a",
+     "kind": "branch",
+     "text": "Declines push: can turn it on later in Settings"
+    },
+    {
+     "id": "F11.06b",
+     "kind": "branch",
+     "text": "Browser blocks notifications: how to allow them"
+    },
+    {
+     "id": "F11.07",
+     "kind": "step",
+     "text": "Installs the app to the home screen"
+    },
+    {
+     "id": "F11.08",
+     "kind": "end",
+     "text": "Gets what matters, where they want it"
+    }
+   ]
+  },
+  {
+   "id": "F12",
+   "title": "Find and join a venture",
+   "steps": [
+    {
+     "id": "F12.01",
+     "kind": "start",
+     "text": "Openings: Venture roles, Ventures, an invite post or Explore"
+    },
+    {
+     "id": "F12.01a",
+     "kind": "branch",
+     "text": "Follows a public venture instead: updates in the feed"
+    },
+    {
+     "id": "F12.02",
+     "kind": "step",
+     "text": "Ventures: Projects / Startups; status, open roles, my university"
+    },
+    {
+     "id": "F12.03",
+     "kind": "step",
+     "text": "Venture page: about, skills it needs, roles with places open"
+    },
+    {
+     "id": "F12.04",
+     "kind": "decision",
+     "text": "Can apply to a role?"
+    },
+    {
+     "id": "F12.04a",
+     "kind": "branch",
+     "text": "Role filled or team full (6 of 6)"
+    },
+    {
+     "id": "F12.04b",
+     "kind": "branch",
+     "text": "University-only venture at another university"
+    },
+    {
+     "id": "F12.04c",
+     "kind": "branch",
+     "text": "Already applied"
+    },
+    {
+     "id": "F12.05",
+     "kind": "step",
+     "text": "Applies: answers up to 3 questions and writes a message"
+    },
+    {
+     "id": "F12.06",
+     "kind": "step",
+     "text": "Requests, Sent: application thread with the owner"
+    },
+    {
+     "id": "F12.06a",
+     "kind": "branch",
+     "text": "Invited by an owner: Requests, Received, accept or decline"
+    },
+    {
+     "id": "F12.07",
+     "kind": "decision",
+     "text": "Owner accepts?"
+    },
+    {
+     "id": "F12.07a",
+     "kind": "branch",
+     "text": "Declined: notified"
+    },
+    {
+     "id": "F12.08",
+     "kind": "step",
+     "text": "Accepted: joins the team and venture chat; prompt to add the owner as a friend"
+    },
+    {
+     "id": "F12.09",
+     "kind": "end",
+     "text": "Member view: Deliverables and Chat tabs"
+    }
+   ]
+  },
+  {
+   "id": "F13",
+   "title": "Start and run a venture (owner)",
+   "steps": [
+    {
+     "id": "F13.01",
+     "kind": "start",
+     "text": "Taps Start a venture"
+    },
+    {
+     "id": "F13.02",
+     "kind": "step",
+     "text": "Type (Project or Startup), title, what you're building, skills, team size, who can see it"
+    },
+    {
+     "id": "F13.02a",
+     "kind": "branch",
+     "text": "Missing title or skills: error"
+    },
+    {
+     "id": "F13.03",
+     "kind": "step",
+     "text": "Created: Recruiting, 'You started this venture'"
+    },
+    {
+     "id": "F13.04",
+     "kind": "step",
+     "text": "Manage: roles and places, questions for applicants, invite by username, link a repository"
+    },
+    {
+     "id": "F13.04a",
+     "kind": "branch",
+     "text": "Each section saves on its own: unsaved edits elsewhere can be lost"
+    },
+    {
+     "id": "F13.05",
+     "kind": "step",
+     "text": "Posts a venture invite in the feed"
+    },
+    {
+     "id": "F13.06",
+     "kind": "step",
+     "text": "Requests, Received: reads the thread; accepts or declines"
+    },
+    {
+     "id": "F13.06a",
+     "kind": "branch",
+     "text": "After accepting, the application thread can be deleted"
+    },
+    {
+     "id": "F13.07",
+     "kind": "step",
+     "text": "Manage: Start building (In progress)"
+    },
+    {
+     "id": "F13.08",
+     "kind": "step",
+     "text": "Posts updates; adds deliverables (links)"
+    },
+    {
+     "id": "F13.09",
+     "kind": "step",
+     "text": "Team: sets roles, removes a member, transfers ownership"
+    },
+    {
+     "id": "F13.10",
+     "kind": "decision",
+     "text": "Ready to complete?"
+    },
+    {
+     "id": "F13.10a",
+     "kind": "branch",
+     "text": "Not yet: needs 2+ members, 1+ deliverable, peer-verified work from 2 members"
+    },
+    {
+     "id": "F13.10b",
+     "kind": "branch",
+     "text": "Abandon venture (confirm)"
+    },
+    {
+     "id": "F13.11",
+     "kind": "step",
+     "text": "Complete: team locked, Shipped post, endorsement prompts, Record entry"
+    },
+    {
+     "id": "F13.12",
+     "kind": "end",
+     "text": "Finished venture counts on every member's profile and CV"
+    }
+   ]
+  },
+  {
+   "id": "F14",
+   "title": "Contributions and endorsements",
+   "steps": [
+    {
+     "id": "F14.01",
+     "kind": "start",
+     "text": "Member opens Contributions"
+    },
+    {
+     "id": "F14.02",
+     "kind": "step",
+     "text": "Log contribution: kind, description, evidence link, hours"
+    },
+    {
+     "id": "F14.02a",
+     "kind": "branch",
+     "text": "Invalid evidence link"
+    },
+    {
+     "id": "F14.03",
+     "kind": "step",
+     "text": "Entry shows 'Self-reported'"
+    },
+    {
+     "id": "F14.04",
+     "kind": "step",
+     "text": "Teammate confirms: 'Peer-verified'; linked-repo commits verify themselves"
+    },
+    {
+     "id": "F14.04a",
+     "kind": "branch",
+     "text": "Commits from before the venture started need a teammate's confirmation"
+    },
+    {
+     "id": "F14.05",
+     "kind": "step",
+     "text": "Confirms a teammate's entry"
+    },
+    {
+     "id": "F14.06",
+     "kind": "step",
+     "text": "Correction within 24 hours (adds a new entry)"
+    },
+    {
+     "id": "F14.06a",
+     "kind": "branch",
+     "text": "After 24 hours: no correction; entries are never edited or deleted"
+    },
+    {
+     "id": "F14.07",
+     "kind": "step",
+     "text": "Venture completes: prompt to endorse teammates"
+    },
+    {
+     "id": "F14.08",
+     "kind": "step",
+     "text": "Endorses: up to 5 skills per teammate and a note"
+    },
+    {
+     "id": "F14.08a",
+     "kind": "branch",
+     "text": "Already endorsed this person for this skill"
+    },
+    {
+     "id": "F14.09",
+     "kind": "step",
+     "text": "Received endorsements on the profile; hides one"
+    },
+    {
+     "id": "F14.10",
+     "kind": "step",
+     "text": "Reviews tab: faculty review of the venture"
+    },
+    {
+     "id": "F14.11",
+     "kind": "end",
+     "text": "Work is verified and credited"
+    }
+   ]
+  },
+  {
+   "id": "F15",
+   "title": "Profile, privacy and account settings",
+   "steps": [
+    {
+     "id": "F15.01",
+     "kind": "start",
+     "text": "Me, then Settings"
+    },
+    {
+     "id": "F15.02",
+     "kind": "step",
+     "text": "Profile: name, photo, cover, bio, department, looking-for line; Save"
+    },
+    {
+     "id": "F15.02a",
+     "kind": "branch",
+     "text": "Leaves with unsaved changes: warning"
+    },
+    {
+     "id": "F15.02b",
+     "kind": "branch",
+     "text": "Photo upload error"
+    },
+    {
+     "id": "F15.03",
+     "kind": "step",
+     "text": "Who sees your profile: friends, university or everyone"
+    },
+    {
+     "id": "F15.04",
+     "kind": "step",
+     "text": "Privacy centre: leaderboards, CV links, CV viewers, blocked people"
+    },
+    {
+     "id": "F15.05",
+     "kind": "step",
+     "text": "Chat: read receipts"
+    },
+    {
+     "id": "F15.06",
+     "kind": "step",
+     "text": "Security: two-factor, signed-in devices, recent activity"
+    },
+    {
+     "id": "F15.06a",
+     "kind": "branch",
+     "text": "Signs out other devices"
+    },
+    {
+     "id": "F15.07",
+     "kind": "step",
+     "text": "User agreement and privacy notice"
+    },
+    {
+     "id": "F15.08",
+     "kind": "step",
+     "text": "Delete account: consequences, 14-day cooling-off"
+    },
+    {
+     "id": "F15.08a",
+     "kind": "branch",
+     "text": "Changes their mind: cancels within 14 days"
+    },
+    {
+     "id": "F15.09",
+     "kind": "step",
+     "text": "Sign out (every tab)"
+    },
+    {
+     "id": "F15.10",
+     "kind": "end",
+     "text": "Account set the way they want"
+    }
+   ]
+  },
+  {
+   "id": "F16",
+   "title": "Credentials",
+   "steps": [
+    {
+     "id": "F16.01",
+     "kind": "start",
+     "text": "Me, then Credentials"
+    },
+    {
+     "id": "F16.02",
+     "kind": "step",
+     "text": "Adds a certificate: file, issuer, title, dates"
+    },
+    {
+     "id": "F16.02a",
+     "kind": "branch",
+     "text": "File too big or wrong type"
+    },
+    {
+     "id": "F16.03",
+     "kind": "step",
+     "text": "Status: pending review"
+    },
+    {
+     "id": "F16.04",
+     "kind": "decision",
+     "text": "Approved by staff?"
+    },
+    {
+     "id": "F16.04a",
+     "kind": "branch",
+     "text": "Rejected with a reason: fix and upload again"
+    },
+    {
+     "id": "F16.05",
+     "kind": "step",
+     "text": "Approved: shows on profile and CV"
+    },
+    {
+     "id": "F16.05a",
+     "kind": "branch",
+     "text": "Expired: marked expired"
+    },
+    {
+     "id": "F16.06",
+     "kind": "end",
+     "text": "Credential counts as proof"
+    }
+   ]
+  },
+  {
+   "id": "F17",
+   "title": "Student Pro and billing",
+   "steps": [
+    {
+     "id": "F17.01",
+     "kind": "start",
+     "text": "Meets a Pro feature (Insights, Refresh now, PDF export, viewer names)"
+    },
+    {
+     "id": "F17.02",
+     "kind": "step",
+     "text": "Explanation of what Pro adds"
+    },
+    {
+     "id": "F17.02a",
+     "kind": "branch",
+     "text": "No payments during the beta; prices are placeholders"
+    },
+    {
+     "id": "F17.03",
+     "kind": "step",
+     "text": "Settings, Billing: plan and free beta Pro or trial"
+    },
+    {
+     "id": "F17.03a",
+     "kind": "branch",
+     "text": "Trial ends: what happens next"
+    },
+    {
+     "id": "F17.04",
+     "kind": "step",
+     "text": "Pro features unlock"
+    },
+    {
+     "id": "F17.05",
+     "kind": "end",
+     "text": "Knows what they have and what it will cost"
+    }
+   ]
+  },
+  {
+   "id": "F18",
+   "title": "Feedback, reports and appeals",
+   "steps": [
+    {
+     "id": "F18.01",
+     "kind": "start",
+     "text": "Feedback button (top bar or Me)"
+    },
+    {
+     "id": "F18.02",
+     "kind": "step",
+     "text": "Type (bug, idea, confusing, praise), text, optional screenshot"
+    },
+    {
+     "id": "F18.03",
+     "kind": "step",
+     "text": "Sent; 'My feedback' lists it"
+    },
+    {
+     "id": "F18.04",
+     "kind": "step",
+     "text": "Status: received, reviewing, planned, shipped or won't do; staff reply"
+    },
+    {
+     "id": "F18.05",
+     "kind": "step",
+     "text": "Reports a post, person, message, society or event with a reason"
+    },
+    {
+     "id": "F18.05a",
+     "kind": "branch",
+     "text": "Confirmation; the reporter is never named"
+    },
+    {
+     "id": "F18.06",
+     "kind": "step",
+     "text": "Staff act (removal or restriction): the person is notified"
+    },
+    {
+     "id": "F18.06a",
+     "kind": "branch",
+     "text": "Account restricted: sign-in shows the reason"
+    },
+    {
+     "id": "F18.07",
+     "kind": "step",
+     "text": "Appeals with a reason"
+    },
+    {
+     "id": "F18.07a",
+     "kind": "branch",
+     "text": "Outcome: upheld or overturned"
+    },
+    {
+     "id": "F18.08",
+     "kind": "end",
+     "text": "Heard and treated fairly"
+    }
+   ]
+  },
+  {
+   "id": "F19",
+   "title": "GitHub and skills",
+   "steps": [
+    {
+     "id": "F19.01",
+     "kind": "start",
+     "text": "Settings, GitHub (or onboarding, or the Skills reminder)"
+    },
+    {
+     "id": "F19.02",
+     "kind": "step",
+     "text": "Reads what Skilient reads and never reads"
+    },
+    {
+     "id": "F19.03",
+     "kind": "step",
+     "text": "Installs the Skilient GitHub App; picks repositories"
+    },
+    {
+     "id": "F19.03a",
+     "kind": "branch",
+     "text": "Cancels on GitHub: nothing connected"
+    },
+    {
+     "id": "F19.04",
+     "kind": "step",
+     "text": "Sync runs; status shown"
+    },
+    {
+     "id": "F19.04a",
+     "kind": "branch",
+     "text": "Sync still running or failed: retry"
+    },
+    {
+     "id": "F19.05",
+     "kind": "step",
+     "text": "Me, Skills: grouped, levels L1–L5, provenance icon"
+    },
+    {
+     "id": "F19.06",
+     "kind": "step",
+     "text": "Opens a skill: evidence and what the next level needs"
+    },
+    {
+     "id": "F19.06a",
+     "kind": "branch",
+     "text": "L0 skills stay private"
+    },
+    {
+     "id": "F19.07",
+     "kind": "step",
+     "text": "Adds a claimed skill (no points until verified)"
+    },
+    {
+     "id": "F19.08",
+     "kind": "step",
+     "text": "Manages repos: exclude, resync, held items, disconnect"
+    },
+    {
+     "id": "F19.08a",
+     "kind": "branch",
+     "text": "Disconnect: what happens to evidence"
+    },
+    {
+     "id": "F19.09",
+     "kind": "end",
+     "text": "Skills reflect real work"
+    }
+   ]
+  },
+  {
+   "id": "F20",
+   "title": "Paths and proof tasks",
+   "steps": [
+    {
+     "id": "F20.01",
+     "kind": "start",
+     "text": "Me, Paths (or Openings Paths card, or the progress card)"
+    },
+    {
+     "id": "F20.02",
+     "kind": "step",
+     "text": "Role cards: 'Starter path' or seniors' order; 'N of M proved · next: X'"
+    },
+    {
+     "id": "F20.03",
+     "kind": "step",
+     "text": "Follows up to 2 paths"
+    },
+    {
+     "id": "F20.03a",
+     "kind": "branch",
+     "text": "A third path: unfollow one first"
+    },
+    {
+     "id": "F20.04",
+     "kind": "step",
+     "text": "Ladder: proved, in progress, next, later"
+    },
+    {
+     "id": "F20.05",
+     "kind": "step",
+     "text": "Square opens the skill drawer: why here, evidence, tasks, swap teachers, openings"
+    },
+    {
+     "id": "F20.06",
+     "kind": "step",
+     "text": "Starts a proof task (3 active at most)"
+    },
+    {
+     "id": "F20.06a",
+     "kind": "branch",
+     "text": "No GitHub: the connect step comes first"
+    },
+    {
+     "id": "F20.06b",
+     "kind": "branch",
+     "text": "Already 3 active tasks"
+    },
+    {
+     "id": "F20.07",
+     "kind": "step",
+     "text": "Task page: brief and checklist; links a repository"
+    },
+    {
+     "id": "F20.08",
+     "kind": "step",
+     "text": "Submits: Verifying (GitHub rescan)"
+    },
+    {
+     "id": "F20.09",
+     "kind": "decision",
+     "text": "Proved by GitHub?"
+    },
+    {
+     "id": "F20.09a",
+     "kind": "branch",
+     "text": "Chooses a code check instead"
+    },
+    {
+     "id": "F20.10",
+     "kind": "step",
+     "text": "Peer review: Confirm, or Needs changes with a note"
+    },
+    {
+     "id": "F20.10a",
+     "kind": "branch",
+     "text": "Needs changes: fix and resubmit"
+    },
+    {
+     "id": "F20.10b",
+     "kind": "branch",
+     "text": "No reviewer in 7 days: 3 more peers are asked"
+    },
+    {
+     "id": "F20.11",
+     "kind": "step",
+     "text": "Done: evidence, Proof task Record entry, next square lights"
+    },
+    {
+     "id": "F20.12",
+     "kind": "end",
+     "text": "Knows what to learn next and has proof of it"
+    }
+   ]
+  },
+  {
+   "id": "F21",
+   "title": "Review a peer's proof task",
+   "steps": [
+    {
+     "id": "F21.01",
+     "kind": "start",
+     "text": "Notification: 'Can you check …'s task?'"
+    },
+    {
+     "id": "F21.02",
+     "kind": "step",
+     "text": "Paths: 'Reviews asked of you'"
+    },
+    {
+     "id": "F21.03",
+     "kind": "step",
+     "text": "Review page: checklist and repository link"
+    },
+    {
+     "id": "F21.03a",
+     "kind": "branch",
+     "text": "Task no longer needs a review"
+    },
+    {
+     "id": "F21.04",
+     "kind": "decision",
+     "text": "Takes the review?"
+    },
+    {
+     "id": "F21.04a",
+     "kind": "branch",
+     "text": "Declines: never asked again for that task"
+    },
+    {
+     "id": "F21.04b",
+     "kind": "branch",
+     "text": "Weekly limit of 5 reviews reached"
+    },
+    {
+     "id": "F21.05",
+     "kind": "step",
+     "text": "Confirm, or Needs changes with a required note"
+    },
+    {
+     "id": "F21.06",
+     "kind": "end",
+     "text": "Review done (reviewers get no Record entry)"
+    }
+   ]
+  },
+  {
+   "id": "F22",
+   "title": "Skill swap",
+   "steps": [
+    {
+     "id": "F22.01",
+     "kind": "start",
+     "text": "Skill swap (rail, Openings card or skill drawer)"
+    },
+    {
+     "id": "F22.02",
+     "kind": "step",
+     "text": "Learn: 'I want to learn', chooses a skill, Add"
+    },
+    {
+     "id": "F22.03",
+     "kind": "step",
+     "text": "Teachers at their university: level, hours taught, notes"
+    },
+    {
+     "id": "F22.03a",
+     "kind": "branch",
+     "text": "No teachers yet"
+    },
+    {
+     "id": "F22.04",
+     "kind": "step",
+     "text": "Request: note, preferred times, optional skill offered back"
+    },
+    {
+     "id": "F22.04a",
+     "kind": "branch",
+     "text": "Mutual swap: both sides get an entry"
+    },
+    {
+     "id": "F22.05",
+     "kind": "step",
+     "text": "Teach: skills they can teach (L2+); incoming requests"
+    },
+    {
+     "id": "F22.06",
+     "kind": "decision",
+     "text": "Teacher accepts within 7 days?"
+    },
+    {
+     "id": "F22.06a",
+     "kind": "branch",
+     "text": "Declined or expired"
+    },
+    {
+     "id": "F22.07",
+     "kind": "step",
+     "text": "Accepted: a DM opens"
+    },
+    {
+     "id": "F22.08",
+     "kind": "step",
+     "text": "Proposes a session (date, time, length, place or link); the other accepts"
+    },
+    {
+     "id": "F22.09",
+     "kind": "step",
+     "text": "After it: 'Did your session happen?' Yes with length and thank-you note, or No"
+    },
+    {
+     "id": "F22.09a",
+     "kind": "branch",
+     "text": "No: gives a no-show reason"
+    },
+    {
+     "id": "F22.10",
+     "kind": "step",
+     "text": "Teacher approves the thank-you note: it shows on their profile"
+    },
+    {
+     "id": "F22.11",
+     "kind": "step",
+     "text": "Ends the swap (or it closes after 30 days with no session)"
+    },
+    {
+     "id": "F22.12",
+     "kind": "end",
+     "text": "Teacher gets a 'Taught' Record entry"
+    }
+   ]
+  },
+  {
+   "id": "F23",
+   "title": "Score, tiers and leaderboard",
+   "steps": [
+    {
+     "id": "F23.01",
+     "kind": "start",
+     "text": "Progress card, or Me, Score"
+    },
+    {
+     "id": "F23.02",
+     "kind": "step",
+     "text": "Score breakdown: Proof and Momentum, evidence links, weekly change"
+    },
+    {
+     "id": "F23.02a",
+     "kind": "branch",
+     "text": "New user: not ranked yet"
+    },
+    {
+     "id": "F23.03",
+     "kind": "step",
+     "text": "Decay notice and how to improve"
+    },
+    {
+     "id": "F23.04",
+     "kind": "step",
+     "text": "Next tier and points to go; the tier-up moment"
+    },
+    {
+     "id": "F23.04a",
+     "kind": "branch",
+     "text": "Tier shows on profile and CV"
+    },
+    {
+     "id": "F23.05",
+     "kind": "step",
+     "text": "Leaderboard: My university / Global; department and batch; own row pinned"
+    },
+    {
+     "id": "F23.05a",
+     "kind": "branch",
+     "text": "Few students: '#1 of 1 on this board'"
+    },
+    {
+     "id": "F23.06",
+     "kind": "step",
+     "text": "Opts out: leaves every board"
+    },
+    {
+     "id": "F23.07",
+     "kind": "end",
+     "text": "Understands rank and how to earn it"
+    }
+   ]
+  },
+  {
+   "id": "F24",
+   "title": "The Record",
+   "steps": [
+    {
+     "id": "F24.01",
+     "kind": "start",
+     "text": "Entry arrives (close-out, office term, venture, swap, proof task): 'New on your Record'"
+    },
+    {
+     "id": "F24.02",
+     "kind": "step",
+     "text": "Me, Record: ledger by academic year, stat tiles, filter by kind"
+    },
+    {
+     "id": "F24.02a",
+     "kind": "branch",
+     "text": "Empty: 'Your first entry is one event away', Find events"
+    },
+    {
+     "id": "F24.03",
+     "kind": "step",
+     "text": "Entry: Signing…, then Sealed with a code"
+    },
+    {
+     "id": "F24.04",
+     "kind": "step",
+     "text": "Pins to profile (3 at most) or hides from profile"
+    },
+    {
+     "id": "F24.05",
+     "kind": "step",
+     "text": "Downloads the certificate PDF with a QR"
+    },
+    {
+     "id": "F24.06",
+     "kind": "step",
+     "text": "Copies the verify link: /verify/<code>"
+    },
+    {
+     "id": "F24.06a",
+     "kind": "branch",
+     "text": "Verify page: valid, revoked or superseded"
+    },
+    {
+     "id": "F24.07",
+     "kind": "step",
+     "text": "Reports a mistake: issuer corrects; old entry 'Superseded'"
+    },
+    {
+     "id": "F24.07a",
+     "kind": "branch",
+     "text": "Entry revoked: reason shown, appeal"
+    },
+    {
+     "id": "F24.08",
+     "kind": "step",
+     "text": "Shares the whole Record: link with expiry; revoke"
+    },
+    {
+     "id": "F24.09",
+     "kind": "step",
+     "text": "Downloads the signed transcript PDF"
+    },
+    {
+     "id": "F24.10",
+     "kind": "end",
+     "text": "Has proof others can check"
+    }
+   ]
+  },
+  {
+   "id": "F25",
+   "title": "Verified CV",
+   "steps": [
+    {
+     "id": "F25.01",
+     "kind": "start",
+     "text": "Me, CV"
+    },
+    {
+     "id": "F25.02",
+     "kind": "step",
+     "text": "Live preview from verified work; code and issue date"
+    },
+    {
+     "id": "F25.03",
+     "kind": "step",
+     "text": "'What your CV shows': sections on or off, order, Record entries for 'Leadership and activities'"
+    },
+    {
+     "id": "F25.04",
+     "kind": "step",
+     "text": "Updates: refreshes monthly; 'Refresh now'"
+    },
+    {
+     "id": "F25.04a",
+     "kind": "branch",
+     "text": "Free: next refresh date; Pro: refresh now"
+    },
+    {
+     "id": "F25.05",
+     "kind": "step",
+     "text": "Share links: expiry, copy, revoke"
+    },
+    {
+     "id": "F25.05a",
+     "kind": "branch",
+     "text": "Below Spark tier: share links locked, with the reason"
+    },
+    {
+     "id": "F25.06",
+     "kind": "step",
+     "text": "Exports the ATS PDF"
+    },
+    {
+     "id": "F25.06a",
+     "kind": "branch",
+     "text": "PDF export is a Pro feature"
+    },
+    {
+     "id": "F25.07",
+     "kind": "step",
+     "text": "Versions and view counts"
+    },
+    {
+     "id": "F25.08",
+     "kind": "step",
+     "text": "Anyone verifies it at /verify (code or PDF upload)"
+    },
+    {
+     "id": "F25.08a",
+     "kind": "branch",
+     "text": "Valid, Superseded, Outdated, Revoked, Altered or Not found"
+    },
+    {
+     "id": "F25.09",
+     "kind": "end",
+     "text": "A CV they can send and others can trust"
+    }
+   ]
+  },
+  {
+   "id": "F26",
+   "title": "Openings",
+   "steps": [
+    {
+     "id": "F26.01",
+     "kind": "start",
+     "text": "Opens Openings (dock)"
+    },
+    {
+     "id": "F26.02",
+     "kind": "step",
+     "text": "Grid: This week, Venture roles, Project ideas, Society inductions, Events, Paths, Skill swaps"
+    },
+    {
+     "id": "F26.03",
+     "kind": "step",
+     "text": "Each card: newest opening, count, updated time, 'new' dot"
+    },
+    {
+     "id": "F26.04",
+     "kind": "decision",
+     "text": "Card empty?"
+    },
+    {
+     "id": "F26.04a",
+     "kind": "branch",
+     "text": "Empty card: one honest line and one action (e.g. Request a society)"
+    },
+    {
+     "id": "F26.05",
+     "kind": "step",
+     "text": "Opens a card: full list, filters, sort by deadline or newest"
+    },
+    {
+     "id": "F26.05a",
+     "kind": "branch",
+     "text": "No matches with these filters"
+    },
+    {
+     "id": "F26.06",
+     "kind": "step",
+     "text": "Opens an item: its own page (apply, register, follow)"
+    },
+    {
+     "id": "F26.07",
+     "kind": "step",
+     "text": "This week: informative posts, events, inductions, new ventures"
+    },
+    {
+     "id": "F26.07a",
+     "kind": "branch",
+     "text": "Quiet week"
+    },
+    {
+     "id": "F26.08",
+     "kind": "step",
+     "text": "Project idea (faculty): starts a venture from it"
+    },
+    {
+     "id": "F26.09",
+     "kind": "end",
+     "text": "Found something to join or apply to"
+    }
+   ]
+  },
+  {
+   "id": "F27",
+   "title": "Societies (member)",
+   "steps": [
+    {
+     "id": "F27.01",
+     "kind": "start",
+     "text": "Societies: own university first; search and category"
+    },
+    {
+     "id": "F27.01a",
+     "kind": "branch",
+     "text": "None at their university yet: Request a society"
+    },
+    {
+     "id": "F27.02",
+     "kind": "step",
+     "text": "Society page: about, officers, Verified; About, Events, Inductions"
+    },
+    {
+     "id": "F27.03",
+     "kind": "step",
+     "text": "Follows: posts and events in their feed"
+    },
+    {
+     "id": "F27.04",
+     "kind": "decision",
+     "text": "Join: which membership mode?"
+    },
+    {
+     "id": "F27.04a",
+     "kind": "branch",
+     "text": "Open: a member at once"
+    },
+    {
+     "id": "F27.04b",
+     "kind": "branch",
+     "text": "By request: pending until an officer accepts"
+    },
+    {
+     "id": "F27.04c",
+     "kind": "branch",
+     "text": "Inductions only: explains and links the round"
+    },
+    {
+     "id": "F27.05",
+     "kind": "step",
+     "text": "Induction round: roles, seats, questions, deadline; Apply"
+    },
+    {
+     "id": "F27.06",
+     "kind": "decision",
+     "text": "Outcome?"
+    },
+    {
+     "id": "F27.06a",
+     "kind": "branch",
+     "text": "Declined, with an optional note"
+    },
+    {
+     "id": "F27.06b",
+     "kind": "branch",
+     "text": "Undecided: declined 14 days after the deadline"
+    },
+    {
+     "id": "F27.07",
+     "kind": "step",
+     "text": "Accepted: member with a team title"
+    },
+    {
+     "id": "F27.08",
+     "kind": "step",
+     "text": "Leaves the society"
+    },
+    {
+     "id": "F27.09",
+     "kind": "step",
+     "text": "Reports the society, a post or an event"
+    },
+    {
+     "id": "F27.10",
+     "kind": "end",
+     "text": "In the societies they care about"
+    }
+   ]
+  },
+  {
+   "id": "F28",
+   "title": "Request a society",
+   "steps": [
+    {
+     "id": "F28.01",
+     "kind": "start",
+     "text": "Taps Request a society"
+    },
+    {
+     "id": "F28.02",
+     "kind": "step",
+     "text": "Basics: name (live check), category, about"
+    },
+    {
+     "id": "F28.02a",
+     "kind": "branch",
+     "text": "Name taken: 'already on Skilient at NUTECH'"
+    },
+    {
+     "id": "F28.03",
+     "kind": "step",
+     "text": "Look: logo and cover"
+    },
+    {
+     "id": "F28.04",
+     "kind": "step",
+     "text": "Proof: letter (5 MB max) or official link; 'I am an office bearer'"
+    },
+    {
+     "id": "F28.05",
+     "kind": "step",
+     "text": "Review, then Submit"
+    },
+    {
+     "id": "F28.05a",
+     "kind": "branch",
+     "text": "One pending request per student"
+    },
+    {
+     "id": "F28.06",
+     "kind": "step",
+     "text": "'Pending · reviewed within 3 working days'"
+    },
+    {
+     "id": "F28.07",
+     "kind": "decision",
+     "text": "Staff decision?"
+    },
+    {
+     "id": "F28.07a",
+     "kind": "branch",
+     "text": "More info needed: edit and resubmit"
+    },
+    {
+     "id": "F28.07b",
+     "kind": "branch",
+     "text": "Rejected, with a reason"
+    },
+    {
+     "id": "F28.08",
+     "kind": "step",
+     "text": "Approved: live, requester is President, setup checklist"
+    },
+    {
+     "id": "F28.09",
+     "kind": "end",
+     "text": "Society is on Skilient"
+    }
+   ]
+  },
+  {
+   "id": "F29",
+   "title": "Attend an event",
+   "steps": [
+    {
+     "id": "F29.01",
+     "kind": "start",
+     "text": "Event post, Openings Events, Events page, society page or 'friends going'"
+    },
+    {
+     "id": "F29.02",
+     "kind": "step",
+     "text": "Events: Upcoming, Registered, Past; type chips"
+    },
+    {
+     "id": "F29.03",
+     "kind": "step",
+     "text": "Event page: agenda, hosts, seats left, what you'll earn"
+    },
+    {
+     "id": "F29.04",
+     "kind": "decision",
+     "text": "Can register?"
+    },
+    {
+     "id": "F29.04a",
+     "kind": "branch",
+     "text": "Not eligible: flat button with the reason"
+    },
+    {
+     "id": "F29.04b",
+     "kind": "branch",
+     "text": "Registration not open: shows when it opens"
+    },
+    {
+     "id": "F29.04c",
+     "kind": "branch",
+     "text": "Full: joins the waitlist"
+    },
+    {
+     "id": "F29.04d",
+     "kind": "branch",
+     "text": "Cancelled or ended"
+    },
+    {
+     "id": "F29.05",
+     "kind": "step",
+     "text": "Register: form, ticket type, team (create, or join with a code)"
+    },
+    {
+     "id": "F29.06",
+     "kind": "decision",
+     "text": "Free or paid?"
+    },
+    {
+     "id": "F29.06a",
+     "kind": "branch",
+     "text": "Paid: see F30"
+    },
+    {
+     "id": "F29.07",
+     "kind": "step",
+     "text": "Result: Confirmed, Pending approval or Waitlisted #N"
+    },
+    {
+     "id": "F29.07a",
+     "kind": "branch",
+     "text": "Waitlist promoted: notified"
+    },
+    {
+     "id": "F29.08",
+     "kind": "step",
+     "text": "Push offer: 'Get reminded on your phone?'"
+    },
+    {
+     "id": "F29.09",
+     "kind": "step",
+     "text": "Ticket: signed QR, brightness hint; Me, Tickets; works offline"
+    },
+    {
+     "id": "F29.09a",
+     "kind": "branch",
+     "text": "Cancels: seat freed, refund if within policy"
+    },
+    {
+     "id": "F29.10",
+     "kind": "step",
+     "text": "Reminders 24 hours and 1 hour before"
+    },
+    {
+     "id": "F29.11",
+     "kind": "step",
+     "text": "At the door: shows the QR or scans the host's code"
+    },
+    {
+     "id": "F29.12",
+     "kind": "step",
+     "text": "After: 'New on your Record'; feedback form open 7 days"
+    },
+    {
+     "id": "F29.13",
+     "kind": "end",
+     "text": "Attended, and it's on their Record"
+    }
+   ]
+  },
+  {
+   "id": "F30",
+   "title": "Pay for a paid ticket",
+   "steps": [
+    {
+     "id": "F30.01",
+     "kind": "start",
+     "text": "Picks a paid ticket type"
+    },
+    {
+     "id": "F30.02",
+     "kind": "step",
+     "text": "Sees the amount, society's payment details, reference code, refund policy, 'You pay the society directly'"
+    },
+    {
+     "id": "F30.03",
+     "kind": "step",
+     "text": "Seat held for 24 hours"
+    },
+    {
+     "id": "F30.03a",
+     "kind": "branch",
+     "text": "No receipt in 24 hours: hold expires, seat released"
+    },
+    {
+     "id": "F30.04",
+     "kind": "step",
+     "text": "Pays outside Skilient (bank, JazzCash, Easypaisa) with the reference"
+    },
+    {
+     "id": "F30.05",
+     "kind": "step",
+     "text": "Uploads the receipt and transaction ID: 'Payment under review'"
+    },
+    {
+     "id": "F30.06",
+     "kind": "decision",
+     "text": "Officer approves?"
+    },
+    {
+     "id": "F30.06a",
+     "kind": "branch",
+     "text": "Rejected with a reason: upload again within 24 hours"
+    },
+    {
+     "id": "F30.07",
+     "kind": "step",
+     "text": "Approved: Confirmed, ticket issued"
+    },
+    {
+     "id": "F30.08",
+     "kind": "step",
+     "text": "Cancels within the refund policy: 'Refund requested'"
+    },
+    {
+     "id": "F30.09",
+     "kind": "step",
+     "text": "Officer marks 'Refund sent'; student marks Received or Not received"
+    },
+    {
+     "id": "F30.09a",
+     "kind": "branch",
+     "text": "Not received: becomes a report after 72 hours"
+    },
+    {
+     "id": "F30.10",
+     "kind": "end",
+     "text": "Paid, confirmed, and any refund handled"
+    }
+   ]
+  },
+  {
+   "id": "F32",
+   "title": "Run a society",
+   "steps": [
+    {
+     "id": "F32.01",
+     "kind": "start",
+     "text": "Society live: setup checklist (logo, officers, membership mode, first event)"
+    },
+    {
+     "id": "F32.01a",
+     "kind": "branch",
+     "text": "Suspended by staff: hidden, events cancelled"
+    },
+    {
+     "id": "F32.02",
+     "kind": "step",
+     "text": "Manage: invites an officer by username with a title and term"
+    },
+    {
+     "id": "F32.03",
+     "kind": "step",
+     "text": "Invitee accepts: joins the roll call (15 at most)"
+    },
+    {
+     "id": "F32.03a",
+     "kind": "branch",
+     "text": "Invite declined or still pending"
+    },
+    {
+     "id": "F32.04",
+     "kind": "step",
+     "text": "Membership mode: Open, By request, Inductions only"
+    },
+    {
+     "id": "F32.05",
+     "kind": "step",
+     "text": "Members and requests: accepts or declines"
+    },
+    {
+     "id": "F32.06",
+     "kind": "step",
+     "text": "Posts as the society from the composer"
+    },
+    {
+     "id": "F32.07",
+     "kind": "step",
+     "text": "Payment details: proposes up to 3 methods; a second officer confirms"
+    },
+    {
+     "id": "F32.07a",
+     "kind": "branch",
+     "text": "No confirmed details: paid tickets disabled, with the reason"
+    },
+    {
+     "id": "F32.07b",
+     "kind": "branch",
+     "text": "Change waiting for the second officer"
+    },
+    {
+     "id": "F32.08",
+     "kind": "step",
+     "text": "Term end: 'Confirm your officers' terms': Office bearer entries"
+    },
+    {
+     "id": "F32.08a",
+     "kind": "branch",
+     "text": "President's own term is confirmed by another officer"
+    },
+    {
+     "id": "F32.09",
+     "kind": "step",
+     "text": "Hands over the presidency; successor accepts"
+    },
+    {
+     "id": "F32.10",
+     "kind": "end",
+     "text": "Society runs without Skilient staff"
+    }
+   ]
+  },
+  {
+   "id": "F33",
+   "title": "Run an induction round",
+   "steps": [
+    {
+     "id": "F33.01",
+     "kind": "start",
+     "text": "Society, Inductions: new round"
+    },
+    {
+     "id": "F33.02",
+     "kind": "step",
+     "text": "Roles (title, seats, skills), up to 3 questions, deadline (30 days at most)"
+    },
+    {
+     "id": "F33.02a",
+     "kind": "branch",
+     "text": "Deadline too far out: error"
+    },
+    {
+     "id": "F33.03",
+     "kind": "step",
+     "text": "Publish: followers and members notified; Openings card updates"
+    },
+    {
+     "id": "F33.04",
+     "kind": "step",
+     "text": "Applicants list: shortlist"
+    },
+    {
+     "id": "F33.05",
+     "kind": "step",
+     "text": "Accepts or declines, with an optional note"
+    },
+    {
+     "id": "F33.05a",
+     "kind": "branch",
+     "text": "Declined applicant sees the optional note"
+    },
+    {
+     "id": "F33.06",
+     "kind": "step",
+     "text": "Accepted: members with a team title"
+    },
+    {
+     "id": "F33.07",
+     "kind": "step",
+     "text": "Deadline closes the round; undecided declined after 14 days"
+    },
+    {
+     "id": "F33.08",
+     "kind": "end",
+     "text": "New members recruited fairly"
+    }
+   ]
+  },
+  {
+   "id": "F34",
+   "title": "Create and publish an event",
+   "steps": [
+    {
+     "id": "F34.01",
+     "kind": "start",
+     "text": "Society: Create event (7 steps, 'N steps left')"
+    },
+    {
+     "id": "F34.02",
+     "kind": "step",
+     "text": "Basics: type, title, cover, description; co-hosts"
+    },
+    {
+     "id": "F34.02a",
+     "kind": "branch",
+     "text": "Co-host society must accept the invite"
+    },
+    {
+     "id": "F34.03",
+     "kind": "step",
+     "text": "When and where: one or several sessions; venue or link"
+    },
+    {
+     "id": "F34.04",
+     "kind": "step",
+     "text": "Tickets: types, capacity, free or PKR price, refund policy"
+    },
+    {
+     "id": "F34.04a",
+     "kind": "branch",
+     "text": "Paid ticket needs confirmed payment details"
+    },
+    {
+     "id": "F34.05",
+     "kind": "step",
+     "text": "Who can come: eligibility, teams, approval, registration window"
+    },
+    {
+     "id": "F34.06",
+     "kind": "step",
+     "text": "Form: up to 8 questions (name, email, department, batch prefilled)"
+    },
+    {
+     "id": "F34.07",
+     "kind": "step",
+     "text": "Record: Attended, Completed (N of M sessions) or Result; volunteer hours"
+    },
+    {
+     "id": "F34.08",
+     "kind": "step",
+     "text": "Review: Save draft or Publish"
+    },
+    {
+     "id": "F34.08a",
+     "kind": "branch",
+     "text": "'Some steps need fixing; they're marked.'"
+    },
+    {
+     "id": "F34.09",
+     "kind": "step",
+     "text": "Published: event page and post; followers notified; Openings updates"
+    },
+    {
+     "id": "F34.09a",
+     "kind": "branch",
+     "text": "Duplicates a past event: prefilled"
+    },
+    {
+     "id": "F34.10",
+     "kind": "end",
+     "text": "Event open for registration"
+    }
+   ]
+  },
+  {
+   "id": "F35",
+   "title": "Manage registrations and payments",
+   "steps": [
+    {
+     "id": "F35.01",
+     "kind": "start",
+     "text": "Event, Manage: registered, pending, waitlist, capacity"
+    },
+    {
+     "id": "F35.02",
+     "kind": "step",
+     "text": "Registrations: approves or declines (manual mode)"
+    },
+    {
+     "id": "F35.03",
+     "kind": "step",
+     "text": "Payments: receipt, amount, reference code, transaction ID"
+    },
+    {
+     "id": "F35.04",
+     "kind": "decision",
+     "text": "Receipt matches?"
+    },
+    {
+     "id": "F35.04a",
+     "kind": "branch",
+     "text": "Approve: confirmed, ticket issued"
+    },
+    {
+     "id": "F35.04b",
+     "kind": "branch",
+     "text": "Reject with a reason"
+    },
+    {
+     "id": "F35.04c",
+     "kind": "branch",
+     "text": "Duplicate receipt flag: 'Also uploaded for …'"
+    },
+    {
+     "id": "F35.05",
+     "kind": "step",
+     "text": "Waitlist promotes on its own"
+    },
+    {
+     "id": "F35.06",
+     "kind": "step",
+     "text": "Staff: adds event staff for check-in"
+    },
+    {
+     "id": "F35.07",
+     "kind": "step",
+     "text": "Messages: writes to all registrants"
+    },
+    {
+     "id": "F35.08",
+     "kind": "step",
+     "text": "Edits: a time or venue change sends a change notice"
+    },
+    {
+     "id": "F35.08a",
+     "kind": "branch",
+     "text": "Capacity below confirmed seats, or narrower eligibility: refused"
+    },
+    {
+     "id": "F35.08b",
+     "kind": "branch",
+     "text": "Cancels the event: everyone told; refunds to mark"
+    },
+    {
+     "id": "F35.09",
+     "kind": "end",
+     "text": "Ready for the day"
+    }
+   ]
+  },
+  {
+   "id": "F36",
+   "title": "Check in attendees",
+   "steps": [
+    {
+     "id": "F36.01",
+     "kind": "start",
+     "text": "Event is Live: Check-in (officers and staff); picks the session"
+    },
+    {
+     "id": "F36.02",
+     "kind": "step",
+     "text": "Camera scanner"
+    },
+    {
+     "id": "F36.02a",
+     "kind": "branch",
+     "text": "No camera permission: search only"
+    },
+    {
+     "id": "F36.02b",
+     "kind": "branch",
+     "text": "Offline: retry"
+    },
+    {
+     "id": "F36.03",
+     "kind": "decision",
+     "text": "Scan result?"
+    },
+    {
+     "id": "F36.03a",
+     "kind": "branch",
+     "text": "Green: 'Checked in · 10:04 · name'"
+    },
+    {
+     "id": "F36.03b",
+     "kind": "branch",
+     "text": "Amber: 'Already checked in at 09:58'"
+    },
+    {
+     "id": "F36.03c",
+     "kind": "branch",
+     "text": "Red: 'Not registered', Walk in if seats remain"
+    },
+    {
+     "id": "F36.04",
+     "kind": "step",
+     "text": "Search by name"
+    },
+    {
+     "id": "F36.05",
+     "kind": "step",
+     "text": "Add by university email (claim email if not on Skilient)"
+    },
+    {
+     "id": "F36.06",
+     "kind": "step",
+     "text": "Live headcount"
+    },
+    {
+     "id": "F36.07",
+     "kind": "step",
+     "text": "Self check-in: shows a rotating code"
+    },
+    {
+     "id": "F36.08",
+     "kind": "end",
+     "text": "Everyone who came is checked in"
+    }
+   ]
+  },
+  {
+   "id": "F37",
+   "title": "Close out an event",
+   "steps": [
+    {
+     "id": "F37.01",
+     "kind": "start",
+     "text": "Manage, Close-out (open 72 hours after the last session)"
+    },
+    {
+     "id": "F37.02",
+     "kind": "step",
+     "text": "Fixes attendance: add or remove, with a reason"
+    },
+    {
+     "id": "F37.03",
+     "kind": "step",
+     "text": "Enters results: placings per person or team"
+    },
+    {
+     "id": "F37.04",
+     "kind": "step",
+     "text": "Logs volunteer hours (capped at the activity's length)"
+    },
+    {
+     "id": "F37.05",
+     "kind": "step",
+     "text": "Issue preview ('N Attended · N Results · N Volunteer'), Issue"
+    },
+    {
+     "id": "F37.05a",
+     "kind": "branch",
+     "text": "No action: Attended and Completed issue on their own at 72 hours"
+    },
+    {
+     "id": "F37.05b",
+     "kind": "branch",
+     "text": "Entry naming the issuing officer needs a second officer"
+    },
+    {
+     "id": "F37.06",
+     "kind": "step",
+     "text": "Entries signed; recipients notified"
+    },
+    {
+     "id": "F37.07",
+     "kind": "step",
+     "text": "Attendee CSV; feedback summary after 7 days"
+    },
+    {
+     "id": "F37.07a",
+     "kind": "branch",
+     "text": "Cancelled paid event: refunds to mark"
+    },
+    {
+     "id": "F37.08",
+     "kind": "step",
+     "text": "Handles 'Report a mistake': correct (supersede) or revoke with a reason"
+    },
+    {
+     "id": "F37.09",
+     "kind": "end",
+     "text": "Attendees have signed entries"
+    }
+   ]
+  }
+ ],
+ "production_pilot": {
+  "findings": {
+   "P01": {
+    "sev": "High",
+    "where": "/me/score",
+    "what": "Score page contradicts itself: total 40, then 'Your score rose quickly, to 498, so a reviewer is checking it'; 'Updated 19 Oct' although scores update nightly; banner 'New in formula v2' but footer 'Formula v1'; Verified skills 0 of 500 while the checklist says an L2 skill is reached and Paths show 6 Backend skills proved. The review hold is 35 days old.",
+    "tasks": "T015,T078",
+    "principles": "H01,H04,TRU",
+    "fix": "When a score is held, say so at the top with the held and pending totals and an expected date; show the formula version once; clear stale anti-gaming flags (ops queue)."
+   },
+   "P02": {
+    "sev": "Med",
+    "where": "/feed Your progress -> /me/score",
+    "what": "'Take this step' opens an explanation page. None of the 'What Spark needs' items link to the action they describe (complete a venture, add a certificate).",
+    "tasks": "T015,T078",
+    "principles": "H06,FIT",
+    "fix": "Make each requirement a link to its action (Ventures, Credentials, Paths, Societies)."
+   },
+   "P03": {
+    "sev": "Med",
+    "where": "/feed Your progress",
+    "what": "'Hide checklist' hides it for good: no confirmation, no undo toast, no way back (set_ui_state checklist_dismissed). Ahmed's account now has it hidden.",
+    "tasks": "T018",
+    "principles": "H03,H05",
+    "fix": "Undo toast plus a 'Show getting started' item in Settings next to Replay tour."
+   },
+   "P04": {
+    "sev": "Low",
+    "where": "Ctrl K menu",
+    "what": "'swap' returns 'Skill swaps (Openings)' first and 'Skill swap' second; Enter opens the Openings category, not the swap page.",
+    "tasks": "T016",
+    "principles": "H04,NAV",
+    "fix": "Rank the page above the Openings category, or label the category 'Openings: skill swaps'."
+   },
+   "P05": {
+    "sev": "Low",
+    "where": "Ctrl K menu",
+    "what": "'privacy' only finds Settings; Privacy centre needs one more click. Same for notifications settings, security, billing.",
+    "tasks": "T016,T062",
+    "principles": "H07,NAV",
+    "fix": "Index each Settings section as its own command."
+   },
+   "P06": {
+    "sev": "Med",
+    "where": "Left rail",
+    "what": "14 icon-only rail items. Tooltips exist (and are in the accessibility tree), but the tour introduces only 5; Societies, Events, Skill swap, Explore, Leaderboard, Friends and Feedback are learned by hovering.",
+    "tasks": "T014,T016",
+    "principles": "H06,LRN",
+    "fix": "Labels under icons on desktop, or group the rail (Do / Proof / People) with a visible expanded mode."
+   },
+   "P07": {
+    "sev": "Low",
+    "where": "Tour step 2",
+    "what": "'Search, or jump anywhere' points at the Explore rail icon, but the search box is in the top bar.",
+    "tasks": "T014",
+    "principles": "H02",
+    "fix": "Anchor the step on the top-bar search."
+   },
+   "P08": {
+    "sev": "Low",
+    "where": "Tour last step",
+    "what": "'You're set' offers 'Write your first post' to an account that already posts.",
+    "tasks": "T014,T018",
+    "principles": "H02",
+    "fix": "Pick the CTA from Your progress's next step."
+   },
+   "P09": {
+    "sev": "Med",
+    "where": "/me/paths",
+    "what": "Empty state says 'Follow a role above to see its ladder', but clicking the role name already shows the ladder without following. The name doesn't look clickable.",
+    "tasks": "T072",
+    "principles": "AFF,H01",
+    "fix": "Copy: 'Open a role to see its ladder; follow up to 2 to track them.' Give the card a visible open affordance."
+   },
+   "P10": {
+    "sev": "High",
+    "where": "/me/paths skill drawer",
+    "what": "Drawer says 'A proof task is the quickest way to show it' then 'No tasks for this skill yet'. The production task bank looks empty, so proof tasks (T073-T075) can't be done.",
+    "tasks": "T072,T073",
+    "principles": "H04,EMP",
+    "fix": "Seed the task bank for each starter-path square before students see it; hide the proof-task line when there are none."
+   },
+   "P11": {
+    "sev": "Low",
+    "where": "/swaps Learn",
+    "what": "'I want to learn' is a plain select of ~150 skills, technical only, no type-ahead filter beyond the browser's.",
+    "tasks": "T076",
+    "principles": "H07,MOB",
+    "fix": "Use the combobox from Explore's skill filter."
+   },
+   "P12": {
+    "sev": "Info",
+    "where": "Left rail",
+    "what": "Yearbook is still live on production (removal not shipped).",
+    "tasks": "-",
+    "principles": "-",
+    "fix": "Ship the removal PR."
+   },
+   "P13": {
+    "sev": "Low",
+    "where": "Top bar search",
+    "what": "Visible hint says 'Ctrl K', accessible name says '⌘K' on Linux in some renders.",
+    "tasks": "T016,T024",
+    "principles": "ACC",
+    "fix": "Build both from the same platform check."
+   },
+   "P14": {
+    "sev": "Med",
+    "where": "Post question strip",
+    "what": "After answering, the strip becomes an empty well with 'Answered' at the right. It doesn't show what you picked or that it counted.",
+    "tasks": "T019,T020",
+    "principles": "H01,AES",
+    "fix": "Show your answer ('You said: useful') with Change, until it locks."
+   },
+   "P15": {
+    "sev": "Low",
+    "where": "Post ⋯ menu",
+    "what": "Items aren't menu items: arrow keys don't move between them. Focus does land on the first item, the ring is visible, and Esc returns focus to ⋯.",
+    "tasks": "T024",
+    "principles": "ACC",
+    "fix": "role=menu/menuitem with arrow-key roving focus."
+   },
+   "P16": {
+    "sev": "High",
+    "where": "/explore People",
+    "what": "Department, batch, skill and university filters do nothing until you type 2+ letters of a name. 'Students in my batch with React' can't be found without knowing a name (explore/page.tsx line 126).",
+    "tasks": "T041,T042",
+    "principles": "H07,FIT",
+    "fix": "Run the search when any filter is set; show filtered results with the empty query."
+   },
+   "P17": {
+    "sev": "Low",
+    "where": "/me hub",
+    "what": "The Me page tiles omit Record, Paths and Tickets, though the Me sidebar and the tour list them.",
+    "tasks": "T014,T080",
+    "principles": "H04,NAV",
+    "fix": "Build the hub tiles from the same nav config as the sidebar."
+   },
+   "P18": {
+    "sev": "Low",
+    "where": "Own profile",
+    "what": "'How others see you' opens your own profile with Edit; there's no preview as a friend or as a stranger, though visibility is Friends only.",
+    "tasks": "T043,T061",
+    "principles": "H01,PRV",
+    "fix": "'Preview as: friend / student at your university / anyone' switch."
+   },
+   "P19": {
+    "sev": "Med",
+    "where": "/notifications",
+    "what": "Every chat message is also a notification (duplicates the Chat badge); no grouping by person or thread; no filter by type; unread items sit under 'Earlier' with no 'New' section.",
+    "tasks": "T044",
+    "principles": "H08,FIT",
+    "fix": "Keep chat out of notifications (or one grouped line per thread); add New/Earlier and a Requests filter."
+   },
+   "P20": {
+    "sev": "Low",
+    "where": "Privacy centre, CV settings, Billing",
+    "what": "Copy still talks about recruiters ('whether recruiters can find you', 'your tier shows to recruiters', 'Company names on CV views') while the recruiter portal is off.",
+    "tasks": "T062,T066,T084",
+    "principles": "H02,TRU",
+    "fix": "Gate recruiter lines on portals.enabled."
+   },
+   "P21": {
+    "sev": "Med",
+    "where": "Privacy centre",
+    "what": "Account has Student Pro active (test), yet 'Names of the people who viewed it are a Pro feature' is shown.",
+    "tasks": "T062,T066",
+    "principles": "H04,TRU",
+    "fix": "Check the entitlement before showing the upsell; show names if entitled."
+   },
+   "P22": {
+    "sev": "High",
+    "where": "Signed CV, /verify",
+    "what": "Abandoned venture 'Evil Genie' appears on the signed CV as 'Oct 2026 – Present', and /verify says 'Every item comes from checked evidence'.",
+    "tasks": "T084,T086",
+    "principles": "TRU",
+    "fix": "Leave abandoned ventures off the CV snapshot (or show an end date and 'Abandoned'); re-issue affected CVs."
+   },
+   "P23": {
+    "sev": "Med",
+    "where": "CV",
+    "what": "'Raw tier on Skilient' is printed twice (header and summary). For most students that tells an employer they're at the bottom.",
+    "tasks": "T084",
+    "principles": "TRU,MOT",
+    "fix": "Hide tier below Spark by default, or make it a CV setting."
+   },
+   "P24": {
+    "sev": "Med",
+    "where": "Privacy centre vs CV",
+    "what": "Privacy centre says '2 active share links'; the CV page shows both expired on 18 Nov.",
+    "tasks": "T062,T085",
+    "principles": "H01,TRU",
+    "fix": "Count only links that haven't expired or been revoked."
+   },
+   "P25": {
+    "sev": "Med",
+    "where": "Settings > GitHub",
+    "what": "'Up to date: 10 repos · 0 commits analysed · 23 skills', while skills cite commits and PRs.",
+    "tasks": "T071,T069",
+    "principles": "H01,TRU",
+    "fix": "Show the real commit count, or drop the number."
+   },
+   "P26": {
+    "sev": "Med",
+    "where": "Feedback form",
+    "what": "Opened from the rail (or account menu) on /me/score, the form attaches '/feedback', not /me/score. The link has no ?from= and document.referrer is empty after in-app navigation.",
+    "tasks": "T067",
+    "principles": "H05",
+    "fix": "Add ?from=<pathname> to every Feedback link."
+   },
+   "P27": {
+    "sev": "Med",
+    "where": "/me/skills",
+    "what": "Claimed (self-reported) skills can only be added in onboarding; /me/skills has no Add, so a skill GitHub can't detect (public speaking) can't be listed later.",
+    "tasks": "T070,T069",
+    "principles": "H03,FIT",
+    "fix": "'Add a skill you haven't proved' on /me/skills, labelled claimed, no points."
+   },
+   "P28": {
+    "sev": "High",
+    "where": "Production content",
+    "what": "Too little content for discovery tasks: Openings all empty, University feed 2 posts, 1 recruiting venture (the tester's own), 0 events, 0 inductions, 0 project ideas, 0 swap teachers, leaderboard '#1 of 1'.",
+    "tasks": "T019,T047,T087,T088,T089,T094,T076,T079",
+    "principles": "EMP",
+    "fix": "Seed a test university (or NUTECH test society, ventures, events, ideas, teachers) before sessions, or run the sessions on staging."
+   },
+   "P29": {
+    "sev": "High",
+    "where": "/me/cv Share links",
+    "what": "Share links need Spark tier (100 points and a peer-verified contribution). A typical new tester can't make one, and nothing before the CV page says so; /verify tells recruiters to 'ask them for their latest link'.",
+    "tasks": "T085",
+    "principles": "H05,FIT",
+    "fix": "Say it where students first meet the CV (checklist, Your progress), or allow one link at Raw."
+   },
+   "P30": {
+    "sev": "Low",
+    "where": "Feed filter empty states",
+    "what": "Every filter shows the same 'Be the first to post...' with 'Browse ventures'; Events should point to Events, Societies to Societies. 'No shipped yet' reads oddly.",
+    "tasks": "T021",
+    "principles": "H02,EMP",
+    "fix": "Per-filter copy and CTA: 'No shipped projects yet'."
+   },
+   "P31": {
+    "sev": "Low",
+    "where": "Venture page tabs",
+    "what": "8 tabs (About ... Manage) show a horizontal scrollbar under them on a 1526px desktop.",
+    "tasks": "T054,T025",
+    "principles": "AES",
+    "fix": "Hide the scrollbar or move Manage into a menu."
+   },
+   "P32": {
+    "sev": "Low",
+    "where": "Type scale",
+    "what": "Text is sized in px (13 and 15px) while spacing uses rem, so a larger browser font size grows boxes but not text; sidebar labels truncate ('Leaderb…'). Zoom still works.",
+    "tasks": "T025",
+    "principles": "ACC",
+    "fix": "Use rem for font sizes."
+   },
+   "P33": {
+    "sev": "Low",
+    "where": "Skill drawer",
+    "what": "Level rules switch to third person ('a repository they own'); the rest of the app says 'you'.",
+    "tasks": "T069",
+    "principles": "H04",
+    "fix": "Second person throughout."
+   },
+   "P34": {
+    "sev": "Low",
+    "where": "Society page",
+    "what": "'Following' (a state) and 'Leave' sit side by side with equal weight; tab title reads 'Society · Skilient', not the society's name.",
+    "tasks": "T089,T091",
+    "principles": "H04,AFF",
+    "fix": "'Unfollow' on hover/focus, Leave in a menu; page title = society name."
+   },
+   "P35": {
+    "sev": "Info",
+    "where": "Content",
+    "what": "Society name typo 'Nutech Entreprenurship Club'.",
+    "tasks": "-",
+    "principles": "-",
+    "fix": "Ask the president to rename."
+   },
+   "P36": {
+    "sev": "Info",
+    "where": "Delete account",
+    "what": "'There is no data export at launch.' Students can't take their data with them.",
+    "tasks": "T064",
+    "principles": "PRV",
+    "fix": "Plan a JSON export."
+   }
+  },
+  "results": {
+   "T014": {
+    "status": "Done",
+    "answers": [
+     "Home: campus feed, composer, my progress. Openings: everything I can join or apply to, one card per kind. Ventures: projects I build with a team. Chat: friends and teams. Me: profile, Record, skills, CV, score.",
+     "Step 2 ('Search, or jump anywhere'): it pointed at a rail icon, not the search box, so I skipped it.",
+     "Too long for what it teaches: 15 steps, yet only 5 of the 14 rail icons get introduced."
+    ],
+    "issues": [
+     "P06",
+     "P07",
+     "P08"
+    ],
+    "note": "Replayed from Settings > Replay tour; it moves /feed -> /openings -> /me -> /feed."
+   },
+   "T015": {
+    "status": "Partly done",
+    "answers": [
+     "Your progress card on Home: 'Earn 60 more points to reach Spark', Take this step.",
+     "Partly. The checklist shows '+15' for an endorsement, but the score page contradicts itself (40 points, then 'rose quickly to 498, under review', 'updated 19 Oct').",
+     "'Get your first endorsement' needs a teammate on an in-progress venture; not doable today. 'Take this step' opened an explainer with no links, so I couldn't start anything."
+    ],
+    "issues": [
+     "P01",
+     "P02"
+    ],
+    "note": ""
+   },
+   "T016": {
+    "status": "Done",
+    "answers": [
+     "'swap': first try gave 'Skill swaps (Openings)' above 'Skill swap'; Enter would open the wrong page. 'privacy': only 'Settings' came up, then one more click to Privacy centre.",
+     "Openings (compass), Skill swap, Leaderboard (medal) and Friends vs Societies (both people icons).",
+     "Yes, they appear on hover and focus and are read out. Without them the rail is guesswork."
+    ],
+    "issues": [
+     "P04",
+     "P05",
+     "P06",
+     "P13"
+    ],
+    "note": ""
+   },
+   "T017": {
+    "status": "Done",
+    "answers": [
+     "The score page tip ('Others see your tier and rank, never the number') was new. Skill swap, Paths and Credentials showed no tip.",
+     "Skill swap empty state ('No teachers... yet') had no action. Paths' 'Follow a role to see its ladder' was wrong: clicking the role name shows it. Credentials' 'Add a certificate below' was right.",
+     "Closed the score tip. Fine to lose; Replay tour covers the rest."
+    ],
+    "issues": [
+     "P09",
+     "P11"
+    ],
+    "note": ""
+   },
+   "T018": {
+    "status": "Done",
+    "answers": [
+     "Account menu, then Settings: 'Replay tour' is near the bottom of Settings.",
+     "About 30 seconds.",
+     "No. 'Hide checklist' hid it for good with no undo and no way back. I expected an undo toast or a Settings switch."
+    ],
+    "issues": [
+     "P03"
+    ],
+    "note": "Side effect: Ahmed's checklist is now hidden; no UI restores it."
+   },
+   "T019": {
+    "status": "Partly done",
+    "answers": [
+     "Not answered: the only other post was already answered. I'd guess it feeds the post's quality score, seen as totals by the author.",
+     "An empty bar with 'Answered' at the right. It looked unfinished: I couldn't see what I'd picked.",
+     "No like button; didn't miss it.",
+     "n/a (2 posts in the feed)."
+    ],
+    "issues": [
+     "P14",
+     "P28"
+    ],
+    "note": "Feed had 2 posts; I didn't answer questions on real students' posts."
+   },
+   "T021": {
+    "status": "Done",
+    "answers": [
+     "The chip looks pressed and ?filter= is in the URL; it's subtle in dark mode.",
+     "University = my campus; Global = every university's posts marked Global.",
+     "One post ('looking for a co-founder'). The composer switched itself to Global too, which I didn't notice at first."
+    ],
+    "issues": [
+     "P30"
+    ],
+    "note": ""
+   },
+   "T024": {
+    "status": "Partly done",
+    "answers": [
+     "Yes, a clear ring everywhere I went.",
+     "No traps. In the ⋯ menu, arrow keys did nothing; Tab and Esc worked, and Esc returned focus to ⋯.",
+     "Not tested: no unanswered question available."
+    ],
+    "issues": [
+     "P15"
+    ],
+    "note": ""
+   },
+   "T025": {
+    "status": "Partly done",
+    "answers": [
+     "Light mode: secondary chip text looks faint on the beige surface (CI's axe check should confirm). Dark mode fine.",
+     "With a 200% browser font size, text stayed 13px while boxes grew; 'Leaderboard' and my name truncated in the sidebar.",
+     "Dark: the raised surfaces read better; light looks washed out on chips."
+    ],
+    "issues": [
+     "P31",
+     "P32"
+    ],
+    "note": "Desktop only; theme switched by class, not by the phone setting."
+   },
+   "T041": {
+    "status": "Blocked",
+    "answers": [
+     "Set Batch 2027 and Skill React. Nothing happened: it still said 'Type at least 2 letters of a name'.",
+     "On my own profile, yes: chips say L3 'Accepted by others' with an AI-assisted tag. Claimed skills aren't shown at all.",
+     "n/a: couldn't reach another student this way."
+    ],
+    "issues": [
+     "P16"
+    ],
+    "note": ""
+   },
+   "T042": {
+    "status": "Partly done",
+    "answers": [
+     "'No results. Try clearing the filters.' with a Clear filters button. Good.",
+     "Not opened (only friends and one suggestion available; didn't want to record a view on a real student).",
+     "n/a"
+    ],
+    "issues": [],
+    "note": ""
+   },
+   "T043": {
+    "status": "Partly done",
+    "answers": [
+     "Me > Profile ('How others see you'), which is just my profile with Edit. No preview as a stranger.",
+     "My GitHub username and every skill with levels are on it; visibility is Friends only, but I couldn't check what non-friends see.",
+     "Raw badge next to my name feels like a beginner label; I'd hide it if I could."
+    ],
+    "issues": [
+     "P18",
+     "P23"
+    ],
+    "note": ""
+   },
+   "T044": {
+    "status": "Partly done",
+    "answers": [
+     "Hard to spot: the list is mostly chat messages; a society membership and a CV refresh are buried between them.",
+     "Yes: every chat message is also a notification, while Chat already shows 5 unread.",
+     "Not tapped (would mark real messages read).",
+     "n/a"
+    ],
+    "issues": [
+     "P19"
+    ],
+    "note": "Didn't open or clear: they're real conversations."
+   },
+   "T047": {
+    "status": "Blocked",
+    "answers": [
+     "The only recruiting venture is my own (3 open roles), so nothing to apply to.",
+     "'1 of 1 place open' = one seat, still free. It reads awkwardly; 'Open: 1 place' would be clearer.",
+     "n/a",
+     "n/a"
+    ],
+    "issues": [
+     "P28"
+    ],
+    "note": ""
+   },
+   "T061": {
+    "status": "Not run",
+    "answers": [
+     "",
+     "Current setting: Friends only.",
+     ""
+    ],
+    "issues": [],
+    "note": "Didn't edit the real profile."
+   },
+   "T062": {
+    "status": "Partly done",
+    "answers": [
+     "Under 30 s: Settings > Privacy centre has both (leaderboard switch and 'Who viewed my CV').",
+     "That recruiters can find me now, which isn't true: the portal is off.",
+     "It says 2 active share links (both expired) and calls viewer names a Pro feature though I have Pro."
+    ],
+    "issues": [
+     "P05",
+     "P20",
+     "P21",
+     "P24"
+    ],
+    "note": "Didn't flip the switch."
+   },
+   "T063": {
+    "status": "Partly done",
+    "answers": [
+     "Recent activity lists device and browser (e.g. 'Chrome on Android') and date; recognisable.",
+     "Not run (signing out would end the user's session).",
+     "Not run."
+    ],
+    "issues": [],
+    "note": ""
+   },
+   "T064": {
+    "status": "Partly done",
+    "answers": [
+     "Mostly: ventures pass to the longest-standing teammate, CVs are revoked. The Record line ('records that mention you... keep no name') is vague about my own entries.",
+     "Not started. The page says I can cancel here within 14 days and I must type my username: felt safe.",
+     "Not read in full."
+    ],
+    "issues": [
+     "P36"
+    ],
+    "note": ""
+   },
+   "T065": {
+    "status": "Partly done",
+    "answers": [
+     "'A Skilient reviewer checks each one'; no time estimate.",
+     "No credentials yet, so no statuses seen.",
+     "Copy says 'on your profile' once approved."
+    ],
+    "issues": [],
+    "note": "No upload."
+   },
+   "T066": {
+    "status": "Done",
+    "answers": [
+     "Pro adds extra CV layouts, refresh any time, CV insights, viewer names and the full survey breakdown; proof, levels and ranking stay free.",
+     "Yes: Billing says 'Student Pro (yearly), Active, Test', renews 19 Oct 2027.",
+     "No; Billing says proof stays free. But nothing says what happens when the beta ends, and Privacy still upsells Pro to me."
+    ],
+    "issues": [
+     "P20",
+     "P21"
+    ],
+    "note": ""
+   },
+   "T067": {
+    "status": "Partly done",
+    "answers": [
+     "Rail icon (Feedback) and the account menu.",
+     "'Every message is read by a person' and 'My feedback' shows status and replies. But it said it would attach '/feedback' when I came from /me/score.",
+     "Yes, if it emailed me."
+    ],
+    "issues": [
+     "P26"
+    ],
+    "note": "Not sent."
+   },
+   "T068": {
+    "status": "Partly done",
+    "answers": [
+     "n/a (nothing to appeal).",
+     "Found /appeals via the URL; I didn't see a link to it from Settings or the rail.",
+     "n/a"
+    ],
+    "issues": [],
+    "note": ""
+   },
+   "T069": {
+    "status": "Done",
+    "answers": [
+     "L2 'Authored': my own commits on 3+ days with 150+ lines or 3+ imports.",
+     "Code-derived only: the page shows no claimed skills, so the question doesn't apply after onboarding.",
+     "Yes for Tailwind: 'commit it on 3 more days (0 of 3)' is concrete. The drawer switches to 'they'."
+    ],
+    "issues": [
+     "P27",
+     "P33"
+    ],
+    "note": ""
+   },
+   "T070": {
+    "status": "Blocked",
+    "answers": [
+     "Couldn't claim one: /me/skills has no Add.",
+     "Not tried (each repo has a switch; 'Switch a repository off to keep it out of your skills' is clear).",
+     "I'd expect the skills to stay but stop updating."
+    ],
+    "issues": [
+     "P27",
+     "P25"
+    ],
+    "note": ""
+   },
+   "T071": {
+    "status": "Partly done",
+    "answers": [
+     "n/a (already connected).",
+     "'Up to date... Last synced 23 Nov, 02:18' but '0 commits analysed' next to 23 skills.",
+     "n/a"
+    ],
+    "issues": [
+     "P25"
+    ],
+    "note": ""
+   },
+   "T072": {
+    "status": "Partly done",
+    "answers": [
+     "A default order until 10 seniors qualify; the subtitle explains it. I trusted it less knowing it isn't from seniors yet.",
+     "6 of 11 done, Express next, done squares dated. Clear.",
+     "Not tried (didn't follow paths on the real account)."
+    ],
+    "issues": [
+     "P09",
+     "P10"
+    ],
+    "note": ""
+   },
+   "T073": {
+    "status": "Blocked",
+    "answers": [
+     "No task exists for Express: 'No tasks for this skill yet'.",
+     "n/a",
+     "n/a"
+    ],
+    "issues": [
+     "P10"
+    ],
+    "note": ""
+   },
+   "T076": {
+    "status": "Blocked",
+    "answers": [
+     "Nobody teaches anything at NUTECH yet.",
+     "Not visible without a teacher.",
+     "'We'll show them here when someone offers...' No other suggestion (e.g. a path or a friend)."
+    ],
+    "issues": [
+     "P11",
+     "P28"
+    ],
+    "note": ""
+   },
+   "T078": {
+    "status": "Partly done",
+    "answers": [
+     "40 points from momentum only; a much higher score is held for review, which the page mentions in one line.",
+     "No: 'Updated 19 Oct' vs nightly updates, 'no change since 22 Nov', formula v2 banner vs 'Formula v1' footer.",
+     "Fair rules on paper; the 35-day review hold with no date feels like a black box."
+    ],
+    "issues": [
+     "P01",
+     "P02"
+    ],
+    "note": ""
+   },
+   "T079": {
+    "status": "Done",
+    "answers": [
+     "'#1 of 1' at my university: meaningless, not encouraging.",
+     "Yes; tier and change are enough.",
+     "Not at #1 of 1, but at the bottom of a real board I might."
+    ],
+    "issues": [
+     "P28"
+    ],
+    "note": ""
+   },
+   "T080": {
+    "status": "Blocked",
+    "answers": [
+     "No entries.",
+     "n/a",
+     "Code page for CVs was convincing (Valid, Ed25519, PDF fingerprint check)."
+    ],
+    "issues": [],
+    "note": ""
+   },
+   "T081": {
+    "status": "Blocked",
+    "answers": [
+     "No entries to share.",
+     "n/a",
+     "n/a"
+    ],
+    "issues": [],
+    "note": ""
+   },
+   "T083": {
+    "status": "Done",
+    "answers": [
+     "Yes: 'Your first entry is one event away', and how entries are earned.",
+     "'Find events' makes sense, but Events is empty at NUTECH, so it's a dead end today."
+    ],
+    "issues": [
+     "P28"
+    ],
+    "note": ""
+   },
+   "T084": {
+    "status": "Partly done",
+    "answers": [
+     "Yes: 'Built from your verified work only'; sections are tick boxes with up/down. Good.",
+     "'Raw tier on Skilient' twice, and an abandoned project shown as 'Present'.",
+     "No: the abandoned project and tier line would go first."
+    ],
+    "issues": [
+     "P22",
+     "P23"
+    ],
+    "note": "Didn't save settings."
+   },
+   "T085": {
+    "status": "Blocked",
+    "answers": [
+     "Share links need Spark tier; the CV page says so, nothing earlier did.",
+     "Pro is clear (templates marked Pro); the Spark gate isn't free-vs-Pro, it's tier, which surprised me.",
+     "CV page: 'Views through your links: 1 in the last 30 days', and per-link view counts."
+    ],
+    "issues": [
+     "P29",
+     "P24"
+    ],
+    "note": ""
+   },
+   "T086": {
+    "status": "Partly done",
+    "answers": [
+     "Typed the CV code at /verify: genuine code shows Valid with signature; a mistyped code shows 'Not found'; an old one 'Superseded'.",
+     "Not tested (needs an edited PDF); the page has a 'Check a PDF you were sent' fingerprint check.",
+     "Yes, more than a normal CV, if the content were right (see the abandoned project)."
+    ],
+    "issues": [
+     "P22"
+    ],
+    "note": ""
+   },
+   "T087": {
+    "status": "Blocked",
+    "answers": [
+     "This week (top), all empty.",
+     "Empty, but every card says what would appear and offers one action. Good empty states.",
+     "No 'new' markers visible because nothing is open."
+    ],
+    "issues": [
+     "P28"
+    ],
+    "note": ""
+   },
+   "T088": {
+    "status": "Blocked",
+    "answers": [
+     "No faculty ideas at NUTECH.",
+     "n/a",
+     "n/a"
+    ],
+    "issues": [
+     "P28"
+    ],
+    "note": ""
+   },
+   "T089": {
+    "status": "Partly done",
+    "answers": [
+     "Following = see posts and events; member = belong (By request here, an officer accepts). The page explains membership mode.",
+     "'Following' looks like a button to follow, but it's the current state; 'Leave' sits right next to it.",
+     "Already a member; not tested."
+    ],
+    "issues": [
+     "P34",
+     "P35"
+    ],
+    "note": ""
+   },
+   "T094": {
+    "status": "Blocked",
+    "answers": [
+     "No upcoming events at NUTECH.",
+     "n/a",
+     "n/a"
+    ],
+    "issues": [
+     "P28"
+    ],
+    "note": ""
+   }
+  }
+ },
+ "heuristics": [
+  {
+   "code": "H01",
+   "methods": [
+    "A",
+    "W"
+   ],
+   "check": "Time every action in the tasks: click to a visible pending state (disabled button, spinner, aria-busy) and to a result (toast, inline message, new page). Every background job (GitHub sync, CV refresh, sealing, reviews) must say its state and when to expect it.",
+   "pass": "Pending state within 100 ms; result or progress within 1 s; every job shows status and an expected time."
+  },
+  {
+   "code": "H02",
+   "methods": [
+    "C",
+    "W"
+   ],
+   "check": "List product words a first-year student may not know (venture, Record, sealed, L2, induction, superseded, corroborated, tier names) and where each first appears.",
+   "pass": "Each is explained where it first appears (subtitle, tooltip or tip)."
+  },
+  {
+   "code": "H03",
+   "methods": [
+    "A"
+   ],
+   "check": "On seeded throwaway data, find every destructive or hiding control (Delete, Remove, Leave, Unfriend, Revoke, Abandon, Cancel, Hide, Block, Decline, Reject) on every route, use it, and note confirm, undo, or a way back. Esc and Back close every dialog and sheet; Back in steppers keeps input.",
+   "pass": "Every one has a confirm, an undo or a stated way back."
+  },
+  {
+   "code": "H04",
+   "methods": [
+    "C",
+    "I"
+   ],
+   "check": "One term per concept across pages (Openings/Opportunities, Batch/Class of, project/venture, you/they), the same label for the same action, one date format.",
+   "pass": "No concept has two names; no action has two labels."
+  },
+  {
+   "code": "H05",
+   "methods": [
+    "A",
+    "W"
+   ],
+   "check": "For every form: submit empty, too long, wrong format, too-big file; double-click submit; leave mid-form; go back after submit.",
+   "pass": "No duplicates from double clicks; leaving a dirty form warns; limits shown before submit."
+  },
+  {
+   "code": "H06",
+   "methods": [
+    "A",
+    "W"
+   ],
+   "check": "Count icon-only controls per page and check each has a tooltip and accessible name. Every 'next step' or requirement message links to the action it describes.",
+   "pass": "All icon-only controls labelled; no next step without a link."
+  },
+  {
+   "code": "H07",
+   "methods": [
+    "A"
+   ],
+   "check": "For every page in the sweep, type its title in Ctrl K: is it in the top 3? Filters and tabs kept in the URL; bulk actions on lists over 10 (payments, check-ins, applicants).",
+   "pass": "At least 90% of pages found in the top 3; state in URL; bulk actions where lists grow."
+  },
+  {
+   "code": "H08",
+   "methods": [
+    "V",
+    "A"
+   ],
+   "check": "Per screenshot: more than one primary (orange) action? the same number or message in two places? At 390 px, is the page's main content above the fold, or only explanation?",
+   "pass": "One primary action per screen; main content visible without scrolling on a phone."
+  },
+  {
+   "code": "H09",
+   "methods": [
+    "A"
+   ],
+   "check": "Trigger errors: server validation, offline, made-up ids, no permission, expired links. Note whether the message names the cause and the fix, sits next to the field, sets aria-invalid and aria-describedby, isn't colour-only, and keeps the input.",
+   "pass": "All five, on every error tried."
+  },
+  {
+   "code": "H10",
+   "methods": [
+    "W"
+   ],
+   "check": "Wherever you got stuck in a task: was help one step away (tip, subtitle, Feedback link carrying the page)?",
+   "pass": "Help or Feedback reachable in one tap from every page."
+  },
+  {
+   "code": "ACC",
+   "methods": [
+    "A"
+   ],
+   "check": "axe WCAG 2.2 AA on every route, both themes, 390 and 1280 px; target size (24 px minimum, 44 px on phone for primary); visible focus at each Tab stop; reflow at 320 css px and 400% zoom; text-spacing override; prefers-reduced-motion; five core tasks by keyboard only (post, apply, register, send a message, export the CV).",
+   "pass": "0 serious or critical axe issues; no sideways scroll; all five tasks keyboard-complete."
+  },
+  {
+   "code": "MOB",
+   "methods": [
+    "A"
+   ],
+   "check": "390x844 phone, Slow 4G and 4x CPU throttling: LCP, CLS and click-to-response on core pages; primary action within thumb reach; inputs have the right inputmode and autocomplete; nothing hover-only.",
+   "pass": "LCP 2.5 s or less, CLS 0.1 or less, response under 200 ms or progress shown."
+  },
+  {
+   "code": "LRN",
+   "methods": [
+    "W"
+   ],
+   "check": "For first-day tasks, compare the clicks you took with the shortest path; note every wrong turn and why the page invited it.",
+   "pass": "No more than 1.5 times the shortest path."
+  },
+  {
+   "code": "NAV",
+   "methods": [
+    "A"
+   ],
+   "check": "Crawl from /feed by visible links only: clicks to reach each student page; pages reachable only by URL (for example /appeals); current place marked in the nav on each page.",
+   "pass": "Every student page within 3 clicks of Home; no orphans; current place always marked."
+  },
+  {
+   "code": "TRU",
+   "methods": [
+    "I"
+   ],
+   "check": "The same fact in different places must match: score, tier, counts (share links, unread, members), statuses (abandoned venture on CV), dates, amounts and payment references.",
+   "pass": "No contradictions."
+  },
+  {
+   "code": "PRV",
+   "methods": [
+    "A"
+   ],
+   "check": "Open the same profile, CV and Record as: self, friend, same-university stranger, other-university student, signed out. Compare what each sees with the visibility setting; hidden parts say why.",
+   "pass": "Exactly matches the setting for every viewer; privacy controls within 2 clicks."
+  },
+  {
+   "code": "AFF",
+   "methods": [
+    "V",
+    "A"
+   ],
+   "check": "Raised means pressable and pressed means active: find raised things that do nothing, flat things that do something, state labels used as buttons ('Following'), pointer cursors on non-focusable elements.",
+   "pass": "None found."
+  },
+  {
+   "code": "COP",
+   "methods": [
+    "C"
+   ],
+   "check": "Every visible string: sentences over 20 words, jargon, typos (spell-check with a product allow-list), recruiter or portal mentions while portals are off, 'you' voice, the same empty copy reused for different things.",
+   "pass": "0 typos and 0 off-flag mentions; long sentences listed."
+  },
+  {
+   "code": "EMP",
+   "methods": [
+    "A"
+   ],
+   "check": "With a fresh account, visit every list page. Note the title, the explanation, the single action, and where the action leads (an empty page again?).",
+   "pass": "Every empty state has all three, and its action doesn't lead to another empty page."
+  },
+  {
+   "code": "MOT",
+   "methods": [
+    "W",
+    "C"
+   ],
+   "check": "Shame or pressure: lowest tier printed or shown to others, confirmshaming, fake urgency, streak pressure, points without an explanation.",
+   "pass": "None found."
+  },
+  {
+   "code": "SAF",
+   "methods": [
+    "A"
+   ],
+   "check": "From each content type (post, comment, message, profile, venture, society, event, Record entry), count taps to Report, Block and Mute; with a second account, check a block hides both people everywhere.",
+   "pass": "2 taps or fewer; block works in every surface."
+  },
+  {
+   "code": "HCK",
+   "methods": [
+    "A"
+   ],
+   "check": "Count choices at each decision point: rail and menu items, select options without type-ahead, fields per form step.",
+   "pass": "Primary nav 7 or fewer (or grouped); any select over 15 options has type-ahead."
+  },
+  {
+   "code": "FIT",
+   "methods": [
+    "A"
+   ],
+   "check": "Bounding boxes at 390 px: primary action at least 44 px and within thumb reach; destructive actions not next to (under 8 px from) or bigger than the primary one.",
+   "pass": "All primary actions pass; no destructive action beside a primary one."
+  },
+  {
+   "code": "JAK",
+   "methods": [
+    "W"
+   ],
+   "check": "Compare chat, feed, profile, sign-in and sharing with WhatsApp, Instagram, LinkedIn and Google; note any difference that caused a slip in a task.",
+   "pass": "No difference caused a slip."
+  },
+  {
+   "code": "DOH",
+   "methods": [
+    "A"
+   ],
+   "check": "Time every click in the tasks under Fast 3G: response or visible progress.",
+   "pass": "95% respond within 400 ms or show progress."
+  },
+  {
+   "code": "PKE",
+   "methods": [
+    "V",
+    "W"
+   ],
+   "check": "Key moments (welcome, first post, applied, venture complete, entry sealed, checked in, tier up) and the last screen of each session: is there a clear, rewarding confirmation?",
+   "pass": "Each key moment has its own confirmation."
+  },
+  {
+   "code": "TES",
+   "methods": [
+    "W"
+   ],
+   "check": "Count fields you typed that the system already knew (university, department, batch, name from email) and steps it could have done for you.",
+   "pass": "No known data asked again."
+  },
+  {
+   "code": "MIL",
+   "methods": [
+    "A"
+   ],
+   "check": "Fields per form or step; steppers show the step count; long lists have headings.",
+   "pass": "7 fields or fewer per step, or grouped under headings."
+  },
+  {
+   "code": "AES",
+   "methods": [
+    "V"
+   ],
+   "check": "Where polish hid a problem: faint pills, stray scrollbars, empty wells that look broken, decoration over content.",
+   "pass": "None found."
+  }
+ ]
+}

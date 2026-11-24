@@ -192,11 +192,22 @@ describe("event list", () => {
     // Calls with a literal event name; the function definitions themselves have `p_event`.
     for (const args of callArgs("private.track")) if (literal(args[1])) written.add(literal(args[1])!);
     for (const args of callArgs("private.track_once")) if (literal(args[2])) written.add(literal(args[2])!);
+    // A later migration that drops a feature lists its events as `-- retired-event: <name>`.
+    for (const m of sql.matchAll(/^-- retired-event: ([a-z_]+)$/gm)) written.delete(m[1]);
     expect([...written].sort()).toEqual([...SERVER_EVENTS].sort());
   });
 
   it("has the five landing events (PRD 5.1) and nothing that overlaps the server's", () => {
-    expect([...CLIENT_EVENTS].sort()).toEqual(["org_cta_click", "signup_start", "uni_detected", "uni_not_live", "uni_requested"]);
+    expect([...CLIENT_EVENTS].sort()).toEqual([
+      "org_cta_click",
+      "signup_start",
+      "uni_detected",
+      "uni_not_live",
+      "uni_requested",
+      "welcome_skipped",
+      "welcome_tour_started",
+      "welcome_viewed",
+    ]);
     for (const event of CLIENT_EVENTS) expect(SERVER_EVENTS as readonly string[]).not.toContain(event);
   });
 });

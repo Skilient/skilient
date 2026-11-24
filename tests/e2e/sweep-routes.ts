@@ -46,12 +46,11 @@ export const SWEEP: SweepRoute[] = [
     "/onboarding/[step]", "/onboarding/done", "/societies", "/societies/new", "/societies/[slug]", "/societies/[slug]/manage",
     "/societies/[slug]/manage/payments", "/societies/[slug]/inductions/new", "/societies/[slug]/inductions/[id]",
     "/societies/[slug]/events/new", "/events/[id]/ticket", "/events/[id]/manage", "/me/tickets", "/me/record", "/me/paths", "/me/tasks/[id]", "/me/tasks/reviews/[id]",
-    "/swaps", "/swaps/[id]", "/yearbook", "/yearbook/me", "/yearbook/vote",
+    "/swaps", "/swaps/[id]",
   ]),
   ...["venture-roles", "inductions", "events", "ideas", "paths", "swaps", "this-week"].map(
     (category): SweepRoute => ({ route: "/openings/[category]", role: "student", params: { category: `=${category}` } }),
   ),
-  { route: "/yearbook/[username]", role: "student", params: { username: "username" } },
   ...["/profile/[username]", "/profile/[username]/activity", "/profile/[username]/skills", "/profile/[username]/ventures"].map(
     (route): SweepRoute => ({ route, role: "student", params: { username: "username" } }),
   ),

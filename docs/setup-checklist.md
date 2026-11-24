@@ -569,5 +569,5 @@ GitHub, payments) to the coming-soon page.
          address works too; push services use it to reach us about problems).
       3. Never rotate them casually: every subscribed device would stop getting pushes until it subscribes again.
       The restore drill makes its own pair for the scratch project (`reseed-vault.sql`, `verify.mjs`).
-- [ ] **Storage plan:** society documents, payment receipts (deleted 90 days after each event), event covers, yearbook photos and
+- [ ] **Storage plan:** society documents, payment receipts (deleted 90 days after each event), event covers (~~yearbook photos~~, removed 2026-11-23) and
       Record PDFs add to storage; check the Supabase plan's quota before the closed beta.

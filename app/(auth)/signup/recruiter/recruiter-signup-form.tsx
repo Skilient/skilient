@@ -23,6 +23,7 @@ export function RecruiterSignupForm({ siteKey, agreement, defaultEmail }: { site
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (siteKey && !token) return;
     const form = new FormData(event.currentTarget);
     if (token) form.set("turnstileToken", token);
     setError(null);
@@ -31,6 +32,7 @@ export function RecruiterSignupForm({ siteKey, agreement, defaultEmail }: { site
       // Success redirects to /signup/verify; anything returned is an error.
       if (result && !result.ok) {
         setError(result);
+        setToken(null);
         setResetKey((k) => k + 1);
       }
     });
@@ -107,7 +109,7 @@ export function RecruiterSignupForm({ siteKey, agreement, defaultEmail }: { site
 
       {siteKey ? <Turnstile siteKey={siteKey} onToken={setToken} resetKey={resetKey} action="signup" /> : null}
 
-      <Button type="submit" size="lg" loading={pending}>
+      <Button type="submit" size="lg" loading={pending} disabled={!!siteKey && !token}>
         Create recruiter account
       </Button>
       <p className="text-center text-body-sm text-text-muted">

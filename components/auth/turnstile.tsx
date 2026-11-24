@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 
 interface TurnstileApi {
-  ready(callback: () => void): void;
   render(el: HTMLElement, options: Record<string, unknown>): string;
   reset(id: string): void;
   remove(id: string): void;
@@ -18,8 +17,10 @@ declare global {
 const SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 let scriptPromise: Promise<void> | null = null;
 
+// Never call turnstile.ready() here: api.js throws TurnstileError 3857 when it was loaded async or
+// deferred, and a script injected from JavaScript always is. render() is usable once onload fires.
 function loadScript(): Promise<void> {
-  if (window.turnstile) return new Promise((resolve) => window.turnstile!.ready(resolve));
+  if (window.turnstile) return Promise.resolve();
   // Loaded by our own (nonce-trusted) bundle, so CSP 'strict-dynamic' allows it.
   scriptPromise ??= new Promise((resolve, reject) => {
     const script = document.createElement("script");
@@ -36,10 +37,8 @@ function loadScript(): Promise<void> {
     if (nonce) script.nonce = nonce;
     script.onload = () => {
       if (!window.turnstile) return fail();
-      window.turnstile.ready(() => {
-        window.clearTimeout(timeout);
-        resolve();
-      });
+      window.clearTimeout(timeout);
+      resolve();
     };
     script.onerror = fail;
     document.head.appendChild(script);

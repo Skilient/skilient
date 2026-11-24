@@ -68,12 +68,12 @@ if (run("T090")) {
   await timedGoto(p, `/societies/${S.inductions.slug}/inductions/${ids.inductionRound}`); await ready(p, 600);
   say("T090 round:", await mainText(p, 1200));
   await shot(p, "T090");
-  const ap = btn(/^Apply/);
-  say("T090 apply:", T(await timedClick(p, ap, "open induction apply")), await dialogText(p, 700));
-  const d = dlg(); const tas = d.locator("textarea, input[type=text], input[type=url]");
-  for (let i = 0; i < await tas.count(); i++) await tas.nth(i).fill(i === 0 ? "https://figma.com/file/my-portfolio" : "I redesigned our venture's onboarding.");
-  const radio = d.getByRole("radio").first(); if (await radio.isVisible().catch(() => false)) await radio.click();
-  say("T090 send:", T(await timedClick(p, d.getByRole("button", { name: /^(Send|Apply|Submit)/ }).last(), "send induction application", { timeout: 30_000 })), await toastText(p));
+  const form = p.locator("main form").last();
+  say("T090 form fields:", await form.locator("select, textarea, input").evaluateAll((e) => e.map((x) => `${x.tagName}:${x.getAttribute("name") ?? x.getAttribute("aria-label")}`)));
+  const tas = form.locator("textarea, input[type=text], input[type=url]");
+  for (let i = 0; i < await tas.count(); i++) await tas.nth(i).fill("https://figma.com/file/my-portfolio — I redesigned our venture's onboarding.");
+  const sel = form.locator("select").first(); if (await sel.isVisible().catch(() => false)) await sel.selectOption({ index: 1 }).catch(() => undefined);
+  say("T090 send:", T(await timedClick(p, form.getByRole("button", { name: /Send application/ }), "send induction application", { timeout: 30_000 })), await toastText(p));
   await p.waitForTimeout(1000); say("T090 after:", await mainText(p, 600));
   const [app] = await sql`select id from public.induction_applications where round_id = ${ids.inductionRound} and user_id = ${acc.tester.id}`.catch(async () => await sql`select id from public.induction_applications where round_id = ${ids.inductionRound} order by created_at desc limit 1`);
   if (app) { const r = await asUser(acc.officer2.id, `select public.decide_induction_application($1, 'accept', $2)`, [app.id, "Loved your onboarding redesign. Welcome!"]).catch((e: any) => "decide: " + e.message); say("T090 officer decided:", r); }
@@ -113,7 +113,8 @@ if (run("T094")) {
   say("T094 fields:", await tas.evaluateAll((e) => e.map((x) => x.getAttribute("aria-label") ?? (x as HTMLInputElement).labels?.[0]?.innerText ?? x.getAttribute("name"))));
   const sub = d.getByRole("button", { name: /^(Register|Confirm|Get ticket)/ }).last();
   say("T094 submit empty:", T(await timedClick(p, sub, "register without answers")), await dialogText(p, 500));
-  for (let i = 0; i < await tas.count(); i++) await tas.nth(i).fill(i === 0 ? "A little, for coursework" : "Windows");
+  await d.getByLabel(/Have you used Git before/).fill("A little, for coursework");
+  await d.getByLabel(/Which laptop OS/).fill("Windows");
   say("T094 submit:", T(await timedClick(p, sub, "register", { timeout: 30_000 })), await toastText(p));
   await ready(p, 800); say("T094 after:", new URL(p.url()).pathname, await mainText(p, 900));
   const tk = p.getByRole("link", { name: /ticket/i }).first(); if (await tk.isVisible().catch(() => false)) { await tk.click(); await ready(p, 700); }
@@ -127,26 +128,30 @@ if (run("T095")) {
   setTask("T095");
   await timedGoto(p, "/events/" + ev.hackathon); await ready(p, 600);
   say("T095 hack:", (await mainText(p, 900)));
+  if (await btn(/^Register/).isVisible().catch(() => false)) {
   say("T095 register:", T(await timedClick(p, btn(/^Register/), "open hackathon register")), await dialogText(p, 900));
   await shot(p, "T095");
   const d = dlg();
-  const create = d.getByText(/Create a team|Start a team/).first(); if (await create.isVisible().catch(() => false)) await create.click();
-  const name = d.locator("input[type=text]").first(); if (await name.isVisible().catch(() => false)) await name.fill("Null Pointers");
+  await d.getByText(/Create a team/).first().click();
+  await d.getByLabel("Team name").fill("Null Pointers");
   say("T095 create team:", T(await timedClick(p, d.getByRole("button", { name: /^(Register|Create|Confirm)/ }).last(), "register with new team", { timeout: 30_000 })), await toastText(p), await dialogText(p, 300));
-  await ready(p, 800);
+  await ready(p, 800); }
   const page_ = await mainText(p, 2000); say("T095 after:", page_.slice(0, 900));
   const code = /\b([A-Z0-9]{5,8})\b/.exec(page_.split("code")[1] ?? "")?.[1];
   const [team] = await sql`select t.id, t.code from public.event_teams t where t.event_id = ${ev.hackathon} order by t.created_at desc limit 1`.catch((e) => [{ err: e.message }] as any);
-  say("T095 team:", JSON.stringify(team), "| code on page:", code);
+  say("T095 team:", JSON.stringify(team), "| code shown on ticket page:", (await p.locator("body").innerText()).includes(team?.code ?? "@@"));
+  await p.goto("/events/" + ev.hackathon); await ready(p, 500); say("T095 code on event page:", (await p.locator("body").innerText()).includes(team?.code ?? "@@"), (await mainText(p, 1500)).split(" | ").filter((l) => /team|code|Null/i.test(l)).slice(0, 5));
   for (const who of ["helperA", "helperB"]) {
     const h = await page(await context(b, { device: "phone", throttle: false }));
     await signIn(h, acc[who]); await h.goto("/events/" + ev.hackathon); await ready(h, 500);
     await h.getByRole("button", { name: /^Register/ }).first().click(); await h.waitForTimeout(800);
     const hd = h.locator('[role="dialog"]').last();
-    await hd.getByText(/Join a team|Have a code/).first().click().catch(() => undefined);
-    await hd.locator("input[type=text]").first().fill(String(team?.code ?? code ?? ""));
+    await hd.getByText(/Join a team/).first().click().catch(() => undefined);
+    await h.waitForTimeout(300);
+    await hd.getByRole("textbox").last().fill(String(team?.code ?? code ?? ""));
     await hd.getByRole("button", { name: /^(Register|Join|Confirm)/ }).last().click(); await h.waitForTimeout(1800);
     say(`T095 ${who} joined:`, (await hd.innerText().catch(() => "")).replace(/\n+/g, " | ").slice(0, 200), "|", (await mainText(h, 300)));
+    await h.context().close();
   }
   await p.reload(); await ready(p, 600); say("T095 team now:", (await mainText(p, 2000)).split(" | ").filter((l) => /team|member|Null|Ali|Bushra/i.test(l)).slice(0, 8));
 }
@@ -157,7 +162,7 @@ if (run("T096")) {
   for (const [k, label] of [["full", "full"], ["otherBatch", "other batch"], ["notOpen", "not open"], ["closed", "cancelled"]] as const) {
     await timedGoto(p, "/events/" + ev[k]); await ready(p, 600);
     say(`T096 ${label}:`, (await mainText(p, 1000)).slice(0, 600), "| buttons:", await p.locator("main").getByRole("button").allInnerTexts());
-    if (k === "full") { const w = btn(/waitlist/i); if (await w.isVisible().catch(() => false)) { say("T096 waitlist:", T(await timedClick(p, w, "join waitlist")), await dialogText(p, 400)); const c = dlg().getByRole("button", { name: /waitlist|Join|Register/i }).last(); if (await c.isVisible().catch(() => false)) say("T096 waitlist confirm:", T(await timedClick(p, c, "confirm waitlist"))); await p.waitForTimeout(800); say("T096 after waitlist:", (await mainText(p, 1000)).split(" | ").filter((l) => /waitlist|position|#/i.test(l))); } }
+    if (k === "full") { const w = btn(/waitlist|^Register/i); if (await w.isVisible().catch(() => false)) { say("T096 waitlist:", T(await timedClick(p, w, "join waitlist")), await dialogText(p, 400)); const c = dlg().getByRole("button", { name: /waitlist|Join|Register/i }).last(); if (await c.isVisible().catch(() => false)) say("T096 waitlist confirm:", T(await timedClick(p, c, "confirm waitlist"))); await p.waitForTimeout(800); say("T096 after waitlist:", (await mainText(p, 1000)).split(" | ").filter((l) => /waitlist|position|#/i.test(l))); } }
     if (k !== "full") await shot(p, "T096");
   }
 }
@@ -165,6 +170,7 @@ if (run("T096")) {
 if (run("T097")) {
   setTask("T097");
   // The event day: move the workshop to start in an hour (check-in opens 2 h before), the officer scans the ticket.
+  if (process.env.SKIP_DAY) { /* already moved */ } else
   await sql`update public.event_sessions set starts_at = now() + interval '1 hour', ends_at = now() + interval '3 hours' where event_id = ${ticketEvent}`;
   await sql`update public.events set starts_at = now() + interval '1 hour', ends_at = now() + interval '3 hours' where id = ${ticketEvent}`;
   await timedGoto(p, `/events/${ticketEvent}/ticket`); await ready(p, 600);
@@ -178,9 +184,11 @@ if (run("T097")) {
   await sql`update public.events set starts_at = now() - interval '3 hours', ends_at = now() - interval '1 hour', status = 'ended' where id = ${ticketEvent}`;
   await timedGoto(p, "/events/" + ticketEvent); await ready(p, 600);
   say("T097 after event:", await mainText(p, 900));
-  const rating = p.getByRole("radio").nth(3); if (await rating.isVisible().catch(() => false)) await rating.click({ force: true });
-  const fb = p.locator("main textarea").first(); if (await fb.isVisible().catch(() => false)) await fb.fill("Good pace, more practice time please.");
-  const send = btn(/Send feedback|Send/); if (await send.isVisible().catch(() => false)) say("T097 feedback:", T(await timedClick(p, send, "send event feedback")), await toastText(p));
+  const fbForm = p.locator("main form").filter({ hasText: "How was it?" }).last();
+  say("T097 rating controls:", await fbForm.locator("input, button, select").evaluateAll((e) => e.map((x) => `${x.tagName}:${x.getAttribute("type")}:${x.getAttribute("aria-label") ?? (x as HTMLElement).innerText ?? ""}`).slice(0, 12)));
+  await fbForm.locator("label").nth(3).click().catch(() => undefined);
+  const fb = fbForm.locator("textarea").first(); if (await fb.isVisible().catch(() => false)) await fb.fill("Good pace, more practice time please.");
+  const send = fbForm.getByRole("button", { name: "Send feedback" }); if (await send.isVisible().catch(() => false)) say("T097 feedback:", T(await timedClick(p, send, "send event feedback")), await toastText(p));
   await p.waitForTimeout(800); say("T097 after feedback:", (await mainText(p, 900)).slice(-300));
   await shot(p, "T097");
   await timedGoto(p, "/notifications"); await ready(p, 500); say("T097 reminders in bell:", (await mainText(p, 900)).split(" | ").filter((l) => /remind|tomorrow|starts|Intro to Git/i.test(l)).slice(0, 4));
@@ -188,8 +196,8 @@ if (run("T097")) {
 
 if (run("T098")) {
   setTask("T098");
-  await timedGoto(p, "/events/" + ev.hackathon); await ready(p, 600);
-  const c = btn(/Cancel (my )?registration|Can't go|Cancel/);
+  await timedGoto(p, `/events/${ev.hackathon}/ticket`); await ready(p, 600);
+  const c = btn(/Cancel registration/);
   say("T098 cancel:", T(await timedClick(p, c, "cancel registration")), await dialogText(p, 500));
   const k = dlg().getByRole("button", { name: /Cancel registration|Yes|Confirm/ }).last(); if (await k.isVisible().catch(() => false)) say("T098 confirm:", T(await timedClick(p, k, "confirm cancel")));
   await p.waitForTimeout(1000); say("T098 after:", await mainText(p, 600), await toastText(p));
@@ -202,7 +210,7 @@ if (run("T099")) {
   await timedGoto(p, "/events/" + payEvent); await ready(p, 600);
   say("T099 paid event:", await mainText(p, 700));
   say("T099 register:", T(await timedClick(p, btn(/^(Register|Buy|Get ticket)/), "open paid register")), await dialogText(p, 700));
-  await dlg().getByRole("button", { name: /^(Register|Buy|Reserve|Confirm)/ }).last().click().catch(() => undefined); await p.waitForTimeout(1500); await ready(p, 600);
+  await dlg().getByRole("button", { name: /^(Hold my seat|Register|Buy|Reserve|Confirm)/ }).last().click().catch(() => undefined); await p.waitForTimeout(1500); await ready(p, 600);
   await p.goto(`/events/${payEvent}/ticket`); await ready(p, 700);
   say("T099 payment panel:", await mainText(p, 1500));
   await shot(p, "T099");

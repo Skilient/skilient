@@ -1683,6 +1683,212 @@
    ],
    "clicks": 4,
    "shortest": 3
+  },
+  {
+   "id": "T087",
+   "status": "Partly done",
+   "answers": [
+    "Openings > Events: 4 events open (Figma masterclass, Alumni talk, Hack Day, Intro to Git). 'This week' said 'A quiet week… no upcoming events' at the same time (R91). I'd pick the Git workshop."
+   ],
+   "findings": [
+    "R91"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T087-1.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T088",
+   "status": "Blocked",
+   "answers": [
+    "Openings > Project ideas: 'Campus bus tracker (UX pilot) · Matches your skills'; Sort: Newest / Deadline soonest / Matches my skills; Explore > Project ideas has skill and university filters.",
+    "The idea page: 'Start a venture from this idea' prefills the form ('Starting from Dr Kamran Faculty's project idea… invited to supervise it').",
+    "Creating it was refused: 'You're doing that too often. Try again later.' (venture creation is rate-limited per day; this tester had made several in S05), with no time given (R46)."
+   ],
+   "findings": [
+    "R46"
+   ],
+   "note": "Plan: venture creation has a daily limit; T051/T057/T088 for one tester can hit it.",
+   "shots": [
+    "docs/ux-pilot/shots/T088-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T089",
+   "status": "Done",
+   "answers": [
+    "Debating Society: 'Follow' then 'Ask to join' (By request) → 'Join request sent'; Developers Club 'Join' (Open) → instant, button became 'Leave'; Design Guild says 'Apply in a round'.",
+    "Following, joining and requesting give no message; the buttons just change (R92).",
+    "'1 members' on society cards and pages (R92)."
+   ],
+   "findings": [
+    "R92"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T089-1.png",
+    "docs/ux-pilot/shots/T089-2.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T090",
+   "status": "Done",
+   "answers": [
+    "Inline form on the round: role select, 'Link one design you made.', 'Send application' → 'Your application · Applied · for Designer'. After the officer's decision: 'Accepted · Loved your onboarding redesign. Welcome!'"
+   ],
+   "findings": [],
+   "note": "No notification of the acceptance appeared in the bell (R93).",
+   "shots": [
+    "docs/ux-pilot/shots/T090-1.png",
+    "docs/ux-pilot/shots/T090-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T091",
+   "status": "Done",
+   "answers": [
+    "Leave asked through the browser's native confirm ('Leave UX Pilot Developers Club?') (R85); the button became 'Join'.",
+    "Reporting the society post: same sheet as other posts, 'Thanks, we'll review this.'"
+   ],
+   "findings": [
+    "R85"
+   ],
+   "note": "",
+   "shots": [],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T094",
+   "status": "Done",
+   "answers": [
+    "Events > Intro to Git: 'Register' opens the ticket sheet with the two questions; leaving the required one empty: 'Answer \"Have you used Git before?\".'; after: 'Your ticket · 53BD92C1 · Valid · Opened once, this ticket also shows without signal on this device.' and a phone-reminder offer."
+   ],
+   "findings": [],
+   "note": "Register 2.0 s on the throttled phone.",
+   "shots": [
+    "docs/ux-pilot/shots/T094-1.png",
+    "docs/ux-pilot/shots/T094-2.png",
+    "docs/ux-pilot/shots/T094-3.png",
+    "docs/ux-pilot/shots/T094-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T095",
+   "status": "Done",
+   "answers": [
+    "Captain: 'Create a team (you're the captain; share its code)' + Team name; the event page shows 'Team Null Pointers · code USM9HU · 1 member'. Two helpers chose 'Join a team with its code' → '3 members'."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T095-1.png",
+    "docs/ux-pilot/shots/T095-2.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T096",
+   "status": "Done",
+   "answers": [
+    "Full: 'Seat · Free · full, waitlist open', Register → 'Join the waitlist' → 'Number 1 on the waitlist. If a seat frees up, you're moved in automatically and told.' Other batch: 'For 2027 only.' (no Register). Not open: 'Registration opens 01 Dec · 00:24.' Cancelled: 'Cancelled: The speaker can't travel this week.'",
+    "None suggested other events. The events list shows the cancelled/closed talk as '50 seats left · Free' and the batch-only one as '20 seats left' (R94)."
+   ],
+   "findings": [
+    "R94"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T096-1.png",
+    "docs/ux-pilot/shots/T096-2.png",
+    "docs/ux-pilot/shots/T096-3.png",
+    "docs/ux-pilot/shots/T096-4.png",
+    "docs/ux-pilot/shots/T096-5.png",
+    "docs/ux-pilot/shots/T096-6.png"
+   ],
+   "clicks": 6,
+   "shortest": 4
+  },
+  {
+   "id": "T097",
+   "status": "Partly done",
+   "answers": [
+    "Reminder: not testable locally (push and email workers); the ticket page offers 'Get reminded on your phone?'.",
+    "Officer scan (played via the product's check-in function): ticket turned to 'Checked in: session at 24 Nov, 05:30'.",
+    "Feedback: 'How was it?' 5 rating buttons + comment; without a rating 'Pick a rating.'; saved (4, comment) but the page showed no thank-you (R95)."
+   ],
+   "findings": [
+    "R95"
+   ],
+   "note": "Event times moved on the local DB to stand in for the day.",
+   "shots": [
+    "docs/ux-pilot/shots/T097-1.png",
+    "docs/ux-pilot/shots/T097-2.png",
+    "docs/ux-pilot/shots/T097-3.png",
+    "docs/ux-pilot/shots/T097-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T098",
+   "status": "Done",
+   "answers": [
+    "Ticket page > 'Cancel registration' → browser's native confirm 'Cancel your registration?' → 'Cancelled'. As the team captain, nothing said what happens to my team (R96)."
+   ],
+   "findings": [
+    "R85",
+    "R96"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T098-1.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T099",
+   "status": "Done",
+   "answers": [
+    "'Hold my seat': 'Seat held: pay to confirm… held until 25 Nov, 05:35', reference 'SKL-P45U (put it in the transfer note)', JazzCash number, receipt upload → 'Receipt under review… your seat stays held until they decide.' and 'I paid but nobody has confirmed it'."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T099-1.png",
+    "docs/ux-pilot/shots/T099-2.png",
+    "docs/ux-pilot/shots/T099-pay.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T100",
+   "status": "Done",
+   "answers": [
+    "'Receipt not accepted… The receipt wasn't accepted: This image isn't a JazzCash receipt… Upload a new one by 25 Nov, 05:35.' Re-upload → Paid. Cancel → 'Refund requested' → officer: 'Refund sent · Sent back to 03001234567 by JazzCash.' with 'I received it / Not received'."
+   ],
+   "findings": [],
+   "note": "Reason ends with a double full stop ('…Club..').",
+   "shots": [
+    "docs/ux-pilot/shots/T100-1.png",
+    "docs/ux-pilot/shots/T100-2.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
   }
  ],
  "cw": [
@@ -1907,6 +2113,24 @@
    "task": "T084",
    "q": 4,
    "why": "Changes don't show on the CV until 1 December."
+  },
+  {
+   "step": "F27.02",
+   "task": "T087",
+   "q": 4,
+   "why": "'This week' says quiet while events are open."
+  },
+  {
+   "step": "F28.01",
+   "task": "T088",
+   "q": 4,
+   "why": "Starting a venture from an idea is refused by a rate limit with no wait time."
+  },
+  {
+   "step": "F30.09",
+   "task": "T098",
+   "q": 4,
+   "why": "The captain isn't told what happens to the team."
   }
  ],
  "findings": [
@@ -2778,6 +3002,72 @@
    "principles": "TRU",
    "fix": "Keep 'Creator' for the founder; show 'Owner' or 'Lead' for later owners.",
    "same_as": ""
+  },
+  {
+   "id": "R91",
+   "severity": 2,
+   "where": "/openings/this-week",
+   "what": "'A quiet week… no upcoming events' while the Events card lists 4 upcoming events; the page is rebuilt only nightly.",
+   "repro": "Open This week the day events are published.",
+   "tasks": "T087",
+   "principles": "H04,EMP",
+   "fix": "Build it live, or say 'updated nightly' and link to Events.",
+   "same_as": ""
+  },
+  {
+   "id": "R92",
+   "severity": 1,
+   "where": "/societies/[slug]",
+   "what": "Follow, Join and Ask to join give no confirmation; '1 members'.",
+   "repro": "Follow or join a society.",
+   "tasks": "T089",
+   "principles": "H01,COP",
+   "fix": "Toasts ('You joined…'); singular 'member'.",
+   "same_as": ""
+  },
+  {
+   "id": "R93",
+   "severity": 2,
+   "where": "/notifications",
+   "what": "Being accepted in an induction round produced no notification.",
+   "repro": "Officer accepts an application.",
+   "tasks": "T090",
+   "principles": "H01",
+   "fix": "Notify the applicant on every decision.",
+   "same_as": ""
+  },
+  {
+   "id": "R94",
+   "severity": 2,
+   "where": "/events",
+   "what": "The list shows '50 seats left' for an event whose registration is closed (and later cancelled), and '20 seats left' for a batch-only event the student can't join.",
+   "repro": "Open Events as a 2028 student.",
+   "tasks": "T096",
+   "principles": "H04,H05",
+   "fix": "Show 'Registration closed', 'Cancelled', 'For 2027 only' on the card.",
+   "same_as": ""
+  },
+  {
+   "id": "R95",
+   "severity": 1,
+   "where": "/events/[id] feedback",
+   "what": "After sending event feedback the page shows no thank-you or saved state.",
+   "repro": "Send feedback after an event.",
+   "tasks": "T097",
+   "principles": "H01",
+   "fix": "'Thanks: the society sees the totals.'",
+   "same_as": ""
+  },
+  {
+   "id": "R96",
+   "severity": 2,
+   "where": "/events/[id]/ticket",
+   "what": "A team captain can cancel with a plain browser confirm that says nothing about their team.",
+   "repro": "Cancel as captain.",
+   "tasks": "T098",
+   "principles": "H05,COP",
+   "fix": "Say what happens to the team (members kept, new captain).",
+   "same_as": ""
   }
  ],
  "plan_fixes": [
@@ -2876,6 +3166,14 @@
   {
    "tasks": "T086",
    "change": "Setup: the genuine PDF needs Pro (trial); the forged one is a print with one character changed."
+  },
+  {
+   "tasks": "T088",
+   "change": "Use a tester who hasn't created ventures that day (daily create limit)."
+  },
+  {
+   "tasks": "T097",
+   "change": "Reminders need the notify worker (staging); the check-in is S11's officer role."
   }
  ],
  "production_recheck": []

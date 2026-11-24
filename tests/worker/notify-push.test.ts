@@ -64,7 +64,7 @@ async function remind() {
 }
 
 beforeAll(async () => {
-  // VAPID keys in Vault, the way docs/setup-checklist.md puts them there.
+  // VAPID keys in Vault, the way docs/archive/supabase-era/setup-checklist.md puts them there.
   const vapid = (await crypto.subtle.generateKey({ name: "ECDSA", namedCurve: "P-256" }, true, ["sign", "verify"])) as CryptoKeyPair;
   vapidVerify = vapid.publicKey;
   vapidPublic = b64urlEncode(new Uint8Array(await crypto.subtle.exportKey("raw", vapid.publicKey)));

@@ -67,7 +67,7 @@ jobs:
           [ "$STEP" = "seed" ] || need="$need LOAD_APP_URL"
           [ "$STEP" = "seed" ] || [ "$WHERE" != "cloud" ] || need="$need K6_CLOUD_TOKEN K6_CLOUD_PROJECT_ID"
           for v in $need; do
-            [ -n "${!v}" ] || { echo "::error::Secret $v is not set (docs/setup-checklist.md Phase 13, load test)"; exit 1; }
+            [ -n "${!v}" ] || { echo "::error::Secret $v is not set (docs/archive/supabase-era/setup-checklist.md Phase 13, load test)"; exit 1; }
           done
           [ "$SCRATCH_SUPABASE_PROJECT_REF" != "$SUPABASE_PROJECT_REF" ] || { echo "::error::The scratch project is production"; exit 1; }
 

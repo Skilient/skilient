@@ -1,5 +1,5 @@
-// Checks the [src: path#symbol] citations in Markdown docs (docs/code/CONVENTIONS.md).
-// Usage: node scripts/docs/check-citations.mjs [paths...]   (default: every .md under docs/code)
+// Checks the [src: path#symbol] citations in Markdown docs (docs/archive/supabase-era/code/CONVENTIONS.md).
+// Usage: node scripts/docs/check-citations.mjs [paths...]   (default: every .md under docs/archive/supabase-era/code)
 // Fails when a citation can't be parsed, a cited file is missing or the symbol does not occur
 // in it; warns when the :L<line> hint is more than 20 lines from the nearest line holding the symbol.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
@@ -35,7 +35,7 @@ function sourceLines(path) {
 }
 
 const targets = process.argv.slice(2);
-const docs = (targets.length ? targets : ["docs/code"]).flatMap(markdownFiles);
+const docs = (targets.length ? targets : ["docs/archive/supabase-era/code"]).flatMap(markdownFiles);
 let failures = 0;
 let warnings = 0;
 const counts = [];

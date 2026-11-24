@@ -61,5 +61,5 @@ Opportunities is renamed **Openings**. It is **one page of category cards**: a b
 - **Push** is offered after the first meaningful action, never on first load (for example after registering for an event: "Get reminded on your phone?").
 - Per-category push preferences in `/settings/notifications`, next to instant email and digest.
 - What is pushed: chat messages, event reminders and changes, new Record entries, induction results, swap requests and session reminders, yearbook notes.
-- **Build:** `push_subscriptions`; the `notify-worker` gains a push channel (Web Push with VAPID keys in Vault, `reseed-vault.sql`); CSP allows the push service's endpoint only from the worker. The keys go on `docs/setup-checklist.md`.
+- **Build:** `push_subscriptions`; the `notify-worker` gains a push channel (Web Push with VAPID keys in Vault, `reseed-vault.sql`); CSP allows the push service's endpoint only from the worker. The keys go on `docs/archive/supabase-era/setup-checklist.md`.
 - **Done when:** a registered student gets the 1-hour reminder as a push on a phone, and turning the category off stops it.

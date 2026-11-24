@@ -3,7 +3,7 @@ import "server-only";
 import { billingGateways, type BillingGateways } from "@/supabase/functions/_shared/billing/config.ts";
 
 /**
- * The gateways for this deployment, from env vars only (docs/setup-checklist.md "Switching to a real
+ * The gateways for this deployment, from env vars only (docs/archive/supabase-era/setup-checklist.md "Switching to a real
  * gateway"). Production is Vercel's production environment; previews and local runs are never live.
  */
 export function gateways(): BillingGateways {

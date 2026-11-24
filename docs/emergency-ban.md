@@ -30,4 +30,4 @@ files it at `/ops/appeals` → **File an emailed appeal** (audited). The staff m
 
 Ban sign-in from the Supabase dashboard (**Authentication → Users → Ban user**), then once `/ops` is back, ban the account properly
 at `/ops/sanctions` (so the restriction, the audit row and the appeal path exist) and lift the dashboard ban. Rows recorded by hand
-before phase 11 (`action = 'emergency_ban'`) are turned into sanctions with the SQL in `docs/setup-checklist.md` → Phase 11.
+before phase 11 (`action = 'emergency_ban'`) are turned into sanctions with the SQL in `docs/archive/supabase-era/setup-checklist.md` → Phase 11.

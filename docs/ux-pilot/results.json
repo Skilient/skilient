@@ -1,0 +1,4273 @@
+{
+ "run": "local",
+ "date": "2026-11-23",
+ "tasks": [
+  {
+   "id": "T001",
+   "status": "Done",
+   "answers": [
+    "From the landing hero ('Pakistan's first social media platform exclusively for university students. Build with classmates, prove your skills with real work, and get recognised by recruiters'): a campus network where I build projects with classmates and get my skills verified for a CV.",
+    "No field was unclear: name, university email (prefilled from the landing box), password with 'At least 10 characters'. The university was recognised under the email ('Signing up as a student of NUTECH. Not your university?'). Unexpected: on the throttled phone, what I typed in the first ~5 s vanished (R01).",
+    "The page changed to 'Check your inbox: We sent a 6-digit code to u*****w@nutech.edu.pk… works for 15 minutes', with a 60 s resend timer. Locally the email arrived in under 1 s. The address is masked, so I couldn't check I'd typed it right (R38).",
+    "Yes: it opens a full-height sheet 'Skilient User Agreement and Privacy Notice, Version 3'. I expected a short summary; it's long legal text and talks about recruiters and universities, which aren't on Skilient yet (R14)."
+   ],
+   "findings": [
+    "R01",
+    "R38",
+    "R14"
+   ],
+   "note": "Ran on Phone, Fast 3G + 4x CPU. Create account: pending 98 ms, result 702 ms; confirm code 64/795 ms. Ends on /onboarding/university 'Join your university'.",
+   "shots": [
+    "docs/ux-pilot/shots/T001-1.png",
+    "docs/ux-pilot/shots/T001-2.png",
+    "docs/ux-pilot/shots/T001-3.png",
+    "docs/ux-pilot/shots/T001-4.png",
+    "docs/ux-pilot/shots/T001-5.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T002",
+   "status": "Done",
+   "answers": [
+    "Gmail: 'Use your university email.' (under the field, on blur and on submit). Typo after @ (nutech.edu.pkk, nutec.edu.pk): 'Your university isn't on Skilient yet. Request it'; after pressing Create account the same line without the 'Request it' link. Used email: 'This email is already registered. Sign in instead. Sign in' at the top of the form. Each told me what to do next except the typo case, which pointed me to the wrong next step.",
+    "Yes, 'Request it' is clear, but for a typo it's the wrong advice: I'd have requested a university that doesn't exist instead of fixing my typo (R02). After submitting, the link disappeared (R03).",
+    "No message blamed me; the typo one made me think NUTECH wasn't on Skilient.",
+    "Not asked: no shared-domain university came up for any of these emails (F01.04b not reached)."
+   ],
+   "findings": [
+    "R02",
+    "R03",
+    "R04"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T002-1.png",
+    "docs/ux-pilot/shots/T002-2.png",
+    "docs/ux-pilot/shots/T002-3.png",
+    "docs/ux-pilot/shots/T002-4.png"
+   ],
+   "clicks": 8,
+   "shortest": 4
+  },
+  {
+   "id": "T003",
+   "status": "Not run",
+   "answers": [
+    "Email; I'd pick Google only if it were clearly my university account.",
+    "Couldn't reach Google: locally Google sign-in isn't configured. Pressing 'Continue with Google' without ticking the agreement shows 'Accept the User Agreement to continue.' under the checkbox, which is clear. The line 'Only your university Google account works.' sits under the button.",
+    "Not reached."
+   ],
+   "findings": [],
+   "note": "Google OAuth isn't configured on the local stack; run on staging (plan fix).",
+   "shots": [
+    "docs/ux-pilot/shots/T003-1.png"
+   ],
+   "clicks": 1,
+   "shortest": null
+  },
+  {
+   "id": "T004",
+   "status": "Done",
+   "answers": [
+    "Yes for both: 'Accept the User Agreement and Privacy Notice to continue.' under the checkbox (aria-invalid + aria-describedby on the checkbox); 'Too short / Use at least 10 characters.' under Password (aria-invalid + describedby).",
+    "Yes: the password message sat at 512-557 px on an 844 px screen.",
+    "Wrong code twice: 'This code has expired or is wrong. Check it, or send a new one.' both times, identical, so I couldn't tell the second try was checked (R05). 'Send a new code in 57s' is a countdown button; I didn't need it. 'Too many attempts' wasn't reached in two tries.",
+    "Other device: 'Confirm your email / Continue to confirm your university email / Confirm my email', then 'You're confirmed. You can close this tab. The tab where you signed up moves on by itself.' The phone tab, reloaded, still said 'Check your inbox' and restarted the 60 s timer (R06). Signing in later before confirming sent me straight to the code screen without saying why, and no new code was sent (R07). After the link was used, signing in went to onboarding."
+   ],
+   "findings": [
+    "R05",
+    "R06",
+    "R07"
+   ],
+   "note": "'password1' is 9 characters, so it tests length, not the breached-password check (plan fix).",
+   "shots": [
+    "docs/ux-pilot/shots/T004-1.png",
+    "docs/ux-pilot/shots/T004-2.png",
+    "docs/ux-pilot/shots/T004-3.png",
+    "docs/ux-pilot/shots/T004-4.png",
+    "docs/ux-pilot/shots/T004-5.png",
+    "docs/ux-pilot/shots/T004-6.png",
+    "docs/ux-pilot/shots/T004-7.png",
+    "docs/ux-pilot/shots/T004-8.png"
+   ],
+   "clicks": 14,
+   "shortest": 10
+  },
+  {
+   "id": "T005",
+   "status": "Done",
+   "answers": [
+    "Sign in > 'Email me a sign-in code instead' > 'Email me a code'; the code arrived in 0.1 s locally ('Your Skilient sign-in code: 138030').",
+    "The code: no password to remember on a phone.",
+    "Yes, on Home. Sign out itself landed on the marketing page '/', not on Sign in."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T005-1.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T006",
+   "status": "Done",
+   "answers": [
+    "'That email and password don't match.' above the fields.",
+    "About 15 s here (email arrives instantly locally). The reset page doesn't carry over the email I'd typed on Sign in (R69).",
+    "Trusted: subject 'Reset your Skilient password', 'It works for 15 minutes and only once', the link goes to the Skilient site through a 'Continue' page. Nothing shows who sent it beyond the name.",
+    "'That reset link has expired or was already used. Ask for a new one.' on the reset form. Clear."
+   ],
+   "findings": [
+    "R69"
+   ],
+   "note": "After saving the new password the page showed Home while the address stayed /reset-password; no 'Password changed' message.",
+   "shots": [
+    "docs/ux-pilot/shots/T006-1.png",
+    "docs/ux-pilot/shots/T006-2.png",
+    "docs/ux-pilot/shots/T006-3.png"
+   ],
+   "clicks": 8,
+   "shortest": 7
+  },
+  {
+   "id": "T007",
+   "status": "Done",
+   "answers": [
+    "Yes: 'After your password, Skilient asks for a code from an authenticator app… keep backup codes for when you can't reach any of them. Optional for students.' It says what, less why.",
+    "Typing the key: the QR plus 'Can't scan it? Enter this key instead' was fine; saving 10 backup codes ('we won't show them again') is the real step.",
+    "Use a backup code: the sign-in step offers 'Use a backup code instead', and Settings says 'If you lose your phone, sign in with one of these… 10 of 10 left.' Without codes there's no path on screen."
+   ],
+   "findings": [],
+   "note": "Turning it off asks 'Turn off two-factor? … your backup codes will stop working.'",
+   "shots": [
+    "docs/ux-pilot/shots/T007-1.png",
+    "docs/ux-pilot/shots/T007-2.png"
+   ],
+   "clicks": 8,
+   "shortest": 7
+  },
+  {
+   "id": "T008",
+   "status": "Done",
+   "answers": [
+    "Accept the updated User Agreement: 'We've updated our User Agreement. Read what changed, then accept to keep using Skilient.'",
+    "Yes: 'What changed' is one sentence at the top, then the full text.",
+    "No: accept is the only way on; no decline or delete link on the page (R70)."
+   ],
+   "findings": [
+    "R70"
+   ],
+   "note": "The new version was published by plain SQL (no ops screen for it).",
+   "shots": [
+    "docs/ux-pilot/shots/T008-1.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T009",
+   "status": "Done",
+   "answers": [
+    "None felt unnecessary; each step's line is benefit-first ('Puts you in your university feed, leaderboards and events.'). Batch is a 22-year list and Department 38 options (R15).",
+    "GitHub ('Skip for now'): connecting is a separate errand. On the skills step there was nothing to do: 'No skills detected yet', and no way to add a skill myself although the text says 'Skills you add yourself show as claimed' (R08).",
+    "Without GitHub no levels showed, so I only learnt 'claimed' (from the explanation: earns no points until verified). L1/L2 weren't shown on this path.",
+    "'Step 1 of 6 · about 6 min left' was right about steps; the minutes jumped 6, 5, 4, 2, 2, 1 (R12). 'Find your people' showed 'Open ventures: No open ventures yet' although two NUTECH ventures were recruiting (R09)."
+   ],
+   "findings": [
+    "R08",
+    "R09",
+    "R12",
+    "R15",
+    "R14"
+   ],
+   "note": "Welcome screen reached in 5 continues (shortest 5). Each step: pending 45-118 ms, result 682-830 ms.",
+   "shots": [
+    "docs/ux-pilot/shots/T009-1.png",
+    "docs/ux-pilot/shots/T009-2.png",
+    "docs/ux-pilot/shots/T009-3.png",
+    "docs/ux-pilot/shots/T009-4.png",
+    "docs/ux-pilot/shots/T009-5.png",
+    "docs/ux-pilot/shots/T009-6.png",
+    "docs/ux-pilot/shots/T009-7.png",
+    "docs/ux-pilot/shots/T009-8.png"
+   ],
+   "clicks": 8,
+   "shortest": 6
+  },
+  {
+   "id": "T010",
+   "status": "Done",
+   "answers": [
+    "Opening / showed the landing page ('Open Skilient'); opening /feed resumed at step 3 (GitHub), the step after the last one I saved (R13).",
+    "'That username is taken. Try another.' with no suggestion (R11).",
+    "Yes: Back is a link, so the username and intro I'd typed on step 2 (not yet saved) were gone when I came back. Step 1's saved values were kept (R10).",
+    "A 48 MB photo: 'Choose an image under 5 MB.' under 'Add a photo'; nothing uploaded, other fields kept."
+   ],
+   "findings": [
+    "R10",
+    "R11",
+    "R13"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T010-1.png",
+    "docs/ux-pilot/shots/T010-2.png",
+    "docs/ux-pilot/shots/T010-3.png"
+   ],
+   "clicks": 12,
+   "shortest": 9
+  },
+  {
+   "id": "T011",
+   "status": "Blocked",
+   "answers": [
+    "Yes, before connecting: 'We read the languages, frameworks and tools your own commits use, and your merged pull requests… We never write to your repositories, never store your code, and never show a private repository's name to anyone but you.'",
+    "Reassured by the 'never' list; I'd still want to see the repository picker before agreeing.",
+    "Not reached: the GitHub App install page is on github.com, which the local stack can't use, and the sync worker is an Edge Function that doesn't boot here."
+   ],
+   "findings": [],
+   "note": "Needs a staging GitHub App (plan fix). Settings > GitHub showed the same copy and 'Connect GitHub'.",
+   "shots": [
+    "docs/ux-pilot/shots/T011-1.png"
+   ],
+   "clicks": null,
+   "shortest": null
+  },
+  {
+   "id": "T012",
+   "status": "Done",
+   "answers": [
+    "'Welcome to Skilient, Nida… You build real projects with classmates, get your work verified, and get a CV that recruiters trust… Proof takes real work, so nothing here is instant. The tour takes about a minute.' Build real work / Get it verified / Carry the proof.",
+    "Skipped to Home (the tour is T014's).",
+    "Calm.",
+    "With reduce motion on, the 20 welcome animations still exist but run at 0.01 ms (instant); nothing moved. Without it, 27 animations play."
+   ],
+   "findings": [
+    "R14"
+   ],
+   "note": "Skip to Home: 929 ms to /feed on the throttled phone; Home first showed 'Loading…'.",
+   "shots": [
+    "docs/ux-pilot/shots/T012-1.png",
+    "docs/ux-pilot/shots/T012-2.png",
+    "docs/ux-pilot/shots/T012-3.png"
+   ],
+   "clicks": 1,
+   "shortest": 1
+  },
+  {
+   "id": "T013",
+   "status": "Partly done",
+   "answers": [
+    "Not checked: the claim email is sent by the notify worker (Edge Function), which doesn't boot on this container. The row was queued (record_claims 1).",
+    "On the welcome screen, without looking: '1 entry waiting. A society checked you in with this university email before you joined. Claim them onto your Record.' with Claim. One tap: '1 entry added to your Record'.",
+    "That I attended 'Open-source evening (claim test)' with UX Pilot Developers Club, provable to anyone with its code at /verify. On /me/record it stays 'Signing…' with no expected time (R18)."
+   ],
+   "findings": [
+    "R18"
+   ],
+   "note": "Signed up straight with the checked-in email instead of the email link.",
+   "shots": [
+    "docs/ux-pilot/shots/T013-1.png",
+    "docs/ux-pilot/shots/T013-2.png",
+    "docs/ux-pilot/shots/T013-3.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T014",
+   "status": "Done",
+   "answers": [
+    "Home: my campus feed, the composer and my progress. Openings: everything I can join or apply to, one card per kind. Ventures: projects I build with others; finished ones count most. Chat: friends and venture teams. Me: profile, Record, skills, CV and score.",
+    "Step 12 'Notifications' and step 13 'Your account' (generic). Step 2 now points at the search box (P07 fixed).",
+    "About right per step but long: 14 steps across /feed, /openings and back; it introduces 5 of the 13 rail places (no Societies, Events, Skill swap, Explore, Leaderboard, Friends, Feedback)."
+   ],
+   "findings": [
+    "R34"
+   ],
+   "note": "Tour started by itself on first /feed. Next: 14 clicks, each settled under 300 ms.",
+   "shots": [
+    "docs/ux-pilot/shots/T014-1.png",
+    "docs/ux-pilot/shots/T014-2.png",
+    "docs/ux-pilot/shots/T014-3.png",
+    "docs/ux-pilot/shots/T014-4.png",
+    "docs/ux-pilot/shots/T014-5.png",
+    "docs/ux-pilot/shots/T014-6.png"
+   ],
+   "clicks": 14,
+   "shortest": 14
+  },
+  {
+   "id": "T015",
+   "status": "Partly done",
+   "answers": [
+    "The 'Spark · NEXT STEP · Earn 19 more points to reach Flare' chip on Home opens 'Your progress' as a sheet.",
+    "Partly: '231.55 points, only you see this' (decimals); points per checklist item aren't on the sheet. The score page explains points well, but says '1 of 6 tiers reached' while I'm at Spark, the second tier (R19).",
+    "'A confirmed contribution in 2 ventures (you have 1)' needs a second venture. 'Take this step' opened the explanation page /me/score, so I couldn't start a step from it (R20, same as P02)."
+   ],
+   "findings": [
+    "R19",
+    "R20"
+   ],
+   "note": "'3 to do' (friend request, contribution to confirm, venture to endorse) is a link and was the real next step.",
+   "shots": [
+    "docs/ux-pilot/shots/T015-1.png",
+    "docs/ux-pilot/shots/T015-2.png",
+    "docs/ux-pilot/shots/T015-3.png",
+    "docs/ux-pilot/shots/T015-4.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T016",
+   "status": "Done",
+   "answers": [
+    "'skill swap' and 'swap': first result 'Skill swaps (Openings)', so Enter opened /openings/swaps, not /swaps (P04). 'privacy' and 'privacy settings': only 'Settings', Enter opened /settings, one more click to Privacy centre (P05).",
+    "Openings (compass) and Skill swap; Friends vs Societies look alike.",
+    "Yes: all 13 rail items show a name and a one-line description on hover, and they're in the accessibility tree."
+   ],
+   "findings": [
+    "R34"
+   ],
+   "note": "Desktop 1280x800.",
+   "shots": [
+    "docs/ux-pilot/shots/T016-1.png"
+   ],
+   "clicks": 6,
+   "shortest": 4
+  },
+  {
+   "id": "T017",
+   "status": "Partly done",
+   "answers": [
+    "No tip appeared on Skill swap, Paths or Credentials (first-visit tips exist only on Openings, venture, CV, score and privacy).",
+    "Credentials (fresh account): 'No credentials yet. Add a certificate below.' with the form right there: yes. Paths: 'Pick a path: Follow a role above to see its ladder'. Skill swap: the learn form, no empty-state action.",
+    "No tip to close."
+   ],
+   "findings": [],
+   "note": "Plan problem: these pages have no tips (plan fix).",
+   "shots": [
+    "docs/ux-pilot/shots/T017-1.png",
+    "docs/ux-pilot/shots/T017-2.png",
+    "docs/ux-pilot/shots/T017-3.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T018",
+   "status": "Partly done",
+   "answers": [
+    "Settings: 'Replay tour: Walk through the app again' (and 'Replay welcome'). Found on the first look in Settings.",
+    "Seconds: Settings > Replay tour restarts at 'Step 1 of 14' on /feed (915 ms).",
+    "There's no 'Hide checklist' any more: the progress sheet offers only 'Hide until tomorrow', and Settings mentions no checklist. So I couldn't hide it for good, and nothing to get back (P03 changed)."
+   ],
+   "findings": [],
+   "note": "Plan problem: F04.07a and the task describe a control that's gone.",
+   "shots": [
+    "docs/ux-pilot/shots/T018-1.png",
+    "docs/ux-pilot/shots/T018-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T019",
+   "status": "Done",
+   "answers": [
+    "Ranks the post and is anonymous; the questions vary ('Did you learn something from this?', 'Was this interesting to you?', 'Would you want to see more like this?', 'Was this informative?'). Nothing says who sees my tick.",
+    "'Answered · Change' in an empty well: looks finished but doesn't show what I picked (P14). Once, answering quickly: 'Take a moment to read the post first.' (F05.05a works).",
+    "No; the questions did the job of a like.",
+    "'[UX test] report me' got 'Did you learn something from this?', which doesn't fit a nonsense post. My own shipped post had no strip (Insights instead)."
+   ],
+   "findings": [
+    "R22"
+   ],
+   "note": "15 posts answered; each answer settled in 60-700 ms. End: 'You're all caught up.'",
+   "shots": [
+    "docs/ux-pilot/shots/T019-1.png",
+    "docs/ux-pilot/shots/T019-2.png",
+    "docs/ux-pilot/shots/T019-3.png"
+   ],
+   "clicks": 15,
+   "shortest": 15
+  },
+  {
+   "id": "T020",
+   "status": "Done",
+   "answers": [
+    "A 'Change' link after 'Answered'; it brings back the question. Obvious enough.",
+    "After the lock (10 minutes in the product, not 15 as the task says), 'Change' simply disappears and the strip says 'Answered'; nothing says why (R23).",
+    "Yes, for a few minutes, and say so when it's final."
+   ],
+   "findings": [
+    "R23"
+   ],
+   "note": "The wait was simulated on the local DB by moving locked_at back.",
+   "shots": [
+    "docs/ux-pilot/shots/T020-1.png",
+    "docs/ux-pilot/shots/T020-2.png",
+    "docs/ux-pilot/shots/T020-3.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T021",
+   "status": "Done",
+   "answers": [
+    "The active chip has aria-current and a pressed look.",
+    "University: my campus; Global: posts from every university.",
+    "Only my own shipped post: the Shipped filter carried over to the Global Feed (/feed?tab=global&filter=shipped), so a global post 'Open-source sprint this weekend' was hidden (R26)."
+   ],
+   "findings": [
+    "R26"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T021-1.png",
+    "docs/ux-pilot/shots/T021-2.png",
+    "docs/ux-pilot/shots/T021-3.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T022",
+   "status": "Done",
+   "answers": [
+    "Right after voting: 'Friday (your vote) 100%… 1 vote'. As expected ('results after you vote' is stated).",
+    "Yes: the reply sits under Bushra's comment, after 'Reply to Bushra Helper'.",
+    "No: typing '@uxp_hel' suggested nothing; I had to know the username (R27)."
+   ],
+   "findings": [
+    "R27"
+   ],
+   "note": "Reply posted after 1.5 s on the throttled phone.",
+   "shots": [
+    "docs/ux-pilot/shots/T022-1.png",
+    "docs/ux-pilot/shots/T022-2.png",
+    "docs/ux-pilot/shots/T022-3.png",
+    "docs/ux-pilot/shots/T022-4.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T023",
+   "status": "Done",
+   "answers": [
+    "'Not for me' hides the post ('Hidden. You'll see fewer posts like this. Undo'); 'Mute' removes the person's posts ('You muted Chaudhry Helper. Their posts won't appear in your feeds. Undo'). Nothing says whether they're told.",
+    "Yes: Spam, Harassment, Inappropriate content, Misinformation, Impersonation, Other, and 'Reports are private. The person isn't told who reported them.'",
+    "'Thanks, we'll review this.' No when (R29). Muting the author first hid the post I had to report, so I opened it from its link."
+   ],
+   "findings": [
+    "R29"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T023-1.png",
+    "docs/ux-pilot/shots/T023-2.png",
+    "docs/ux-pilot/shots/T023-3.png",
+    "docs/ux-pilot/shots/T023-4.png"
+   ],
+   "clicks": 8,
+   "shortest": 6
+  },
+  {
+   "id": "T024",
+   "status": "Done",
+   "answers": [
+    "Yes: every stop had a visible focus ring.",
+    "None trapped, but 14 rail and header stops come before the feed and there's no skip link (R31); the ⋯ menu's arrow keys don't move between items (P15); Esc returns focus to ⋯.",
+    "They read only 'Yes' and 'No', not the question (R32)."
+   ],
+   "findings": [
+    "R31",
+    "R32"
+   ],
+   "note": "Desktop, keyboard only.",
+   "shots": [],
+   "clicks": 30,
+   "shortest": 20
+  },
+  {
+   "id": "T025",
+   "status": "Partly done",
+   "answers": [
+    "No; both themes read well. The CV page showed 'We couldn't prepare your CV' locally (CV signing runs in an Edge Function).",
+    "With a larger browser text size (root font 2x), boxes and icons grow but text stays the same size, so the phone dock labels overlap ('Openings' over 'Ventures') and the search box squashes (R33, same as P32).",
+    "Dark: the orange stands out more."
+   ],
+   "findings": [
+    "R33"
+   ],
+   "note": "'Largest text' emulated as a 2x root font size (what Chrome's font-size setting changes).",
+   "shots": [
+    "docs/ux-pilot/shots/T025-1.png",
+    "docs/ux-pilot/shots/T025-2.png",
+    "docs/ux-pilot/shots/T025-3.png",
+    "docs/ux-pilot/shots/T025-4.png",
+    "docs/ux-pilot/shots/T025-5.png",
+    "docs/ux-pilot/shots/T025-6.png",
+    "docs/ux-pilot/shots/T025-7.png",
+    "docs/ux-pilot/shots/T025-8.png"
+   ],
+   "clicks": null,
+   "shortest": null
+  },
+  {
+   "id": "T026",
+   "status": "Done",
+   "answers": [
+    "University: the audience switch under the composer (University | Global) was already on University; I checked it before posting.",
+    "A 48 MB photo was accepted without a word (shrunk in the browser): 'Images (1/4)'. No limit was mentioned, which is fine.",
+    "At the top of my University Feed, marked 'just now · University'.",
+    "'Posted.' under the composer, but only 21.7 s after tapping Post on Fast 3G; until then the button stayed active and nothing said it was sending (R41)."
+   ],
+   "findings": [
+    "R41"
+   ],
+   "note": "Two photos ended up attached (the big one too): the task's 'one photo' needs the tester to remove one; no remove step was obvious.",
+   "shots": [
+    "docs/ux-pilot/shots/T026-1.png",
+    "docs/ux-pilot/shots/T026-2.png",
+    "docs/ux-pilot/shots/T026-3.png",
+    "docs/ux-pilot/shots/T026-4.png",
+    "docs/ux-pilot/shots/T026-5.png",
+    "docs/ux-pilot/shots/T026-6.png",
+    "docs/ux-pilot/shots/T026-7.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T027",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Add an option' adds a field; each option has a remove button (3 shown with 3 options).",
+    "'Closes after' select (1 to 7 days) under the options; stored 2 days, 3 options.",
+    "A batch-only audience: polls go to the whole university or globally, not to my batch."
+   ],
+   "findings": [],
+   "note": "Posted in 0.76 s.",
+   "shots": [
+    "docs/ux-pilot/shots/T027-1.png",
+    "docs/ux-pilot/shots/T027-2.png",
+    "docs/ux-pilot/shots/T027-3.png",
+    "docs/ux-pilot/shots/T027-4.png"
+   ],
+   "clicks": 7,
+   "shortest": 7
+  },
+  {
+   "id": "T028",
+   "status": "Done",
+   "answers": [
+    "Yes: the draft 'Half-written thought…' was still there after leaving Home. I expected it to be lost.",
+    "'Wait 30 seconds between posts.' under the composer (named the wait); my text stayed in the box.",
+    "Nothing: the Post button is disabled when the box is empty; no message says why."
+   ],
+   "findings": [
+    "R42"
+   ],
+   "note": "The 30 s limit counts the poll posted just before, so the first of the 'two quick posts' was refused.",
+   "shots": [
+    "docs/ux-pilot/shots/T028-1.png",
+    "docs/ux-pilot/shots/T028-2.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T029",
+   "status": "Done",
+   "answers": [
+    "'Edit' sits right on my own post (with Delete), not in a menu.",
+    "Yes, stated when editing: 'You can edit a post for 15 minutes after posting. It will show as edited.' Not before, when posting.",
+    "Yes: 'Delete this post? It's removed for everyone, with its images, votes and RSVPs. This can't be undone.' Cancel / Delete."
+   ],
+   "findings": [],
+   "note": "Save 1.4 s and delete 1.4 s on the throttled phone.",
+   "shots": [
+    "docs/ux-pilot/shots/T029-1.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T030",
+   "status": "Partly done",
+   "answers": [
+    "Nothing countable: no question under my own post and no public line yet; 'Insights' opens 'Post insights come with Student Pro.'",
+    "Because answers from my own question would be about me; nothing on the page says so.",
+    "Partly: 'See how readers answered every question… the full breakdown is part of Student Pro.' It doesn't say what the free public line is or where it shows. Not worth paying for from this sheet alone."
+   ],
+   "findings": [
+    "R43"
+   ],
+   "note": "Pinning works: 'Pin' on each comment, then 'Pinned by the author' and 'Unpin'. Helpers couldn't answer the post's question from SQL ('there's no question for you'): the question is assigned on view, so the setup needs helpers to open the post in the app.",
+   "shots": [
+    "docs/ux-pilot/shots/T030-1.png",
+    "docs/ux-pilot/shots/T030-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T031",
+   "status": "Done",
+   "answers": [
+    "No: the sheet says 'Nobody sees a share count' but nothing about notifying the friend.",
+    "Yes: the toast 'Sent to Fee Tracker · 04:02 Undo' stayed long enough; Undo gave 'Share taken back.' The '· 04:02' reads like a countdown but is the clock time (R44).",
+    "No; sending inside Skilient keeps it in the chat with a card.",
+    "Fresh account: 'No chats yet. Message a friend or join a venture first.' with Find friends. Good."
+   ],
+   "findings": [
+    "R44"
+   ],
+   "note": "The abandoned venture's chat (Hostel Mess Menu) is offered as a share target.",
+   "shots": [
+    "docs/ux-pilot/shots/T031-1.png",
+    "docs/ux-pilot/shots/T031-2.png",
+    "docs/ux-pilot/shots/T031-3.png",
+    "docs/ux-pilot/shots/T031-4.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T032",
+   "status": "Partly done",
+   "answers": [
+    "Yes: a shared post shows as a card 'Post by Ali Helper · 23 Nov' under the note.",
+    "Not seen: the helper couldn't share a post the tester can't see ('that post isn't available to share'), so F07.06a can't be produced this way.",
+    "Nothing stopped me: 5 posts to 4 chats each (20 shares in under a minute) all went through (R45)."
+   ],
+   "findings": [
+    "R45"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T032-1.png",
+    "docs/ux-pilot/shots/T032-2.png"
+   ],
+   "clicks": 20,
+   "shortest": null
+  },
+  {
+   "id": "T033",
+   "status": "Done",
+   "answers": [
+    "Each suggestion says why: 'Same batch' or 'Same department'. Made sense.",
+    "'No one has that username.' under the field.",
+    "Friends > Sent tab ('Sent 1')."
+   ],
+   "findings": [
+    "R46",
+    "R47"
+   ],
+   "note": "After one request, adding from suggestions said 'You're doing that too often. Try again later.' (R46). Danish stayed in suggestions with 'Add friend' after I'd sent him a request (R47). Dismiss removes a suggestion without confirmation or undo.",
+   "shots": [
+    "docs/ux-pilot/shots/T033-1.png",
+    "docs/ux-pilot/shots/T033-2.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T034",
+   "status": "Done",
+   "answers": [
+    "The Received tab count ('Received 1') and the progress sheet's '1 friend request'.",
+    "Yes: Received and Sent tabs with counts.",
+    "'You're already friends.' under the field."
+   ],
+   "findings": [],
+   "note": "Accept and Cancel gave no toast; the row just disappeared.",
+   "shots": [
+    "docs/ux-pilot/shots/T034-1.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T035",
+   "status": "Done",
+   "answers": [
+    "Friends rows have only Unfriend; Message is on the friend's profile (one more tap). Chat itself has no 'new message' button (R48).",
+    "No: Unfriend asks 'Unfriend Sana Spark? You'll go back to being strangers. Either of you can send a new request later.' On the profile, Message and Unfriend sit side by side with equal weight.",
+    "The friends-only profile and messaging."
+   ],
+   "findings": [
+    "R48"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T035-1.png"
+   ],
+   "clicks": 5,
+   "shortest": 3
+  },
+  {
+   "id": "T036",
+   "status": "Done",
+   "answers": [
+    "Their profile: Block next to Add friend and Report.",
+    "Yes: 'You'll stop seeing each other's profiles, posts and ventures, and any friendship or request between you ends. Chaudhry isn't told…'",
+    "Yes: Friends > Blocked > Unblock, with 'Your old friendship isn't restored'. They wouldn't know: their view of my profile is the generic 'We couldn't find that page'."
+   ],
+   "findings": [],
+   "note": "Block lands on Friends > Blocked, which also lists my muted people.",
+   "shots": [
+    "docs/ux-pilot/shots/T036-1.png",
+    "docs/ux-pilot/shots/T036-2.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T037",
+   "status": "Done",
+   "answers": [
+    "My message appeared at once with its time; no 'Sent' or 'Delivered' tick on a text message. A photo showed '· sending' until it went. Earlier messages show '· Seen' (read receipts).",
+    "Yes: 'Replying to Ali Helper · Thursday, 9am. Room 204.' above the box, and the sent reply quotes it.",
+    "'Message deleted' in its place, straight away, with no confirmation and no undo (R49).",
+    "Typing indicator and a tick for delivered. Reactions are there (👍 ❤️ 😂 🎉 😮 🙏)."
+   ],
+   "findings": [
+    "R49"
+   ],
+   "note": "Helper's reply arrived live (Realtime) within 4 s.",
+   "shots": [
+    "docs/ux-pilot/shots/T037-1.png",
+    "docs/ux-pilot/shots/T037-2.png"
+   ],
+   "clicks": 9,
+   "shortest": 7
+  },
+  {
+   "id": "T038",
+   "status": "Done",
+   "answers": [
+    "Nothing until I sent: then a toast 'Reconnecting… new messages will appear when you're back.' No offline banner.",
+    "By itself: it was stored once after the connection came back; no retry needed.",
+    "Yes: while offline my message looked exactly like a sent one, with its time and Edit/Delete, no 'sending' or 'not sent' mark (R50)."
+   ],
+   "findings": [
+    "R50"
+   ],
+   "note": "Offline simulated with the browser context's offline mode.",
+   "shots": [
+    "docs/ux-pilot/shots/T038-1.png",
+    "docs/ux-pilot/shots/T038-2.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T039",
+   "status": "Done",
+   "answers": [
+    "The search box at the top of Chat ('Search messages'): 'December' found both messages, newest chats first, without opening the chat. There is also 'Search this chat' inside a chat.",
+    "That I stop getting notified; it doesn't say for how long. Mute applied at once (button became 'Unmute'), with no choice of duration and no message (R51).",
+    "Settings > Chat: 'If you turn this off, you won't send them or see anyone else's.' Clear. 'Saved.'"
+   ],
+   "findings": [
+    "R51"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T039-1.png",
+    "docs/ux-pilot/shots/T039-2.png",
+    "docs/ux-pilot/shots/T039-3.png",
+    "docs/ux-pilot/shots/T039-4.png",
+    "docs/ux-pilot/shots/T039-5.png",
+    "docs/ux-pilot/shots/T039-6.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T040",
+   "status": "Done",
+   "answers": [
+    "Nothing stopped me with a message: a stranger's profile simply has no Message button (Add friend, Block, Report), and nothing says why or how to message them (R52).",
+    "Fair for safety, but it should say 'Only friends can message you. Add Danish as a friend first.'",
+    "Sure: the sheet names the message and lets me tick up to 10 earlier messages for context ('Moderators see only the reported message and the ones you tick'). The stored report has 1 context message.",
+    "Not here; the helper is an existing account."
+   ],
+   "findings": [
+    "R52"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T040-1.png",
+    "docs/ux-pilot/shots/T040-2.png",
+    "docs/ux-pilot/shots/T040-3.png",
+    "docs/ux-pilot/shots/T040-4.png"
+   ],
+   "clicks": 5,
+   "shortest": null
+  },
+  {
+   "id": "T041",
+   "status": "Partly done",
+   "answers": [
+    "Batch 2028 and Skill React filters changed the URL (?batch=2028&skill=react) but the list stayed 'People you may know'; results came only after typing 2+ letters of a name ('Iq'). I could only find her because I knew her name (P16).",
+    "On the profile: chips 'React L2 , level 2: Written by them.' vs 'Python L1: Found in their repos'. No 'claimed' skill exists to compare.",
+    "The GitHub link and 'Written by them'. Nothing shows how much code."
+   ],
+   "findings": [
+    "R53"
+   ],
+   "note": "Found only by name; the filters alone do nothing.",
+   "shots": [
+    "docs/ux-pilot/shots/T041-1.png",
+    "docs/ux-pilot/shots/T041-2.png",
+    "docs/ux-pilot/shots/T041-3.png",
+    "docs/ux-pilot/shots/T041-4.png"
+   ],
+   "clicks": 6,
+   "shortest": 3
+  },
+  {
+   "id": "T042",
+   "status": "Done",
+   "answers": [
+    "'No results. Try clearing the filters.' with 'Clear filters'. Good.",
+    "Name, university, department, batch, GitHub link and top skills (Iqra), or 'hasn't added an intro yet' (Danish). Nothing says some parts are hidden or why.",
+    "Add friend (or Accept/Decline when she'd sent me a request), Block, Report. No Message."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T042-1.png",
+    "docs/ux-pilot/shots/T042-2.png",
+    "docs/ux-pilot/shots/T042-3.png",
+    "docs/ux-pilot/shots/T042-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T043",
+   "status": "Done",
+   "answers": [
+    "Me > Profile 'How others see you' opens my own profile with 'Edit profile'; there's no preview as a friend or a stranger. 'Visible to: my university.' at the end (P18).",
+    "The GitHub username link; all skills incl. L1.",
+    "My tier (Spark) shows next to my name. Fine at Spark; at Raw I'd rather hide it."
+   ],
+   "findings": [
+    "R54"
+   ],
+   "note": "Searching for the blocked person: 'No results. Try other words, or part of a name.'",
+   "shots": [
+    "docs/ux-pilot/shots/T043-1.png",
+    "docs/ux-pilot/shots/T043-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T044",
+   "status": "Done",
+   "answers": [
+    "The decline 'Your application to Campus Lost & Found wasn't accepted this time.' It sits in one 'Today' list with chat messages; no grouping or filter (P19).",
+    "Yes: every chat message is also a notification ('Ali Helper sent you a message: …'), duplicating the Chat badge.",
+    "To /requests (Sent), which listed my application twice as 'Declined' (I'd applied twice). 'Mark all read' cleared the bell; the Chat tab kept '1 unread'.",
+    "Fresh account: 'You're all caught up. Friend requests, applications, invites and team news show up here.'"
+   ],
+   "findings": [
+    "R55"
+   ],
+   "note": "Notifications list first renders 'Loading…' on the throttled phone (~1 s).",
+   "shots": [
+    "docs/ux-pilot/shots/T044-1.png",
+    "docs/ux-pilot/shots/T044-2.png",
+    "docs/ux-pilot/shots/T044-3.png",
+    "docs/ux-pilot/shots/T044-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T045",
+   "status": "Partly done",
+   "answers": [
+    "19 settings, one per category, each autosaving with its own toast ('Saved: off for comments.' ×19).",
+    "Mostly; but 'Recruiter contact requests', 'Job applications' and 'Recruiting' are listed though the recruiter portal is off (R71). Event reminders sit under 'Societies and events'.",
+    "Nothing: 'Turn on for this device' answered 'Phone notifications aren't set up yet.', with no browser prompt (push keys aren't configured locally)."
+   ],
+   "findings": [
+    "R71"
+   ],
+   "note": "Push needs VAPID keys and the notify worker (not on this container).",
+   "shots": [
+    "docs/ux-pilot/shots/T045-1.png",
+    "docs/ux-pilot/shots/T045-2.png",
+    "docs/ux-pilot/shots/T045-3.png",
+    "docs/ux-pilot/shots/T045-4.png"
+   ],
+   "clicks": 21,
+   "shortest": 4
+  },
+  {
+   "id": "T046",
+   "status": "Partly done",
+   "answers": [
+    "No: no install offer on Home or in Settings (it's offered only on a ticket page and after a first chat message).",
+    "Manifest is set up as an app (display standalone, start /feed, service worker registered); actually adding to a home screen can't be done in this headless browser.",
+    "Not answerable here."
+   ],
+   "findings": [
+    "R56"
+   ],
+   "note": "Needs a real phone.",
+   "shots": [],
+   "clicks": null,
+   "shortest": null
+  },
+  {
+   "id": "T047",
+   "status": "Done",
+   "answers": [
+    "Openings > Venture roles: 'Backend developer · Matches your skills · Campus Lost & Found · 1 of 1 open · Node.js, SQL'. The skills shown per role decided it.",
+    "One place in this role, and it's still free. 'place' and 'open' in one phrase reads awkwardly.",
+    "The page now says 'Application sent · Withdraw'; Requests > Sent lists it. No toast or message after sending (1.65 s, R57).",
+    "'The owner sees your message, your answers and your profile card.' Clear."
+   ],
+   "findings": [
+    "R57"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T047-1.png",
+    "docs/ux-pilot/shots/T047-2.png",
+    "docs/ux-pilot/shots/T047-3.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T048",
+   "status": "Done",
+   "answers": [
+    "Not from a notification I saw: the venture page changed to 'You're on the team · Leave venture'.",
+    "'You're on the team', Leave venture, and a Chat tab. On the phone the tab row is 600 px wide in a 390 px screen: Reviews and Chat are off-screen and must be scrolled to (R58, P31).",
+    "Puts its updates in my Home ('Followed venture updates'); the button just became 'Following', nothing explained."
+   ],
+   "findings": [
+    "R58"
+   ],
+   "note": "Team chat opened with a push offer card ('Get new messages on your phone…').",
+   "shots": [
+    "docs/ux-pilot/shots/T048-1.png"
+   ],
+   "clicks": 6,
+   "shortest": 4
+  },
+  {
+   "id": "T049",
+   "status": "Done",
+   "answers": [
+    "Requests > Invites: 'You're invited to join Study Buddy Finder · Accept · Decline'. Accepting gave no message; the invite just vanished.",
+    "The Sent tab says only 'Declined' with no reason; neutral, a bit cold.",
+    "Nothing stopped me: the role page still shows 'Apply to a role', and a second application to the same role went through silently (R59)."
+   ],
+   "findings": [
+    "R59"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T049-1.png",
+    "docs/ux-pilot/shots/T049-2.png"
+   ],
+   "clicks": 6,
+   "shortest": 4
+  },
+  {
+   "id": "T050",
+   "status": "Done",
+   "answers": [
+    "Full venture: no. It shows '2 of 2 members' and the role 'Filled', but 'Apply to join' is still offered (R60). Other university's venture: it isn't listed or searchable at all, and its link says 'We couldn't find that page'.",
+    "No alternatives were suggested on either page."
+   ],
+   "findings": [
+    "R60"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T050-1.png",
+    "docs/ux-pilot/shots/T050-2.png"
+   ],
+   "clicks": 3,
+   "shortest": null
+  },
+  {
+   "id": "T051",
+   "status": "Done",
+   "answers": [
+    "Role skills use a type-ahead ('Add React') that isn't obvious; the question field has no visible label.",
+    "No: the manage page has separate Save buttons per section ('Save role', 'Save questions', 'Save details') and no unsaved marker; leaving after editing the title silently dropped my change (R61).",
+    "About 12 s and 13 actions after the empty-title check. Nothing asked twice."
+   ],
+   "findings": [
+    "R61"
+   ],
+   "note": "Empty title: 'Check the highlighted fields.' at the top and 'Give it a title of at least 3 characters.' under Title (aria-invalid + describedby), but focus doesn't move to the field (R62).",
+   "shots": [
+    "docs/ux-pilot/shots/T051-1.png",
+    "docs/ux-pilot/shots/T051-2.png",
+    "docs/ux-pilot/shots/T051-3.png"
+   ],
+   "clicks": 13,
+   "shortest": 11
+  },
+  {
+   "id": "T052",
+   "status": "Done",
+   "answers": [
+    "Composer kind 'Venture invite', then a Venture select ('Readers see its open roles and an Apply button').",
+    "Didn't check as another user; my own feed shows it with the roles and Apply.",
+    "Yes; the tour mentioned the composer, and the kind tabs are on Home."
+   ],
+   "findings": [],
+   "note": "The venture select listed '[UX test] Ayesha' twice (a stray half-made venture of the same name from an earlier attempt).",
+   "shots": [
+    "docs/ux-pilot/shots/T052-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T053",
+   "status": "Done",
+   "answers": [
+    "Mostly: message, the answer to my question and a link to the profile, inline on Requests. Skills or tier weren't on the application.",
+    "The team chat existed but said 'No messages yet. Say hello.'; nothing announced the new member.",
+    "No: Decline is instant, no confirmation and no reason field (R63). A short optional reason would help."
+   ],
+   "findings": [
+    "R63"
+   ],
+   "note": "Invite by username: 'Invite sent.' (1.6 s).",
+   "shots": [
+    "docs/ux-pilot/shots/T053-1.png",
+    "docs/ux-pilot/shots/T053-2.png",
+    "docs/ux-pilot/shots/T053-3.png",
+    "docs/ux-pilot/shots/T053-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T054",
+   "status": "Done",
+   "answers": [
+    "'Mark this venture in progress? It stays open to applications while any role has places.' It doesn't say whether it can be undone (it can't).",
+    "On the venture's Updates tab, and in followers' Home.",
+    "Update = what happened this week; deliverable = a link to what was made (needed to complete)."
+   ],
+   "findings": [
+    "R64"
+   ],
+   "note": "Update, repository and deliverable saved with no toast: the page just changed (R64).",
+   "shots": [
+    "docs/ux-pilot/shots/T054-1.png"
+   ],
+   "clicks": 9,
+   "shortest": 8
+  },
+  {
+   "id": "T055",
+   "status": "Done",
+   "answers": [
+    "Partly: 'Make Bushra Helper the owner? They'll manage the venture. You stay on the team as a member.' It doesn't say I can't take it back.",
+    "No: only the new owner can make me owner again; nothing says so."
+   ],
+   "findings": [],
+   "note": "A role select per member (Lead, Developer, Designer, Researcher, Member) is on the Team tab.",
+   "shots": [
+    "docs/ux-pilot/shots/T055-1.png",
+    "docs/ux-pilot/shots/T055-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T056",
+   "status": "Done",
+   "answers": [
+    "Yes: the manage page lists 'To complete it you need: at least 1 deliverable (you have 0) · peer-verified contributions from at least 2 members (you have 1)', and the dialog repeats the first missing item. The dialog says 'This can't be undone' before checking, then errors inside it.",
+    "Satisfying: 'This venture is complete' and a Shipped post.",
+    "A 'Shipped' post in the Global feed and on my profile's Ventures tab as Completed."
+   ],
+   "findings": [
+    "R65"
+   ],
+   "note": "After my entry was corrected, the helper couldn't confirm the correction ('confirm the entry, not a correction'), only the original (R65).",
+   "shots": [
+    "docs/ux-pilot/shots/T056-1.png",
+    "docs/ux-pilot/shots/T056-2.png",
+    "docs/ux-pilot/shots/T056-3.png",
+    "docs/ux-pilot/shots/T056-4.png"
+   ],
+   "clicks": 8,
+   "shortest": 6
+  },
+  {
+   "id": "T057",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Abandon this venture? Applications and invites close. The page stays up as a record. This can't be undone.'",
+    "No, and it says so."
+   ],
+   "findings": [
+    "R66"
+   ],
+   "note": "Abandoned ventures still appear first in Ventures 'Any status' and on the profile (R66).",
+   "shots": [
+    "docs/ux-pilot/shots/T057-1.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T058",
+   "status": "Done",
+   "answers": [
+    "Self-reported: I said I did it. Peer-verified: a teammate confirmed it.",
+    "Yes: 'Entries can't be deleted; you can correct one for 24 hours.' at the top of the form.",
+    "No: Confirm on a teammate's entry acts at once, no dialog; the label changes to 'Peer-verified'."
+   ],
+   "findings": [
+    "R67"
+   ],
+   "note": "Bad link: 'Use a full link starting with https://.' under the field, aria-invalid + describedby, input kept.",
+   "shots": [
+    "docs/ux-pilot/shots/T058-1.png",
+    "docs/ux-pilot/shots/T058-2.png",
+    "docs/ux-pilot/shots/T058-3.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T059",
+   "status": "Done",
+   "answers": [
+    "'Correct' on my entry: 'Your correction replaces what the timeline shows. The original stays on the record, and a teammate confirms the new version.'",
+    "Yes.",
+    "Nothing; the window has closed. The page doesn't say what to do then."
+   ],
+   "findings": [],
+   "note": "Entry shows 'Corrected'.",
+   "shots": [
+    "docs/ux-pilot/shots/T059-1.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T060",
+   "status": "Done",
+   "answers": [
+    "Ticked the skills the sheet offered (only the venture's skills, React and SQL); 'Choose up to 5. 20 endorsements left this month.' Fine.",
+    "Weight on their profile; tied to an entry it 'makes it evidence… raises the skill to L4'.",
+    "If it's for a skill they no longer want shown, or from a teammate they fell out with.",
+    "Supervisor and faculty reviews: 'A review from a teacher adds a Reviewed by faculty badge to this project on your CV.'"
+   ],
+   "findings": [],
+   "note": "Hide is instant and reversible ('Hidden from others · Show').",
+   "shots": [
+    "docs/ux-pilot/shots/T060-1.png",
+    "docs/ux-pilot/shots/T060-2.png",
+    "docs/ux-pilot/shots/T060-3.png"
+   ],
+   "clicks": 7,
+   "shortest": 6
+  },
+  {
+   "id": "T061",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Unsaved changes' next to Save changes, then 'Saved.'. But leaving before saving dropped my intro with no warning (R72).",
+    "My university: 'Signed-in students and staff at your university, and your friends anywhere, see your full profile.' Others see name, department and batch.",
+    "A crop step for the photo appeared (good). Nothing missing."
+   ],
+   "findings": [
+    "R72"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T061-1.png"
+   ],
+   "clicks": 9,
+   "shortest": 7
+  },
+  {
+   "id": "T062",
+   "status": "Done",
+   "answers": [
+    "About 6 s: Settings > Privacy centre > 'Show me on leaderboards' switch ('Saved.'); 'Who viewed my CV: 0 views in the last 30 days' on the same page.",
+    "'your tier still shows on your profile and to recruiters' and 'whether recruiters can find you': there are no recruiters on Skilient now (P20).",
+    "The switch has no accessible name of its own (R73)."
+   ],
+   "findings": [
+    "R73",
+    "R14"
+   ],
+   "note": "Leaderboard then says 'You've left the leaderboards… Show me again'.",
+   "shots": [
+    "docs/ux-pilot/shots/T062-1.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T063",
+   "status": "Partly done",
+   "answers": [
+    "The list is 'Recent activity' (sign-ins with browser and time), not a list of signed-in devices; recognisable ('Chrome on Android').",
+    "'Sign out everywhere? Every device, including this one, will need to sign in again.' Then I was signed out too; there's no 'all other devices' (R74).",
+    "The other tab moved to the home page by itself after I signed out in the first."
+   ],
+   "findings": [
+    "R74"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T063-1.png"
+   ],
+   "clicks": 4,
+   "shortest": null
+  },
+  {
+   "id": "T064",
+   "status": "Done",
+   "answers": [
+    "Mostly: profile, posts, messages, endorsements, credentials and score are deleted; ventures pass to a teammate; signed CVs are revoked. Your own Record isn't named. 'There is no data export at launch.' (P36)",
+    "'Keep my account' on the page the account is locked to ('It will be permanently deleted on Tuesday, 8 December 2026… nobody else is told'). Safe.",
+    "Long: about 3,000 words in 12 sections; the headings are clear."
+   ],
+   "findings": [],
+   "note": "Start needed the username typed; no extra dialog.",
+   "shots": [
+    "docs/ux-pilot/shots/T064-1.png",
+    "docs/ux-pilot/shots/T064-2.png",
+    "docs/ux-pilot/shots/T064-3.png",
+    "docs/ux-pilot/shots/T064-4.png",
+    "docs/ux-pilot/shots/T064-5.png",
+    "docs/ux-pilot/shots/T064-6.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T065",
+   "status": "Done",
+   "answers": [
+    "Yes: 'A Skilient reviewer checks each one… Reviews usually take up to 3 days.'",
+    "'Waiting for review', 'Approved', 'Not approved' with 'Reviewer's note: The file is too blurry… Upload a clearer scan'. Clear.",
+    "Profile Overview > Credentials."
+   ],
+   "findings": [
+    "R75"
+   ],
+   "note": "Too-big file: no message when choosing it; 'PDFs can be up to 5 MB.' only after pressing Send. The same certificate can be sent again and shows up repeatedly (R75).",
+   "shots": [
+    "docs/ux-pilot/shots/T065-1.png",
+    "docs/ux-pilot/shots/T065-2.png",
+    "docs/ux-pilot/shots/T065-3.png",
+    "docs/ux-pilot/shots/T065-4.png",
+    "docs/ux-pilot/shots/T065-5.png",
+    "docs/ux-pilot/shots/T065-6.png",
+    "docs/ux-pilot/shots/T065-7.png",
+    "docs/ux-pilot/shots/T065-8.png",
+    "docs/ux-pilot/shots/T065-9.png"
+   ],
+   "clicks": 8,
+   "shortest": 6
+  },
+  {
+   "id": "T066",
+   "status": "Done",
+   "answers": [
+    "Polish and convenience: ATS PDF export, refresh CV any time, CV layouts and insights, company names on CV views, who viewed your record, full survey breakdown.",
+    "No: 'Your plan: Free', with a 7-day trial. 'Test mode' banner shows.",
+    "No: 'Proof stays free for everyone: verification, levels, ranking and being found.' But 'Company names on CV views' means nothing with no recruiters."
+   ],
+   "findings": [
+    "R14"
+   ],
+   "note": "What happens when the beta ends isn't stated anywhere on the page (R76).",
+   "shots": [
+    "docs/ux-pilot/shots/T066-1.png"
+   ],
+   "clicks": 1,
+   "shortest": 1
+  },
+  {
+   "id": "T067",
+   "status": "Done",
+   "answers": [
+    "Feedback in the rail (desktop) / /feedback; on the phone it isn't in the account menu.",
+    "Yes: 'Thank you. We read every one, and you'll see its status below.' with steps Received, Reviewing, Planned, Shipped.",
+    "Yes: the reply and 'Planned' showed under 'My feedback'. It attached '/feedback', not the score page I came from (P26)."
+   ],
+   "findings": [
+    "R77"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T067-1.png",
+    "docs/ux-pilot/shots/T067-2.png",
+    "docs/ux-pilot/shots/T067-3.png",
+    "docs/ux-pilot/shots/T067-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T068",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Reason given: Spam: the post asks people to report it… (rule 3, spam).' and 'Repeated test spam posts…'. Banner: 'Your account is suspended until Fri 27 Nov… You can read, appeal the decision or delete your account, but not post, message or apply. Appeal'.",
+    "Yes: the banner's Appeal link; each decision appealable once within 30 days, 'a different staff member reviews it'.",
+    "Fair: 'Decision reversed' with the reviewer's reason. Each decision needs its own appeal (post removal and suspension separately)."
+   ],
+   "findings": [],
+   "note": "Staff side played through the product's functions as two different staff accounts.",
+   "shots": [
+    "docs/ux-pilot/shots/T068-1.png",
+    "docs/ux-pilot/shots/T068-2.png",
+    "docs/ux-pilot/shots/T068-3.png",
+    "docs/ux-pilot/shots/T068-4.png",
+    "docs/ux-pilot/shots/T068-5.png",
+    "docs/ux-pilot/shots/T068-6.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T069",
+   "status": "Done",
+   "answers": [
+    "Authored: my own commits on 3 or more separate days with 150+ lines (the drawer's L2 rule). For SQL: 'Active days 3 · Lines of code 240 · Repositories 1'.",
+    "Yes: chips say 'L2 · You've written this' vs 'L1 · Found in your repos' vs 'L3 · Accepted by others'. There are no claimed skills to compare.",
+    "Yes: 'tag a venture contribution with it and have a teammate confirm it' is doable this week. The level rules speak in third person ('a repository they own') while the advice says 'you' (P33)."
+   ],
+   "findings": [
+    "R78"
+   ],
+   "note": "Drawer loads with 'Loading your evidence…'.",
+   "shots": [
+    "docs/ux-pilot/shots/T069-1.png",
+    "docs/ux-pilot/shots/T069-2.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T070",
+   "status": "Partly done",
+   "answers": [
+    "There's no way to add a skill myself, here or anywhere (R08).",
+    "No: switching a repository off took effect at once with no confirmation, and all my GitHub skills (JavaScript and SQL L2) vanished from /me/skills and paths at once. Switching it on brought them back (R79).",
+    "Probably the same: skills from that code would go. Nothing on the page says so; 'Disconnect' has its own confirm (not opened)."
+   ],
+   "findings": [
+    "R08",
+    "R79"
+   ],
+   "note": "Settings > GitHub also says 'Not synced yet.' because the sync worker doesn't run locally.",
+   "shots": [
+    "docs/ux-pilot/shots/T070-1.png",
+    "docs/ux-pilot/shots/T070-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T071",
+   "status": "Partly done",
+   "answers": [
+    "Can't compare: 'Connect GitHub' goes to github.com/apps/…/installations/new, which can't be reached locally.",
+    "Not observable (sync runs in a worker).",
+    "Simulating GitHub's cancel return brought me to Settings > GitHub with 'That GitHub link expired or was opened in another account. Start again below.', which blames a link, not the cancel (R80)."
+   ],
+   "findings": [
+    "R80"
+   ],
+   "note": "Real GitHub needs staging.",
+   "shots": [],
+   "clicks": 2,
+   "shortest": null
+  },
+  {
+   "id": "T072",
+   "status": "Done",
+   "answers": [
+    "'Starter path: the order switches to seniors' records once 10 of them qualify.' I'd trust it moderately; it's a fixed list until then.",
+    "What I've proved (dated squares 'done'), where I am ('you are here') and what's next ('next: Express'), '2 of 11 proved'.",
+    "After two, the third path's Follow button simply disappeared; only the line at the top says 'Follow up to 2 paths' (R81)."
+   ],
+   "findings": [
+    "R81"
+   ],
+   "note": "Next skill: Node.js (JavaScript and SQL done). Its drawer: 'Why it's here: Square 2…', proof tasks, and 'Learn it in a skill swap: Nobody at your university teaches it yet'.",
+   "shots": [
+    "docs/ux-pilot/shots/T072-1.png",
+    "docs/ux-pilot/shots/T072-2.png",
+    "docs/ux-pilot/shots/T072-3.png",
+    "docs/ux-pilot/shots/T072-4.png"
+   ],
+   "clicks": 6,
+   "shortest": 4
+  },
+  {
+   "id": "T073",
+   "status": "Partly done",
+   "answers": [
+    "Yes: brief, 'Done when' checklist, repository picker.",
+    "'Verifying with GitHub: We're rescanning your repository. If commits since you started show the skill, the task is done without a peer.' No expected time (R82).",
+    "Not reached locally: the GitHub check runs in a worker; the tick routed it to a peer after the wait (simulated)."
+   ],
+   "findings": [
+    "R82"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T073-1.png",
+    "docs/ux-pilot/shots/T073-2.png",
+    "docs/ux-pilot/shots/T073-3.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T074",
+   "status": "Done",
+   "answers": [
+    "Yes: 'What to change: … Add one test and a How to run section.'",
+    "'Resubmit' on the task page; it went back to 'Verifying with GitHub' and the reviewer's note disappeared from the page.",
+    "No code-check option is offered on the task page for this case."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T074-1.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T075",
+   "status": "Done",
+   "answers": [
+    "The page says 'Check it against the list' and shows the repository name; nothing says whether to run or read the code, and the repo isn't a link I could open (R83).",
+    "Mostly: four checklist items and a note. Enough for a starter task.",
+    "Fair enough as asked, but 'Thank you: reviews keep proof honest.' is the only reward; nothing on my profile.",
+    "'Decline' next to Accept before accepting: 'Declining is fine; you won't be asked about this task again.'"
+   ],
+   "findings": [
+    "R83"
+   ],
+   "note": "Confirm had no confirmation step.",
+   "shots": [
+    "docs/ux-pilot/shots/T075-1.png",
+    "docs/ux-pilot/shots/T075-2.png",
+    "docs/ux-pilot/shots/T075-3.png",
+    "docs/ux-pilot/shots/T075-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T076",
+   "status": "Partly done",
+   "answers": [
+    "The only one listed: 'Ali Helper · L3 SQL · new teacher · Joins, indexes and query plans'. The level and his note.",
+    "Yes: 'Offer a skill back (optional): No, just this / React / JavaScript. A mutual swap…'.",
+    "'No teachers at your university yet. We'll show them here when someone offers…' (Rust)."
+   ],
+   "findings": [
+    "R84"
+   ],
+   "note": "The 'Times that suit you' field didn't take my input from the script and was stored empty; the request went without times and without an error (R84).",
+   "shots": [
+    "docs/ux-pilot/shots/T076-1.png",
+    "docs/ux-pilot/shots/T076-2.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T077",
+   "status": "Done",
+   "answers": [
+    "Ali proposed '26 Nov · 30 min · Library, 2nd floor' and I accepted on the swap page.",
+    "Yes: 'Did your session with Ali happen? Yes / No', minutes, thank-you note.",
+    "Teacher: on /me/record as 'Taught: Taught SQL to Ayesha · 1 session · 0.3 h · Signing…' (wording doubled, R85).",
+    "End swap uses the browser's plain confirm box, unlike every other dialog (R85); otherwise nothing."
+   ],
+   "findings": [
+    "R85"
+   ],
+   "note": "The session time was moved into the past on the local DB to stand in for waiting.",
+   "shots": [
+    "docs/ux-pilot/shots/T077-1.png",
+    "docs/ux-pilot/shots/T077-2.png",
+    "docs/ux-pilot/shots/T077-3.png"
+   ],
+   "clicks": 7,
+   "shortest": 6
+  },
+  {
+   "id": "T078",
+   "status": "Done",
+   "answers": [
+    "231.55 points: Work 159 (a completed venture as creator), verified skills 45, endorsements 7.5; Spark, 19 points from Flare.",
+    "'Updated 24 Nov 2026' and 'Scores update every night at about 3 AM' agree; but my completed Fee Tracker venture today isn't in it yet, with nothing saying it will count tonight.",
+    "'1 of 6 tiers reached' while on Spark (R19); points with two decimals look gameable to the cent. The best action ('a confirmed contribution in 2 ventures') isn't a link (P02)."
+   ],
+   "findings": [
+    "R19",
+    "R20"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T078-1.png"
+   ],
+   "clicks": 2,
+   "shortest": 1
+  },
+  {
+   "id": "T079",
+   "status": "Partly done",
+   "answers": [
+    "I'd left the leaderboards in T062, so I only saw 'You've left the leaderboards… Show me again' and Bushra at the top.",
+    "Yes, points stay private.",
+    "I already did; I'd opt back in only at a higher tier."
+   ],
+   "findings": [],
+   "note": "Plan: T062 (opt out) runs before T079 in S06/S07 for the same tester; swap the order or use another account.",
+   "shots": [
+    "docs/ux-pilot/shots/T079-1.png"
+   ],
+   "clicks": 4,
+   "shortest": null
+  },
+  {
+   "id": "T080",
+   "status": "Done",
+   "answers": [
+    "Signed by Skilient and locked: 'Sealed · 05:01' with a code; the verify page says 'hasn't changed since'.",
+    "Likely yes: the PDF has a code, and the public verify page shows 'Valid', the issuer, date, evidence and 'Signature: Ed25519, checked'.",
+    "Yes, though 'Ed25519' and 'key cv-2026…' mean nothing to a committee; 'Issued by Skilient' for a venture completion is less convincing than a society's name."
+   ],
+   "findings": [],
+   "note": "Pin: instant, the entry shows under 'From the Record' on the profile. Certificate downloaded (62 KB).",
+   "shots": [
+    "docs/ux-pilot/shots/T080-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T081",
+   "status": "Done",
+   "answers": [
+    "Expires after: 7 days / 30 days / 90 days radio, then 'Make a share link' ('expires 1 Dec 2026').",
+    "Mostly: the committee view lists the entries I show; it doesn't say hidden entries are left out. 'Copy your link now: it won't be shown again.'",
+    "Yes for the visitor: 'This link isn't valid. It may have expired or been revoked.' But my page still showed the revoked link with 'Copy link' (R86), and Revoke had no confirmation."
+   ],
+   "findings": [
+    "R86"
+   ],
+   "note": "Transcript PDF downloaded.",
+   "shots": [
+    "docs/ux-pilot/shots/T081-1.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T082",
+   "status": "Done",
+   "answers": [
+    "The society: 'The society's officers see your note. If they correct it, a new entry replaces this one and this code reads superseded.'",
+    "It moved under 'Corrected entries (1)'; the new one '…(2 sessions)' has a new code.",
+    "'Issued in error · 24 Nov 2026: Issued to the wrong list…' with an Appeal button on the entry and on Appeals. Enough."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T082-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T083",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Your first entry is one event away.'",
+    "No: it suggested 'Security talk (registration closed)', an event you can no longer register for (R87)."
+   ],
+   "findings": [
+    "R87"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T083-1.png"
+   ],
+   "clicks": 1,
+   "shortest": 1
+  },
+  {
+   "id": "T084",
+   "status": "Partly done",
+   "answers": [
+    "Yes: nothing to type; sections are switches with up/down. Good for trust.",
+    "Yes: 'Spark tier on Skilient' is printed twice (header and summary) and can't be turned off (P23). The same certificate appears three times (R75).",
+    "Not yet: the changes apply only from the 1 December version ('Saved. Your CV changes on 1 December.'); refreshing now is Pro."
+   ],
+   "findings": [
+    "R88",
+    "R75"
+   ],
+   "note": "The section switches have no accessible names (R88). Done-when can't be met on the free plan within the session.",
+   "shots": [
+    "docs/ux-pilot/shots/T084-1.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T085",
+   "status": "Partly done",
+   "answers": [
+    "The PDF: 'ATS PDF export is a Student Pro feature, coming with plans.' The link worked for a Spark account.",
+    "Mostly: 'Your web CV and share links are free.' But 'coming with plans' while a trial exists confuses.",
+    "Privacy centre: '1 active share link', and on the CV page 'Views through your links: 0'."
+   ],
+   "findings": [],
+   "note": "'Share links are paused.' appears on the CV page next to the new link without explanation.",
+   "shots": [
+    "docs/ux-pilot/shots/T085-1.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T086",
+   "status": "Done",
+   "answers": [
+    "Genuine: 'Your PDF matches a PDF issued under this code.' Forged (one character changed): 'doesn't match… The genuine CV is shown below so you can compare.'",
+    "On /verify you must first type the code; the PDF check only appears after (R89)."
+   ],
+   "findings": [
+    "R89"
+   ],
+   "note": "A transferred venture shows the new owner as 'Creator' on their CV (R90).",
+   "shots": [
+    "docs/ux-pilot/shots/T086-1.png",
+    "docs/ux-pilot/shots/T086-2.png",
+    "docs/ux-pilot/shots/T086-3.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T087",
+   "status": "Partly done",
+   "answers": [
+    "Openings > Events: 4 events open (Figma masterclass, Alumni talk, Hack Day, Intro to Git). 'This week' said 'A quiet week… no upcoming events' at the same time (R91). I'd pick the Git workshop."
+   ],
+   "findings": [
+    "R91"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T087-1.png"
+   ],
+   "clicks": 3,
+   "shortest": 2
+  },
+  {
+   "id": "T088",
+   "status": "Blocked",
+   "answers": [
+    "Openings > Project ideas: 'Campus bus tracker (UX pilot) · Matches your skills'; Sort: Newest / Deadline soonest / Matches my skills; Explore > Project ideas has skill and university filters.",
+    "The idea page: 'Start a venture from this idea' prefills the form ('Starting from Dr Kamran Faculty's project idea… invited to supervise it').",
+    "Creating it was refused: 'You're doing that too often. Try again later.' (venture creation is rate-limited per day; this tester had made several in S05), with no time given (R46)."
+   ],
+   "findings": [
+    "R46"
+   ],
+   "note": "Plan: venture creation has a daily limit; T051/T057/T088 for one tester can hit it.",
+   "shots": [
+    "docs/ux-pilot/shots/T088-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T089",
+   "status": "Done",
+   "answers": [
+    "Debating Society: 'Follow' then 'Ask to join' (By request) → 'Join request sent'; Developers Club 'Join' (Open) → instant, button became 'Leave'; Design Guild says 'Apply in a round'.",
+    "Following, joining and requesting give no message; the buttons just change (R92).",
+    "'1 members' on society cards and pages (R92)."
+   ],
+   "findings": [
+    "R92"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T089-1.png",
+    "docs/ux-pilot/shots/T089-2.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T090",
+   "status": "Done",
+   "answers": [
+    "Inline form on the round: role select, 'Link one design you made.', 'Send application' → 'Your application · Applied · for Designer'. After the officer's decision: 'Accepted · Loved your onboarding redesign. Welcome!'"
+   ],
+   "findings": [],
+   "note": "No notification of the acceptance appeared in the bell (R93).",
+   "shots": [
+    "docs/ux-pilot/shots/T090-1.png",
+    "docs/ux-pilot/shots/T090-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T091",
+   "status": "Done",
+   "answers": [
+    "Leave asked through the browser's native confirm ('Leave UX Pilot Developers Club?') (R85); the button became 'Join'.",
+    "Reporting the society post: same sheet as other posts, 'Thanks, we'll review this.'"
+   ],
+   "findings": [
+    "R85"
+   ],
+   "note": "",
+   "shots": [],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T092",
+   "status": "Done",
+   "answers": [
+    "Yes: a PDF letter or a link to the society on the university site. In real life the faculty advisor's letter.",
+    "The proof step (reading what counts as proof). The whole request took ~9 s and 9 actions.",
+    "'Request sent. Skilient reviews requests within 3 working days. We'll notify you either way.' A second request: 'You already have a request waiting… One request at a time.'"
+   ],
+   "findings": [
+    "R97"
+   ],
+   "note": "Existing name: 'UX Pilot Debating Society is already on Skilient at NUTECH.' under the field and Continue did nothing else. A PDF picked as the optional logo was accepted until after submit: 'Your request is in, but the logo didn't upload' (R97). The name field has no accessible name (R88-type).",
+   "shots": [
+    "docs/ux-pilot/shots/T092-1.png",
+    "docs/ux-pilot/shots/T092-2.png"
+   ],
+   "clicks": 9,
+   "shortest": 7
+  },
+  {
+   "id": "T093",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Skilient needs more information: Please add the link to your society's page… Answer and send it back' with new proof and link fields.",
+    "Yes: the society page shows 'Set up your society' with four steps.",
+    "Rejection (officer-1): 'Not approved · Note from Skilient: We couldn't find this society on NUTECH's list. Ask your advisor for a letter and request again.' Fair."
+   ],
+   "findings": [
+    "R98"
+   ],
+   "note": "No notification arrived for 'more information' or the decision (R98); the status shows on Societies > Your requests.",
+   "shots": [
+    "docs/ux-pilot/shots/T093-1.png",
+    "docs/ux-pilot/shots/T093-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T094",
+   "status": "Done",
+   "answers": [
+    "Events > Intro to Git: 'Register' opens the ticket sheet with the two questions; leaving the required one empty: 'Answer \"Have you used Git before?\".'; after: 'Your ticket · 53BD92C1 · Valid · Opened once, this ticket also shows without signal on this device.' and a phone-reminder offer."
+   ],
+   "findings": [],
+   "note": "Register 2.0 s on the throttled phone.",
+   "shots": [
+    "docs/ux-pilot/shots/T094-1.png",
+    "docs/ux-pilot/shots/T094-2.png",
+    "docs/ux-pilot/shots/T094-3.png",
+    "docs/ux-pilot/shots/T094-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T095",
+   "status": "Done",
+   "answers": [
+    "Captain: 'Create a team (you're the captain; share its code)' + Team name; the event page shows 'Team Null Pointers · code USM9HU · 1 member'. Two helpers chose 'Join a team with its code' → '3 members'."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T095-1.png",
+    "docs/ux-pilot/shots/T095-2.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T096",
+   "status": "Done",
+   "answers": [
+    "Full: 'Seat · Free · full, waitlist open', Register → 'Join the waitlist' → 'Number 1 on the waitlist. If a seat frees up, you're moved in automatically and told.' Other batch: 'For 2027 only.' (no Register). Not open: 'Registration opens 01 Dec · 00:24.' Cancelled: 'Cancelled: The speaker can't travel this week.'",
+    "None suggested other events. The events list shows the cancelled/closed talk as '50 seats left · Free' and the batch-only one as '20 seats left' (R94)."
+   ],
+   "findings": [
+    "R94"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T096-1.png",
+    "docs/ux-pilot/shots/T096-2.png",
+    "docs/ux-pilot/shots/T096-3.png",
+    "docs/ux-pilot/shots/T096-4.png",
+    "docs/ux-pilot/shots/T096-5.png",
+    "docs/ux-pilot/shots/T096-6.png"
+   ],
+   "clicks": 6,
+   "shortest": 4
+  },
+  {
+   "id": "T097",
+   "status": "Partly done",
+   "answers": [
+    "Reminder: not testable locally (push and email workers); the ticket page offers 'Get reminded on your phone?'.",
+    "Officer scan (played via the product's check-in function): ticket turned to 'Checked in: session at 24 Nov, 05:30'.",
+    "Feedback: 'How was it?' 5 rating buttons + comment; without a rating 'Pick a rating.'; saved (4, comment) but the page showed no thank-you (R95)."
+   ],
+   "findings": [
+    "R95"
+   ],
+   "note": "Event times moved on the local DB to stand in for the day.",
+   "shots": [
+    "docs/ux-pilot/shots/T097-1.png",
+    "docs/ux-pilot/shots/T097-2.png",
+    "docs/ux-pilot/shots/T097-3.png",
+    "docs/ux-pilot/shots/T097-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T098",
+   "status": "Done",
+   "answers": [
+    "Ticket page > 'Cancel registration' → browser's native confirm 'Cancel your registration?' → 'Cancelled'. As the team captain, nothing said what happens to my team (R96)."
+   ],
+   "findings": [
+    "R85",
+    "R96"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T098-1.png"
+   ],
+   "clicks": 2,
+   "shortest": 2
+  },
+  {
+   "id": "T099",
+   "status": "Done",
+   "answers": [
+    "'Hold my seat': 'Seat held: pay to confirm… held until 25 Nov, 05:35', reference 'SKL-P45U (put it in the transfer note)', JazzCash number, receipt upload → 'Receipt under review… your seat stays held until they decide.' and 'I paid but nobody has confirmed it'."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T099-1.png",
+    "docs/ux-pilot/shots/T099-2.png",
+    "docs/ux-pilot/shots/T099-pay.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T100",
+   "status": "Done",
+   "answers": [
+    "'Receipt not accepted… The receipt wasn't accepted: This image isn't a JazzCash receipt… Upload a new one by 25 Nov, 05:35.' Re-upload → Paid. Cancel → 'Refund requested' → officer: 'Refund sent · Sent back to 03001234567 by JazzCash.' with 'I received it / Not received'."
+   ],
+   "findings": [],
+   "note": "Reason ends with a double full stop ('…Club..').",
+   "shots": [
+    "docs/ux-pilot/shots/T100-1.png",
+    "docs/ux-pilot/shots/T100-2.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T104",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Set up your society' lists logo and cover, officers, how members join, first event, each linking to its section, and ticks them off.",
+    "No: the term dates default to today and a year from today, not the academic year; 'start and end month' are full dates (R99).",
+    "By request; the select describes each mode in one line ('Open: Anyone… joins with one tap', 'By request: … an officer accepts', 'Inductions only'). The trade-off isn't explained."
+   ],
+   "findings": [
+    "R99"
+   ],
+   "note": "Invite needed a title ('Give the role a title.'); the toast after inviting said only 'Saved.'.",
+   "shots": [
+    "docs/ux-pilot/shots/T104-1.png",
+    "docs/ux-pilot/shots/T104-2.png"
+   ],
+   "clicks": 9,
+   "shortest": 7
+  },
+  {
+   "id": "T105",
+   "status": "Done",
+   "answers": [
+    "A 'Post as' select in the composer (Yourself / each society I run).",
+    "I didn't preview; the feed shows '[UX test] Film Society · by Iqra Secretary'."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T105-1.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T106",
+   "status": "Done",
+   "answers": [
+    "Yes: 'A change takes effect only when a second officer confirms it.'",
+    "Yes: 'Waiting for a second officer… Another officer confirms it.' and 'No confirmed account yet. Paid ticket types can't be published until one is confirmed.'",
+    "(Co-officer) The number and title against the society's real JazzCash account; the page shows Confirm / Reject and the proposer."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T106-1.png",
+    "docs/ux-pilot/shots/T106-2.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T107",
+   "status": "Done",
+   "answers": [
+    "Yes: 'A confirmed term becomes an Office bearer entry on the officer's Record.'",
+    "No: 'Offer the handover' sent it at once, no dialog; only the line 'you stay a member, and your term ends that day' (R100).",
+    "From my Record ('Office bearer: President'); no notification. Only the next President could confirm my term, after I'd lost access."
+   ],
+   "findings": [
+    "R100"
+   ],
+   "note": "Term dates had to be set on the local DB to stand in for the end of term. Ali's ended General Secretary term still shows 'Current'.",
+   "shots": [
+    "docs/ux-pilot/shots/T107-1.png",
+    "docs/ux-pilot/shots/T107-2.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T108",
+   "status": "Done",
+   "answers": [
+    "Roles and seats were clear ('Designer 2/2 open · Writer 1/1 open').",
+    "The round page after saving shows what students see.",
+    "No: nothing says who is told when publishing (followers? members?)."
+   ],
+   "findings": [],
+   "note": "Two months: 'The deadline is within the next 30 days.' under the field. Saved as a draft first, then 'Publish the round' (no confirmation).",
+   "shots": [
+    "docs/ux-pilot/shots/T108-1.png",
+    "docs/ux-pilot/shots/T108-2.png",
+    "docs/ux-pilot/shots/T108-3.png",
+    "docs/ux-pilot/shots/T108-4.png",
+    "docs/ux-pilot/shots/T108-5.png"
+   ],
+   "clicks": 10,
+   "shortest": 9
+  },
+  {
+   "id": "T109",
+   "status": "Partly done",
+   "answers": [
+    "Yes: each application shows name, role, the answer and Shortlist / Accept / Decline.",
+    "No: Decline is instant with no note field, so I couldn't add a kind note (R101); the applicant later sees 'Not this time'.",
+    "It stays 'Applied'; the round says undecided ones are declined 14 days after the deadline."
+   ],
+   "findings": [
+    "R101"
+   ],
+   "note": "Shortlisting gives no visible state once another decision is made.",
+   "shots": [
+    "docs/ux-pilot/shots/T109-1.png",
+    "docs/ux-pilot/shots/T109-2.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T110",
+   "status": "Done",
+   "answers": [
+    "'When and where' (two sessions, four date-time fields, typed by hand) and 'Who can come': departments are a free-text field ('Separate with commas'), so 'BSCS' must match the exact department name (R103).",
+    "Yes: '6 steps left…' kept me oriented.",
+    "Mostly: Attended / Completed / Result / Volunteer hours each say what earns it; 'Sessions needed to complete' appeared but the review shows only 'Attended, Completed' and the saved event has no threshold (R104).",
+    "No; 'Nothing is saved until you save' warns about leaving."
+   ],
+   "findings": [
+    "R103",
+    "R104"
+   ],
+   "note": "42 s, 25 actions on desktop. Draft → 'Published.' with no confirmation. Review says '1 questions'.",
+   "shots": [
+    "docs/ux-pilot/shots/T110-1.png",
+    "docs/ux-pilot/shots/T110-2.png"
+   ],
+   "clicks": 25,
+   "shortest": 20
+  },
+  {
+   "id": "T111",
+   "status": "Partly done",
+   "answers": [
+    "Yes: 'Students pay the society directly and upload the receipt; an officer checks it. Skilient doesn't handle the money.'",
+    "A 'Refunds' select; my choice didn't stick (saved as 'none'), so I can't say the wording works (R104 plan).",
+    "Duplicate opened the stepper prefilled with the same title ('Debugging clinic (ready for close-out)'), dates included; nothing marks it as a copy (R105)."
+   ],
+   "findings": [
+    "R105"
+   ],
+   "note": "Co-host: a free-text 'Co-hosting societies' field with no suggestions; nothing was saved (0 co-hosts). Editing a published event warns 'Changing the time or place tells everyone registered.'",
+   "shots": [
+    "docs/ux-pilot/shots/T111-1.png",
+    "docs/ux-pilot/shots/T111-2.png"
+   ],
+   "clicks": 14,
+   "shortest": 10
+  },
+  {
+   "id": "T112",
+   "status": "Partly done",
+   "answers": [
+    "Yes: amount, reference (SKL-…), transaction ID and 'Open the receipt' per row.",
+    "Yes: 'Possible duplicate · Same transaction ID also uploaded for Fatima Final's registration' on both rows.",
+    "Opened as a link (not checked visually)."
+   ],
+   "findings": [],
+   "note": "My runner approved both duplicate rows by mistake; Reject needs an inline 'Reason to reject' ('Tell the student what's wrong with the receipt.').",
+   "shots": [
+    "docs/ux-pilot/shots/T112-1.png",
+    "docs/ux-pilot/shots/T112-2.png",
+    "docs/ux-pilot/shots/T112-3.png",
+    "docs/ux-pilot/shots/T112-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T113",
+   "status": "Done",
+   "answers": [
+    "The Messages tab says 'Goes to everyone confirmed, waiting or on the waitlist, as a notification.' No count or confirmation after sending (R106).",
+    "Lowering to 1 seat with 1 confirmed (2 waiting) was accepted silently.",
+    "Yes: only the confirmed, or only the waitlist."
+   ],
+   "findings": [
+    "R106"
+   ],
+   "note": "Approve on Registrations; Staff tab 'Add staff' by username worked.",
+   "shots": [
+    "docs/ux-pilot/shots/T113-1.png",
+    "docs/ux-pilot/shots/T113-2.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T114",
+   "status": "Done",
+   "answers": [
+    "No: 'Cancel the event' is a collapsed section on the Messages tab with only 'Why (everyone registered reads this)'; one tap cancels, no confirmation of consequences (R107).",
+    "Partly: payments switch to 'Refund requested · Mark refund sent'. But the paid student's ticket still says 'Valid' after cancelling (R107)."
+   ],
+   "findings": [
+    "R107"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T114-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T115",
+   "status": "Partly done",
+   "answers": [
+    "Not testable outdoors; on screen the result text is the same colour for all outcomes (no green/amber/red panel captured).",
+    "Typed codes: ~0.7 s, but every ticket code typed from under the QR was refused: 'Not checked in. That isn't a Skilient ticket.' (R102). Name search + 'Check in' and the walk-in email worked.",
+    "'Add by university email': they can claim the entry when they join."
+   ],
+   "findings": [
+    "R102"
+   ],
+   "note": "This headless browser has no camera scanning ('This browser can't scan codes. Use a handheld scanner or type the code under the QR.'). Only 2 of the 5 check-ins could be done.",
+   "shots": [
+    "docs/ux-pilot/shots/T115-1.png",
+    "docs/ux-pilot/shots/T115-2.png"
+   ],
+   "clicks": 8,
+   "shortest": 6
+  },
+  {
+   "id": "T116",
+   "status": "Blocked",
+   "answers": [
+    "Not available: a rotating room code exists only for university events (portal off); society events have no self check-in.",
+    "—",
+    "—"
+   ],
+   "findings": [],
+   "note": "Plan: drop T116 for societies or build self check-in.",
+   "shots": [],
+   "clicks": null,
+   "shortest": null
+  },
+  {
+   "id": "T117",
+   "status": "Done",
+   "answers": [
+    "The close-out table (attendee, sessions, place, hours) is the preview; 'Issue now' issued at once with no confirmation (R108).",
+    "No: nothing says entries can't be edited once issued (only corrected).",
+    "Yes: 'Close-out is open until 27 Nov… It issues by itself then.'"
+   ],
+   "findings": [
+    "R108"
+   ],
+   "note": "Missed attendee added with a reason; places 1–3 saved; 3 volunteer hours refused: 'Hours are capped at the event's length (2.0 h).' My own entry waits for a second officer ('awaiting'). After issuing: 'Entries appear on attendees' Records when The Record opens.' (odd wording).",
+   "shots": [
+    "docs/ux-pilot/shots/T117-1.png",
+    "docs/ux-pilot/shots/T117-2.png"
+   ],
+   "clicks": 12,
+   "shortest": 10
+  },
+  {
+   "id": "T118",
+   "status": "Done",
+   "answers": [
+    "Yes: the section says 'A correction issues a new entry and the old code reads superseded'; the corrected entry showed 'Signing…' first.",
+    "The CSV has quoted columns but no UTF-8 BOM (Excel may garble Urdu names) and raw ISO timestamps ('2026-11-24T01:01:26.055513+00:00') (R109).",
+    "Not yet: '0 answers so far. Totals show from 5 answers so nobody can be picked out.'"
+   ],
+   "findings": [
+    "R109"
+   ],
+   "note": "The mistake report shows inline with 'Correct it' and the entry's fields (Title, Place, Evidence line, Note to the student).",
+   "shots": [
+    "docs/ux-pilot/shots/T118-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  }
+ ],
+ "cw": [
+  {
+   "step": "F01.04c",
+   "task": "T002",
+   "q": 3,
+   "why": "For a typo, 'Request it' is the visible control, and it leads to requesting a university that doesn't exist."
+  },
+  {
+   "step": "F01.08c",
+   "task": "T004",
+   "q": 4,
+   "why": "After confirming elsewhere, the original tab still says 'Check your inbox'."
+  },
+  {
+   "step": "F02.03b",
+   "task": "T004",
+   "q": 4,
+   "why": "Signing in unconfirmed lands on the code screen without saying why or sending a code."
+  },
+  {
+   "step": "F03.05a",
+   "task": "T009",
+   "q": 2,
+   "why": "There is no control to add a claimed skill."
+  },
+  {
+   "step": "F03.07",
+   "task": "T009",
+   "q": 4,
+   "why": "Open ventures always empty, so nothing to act on."
+  },
+  {
+   "step": "F03.02a",
+   "task": "T010",
+   "q": 4,
+   "why": "Back drops what was typed on the current step."
+  },
+  {
+   "step": "F04.06",
+   "task": "T015",
+   "q": 3,
+   "why": "'Take this step' sounds like an action but opens an explainer."
+  },
+  {
+   "step": "F04.07a",
+   "task": "T018",
+   "q": 2,
+   "why": "No 'Hide checklist' control exists; only 'Hide until tomorrow'."
+  },
+  {
+   "step": "F04.04",
+   "task": "T017",
+   "q": 2,
+   "why": "No tip appears on Skill swap, Paths or Credentials."
+  },
+  {
+   "step": "F04.08",
+   "task": "T016",
+   "q": 4,
+   "why": "'privacy' leads to Settings, not the Privacy centre; 'swap' to the Openings category."
+  },
+  {
+   "step": "F05.07",
+   "task": "T019",
+   "q": 4,
+   "why": "'Answered' without the answer: not sure it counted."
+  },
+  {
+   "step": "F05.06b",
+   "task": "T020",
+   "q": 4,
+   "why": "Change disappears without saying the answer is now final."
+  },
+  {
+   "step": "F05.02",
+   "task": "T021",
+   "q": 4,
+   "why": "The Global Feed keeps the Shipped filter and looks empty."
+  },
+  {
+   "step": "F05.09",
+   "task": "T022",
+   "q": 2,
+   "why": "No mention suggestions appear when typing @."
+  },
+  {
+   "step": "F05.10",
+   "task": "T024",
+   "q": 2,
+   "why": "Arrow keys don't move within the ⋯ menu."
+  },
+  {
+   "step": "F06.07",
+   "task": "T026",
+   "q": 4,
+   "why": "For 21 s after Post nothing changes, so it looks like nothing happened."
+  },
+  {
+   "step": "F06.10",
+   "task": "T030",
+   "q": 4,
+   "why": "Insights shows a Pro pitch, not how the post is doing."
+  },
+  {
+   "step": "F07.05b",
+   "task": "T032",
+   "q": 4,
+   "why": "No feedback or limit when sharing a lot."
+  },
+  {
+   "step": "F08.06",
+   "task": "T035",
+   "q": 2,
+   "why": "No Message control on the Friends page."
+  },
+  {
+   "step": "F08.02",
+   "task": "T033",
+   "q": 4,
+   "why": "After sending, the person still shows 'Add friend' in suggestions."
+  },
+  {
+   "step": "F09.03a",
+   "task": "T040",
+   "q": 4,
+   "why": "No message or control says why you can't message a stranger."
+  },
+  {
+   "step": "F10.03",
+   "task": "T041",
+   "q": 2,
+   "why": "Filters look like they work but nothing changes until you type a name."
+  },
+  {
+   "step": "F09.05a",
+   "task": "T038",
+   "q": 4,
+   "why": "An offline message looks sent."
+  },
+  {
+   "step": "F11.02a",
+   "task": "T044",
+   "q": 3,
+   "why": "Chat messages in notifications bury the decision."
+  },
+  {
+   "step": "F12.04a",
+   "task": "T050",
+   "q": 3,
+   "why": "'Apply to join' on a full team suggests you can still join."
+  },
+  {
+   "step": "F12.04c",
+   "task": "T049",
+   "q": 4,
+   "why": "Reapplying after a decline goes through silently."
+  },
+  {
+   "step": "F13.04a",
+   "task": "T051",
+   "q": 4,
+   "why": "No sign whether edits on the manage page were saved."
+  },
+  {
+   "step": "F12.08",
+   "task": "T048",
+   "q": 2,
+   "why": "On a phone the Chat tab is off-screen."
+  },
+  {
+   "step": "F02.06",
+   "task": "T063",
+   "q": 3,
+   "why": "'Sign out of all devices' signs this device out too."
+  },
+  {
+   "step": "F02.05a",
+   "task": "T008",
+   "q": 4,
+   "why": "No way to decline; accept is the only path."
+  },
+  {
+   "step": "F11.06b",
+   "task": "T045",
+   "q": 4,
+   "why": "'Turn on for this device' fails with no next step."
+  },
+  {
+   "step": "F15.02b",
+   "task": "T061",
+   "q": 4,
+   "why": "Leaving unsaved loses the change without a prompt."
+  },
+  {
+   "step": "F19.08",
+   "task": "T070",
+   "q": 4,
+   "why": "Excluding a repository silently removes skills; nothing says it did."
+  },
+  {
+   "step": "F20.05",
+   "task": "T072",
+   "q": 2,
+   "why": "The third Follow button is just gone."
+  },
+  {
+   "step": "F21.04",
+   "task": "T075",
+   "q": 3,
+   "why": "'Check it' doesn't say how; no repo link."
+  },
+  {
+   "step": "F24.10",
+   "task": "T081",
+   "q": 4,
+   "why": "The revoked link still shows with Copy link."
+  },
+  {
+   "step": "F25.03",
+   "task": "T084",
+   "q": 4,
+   "why": "Changes don't show on the CV until 1 December."
+  },
+  {
+   "step": "F27.02",
+   "task": "T087",
+   "q": 4,
+   "why": "'This week' says quiet while events are open."
+  },
+  {
+   "step": "F28.01",
+   "task": "T088",
+   "q": 4,
+   "why": "Starting a venture from an idea is refused by a rate limit with no wait time."
+  },
+  {
+   "step": "F30.09",
+   "task": "T098",
+   "q": 4,
+   "why": "The captain isn't told what happens to the team."
+  },
+  {
+   "step": "F31.10",
+   "task": "T107",
+   "q": 4,
+   "why": "Nothing confirms the handover or what it ends."
+  },
+  {
+   "step": "F33.05",
+   "task": "T109",
+   "q": 2,
+   "why": "No place to write a note when declining."
+  },
+  {
+   "step": "F35.08",
+   "task": "T115",
+   "q": 3,
+   "why": "The printed code isn't accepted where the console asks for it."
+  },
+  {
+   "step": "F35.12",
+   "task": "T116",
+   "q": 1,
+   "why": "No self check-in for society events."
+  },
+  {
+   "step": "F34.10",
+   "task": "T114",
+   "q": 4,
+   "why": "After cancelling, paid tickets still read Valid."
+  }
+ ],
+ "findings": [
+  {
+   "id": "R01",
+   "severity": 3,
+   "where": "/signup (all server-rendered forms)",
+   "what": "On Phone with Fast 3G and 4x CPU, the form looks ready after 1.7 s but hydrates at ~6.6 s; anything typed before that is wiped without notice (name and password came back empty; 'Enter your name' errors on submit).",
+   "repro": "Open /signup on a throttled phone, type name and password within 5 s, wait: fields are empty.",
+   "tasks": "T001,T004",
+   "principles": "MOB,H05,DOH",
+   "fix": "Keep typed values through hydration (uncontrolled inputs or read DOM values on hydrate), or disable fields until ready.",
+   "same_as": ""
+  },
+  {
+   "id": "R02",
+   "severity": 2,
+   "where": "/signup",
+   "what": "A typo after @ (nutech.edu.pkk, nutec.edu.pk) says 'Your university isn't on Skilient yet. Request it', steering the student to request a university that doesn't exist.",
+   "repro": "Sign up with name@nutec.edu.pk.",
+   "tasks": "T002",
+   "principles": "H09,H05",
+   "fix": "For a domain close to a live one, ask 'Did you mean @nutech.edu.pk?' before offering the request.",
+   "same_as": ""
+  },
+  {
+   "id": "R03",
+   "severity": 2,
+   "where": "/signup",
+   "what": "After submitting with an unknown domain, the 'Request it' link disappears from the message.",
+   "repro": "Type an unknown domain, press Create account.",
+   "tasks": "T002",
+   "principles": "H09",
+   "fix": "Keep the request link in the submit-time message.",
+   "same_as": ""
+  },
+  {
+   "id": "R04",
+   "severity": 1,
+   "where": "/signup",
+   "what": "'This email is already registered. Sign in instead. Sign in' appears at the top of the form, not by the email field, with 'Sign in' twice.",
+   "repro": "Sign up with an existing email.",
+   "tasks": "T002",
+   "principles": "H09,COP",
+   "fix": "Show it under the email field: 'This email already has an account. Sign in'.",
+   "same_as": ""
+  },
+  {
+   "id": "R05",
+   "severity": 2,
+   "where": "/signup/verify",
+   "what": "A second wrong code shows the identical message; nothing shows the new attempt was checked or how many are left.",
+   "repro": "Enter a wrong code twice.",
+   "tasks": "T004",
+   "principles": "H01,H09",
+   "fix": "Re-announce the message (live region) and say attempts left.",
+   "same_as": ""
+  },
+  {
+   "id": "R06",
+   "severity": 2,
+   "where": "/signup/verify",
+   "what": "After the link is used on another device ('The tab where you signed up moves on by itself'), the phone tab, reloaded, still says 'Check your inbox' and restarts the resend timer.",
+   "repro": "Sign up on phone, open the email link on desktop and confirm, reload the phone tab.",
+   "tasks": "T004",
+   "principles": "H01,H04",
+   "fix": "On load and on focus, check confirmation and move on.",
+   "same_as": ""
+  },
+  {
+   "id": "R07",
+   "severity": 2,
+   "where": "/signin",
+   "what": "Signing in before confirming the email goes straight to the code screen with no reason given, and no new code is sent although a fresh 60 s timer suggests one was.",
+   "repro": "Sign up, close, sign in later.",
+   "tasks": "T004",
+   "principles": "H09,H01",
+   "fix": "Say 'Confirm your email first. We sent a new code to …' and send it.",
+   "same_as": ""
+  },
+  {
+   "id": "R08",
+   "severity": 3,
+   "where": "/onboarding/skills, /me/skills",
+   "what": "The step says 'Skills you add yourself show as claimed', but there is no way to add a skill anywhere; without GitHub the step is empty.",
+   "repro": "Skip GitHub, reach step 4.",
+   "tasks": "T009,T070",
+   "principles": "COP,H04,LRN",
+   "fix": "Add 'Add a skill you have' (claimed) to the step and to /me/skills, or remove the promise.",
+   "same_as": "P27"
+  },
+  {
+   "id": "R09",
+   "severity": 3,
+   "where": "/onboarding/people",
+   "what": "'Open ventures at <university>: No open ventures yet' always; the step never loads ventures, though two NUTECH ventures were recruiting.",
+   "repro": "Finish onboarding at NUTECH with recruiting ventures present.",
+   "tasks": "T009",
+   "principles": "H04,TRU,EMP",
+   "fix": "Load recruiting university/public ventures with open roles into the step.",
+   "same_as": ""
+  },
+  {
+   "id": "R10",
+   "severity": 2,
+   "where": "/onboarding/profile",
+   "what": "Back is a link, so unsaved username and intro typed on step 2 are lost.",
+   "repro": "Type a username and intro, press Back, then Continue.",
+   "tasks": "T010",
+   "principles": "H03,H05",
+   "fix": "Save drafts on Back (or keep them in the form state).",
+   "same_as": ""
+  },
+  {
+   "id": "R11",
+   "severity": 1,
+   "where": "/onboarding/profile",
+   "what": "'That username is taken. Try another.' offers no suggestion.",
+   "repro": "Type an existing username.",
+   "tasks": "T010",
+   "principles": "H05",
+   "fix": "Suggest two free variants.",
+   "same_as": ""
+  },
+  {
+   "id": "R12",
+   "severity": 1,
+   "where": "/onboarding",
+   "what": "Time left jumps (6, 5, 4, 2, 2, 1 min).",
+   "repro": "Walk the wizard.",
+   "tasks": "T009",
+   "principles": "H01",
+   "fix": "Base it on remaining steps evenly.",
+   "same_as": ""
+  },
+  {
+   "id": "R13",
+   "severity": 1,
+   "where": "/",
+   "what": "A signed-in student mid-onboarding who opens / sees the marketing page ('Open Skilient'), not their next step.",
+   "repro": "Close mid-onboarding, open skilient.com.",
+   "tasks": "T010",
+   "principles": "NAV",
+   "fix": "Redirect signed-in users to their current step or Home.",
+   "same_as": ""
+  },
+  {
+   "id": "R14",
+   "severity": 2,
+   "where": "/, /signup agreement, /onboarding/done",
+   "what": "Copy promises recruiters ('get recognised by recruiters', 'a CV that recruiters trust') while the recruiter portal is off.",
+   "repro": "Read the landing hero and welcome screen.",
+   "tasks": "T001,T009,T012",
+   "principles": "COP,TRU",
+   "fix": "Drop or soften recruiter claims while portals are off.",
+   "same_as": "P20"
+  },
+  {
+   "id": "R15",
+   "severity": 1,
+   "where": "/onboarding/university",
+   "what": "Batch list has 22 years (2011-2032) and Department 38 options with no search.",
+   "repro": "Open the selects.",
+   "tasks": "T009",
+   "principles": "HCK",
+   "fix": "Default to likely batches; add type-ahead search to Department.",
+   "same_as": ""
+  },
+  {
+   "id": "R18",
+   "severity": 2,
+   "where": "/me/record",
+   "what": "A new entry shows 'Signing…' with no idea how long it takes.",
+   "repro": "Claim an entry and open the Record.",
+   "tasks": "T013",
+   "principles": "H01",
+   "fix": "'Signing, usually within a minute' and refresh when sealed.",
+   "same_as": ""
+  },
+  {
+   "id": "R19",
+   "severity": 2,
+   "where": "/feed progress, /me/score",
+   "what": "Points shown with decimals ('231.55 points'); /me/score says '1 of 6 tiers reached' while the student is at Spark (tier 2).",
+   "repro": "Open the progress sheet and score page as a Spark student.",
+   "tasks": "T015",
+   "principles": "H04,TRU",
+   "fix": "Round points; count tiers reached including the current one.",
+   "same_as": "P01"
+  },
+  {
+   "id": "R20",
+   "severity": 2,
+   "where": "/feed progress",
+   "what": "'Take this step' opens the score explanation, not an action.",
+   "repro": "Progress > Take this step.",
+   "tasks": "T015",
+   "principles": "H06,FIT",
+   "fix": "Link the next step to its action.",
+   "same_as": "P02"
+  },
+  {
+   "id": "R22",
+   "severity": 2,
+   "where": "Post survey strip",
+   "what": "After answering, the strip shows 'Answered · Change' in an empty well, not the answer.",
+   "repro": "Answer any post.",
+   "tasks": "T019",
+   "principles": "H01,COP",
+   "fix": "Show 'You said Yes · Change'.",
+   "same_as": "P14"
+  },
+  {
+   "id": "R23",
+   "severity": 2,
+   "where": "Post survey strip",
+   "what": "When the change window ends (10 min), 'Change' disappears with no explanation.",
+   "repro": "Answer, wait 10 minutes, reload.",
+   "tasks": "T020",
+   "principles": "H01,H03",
+   "fix": "'Answers are final after 10 minutes' on hover/under the strip.",
+   "same_as": ""
+  },
+  {
+   "id": "R26",
+   "severity": 2,
+   "where": "/feed",
+   "what": "Switching to Global Feed keeps the active filter (Shipped), so the Global Feed looks nearly empty.",
+   "repro": "Filter Shipped, then Global Feed.",
+   "tasks": "T021",
+   "principles": "H01,AFF",
+   "fix": "Reset the filter on feed switch, or show it clearly with a clear button.",
+   "same_as": ""
+  },
+  {
+   "id": "R27",
+   "severity": 2,
+   "where": "Comments",
+   "what": "Typing @ suggests no names; you must know the exact username.",
+   "repro": "Reply with '@uxp_hel'.",
+   "tasks": "T022",
+   "principles": "JAK,H06",
+   "fix": "Autocomplete friends and thread participants.",
+   "same_as": ""
+  },
+  {
+   "id": "R29",
+   "severity": 1,
+   "where": "Report sheet",
+   "what": "After reporting: 'Thanks, we'll review this.' No timeline or where to see the outcome.",
+   "repro": "Report a post.",
+   "tasks": "T023",
+   "principles": "H01,SAF",
+   "fix": "'Usually within 2 days; you'll get a notification.'",
+   "same_as": ""
+  },
+  {
+   "id": "R31",
+   "severity": 2,
+   "where": "App shell (desktop)",
+   "what": "Keyboard users pass 14 rail and header stops before the feed; no skip link in the app shell.",
+   "repro": "Tab from page load on /feed.",
+   "tasks": "T024",
+   "principles": "ACC,FIT",
+   "fix": "Add 'Skip to content' to the app shell.",
+   "same_as": ""
+  },
+  {
+   "id": "R32",
+   "severity": 1,
+   "where": "Post survey strip",
+   "what": "Tick and cross are named only 'Yes' and 'No'.",
+   "repro": "Focus the tick with a screen reader.",
+   "tasks": "T024",
+   "principles": "ACC",
+   "fix": "Name them 'Yes: <question>' or group with the question as label.",
+   "same_as": ""
+  },
+  {
+   "id": "R33",
+   "severity": 3,
+   "where": "All pages",
+   "what": "With a larger browser font size, controls (rem) grow but text (px) doesn't; the phone dock labels overlap and the search box squashes.",
+   "repro": "Set the browser default font to 32px; open /feed on a phone.",
+   "tasks": "T025",
+   "principles": "ACC,MOB",
+   "fix": "Size text in rem.",
+   "same_as": "P32"
+  },
+  {
+   "id": "R34",
+   "severity": 2,
+   "where": "Ctrl K, tour",
+   "what": "'swap' opens 'Skill swaps (Openings)' first; 'privacy' finds only Settings. The tour introduces 5 of 13 rail places.",
+   "repro": "Ctrl K, type swap / privacy.",
+   "tasks": "T016,T014",
+   "principles": "H07,LRN",
+   "fix": "Rank exact page names first; index settings sub-pages; one tour step for the rail's lower group.",
+   "same_as": "P04"
+  },
+  {
+   "id": "R38",
+   "severity": 2,
+   "where": "/signup/verify",
+   "what": "The code screen masks the address the student just typed (u*****w@…), so a typo can't be spotted.",
+   "repro": "Sign up and read the code screen.",
+   "tasks": "T001",
+   "principles": "H05",
+   "fix": "Show the full address to the person who just typed it.",
+   "same_as": ""
+  },
+  {
+   "id": "R40",
+   "severity": 2,
+   "where": "/feed",
+   "what": "New posts stay in a 2-hour 'seed' stage shown only to a sample; a brand-new student saw 2 posts while ~20 existed at their university.",
+   "repro": "Sign up and open Home within 2 hours of others posting.",
+   "tasks": "T012,T019",
+   "principles": "EMP,H01",
+   "fix": "Let posts from a student's own university reach small universities without the seed gate, or fill quiet feeds with older posts.",
+   "same_as": ""
+  },
+  {
+   "id": "R41",
+   "severity": 3,
+   "where": "/feed composer",
+   "what": "Posting with photos on Fast 3G took 21.7 s with no pending state: the Post button stays active, no progress, no 'Posting…'.",
+   "repro": "Phone on Fast 3G, attach two photos, tap Post.",
+   "tasks": "T026",
+   "principles": "H01,MOB,DOH",
+   "fix": "Disable Post, show 'Uploading 1 of 2…' with progress, keep the draft if it fails.",
+   "same_as": ""
+  },
+  {
+   "id": "R42",
+   "severity": 1,
+   "where": "/feed composer",
+   "what": "An empty post just disables Post; nothing says why.",
+   "repro": "Clear the composer.",
+   "tasks": "T028",
+   "principles": "H09",
+   "fix": "Keep Post enabled and say 'Write something first', or show a hint.",
+   "same_as": ""
+  },
+  {
+   "id": "R43",
+   "severity": 2,
+   "where": "/post/[id] own post",
+   "what": "Own post shows no answers count and no public line; 'Insights' only says it's a Student Pro feature, without saying what the free line is or when it appears.",
+   "repro": "Open your own post with a few answers.",
+   "tasks": "T030",
+   "principles": "H01,TRU,MOT",
+   "fix": "Show the public line (or 'appears after 3 answers') on own posts; describe Pro below it.",
+   "same_as": "F05.07a"
+  },
+  {
+   "id": "R44",
+   "severity": 1,
+   "where": "Share toast",
+   "what": "'Sent to Fee Tracker · 04:02 Undo' shows the clock time, which reads like an undo countdown.",
+   "repro": "Share a post.",
+   "tasks": "T031",
+   "principles": "COP,H04",
+   "fix": "Drop the time, or show 'Undo (10 s)'.",
+   "same_as": ""
+  },
+  {
+   "id": "R45",
+   "severity": 2,
+   "where": "Share sheet",
+   "what": "No limit on sharing: 20 shares to 4 chats in under a minute went through.",
+   "repro": "Share five posts to every chat quickly.",
+   "tasks": "T032",
+   "principles": "SAF",
+   "fix": "Rate-limit shares per minute, as posts and friend requests are.",
+   "same_as": "F07.05b"
+  },
+  {
+   "id": "R46",
+   "severity": 2,
+   "where": "/friends",
+   "what": "After one friend request, a second within seconds says 'You're doing that too often. Try again later.' without saying how long.",
+   "repro": "Send a request by username, then tap Add friend on a suggestion.",
+   "tasks": "T033",
+   "principles": "H09,H05",
+   "fix": "Say the wait ('Try again in 20 seconds') or allow a few in a row.",
+   "same_as": ""
+  },
+  {
+   "id": "R47",
+   "severity": 2,
+   "where": "/friends People you may know",
+   "what": "A person you just sent a request to stays in suggestions with 'Add friend'.",
+   "repro": "Request a suggested person by username.",
+   "tasks": "T033",
+   "principles": "H04,H01",
+   "fix": "Drop pending people from suggestions or show 'Requested'.",
+   "same_as": ""
+  },
+  {
+   "id": "R48",
+   "severity": 2,
+   "where": "/friends, /chat",
+   "what": "No Message button on the Friends list, and /chat has no way to start a new conversation; you must go through a profile.",
+   "repro": "Try to message a friend from Friends or Chat.",
+   "tasks": "T035",
+   "principles": "NAV,H07",
+   "fix": "Add Message to friend rows and a 'New message' picker in Chat.",
+   "same_as": ""
+  },
+  {
+   "id": "R49",
+   "severity": 2,
+   "where": "/chat/[id]",
+   "what": "Deleting your own message happens at once: no confirmation, no undo; it becomes 'Message deleted'.",
+   "repro": "Delete a message in a chat.",
+   "tasks": "T037",
+   "principles": "H03,H05",
+   "fix": "Undo toast for a few seconds.",
+   "same_as": ""
+  },
+  {
+   "id": "R50",
+   "severity": 2,
+   "where": "/chat/[id]",
+   "what": "Offline, a sent message looks identical to a delivered one (time, Edit, Delete); only a generic 'Reconnecting…' toast appears.",
+   "repro": "Go offline, send a message.",
+   "tasks": "T038",
+   "principles": "H01,MOB",
+   "fix": "Mark it 'Sending…' / 'Not sent yet' until the server has it.",
+   "same_as": ""
+  },
+  {
+   "id": "R51",
+   "severity": 1,
+   "where": "/chat/[id]",
+   "what": "Mute applies instantly with no duration choice or confirmation of what it changes.",
+   "repro": "Tap Mute in a venture chat.",
+   "tasks": "T039",
+   "principles": "H01,H06",
+   "fix": "Toast 'Muted. You won't be notified about this chat. Unmute any time.'",
+   "same_as": ""
+  },
+  {
+   "id": "R52",
+   "severity": 2,
+   "where": "/profile/[username] (stranger)",
+   "what": "A stranger's profile has no Message button and no line explaining that only friends can message.",
+   "repro": "Open a non-friend's profile.",
+   "tasks": "T040",
+   "principles": "H09,COP",
+   "fix": "Show a disabled Message with 'Only friends can message. Add friend first.'",
+   "same_as": ""
+  },
+  {
+   "id": "R53",
+   "severity": 3,
+   "where": "/explore People",
+   "what": "Batch, department and skill filters show nothing (only 'People you may know') until 2+ letters of a name are typed, so 'students in my batch with React' can't be found.",
+   "repro": "Explore > Batch 2028 + Skill React.",
+   "tasks": "T041",
+   "principles": "H06,NAV,TRU",
+   "fix": "Run filter-only searches; show matching people.",
+   "same_as": "P16"
+  },
+  {
+   "id": "R54",
+   "severity": 1,
+   "where": "/me > Profile",
+   "what": "'How others see you' opens your own editable profile; there's no preview as friend or stranger.",
+   "repro": "Me > Profile.",
+   "tasks": "T043",
+   "principles": "PRV",
+   "fix": "Add 'View as: Friend · University · Anyone'.",
+   "same_as": "P18"
+  },
+  {
+   "id": "R55",
+   "severity": 2,
+   "where": "/notifications",
+   "what": "Every chat message is also a notification; one flat list, no grouping or type filter.",
+   "repro": "Receive chat messages and a decision.",
+   "tasks": "T044",
+   "principles": "H08,NAV",
+   "fix": "Leave chat messages to the Chat badge; group by type.",
+   "same_as": "P19"
+  },
+  {
+   "id": "R56",
+   "severity": 1,
+   "where": "/feed, /settings",
+   "what": "Installing to the home screen isn't offered on Home or Settings.",
+   "repro": "Look for 'Add to home screen'.",
+   "tasks": "T046",
+   "principles": "MOB",
+   "fix": "Offer it once in the progress checklist or Settings.",
+   "same_as": ""
+  },
+  {
+   "id": "R57",
+   "severity": 1,
+   "where": "/ventures/[id] apply",
+   "what": "After sending an application there's no confirmation message; the button just changes to 'Application sent'.",
+   "repro": "Apply to a role.",
+   "tasks": "T047",
+   "principles": "H01",
+   "fix": "Toast 'Application sent to Ali. You'll get a notification when they decide.'",
+   "same_as": ""
+  },
+  {
+   "id": "R58",
+   "severity": 2,
+   "where": "/ventures/[id] tabs (phone)",
+   "what": "Seven tabs in a 600 px row on a 390 px screen; Reviews and Chat (and Manage) are off-screen.",
+   "repro": "Open a venture you're a member of on a phone.",
+   "tasks": "T048",
+   "principles": "MOB,NAV",
+   "fix": "Wrap or move secondary tabs into a 'More' menu.",
+   "same_as": "P31"
+  },
+  {
+   "id": "R59",
+   "severity": 2,
+   "where": "/ventures/[id]",
+   "what": "After a decline you can apply again to the same role straight away; duplicate applications pile up in Requests.",
+   "repro": "Get declined, apply again.",
+   "tasks": "T049,T044",
+   "principles": "H05,COP",
+   "fix": "Say 'Ali declined this on 24 Nov' and allow reapplying after a set time.",
+   "same_as": ""
+  },
+  {
+   "id": "R60",
+   "severity": 2,
+   "where": "/ventures/[id] (full)",
+   "what": "'Apply to join' is shown on a full venture (2 of 2, role Filled).",
+   "repro": "Open a full venture.",
+   "tasks": "T050",
+   "principles": "H05,H04",
+   "fix": "Replace with 'Team full · Follow for updates'.",
+   "same_as": ""
+  },
+  {
+   "id": "R61",
+   "severity": 2,
+   "where": "/ventures/[id]/manage",
+   "what": "Separate Save buttons per section and no unsaved warning; leaving after an edit silently drops it.",
+   "repro": "Change the title, open About.",
+   "tasks": "T051",
+   "principles": "H05,H01",
+   "fix": "Warn on leave, or autosave with 'Saved'.",
+   "same_as": ""
+  },
+  {
+   "id": "R62",
+   "severity": 1,
+   "where": "/ventures/new",
+   "what": "On an empty-title error focus stays on the button.",
+   "repro": "Submit with no title.",
+   "tasks": "T051",
+   "principles": "ACC,H09",
+   "fix": "Move focus to the first invalid field.",
+   "same_as": ""
+  },
+  {
+   "id": "R63",
+   "severity": 2,
+   "where": "/requests",
+   "what": "Accept and Decline act instantly with no confirmation, no reason and no toast.",
+   "repro": "Decline an applicant.",
+   "tasks": "T053",
+   "principles": "H03,COP,SAF",
+   "fix": "Confirm Decline with an optional reason; toast with Undo.",
+   "same_as": ""
+  },
+  {
+   "id": "R64",
+   "severity": 1,
+   "where": "/ventures/[id]/updates, deliverables, manage",
+   "what": "Posting an update, linking a repository and adding a deliverable show no confirmation.",
+   "repro": "Do any of them.",
+   "tasks": "T054",
+   "principles": "H01",
+   "fix": "'Posted.' / 'Saved.' toasts as elsewhere.",
+   "same_as": ""
+  },
+  {
+   "id": "R65",
+   "severity": 2,
+   "where": "/ventures/[id]/contributions",
+   "what": "After an entry is corrected, a teammate can't confirm the correction ('confirm the entry, not a correction').",
+   "repro": "Correct your entry, ask a teammate to confirm.",
+   "tasks": "T056,T059",
+   "principles": "H09,TRU",
+   "fix": "Let teammates confirm the current version.",
+   "same_as": ""
+  },
+  {
+   "id": "R66",
+   "severity": 2,
+   "where": "/ventures, /profile/[u]/ventures",
+   "what": "Abandoned ventures are listed first under 'Any status' and on profiles.",
+   "repro": "Open Ventures.",
+   "tasks": "T057",
+   "principles": "H04,TRU",
+   "fix": "Hide abandoned by default; show them under a filter.",
+   "same_as": "P22"
+  },
+  {
+   "id": "R67",
+   "severity": 1,
+   "where": "/ventures/[id]/contributions",
+   "what": "Confirming a teammate's entry is instant with no dialog, though it can't be undone and affects their score.",
+   "repro": "Confirm an entry.",
+   "tasks": "T058",
+   "principles": "H03,TRU",
+   "fix": "Confirm: 'You confirm Ali did this. This can't be undone.'",
+   "same_as": ""
+  },
+  {
+   "id": "R68",
+   "severity": 3,
+   "where": "All pages (new students)",
+   "what": "Until a new student finishes or skips the tour, opening any page (Settings, Me, a notification or shared link) redirects to /feed to show tour step 1.",
+   "repro": "Sign up, leave the welcome screen without choosing, open /settings/privacy.",
+   "tasks": "T011,T064",
+   "principles": "NAV,H03,LRN",
+   "fix": "Start the tour only on /feed, and only by choice; never redirect a deep link.",
+   "same_as": ""
+  },
+  {
+   "id": "R69",
+   "severity": 1,
+   "where": "/forgot-password",
+   "what": "The email typed on Sign in isn't carried to Reset password.",
+   "repro": "Fail sign-in, tap Forgot password.",
+   "tasks": "T006",
+   "principles": "H06",
+   "fix": "Prefill the email.",
+   "same_as": ""
+  },
+  {
+   "id": "R70",
+   "severity": 2,
+   "where": "/agreement",
+   "what": "An updated agreement can only be accepted; no link to decline, export or delete the account.",
+   "repro": "Publish a new version, sign in.",
+   "tasks": "T008",
+   "principles": "COP,PRV",
+   "fix": "Add 'Don't agree? Delete your account' with what happens.",
+   "same_as": ""
+  },
+  {
+   "id": "R71",
+   "severity": 2,
+   "where": "/settings/notifications",
+   "what": "Lists Recruiter contact requests, Job applications and Recruiting while the recruiter portal is off; 19 autosave toasts when changing many.",
+   "repro": "Open notification settings.",
+   "tasks": "T045",
+   "principles": "COP,H08",
+   "fix": "Hide portal categories while portals are off; one 'Saved' toast.",
+   "same_as": ""
+  },
+  {
+   "id": "R72",
+   "severity": 2,
+   "where": "/settings/profile",
+   "what": "Leaving with unsaved changes drops them silently ('Unsaved changes' shows but there's no warning).",
+   "repro": "Type an intro, open Home.",
+   "tasks": "T061",
+   "principles": "H05,H03",
+   "fix": "Warn before leaving with unsaved changes.",
+   "same_as": ""
+  },
+  {
+   "id": "R73",
+   "severity": 2,
+   "where": "/settings/privacy",
+   "what": "The leaderboard switch has no accessible name.",
+   "repro": "Focus the switch with a screen reader.",
+   "tasks": "T062",
+   "principles": "ACC",
+   "fix": "aria-labelledby the 'Show me on leaderboards' label.",
+   "same_as": ""
+  },
+  {
+   "id": "R74",
+   "severity": 2,
+   "where": "/settings/security",
+   "what": "Devices are a recent-activity log, and 'Sign out of all devices' includes this one; you can't sign out the others only.",
+   "repro": "Settings > Security.",
+   "tasks": "T063",
+   "principles": "PRV,TRU",
+   "fix": "List active sessions with 'This device', and 'Sign out other devices'.",
+   "same_as": ""
+  },
+  {
+   "id": "R75",
+   "severity": 1,
+   "where": "/me/credentials",
+   "what": "Too-big files are only rejected after Send, and the same certificate can be submitted again and again.",
+   "repro": "Choose a 6 MB PDF; send one twice.",
+   "tasks": "T065",
+   "principles": "H05,H09",
+   "fix": "Check size on choosing; warn on duplicates.",
+   "same_as": ""
+  },
+  {
+   "id": "R76",
+   "severity": 1,
+   "where": "/settings/billing",
+   "what": "Nothing says what happens when the beta ends.",
+   "repro": "Read Billing.",
+   "tasks": "T066",
+   "principles": "TRU,COP",
+   "fix": "One line on the beta and its end date.",
+   "same_as": ""
+  },
+  {
+   "id": "R77",
+   "severity": 2,
+   "where": "/feedback",
+   "what": "The form attaches '/feedback' as the page, not the page the student came from; the phone account menu has no Feedback link.",
+   "repro": "Open Feedback from the score page.",
+   "tasks": "T067",
+   "principles": "H10",
+   "fix": "Pass ?from= and show it.",
+   "same_as": "P26"
+  },
+  {
+   "id": "R78",
+   "severity": 1,
+   "where": "Skill drawer",
+   "what": "Level rules switch to third person ('a repository they own') while the advice says 'you'.",
+   "repro": "Open any skill.",
+   "tasks": "T069",
+   "principles": "COP,H04",
+   "fix": "Use 'you' throughout.",
+   "same_as": "P33"
+  },
+  {
+   "id": "R79",
+   "severity": 2,
+   "where": "/settings/github",
+   "what": "Switching a repository off immediately removes every skill it proved (here all L2 skills), with no confirmation or explanation.",
+   "repro": "Switch off your only repository.",
+   "tasks": "T070",
+   "principles": "H05,H03,TRU",
+   "fix": "Confirm with 'JavaScript and SQL drop to L1 or disappear'; show the effect.",
+   "same_as": ""
+  },
+  {
+   "id": "R80",
+   "severity": 2,
+   "where": "/settings/github after GitHub cancel",
+   "what": "Returning from GitHub without installing says 'That GitHub link expired or was opened in another account.'",
+   "repro": "Cancel on GitHub's install page.",
+   "tasks": "T071",
+   "principles": "H09",
+   "fix": "'You didn't finish on GitHub. Connect again when you're ready.'",
+   "same_as": ""
+  },
+  {
+   "id": "R81",
+   "severity": 1,
+   "where": "/me/paths",
+   "what": "With 2 paths followed, other paths' Follow button disappears without explanation.",
+   "repro": "Follow two paths, look at a third.",
+   "tasks": "T072",
+   "principles": "H01,H09",
+   "fix": "Show Follow disabled with 'Unfollow one first (2 max)'.",
+   "same_as": ""
+  },
+  {
+   "id": "R82",
+   "severity": 2,
+   "where": "/me/tasks/[id]",
+   "what": "'Verifying with GitHub' gives no expected time or what happens if nothing is found.",
+   "repro": "Submit a task.",
+   "tasks": "T073",
+   "principles": "H01",
+   "fix": "'Usually within an hour; if your commits don't show it, a peer checks it.'",
+   "same_as": ""
+  },
+  {
+   "id": "R83",
+   "severity": 2,
+   "where": "/me/tasks/reviews/[id]",
+   "what": "The review page names the repository but doesn't link to it or say what 'checking' means (run, read).",
+   "repro": "Open a review request.",
+   "tasks": "T075",
+   "principles": "H06,TRU",
+   "fix": "Link the repository and the commits since the task started; one line on how to check.",
+   "same_as": ""
+  },
+  {
+   "id": "R84",
+   "severity": 2,
+   "where": "/swaps request",
+   "what": "The swap request was sent with empty preferred times and no error, though the form asks for times.",
+   "repro": "Send a request leaving Times empty.",
+   "tasks": "T076",
+   "principles": "H05,H09",
+   "fix": "Require at least one time, or say it's optional.",
+   "same_as": ""
+  },
+  {
+   "id": "R85",
+   "severity": 1,
+   "where": "/swaps/[id]",
+   "what": "End swap uses the browser's native confirm; the Taught entry reads 'Taught: Taught SQL to Ayesha'.",
+   "repro": "End a swap.",
+   "tasks": "T077",
+   "principles": "AES,COP",
+   "fix": "Use the app's dialog; title 'Taught SQL to Ayesha'.",
+   "same_as": ""
+  },
+  {
+   "id": "R86",
+   "severity": 2,
+   "where": "/me/record share",
+   "what": "After revoking a share link, the page keeps showing the revoked URL with 'Copy link'; Revoke has no confirmation.",
+   "repro": "Make a link, revoke it.",
+   "tasks": "T081",
+   "principles": "H03,H04",
+   "fix": "Clear the one-time link panel on revoke; confirm the revoke.",
+   "same_as": ""
+  },
+  {
+   "id": "R87",
+   "severity": 2,
+   "where": "/me/record (empty)",
+   "what": "The empty Record suggests an event whose registration has closed.",
+   "repro": "Open the Record with no entries.",
+   "tasks": "T083",
+   "principles": "EMP",
+   "fix": "Suggest only events open for registration.",
+   "same_as": ""
+  },
+  {
+   "id": "R88",
+   "severity": 2,
+   "where": "/me/cv sections",
+   "what": "The section show/hide switches have no accessible name.",
+   "repro": "Focus a section switch with a screen reader.",
+   "tasks": "T084",
+   "principles": "ACC",
+   "fix": "Label each with the section name.",
+   "same_as": ""
+  },
+  {
+   "id": "R89",
+   "severity": 1,
+   "where": "/verify",
+   "what": "The PDF check is only on the result page after a code; /verify doesn't say you can check a PDF.",
+   "repro": "Open /verify.",
+   "tasks": "T086",
+   "principles": "H06,TRU",
+   "fix": "Offer 'Check a PDF' on /verify and read the code from the file.",
+   "same_as": ""
+  },
+  {
+   "id": "R90",
+   "severity": 2,
+   "where": "Signed CV",
+   "what": "A venture handed to a teammate shows them as 'Creator' on their CV.",
+   "repro": "Transfer ownership, issue the new owner's CV.",
+   "tasks": "T086,T055",
+   "principles": "TRU",
+   "fix": "Keep 'Creator' for the founder; show 'Owner' or 'Lead' for later owners.",
+   "same_as": ""
+  },
+  {
+   "id": "R91",
+   "severity": 2,
+   "where": "/openings/this-week",
+   "what": "'A quiet week… no upcoming events' while the Events card lists 4 upcoming events; the page is rebuilt only nightly.",
+   "repro": "Open This week the day events are published.",
+   "tasks": "T087",
+   "principles": "H04,EMP",
+   "fix": "Build it live, or say 'updated nightly' and link to Events.",
+   "same_as": ""
+  },
+  {
+   "id": "R92",
+   "severity": 1,
+   "where": "/societies/[slug]",
+   "what": "Follow, Join and Ask to join give no confirmation; '1 members'.",
+   "repro": "Follow or join a society.",
+   "tasks": "T089",
+   "principles": "H01,COP",
+   "fix": "Toasts ('You joined…'); singular 'member'.",
+   "same_as": ""
+  },
+  {
+   "id": "R93",
+   "severity": 2,
+   "where": "/notifications",
+   "what": "Being accepted in an induction round produced no notification.",
+   "repro": "Officer accepts an application.",
+   "tasks": "T090",
+   "principles": "H01",
+   "fix": "Notify the applicant on every decision.",
+   "same_as": ""
+  },
+  {
+   "id": "R94",
+   "severity": 2,
+   "where": "/events",
+   "what": "The list shows '50 seats left' for an event whose registration is closed (and later cancelled), and '20 seats left' for a batch-only event the student can't join.",
+   "repro": "Open Events as a 2028 student.",
+   "tasks": "T096",
+   "principles": "H04,H05",
+   "fix": "Show 'Registration closed', 'Cancelled', 'For 2027 only' on the card.",
+   "same_as": ""
+  },
+  {
+   "id": "R95",
+   "severity": 1,
+   "where": "/events/[id] feedback",
+   "what": "After sending event feedback the page shows no thank-you or saved state.",
+   "repro": "Send feedback after an event.",
+   "tasks": "T097",
+   "principles": "H01",
+   "fix": "'Thanks: the society sees the totals.'",
+   "same_as": ""
+  },
+  {
+   "id": "R96",
+   "severity": 2,
+   "where": "/events/[id]/ticket",
+   "what": "A team captain can cancel with a plain browser confirm that says nothing about their team.",
+   "repro": "Cancel as captain.",
+   "tasks": "T098",
+   "principles": "H05,COP",
+   "fix": "Say what happens to the team (members kept, new captain).",
+   "same_as": ""
+  },
+  {
+   "id": "R97",
+   "severity": 2,
+   "where": "/societies/new",
+   "what": "The optional logo accepts any file and fails only after the request is sent ('the logo didn't upload').",
+   "repro": "Pick a PDF as the logo.",
+   "tasks": "T092",
+   "principles": "H05,H09",
+   "fix": "Check type on choosing.",
+   "same_as": ""
+  },
+  {
+   "id": "R98",
+   "severity": 2,
+   "where": "/notifications",
+   "what": "No notification for 'more information needed', approval or rejection of a society request.",
+   "repro": "Staff decide a request.",
+   "tasks": "T093",
+   "principles": "H01",
+   "fix": "Notify the requester of each decision.",
+   "same_as": ""
+  },
+  {
+   "id": "R99",
+   "severity": 1,
+   "where": "/societies/[slug]/manage officers",
+   "what": "Term dates default to today and one year on, not the academic year.",
+   "repro": "Invite an officer.",
+   "tasks": "T104",
+   "principles": "H06",
+   "fix": "Default to the university's academic year (Sept–June).",
+   "same_as": ""
+  },
+  {
+   "id": "R100",
+   "severity": 2,
+   "where": "/societies/[slug]/manage handover",
+   "what": "Offering the presidency hands it over (once accepted) with no confirmation; the outgoing president loses the manage page and can't confirm their own term.",
+   "repro": "Offer the handover.",
+   "tasks": "T107",
+   "principles": "H05,H03",
+   "fix": "Confirm with what you lose; confirm your officers' terms first.",
+   "same_as": ""
+  },
+  {
+   "id": "R101",
+   "severity": 2,
+   "where": "/societies/[slug]/inductions/[id]",
+   "what": "Decline is instant with no note; Accept has no confirm; the shortlist state isn't kept visible.",
+   "repro": "Decline an applicant.",
+   "tasks": "T109",
+   "principles": "COP,H03",
+   "fix": "Optional kind note on decline; confirm both.",
+   "same_as": ""
+  },
+  {
+   "id": "R102",
+   "severity": 3,
+   "where": "/events/[id]/check-in",
+   "what": "Typing the 8-character code printed under the ticket's QR is refused ('That isn't a Skilient ticket'); the field only accepts the full signed payload a scanner reads. On phones without BarcodeDetector (iOS Safari) the door falls back to name search only.",
+   "repro": "Type a ticket's printed code into the console.",
+   "tasks": "T115",
+   "principles": "H09,FIT,MOB",
+   "fix": "Accept the printed code (look up the registration by it).",
+   "same_as": ""
+  },
+  {
+   "id": "R103",
+   "severity": 2,
+   "where": "/societies/[slug]/events/new",
+   "what": "Eligibility by department is free text; a typo or 'BSCS' silently excludes the intended students.",
+   "repro": "Restrict an event to 'BSCS'.",
+   "tasks": "T110",
+   "principles": "H05,H06",
+   "fix": "Pick departments from the university's list.",
+   "same_as": ""
+  },
+  {
+   "id": "R104",
+   "severity": 2,
+   "where": "Event stepper",
+   "what": "'Sessions needed to complete' isn't shown in the review and wasn't saved; the refund select choice was saved as 'none'.",
+   "repro": "Set Completed after 2 sessions; set refunds until 2 days.",
+   "tasks": "T110,T111",
+   "principles": "H01,TRU",
+   "fix": "Show both in the review; check they persist.",
+   "same_as": ""
+  },
+  {
+   "id": "R105",
+   "severity": 1,
+   "where": "Event duplicate",
+   "what": "Duplicate keeps the same title and the old dates without marking it a copy.",
+   "repro": "Duplicate a past event.",
+   "tasks": "T111",
+   "principles": "H05",
+   "fix": "Title 'Copy of …' and clear the dates.",
+   "same_as": ""
+  },
+  {
+   "id": "R106",
+   "severity": 1,
+   "where": "/events/[id]/manage messages",
+   "what": "Sending a notice shows no count or confirmation; it only appears in the list.",
+   "repro": "Send a message to registrants.",
+   "tasks": "T113",
+   "principles": "H01",
+   "fix": "'Sent to 3 people.'",
+   "same_as": ""
+  },
+  {
+   "id": "R107",
+   "severity": 3,
+   "where": "/events/[id]/manage",
+   "what": "Cancelling an event with paid registrations takes one tap with no confirmation of consequences, and paid students' tickets still say 'Valid' afterwards.",
+   "repro": "Cancel a paid event; open a paid student's ticket.",
+   "tasks": "T114",
+   "principles": "H05,TRU,H04",
+   "fix": "Confirm with refunds owed; mark tickets Cancelled.",
+   "same_as": ""
+  },
+  {
+   "id": "R108",
+   "severity": 2,
+   "where": "/events/[id]/manage?tab=closeout",
+   "what": "'Issue now' issues every entry at once with no confirmation, and nothing says issued entries can't be edited.",
+   "repro": "Issue entries.",
+   "tasks": "T117",
+   "principles": "H05,H03",
+   "fix": "Confirm with the count and 'entries can't be edited, only corrected'.",
+   "same_as": ""
+  },
+  {
+   "id": "R109",
+   "severity": 1,
+   "where": "/api/events/[id]/export",
+   "what": "The CSV has no UTF-8 BOM and raw ISO timestamps.",
+   "repro": "Export and open in Excel.",
+   "tasks": "T118",
+   "principles": "COP",
+   "fix": "Add a BOM; format dates as '24 Nov 2026, 06:01'.",
+   "same_as": ""
+  },
+  {
+   "id": "H01",
+   "severity": 3,
+   "where": "Ctrl K (all pages)",
+   "what": "Only 26 of 58 student page titles are in the top 3 results (45%); Privacy, Security, Your score, Your skills, Billing, Delete account, Appeals and Edit profile fall back to 'Search for … in Explore', and Enter then opens Explore.",
+   "repro": "Ctrl K, type a page title.",
+   "tasks": "probe 3",
+   "principles": "H07",
+   "fix": "Index every page by title and synonyms; rank exact page names first.",
+   "same_as": "P04"
+  },
+  {
+   "id": "H02",
+   "severity": 3,
+   "where": "Phone navigation",
+   "what": "Crawling visible links from Home on a phone never reaches Explore, Events, Societies or Tickets within 4 taps; Appeals isn't linked from any page on phone or desktop (only from a restriction banner).",
+   "repro": "Phone, follow visible links from /feed.",
+   "tasks": "probe 4",
+   "principles": "NAV",
+   "fix": "Add Events, Societies and Explore to a 'More' place in the dock; link Appeals from Settings and the Privacy centre.",
+   "same_as": ""
+  },
+  {
+   "id": "H03",
+   "severity": 2,
+   "where": "/settings/privacy",
+   "what": "Privacy controls are 3 taps from Home (account menu, Settings, Privacy centre); the bar is 2.",
+   "repro": "From /feed find the Privacy centre.",
+   "tasks": "probe 8",
+   "principles": "PRV,NAV",
+   "fix": "Put 'Privacy' in the account menu.",
+   "same_as": ""
+  },
+  {
+   "id": "H04",
+   "severity": 2,
+   "where": "/explore, /leaderboard, /me/paths, /ventures, society manage, event stepper",
+   "what": "At 320 px these pages scroll sideways (WCAG 1.4.10 reflow).",
+   "repro": "Set the viewport to 320 px.",
+   "tasks": "probe 1",
+   "principles": "ACC,MOB",
+   "fix": "Let filter rows and tab rows wrap.",
+   "same_as": ""
+  },
+  {
+   "id": "H05",
+   "severity": 2,
+   "where": "26 pages incl. /feed, /chat, /explore, /me/score, /openings",
+   "what": "With the WCAG text-spacing override, text in fixed-height or ellipsis boxes is clipped.",
+   "repro": "Apply line-height 1.5, letter-spacing .12em, word-spacing .16em.",
+   "tasks": "probe 1",
+   "principles": "ACC",
+   "fix": "Let chips, tabs and buttons grow in height; avoid fixed heights on text.",
+   "same_as": ""
+  },
+  {
+   "id": "H06",
+   "severity": 2,
+   "where": "/chat/[id], /feed, /me/cv, onboarding",
+   "what": "Targets under 24 px on 49 page views: message timestamps and Reply/React/Report links (78x23), feed dates, CV section arrows.",
+   "repro": "Measure interactive elements at 390 px.",
+   "tasks": "probe 1",
+   "principles": "FIT,ACC",
+   "fix": "Give links at least 24 px of hit area; move message actions behind a long-press or ⋯.",
+   "same_as": ""
+  },
+  {
+   "id": "H07",
+   "severity": 2,
+   "where": "/profile/[username]",
+   "what": "'Unfriend' sits 8 px from the primary 'Message' button with equal size.",
+   "repro": "Open a friend's profile.",
+   "tasks": "probe 1, screens",
+   "principles": "FIT,AFF",
+   "fix": "Move Unfriend and Block into a ⋯ menu.",
+   "same_as": ""
+  },
+  {
+   "id": "H08",
+   "severity": 2,
+   "where": "/settings/notifications, society manage, /settings/billing, /settings/security",
+   "what": "More than one primary-styled action on 10 screens (5 on notification settings, 4 on society manage).",
+   "repro": "Count solid-orange actions per screen.",
+   "tasks": "probe 1",
+   "principles": "H08,AES",
+   "fix": "One filled action per screen; others tonal.",
+   "same_as": ""
+  },
+  {
+   "id": "H09",
+   "severity": 2,
+   "where": "/societies/[slug]/manage/payments, /notifications, /ventures, /teach/*",
+   "what": "15 controls without an accessible name (payment type select, account inputs and buttons; icon-only links).",
+   "repro": "Read names with a screen reader.",
+   "tasks": "probe 1",
+   "principles": "H06,ACC",
+   "fix": "Label each control.",
+   "same_as": ""
+  },
+  {
+   "id": "H10",
+   "severity": 3,
+   "where": "Destructive controls (12)",
+   "what": "No confirm, undo or way back: delete a comment, unfollow a society, unfollow a path, dismiss a suggestion, delete a chat message, revoke a Record share link, accept/decline applications, confirm a contribution, cancel an event, offer the handover, issue entries, decline an induction applicant.",
+   "repro": "Use each control.",
+   "tasks": "probe 5, tasks",
+   "principles": "H03,H05",
+   "fix": "Confirm the irreversible ones; undo toast for the rest.",
+   "same_as": "R49"
+  },
+  {
+   "id": "H11",
+   "severity": 1,
+   "where": "Leave society, Cancel registration, End swap",
+   "what": "These use the browser's native confirm box, unlike every other dialog.",
+   "repro": "Leave a society.",
+   "tasks": "probe 5, tasks",
+   "principles": "AES,H04",
+   "fix": "Use the app's dialog.",
+   "same_as": "R85"
+  },
+  {
+   "id": "H12",
+   "severity": 2,
+   "where": "Report sheet",
+   "what": "Esc closes the report sheet but focus jumps to the top search box, not back to Report.",
+   "repro": "Open Report, press Esc.",
+   "tasks": "probe 5",
+   "principles": "ACC",
+   "fix": "Return focus to the trigger.",
+   "same_as": ""
+  },
+  {
+   "id": "H13",
+   "severity": 3,
+   "where": "/feed composer offline",
+   "what": "Posting while offline replaces the whole page with 'This page didn't load. Something went wrong on our side.'; the composer and draft are gone.",
+   "repro": "Go offline, post.",
+   "tasks": "probe 6",
+   "principles": "H09,H05,MOB",
+   "fix": "Catch the failed action, keep the draft, say 'You're offline; it'll post when you're back'.",
+   "same_as": ""
+  },
+  {
+   "id": "H14",
+   "severity": 2,
+   "where": "/ops",
+   "what": "A student opening /ops is told 'This area needs two-factor. Turn it on below…', revealing the staff area, instead of not found.",
+   "repro": "Open /ops as a student.",
+   "tasks": "probe 6",
+   "principles": "H09,SAF",
+   "fix": "404 for non-staff before the two-factor check.",
+   "same_as": ""
+  },
+  {
+   "id": "H15",
+   "severity": 1,
+   "where": "/ventures/new",
+   "what": "The title field stops at 80 characters without a counter or message.",
+   "repro": "Type a long title.",
+   "tasks": "probe 6",
+   "principles": "H05",
+   "fix": "Show a counter near the limit.",
+   "same_as": ""
+  },
+  {
+   "id": "H16",
+   "severity": 2,
+   "where": "Empty states",
+   "what": "Some empty-state actions lead to another empty page: Openings > Paths → /me/paths ('Pick a path'), Openings > Skill swaps → /swaps; Appeals has no action.",
+   "repro": "As a new student, follow each empty-state action.",
+   "tasks": "probe 7",
+   "principles": "EMP",
+   "fix": "Point each action at the step that fills the list.",
+   "same_as": ""
+  },
+  {
+   "id": "H17",
+   "severity": 2,
+   "where": "/profile/[username] (friends-only)",
+   "what": "A friends-only profile tells strangers it's shared 'with their university or friends only'.",
+   "repro": "Set Friends only; open as a stranger.",
+   "tasks": "probe 8",
+   "principles": "PRV,TRU",
+   "fix": "Word the line per setting.",
+   "same_as": ""
+  },
+  {
+   "id": "H18",
+   "severity": 3,
+   "where": "/me/score, /settings/privacy, /notifications, /settings/github",
+   "what": "Four contradictions: '1 of 6 tiers reached' at Spark; an expired share link counted as active; bell 44 unread vs 22 marked on the page; 'Not synced yet' beside 12 commits of evidence.",
+   "repro": "See probe 9.",
+   "tasks": "probe 9",
+   "principles": "TRU,H04",
+   "fix": "One source for each fact.",
+   "same_as": "R19"
+  },
+  {
+   "id": "H19",
+   "severity": 2,
+   "where": "Privacy centre, CV, notification settings, Billing, sign-up",
+   "what": "10 strings mention recruiters, hiring or company names while the recruiter portal is off.",
+   "repro": "Read those pages.",
+   "tasks": "probe 10",
+   "principles": "COP,TRU",
+   "fix": "Hide portal wording behind the portals flag.",
+   "same_as": "P20"
+  },
+  {
+   "id": "H20",
+   "severity": 2,
+   "where": "Copy across pages",
+   "what": "Two terms for one concept: 'Class of 2028' and 'Batch of 2028'; 'Skill swap' and 'Skill swaps'; 'Openings' and 'Opportunities'.",
+   "repro": "Compare labels.",
+   "tasks": "probe 10",
+   "principles": "H04",
+   "fix": "Pick one per concept.",
+   "same_as": ""
+  },
+  {
+   "id": "H21",
+   "severity": 1,
+   "where": "Copy outside legal pages",
+   "what": "26 sentences over 20 words outside Terms and Privacy (e.g. leaderboard and score explanations).",
+   "repro": "Read the Privacy centre and score page.",
+   "tasks": "probe 10",
+   "principles": "COP",
+   "fix": "Split into two sentences.",
+   "same_as": ""
+  },
+  {
+   "id": "H22",
+   "severity": 2,
+   "where": "All actions",
+   "what": "Only 56% of 592 timed actions responded or showed progress within 400 ms; 77 showed no pending sign at all; background jobs (Record signing, GitHub check, sync, CV refresh) show no expected time.",
+   "repro": "See timings.jsonl.",
+   "tasks": "probe 2, tasks",
+   "principles": "DOH,H01",
+   "fix": "Disable and label buttons while pending; ETAs on every job.",
+   "same_as": "R41"
+  },
+  {
+   "id": "H23",
+   "severity": 1,
+   "where": "/feed",
+   "what": "Cold LCP on the throttled phone is 2.8 s (bar 2.5 s); every other core page is 0.8–1.2 s.",
+   "repro": "Fast 3G, 4x CPU, open /feed.",
+   "tasks": "probe 2",
+   "principles": "MOB",
+   "fix": "Defer the composer and progress chip below the first post.",
+   "same_as": ""
+  },
+  {
+   "id": "H24",
+   "severity": 1,
+   "where": "/explore, /swaps, /settings/profile",
+   "what": "Native selects with 157–284 options (skills, universities) and no search.",
+   "repro": "Open the Skill or University select.",
+   "tasks": "probe 1",
+   "principles": "HCK",
+   "fix": "Searchable combobox.",
+   "same_as": "P11"
+  },
+  {
+   "id": "H25",
+   "severity": 1,
+   "where": "/teach/ideas/new",
+   "what": "11 fields in one ungrouped form.",
+   "repro": "Open the idea form.",
+   "tasks": "probe 1",
+   "principles": "MIL",
+   "fix": "Group under headings or split into steps.",
+   "same_as": ""
+  },
+  {
+   "id": "H26",
+   "severity": 2,
+   "where": "/feed (phone)",
+   "what": "The composer and progress chip fill the first screen; the first post starts below the fold.",
+   "repro": "Open Home on a 390 px phone.",
+   "tasks": "screens",
+   "principles": "H08",
+   "fix": "Collapse the composer to one line until tapped.",
+   "same_as": ""
+  },
+  {
+   "id": "H27",
+   "severity": 2,
+   "where": "Venture, Openings, score, CV, Privacy (phone)",
+   "what": "First-visit tip cards sit above the page content on every visit until dismissed, pushing the page below the fold; on /me/score the score itself starts below the fold behind a tip, a banner and a 3D coin.",
+   "repro": "Open /me/score on a phone.",
+   "tasks": "screens",
+   "principles": "H08,AES",
+   "fix": "Show tips once, collapsed; put the number first.",
+   "same_as": ""
+  },
+  {
+   "id": "H28",
+   "severity": 2,
+   "where": "/chat/[id]",
+   "what": "Reply · React · Report/Delete text links under every message make long threads noisy and the targets tiny.",
+   "repro": "Open a busy chat.",
+   "tasks": "screens",
+   "principles": "AES,FIT",
+   "fix": "Show actions on long-press or hover.",
+   "same_as": ""
+  },
+  {
+   "id": "H29",
+   "severity": 1,
+   "where": "/societies/[slug]",
+   "what": "'Following' is plain text beside a filled 'Join'; 'Report' sits on a different baseline.",
+   "repro": "Open a society you follow.",
+   "tasks": "screens",
+   "principles": "AES,AFF",
+   "fix": "Same button family; align.",
+   "same_as": ""
+  },
+  {
+   "id": "H30",
+   "severity": 1,
+   "where": "/me/paths",
+   "what": "The selected path card is outlined in blue, the only blue on the page, so it reads as a focus ring.",
+   "repro": "Open a path.",
+   "tasks": "screens",
+   "principles": "AES",
+   "fix": "Use the accent for selection.",
+   "same_as": ""
+  },
+  {
+   "id": "H31",
+   "severity": 1,
+   "where": "/events/[id]/ticket",
+   "what": "An ended, checked-in ticket still offers 'Get reminded on your phone?'.",
+   "repro": "Open a past ticket.",
+   "tasks": "screens",
+   "principles": "PKE",
+   "fix": "Hide the reminder offer after the event.",
+   "same_as": ""
+  },
+  {
+   "id": "H32",
+   "severity": 1,
+   "where": "/notifications",
+   "what": "Two identical lines 'New on your Record: [UX test] Speed coding contest' (one Attended, one Result) read as a duplicate.",
+   "repro": "Get two entries from one event.",
+   "tasks": "screens",
+   "principles": "PKE,H04",
+   "fix": "Name the entry kind.",
+   "same_as": ""
+  },
+  {
+   "id": "H33",
+   "severity": 1,
+   "where": "/events/[id]/check-in (phone)",
+   "what": "A large empty gap above 'Scan a ticket' pushes the input below the fold.",
+   "repro": "Open the console on a phone.",
+   "tasks": "screens",
+   "principles": "AES",
+   "fix": "Remove the gap.",
+   "same_as": ""
+  },
+  {
+   "id": "H34",
+   "severity": 1,
+   "where": "/ventures",
+   "what": "A skill name in the corner of each card ('React') is styled like a button.",
+   "repro": "Open Ventures.",
+   "tasks": "screens",
+   "principles": "AFF",
+   "fix": "Style skills as tags.",
+   "same_as": ""
+  },
+  {
+   "id": "H35",
+   "severity": 1,
+   "where": "/events/[id]/manage",
+   "what": "'Check-in' is a black filled button beside the orange primary style: two primary styles.",
+   "repro": "Open event manage (light).",
+   "tasks": "screens",
+   "principles": "H08,AES",
+   "fix": "One primary style.",
+   "same_as": ""
+  },
+  {
+   "id": "H36",
+   "severity": 1,
+   "where": "/signup (phone)",
+   "what": "The agreement label wraps oddly with a stray full stop on its own line.",
+   "repro": "Open sign-up at 390 px.",
+   "tasks": "screens",
+   "principles": "AES",
+   "fix": "Fix the label layout.",
+   "same_as": ""
+  },
+  {
+   "id": "H37",
+   "severity": 2,
+   "where": "Phone account menu",
+   "what": "Feedback isn't in the phone dock or the account menu; on desktop it's one tap in the rail.",
+   "repro": "Look for Feedback on a phone.",
+   "tasks": "tasks, probe 4",
+   "principles": "H10",
+   "fix": "Add Feedback to the account menu.",
+   "same_as": ""
+  }
+ ],
+ "plan_fixes": [
+  {
+   "tasks": "T003",
+   "change": "Google OAuth isn't configured locally; run T003 on staging with a university Google Workspace test account."
+  },
+  {
+   "tasks": "T011,T071",
+   "change": "Needs a staging GitHub App and running workers; the local stack can't reach github.com and Edge Functions don't boot in the cloud container."
+  },
+  {
+   "tasks": "T013",
+   "change": "The claim email needs the notify worker; locally use the welcome screen's claim card, or run on staging."
+  },
+  {
+   "tasks": "T004",
+   "change": "Use 'password123' (10+ characters, breached) to test the breached-password check; 'password1' only tests length."
+  },
+  {
+   "tasks": "T009",
+   "change": "Ask about L1/L2 only of testers who connected GitHub; without it the step shows no levels."
+  },
+  {
+   "tasks": "T017",
+   "change": "Name pages that have first-visit tips: Openings, a venture page, CV, score, Privacy centre."
+  },
+  {
+   "tasks": "T018",
+   "change": "The product now offers 'Hide until tomorrow', not 'Hide checklist'; update F04.07a and the task ('hide your progress for today; find where it went')."
+  },
+  {
+   "tasks": "T019,T021",
+   "change": "Setup must include posts older than 2 hours (seed stage) or the tester sees almost none; the seed script ages them."
+  },
+  {
+   "tasks": "T020",
+   "change": "The product locks answers after 10 minutes, not 15; say 'come back after 10 minutes' or 'later'."
+  },
+  {
+   "tasks": "T023",
+   "change": "Mute and the report target are the same helper in practice; say 'report first, then mute', or use a different person to mute."
+  },
+  {
+   "tasks": "T025",
+   "change": "Say which text-size setting (browser font size vs Android font scale); they behave differently."
+  },
+  {
+   "tasks": "T030",
+   "change": "Helpers must open the post in the app before answering (questions are assigned on view); and the free public line needs 3+ positive answers."
+  },
+  {
+   "tasks": "T032",
+   "change": "A helper can't share a post the tester can't see; make the second post university-only at the tester's university and then change the tester's view (e.g. the author deletes it) to test the unavailable card."
+  },
+  {
+   "tasks": "T026",
+   "change": "Say 'remove the big photo after you've seen what happens' so the post has one photo."
+  },
+  {
+   "tasks": "T046",
+   "change": "Run on a real phone (Android Chrome install prompt; iOS Share > Add to Home Screen); headless browsers can't."
+  },
+  {
+   "tasks": "T040",
+   "change": "Name the stranger to find ('find Danish Helper in Explore'); filters alone return nobody."
+  },
+  {
+   "tasks": "T047",
+   "change": "The plan expects a notification of acceptance (T048); check it on the bell; in this run the venture page changed first."
+  },
+  {
+   "tasks": "T045",
+   "change": "Push needs VAPID keys and the notify worker; run on staging and a real phone."
+  },
+  {
+   "tasks": "T063",
+   "change": "The product can't sign out 'everywhere except this phone'; reword to 'sign out of all devices' or wait for the feature."
+  },
+  {
+   "tasks": "T068",
+   "change": "Removal and restriction are two decisions, each with its own appeal; say 'appeal one of them'."
+  },
+  {
+   "tasks": "T062,T079",
+   "change": "Same tester opts out of leaderboards (T062) before T079; run T079 first or reset the opt-out."
+  },
+  {
+   "tasks": "T073,T074,T075",
+   "change": "The GitHub check and peer routing are worker/cron driven; locally the wait is simulated, on staging allow the github_wait_minutes."
+  },
+  {
+   "tasks": "T084",
+   "change": "On the free plan CV changes apply at the next monthly refresh; the done-when can't be met in a session. Use a Pro trial or accept 'saved for the next version'."
+  },
+  {
+   "tasks": "T086",
+   "change": "Setup: the genuine PDF needs Pro (trial); the forged one is a print with one character changed."
+  },
+  {
+   "tasks": "T088",
+   "change": "Use a tester who hasn't created ventures that day (daily create limit)."
+  },
+  {
+   "tasks": "T097",
+   "change": "Reminders need the notify worker (staging); the check-in is S11's officer role."
+  },
+  {
+   "tasks": "T107",
+   "change": "'Confirm your officers' terms, then hand over' isn't possible in that order: terms end at handover and the next President confirms them; reword."
+  },
+  {
+   "tasks": "T104",
+   "change": "'This academic year' needs a Sept–June default; tell testers to type the dates."
+  },
+  {
+   "tasks": "T116",
+   "change": "Self check-in exists only for university events; remove T116 from the society sessions or build it."
+  },
+  {
+   "tasks": "T117",
+   "change": "Volunteer hours are capped at the event length; '3 hours' fails on a 2-hour event."
+  },
+  {
+   "tasks": "T115",
+   "change": "Needs a real phone with a camera (BarcodeDetector) for scanning and the colour question."
+  }
+ ],
+ "production_recheck": [
+  {
+   "id": "P01",
+   "result": "confirmed",
+   "note": "Score page still says '1 of 6 tiers reached' at Spark (R19); formula v2 shown consistently in banner and footer; the held-score/'rose quickly' text didn't appear (no flags locally)."
+  },
+  {
+   "id": "P02",
+   "result": "confirmed",
+   "note": "'Take this step' opens /me/score; requirements aren't links (T015, T078)."
+  },
+  {
+   "id": "P03",
+   "result": "not reproduced",
+   "note": "Phone progress sheet only offers 'Hide until tomorrow'; no permanent 'Hide checklist' was reachable at 1300 px (T018)."
+  },
+  {
+   "id": "P04",
+   "result": "confirmed",
+   "note": "Ctrl K 'swap' opens Openings > Skill swaps first (T016)."
+  },
+  {
+   "id": "P05",
+   "result": "confirmed",
+   "note": "Ctrl K 'privacy' finds only Settings (T016)."
+  },
+  {
+   "id": "P06",
+   "result": "confirmed",
+   "note": "13 rail items with tooltips; the 14-step tour introduces Home, Openings, Ventures, Chat, Me, notifications and account only (T014)."
+  },
+  {
+   "id": "P07",
+   "result": "not reproduced",
+   "note": "Tour step 2 now points at the top-bar search box (T014)."
+  },
+  {
+   "id": "P08",
+   "result": "confirmed",
+   "note": "The last tour step offers 'Write your first post' to an account that already has a post (T014)."
+  },
+  {
+   "id": "P09",
+   "result": "confirmed",
+   "note": "'Pick a path: Follow a role above to see its ladder', yet opening a role shows its ladder without following (T017, T072)."
+  },
+  {
+   "id": "P10",
+   "result": "not reproduced",
+   "note": "Locally the bank has tasks for each square (seeded and from config); data-dependent in production."
+  },
+  {
+   "id": "P11",
+   "result": "confirmed",
+   "note": "Skill swap 'I want to learn' is a plain select of ~150 skills (T017, T076)."
+  },
+  {
+   "id": "P12",
+   "result": "not reproduced",
+   "note": "No Yearbook in the rail (removed by migration 20261124000000)."
+  },
+  {
+   "id": "P13",
+   "result": "not reproduced",
+   "note": "The search button reads 'Search or jump to… Ctrl K' with no conflicting aria-label (Linux)."
+  },
+  {
+   "id": "P14",
+   "result": "confirmed",
+   "note": "'Answered · Change' in an empty well, without the answer (T019)."
+  },
+  {
+   "id": "P15",
+   "result": "confirmed",
+   "note": "Arrow keys don't move within the ⋯ menu; Esc returns focus (T024)."
+  },
+  {
+   "id": "P16",
+   "result": "confirmed",
+   "note": "Batch + skill filters return nothing until 2 letters are typed (T041)."
+  },
+  {
+   "id": "P17",
+   "result": "confirmed",
+   "note": "Me hub tiles: Profile, Skills, My work, CV, Score, Credentials, Leaderboard, Friends, Feedback; no Record, Paths or Tickets (T043)."
+  },
+  {
+   "id": "P18",
+   "result": "confirmed",
+   "note": "'How others see you' opens the own editable profile (T043)."
+  },
+  {
+   "id": "P19",
+   "result": "confirmed",
+   "note": "Chat messages are also notifications; one flat list (T044)."
+  },
+  {
+   "id": "P20",
+   "result": "confirmed",
+   "note": "Recruiter wording on landing, welcome, Privacy centre, notification settings, Billing (T001, T062, T045, T066)."
+  },
+  {
+   "id": "P21",
+   "result": "not reproduced",
+   "note": "With an active Pro trial the Privacy centre no longer shows the 'Names… are a Pro feature' line."
+  },
+  {
+   "id": "P22",
+   "result": "not reproduced",
+   "note": "Abandoned ventures don't appear on the signed CV locally (they still list first in Ventures and on the profile, R66)."
+  },
+  {
+   "id": "P23",
+   "result": "confirmed",
+   "note": "'Spark tier on Skilient' printed in header and summary (T084)."
+  },
+  {
+   "id": "P24",
+   "result": "confirmed",
+   "note": "After a share link expired, the Privacy centre still said '1 active share link' while the CV page said 'Share links are paused.'"
+  },
+  {
+   "id": "P25",
+   "result": "confirmed",
+   "note": "Settings > GitHub says 'Not synced yet.' while skills cite commits and repositories (T070); counts aren't reconciled."
+  },
+  {
+   "id": "P26",
+   "result": "confirmed",
+   "note": "Feedback attaches '/feedback', not the page you came from (T067)."
+  },
+  {
+   "id": "P27",
+   "result": "confirmed",
+   "note": "No way to add a claimed skill in onboarding or /me/skills (T009, T070)."
+  },
+  {
+   "id": "P28",
+   "result": "can't check locally",
+   "note": "Production content volume; the local run is seeded."
+  },
+  {
+   "id": "P29",
+   "result": "can't check locally",
+   "note": "A Raw-tier account has no issued CV locally (signing runs in a worker); Spark could make a link (T085)."
+  },
+  {
+   "id": "P30",
+   "result": "can't check locally",
+   "note": "Seeded posts fill every filter, so the empty copy didn't show."
+  },
+  {
+   "id": "P31",
+   "result": "not reproduced",
+   "note": "No horizontal overflow of venture tabs at 1280 px desktop; on phones the tabs overflow (R58)."
+  },
+  {
+   "id": "P32",
+   "result": "confirmed",
+   "note": "Text in px doesn't grow with the browser font size; dock labels overlap (T025, R33)."
+  },
+  {
+   "id": "P33",
+   "result": "confirmed",
+   "note": "Skill drawer level rules say 'they'/'their' (T069)."
+  },
+  {
+   "id": "P34",
+   "result": "confirmed",
+   "note": "Society page title is 'Society · Skilient'; Following and Join/Leave sit side by side with equal weight."
+  },
+  {
+   "id": "P35",
+   "result": "can't check locally",
+   "note": "Production society name."
+  },
+  {
+   "id": "P36",
+   "result": "confirmed",
+   "note": "'There is no data export at launch.' on Delete account (T064)."
+  }
+ ]
+}

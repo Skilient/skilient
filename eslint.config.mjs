@@ -88,6 +88,8 @@ const eslintConfig = defineConfig([
     // Vendored agent skills (third-party); not app code.
     ".claude/**",
     ".agents/**",
+    // One-off UX pilot probes (phase 13 UX pilot); not app code.
+    "scripts/ux-pilot/**",
   ]),
   {
     files: ["**/*.{ts,tsx,js,mjs}"],

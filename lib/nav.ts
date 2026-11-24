@@ -1,6 +1,5 @@
 import {
   Bell,
-  BookOpenText,
   CalendarBlank,
   ChatCircleDots,
   ChatsCircle,
@@ -23,8 +22,7 @@ import type { Icon } from "@phosphor-icons/react";
  * each place to its coach mark. Client-safe: no server code.
  *
  * Opportunities became Openings (decisions 2026-11-02) at /openings in phase 18; /opportunities/*
- * redirects there (next.config.ts). The Yearbook is listed for everyone: its page says when the
- * caller's book opens if they aren't in the final year.
+ * redirects there (next.config.ts).
  */
 export type BadgeKey = "chat" | "notifications" | "friends" | "ventures" | "openings";
 export type NavBadges = Record<BadgeKey, number>;
@@ -145,7 +143,6 @@ export const PRIMARY_NAV: NavItem[] = [
 export const SECONDARY_NAV: NavItem[] = [
   { key: "societies", label: "Societies", description: "Clubs and societies: follow, join, apply.", href: "/societies", icon: UsersFour, match: ["/societies"] },
   { key: "events", label: "Events", description: "Society talks, workshops, hackathons and socials.", href: "/events", icon: CalendarBlank, match: ["/events", "/u"] },
-  { key: "yearbook", label: "Yearbook", description: "Your final-year batch's book: notes, superlatives, kept after graduation.", href: "/yearbook", icon: BookOpenText, match: ["/yearbook"] },
   { key: "swaps", label: "Skill swap", description: "Teach what you know, learn from seniors at your university.", href: "/swaps", icon: Swap, match: ["/swaps"] },
   { key: "explore", label: "Explore", description: "Find people, ventures and skills.", href: "/explore", icon: MagnifyingGlass, match: ["/explore"] },
   { key: "leaderboard", label: "Leaderboard", description: "Where you stand at your university and overall.", href: "/leaderboard", icon: Medal, match: ["/leaderboard"] },

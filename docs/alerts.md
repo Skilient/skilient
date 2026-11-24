@@ -41,4 +41,4 @@ worker (kind `ops_alert`) to every address in `/ops/config` → `alerts.recipien
 1. `/ops/config` → `alerts.recipients` → `["you@…"]`.
 2. Check the pipe end to end: `select private.queue_alert_email('test', 'firing', 'Test alert', 'Ignore me', now());` in
    the SQL editor. The email arrives within a minute (notify worker).
-3. Brevo webhook: `docs/email-brevo-migration.md`; Sentry rules, Grafana and UptimeRobot: `docs/setup-checklist.md` Phase 13.
+3. Brevo webhook: `docs/email-brevo-migration.md`; Sentry rules, Grafana and UptimeRobot: `docs/archive/supabase-era/setup-checklist.md` Phase 13.

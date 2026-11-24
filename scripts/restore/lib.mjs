@@ -1,4 +1,4 @@
-// Shared helpers for the restore drill (docs/restore-drill.md, .github/workflows/restore-drill.yml).
+// Shared helpers for the restore drill (docs/archive/supabase-era/restore-drill.md, .github/workflows/restore-drill.yml).
 // Pure functions are unit-tested in tests/unit/restore-drill.test.ts.
 
 const API = "https://api.supabase.com";

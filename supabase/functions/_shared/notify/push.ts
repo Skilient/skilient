@@ -55,7 +55,7 @@ export async function runPushWorker(opts: { db: Db; fetch: Fetch; log: Log; now?
 
   const keys = await loadVapidKeys(db);
   if (!keys) {
-    // Not set up yet (docs/setup-checklist.md): pushes are best effort, the bell still has everything.
+    // Not set up yet (docs/archive/supabase-era/setup-checklist.md): pushes are best effort, the bell still has everything.
     for (const row of rows) await archive(row.msg_id);
     result.skipped += rows.length;
     log("notify.push_not_configured", { level: "warn", outcome: "refused", count: rows.length });

@@ -8,7 +8,7 @@
  *   - Webhook: header `X-SFPY-SIGNATURE` = hex HMAC-SHA512 of JSON.stringify(body.data) with the webhook secret
  *     (the SDK's `verify.webhook`). The body carries no signed timestamp, so the 5-minute window uses
  *     `data.created_at` when present.
- * CONFIRM IN THE SAFEPAY SANDBOX before going live (marked `CONFIRM` below; see docs/setup-checklist.md):
+ * CONFIRM IN THE SAFEPAY SANDBOX before going live (marked `CONFIRM` below; see docs/archive/supabase-era/setup-checklist.md):
  *   - The webhook event names and fields (`payment:created`, `notification.state`, `metadata.order_id`).
  *   - JazzCash and Easypaisa on the hosted checkout, and how the payment method is reported.
  *   - Refunds through the API (until confirmed, refunds fail here and staff refund in the Safepay dashboard).

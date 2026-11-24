@@ -10,3 +10,6 @@ a0c22d981ac8676f23635e529353c6ac348f94aa:tests/fixtures/billing/safepay/payment.
 038fe8d25635e1644516c4a24202bdaad3cd1a42:deploy/modules/apps.bicep:generic-api-key:20
 # False positive (decisions.md 2026-11-24): a UX pilot string id (a CV id shown in the copy deck), not a credential.
 8194925c9e05d26477aaf8f29448cf9f8abd6398:docs/ux-pilot/heuristics/strings.json:generic-api-key:825
+# False positive (decisions.md 2026-11-24): an entropy match on a plain-prose line of the Azure W0 decisions entry
+# ("idempotency keys for writes, ..."), not a credential.
+906895a6de6f12e1c44e91f4ec46aaa2985ec354:docs/decisions.md:generic-api-key:2292

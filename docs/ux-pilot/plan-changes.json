@@ -1,0 +1,256 @@
+[
+ {
+  "task": "T003",
+  "field": "notes",
+  "new": "Google OAuth isn't configured on the local stack; use a university Google Workspace test account."
+ },
+ {
+  "task": "T011",
+  "field": "notes",
+  "new": "Needs the GitHub App and the github-worker."
+ },
+ {
+  "task": "T071",
+  "field": "notes",
+  "new": "Needs the GitHub App and the github-worker."
+ },
+ {
+  "task": "T013",
+  "field": "notes",
+  "new": "The claim email needs the notify worker. Locally, use the claim card on the welcome screen instead."
+ },
+ {
+  "task": "T045",
+  "field": "notes",
+  "new": "Push needs VAPID keys, the notify worker and a real phone."
+ },
+ {
+  "task": "T046",
+  "field": "notes",
+  "new": "Android Chrome install prompt, or iOS Share > Add to Home Screen; headless browsers can't."
+ },
+ {
+  "task": "T097",
+  "field": "notes",
+  "new": "Reminders need the notify worker; the door check-in is S11's officer."
+ },
+ {
+  "task": "T115",
+  "field": "notes",
+  "new": "Needs a camera (BarcodeDetector) for scanning and the colour question."
+ },
+ {
+  "task": "T073",
+  "field": "notes",
+  "new": "The GitHub check is worker-driven; allow tasks.limits github_wait_minutes before judging the wait."
+ },
+ {
+  "task": "T074",
+  "field": "notes",
+  "new": "Peer routing runs on the proof-tasks-tick cron."
+ },
+ {
+  "task": "T075",
+  "field": "notes",
+  "new": "Peer routing runs on the proof-tasks-tick cron."
+ },
+ {
+  "task": "T004",
+  "field": "task",
+  "old": "Make mistakes on purpose while signing up: press sign up without ticking the agreement, use the password 'password1', type a wrong code twice, then open the email link on a different device. Close everything, come back later and sign in.",
+  "new": "Make mistakes on purpose while signing up: press sign up without ticking the agreement, use the password 'password1', then 'password123', type a wrong code twice, then open the email link on a different device. Close everything, come back later and sign in.",
+  "why": "'password1' only tests length; 'password123' (10+ characters, breached) tests the breached-password check."
+ },
+ {
+  "task": "T009",
+  "field": "questions",
+  "why": "Without GitHub the skills step shows no levels."
+ },
+ {
+  "task": "T017",
+  "field": "task",
+  "old": "Open three pages you haven't visited yet (for example Skill swap, Paths and Credentials). Read any tip that appears.",
+  "new": "Open three pages you haven't visited yet that show a first-visit tip: Openings, a venture page, your CV, your score or the Privacy centre. Read the tip that appears.",
+  "why": "Skill swap, Paths and Credentials have no tips."
+ },
+ {
+  "task": "T018",
+  "field": "task",
+  "old": "You skipped the tour earlier. Find a way to watch it again. Then hide the getting-started checklist and try to get it back.",
+  "new": "You skipped the tour earlier. Find a way to watch it again. Then hide your getting-started progress for today and find where it went.",
+  "why": "The product offers 'Hide until tomorrow', not 'Hide checklist'."
+ },
+ {
+  "task": "T018",
+  "field": "done",
+  "old": "The tour is replaying, and you know where the checklist went.",
+  "new": "The tour is replaying, and you know where your progress went.",
+  "why": "Matches the new task."
+ },
+ {
+  "step": "F04.07a",
+  "old": "Hide checklist; it also hides when all items are done"
+ },
+ {
+  "task": "T019",
+  "field": "setup",
+  "old": "At least 5 posts of different types at the tester's university",
+  "new": "At least 5 posts of different types at the tester's university. Include posts older than 2 hours (the feed's seed stage), or the tester sees almost none; the pilot seed ages them.",
+  "why": "New posts stay in the seed stage for 2 hours."
+ },
+ {
+  "task": "T021",
+  "field": "setup",
+  "old": "Any signed-in tester",
+  "new": "Any signed-in tester. Include posts older than 2 hours (the feed's seed stage), or the tester sees almost none; the pilot seed ages them.",
+  "why": "New posts stay in the seed stage for 2 hours."
+ },
+ {
+  "task": "T020",
+  "field": "task",
+  "old": "Answer a post's question, then change your answer. Come back after 15 minutes and try to change it again.",
+  "new": "Answer a post's question, then change your answer. Come back after 10 minutes and try to change it again.",
+  "why": "Answers lock after 10 minutes."
+ },
+ {
+  "task": "T023",
+  "field": "task",
+  "old": "One post isn't for you and one person posts too often: see less of each. Then report the post titled '[UX test] report me'.",
+  "new": "One post isn't for you and one person posts too often: see less of each. Report the post titled '[UX test] report me' first, then mute its author.",
+  "why": "Mute target and report target are the same helper in practice."
+ },
+ {
+  "task": "T025",
+  "field": "task",
+  "old": "Switch your phone between light and dark mode, then set your phone's text size to the largest. Browse Home, a venture page and your CV in each.",
+  "new": "Switch your phone between light and dark mode, then set your browser's font size to the largest (Chrome: Settings > Accessibility > Text scaling), then your phone's text size. Browse Home, a venture page and your CV in each.",
+  "why": "Browser font size and Android font scale behave differently."
+ },
+ {
+  "task": "T026",
+  "field": "task",
+  "old": "Share something useful with students at your university: a short post with one photo. Make sure only your university sees it. Try a very large photo first.",
+  "new": "Share something useful with students at your university: a short post with one photo. Make sure only your university sees it. Try a very large photo first. Once you've seen what happens with it, remove the big photo so the post has one photo.",
+  "why": "Otherwise the post ends with two photos."
+ },
+ {
+  "task": "T030",
+  "field": "setup",
+  "old": "Helper comments on the tester's post",
+  "new": "Helper comments on the tester's post. At least 3 helpers open the post in the app and answer its question positively (questions are assigned on view; the free public line needs 3+ positive answers).",
+  "why": "Questions are assigned when a post is viewed."
+ },
+ {
+  "task": "T032",
+  "field": "setup",
+  "old": "Helper shares one normal post and one post the tester can't see (another university's university-only post)",
+  "new": "Helper shares two posts in chat: one normal, and one university-only post at the tester's university that its author then deletes (to show the unavailable card).",
+  "why": "A helper can't share a post the tester can't see."
+ },
+ {
+  "task": "T040",
+  "field": "task",
+  "old": "Try to message someone who isn't your friend (find them in Explore). Then report a message from the helper marked '[UX test]'.",
+  "new": "Try to message someone who isn't your friend: find Danish Helper in Explore. Then report a message from the helper marked '[UX test]'.",
+  "why": "Explore filters alone return nobody until a name is typed (R53)."
+ },
+ {
+  "task": "T047",
+  "field": "notes",
+  "new": "Acceptance is checked in T048; look at the bell first, not the venture page."
+ },
+ {
+  "task": "T048",
+  "field": "notes",
+  "new": "In the pilot the venture page changed before any notification was seen; ask testers which they noticed first."
+ },
+ {
+  "task": "T062",
+  "field": "setup",
+  "old": "Any signed-in tester",
+  "new": "Any signed-in tester who has already done T079 (or reset the leaderboard opt-out after this task)",
+  "why": "T062 opts the tester out of leaderboards before T079."
+ },
+ {
+  "task": "T063",
+  "field": "task",
+  "old": "Check which devices are signed into your account and sign out everywhere except this phone. Then sign out here too, with Skilient open in two tabs.",
+  "new": "Check which devices are signed into your account and sign out of all devices. Then sign in again and sign out here, with Skilient open in two tabs.",
+  "why": "The product can't sign out everywhere except this device."
+ },
+ {
+  "task": "T068",
+  "field": "task",
+  "old": "Staff removed one of your test posts and restricted your test account. Find out why, and appeal.",
+  "new": "Staff removed one of your test posts and restricted your test account. Find out why, and appeal one of the two decisions.",
+  "why": "Each decision has its own appeal."
+ },
+ {
+  "task": "T068",
+  "field": "done",
+  "old": "Your appeal has an outcome.",
+  "new": "Your appeal of one decision has an outcome.",
+  "why": "Matches the new task."
+ },
+ {
+  "task": "T079",
+  "field": "setup",
+  "old": "Any signed-in tester",
+  "new": "Any signed-in tester; run before T062 (which opts out of leaderboards)",
+  "why": "Order dependency."
+ },
+ {
+  "task": "T084",
+  "field": "setup",
+  "old": "Any signed-in tester",
+  "new": "Tester on a Pro trial (on the free plan CV changes apply at the next monthly refresh)",
+  "why": "The done-when can't be met in one session on the free plan."
+ },
+ {
+  "task": "T086",
+  "field": "setup",
+  "old": "Helper provides one genuine CV PDF and one with a single edited character",
+  "new": "Helper on a Pro trial exports one genuine CV PDF, and prints a copy with a single character changed",
+  "why": "PDF export needs Pro."
+ },
+ {
+  "task": "T088",
+  "field": "setup",
+  "old": "A faculty helper posts a project idea",
+  "new": "A faculty helper posts a project idea. Tester hasn't created a venture today (daily create limit).",
+  "why": "Daily venture limit."
+ },
+ {
+  "task": "T104",
+  "field": "task",
+  "old": "Your society is live. Finish its set-up: add a logo, invite a co-officer (helper) as General Secretary for this academic year, choose how students join, and handle a join request.",
+  "new": "Your society is live. Finish its set-up: add a logo, invite a co-officer (helper) as General Secretary for this academic year (type the dates: 1 September to 30 June), choose how students join, and handle a join request.",
+  "why": "No academic-year default in the term form."
+ },
+ {
+  "task": "T107",
+  "field": "task",
+  "old": "It's the end of term. Confirm your officers' terms, then hand the presidency to your co-officer.",
+  "new": "It's the end of term. Hand the presidency to your co-officer, then check that the new President can confirm your officers' terms.",
+  "why": "Terms end at handover and the next President confirms them."
+ },
+ {
+  "task": "T107",
+  "field": "done",
+  "old": "Your co-officer is President.",
+  "new": "Your co-officer is President and your officers' terms are confirmed or waiting for them.",
+  "why": "Matches the new task."
+ },
+ {
+  "task": "T117",
+  "field": "task",
+  "old": "Your event has ended. Add one attendee who was missed, enter 1st to 3rd place, log 3 volunteer hours for a helper, and issue the entries. Include yourself as an attendee.",
+  "new": "Your event has ended. Add one attendee who was missed, enter 1st to 3rd place, log 2 volunteer hours (no more than the event's length) for a helper, and issue the entries. Include yourself as an attendee.",
+  "why": "Volunteer hours are capped at the event length."
+ },
+ {
+  "task": "T116",
+  "field": "notes",
+  "new": "Self check-in exists only for university events, not society events. Kept for the id; skip it until it's built."
+ }
+]

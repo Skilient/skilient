@@ -55,6 +55,7 @@ export function SignupForm({
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (siteKey && !token) return;
     const form = new FormData(event.currentTarget);
     if (token) form.set("turnstileToken", token);
     if (chosen) form.set("universityId", chosen.id);
@@ -65,6 +66,7 @@ export function SignupForm({
       // Success redirects to /signup/verify; anything returned is an error.
       if (result && !result.ok) {
         setError(result);
+        setToken(null);
         setResetKey((k) => k + 1);
       }
     });
@@ -234,7 +236,7 @@ export function SignupForm({
 
       {siteKey ? <Turnstile siteKey={siteKey} onToken={setToken} resetKey={resetKey} action="signup" /> : null}
 
-      <Button type="submit" size="lg" loading={pending} disabled={googlePending}>
+      <Button type="submit" size="lg" loading={pending} disabled={googlePending || (!!siteKey && !token)}>
         Create account
       </Button>
 

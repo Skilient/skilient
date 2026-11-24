@@ -273,13 +273,13 @@ Plan: `docs/student-first-plan.md`. Features: PRD 5.30–5.34. Screens: `screen-
 
 ## Phase 18 — Community
 
-📖 `05-34-openings-sharing-and-reach.md`, `05-33-yearbook.md`, `05-09-chat.md`
+📖 `05-34-openings-sharing-and-reach.md`, ~~`05-33-yearbook.md`~~ (removed 2026-11-23), `05-09-chat.md`
 
 - [x] Openings (grid in one SQL call, category pages, This week, redirects from `/opportunities`)
-- [x] yearbook (pages, notes with owner approval, superlatives, reveal, freeze, page PDF)
+- [x] ~~yearbook (pages, notes with owner approval, superlatives, reveal, freeze, page PDF)~~ removed 2026-11-23, see decisions.md (`20261124000000_remove_yearbook.sql`)
 - [x] share-to-chat, people you may know, PWA (manifest, service worker, cached ticket) and web push
 
-✅ Openings shows every card's latest item with loading, empty and error states · unapproved yearbook notes and votes are unreadable to others · a shared post the recipient can't see renders as unavailable · an event reminder arrives as a push and stops when the category is off
+✅ Openings shows every card's latest item with loading, empty and error states · ~~unapproved yearbook notes and votes are unreadable to others~~ (yearbook removed 2026-11-23) · a shared post the recipient can't see renders as unavailable · an event reminder arrives as a push and stops when the category is off
 
 ---
 

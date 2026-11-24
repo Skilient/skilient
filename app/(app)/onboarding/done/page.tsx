@@ -1,64 +1,37 @@
-import { CheckCircle, Circle } from "@phosphor-icons/react/dist/ssr";
-import type { Metadata, Route } from "next";
-import Link from "next/link";
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { WelcomeActions, WelcomeRoot } from "@/components/onboarding/welcome-controls";
+import { WelcomeScene } from "@/components/onboarding/welcome-scene";
 import { ClaimCard } from "@/components/record/claim-card";
-import { Button } from "@/components/ui";
 import { getCurrentUser } from "@/lib/auth/current-user";
-import type { ChecklistItem } from "@/lib/data/portal";
-import { points } from "@/lib/ranking/labels";
 import { createClient } from "@/lib/supabase/server";
+import "./welcome.css";
 
-export const metadata: Metadata = { title: "You're in" };
+export const metadata: Metadata = { title: "Welcome to Skilient" };
 
-/** "You're in" (PRD 5.27): the getting-started checklist as it stands, and the tour. */
-export default async function OnboardingDonePage() {
+/**
+ * Welcome to Skilient (PRD 5.27's "You're in", remade 2026-11-15): where the onboarding wizard
+ * ends and the tour begins. The clouds part on the logo, the wordmark and what this place is; then
+ * "Start the tour". The getting-started checklist that used to be here lives in Home's progress
+ * column. Settings → "Replay welcome" opens it again with `?replay=1`.
+ */
+export default async function WelcomePage({ searchParams }: PageProps<"/onboarding/done">) {
   const user = await getCurrentUser();
+  if (!user) redirect("/signin");
+  // The tour it leads to is the student one; everyone else goes to their own home.
+  if (user.role !== "student") redirect("/feed");
   const supabase = await createClient();
-  const [{ data }, { data: waiting }] = await Promise.all([supabase.rpc("getting_started"), supabase.rpc("record_waiting")]);
-  const items = ((data as unknown as { items?: ChecklistItem[] } | null)?.items ?? []).map((i) => ({
-    ...i,
-    // Everyone who reaches this page has finished the wizard, which is what "your profile" means here.
-    done: i.key === "profile" ? true : i.done,
-  }));
+  const [{ data: waiting }, sp] = await Promise.all([supabase.rpc("record_waiting"), searchParams]);
+  const entries = typeof waiting === "number" ? waiting : 0;
   return (
-    <main className="mx-auto flex w-full max-w-xl flex-col gap-6 px-[var(--page-gutter)] py-12">
-      {/* PRD 5.30: walk-ins a society checked in by this email before they joined. */}
-      <ClaimCard waiting={typeof waiting === "number" ? waiting : 0} />
-      <div className="rounded-lg border border-border-default bg-bg-surface p-6 shadow-1 sm:p-8">
-        <h1 className="font-display text-h1">You&apos;re in{user ? `, ${user.fullName.split(/\s+/)[0]}` : ""}</h1>
-        <p className="mt-2 text-body text-text-secondary">Your profile is set up. Here&apos;s what builds your proof from here:</p>
-        <ul className="mt-5 flex flex-col gap-3" data-testid="done-checklist">
-          {items.map((item) => (
-            <li key={item.key} className="flex items-center gap-3 text-body">
-              {item.done ? (
-                <CheckCircle aria-hidden weight="fill" className="size-5 shrink-0 text-success" />
-              ) : (
-                <Circle aria-hidden weight="bold" className="size-5 shrink-0 text-text-muted" />
-              )}
-              <Link href={item.href as Route} className={item.done ? "text-text-secondary line-through" : "underline-offset-4 hover:underline"}>
-                {item.label}
-              </Link>
-              <span className="sr-only">{item.done ? "(done)" : "(to do)"}</span>
-              {item.points !== null && !item.done ? (
-                <span className="ml-auto text-caption text-text-secondary tabular-nums">
-                  +{points(item.points)}
-                  {item.note ? ` ${item.note}` : ""}
-                </span>
-              ) : null}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Button asChild size="lg">
-            <Link href="/feed?tour=1" data-testid="take-tour">
-              Take the tour
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="secondary">
-            <Link href="/feed">Go to Home</Link>
-          </Button>
-        </div>
-      </div>
-    </main>
+    <WelcomeRoot replay={sp.replay === "1"}>
+      <WelcomeScene
+        firstName={user.fullName.split(/\s+/)[0] ?? null}
+        // PRD 5.30: walk-ins a society checked in by this email before they joined. Always mounted:
+        // after claiming it keeps saying what was added, though nothing is waiting any more.
+        claim={<ClaimCard waiting={entries} />}
+        actions={<WelcomeActions delay={5.4} />}
+      />
+    </WelcomeRoot>
   );
 }

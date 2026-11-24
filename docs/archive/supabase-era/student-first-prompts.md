@@ -78,6 +78,8 @@ Before finishing: typecheck, lint, unit tests, pgTAP, worker tests with the fake
 
 ## Phase 18: Community (Openings, yearbook, sharing, push)
 
+The yearbook part was built and then removed on 2026-11-23 (decisions.md); the prompt below is kept as history.
+
 ```text
 Build phase 18 (Community) of the Student-first track in one go: one session, one PR, no slices.
 

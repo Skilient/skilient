@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import { FirstVisitTip } from "@/components/learn/first-visit-tip";
 import { LeaderboardToggle } from "@/components/ranking/leaderboard-toggle";
-import { SuperlativesToggle } from "@/components/yearbook/superlatives-toggle";
 import { RecruiterPrefsForm } from "@/components/recruit/student-controls";
 import { ConfirmAction } from "@/components/ventures/confirm-action";
 import { unblockCompany } from "@/lib/features/privacy/actions";
@@ -49,7 +48,7 @@ export default async function PrivacyCentrePage() {
   // Recruiter and university parts wait for their portals (phase 14); nothing of theirs is read meanwhile.
   const portals = await getPortals();
   const [{ data: profile }, { data: cv }, { count: links }, views, blocks, companies, viewers, prefs, recordViewers] = await Promise.all([
-    supabase.from("profiles").select("leaderboard_opt_out, yearbook_superlatives_opt_out, visibility, recruiter_visible, looking_for").eq("user_id", user.id).maybeSingle(),
+    supabase.from("profiles").select("leaderboard_opt_out, visibility, recruiter_visible, looking_for").eq("user_id", user.id).maybeSingle(),
     supabase.from("cv_settings").select("visibility").eq("user_id", user.id).maybeSingle(),
     supabase.from("cv_share_links").select("id", { count: "exact", head: true }).eq("user_id", user.id).is("revoked_at", null),
     getCvViewsLast30Days(user.id),
@@ -136,10 +135,6 @@ export default async function PrivacyCentrePage() {
 
       <Section id="leaderboard-h" title="Leaderboards">
         <LeaderboardToggle initialOptOut={profile?.leaderboard_opt_out ?? false} />
-      </Section>
-
-      <Section id="yearbook-h" title="Yearbook">
-        <SuperlativesToggle initialOptOut={profile?.yearbook_superlatives_opt_out ?? false} />
       </Section>
 
       <Section id="cv-h" title="CV visibility and share links">

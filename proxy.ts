@@ -85,6 +85,12 @@ export async function proxy(request: NextRequest) {
   });
 
   if (decision.type === "next") return session.response;
+  // A wizard step's server action from a page left in history (Back after Finish): a redirect here
+  // reaches the action client as a non-RSC response and breaks the page. Let it through; the
+  // onboarding actions send a finished account home themselves (lib/actions/onboarding.ts `begin`).
+  if (decision.type === "redirect" && request.method === "POST" && request.headers.has("next-action") && pathname.startsWith("/onboarding/")) {
+    return session.response;
+  }
   if (decision.type === "not-found") return rewriteWithCookies(request, session.response, "/_closed", requestHeaders());
   if (decision.type === "sign-out") await session.supabase.auth.signOut({ scope: "local" });
   return redirectWithCookies(request, session.response, decision.to);

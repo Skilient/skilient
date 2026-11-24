@@ -1,3 +1,5 @@
+> **Removed 2026-11-23, see decisions.md.** Kept for history; nothing here is built.
+
 ### 5.33 Digital yearbook (decided 2026-11-02)
 
 The final-year batch's book: every final-year student has a page that friends, teammates and society co-members sign with notes, and the batch votes **kind superlatives** from a fixed list. It opens in the last semester and freezes at graduation as a keepsake. Signed-in only, never public (CLAUDE.md: no public profile pages).

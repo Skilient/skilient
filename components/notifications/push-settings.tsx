@@ -9,7 +9,7 @@ import { currentSubscription, pushSupported, subscribeThisDevice } from "@/lib/p
 /**
  * Phone and browser notifications (PRD 5.34), next to instant email and digest: turn push on or off
  * for this device, and choose which kinds are pushed (chat messages, event reminders and changes,
- * Record entries, induction results, swap requests and reminders, yearbook notes).
+ * Record entries, induction results, swap requests and reminders).
  */
 export function PushSettings({ devices, categories }: { devices: number; categories: { category: string; label: string; push: boolean }[] }) {
   const router = useRouter();

@@ -1,6 +1,6 @@
 // Prints a fresh VAPID key pair for web push (PRD 5.34) as two base64url values on one line:
 // "<public key: 65-byte uncompressed P-256 point> <private key: 32-byte scalar>".
-// Used by the restore drill (a scratch project gets its own keys) and by docs/setup-checklist.md.
+// Used by the restore drill (a scratch project gets its own keys) and by docs/archive/supabase-era/setup-checklist.md.
 import { generateKeyPairSync } from "node:crypto";
 
 const { publicKey, privateKey } = generateKeyPairSync("ec", { namedCurve: "prime256v1" });

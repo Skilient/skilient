@@ -122,7 +122,7 @@ Style for all of them: **two-colour risograph print.** Ink #0E0D0B and vermillio
 **Slice 4: SEO, verify, launch email, wrap-up.**
 - SEO: `generateMetadata` on every page (canonical from `NEXT_PUBLIC_SITE_URL`), `opengraph-image.tsx` per route with plate 6, `sitemap.ts`, `robots.ts`, Organization JSON-LD, a check that signed-in routes are noindex.
 - `/verify` under marketing chrome; `/terms` and `/privacy`; the `university-launch` job (a notify-worker kind, emails confirmed requesters once when a university goes live, `pnpm test:worker`); a `/demo` 404 test; Lighthouse CI URLs for every route.
-- Docs: impeccable documenter → `DESIGN.md`; `docs/setup-checklist.md` Phase 12 (domain, Search Console + sitemap, OG debuggers, Resend sender, Turnstile site keys for the new forms, recheck stats, supply About/legal text); CLAUDE.md code map (phase 12); tick the build-plan boxes.
+- Docs: impeccable documenter → `DESIGN.md`; `docs/archive/supabase-era/setup-checklist.md` Phase 12 (domain, Search Console + sitemap, OG debuggers, Resend sender, Turnstile site keys for the new forms, recheck stats, supply About/legal text); CLAUDE.md code map (phase 12); tick the build-plan boxes.
 - Done when: all four phase checks are green on the final head, plus the PRD 5.1 "done when" list.
 
 **Process per slice:** local typecheck, lint, the slice's unit tests, pgTAP for new files, the slice's E2E, Lighthouse and the design gates → open the PR → `subscribe_pr_activity` and watch CI → fix only the failing lines (at most two attempts, then report) → merge when green. The next slice is built locally while CI runs and pushed after the merge. A short report per slice.

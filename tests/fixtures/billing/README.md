@@ -7,7 +7,7 @@ accepts it, rejects a tampered or stale copy, and normalises it.
 
 **Provenance.** No merchant account or sandbox exists yet (decisions.md 2026-10-05), so these bodies are built from
 the gateways' public documentation and examples, not recorded from a sandbox. Step 6 of "Switching to a real
-gateway" in `docs/setup-checklist.md` replaces each file with a real sandbox delivery (body only; never commit a
+gateway" in `docs/archive/supabase-era/setup-checklist.md` replaces each file with a real sandbox delivery (body only; never commit a
 signature header or a secret) and re-runs the tests. Anything the adapters mark `CONFIRM` is checked then.
 
 - `paddle/transaction.completed.json`: a first payment from our checkout (`custom_data.session_id`).

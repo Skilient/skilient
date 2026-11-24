@@ -3,7 +3,7 @@ name: Restore drill
 # PRD 10 "Backups"; phase 13 slice 4 (question 16). Dumps production with the Supabase CLI and restores it into the
 # scratch project, then checks migrations, RLS, policies, row counts, Vault and cron, copies Storage files, and builds
 # the app against the restore to check /api/health. Manual only. The scratch project must be freshly created (empty):
-# the restore refuses to write into a database that already has tables. Runbook: docs/restore-drill.md.
+# the restore refuses to write into a database that already has tables. Runbook: docs/archive/supabase-era/restore-drill.md.
 
 on:
   workflow_dispatch:
@@ -49,7 +49,7 @@ jobs:
         run: |
           [ "$CONFIRM" = "restore into scratch" ] || { echo "::error::Type exactly: restore into scratch"; exit 1; }
           for v in SUPABASE_ACCESS_TOKEN SUPABASE_PROJECT_REF SUPABASE_DB_PASSWORD SCRATCH_SUPABASE_PROJECT_REF SCRATCH_SUPABASE_DB_PASSWORD; do
-            [ -n "${!v}" ] || { echo "::error::Secret $v is not set (docs/setup-checklist.md Phase 13)"; exit 1; }
+            [ -n "${!v}" ] || { echo "::error::Secret $v is not set (docs/archive/supabase-era/setup-checklist.md Phase 13)"; exit 1; }
           done
           [ "$SCRATCH_SUPABASE_PROJECT_REF" != "$SUPABASE_PROJECT_REF" ] || { echo "::error::The scratch project is production"; exit 1; }
 
@@ -85,7 +85,7 @@ jobs:
       - name: The scratch project is empty
         run: |
           n=$(psql "$SCRATCH_DB_URL" -Atc "select count(*) from pg_tables where schemaname in ('public', 'private')")
-          [ "$n" = 0 ] || { echo "::error::Scratch already has $n tables. Create a fresh scratch project first (docs/restore-drill.md)."; exit 1; }
+          [ "$n" = 0 ] || { echo "::error::Scratch already has $n tables. Create a fresh scratch project first (docs/archive/supabase-era/restore-drill.md)."; exit 1; }
 
       - name: Dump production (roles, schema, data)
         run: |

@@ -168,7 +168,7 @@ A ticket type is free or paid. **Skilient never handles the money.** The student
 - `submit_receipt`, `review_payment`, `mark_refund_sent`, `confirm_refund`.
 - Holds expire in `event-tick`.
 - The receipt is checked in a server action the same way as credentials (`lib/actions/credentials.ts`).
-- The agreement and privacy notice must say that Skilient isn't a party to ticket payments and that receipts are stored (`docs/setup-checklist.md`).
+- The agreement and privacy notice must say that Skilient isn't a party to ticket payments and that receipts are stored (`docs/archive/supabase-era/setup-checklist.md`).
 
 #### Build: societies and events
 

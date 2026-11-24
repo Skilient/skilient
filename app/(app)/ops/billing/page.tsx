@@ -151,7 +151,7 @@ async function Gateways() {
             a.missing.join(", "),
           ])}
         />
-        <p className="text-caption text-text-secondary">Queued: {g.activity.queue.events} events, {g.activity.queue.jobs} worker jobs. Setup steps: docs/setup-checklist.md, &ldquo;Switching to a real gateway&rdquo;.</p>
+        <p className="text-caption text-text-secondary">Queued: {g.activity.queue.events} events, {g.activity.queue.jobs} worker jobs. Setup steps: docs/archive/supabase-era/setup-checklist.md, &ldquo;Switching to a real gateway&rdquo;.</p>
       </Section>
       <Section title="Sales tax rates" id="tax-h">
         <DataTable head={["Province", "Label", "Rate", "From"]} empty="No rates yet: PKR invoices to organisations say the rate is missing." rows={g.activity.tax_rates.map((t) => [t.province, t.label, `${(Number(t.rate) * 100).toFixed(2)}%`, dayLabel(t.effective_from)])} />

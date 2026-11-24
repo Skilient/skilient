@@ -1,7 +1,7 @@
 # Product analytics (PostHog)
 
 PRD 10 "Product analytics", "Session replays and heatmaps", "Privacy rules"; phase 13 slice 1. Setup steps are in
-`docs/setup-checklist.md` "Phase 13".
+`docs/archive/supabase-era/setup-checklist.md` "Phase 13".
 
 ## How it works
 

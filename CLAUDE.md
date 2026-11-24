@@ -1,98 +1,68 @@
 # CLAUDE.md — Skilient
 
-Skilient is a university-gated social platform for Pakistani students: they prove skills through real project work (GitHub evidence, ventures, peer and faculty verification) and turn that proof into a signed, verifiable CV that recruiters trust. Recruiters, faculty and universities each have their own portal. The whole platform launches once, complete.
+Skilient is a university-gated platform for Pakistani students: they prove skills through real project work (GitHub evidence, ventures, peer and faculty verification) and turn that proof into a signed, verifiable CV that recruiters trust. Current product scope: `docs/student-first-plan.md` (students first; recruiter and university portals behind flags; faculty portal waits).
 
-## Where the spec lives
+This branch (`azure`) moves the backend from Supabase to Azure. Until the cutover, production still runs on Supabase and Vercel.
 
-- `docs/prd/` — the PRD, one file per section. **Start with `docs/prd/README.md`** (index). Read only the sections the current phase lists.
-- `docs/screen-spec.md` — every screen: route, layout, key elements, states, and the two design gates.
-- `docs/build-plan.md` — the phases, in order, each with its PRD sections and "done when" checks. **This is the source of truth for what to build next.**
-- `docs/student-first-plan.md` — **the current scope (2026-11-02): students first.** Recruiter and university portals are off by flag, faculty stays; The Record, societies and events, paths and Openings come next (phases 14–18). Read it before planning any feature, and don't re-propose its rejected list.
-- `docs/decisions.md` — every product decision so far, dated, with reasons. Append new ones.
-- `docs/setup-checklist.md` — accounts and keys a human must create; never invent values.
-- `brand/` — final logo SVGs (Editorial: ink #0E0D0B, vermillion #C03910). Copy into `public/brand/` in phase 0.
-- `design/tokens-figma-ramps.json` — colour ramps from the Figma frames; semantic tokens are in PRD section 9.
-- `docs/reference/` — the original Figma frames (PDF).
+## Where things are
 
-Precedence when documents disagree: a feature section (5.x) beats section 6 (data model); 5.28 beats 5.6/5.7/5.9/5.15; 5.27 replaces 5.3; `docs/decisions.md` (newest entry) beats everything. If still unclear, ask — don't guess.
+- `docs/azure/prd.md`: **the backend PRD.** Architecture, services, data, security, cost, build plan (W0 to W16), implementation plan and cutover. Read the build-plan row for your workstream and the section it points to.
+- `docs/azure/setup-checklist.md`: accounts, exports and secrets a human creates. Never invent values for it.
+- `docs/azure/README.md`: index of the above.
+- `docs/prd/README.md`: the product spec, one file per section. Precedence: a feature section (5.x) beats section 6 (data model); 5.28 beats 5.6, 5.7, 5.9 and 5.15; 5.27 replaces 5.3; the newest entry in `docs/decisions.md` beats everything. If two sections conflict and the decision log is silent, ask Ahmed.
+- `docs/screen-spec.md`, `docs/design-gates.md`: every screen, its states and the design gates.
+- `docs/decisions.md`: dated decisions with reasons. Append new ones.
+- `docs/archive/supabase-era/`: the old build plan, checklists, phase questions and code map. History only. Do not follow it.
+- `brand/`: final logo SVGs (Editorial: ink `#0E0D0B`, vermillion `#C03910`).
+- `AGENTS.md`: Next.js 16 rules. Read `node_modules/next/dist/docs/` before using an API you are unsure of.
 
-## Stack (fixed — don't swap without asking)
+## Stack (target, from `docs/azure/prd.md`; do not swap without asking)
 
-Next.js 16 App Router, React 19, TypeScript strict, Tailwind CSS v4 (CSS-first, `@theme inline`, no config file), Supabase (Postgres + RLS, Auth with PKCE via `@supabase/ssr`, Realtime, Storage, Edge Functions, pg_cron, pgmq, Vault), Vercel (`bom1`), Supabase region Mumbai (`ap-south-1`), Brevo, Sentry, PostHog (EU), Axiom, Cloudflare Turnstile. pnpm, Node 22. Fonts: Space Grotesk (every label, heading and line of body copy, phase 14), Spectral (belief moments only: the landing headline, the welcome screen, tier-up, the Record and certificates; `font-serif`), JetBrains Mono (proof: dates, ids, counts), self-hosted via `next/font`; the CV keeps Barlow, and /ops keeps PRD 9 (Barlow, Spectral headings) through `.classic`; Montserrat only inside the wordmark SVG. Icons: Phosphor. Look: the neumorphism brief in `app/(marketing)/CLAUDE.md` (one surface, raised = pressable, pressed = active, signal orange the only accent).
-
-Email migration (2026-10-14): `docs/email-brevo-migration.md` supersedes historical Resend notes below.
-Category selects security@ or notify@ with display name Skilient. Auth SMTP is dashboard-managed.
+- Node 22, TypeScript strict, pnpm. Monorepo: `apps/web` (the Next.js app, unchanged), `services/<name>/`, `jobs/`, `packages/`, `deploy/` (Bicep), `tools/cutover/`, `perf/`.
+- Web: Next.js 16 App Router, React 19, Tailwind CSS v4 (CSS-first, `@theme inline`, no config file). Fonts and icons as in the product spec: Space Grotesk (labels and body), Spectral (belief moments, `font-serif`), JetBrains Mono (proof), Barlow in the CV, Montserrat only in the wordmark. Icons: Phosphor.
+- Backend: 12 domain services (`identity`, `people`, `content`, `messaging`, `work`, `ranking`, `community`, `credentials`, `notify`, `trust`, `market`, `billing`) and 2 platform services (`realtime`, `media`). Express 5 as the HTTP server; ConnectRPC over HTTP/2 with Protobuf contracts, in-memory transport when co-hosted; Zod inside services; `postgres.js` with Kysely; Vitest, Playwright, k6; distroless images.
+- Azure, Central India: Container Apps (`web`, `core-a`, `core-b`, jobs), Azure Database for PostgreSQL Flexible Server (private, virtual network), Blob Storage, Key Vault, Log Analytics with Application Insights, Azure Monitor alerts, budgets. Bicep, deployed by GitHub Actions.
+- Outside Azure: Cloudflare Free, GitHub Container Registry, Brevo (email), PostHog (EU), Sentry.
 
 ## Never
 
-- No AI/LLM API anywhere in the product (no Claude, OpenAI, etc.). Summaries, questions and grading are templates or humans.
-- No likes, reactions or saves on posts (share-to-chat is allowed, never counted). No group chats beyond venture chats. No video anywhere. No public profile pages.
-- Never sell rank or visibility; never order search, leaderboards or "For you" by payment.
-- No service-role key in pages, client code, or server actions acting for a user (only Edge Functions, jobs, billing worker).
-- No table without RLS (default deny) and a pgTAP refusal test. No `getSession()` in server code; use `getUser()`.
-- Never trust a user id, GitHub username, price or entitlement from the client.
-- No schema changes outside `supabase/migrations/`; never edit the database by hand.
-- Never commit secrets (gitleaks blocks it).
-
-## Skills
-
-Use the Postgres best-practices skill for every migration, RLS policy and query; the PRD and decisions.md take precedence where they differ.
-
-## How to work
-
-1. At the start of a session: read this file, `docs/build-plan.md`, and only the PRD sections for the current phase.
-2. Work one phase (or one slice of a phase) per session/PR. Don't start the next phase until the current one's "done when" checks pass.
-3. Every server action: Zod input, `getUser()`, explicit ownership check, `{ count: "exact" }` write check, typed error, JSON log line with `request_id`.
-4. Every screen: loading, empty and error states; light and dark; keyboard-operable; passes the design gates in `docs/screen-spec.md`.
-5. Before finishing: typecheck, lint, unit tests, pgTAP, and the phase's E2E tests all green. Tick the phase's boxes in `docs/build-plan.md`.
-6. Log any decision or deviation in `docs/decisions.md` (dated one-liner + why). If the spec is ambiguous or two sections conflict, ask the owner (Ahmed) instead of picking.
-
-## Working efficiently (token discipline)
-
-Quality rules above still apply in full; these rules only cut waste.
-
-**Reading**
-- Read only the PRD sections the current slice needs. Use grep or line offsets instead of whole files once you know where something is.
-- Don't re-read files you've already read in this session unless they changed.
-- Pipe long command output through `tail -n 40` or `grep`; never paste full logs, full test output or full diffs.
-
-**Planning and questions**
-- Ask all questions for a phase in ONE list at planning time, each with a recommended default. After Ahmed answers, build on those answers without asking again. If something new comes up mid-slice, pick the safest default, log it in docs/decisions.md, and list it in the final report.
-
-**Building and testing**
-- One slice per session. When a slice is merged, the next slice starts in a fresh session.
-- Student-first track (phases 14–18): no slices. Each phase is built whole in one session and one PR (Ahmed, 2026-11-02).
-- Locally, run typecheck, lint and only the tests for the code you changed. The full suite runs in CI.
-- Prefer fewer, larger slices when a phase's pieces are small.
-
-**CI**
-- Push when local checks pass, then STOP. Do not poll, wait for or re-run CI. If CI fails, Ahmed pastes back the failing lines; fix only those.
-- Never loop on a failing check more than twice. Stop and report what's failing and your best guess why.
-
-**Reporting**
-- Final report per slice: at most 15 lines. What changed, what Ahmed must do by hand, and anything failing or deferred. No recap of the plan.
-- Put detail in the repo (docs/decisions.md, checklists), not in chat.
-
-**Tools**
-- No subagents, parallel reviews or extra verification passes unless Ahmed asks.
+- No AI or LLM API anywhere in the product (no Claude, OpenAI, etc.). Summaries, questions and grading are templates or humans.
+- No likes, reactions or saves on posts. Share-to-chat is allowed and never counted. No group chats beyond venture chats. No video anywhere. No public profile pages.
+- Never sell rank or visibility. Never order search, leaderboards or "For you" by payment.
+- No business rule in `apps/web`. Web checks the session token itself and calls services; it holds no rules.
+- Never trust a user id, GitHub username, price or entitlement from the client. The token and the owning service are the only sources.
+- No table without an owning service, default-deny row-level security, and a refusal test.
+- No query that names another service's schema. A lint rule and the database roles both enforce this.
+- No schema change outside `services/<name>/migrations/`. Migrations are plain SQL and forward-only.
+- No service-to-service call inside a loop; use the batch method. No call chain deeper than two.
+- No new endpoint without a line in `perf/budgets.json`.
+- Every staff method checks role and two-factor level and writes the audit log before and after. A contract test fails if one does not.
+- Secrets live only in Key Vault, reached by managed identity. Never in images, the repo, CI logs or chat.
+- Never commit secrets. gitleaks blocks them.
+- Commits and pull requests carry no Co-Authored-By or AI attribution lines.
 
 ## Commands
 
-```bash
-pnpm dev            # dev server (UI gallery at /ui)
-pnpm build          # production build (ENABLE_UI_GALLERY=1 keeps /ui)
-pnpm lint           # ESLint, zero warnings (includes the service-role / getSession / REST guards)
-pnpm typecheck      # next typegen && tsc --noEmit
-pnpm test           # Vitest (tests/unit)
-pnpm test:e2e       # Playwright + axe against `pnpm start` on :3100 (build first)
-pnpm size           # size-limit report
-pnpm db:start       # supabase start: local stack (Docker)
-pnpm db:reset       # supabase db reset: rebuild local DB from migrations + seed
-pnpm db:test        # supabase test db: pgTAP (supabase/tests)
-pnpm db:types       # regenerate types/database.ts (CI fails if stale)
-```
+Today, from `package.json`: `pnpm dev`, `pnpm build`, `pnpm lint` (zero warnings), `pnpm typecheck`, `pnpm test` (Vitest), `pnpm test:e2e` (Playwright on a built app). The `db:*` scripts drive the local Supabase stack and go when Supabase does. The W0 foundation adds the workspace's own commands; update this line when it lands.
 
-Supabase CLI: Ahmed doesn't run it locally. CI runs the local stack for pgTAP, the stale-types check and `supabase db advisors --fail-on warn` on every PR, and on merge to `main` links the hosted project (`SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF`, `SUPABASE_DB_PASSWORD` repo secrets) and runs `supabase db push`. The `db:*` scripts are for sessions or machines that have Docker. In cloud sessions, `.claude/hooks/session-start.sh` runs `pnpm install`, starts Docker and sets `PW_CHROMIUM_PATH`; run `pnpm db:start` yourself when a task touches the database (about a minute, longer on a fresh container). The hook does nothing on local machines.
+## How to work
+
+1. At the start of a session: read this file, the build-plan row for the workstream you are on, and the PRD sections that row names. Read nothing else up front.
+2. One long-lived branch, `azure`. Workstreams in the PRD's order: W0 first; W1 and W2 next; W3 to W12 in any order; W13 re-points `apps/web` service by service; W14 to W16 close the phase. Nothing reaches production until the whole phase passes its checks.
+3. Each service: a handler validates input, authorises the actor, runs one transaction together with its events, and checks the row count. Typed errors. One JSON log line per request with `request_id`, and a hashed user id, never names, emails or content.
+4. Port by golden test. Before a service is written, record its public functions' outputs on the current stack. The service is not done until its golden tests match.
+5. Every screen: loading, empty and error states; light and dark; keyboard-operable; passes the design gates in `docs/screen-spec.md`.
+6. Before finishing: typecheck, lint, unit tests, contract tests and the workstream's own checks green. Tick the workstream's boxes in the PRD's "phase is done when" list.
+7. Log every decision or deviation in `docs/decisions.md`: dated, one line, and why. If the spec is ambiguous or two sections conflict, ask Ahmed instead of picking.
+8. Read only the PRD section you need. Pipe long output through `tail` or `grep`. Never paste full logs or diffs into chat.
+9. Commit or push only when Ahmed asks. Never loop on a failing check more than twice; report what is failing and your best guess why.
+10. Final report: at most 15 lines. What changed, what Ahmed must do by hand, and what is failing or deferred.
+
+## Current app (until the W13 cutover)
+
+Next.js 16 App Router, React 19, TypeScript strict, Tailwind CSS v4 (CSS-first, `@theme inline`, no config file), Supabase (Postgres + RLS, Auth with PKCE via `@supabase/ssr`, Realtime, Storage, Edge Functions, pg_cron, pgmq, Vault), Vercel (`bom1`), Supabase region Mumbai (`ap-south-1`), Brevo, Sentry, PostHog (EU), Axiom, Cloudflare Turnstile. pnpm, Node 22. Fonts: Space Grotesk (every label, heading and line of body copy, phase 14), Spectral (belief moments only: the landing headline, the welcome screen, tier-up, the Record and certificates; `font-serif`), JetBrains Mono (proof: dates, ids, counts), self-hosted via `next/font`; the CV keeps Barlow, and /ops keeps PRD 9 (Barlow, Spectral headings) through `.classic`; Montserrat only inside the wordmark SVG. Icons: Phosphor. Look: the neumorphism brief in `app/(marketing)/CLAUDE.md` (one surface, raised = pressable, pressed = active, signal orange the only accent).
+Email migration (2026-10-14): `docs/email-brevo-migration.md` supersedes historical Resend notes below.
+Category selects security@ or notify@ with display name Skilient. Auth SMTP is dashboard-managed.
 
 Local setup: `cp .env.example .env.local`, then `pnpm db:start` and fill `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` from `pnpm exec supabase status`. If Playwright's own browser isn't installed, set `PW_CHROMIUM_PATH` to a local Chromium.
 

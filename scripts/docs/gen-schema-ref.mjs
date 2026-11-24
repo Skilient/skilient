@@ -6,7 +6,7 @@ import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "../..");
-const output = resolve(root, "docs/code/reference/schema");
+const output = resolve(root, "docs/archive/supabase-era/code/reference/schema");
 const args = process.argv.slice(2);
 const options = new Map();
 for (let i = 0; i < args.length; i += 2) {

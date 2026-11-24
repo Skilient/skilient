@@ -35,13 +35,13 @@ test.describe("Student portal", () => {
     for (const key of ["home", "openings", "ventures", "chat", "me", "events", "explore", "leaderboard", "notifications", "feedback"]) {
       await expect(page.getByTestId(`nav-${key}`)).toHaveAttribute("aria-describedby", /.+/);
     }
-    await page.getByTestId("nav-openings").hover();
-    await expect(page.getByRole("tooltip")).toContainText("each card with its newest opening");
 
-    // The tour starts by itself, and runs from the keyboard alone.
+    // The tour starts by itself, lights one thing at a time, and runs from the keyboard alone.
     const popover = page.getByTestId("tour-popover");
+    const progress = page.getByTestId("tour-progress");
     await expect(popover).toBeVisible();
-    await expect(page.getByTestId("tour-progress")).toHaveText("Step 1 of 9");
+    await expect(progress).toHaveText("Step 1 of 15");
+    await expect(page.getByTestId("tour-spotlight")).toBeVisible();
     await expect(page.getByTestId("tour-next")).toBeFocused();
     await page.keyboard.press("Tab");
     await page.keyboard.press("Tab");
@@ -50,20 +50,48 @@ test.describe("Student portal", () => {
     await expect
       .poll(() => page.evaluate(() => !!document.activeElement?.closest("[data-testid=tour-popover]")), { timeout: 5000 })
       .toBe(true);
-    await page.getByTestId("tour-next").focus();
-    await page.keyboard.press("Enter");
-    await expect(page.getByTestId("tour-progress")).toHaveText("Step 2 of 9");
-    await expect(popover).toContainText("Openings");
-    await page.getByTestId("tour-back").focus();
-    await page.keyboard.press("Enter");
-    await expect(page.getByTestId("tour-progress")).toHaveText("Step 1 of 9");
-    for (let i = 0; i < 9; i++) {
+    const next = async (step: number) => {
       await page.getByTestId("tour-next").focus();
       await page.keyboard.press("Enter");
-    }
+      await expect(progress).toHaveText(`Step ${step} of 15`);
+    };
+    await next(2);
+    await expect(popover).toContainText("Search, or jump anywhere");
+    await page.getByTestId("tour-back").focus();
+    await page.keyboard.press("Enter");
+    await expect(progress).toHaveText("Step 1 of 15");
+    // Home: the rail, search, the two feeds, the composer, Your progress, then Openings on the rail.
+    for (const step of [2, 3, 4, 5, 6]) await next(step);
+    await expect(page).toHaveURL(/\/feed/);
+    // It walks to Openings by itself; the first-visit tip stands down while the tour is talking.
+    await next(7);
+    await expect(page).toHaveURL(/\/openings$/);
+    await expect(popover).toContainText("This week");
+    await expect(page.getByTestId("tip-opportunities")).toBeHidden();
+    // A reload in the middle resumes on the same step, on the same page.
+    await page.reload();
+    await expect(progress).toHaveText("Step 7 of 15");
+    for (const step of [8, 9, 10, 11]) await next(step);
+    // Then inside Me: the grouped panel.
+    await next(12);
+    await expect(page).toHaveURL(/\/me$/);
+    await expect(popover).toContainText("Your proof, in one place");
+    await next(13);
+    await next(14);
+    // It ends back on Home, with one thing to do.
+    await next(15);
+    await expect(page).toHaveURL(/\/feed$/);
+    await expect(popover).toContainText("You're set");
+    await page.getByTestId("tour-cta").click();
     await expect(popover).toHaveCount(0);
+    await expect(page.getByTestId("composer").locator("textarea").first()).toBeFocused();
     const db = adminClient();
     await expect.poll(async () => (await db.from("tour_progress").select("completed_at").eq("user_id", me.id).single()).data?.completed_at ?? null, { timeout: 30_000 }).not.toBeNull();
+    // With the tour out of the way the page can be used again: a nav tooltip on hover.
+    await page.getByTestId("nav-openings").hover();
+    await expect(page.getByRole("tooltip")).toContainText("each card with its newest opening");
+    // Walking through Openings on the tour is not the student reading it: nothing was marked as seen.
+    expect((await db.from("openings_seen").select("category").eq("user_id", me.id)).data).toEqual([]);
     // Finished: it doesn't start again.
     await page.reload();
     await expect(page.getByTestId("progress-card")).toBeVisible();
@@ -73,7 +101,7 @@ test.describe("Student portal", () => {
     await page.goto("/settings");
     await page.getByTestId("replay-tour").click();
     await expect(page).toHaveURL(/\/feed/);
-    await expect(page.getByTestId("tour-progress")).toHaveText("Step 1 of 9");
+    await expect(page.getByTestId("tour-progress")).toHaveText("Step 1 of 15");
     await page.keyboard.press("Escape");
     await expect(popover).toHaveCount(0);
     await expect.poll(async () => (await db.from("tour_progress").select("skipped_at").eq("user_id", me.id).single()).data?.skipped_at ?? null, { timeout: 30_000 }).not.toBeNull();
@@ -126,13 +154,78 @@ test.describe("Student portal", () => {
     expect(problems).toEqual([]);
   });
 
+  test("welcome: the film ends on Start the tour, can be skipped, plays once, and leads into the tour", async ({ page, browser }, info) => {
+    test.skip(info.project.name !== "desktop", "runs once, on desktop");
+    test.setTimeout(120_000);
+    const problems = watchConsole(page);
+    const me = await createStudent({ domain: "nutech.edu.pk", fullName: "Wajiha Welcome", tour: true });
+    await signInWithPassword(page, me.email, me.password);
+    // Signing in lands on Home, where the tour would start: leave it for the welcome screen.
+    await page.getByTestId("tour-skip").click();
+
+    // First visit: the film plays to its end by itself and hands the keyboard to the way in.
+    await page.goto("/onboarding/done");
+    const welcome = page.getByTestId("welcome");
+    await expect(page.getByRole("heading", { name: /Welcome to Skilient, Wajiha/ })).toBeAttached();
+    await expect(page.getByTestId("welcome-description")).toContainText("This is where students prove what they can do.");
+    await expect(page.getByTestId("welcome-skip-intro")).toBeVisible();
+    await expect(welcome).not.toHaveAttribute("data-skip", "");
+    await expect(welcome).toHaveAttribute("data-done", "", { timeout: 10_000 });
+    await expect(page.getByTestId("start-tour")).toBeFocused();
+    await expect(page.getByTestId("welcome-skip-intro")).toBeHidden();
+    // No shell on this screen: it owns the window.
+    await expect(page.getByTestId("nav-home")).toHaveCount(0);
+    await axe(page, "welcome");
+
+    // Seen once: a second visit shows the end state straight away. Settings replays the film.
+    await page.reload();
+    await expect(welcome).toHaveAttribute("data-skip", "");
+    await page.goto("/settings");
+    await page.getByTestId("replay-welcome").click();
+    await expect(page).toHaveURL(/\/onboarding\/done\?replay=1$/);
+    await expect(page.getByTestId("welcome-skip-intro")).toBeVisible();
+    await page.getByTestId("welcome-skip-intro").click();
+    await expect(welcome).toHaveAttribute("data-skip", "");
+
+    // Start the tour: Home opens and the tour begins at its first step.
+    await page.getByTestId("start-tour").click();
+    await expect(page).toHaveURL(/\/feed$/);
+    await expect(page.getByTestId("tour-progress")).toHaveText("Step 1 of 15");
+    await page.getByTestId("tour-skip").click();
+
+    // A shared computer: the next student to sign in on this browser still gets their own welcome
+    // (the "seen" flag is kept per account), and their own tour.
+    const next = await createStudent({ domain: "nutech.edu.pk", fullName: "Nida Next", tour: true });
+    await page.context().clearCookies();
+    await signInWithPassword(page, next.email, next.password);
+    await expect(page.getByTestId("tour-progress")).toHaveText("Step 1 of 15");
+    await page.getByTestId("tour-skip").click();
+    await page.goto("/onboarding/done");
+    await expect(page.getByRole("heading", { name: /Welcome to Skilient, Nida/ })).toBeAttached();
+    await expect(page.getByTestId("welcome-skip-intro")).toBeVisible();
+    await expect(page.getByTestId("welcome")).not.toHaveAttribute("data-skip", "");
+
+    // Less motion: no film at all, the end state from the start.
+    const calm = await browser.newContext({ reducedMotion: "reduce" });
+    const calmPage = await calm.newPage();
+    await signInWithPassword(calmPage, me.email, me.password);
+    await calmPage.goto("/onboarding/done?replay=1");
+    await expect(calmPage.getByTestId("welcome")).toHaveAttribute("data-skip", "");
+    await expect(calmPage.getByTestId("start-tour")).toBeVisible();
+    await calm.close();
+    expect(problems).toEqual([]);
+  });
+
   test("the phone shell: five places in the dock, a header and a shorter tour", async ({ page }, info) => {
     test.skip(info.project.name !== "phone", "phone only");
     test.setTimeout(90_000);
     const me = await createStudent({ domain: "nutech.edu.pk", fullName: "Phone Tabs", tour: true });
     await signInWithPassword(page, me.email, me.password);
-    // Phone: the dock's five places, the search well (Explore) and the bell; Leaderboard and Feedback are desktop rail stops.
-    await expect(page.getByTestId("tour-progress")).toHaveText(/Step 1 of 7/);
+    // Phone: every step but the sidebar's second tier, which only desktop has.
+    await expect(page.getByTestId("tour-progress")).toHaveText(/Step 1 of 14/);
+    // "Your progress" is a chip above the feed here, not a column.
+    await expect(page.getByTestId("progress-chip")).toBeVisible();
+    await expect(page.getByTestId("progress-card")).toBeHidden();
     await page.getByTestId("tour-skip").click();
     await expect(page.getByRole("navigation", { name: "Main" }).getByRole("link")).toHaveCount(5);
     await page.getByTestId("tab-me").click();

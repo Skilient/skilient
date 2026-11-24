@@ -82,7 +82,8 @@ test.describe("Ventures", () => {
 
     // The owner accepts on /requests, after reading the answer.
     await page.goto("/ventures");
-    await page.getByRole("link", { name: "Requests", exact: true }).click();
+    // From 1024 px this is the sidebar's row, whose name carries the waiting count ("Requests 1 waiting").
+    await page.getByRole("link", { name: /^Requests\b/ }).first().click();
     await expect(page).toHaveURL(/\/requests$/);
     const card = page.getByRole("article", { name: `Application from ${applicant.fullName}` });
     await expect(card).toContainText("An Android phone.");

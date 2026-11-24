@@ -5,14 +5,14 @@ import { FormAlert } from "@/components/auth/form-alert";
 import { Button, Textarea } from "@/components/ui";
 import { resolveCase, type CaseAction, type Severity } from "@/lib/actions/ops/moderation";
 
-type Target = "post" | "comment" | "message" | "profile" | "venture" | "society" | "event" | "event_registration" | "record_entry" | "swap" | "yearbook_page" | "yearbook_note";
+type Target = "post" | "comment" | "message" | "profile" | "venture" | "society" | "event" | "event_registration" | "record_entry" | "swap";
 
 const ACTIONS: { value: CaseAction; label: string; hint: string; targets: Target[] }[] = [
-  { value: "dismiss", label: "Dismiss", hint: "Nothing breaks the guidelines. A held post goes back to the feed.", targets: ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry", "swap", "yearbook_page", "yearbook_note"] },
-  { value: "remove", label: "Remove content", hint: "Hidden from everyone, the owner included; images are deleted. The owner is told why.", targets: ["post", "comment", "message", "yearbook_page", "yearbook_note"] },
+  { value: "dismiss", label: "Dismiss", hint: "Nothing breaks the guidelines. A held post goes back to the feed.", targets: ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry", "swap"] },
+  { value: "remove", label: "Remove content", hint: "Hidden from everyone, the owner included; images are deleted. The owner is told why.", targets: ["post", "comment", "message"] },
   { value: "clear_profile", label: "Clear bio and photo", hint: "The profile stays; its bio and photo are removed. The owner is told why.", targets: ["profile"] },
   { value: "unlist", label: "Unlist the venture", hint: "It leaves browse and search; members keep access. The owner is told why.", targets: ["venture"] },
-  { value: "warn", label: "Warn the owner", hint: "The content stays. The owner gets a warning with your reason.", targets: ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry", "swap", "yearbook_page", "yearbook_note"] },
+  { value: "warn", label: "Warn the owner", hint: "The content stays. The owner gets a warning with your reason.", targets: ["post", "comment", "message", "profile", "venture", "society", "event", "event_registration", "record_entry", "swap"] },
 ];
 
 const SEVERITIES: { value: Severity; label: string; hint: string }[] = [
@@ -26,7 +26,8 @@ const SEVERITIES: { value: Severity; label: string; hint: string }[] = [
  * (PRD 5.26, decisions.md 2026-09-30). Anything but a dismissal also takes a severity, which
  * costs the owner ranking points (PRD 5.13 penalties). Suspend and ban come in phase 11.
  */
-export function ResolveForm({ caseId, targetType }: { caseId: string; targetType: Target }) {
+/** `targetType` is the case's report_target; values no longer reportable get no actions. */
+export function ResolveForm({ caseId, targetType }: { caseId: string; targetType: string }) {
   const id = useId();
   const [action, setAction] = useState<CaseAction | null>(null);
   const [severity, setSeverity] = useState<Severity | null>(null);
@@ -56,7 +57,7 @@ export function ResolveForm({ caseId, targetType }: { caseId: string; targetType
       {error ? <FormAlert>{error}</FormAlert> : null}
       <fieldset className="flex flex-col gap-2">
         <legend className="mb-1 text-body-sm font-semibold">Action</legend>
-        {ACTIONS.filter((a) => a.targets.includes(targetType)).map((a) => (
+        {ACTIONS.filter((a) => (a.targets as readonly string[]).includes(targetType)).map((a) => (
           <label key={a.value} className="flex items-start gap-2 text-body-sm">
             <input type="radio" name={`${id}-action`} value={a.value} checked={action === a.value} onChange={() => setAction(a.value)} className="mt-1 size-4" />
             <span>

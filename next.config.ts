@@ -16,7 +16,6 @@ const nextConfig: NextConfig = {
     "/api/ops/pdf-check": ["./node_modules/@sparticuz/chromium/bin/**", "./lib/cv/fonts/*.woff2"],
     "/api/billing/invoice/**": ["./node_modules/@sparticuz/chromium/bin/**", "./lib/cv/fonts/*.woff2"],
     "/api/uni/export": ["./node_modules/@sparticuz/chromium/bin/**", "./lib/cv/fonts/*.woff2"],
-    "/api/yearbook/pdf": ["./node_modules/@sparticuz/chromium/bin/**", "./lib/cv/fonts/*.woff2"],
   },
   experimental: {
     // Profile images (PRD 5.4: covers up to 8 MB) are uploaded through a server action.

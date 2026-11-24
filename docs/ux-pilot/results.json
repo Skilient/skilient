@@ -2036,6 +2036,171 @@
    ],
    "clicks": 4,
    "shortest": 3
+  },
+  {
+   "id": "T110",
+   "status": "Done",
+   "answers": [
+    "'When and where' (two sessions, four date-time fields, typed by hand) and 'Who can come': departments are a free-text field ('Separate with commas'), so 'BSCS' must match the exact department name (R103).",
+    "Yes: '6 steps left…' kept me oriented.",
+    "Mostly: Attended / Completed / Result / Volunteer hours each say what earns it; 'Sessions needed to complete' appeared but the review shows only 'Attended, Completed' and the saved event has no threshold (R104).",
+    "No; 'Nothing is saved until you save' warns about leaving."
+   ],
+   "findings": [
+    "R103",
+    "R104"
+   ],
+   "note": "42 s, 25 actions on desktop. Draft → 'Published.' with no confirmation. Review says '1 questions'.",
+   "shots": [
+    "docs/ux-pilot/shots/T110-1.png",
+    "docs/ux-pilot/shots/T110-2.png"
+   ],
+   "clicks": 25,
+   "shortest": 20
+  },
+  {
+   "id": "T111",
+   "status": "Partly done",
+   "answers": [
+    "Yes: 'Students pay the society directly and upload the receipt; an officer checks it. Skilient doesn't handle the money.'",
+    "A 'Refunds' select; my choice didn't stick (saved as 'none'), so I can't say the wording works (R104 plan).",
+    "Duplicate opened the stepper prefilled with the same title ('Debugging clinic (ready for close-out)'), dates included; nothing marks it as a copy (R105)."
+   ],
+   "findings": [
+    "R105"
+   ],
+   "note": "Co-host: a free-text 'Co-hosting societies' field with no suggestions; nothing was saved (0 co-hosts). Editing a published event warns 'Changing the time or place tells everyone registered.'",
+   "shots": [
+    "docs/ux-pilot/shots/T111-1.png",
+    "docs/ux-pilot/shots/T111-2.png"
+   ],
+   "clicks": 14,
+   "shortest": 10
+  },
+  {
+   "id": "T112",
+   "status": "Partly done",
+   "answers": [
+    "Yes: amount, reference (SKL-…), transaction ID and 'Open the receipt' per row.",
+    "Yes: 'Possible duplicate · Same transaction ID also uploaded for Fatima Final's registration' on both rows.",
+    "Opened as a link (not checked visually)."
+   ],
+   "findings": [],
+   "note": "My runner approved both duplicate rows by mistake; Reject needs an inline 'Reason to reject' ('Tell the student what's wrong with the receipt.').",
+   "shots": [
+    "docs/ux-pilot/shots/T112-1.png",
+    "docs/ux-pilot/shots/T112-2.png",
+    "docs/ux-pilot/shots/T112-3.png",
+    "docs/ux-pilot/shots/T112-4.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T113",
+   "status": "Done",
+   "answers": [
+    "The Messages tab says 'Goes to everyone confirmed, waiting or on the waitlist, as a notification.' No count or confirmation after sending (R106).",
+    "Lowering to 1 seat with 1 confirmed (2 waiting) was accepted silently.",
+    "Yes: only the confirmed, or only the waitlist."
+   ],
+   "findings": [
+    "R106"
+   ],
+   "note": "Approve on Registrations; Staff tab 'Add staff' by username worked.",
+   "shots": [
+    "docs/ux-pilot/shots/T113-1.png",
+    "docs/ux-pilot/shots/T113-2.png"
+   ],
+   "clicks": 6,
+   "shortest": 5
+  },
+  {
+   "id": "T114",
+   "status": "Done",
+   "answers": [
+    "No: 'Cancel the event' is a collapsed section on the Messages tab with only 'Why (everyone registered reads this)'; one tap cancels, no confirmation of consequences (R107).",
+    "Partly: payments switch to 'Refund requested · Mark refund sent'. But the paid student's ticket still says 'Valid' after cancelling (R107)."
+   ],
+   "findings": [
+    "R107"
+   ],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T114-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
+  },
+  {
+   "id": "T115",
+   "status": "Partly done",
+   "answers": [
+    "Not testable outdoors; on screen the result text is the same colour for all outcomes (no green/amber/red panel captured).",
+    "Typed codes: ~0.7 s, but every ticket code typed from under the QR was refused: 'Not checked in. That isn't a Skilient ticket.' (R102). Name search + 'Check in' and the walk-in email worked.",
+    "'Add by university email': they can claim the entry when they join."
+   ],
+   "findings": [
+    "R102"
+   ],
+   "note": "This headless browser has no camera scanning ('This browser can't scan codes. Use a handheld scanner or type the code under the QR.'). Only 2 of the 5 check-ins could be done.",
+   "shots": [
+    "docs/ux-pilot/shots/T115-1.png",
+    "docs/ux-pilot/shots/T115-2.png"
+   ],
+   "clicks": 8,
+   "shortest": 6
+  },
+  {
+   "id": "T116",
+   "status": "Blocked",
+   "answers": [
+    "Not available: a rotating room code exists only for university events (portal off); society events have no self check-in.",
+    "—",
+    "—"
+   ],
+   "findings": [],
+   "note": "Plan: drop T116 for societies or build self check-in.",
+   "shots": [],
+   "clicks": null,
+   "shortest": null
+  },
+  {
+   "id": "T117",
+   "status": "Done",
+   "answers": [
+    "The close-out table (attendee, sessions, place, hours) is the preview; 'Issue now' issued at once with no confirmation (R108).",
+    "No: nothing says entries can't be edited once issued (only corrected).",
+    "Yes: 'Close-out is open until 27 Nov… It issues by itself then.'"
+   ],
+   "findings": [
+    "R108"
+   ],
+   "note": "Missed attendee added with a reason; places 1–3 saved; 3 volunteer hours refused: 'Hours are capped at the event's length (2.0 h).' My own entry waits for a second officer ('awaiting'). After issuing: 'Entries appear on attendees' Records when The Record opens.' (odd wording).",
+   "shots": [
+    "docs/ux-pilot/shots/T117-1.png",
+    "docs/ux-pilot/shots/T117-2.png"
+   ],
+   "clicks": 12,
+   "shortest": 10
+  },
+  {
+   "id": "T118",
+   "status": "Done",
+   "answers": [
+    "Yes: the section says 'A correction issues a new entry and the old code reads superseded'; the corrected entry showed 'Signing…' first.",
+    "The CSV has quoted columns but no UTF-8 BOM (Excel may garble Urdu names) and raw ISO timestamps ('2026-11-24T01:01:26.055513+00:00') (R109).",
+    "Not yet: '0 answers so far. Totals show from 5 answers so nobody can be picked out.'"
+   ],
+   "findings": [
+    "R109"
+   ],
+   "note": "The mistake report shows inline with 'Correct it' and the entry's fields (Title, Place, Evidence line, Note to the student).",
+   "shots": [
+    "docs/ux-pilot/shots/T118-1.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
   }
  ],
  "cw": [
@@ -2290,6 +2455,24 @@
    "task": "T109",
    "q": 2,
    "why": "No place to write a note when declining."
+  },
+  {
+   "step": "F35.08",
+   "task": "T115",
+   "q": 3,
+   "why": "The printed code isn't accepted where the console asks for it."
+  },
+  {
+   "step": "F35.12",
+   "task": "T116",
+   "q": 1,
+   "why": "No self check-in for society events."
+  },
+  {
+   "step": "F34.10",
+   "task": "T114",
+   "q": 4,
+   "why": "After cancelling, paid tickets still read Valid."
   }
  ],
  "findings": [
@@ -3282,6 +3465,94 @@
    "principles": "COP,H03",
    "fix": "Optional kind note on decline; confirm both.",
    "same_as": ""
+  },
+  {
+   "id": "R102",
+   "severity": 3,
+   "where": "/events/[id]/check-in",
+   "what": "Typing the 8-character code printed under the ticket's QR is refused ('That isn't a Skilient ticket'); the field only accepts the full signed payload a scanner reads. On phones without BarcodeDetector (iOS Safari) the door falls back to name search only.",
+   "repro": "Type a ticket's printed code into the console.",
+   "tasks": "T115",
+   "principles": "H09,FIT,MOB",
+   "fix": "Accept the printed code (look up the registration by it).",
+   "same_as": ""
+  },
+  {
+   "id": "R103",
+   "severity": 2,
+   "where": "/societies/[slug]/events/new",
+   "what": "Eligibility by department is free text; a typo or 'BSCS' silently excludes the intended students.",
+   "repro": "Restrict an event to 'BSCS'.",
+   "tasks": "T110",
+   "principles": "H05,H06",
+   "fix": "Pick departments from the university's list.",
+   "same_as": ""
+  },
+  {
+   "id": "R104",
+   "severity": 2,
+   "where": "Event stepper",
+   "what": "'Sessions needed to complete' isn't shown in the review and wasn't saved; the refund select choice was saved as 'none'.",
+   "repro": "Set Completed after 2 sessions; set refunds until 2 days.",
+   "tasks": "T110,T111",
+   "principles": "H01,TRU",
+   "fix": "Show both in the review; check they persist.",
+   "same_as": ""
+  },
+  {
+   "id": "R105",
+   "severity": 1,
+   "where": "Event duplicate",
+   "what": "Duplicate keeps the same title and the old dates without marking it a copy.",
+   "repro": "Duplicate a past event.",
+   "tasks": "T111",
+   "principles": "H05",
+   "fix": "Title 'Copy of …' and clear the dates.",
+   "same_as": ""
+  },
+  {
+   "id": "R106",
+   "severity": 1,
+   "where": "/events/[id]/manage messages",
+   "what": "Sending a notice shows no count or confirmation; it only appears in the list.",
+   "repro": "Send a message to registrants.",
+   "tasks": "T113",
+   "principles": "H01",
+   "fix": "'Sent to 3 people.'",
+   "same_as": ""
+  },
+  {
+   "id": "R107",
+   "severity": 3,
+   "where": "/events/[id]/manage",
+   "what": "Cancelling an event with paid registrations takes one tap with no confirmation of consequences, and paid students' tickets still say 'Valid' afterwards.",
+   "repro": "Cancel a paid event; open a paid student's ticket.",
+   "tasks": "T114",
+   "principles": "H05,TRU,H04",
+   "fix": "Confirm with refunds owed; mark tickets Cancelled.",
+   "same_as": ""
+  },
+  {
+   "id": "R108",
+   "severity": 2,
+   "where": "/events/[id]/manage?tab=closeout",
+   "what": "'Issue now' issues every entry at once with no confirmation, and nothing says issued entries can't be edited.",
+   "repro": "Issue entries.",
+   "tasks": "T117",
+   "principles": "H05,H03",
+   "fix": "Confirm with the count and 'entries can't be edited, only corrected'.",
+   "same_as": ""
+  },
+  {
+   "id": "R109",
+   "severity": 1,
+   "where": "/api/events/[id]/export",
+   "what": "The CSV has no UTF-8 BOM and raw ISO timestamps.",
+   "repro": "Export and open in Excel.",
+   "tasks": "T118",
+   "principles": "COP",
+   "fix": "Add a BOM; format dates as '24 Nov 2026, 06:01'.",
+   "same_as": ""
   }
  ],
  "plan_fixes": [
@@ -3396,6 +3667,18 @@
   {
    "tasks": "T104",
    "change": "'This academic year' needs a Sept–June default; tell testers to type the dates."
+  },
+  {
+   "tasks": "T116",
+   "change": "Self check-in exists only for university events; remove T116 from the society sessions or build it."
+  },
+  {
+   "tasks": "T117",
+   "change": "Volunteer hours are capped at the event length; '3 hours' fails on a 2-hour event."
+  },
+  {
+   "tasks": "T115",
+   "change": "Needs a real phone with a camera (BarcodeDetector) for scanning and the colour question."
   }
  ],
  "production_recheck": []

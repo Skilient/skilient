@@ -1,0 +1,37 @@
+import sys; sys.path.insert(0,'scripts/ux-pilot'); from merge import *
+merge(tasks=[
+T("T087","Partly done",["Openings > Events: 4 events open (Figma masterclass, Alumni talk, Hack Day, Intro to Git). 'This week' said 'A quiet week… no upcoming events' at the same time (R91). I'd pick the Git workshop."],["R91"],"",3,2),
+T("T088","Blocked",["Openings > Project ideas: 'Campus bus tracker (UX pilot) · Matches your skills'; Sort: Newest / Deadline soonest / Matches my skills; Explore > Project ideas has skill and university filters.",
+ "The idea page: 'Start a venture from this idea' prefills the form ('Starting from Dr Kamran Faculty's project idea… invited to supervise it').",
+ "Creating it was refused: 'You're doing that too often. Try again later.' (venture creation is rate-limited per day; this tester had made several in S05), with no time given (R46)."],["R46"],"Plan: venture creation has a daily limit; T051/T057/T088 for one tester can hit it.",4,3),
+T("T089","Done",["Debating Society: 'Follow' then 'Ask to join' (By request) → 'Join request sent'; Developers Club 'Join' (Open) → instant, button became 'Leave'; Design Guild says 'Apply in a round'.",
+ "Following, joining and requesting give no message; the buttons just change (R92).",
+ "'1 members' on society cards and pages (R92)."],["R92"],"",5,4),
+T("T090","Done",["Inline form on the round: role select, 'Link one design you made.', 'Send application' → 'Your application · Applied · for Designer'. After the officer's decision: 'Accepted · Loved your onboarding redesign. Welcome!'"],[],"No notification of the acceptance appeared in the bell (R93).",3,3),
+T("T091","Done",["Leave asked through the browser's native confirm ('Leave UX Pilot Developers Club?') (R85); the button became 'Join'.",
+ "Reporting the society post: same sheet as other posts, 'Thanks, we'll review this.'"],["R85"],"",5,4),
+T("T094","Done",["Events > Intro to Git: 'Register' opens the ticket sheet with the two questions; leaving the required one empty: 'Answer \"Have you used Git before?\".'; after: 'Your ticket · 53BD92C1 · Valid · Opened once, this ticket also shows without signal on this device.' and a phone-reminder offer."],[],"Register 2.0 s on the throttled phone.",4,3),
+T("T095","Done",["Captain: 'Create a team (you're the captain; share its code)' + Team name; the event page shows 'Team Null Pointers · code USM9HU · 1 member'. Two helpers chose 'Join a team with its code' → '3 members'."],[],"",6,5),
+T("T096","Done",["Full: 'Seat · Free · full, waitlist open', Register → 'Join the waitlist' → 'Number 1 on the waitlist. If a seat frees up, you're moved in automatically and told.' Other batch: 'For 2027 only.' (no Register). Not open: 'Registration opens 01 Dec · 00:24.' Cancelled: 'Cancelled: The speaker can't travel this week.'",
+ "None suggested other events. The events list shows the cancelled/closed talk as '50 seats left · Free' and the batch-only one as '20 seats left' (R94)."],["R94"],"",6,4),
+T("T097","Partly done",["Reminder: not testable locally (push and email workers); the ticket page offers 'Get reminded on your phone?'.",
+ "Officer scan (played via the product's check-in function): ticket turned to 'Checked in: session at 24 Nov, 05:30'.",
+ "Feedback: 'How was it?' 5 rating buttons + comment; without a rating 'Pick a rating.'; saved (4, comment) but the page showed no thank-you (R95)."],["R95"],"Event times moved on the local DB to stand in for the day.",4,3),
+T("T098","Done",["Ticket page > 'Cancel registration' → browser's native confirm 'Cancel your registration?' → 'Cancelled'. As the team captain, nothing said what happens to my team (R96)."],["R85","R96"],"",2,2),
+T("T099","Done",["'Hold my seat': 'Seat held: pay to confirm… held until 25 Nov, 05:35', reference 'SKL-P45U (put it in the transfer note)', JazzCash number, receipt upload → 'Receipt under review… your seat stays held until they decide.' and 'I paid but nobody has confirmed it'."],[],"",4,4),
+T("T100","Done",["'Receipt not accepted… The receipt wasn't accepted: This image isn't a JazzCash receipt… Upload a new one by 25 Nov, 05:35.' Re-upload → Paid. Cancel → 'Refund requested' → officer: 'Refund sent · Sent back to 03001234567 by JazzCash.' with 'I received it / Not received'."],[],"Reason ends with a double full stop ('…Club..').",6,5),
+],findings=[
+F("R91",2,"/openings/this-week","'A quiet week… no upcoming events' while the Events card lists 4 upcoming events; the page is rebuilt only nightly.","Open This week the day events are published.","T087","H04,EMP","Build it live, or say 'updated nightly' and link to Events."),
+F("R92",1,"/societies/[slug]","Follow, Join and Ask to join give no confirmation; '1 members'.","Follow or join a society.","T089","H01,COP","Toasts ('You joined…'); singular 'member'."),
+F("R93",2,"/notifications","Being accepted in an induction round produced no notification.","Officer accepts an application.","T090","H01","Notify the applicant on every decision."),
+F("R94",2,"/events","The list shows '50 seats left' for an event whose registration is closed (and later cancelled), and '20 seats left' for a batch-only event the student can't join.","Open Events as a 2028 student.","T096","H04,H05","Show 'Registration closed', 'Cancelled', 'For 2027 only' on the card."),
+F("R95",1,"/events/[id] feedback","After sending event feedback the page shows no thank-you or saved state.","Send feedback after an event.","T097","H01","'Thanks: the society sees the totals.'"),
+F("R96",2,"/events/[id]/ticket","A team captain can cancel with a plain browser confirm that says nothing about their team.","Cancel as captain.","T098","H05,COP","Say what happens to the team (members kept, new captain)."),
+],cw=[
+C("F27.02","T087",4,"'This week' says quiet while events are open."),
+C("F28.01","T088",4,"Starting a venture from an idea is refused by a rate limit with no wait time."),
+C("F30.09","T098",4,"The captain isn't told what happens to the team."),
+],plan=[
+P("T088","Use a tester who hasn't created ventures that day (daily create limit)."),
+P("T097","Reminders need the notify worker (staging); the check-in is S11's officer role."),
+])

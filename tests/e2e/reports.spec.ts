@@ -52,7 +52,13 @@ test.describe("Reports and /ops", () => {
     await signInWithPassword(page, reader.email, reader.password);
     await page.goto("/feed");
     const card = page.getByTestId("post").filter({ hasText: `Buy exam leaks ${tag}` });
-    await card.getByRole("button", { name: "More for this post" }).click();
+    // The feed is server-rendered first: a click that lands before React has hydrated does nothing,
+    // so retry it until the menu reports open. The Report item stays hidden until then.
+    const more = card.getByRole("button", { name: "More for this post" });
+    await expect(async () => {
+      await more.click();
+      await expect(more).toHaveAttribute("aria-expanded", "true", { timeout: 2_000 });
+    }).toPass({ timeout: 60_000 });
     await card.getByRole("button", { name: "Report" }).click();
     const dialog = page.getByRole("dialog", { name: "Report this post" });
     await dialog.getByRole("radio", { name: "Spam" }).check();

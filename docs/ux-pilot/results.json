@@ -1768,6 +1768,44 @@
    "shortest": 4
   },
   {
+   "id": "T092",
+   "status": "Done",
+   "answers": [
+    "Yes: a PDF letter or a link to the society on the university site. In real life the faculty advisor's letter.",
+    "The proof step (reading what counts as proof). The whole request took ~9 s and 9 actions.",
+    "'Request sent. Skilient reviews requests within 3 working days. We'll notify you either way.' A second request: 'You already have a request waiting… One request at a time.'"
+   ],
+   "findings": [
+    "R97"
+   ],
+   "note": "Existing name: 'UX Pilot Debating Society is already on Skilient at NUTECH.' under the field and Continue did nothing else. A PDF picked as the optional logo was accepted until after submit: 'Your request is in, but the logo didn't upload' (R97). The name field has no accessible name (R88-type).",
+   "shots": [
+    "docs/ux-pilot/shots/T092-1.png",
+    "docs/ux-pilot/shots/T092-2.png"
+   ],
+   "clicks": 9,
+   "shortest": 7
+  },
+  {
+   "id": "T093",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Skilient needs more information: Please add the link to your society's page… Answer and send it back' with new proof and link fields.",
+    "Yes: the society page shows 'Set up your society' with four steps.",
+    "Rejection (officer-1): 'Not approved · Note from Skilient: We couldn't find this society on NUTECH's list. Ask your advisor for a letter and request again.' Fair."
+   ],
+   "findings": [
+    "R98"
+   ],
+   "note": "No notification arrived for 'more information' or the decision (R98); the status shows on Societies > Your requests.",
+   "shots": [
+    "docs/ux-pilot/shots/T093-1.png",
+    "docs/ux-pilot/shots/T093-2.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
    "id": "T094",
    "status": "Done",
    "answers": [
@@ -1889,6 +1927,115 @@
    ],
    "clicks": 6,
    "shortest": 5
+  },
+  {
+   "id": "T104",
+   "status": "Done",
+   "answers": [
+    "Yes: 'Set up your society' lists logo and cover, officers, how members join, first event, each linking to its section, and ticks them off.",
+    "No: the term dates default to today and a year from today, not the academic year; 'start and end month' are full dates (R99).",
+    "By request; the select describes each mode in one line ('Open: Anyone… joins with one tap', 'By request: … an officer accepts', 'Inductions only'). The trade-off isn't explained."
+   ],
+   "findings": [
+    "R99"
+   ],
+   "note": "Invite needed a title ('Give the role a title.'); the toast after inviting said only 'Saved.'.",
+   "shots": [
+    "docs/ux-pilot/shots/T104-1.png",
+    "docs/ux-pilot/shots/T104-2.png"
+   ],
+   "clicks": 9,
+   "shortest": 7
+  },
+  {
+   "id": "T105",
+   "status": "Done",
+   "answers": [
+    "A 'Post as' select in the composer (Yourself / each society I run).",
+    "I didn't preview; the feed shows '[UX test] Film Society · by Iqra Secretary'."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T105-1.png"
+   ],
+   "clicks": 3,
+   "shortest": 3
+  },
+  {
+   "id": "T106",
+   "status": "Done",
+   "answers": [
+    "Yes: 'A change takes effect only when a second officer confirms it.'",
+    "Yes: 'Waiting for a second officer… Another officer confirms it.' and 'No confirmed account yet. Paid ticket types can't be published until one is confirmed.'",
+    "(Co-officer) The number and title against the society's real JazzCash account; the page shows Confirm / Reject and the proposer."
+   ],
+   "findings": [],
+   "note": "",
+   "shots": [
+    "docs/ux-pilot/shots/T106-1.png",
+    "docs/ux-pilot/shots/T106-2.png"
+   ],
+   "clicks": 4,
+   "shortest": 4
+  },
+  {
+   "id": "T107",
+   "status": "Done",
+   "answers": [
+    "Yes: 'A confirmed term becomes an Office bearer entry on the officer's Record.'",
+    "No: 'Offer the handover' sent it at once, no dialog; only the line 'you stay a member, and your term ends that day' (R100).",
+    "From my Record ('Office bearer: President'); no notification. Only the next President could confirm my term, after I'd lost access."
+   ],
+   "findings": [
+    "R100"
+   ],
+   "note": "Term dates had to be set on the local DB to stand in for the end of term. Ali's ended General Secretary term still shows 'Current'.",
+   "shots": [
+    "docs/ux-pilot/shots/T107-1.png",
+    "docs/ux-pilot/shots/T107-2.png"
+   ],
+   "clicks": 5,
+   "shortest": 4
+  },
+  {
+   "id": "T108",
+   "status": "Done",
+   "answers": [
+    "Roles and seats were clear ('Designer 2/2 open · Writer 1/1 open').",
+    "The round page after saving shows what students see.",
+    "No: nothing says who is told when publishing (followers? members?)."
+   ],
+   "findings": [],
+   "note": "Two months: 'The deadline is within the next 30 days.' under the field. Saved as a draft first, then 'Publish the round' (no confirmation).",
+   "shots": [
+    "docs/ux-pilot/shots/T108-1.png",
+    "docs/ux-pilot/shots/T108-2.png",
+    "docs/ux-pilot/shots/T108-3.png",
+    "docs/ux-pilot/shots/T108-4.png",
+    "docs/ux-pilot/shots/T108-5.png"
+   ],
+   "clicks": 10,
+   "shortest": 9
+  },
+  {
+   "id": "T109",
+   "status": "Partly done",
+   "answers": [
+    "Yes: each application shows name, role, the answer and Shortlist / Accept / Decline.",
+    "No: Decline is instant with no note field, so I couldn't add a kind note (R101); the applicant later sees 'Not this time'.",
+    "It stays 'Applied'; the round says undecided ones are declined 14 days after the deadline."
+   ],
+   "findings": [
+    "R101"
+   ],
+   "note": "Shortlisting gives no visible state once another decision is made.",
+   "shots": [
+    "docs/ux-pilot/shots/T109-1.png",
+    "docs/ux-pilot/shots/T109-2.png"
+   ],
+   "clicks": 4,
+   "shortest": 3
   }
  ],
  "cw": [
@@ -2131,6 +2278,18 @@
    "task": "T098",
    "q": 4,
    "why": "The captain isn't told what happens to the team."
+  },
+  {
+   "step": "F31.10",
+   "task": "T107",
+   "q": 4,
+   "why": "Nothing confirms the handover or what it ends."
+  },
+  {
+   "step": "F33.05",
+   "task": "T109",
+   "q": 2,
+   "why": "No place to write a note when declining."
   }
  ],
  "findings": [
@@ -3068,6 +3227,61 @@
    "principles": "H05,COP",
    "fix": "Say what happens to the team (members kept, new captain).",
    "same_as": ""
+  },
+  {
+   "id": "R97",
+   "severity": 2,
+   "where": "/societies/new",
+   "what": "The optional logo accepts any file and fails only after the request is sent ('the logo didn't upload').",
+   "repro": "Pick a PDF as the logo.",
+   "tasks": "T092",
+   "principles": "H05,H09",
+   "fix": "Check type on choosing.",
+   "same_as": ""
+  },
+  {
+   "id": "R98",
+   "severity": 2,
+   "where": "/notifications",
+   "what": "No notification for 'more information needed', approval or rejection of a society request.",
+   "repro": "Staff decide a request.",
+   "tasks": "T093",
+   "principles": "H01",
+   "fix": "Notify the requester of each decision.",
+   "same_as": ""
+  },
+  {
+   "id": "R99",
+   "severity": 1,
+   "where": "/societies/[slug]/manage officers",
+   "what": "Term dates default to today and one year on, not the academic year.",
+   "repro": "Invite an officer.",
+   "tasks": "T104",
+   "principles": "H06",
+   "fix": "Default to the university's academic year (Sept–June).",
+   "same_as": ""
+  },
+  {
+   "id": "R100",
+   "severity": 2,
+   "where": "/societies/[slug]/manage handover",
+   "what": "Offering the presidency hands it over (once accepted) with no confirmation; the outgoing president loses the manage page and can't confirm their own term.",
+   "repro": "Offer the handover.",
+   "tasks": "T107",
+   "principles": "H05,H03",
+   "fix": "Confirm with what you lose; confirm your officers' terms first.",
+   "same_as": ""
+  },
+  {
+   "id": "R101",
+   "severity": 2,
+   "where": "/societies/[slug]/inductions/[id]",
+   "what": "Decline is instant with no note; Accept has no confirm; the shortlist state isn't kept visible.",
+   "repro": "Decline an applicant.",
+   "tasks": "T109",
+   "principles": "COP,H03",
+   "fix": "Optional kind note on decline; confirm both.",
+   "same_as": ""
   }
  ],
  "plan_fixes": [
@@ -3174,6 +3388,14 @@
   {
    "tasks": "T097",
    "change": "Reminders need the notify worker (staging); the check-in is S11's officer role."
+  },
+  {
+   "tasks": "T107",
+   "change": "'Confirm your officers' terms, then hand over' isn't possible in that order: terms end at handover and the next President confirms them; reword."
+  },
+  {
+   "tasks": "T104",
+   "change": "'This academic year' needs a Sept–June default; tell testers to type the dates."
   }
  ],
  "production_recheck": []

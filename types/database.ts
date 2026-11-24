@@ -3033,14 +3033,14 @@ isOneToOne: false
                   ]
                 },"profiles": {
                   Row: {
-                    "availability": (string)[],"avatar_path": string | null,"bio": string | null,"campus": string | null,"chat_read_receipts": boolean,"city": string | null,"cover_path": string | null,"created_at": string,"delete_after": string | null,"department": string | null,"department_id": string | null,"full_name": string,"graduated_at": string | null,"graduation_year": number | null,"leaderboard_opt_out": boolean,"looking_for": (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete": boolean,"programme": string | null,"recruiter_visible": boolean,"remote_ok": boolean,"role": Database["public"]['Enums']["account_role"],"status": Database["public"]['Enums']["account_status"],"university_id": string | null,"updated_at": string,"user_id": string,"username": string | null,"visibility": Database["public"]['Enums']["profile_visibility"],"yearbook_superlatives_opt_out": boolean
+                    "availability": (string)[],"avatar_path": string | null,"bio": string | null,"campus": string | null,"chat_read_receipts": boolean,"city": string | null,"cover_path": string | null,"created_at": string,"delete_after": string | null,"department": string | null,"department_id": string | null,"full_name": string,"graduated_at": string | null,"graduation_year": number | null,"leaderboard_opt_out": boolean,"looking_for": (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete": boolean,"programme": string | null,"recruiter_visible": boolean,"remote_ok": boolean,"role": Database["public"]['Enums']["account_role"],"status": Database["public"]['Enums']["account_status"],"university_id": string | null,"updated_at": string,"user_id": string,"username": string | null,"visibility": Database["public"]['Enums']["profile_visibility"]
                   }
                   ComputedFields: never
                   Insert: {
-                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name": string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id": string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"],"yearbook_superlatives_opt_out"?: boolean
+                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name": string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id": string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"]
                   }
                   Update: {
-                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name"?: string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id"?: string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"],"yearbook_superlatives_opt_out"?: boolean
+                    "availability"?: (string)[],"avatar_path"?: string | null,"bio"?: string | null,"campus"?: string | null,"chat_read_receipts"?: boolean,"city"?: string | null,"cover_path"?: string | null,"created_at"?: string,"delete_after"?: string | null,"department"?: string | null,"department_id"?: string | null,"full_name"?: string,"graduated_at"?: string | null,"graduation_year"?: number | null,"leaderboard_opt_out"?: boolean,"looking_for"?: (Database["public"]['Enums']["looking_for_option"])[],"onboarding_complete"?: boolean,"programme"?: string | null,"recruiter_visible"?: boolean,"remote_ok"?: boolean,"role"?: Database["public"]['Enums']["account_role"],"status"?: Database["public"]['Enums']["account_status"],"university_id"?: string | null,"updated_at"?: string,"user_id"?: string,"username"?: string | null,"visibility"?: Database["public"]['Enums']["profile_visibility"]
                   }
                   Relationships: [
                     {
@@ -5005,106 +5005,6 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
-                },"yearbook_awards": {
-                  Row: {
-                    "declined_at": string | null,"status": string,"title": string,"title_key": string,"told_at": string,"winner_id": string,"yearbook_id": string
-                  }
-                  ComputedFields: never
-                  Insert: {
-                    "declined_at"?: string | null,"status"?: string,"title": string,"title_key": string,"told_at"?: string,"winner_id": string,"yearbook_id": string
-                  }
-                  Update: {
-                    "declined_at"?: string | null,"status"?: string,"title"?: string,"title_key"?: string,"told_at"?: string,"winner_id"?: string,"yearbook_id"?: string
-                  }
-                  Relationships: [
-                    {
-      foreignKeyName: "yearbook_awards_yearbook_id_fkey"
-      columns: ["yearbook_id"]
-isOneToOne: false
-      referencedRelation: "yearbooks"
-      referencedColumns: ["id"]
-    }
-                  ]
-                },"yearbook_notes": {
-                  Row: {
-                    "approved_at": string | null,"body": string,"created_at": string,"hidden_at": string | null,"id": string,"page_id": string,"removed_at": string | null,"removed_by": string | null,"updated_at": string,"writer_id": string
-                  }
-                  ComputedFields: never
-                  Insert: {
-                    "approved_at"?: string | null,"body": string,"created_at"?: string,"hidden_at"?: string | null,"id"?: string,"page_id": string,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"writer_id": string
-                  }
-                  Update: {
-                    "approved_at"?: string | null,"body"?: string,"created_at"?: string,"hidden_at"?: string | null,"id"?: string,"page_id"?: string,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"writer_id"?: string
-                  }
-                  Relationships: [
-                    {
-      foreignKeyName: "yearbook_notes_page_id_fkey"
-      columns: ["page_id"]
-isOneToOne: false
-      referencedRelation: "yearbook_pages"
-      referencedColumns: ["id"]
-    }
-                  ]
-                },"yearbook_pages": {
-                  Row: {
-                    "created_at": string,"department": string | null,"highlights": (string)[],"id": string,"photo_path": string | null,"quote": string | null,"removed_at": string | null,"removed_by": string | null,"updated_at": string,"user_id": string,"visible": boolean,"yearbook_id": string
-                  }
-                  ComputedFields: never
-                  Insert: {
-                    "created_at"?: string,"department"?: string | null,"highlights"?: (string)[],"id"?: string,"photo_path"?: string | null,"quote"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"user_id": string,"visible"?: boolean,"yearbook_id": string
-                  }
-                  Update: {
-                    "created_at"?: string,"department"?: string | null,"highlights"?: (string)[],"id"?: string,"photo_path"?: string | null,"quote"?: string | null,"removed_at"?: string | null,"removed_by"?: string | null,"updated_at"?: string,"user_id"?: string,"visible"?: boolean,"yearbook_id"?: string
-                  }
-                  Relationships: [
-                    {
-      foreignKeyName: "yearbook_pages_yearbook_id_fkey"
-      columns: ["yearbook_id"]
-isOneToOne: false
-      referencedRelation: "yearbooks"
-      referencedColumns: ["id"]
-    }
-                  ]
-                },"yearbook_votes": {
-                  Row: {
-                    "nominee_id": string,"title_key": string,"updated_at": string,"voter_id": string,"yearbook_id": string
-                  }
-                  ComputedFields: never
-                  Insert: {
-                    "nominee_id": string,"title_key": string,"updated_at"?: string,"voter_id": string,"yearbook_id": string
-                  }
-                  Update: {
-                    "nominee_id"?: string,"title_key"?: string,"updated_at"?: string,"voter_id"?: string,"yearbook_id"?: string
-                  }
-                  Relationships: [
-                    {
-      foreignKeyName: "yearbook_votes_yearbook_id_fkey"
-      columns: ["yearbook_id"]
-isOneToOne: false
-      referencedRelation: "yearbooks"
-      referencedColumns: ["id"]
-    }
-                  ]
-                },"yearbooks": {
-                  Row: {
-                    "batch": number,"created_at": string,"freezes_at": string,"frozen_at": string | null,"id": string,"opens_at": string,"reveal_at": string,"revealed_at": string | null,"university_id": string,"vote_closes_at": string,"vote_opens_at": string,"winners_told_at": string | null
-                  }
-                  ComputedFields: never
-                  Insert: {
-                    "batch": number,"created_at"?: string,"freezes_at": string,"frozen_at"?: string | null,"id"?: string,"opens_at": string,"reveal_at": string,"revealed_at"?: string | null,"university_id": string,"vote_closes_at": string,"vote_opens_at": string,"winners_told_at"?: string | null
-                  }
-                  Update: {
-                    "batch"?: number,"created_at"?: string,"freezes_at"?: string,"frozen_at"?: string | null,"id"?: string,"opens_at"?: string,"reveal_at"?: string,"revealed_at"?: string | null,"university_id"?: string,"vote_closes_at"?: string,"vote_opens_at"?: string,"winners_told_at"?: string | null
-                  }
-                  Relationships: [
-                    {
-      foreignKeyName: "yearbooks_university_id_fkey"
-      columns: ["university_id"]
-isOneToOne: false
-      referencedRelation: "universities"
-      referencedColumns: ["id"]
-    }
-                  ]
                 }
           }
           Views: {
@@ -5278,9 +5178,6 @@ isOneToOne: false
                            },
 "cancel_swap_session":
 { Args: { "p_session": string }; Returns: undefined
-                           },
-"cast_yearbook_vote":
-{ Args: { "p_title": string,"p_username": string }; Returns: undefined
                            },
 "check_in_email":
 { Args: { "p_email": string,"p_event": string,"p_session": string }; Returns: Json
@@ -5494,17 +5391,11 @@ isOneToOne: false
 "decide_uni_domain":
 { Args: { "p_approve": boolean,"p_id": string,"p_reason": string }; Returns: undefined
                            },
-"decide_yearbook_note":
-{ Args: { "p_approve": boolean,"p_note": string }; Returns: undefined
-                           },
 "decline_record_mistake":
 { Args: { "p_correction": string,"p_note": string }; Returns: undefined
                            },
 "decline_task_review":
 { Args: { "p_review": string }; Returns: undefined
-                           },
-"decline_yearbook_award":
-{ Args: { "p_title": string }; Returns: undefined
                            },
 "delete_comment":
 { Args: { "p_comment": string }; Returns: undefined
@@ -6745,9 +6636,6 @@ isOneToOne: false
 "save_venture_role":
 { Args: { "p_role"?: string,"p_skill_ids": (string)[],"p_slots": number,"p_title": string,"p_venture": string }; Returns: string
                            },
-"save_yearbook_page":
-{ Args: { "p_clear_photo"?: boolean,"p_highlights": (string)[],"p_photo"?: string,"p_quote": string,"p_visible": boolean }; Returns: undefined
-                           },
 "saved_searches_list":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
@@ -6837,9 +6725,6 @@ isOneToOne: false
 "set_society_images":
 { Args: { "p_cover": string,"p_logo": string,"p_society": string }; Returns: undefined
                            },
-"set_superlatives_opt_out":
-{ Args: { "p_on": boolean }; Returns: undefined
-                           },
 "set_ui_state":
 { Args: { "p_key": string,"p_value": Json }; Returns: undefined
                            },
@@ -6860,9 +6745,6 @@ isOneToOne: false
                            },
 "shortlists_list":
 { Args: Record<PropertyKey, never>; Returns: Json
-                           },
-"sign_yearbook":
-{ Args: { "p_body": string,"p_username": string }; Returns: string
                            },
 "signin_failed":
 { Args: { "p_email": string,"p_ip_hash": string }; Returns: Json
@@ -7273,21 +7155,6 @@ isOneToOne: false
                            },
 "withdraw_job_application":
 { Args: { "p_id": string }; Returns: undefined
-                           },
-"yearbook_ballot":
-{ Args: Record<PropertyKey, never>; Returns: Json
-                           },
-"yearbook_home":
-{ Args: { "p_q"?: string }; Returns: Json
-                           },
-"yearbook_me":
-{ Args: Record<PropertyKey, never>; Returns: Json
-                           },
-"yearbook_nominees":
-{ Args: { "p_q"?: string }; Returns: Json
-                           },
-"yearbook_page":
-{ Args: { "p_username": string }; Returns: Json
                            }
           }
           Enums: {

@@ -14,7 +14,7 @@ export function TipCard({ tipId }: { tipId: TipId }) {
   const [pending, startTransition] = useTransition();
   if (gone) return null;
   return (
-    <aside aria-label={tip.title} className="flex flex-col gap-2 rounded-lg border border-border-default bg-accent-subtle p-4" data-testid={`tip-${tipId}`}>
+    <aside aria-label={tip.title} className="flex flex-col gap-2 rounded-lg border border-border-default bg-accent-subtle p-4" data-testid={`tip-${tipId}`} data-tip-card>
       <div className="flex items-start gap-3">
         <Lightbulb aria-hidden weight="bold" className="mt-0.5 size-5 shrink-0 text-accent" />
         <div className="min-w-0 flex-1">

@@ -48,6 +48,9 @@ Ids (the user uuid, university id), enums, counts and booleans. Never names, ema
 | `uni_not_live` | It recognised a university that isn't live, or an unknown domain | `source`, `known` |
 | `uni_requested` | "Request your university" sent | `known` |
 | `org_cta_click` | A call to action on an organisation page | `cta`, `page` |
+| `welcome_viewed` | The welcome screen after onboarding was shown | `replay` (opened again from Settings) |
+| `welcome_tour_started` | "Start the tour" on the welcome screen | `replay` |
+| `welcome_skipped` | "Skip to Home" on the welcome screen (the tour is recorded as skipped) | none |
 
 ### Server (outbox)
 

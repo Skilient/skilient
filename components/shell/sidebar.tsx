@@ -10,7 +10,7 @@ import { BadgePill } from "@/components/shell/badge-pill";
 import { useNavBadges } from "@/components/shell/nav-badges";
 import { Avatar, Tooltip } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { activeLevel, currentPlace, isActive, PRIMARY_NAV, SECONDARY_NAV, type NavItem } from "@/lib/nav";
+import { activeLevel, currentPlace, isActive, levelGroups, PRIMARY_NAV, SECONDARY_NAV, type NavItem, type NavLevel } from "@/lib/nav";
 
 /** One place on the rail: raised at rest, pressed in when you are there (with a filled icon and a label change). */
 function RailLink({ item, pathname }: { item: NavItem; pathname: string }) {
@@ -41,6 +41,43 @@ function RailLink({ item, pathname }: { item: NavItem; pathname: string }) {
         </Link>
       </Tooltip>
     </li>
+  );
+}
+
+/** One group of levels under its heading (or a bare list when the place has no groups). */
+function LevelGroup({ id, heading, levels, active }: { id: string; heading: string | null; levels: NavLevel[]; active: NavLevel | null }) {
+  const badges = useNavBadges();
+  return (
+    <div className="flex flex-col gap-1">
+      {heading ? (
+        <p id={id} className="px-3 pt-1 text-label text-text-secondary uppercase">
+          {heading}
+        </p>
+      ) : null}
+      <ul aria-labelledby={heading ? id : undefined} className="flex flex-col gap-0.5">
+        {levels.map((l) => {
+          const on = l === active;
+          const count = l.badge ? badges[l.badge] : 0;
+          return (
+            <li key={l.href + l.label}>
+              <Link
+                href={l.href as Route}
+                aria-current={on ? "page" : undefined}
+                className={cn(
+                  // Short laptop screens get tighter rows, so Me's ten levels fit without scrolling the panel.
+                  "flex min-h-10 items-center gap-2 rounded-[12px] px-3 text-body-sm font-semibold transition-shadow duration-[140ms] ease-out [@media(max-height:880px)]:min-h-8",
+                  on ? "bg-bg-surface text-text-primary shadow-[var(--pressed-s)]" : "text-text-secondary hover:text-text-primary hover:shadow-[var(--raised-s)]",
+                )}
+              >
+                {on ? <span aria-hidden className="h-4 w-1 shrink-0 rounded-full bg-primary" /> : null}
+                <span className="min-w-0 flex-1 truncate">{l.label}</span>
+                <BadgePill count={count} srSuffix={l.badge === "chat" ? "unread" : l.badge === "openings" ? "new" : "waiting"} />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 
@@ -77,37 +114,23 @@ export function Sidebar() {
           </ul>
         </nav>
       </div>
-      <div className="hidden w-[208px] flex-col gap-4 px-4 py-5 lg:flex" data-testid="sidebar-levels">
+      <div className="hidden w-[208px] flex-col gap-4 px-3 py-4 lg:flex" data-testid="sidebar-levels">
         {place ? (
-          <>
-            <p className="px-2 text-h4 text-text-primary">{place.label}</p>
+          // One panel for the place you are in: its name, what it is for, then its levels under
+          // headings (2026-11-15: a bare list beside the rail read as stranded).
+          <div className="neu-flat flex min-h-0 flex-col gap-3 overflow-y-auto p-3" data-tour="sidebar-levels">
+            <div className="flex flex-col gap-1 px-2 pt-1">
+              <p className="text-h4 text-text-primary">{place.label}</p>
+              <p className="text-caption text-text-secondary">{place.description}</p>
+            </div>
             {place.levels?.length ? (
-              <nav aria-label={`${place.label} sections`}>
-                <ul className="flex flex-col gap-1">
-                  {place.levels.map((l) => {
-                    const on = l === level;
-                    return (
-                      <li key={l.href + l.label}>
-                        <Link
-                          href={l.href as Route}
-                          aria-current={on ? "page" : undefined}
-                          className={cn(
-                            "flex min-h-11 items-center rounded-[12px] px-3 text-body font-semibold transition-shadow duration-[140ms] ease-out",
-                            on ? "bg-bg-surface text-text-primary shadow-[var(--pressed-s)]" : "text-text-secondary hover:text-text-primary hover:shadow-[var(--raised-s)]",
-                          )}
-                        >
-                          {on ? <span aria-hidden className="mr-2 h-4 w-1 rounded-full bg-primary" /> : null}
-                          {l.label}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
+              <nav aria-label={`${place.label} sections`} className="flex flex-col gap-3 [@media(max-height:880px)]:gap-1.5">
+                {levelGroups(place).map((group, i) => (
+                  <LevelGroup key={group.heading ?? i} id={`levels-${place.key}-${i}`} heading={group.heading} levels={group.levels} active={level} />
+                ))}
               </nav>
-            ) : (
-              <p className="px-2 text-body-sm text-text-secondary">{place.description}</p>
-            )}
-          </>
+            ) : null}
+          </div>
         ) : null}
         {user ? (
           <div className="mt-auto flex flex-col gap-1">

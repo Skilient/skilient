@@ -659,18 +659,6 @@ export function describeNotification(n: NotificationInput): NotificationText {
         href: `/societies/${str(n.data.slug) ?? ""}/manage/payments`,
         subject: n.data.accepted ? "Payment details changed" : "Payment details change rejected",
       };
-    case "yearbook_open":
-      return { text: `Your yearbook is open: the batch of ${n.data.batch ?? "your year"} can sign each other's pages now.`, href: "/yearbook", subject: "Your yearbook is open" };
-    case "yearbook_note":
-      return { text: `${who} signed your yearbook. Approve the note to show it to your batch.`, href: "/yearbook/me", subject: `${who} signed your yearbook` };
-    case "yearbook_vote_open":
-      return { text: "The superlative vote is open: one secret vote per title, for someone in your department.", href: "/yearbook/vote", subject: "Vote your batch's superlatives" };
-    case "yearbook_award":
-      return {
-        text: `Your batch voted you "${str(n.data.title) ?? "a superlative"}". Only you know until the reveal; you can decline it before then.`,
-        href: "/yearbook/me",
-        subject: "Your batch voted you a superlative",
-      };
     default:
       return { text: "You have a new notification.", href: "/notifications", subject: "New activity on Skilient" };
   }

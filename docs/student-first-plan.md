@@ -13,7 +13,7 @@ Skilient becomes **the portal a student can't do university without**: "if a uni
 | **The Record** (headline) | 5.30 | A signed, verifiable co-curricular transcript. Verified societies and Skilient issue entries, only through Skilient, so receiving one needs an account. Merit entries move rank slightly (formula v2) |
 | Societies and society events | 5.31 | Society pages, officers, inductions; events with stepper creation, form builder, free and paid ticket types (paid directly to the society; the student uploads the receipt and an officer confirms it), waitlist, teams, signed tickets, scanner check-in, close-out that issues Record entries. Students can't create events |
 | Paths, proof tasks, skill swap | 5.32 | "What do I even learn?": skills in the order seniors proved them, a task per next skill that becomes evidence, and learner-confirmed teaching that lands on the teacher's Record |
-| Digital yearbook | 5.33 | Final year: notes the owner approves, kind superlatives with secret votes, frozen at graduation |
+| ~~Digital yearbook~~ | ~~5.33~~ | Removed 2026-11-23, see decisions.md |
 | Openings, share-to-chat, people you may know, push | 5.34 | One page of category cards with the latest opening on each; share a post into a DM or venture chat; suggestions with reasons; an installable app with web push |
 
 ## The loop: one semester with Ali
@@ -25,7 +25,7 @@ Skilient becomes **the portal a student can't do university without**: "if a uni
 5. For React he asks a senior through a skill swap. After 3 confirmed sessions, the senior's Record shows "Taught React · 4.5 h".
 6. He shares an informative post into his venture chat.
 7. The next year he's Design Lead, and his check-ins issue other people's entries.
-8. In final year he signs batch-mates' yearbook pages and attaches his Record transcript to a scholarship application.
+8. In final year he attaches his Record transcript to a scholarship application. (~~He signs batch-mates' yearbook pages~~: the yearbook was removed 2026-11-23.)
 
 Every step starts with someone else's action that needs an account to receive.
 
@@ -59,7 +59,7 @@ The app adopts the neumorphism brief from the marketing branch (`claude/wonderfu
 
 1. **Root tokens.** The branch's contrast-checked `.neu` token block (light #E6E1D8, dark #2A2723) moves into `app/styles/tokens.css` with the PRD 9 semantic names re-pointed, so every existing component follows. The component classes (`neu-card`, `neu-btn`, `neu-well`, `neu-tile`, tier finishes) move to a shared `app/styles/neu.css`.
 2. **App density.** Radii 24/20/14 (marketing uses 32/24/16); mostly `raised-s`/`raised-m`; `raised-l` only for sheets and dialogs; smaller shadows on phones; `content-visibility: auto` on long lists, because doubled blurred shadows are a paint cost on a mid-range Android.
-3. **Fonts.** Space Grotesk replaces Barlow app-wide; the CV keeps Barlow; Spectral only for belief moments (tier-up, the Record and certificates, the yearbook); JetBrains Mono for proof.
+3. **Fonts.** Space Grotesk replaces Barlow app-wide; the CV keeps Barlow; Spectral only for belief moments (tier-up, the Record and certificates; ~~the yearbook~~, removed 2026-11-23); JetBrains Mono for proof.
 4. **Primitives** (`components/ui/`), rebuilt to the brief and the Figma moodboard:
    - Button with a timed variant; Field with four states; Tabs as an inset track; Switch; Checkbox
    - Avatar with tier ring and seal; TierBadge and Seal (from `components/marketing/neu.tsx`); SkillChip; status tag
@@ -69,10 +69,10 @@ The app adopts the neumorphism brief from the marketing branch (`claude/wonderfu
    - Desktop: a two-tier sidebar (a raised rail of places plus the levels inside).
    - Header: search well, ⌘K, notifications, avatar.
    - Phone dock: **Home · Openings · Ventures · Chat · Me**. Me holds Record, Paths, Tickets, Skills, CV and Score.
-   - Secondary: Societies, Events, Yearbook (final year), Explore, Leaderboard, Friends, Notifications.
+   - Secondary: Societies, Events, ~~Yearbook (final year)~~ (removed 2026-11-23), Explore, Leaderboard, Friends, Notifications.
 6. **3D objects at earned moments only** (never in navigation):
    - existing renders: medallions, seal, ticket, tray, bulb, envelope, campus, chai
-   - new renders from `scripts/renders/objects.py`: a society banner, a check-in stamp, a ledger book, a yearbook
+   - new renders from `scripts/renders/objects.py`: a society banner, a check-in stamp, a ledger book, ~~a yearbook~~ (removed 2026-11-23)
    - AVIF/WebP, 30 KB or less on phones
 7. **Post card.** Name first; the survey strip in a well; Comment and Share visible; Not for me, Mute and Report move into a `⋯` menu.
 8. **Ops** keeps its dense PRD 9 look by wrapping its layout in `.classic`.
@@ -88,7 +88,7 @@ Five build phases, **each built in one go: one session and one PR per phase, no 
 | 15 Societies and events | Societies · Events, registration, tickets · Check-in, close-out, export · Paid tickets (receipt upload and review) |
 | 16 The Record | Entries, signing, verify, issuing, formula v2 · `/me/record`, PDFs, share, CV, claim by email, corrections · Landing story update |
 | 17 Growth | Paths and proof tasks · Skill swap |
-| 18 Community | Openings · Yearbook · Share-to-chat, people you may know, PWA and push |
+| 18 Community | Openings · ~~Yearbook~~ (removed 2026-11-23) · Share-to-chat, people you may know, PWA and push |
 | 13 (rest) | Load test, design gates on the new design, launch gate |
 
 **Checklist for every new table or feature:**

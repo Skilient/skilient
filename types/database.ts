@@ -5010,7 +5010,7 @@ isOneToOne: false
           Views: {
             "contributions_with_status": {
                   Row: {
-                    "ai_agent": string | null,"before_venture": boolean | null,"by_member": boolean | null,"commit_sha": string | null,"confirmations": number | null,"confirmed_by_me": boolean | null,"corrected_at": string | null,"created_at": string | null,"current_id": string | null,"description": string | null,"evidence_url": string | null,"faculty_confirmed": boolean | null,"hours": number | null,"id": string | null,"kind": Database["public"]['Enums']["contribution_kind"] | null,"peer_verified": boolean | null,"skill_ids": (string)[] | null,"source": Database["public"]['Enums']["contribution_source"] | null,"user_id": string | null,"venture_id": string | null
+                    "ai_agent": string | null,"before_venture": boolean,"by_member": boolean | null,"commit_sha": string | null,"confirmations": number | null,"confirmed_by_me": boolean | null,"corrected_at": string | null,"created_at": string,"current_id": string,"description": string,"evidence_url": string | null,"faculty_confirmed": boolean | null,"hours": number | null,"id": string,"kind": Database["public"]['Enums']["contribution_kind"],"peer_verified": boolean | null,"skill_ids": (string)[],"source": Database["public"]['Enums']["contribution_source"],"user_id": string,"venture_id": string
                   }
                   ComputedFields: never
                   Relationships: [

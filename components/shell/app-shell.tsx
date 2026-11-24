@@ -19,6 +19,8 @@ import { TourHost, type TourInitial } from "@/components/tour/tour-host";
 export function AppShell({ children, tour }: { children: ReactNode; tour: TourInitial }) {
   const user = useCurrentUser();
   const pathname = usePathname();
+  // The welcome screen owns the whole window: no shell, no header (2026-11-15).
+  if (pathname === "/onboarding/done") return <>{children}</>;
   const focused =
     (pathname.startsWith("/onboarding") && pathname !== "/onboarding/done") || pathname === "/agreement" || pathname === "/ops" || pathname.startsWith("/ops/");
   if (!user || focused || user.status === "deleting" || user.role !== "student" || !user.onboardingComplete) {

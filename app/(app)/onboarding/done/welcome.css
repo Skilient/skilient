@@ -1,0 +1,278 @@
+/*
+ * Welcome to Skilient (2026-11-15): the one screen that plays like a short film. Clouds cover the
+ * screen, part, and the mark, the title and what to expect arrive in turn; then everything rests.
+ *
+ * It is a CSS timeline on purpose: it runs from the first paint (no flash before hydration, and it
+ * works without JavaScript), animates only transform, opacity, clip-path and stroke-dashoffset, and
+ * uses no filters (the clouds' soft edges are gradients), so it stays smooth on a cheap phone. Nothing loops. `data-skip` on the root
+ * (Skip intro, a key, a tap, or a return visit) jumps every animation to its end state, and so does
+ * prefers-reduced-motion. The brief's "no decorative motion" has this one exception, like the
+ * tier-up's moment of light (docs/decisions.md).
+ */
+.welcome {
+  --w-ink: #0e0d0b;
+  --w-red: #c03910;
+  /* Morning: clouds a little brighter than the paper behind them, nearest brightest. */
+  --w-sky: var(--surface);
+  --w-far: color-mix(in srgb, var(--surface-hi) 60%, var(--surface));
+  --w-mid: var(--surface-hi);
+  --w-near: color-mix(in srgb, var(--surface-hi) 45%, white);
+  --w-lit: rgb(255 255 255 / 0.7);
+  --w-shade: rgb(96 74 48 / 0.1);
+  --w-glow: color-mix(in srgb, var(--signal-tint) 75%, transparent);
+  --w-out: cubic-bezier(0, 0, 0.2, 1);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--w-sky);
+}
+.dark .welcome {
+  --w-ink: #e7e7e3;
+  --w-red: #e04020;
+  /* Night: a darker sky, clouds lit as if by a low moon. */
+  --w-sky: color-mix(in srgb, var(--surface-lo) 62%, black);
+  --w-far: color-mix(in srgb, var(--surface-hi) 94%, white);
+  --w-mid: color-mix(in srgb, var(--surface-hi) 86%, white);
+  --w-near: color-mix(in srgb, var(--surface-hi) 74%, white);
+  --w-lit: rgb(255 244 230 / 0.12);
+  --w-shade: rgb(0 0 0 / 0.16);
+  --w-glow: color-mix(in srgb, var(--signal) 38%, transparent);
+}
+
+/* --- The sky: a warm light behind the gap, then the cloud banks in front of it ---------------- */
+.welcome-sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.welcome-glow {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  width: min(120vw, 1100px);
+  aspect-ratio: 1;
+  background: radial-gradient(closest-side, var(--w-glow), transparent);
+  opacity: 0.55;
+  transform: translate(-50%, -50%);
+  animation: w-glow 2.2s var(--w-out) 0.7s both;
+}
+@keyframes w-glow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.35);
+  }
+  60% {
+    opacity: 1;
+  }
+}
+
+/* Each side holds three banks; the right side is the left one mirrored (with its own shapes). */
+.welcome-side {
+  position: absolute;
+  inset: 0;
+}
+.welcome-side-right {
+  transform: scaleX(-1);
+}
+.welcome-bank {
+  /* Wide enough that the two sides overlap in the middle on any screen, tall or wide. */
+  --w: max(64vw, 72vh);
+  /* Where a bank rests: its inner edge `--peek` in from the screen's edge (negative: off screen).
+     0.93 of the width is where the puffs end; 6vw is the bank's own offset to the left. */
+  --x: calc(var(--peek) + 6vw - 0.93 * var(--w));
+  position: absolute;
+  top: -15vh;
+  left: -6vw;
+  width: var(--w);
+  height: 130vh;
+  transform: translate3d(var(--x), var(--y, 0), 0) scale(var(--s, 1));
+  transform-origin: 0 50%;
+  animation: w-part var(--t, 2.4s) cubic-bezier(0.3, 0, 0.15, 1) 0.2s both;
+  will-change: transform;
+}
+/* Far banks move least and stay in view at the edges; near ones leave the screen. */
+.welcome-bank-far {
+  --peek: 13vw;
+  --s: 1.1;
+  --t: 2.6s;
+  color: var(--w-far);
+}
+.welcome-bank-mid {
+  --peek: 3vw;
+  --y: 3vh;
+  --s: 1.05;
+  --t: 2.4s;
+  color: var(--w-mid);
+}
+.welcome-bank-near {
+  --peek: -12vw;
+  --y: -4vh;
+  --t: 2.2s;
+  color: var(--w-near);
+}
+@media (max-width: 640px) {
+  /* A phone is narrow: the clouds keep clear of the words. */
+  .welcome-bank-far {
+    --peek: 4vw;
+  }
+  .welcome-bank-mid {
+    --peek: -6vw;
+  }
+  .welcome-bank-near {
+    --peek: -20vw;
+  }
+}
+/* A slow drift while the screen is covered, then the parting. */
+@keyframes w-part {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  28% {
+    transform: translate3d(calc(var(--x) * 0.035), 0, 0) scale(1);
+  }
+}
+/* "Start the tour": the clouds close again before Home opens. */
+.welcome[data-closing] .welcome-bank {
+  animation: w-close 0.45s cubic-bezier(0.4, 0, 1, 1) both;
+}
+@keyframes w-close {
+  to {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+.welcome[data-closing] .welcome-stage,
+.welcome[data-closing] .welcome-skip {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+
+/* --- The stage: everything the student reads, revealed in order ------------------------------ */
+.welcome-stage {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 4.5rem var(--page-gutter) 2.5rem;
+  text-align: center;
+}
+.welcome [data-in] {
+  animation: w-rise 0.7s var(--w-out) var(--d, 0s) both;
+}
+@keyframes w-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* The mark assembles: the centre lands, the nodes follow, the links draw. */
+.welcome-mark {
+  width: clamp(64px, 11vh, 96px);
+  height: auto;
+  overflow: visible;
+}
+.welcome-mark [data-pop] {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: w-pop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) var(--d) both;
+}
+@keyframes w-pop {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+.welcome-mark [data-draw] {
+  stroke-dasharray: 1;
+  animation: w-draw 0.7s var(--w-out) var(--d) both;
+}
+@keyframes w-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+/* One pulse of the centre once it is whole: the moment of light. */
+.welcome-mark [data-pulse] {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation:
+    w-pop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) var(--d) both,
+    w-pulse 0.7s ease-out 3.05s 1 both;
+}
+@keyframes w-pulse {
+  40% {
+    transform: scale(1.28);
+  }
+}
+
+/* The wordmark wipes in from the left. */
+.welcome-wordmark {
+  display: block;
+  width: min(78vw, 400px);
+  animation: w-wipe 0.8s var(--w-out) var(--d) both;
+}
+@keyframes w-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* The button rises from flat to raised as it arrives. */
+.welcome-cta {
+  animation:
+    w-rise 0.6s var(--w-out) var(--d) both,
+    w-lift 0.6s var(--w-out) var(--d) both;
+}
+@keyframes w-lift {
+  from {
+    box-shadow: none;
+  }
+}
+
+.welcome-skip {
+  position: absolute;
+  top: 1rem;
+  right: var(--page-gutter);
+  z-index: 1;
+}
+/* Once the film is over there is nothing to skip. */
+.welcome[data-skip] .welcome-skip,
+.welcome[data-done] .welcome-skip {
+  display: none;
+}
+
+/* --- Skipped, seen before, or less motion: straight to the end state ------------------------- */
+.welcome[data-skip] *,
+.welcome[data-skip] *::before {
+  animation-delay: 0s !important;
+  animation-duration: 1ms !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .welcome *,
+  .welcome *::before {
+    animation-delay: 0s !important;
+    animation-duration: 1ms !important;
+    transition: none !important;
+  }
+  .welcome-stage {
+    animation: w-fade 0.3s linear both !important;
+  }
+  .welcome-skip {
+    display: none;
+  }
+}
+@keyframes w-fade {
+  from {
+    opacity: 0;
+  }
+}

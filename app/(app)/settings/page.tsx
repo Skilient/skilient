@@ -1,4 +1,4 @@
-import { Bell, CaretRight, Certificate, ChatsCircle, CreditCard, EyeSlash, FileText, GithubLogo, Lock, Scales, ShieldCheck, Trash, UserCircle } from "@phosphor-icons/react/dist/ssr";
+import { Bell, CaretRight, Certificate, CloudSun, ChatsCircle, CreditCard, EyeSlash, FileText, GithubLogo, Lock, Scales, ShieldCheck, Trash, UserCircle } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { ReplayTourButton } from "@/components/learn/replay-tour-button";
@@ -51,6 +51,18 @@ export default async function SettingsPage() {
             <ReplayTourButton />
           </li>
         )}
+        {user?.role === "student" ? (
+          <li>
+            <Link href={"/onboarding/done?replay=1" as Route} className="flex items-center gap-4 px-5 py-4 hover:bg-bg-subtle" data-testid="replay-welcome">
+              <CloudSun aria-hidden weight="bold" className="size-6 shrink-0 text-text-muted" />
+              <span className="min-w-0 flex-1">
+                <span className="block text-h4">Replay welcome</span>
+                <span className="block text-body-sm text-text-secondary">See the welcome screen again, then take the tour from there.</span>
+              </span>
+              <CaretRight aria-hidden weight="bold" className="size-4 shrink-0 text-text-muted" />
+            </Link>
+          </li>
+        ) : null}
       </ul>
     </main>
   );

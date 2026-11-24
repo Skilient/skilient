@@ -23,8 +23,9 @@ const tierRing: Record<Tier, string> = {
   luminary: "ring-tier-luminary bg-[#ddc7f0]",
 };
 
-export function initials(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
+/** Null-safe: a missing name (a deleted account, say) gives "?" and never throws. */
+export function initials(name: string | null | undefined): string {
+  const parts = (name ?? "").trim().split(/\s+/).filter(Boolean);
   const first = parts[0]?.[0] ?? "";
   const last = parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? "") : "";
   return (first + last).toUpperCase() || "?";

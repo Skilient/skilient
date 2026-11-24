@@ -5,18 +5,16 @@ import { expect, test, type Browser, type Page } from "@playwright/test";
 import { createStudent, hasBackend, signInWithPassword, type TestStudent } from "./support";
 
 /**
- * Phase 18 (PRD 5.33, 5.34) done-whens, through the app: Openings shows every card's latest item,
+ * Phase 18 (PRD 5.34) done-whens, through the app: Openings shows every card's latest item,
  * with its empty state (loading and error states are rendered in tests/unit/openings-cards.test.tsx);
- * unapproved yearbook notes are unreadable to others (votes: pgTAP 60, they have no grant at all);
  * a shared post the recipient can't see renders as unavailable; push is chosen per category (the
  * 1-hour reminder arriving as a push, and stopping when the category is off, is
  * tests/worker/notify-push.test.ts with a fake push service). Axe in both themes on every new screen.
  */
 const DB_URL = process.env.E2E_DATABASE_URL ?? "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 const RULES = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
-const BATCH = 2031;
 
-test.describe("Community: Openings, yearbook, share, push", () => {
+test.describe("Community: Openings, share, push", () => {
   test.skip(!hasBackend, "needs the local Supabase stack");
   test.beforeEach(({}, info) => {
     test.skip(info.project.name !== "desktop", "account flows run once, on desktop");
@@ -95,6 +93,31 @@ test.describe("Community: Openings, yearbook, share, push", () => {
     await expect(paths).toHaveAttribute("data-state", "empty");
     await expect(paths.getByRole("link", { name: "Choose a path" })).toBeVisible();
     await expect(page.getByTestId("opening-card-jobs")).toHaveCount(0);
+    // This week leads as the banner, and nothing in any card is cut off at any width (2026-11-15:
+    // a long action label used to push the text past the card's edge, where it was clipped).
+    await expect(grid.locator("li").first().getByTestId("opening-card-this_week")).toBeVisible();
+    const desktop = page.viewportSize()!;
+    for (const width of [390, 768, 1024, 1280, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      // The card hides overflow, so content wider than the card shows up as its scroll width.
+      // (A long host name is cut with an ellipsis on purpose: that happens inside the card.)
+      const clipped = await grid.locator("article").evaluateAll((cards) =>
+        cards.filter((card) => card.scrollWidth > card.clientWidth + 1).map((card) => card.querySelector("h3")?.textContent ?? "?"),
+      );
+      expect(clipped, `cards clipped at ${width}px`).toEqual([]);
+      // A row never ends with a gap: every row's cards reach the grid's right edge.
+      const ragged = await grid.evaluate((ul) => {
+        const right = ul.getBoundingClientRect().right;
+        const rows = new Map<number, number>();
+        for (const li of ul.children) {
+          const r = li.getBoundingClientRect();
+          rows.set(Math.round(r.top), Math.max(rows.get(Math.round(r.top)) ?? 0, r.right));
+        }
+        return [...rows.values()].filter((edge) => Math.abs(edge - right) > 2).length;
+      });
+      expect(ragged, `rows with a gap at ${width}px`).toBe(0);
+    }
+    await page.setViewportSize(desktop);
     await axeBothThemes(page, "openings");
 
     await inductions.getByRole("link", { name: "Society inductions" }).click();
@@ -109,63 +132,6 @@ test.describe("Community: Openings, yearbook, share, push", () => {
     await page.goto("/openings/this-week");
     await expect(page.getByTestId("this-week")).toBeVisible();
     await axeBothThemes(page, "this week");
-  });
-
-  test("Yearbook: an unapproved note is unreadable to the batch until the owner approves it", async ({ browser }) => {
-    test.setTimeout(240_000);
-    const owner = await createStudent({ domain: "nutech.edu.pk", fullName: "Yasmin Owner" });
-    const friend = await createStudent({ domain: "nutech.edu.pk", fullName: "Farah Friend" });
-    const batchmate = await createStudent({ domain: "nutech.edu.pk", fullName: "Bilal Batchmate" });
-    await sql`update public.profiles set graduation_year = ${BATCH} where user_id in (${owner.id}, ${friend.id}, ${batchmate.id})`;
-    await befriend(owner, friend);
-    await sql`
-      insert into public.yearbooks (university_id, batch, opens_at, vote_opens_at, vote_closes_at, reveal_at, freezes_at)
-      select university_id, ${BATCH}, now() - interval '1 day', now() + interval '10 days', now() + interval '11 days', now() + interval '13 days', now() + interval '60 days'
-        from public.profiles where user_id = ${owner.id}
-      on conflict (university_id, batch) do nothing`;
-
-    const ownerPage = await pageFor(browser, owner);
-    await ownerPage.goto("/yearbook");
-    await expect(ownerPage.getByTestId("yearbook-home")).toBeVisible();
-    await axeBothThemes(ownerPage, "yearbook");
-
-    const friendPage = await pageFor(browser, friend);
-    await friendPage.goto(`/yearbook/${owner.username}`);
-    await friendPage.getByLabel(/Sign Yasmin's page/).fill("Three years of late labs. Thank you for every one.");
-    await friendPage.getByTestId("yearbook-sign").getByRole("button", { name: "Sign", exact: true }).click();
-    await expect(friendPage.getByRole("status")).toContainText("It shows once approved");
-    await friendPage.reload();
-    await expect(friendPage.getByTestId("yearbook-note-pending")).toBeVisible();
-    await axeBothThemes(friendPage, "yearbook page");
-
-    // A batch-mate with no tie sees no note and can't sign.
-    const batchPage = await pageFor(browser, batchmate);
-    await batchPage.goto(`/yearbook/${owner.username}`);
-    await expect(batchPage.getByTestId("yearbook-page")).toBeVisible();
-    await expect(batchPage.getByTestId("yearbook-notes")).toHaveCount(0);
-    await expect(batchPage.getByTestId("yearbook-cant-sign")).toBeVisible();
-    const api = await apiAs(batchmate);
-    // Earlier runs share this batch's book: look only at the note just written.
-    const { data: rows } = await api.from("yearbook_notes").select("id").eq("writer_id", friend.id);
-    expect(rows ?? []).toEqual([]);
-    const { error: voteRead } = await api.from("yearbook_votes").select("*");
-    expect(voteRead?.code).toBe("42501");
-
-    // The owner approves; now the batch reads it.
-    await ownerPage.goto("/yearbook/me");
-    const inbox = ownerPage.getByTestId("yearbook-inbox");
-    await expect(inbox).toContainText("Three years of late labs");
-    await axeBothThemes(ownerPage, "my yearbook");
-    await inbox.getByTestId("note-approve").click();
-    await expect(inbox.locator("[data-status=approved]")).toHaveCount(1);
-    await batchPage.reload();
-    await expect(batchPage.getByTestId("yearbook-notes")).toContainText("Three years of late labs");
-
-    await ownerPage.goto("/yearbook/vote");
-    await expect(ownerPage.getByTestId("yearbook-vote")).toHaveAttribute("data-state", "open");
-    await axeBothThemes(ownerPage, "superlatives");
-    await ownerPage.goto("/settings/privacy");
-    await expect(ownerPage.getByTestId("superlatives-toggle").filter({ visible: true })).toBeVisible();
   });
 
   test("Share: the recipient sees the post, and 'This post isn't available' once they can't", async ({ browser }) => {

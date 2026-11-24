@@ -16,6 +16,11 @@ param jobImage string
 param cloudflareIpRanges array
 param batchCron string
 
+// GHCR pull credentials. The token is a deviation from the Key Vault-only rule; see docs/decisions.md.
+@secure()
+param ghcrToken string
+param ghcrUsername string
+
 // Built-in role definition IDs.
 var keyVaultSecretsUser = '4633458b-17de-408a-b874-0445c86b69e6'
 var storageBlobDataContributor = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
@@ -93,6 +98,19 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = {
   properties: {
     environmentId: env.id
     configuration: {
+      secrets: [
+        {
+          name: 'ghcr-pat'
+          value: ghcrToken
+        }
+      ]
+      registries: [
+        {
+          server: 'ghcr.io'
+          username: ghcrUsername
+          passwordSecretRef: 'ghcr-pat'
+        }
+      ]
       activeRevisionsMode: 'Multiple'
       ingress: {
         external: true
@@ -157,6 +175,19 @@ resource coreA 'Microsoft.App/containerApps@2024-03-01' = {
   properties: {
     environmentId: env.id
     configuration: {
+      secrets: [
+        {
+          name: 'ghcr-pat'
+          value: ghcrToken
+        }
+      ]
+      registries: [
+        {
+          server: 'ghcr.io'
+          username: ghcrUsername
+          passwordSecretRef: 'ghcr-pat'
+        }
+      ]
       activeRevisionsMode: 'Multiple'
       ingress: {
         external: false
@@ -223,6 +254,19 @@ resource coreB 'Microsoft.App/containerApps@2024-03-01' = {
   properties: {
     environmentId: env.id
     configuration: {
+      secrets: [
+        {
+          name: 'ghcr-pat'
+          value: ghcrToken
+        }
+      ]
+      registries: [
+        {
+          server: 'ghcr.io'
+          username: ghcrUsername
+          passwordSecretRef: 'ghcr-pat'
+        }
+      ]
       activeRevisionsMode: 'Multiple'
       ingress: {
         external: false
@@ -289,6 +333,19 @@ resource realtime 'Microsoft.App/containerApps@2024-03-01' = {
   properties: {
     environmentId: env.id
     configuration: {
+      secrets: [
+        {
+          name: 'ghcr-pat'
+          value: ghcrToken
+        }
+      ]
+      registries: [
+        {
+          server: 'ghcr.io'
+          username: ghcrUsername
+          passwordSecretRef: 'ghcr-pat'
+        }
+      ]
       activeRevisionsMode: 'Multiple'
       ingress: {
         external: true
@@ -353,6 +410,19 @@ resource renderJob 'Microsoft.App/jobs@2024-03-01' = {
   properties: {
     environmentId: env.id
     configuration: {
+      secrets: [
+        {
+          name: 'ghcr-pat'
+          value: ghcrToken
+        }
+      ]
+      registries: [
+        {
+          server: 'ghcr.io'
+          username: ghcrUsername
+          passwordSecretRef: 'ghcr-pat'
+        }
+      ]
       triggerType: 'Manual'
       replicaTimeout: 1800
       replicaRetryLimit: 0
@@ -402,6 +472,19 @@ resource harvestJob 'Microsoft.App/jobs@2024-03-01' = {
   properties: {
     environmentId: env.id
     configuration: {
+      secrets: [
+        {
+          name: 'ghcr-pat'
+          value: ghcrToken
+        }
+      ]
+      registries: [
+        {
+          server: 'ghcr.io'
+          username: ghcrUsername
+          passwordSecretRef: 'ghcr-pat'
+        }
+      ]
       triggerType: 'Manual'
       replicaTimeout: 1800
       replicaRetryLimit: 0
@@ -447,6 +530,19 @@ resource batchJob 'Microsoft.App/jobs@2024-03-01' = {
   properties: {
     environmentId: env.id
     configuration: {
+      secrets: [
+        {
+          name: 'ghcr-pat'
+          value: ghcrToken
+        }
+      ]
+      registries: [
+        {
+          server: 'ghcr.io'
+          username: ghcrUsername
+          passwordSecretRef: 'ghcr-pat'
+        }
+      ]
       triggerType: 'Schedule'
       replicaTimeout: 1800
       replicaRetryLimit: 0
@@ -497,6 +593,19 @@ resource migrateJob 'Microsoft.App/jobs@2024-03-01' = {
   properties: {
     environmentId: env.id
     configuration: {
+      secrets: [
+        {
+          name: 'ghcr-pat'
+          value: ghcrToken
+        }
+      ]
+      registries: [
+        {
+          server: 'ghcr.io'
+          username: ghcrUsername
+          passwordSecretRef: 'ghcr-pat'
+        }
+      ]
       triggerType: 'Manual'
       replicaTimeout: 1800
       replicaRetryLimit: 0

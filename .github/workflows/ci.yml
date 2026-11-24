@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       app: ${{ steps.filter.outputs.app }}
+      services: ${{ steps.filter.outputs.services }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -48,18 +49,55 @@ jobs:
           if [ -z "$base" ] || ! git cat-file -e "$base" 2>/dev/null; then
             echo "No usable base commit (first push, force-push or manual dispatch) - running everything."
             echo "app=true" >> "$GITHUB_OUTPUT"
+            echo "services=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           changed="$(git diff --name-only "$base" "${{ github.sha }}")"
           echo "$changed"
-          if echo "$changed" | grep -Eq '^(app|components|lib|supabase|tests|public|scripts)/|^(next\.config\.ts|package\.json|pnpm-lock\.yaml|playwright.*\.config\.ts|vitest.*\.config\.mts|tsconfig\.json|\.github/workflows/ci\.yml)$'; then
+          if echo "$changed" | grep -Eq '^apps/web/|^(package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|\.github/workflows/ci\.yml)$'; then
             echo "app=true" >> "$GITHUB_OUTPUT"
           else
             echo "app=false" >> "$GITHUB_OUTPUT"
           fi
+          # The Azure backend (services, packages, tools, perf budgets): image build and two-container smoke.
+          if echo "$changed" | grep -Eq '^(services|packages|tools|jobs|perf)/|^(package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|tsconfig\.base\.json|eslint\.config\.mjs|\.dockerignore|\.github/workflows/ci\.yml)$'; then
+            echo "services=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "services=false" >> "$GITHUB_OUTPUT"
+          fi
 
   checks:
-    name: Typecheck, lint, unit tests
+    name: Typecheck, lint, unit and contract tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The contracts' breaking-change check compares with the base commit.
+          fetch-depth: 0
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Every workspace package: apps/web, services, packages, tools. Unit tests include the
+      # Postgres harness, which starts postgres:17 in Docker (testcontainers).
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      # docs/azure/prd.md, "Typed calls": contract tests on both transports (in memory and HTTP/2).
+      - run: pnpm test:contract
+      - name: Contracts lint, format and generated code up to date
+        run: pnpm contracts:check
+      - name: Contracts have no breaking change
+        run: pnpm --filter @skilient/contracts breaking
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before || 'HEAD~1' }}
+
+  services-image:
+    name: Services image, co-hosted and two-container HTTP/2 smoke
+    needs: changes
+    if: needs.changes.outputs.services == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -69,15 +107,20 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm typecheck
-      - run: pnpm lint
-      - run: pnpm test
+      - name: Build the services image (distroless)
+        run: pnpm services:image
+      - name: Sample standalone, co-hosted, and called across two containers over HTTP/2
+        run: pnpm services:smoke
 
   database-checks:
     name: pgTAP, worker test, types
     needs: changes
     if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        # The Next.js app lives in apps/web (docs/azure/prd.md, "Repository layout").
+        working-directory: apps/web
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
@@ -151,6 +194,10 @@ jobs:
       fail-fast: false
       matrix:
         shard: [1, 2, 3]
+    defaults:
+      run:
+        # The Next.js app lives in apps/web (docs/azure/prd.md, "Repository layout").
+        working-directory: apps/web
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
@@ -194,8 +241,8 @@ jobs:
       - name: Cache the Next.js build cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: .next/cache
-          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('app/**', 'components/**', 'lib/**', 'next.config.ts') }}
+          path: apps/web/.next/cache
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('apps/web/app/**', 'apps/web/components/**', 'apps/web/lib/**', 'apps/web/next.config.ts') }}
           restore-keys: |
             nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
       - name: Build (gallery enabled)
@@ -236,8 +283,8 @@ jobs:
         with:
           name: playwright-report-${{ matrix.shard }}
           path: |
-            playwright-report/
-            test-results/
+            apps/web/playwright-report/
+            apps/web/test-results/
           retention-days: 14
 
   gitleaks:
@@ -273,6 +320,10 @@ jobs:
     runs-on: ubuntu-latest
     # PRD 10: performance budgets have leeway; they report on every PR but never block a merge.
     continue-on-error: true
+    defaults:
+      run:
+        # The Next.js app lives in apps/web (docs/azure/prd.md, "Repository layout").
+        working-directory: apps/web
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
@@ -284,8 +335,8 @@ jobs:
       - name: Cache the Next.js build cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: .next/cache
-          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('app/**', 'components/**', 'lib/**', 'next.config.ts') }}
+          path: apps/web/.next/cache
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('apps/web/app/**', 'apps/web/components/**', 'apps/web/lib/**', 'apps/web/next.config.ts') }}
           restore-keys: |
             nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
       - run: pnpm build
@@ -298,8 +349,8 @@ jobs:
         with:
           name: performance-reports
           path: |
-            size-limit.txt
-            .lighthouseci/
+            apps/web/size-limit.txt
+            apps/web/.lighthouseci/
           # .lighthouseci/ is a dot-folder; upload-artifact skips hidden files unless told otherwise.
           include-hidden-files: true
           retention-days: 14
@@ -314,6 +365,10 @@ jobs:
     concurrency:
       group: supabase-migrate-production
       cancel-in-progress: false
+    defaults:
+      run:
+        # The Next.js app lives in apps/web (docs/azure/prd.md, "Repository layout").
+        working-directory: apps/web
     env:
       # Scoped personal access token (Supabase dashboard → Account → Access tokens).
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}

@@ -43,7 +43,7 @@ This branch (`azure`) moves the backend from Supabase to Azure. Until the cutove
 
 ## Commands
 
-Today, from `package.json`: `pnpm dev`, `pnpm build`, `pnpm lint` (zero warnings), `pnpm typecheck`, `pnpm test` (Vitest), `pnpm test:e2e` (Playwright on a built app). The `db:*` scripts drive the local Supabase stack and go when Supabase does. The W0 foundation adds the workspace's own commands; update this line when it lands.
+Workspace commands (root `package.json`): `pnpm dev`/`build`/`test:e2e` (apps/web), `pnpm typecheck`, `pnpm lint`, `pnpm test` (every package), `pnpm test:contract` (both transports), `pnpm contracts:gen`/`contracts:check`, `pnpm services:image`, `pnpm services:smoke` (two-container HTTP/2). The `db:*` scripts drive the local Supabase stack in `apps/web` and go when Supabase does.
 
 ## How to work
 

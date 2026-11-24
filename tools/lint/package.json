@@ -1,0 +1,14 @@
+{
+  "name": "@skilient/lint",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p .",
+    "lint": "eslint --max-warnings=0 . && node src/check-migrations.mjs",
+    "test": "vitest run"
+  }
+}

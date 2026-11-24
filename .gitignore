@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -11,14 +11,15 @@
 !.yarn/versions
 
 # testing
-/coverage
+coverage/
 
 # next.js
-/.next/
-/out/
+.next/
+/apps/web/out/
 
 # production
 /build
+dist/
 
 # misc
 .DS_Store
@@ -42,9 +43,9 @@ yarn-error.log*
 next-env.d.ts
 
 # test and CI output
-/test-results/
-/playwright-report/
-/.lighthouseci/
+test-results/
+playwright-report/
+.lighthouseci/
 size-limit.txt
 
 # impeccable review captures (local only)
@@ -55,4 +56,5 @@ size-limit.txt
 .ua/tmp/
 .ua/.trash-*/
 .ua/diff-overlay.json
-tests/load/fixtures.json
+apps/web/tests/load/fixtures.json
+deploy/main.json

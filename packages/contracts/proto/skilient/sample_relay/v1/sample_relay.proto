@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package skilient.sample_relay.v1;
+
+// The W0 sample's caller. Relay calls SampleService.Echo, in memory when both
+// are hosted in one process and over HTTP/2 when they are not.
+service SampleRelayService {
+  rpc Relay(RelayRequest) returns (RelayResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+}
+
+message RelayRequest {
+  string message = 1;
+}
+
+message RelayResponse {
+  string message = 1;
+  // The replica that served Echo.
+  string echo_served_by = 2;
+  // The replica that served Relay.
+  string relay_served_by = 3;
+  // "memory" or "http2".
+  string transport = 4;
+}

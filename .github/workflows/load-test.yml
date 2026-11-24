@@ -44,6 +44,10 @@ jobs:
     # GitHub-hosted minutes are used up and the budget is $0 (decisions 2026-11-05), so this runs on Ahmed's own
     # Linux machine registered as a self-hosted runner with the label `skilient` (docs/self-hosted-runner.md).
     runs-on: [self-hosted, linux, skilient]
+    defaults:
+      run:
+        # The Next.js app lives in apps/web (docs/azure/prd.md, "Repository layout").
+        working-directory: apps/web
     timeout-minutes: 120
     environment: production
     env:
@@ -149,7 +153,7 @@ jobs:
         with:
           name: load-test-results
           path: |
-            k6-output.txt
-            k6-summary.json
-            db-report.txt
+            apps/web/k6-output.txt
+            apps/web/k6-summary.json
+            apps/web/db-report.txt
           retention-days: 30

@@ -1,0 +1,25 @@
+{
+  "name": "@skilient/sample",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p .",
+    "lint": "eslint --max-warnings=0 .",
+    "test": "vitest run --project unit",
+    "test:contract": "vitest run --project contract"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.17.0",
+    "@connectrpc/connect": "2.3.0",
+    "@skilient/contracts": "workspace:*",
+    "@skilient/platform": "workspace:*",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@skilient/testing": "workspace:*"
+  }
+}

@@ -1,0 +1,26 @@
+# The services image needs the workspace manifests, the lockfile and the backend sources only.
+**/node_modules
+**/dist
+**/.next
+**/coverage
+**/test-results
+**/playwright-report
+.git
+.github
+.claude
+.agents
+.codex
+.impeccable
+.ua
+.zap
+.vscode
+.env*
+docs
+brand
+design
+deploy
+perf
+apps/web/*
+!apps/web/package.json
+**/test
+**/*.test.ts

@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package skilient.sample.v1;
+
+// The W0 sample service. It proves the platform, the host and both transports;
+// it owns no data and is not part of the product.
+service SampleService {
+  // Echo returns the message and which process served it.
+  rpc Echo(EchoRequest) returns (EchoResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // WhoAmI returns the caller as the platform verified it.
+  rpc WhoAmI(WhoAmIRequest) returns (WhoAmIResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+}
+
+message EchoRequest {
+  // 1 to 200 characters.
+  string message = 1;
+}
+
+message EchoResponse {
+  string message = 1;
+  // The replica that served the call (host name).
+  string served_by = 2;
+  // Call depth as received: 1 from web, 2 from another service.
+  uint32 depth = 3;
+}
+
+message WhoAmIRequest {}
+
+message WhoAmIResponse {
+  // The service named in the signed service token ("web" for the web app).
+  string caller = 1;
+  bool signed_in = 2;
+  // The verified user id, empty when signed out.
+  string user_id = 3;
+}

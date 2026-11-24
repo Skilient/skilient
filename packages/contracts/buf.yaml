@@ -1,0 +1,10 @@
+# Contracts for every service (docs/azure/prd.md, "Typed calls"). One package per service and version.
+version: v2
+modules:
+  - path: proto
+lint:
+  use:
+    - STANDARD
+breaking:
+  use:
+    - FILE

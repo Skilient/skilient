@@ -1,0 +1,26 @@
+{
+  "name": "@skilient/host",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "tsx src/main.ts",
+    "bundle": "node scripts/bundle.mjs",
+    "typecheck": "tsc --noEmit -p .",
+    "lint": "eslint --max-warnings=0 .",
+    "test": "vitest run",
+    "smoke": "tsx scripts/two-containers.ts"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.17.0",
+    "@connectrpc/connect": "2.3.0",
+    "@skilient/contracts": "workspace:*",
+    "@skilient/platform": "workspace:*",
+    "@skilient/sample": "workspace:*",
+    "@skilient/sample-relay": "workspace:*",
+    "esbuild": "0.28.2"
+  }
+}

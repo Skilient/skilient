@@ -32,6 +32,10 @@ jobs:
     # GitHub-hosted minutes are used up and the budget is $0 (decisions 2026-11-05), so this runs on Ahmed's own
     # Linux machine registered as a self-hosted runner with the label `skilient` (docs/self-hosted-runner.md).
     runs-on: [self-hosted, linux, skilient]
+    defaults:
+      run:
+        # The Next.js app lives in apps/web (docs/azure/prd.md, "Repository layout").
+        working-directory: apps/web
     # The schema restore sends about 9,000 statements one at a time from a US runner to Mumbai (~35 minutes).
     timeout-minutes: 180
     # Same environment as the migrate job, so the same secrets are visible.
@@ -195,6 +199,6 @@ jobs:
         with:
           name: restore-drill-report
           path: |
-            restore-report.json
-            health.json
+            apps/web/restore-report.json
+            apps/web/health.json
           retention-days: 90

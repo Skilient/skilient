@@ -28,7 +28,7 @@ describe("splitAgreement", () => {
 
 describe("the published agreement text", () => {
   // docs/legal is the source the migration copies; the pages need its privacy marker to split correctly.
-  const source = readFileSync(join(process.cwd(), "docs/legal/user-agreement-and-privacy-notice.md"), "utf-8");
+  const source = readFileSync(join(process.cwd(), "../../docs/legal/user-agreement-and-privacy-notice.md"), "utf-8");
   const body = source.slice(source.indexOf("This agreement is between you"));
 
   it("has the privacy marker exactly once, with the notice after it", () => {

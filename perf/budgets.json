@@ -1,0 +1,6 @@
+{
+  "$comment": "Server-side p95 budget for every endpoint (docs/azure/prd.md, Performance budgets). A method without a line here fails packages/contracts/test/budgets.test.ts. dbTrips is the most database round trips one call may make.",
+  "skilient.sample.v1.SampleService/Echo": { "p95Ms": 20, "dbTrips": 0 },
+  "skilient.sample.v1.SampleService/WhoAmI": { "p95Ms": 20, "dbTrips": 0 },
+  "skilient.sample_relay.v1.SampleRelayService/Relay": { "p95Ms": 40, "dbTrips": 0 }
+}

@@ -16,9 +16,9 @@ on:
         default: ""
   pull_request:
     paths:
-      - proxy.ts
-      - next.config.ts
-      - lib/security/**
+      - apps/web/proxy.ts
+      - apps/web/next.config.ts
+      - apps/web/lib/security/**
       - .zap/**
       - .github/workflows/zap.yml
 
@@ -40,6 +40,10 @@ jobs:
     # 2026-11-05); the weekly and pull-request runs stay on GitHub's runners.
     runs-on: ${{ github.event_name == 'workflow_dispatch' && fromJSON('["self-hosted","linux","skilient"]') || 'ubuntu-latest' }}
     timeout-minutes: 40
+    defaults:
+      run:
+        # The Next.js app lives in apps/web (docs/azure/prd.md, "Repository layout").
+        working-directory: apps/web
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
@@ -73,7 +77,7 @@ jobs:
         env:
           TARGET: ${{ inputs.target != '' && inputs.target || 'http://127.0.0.1:3100' }}
         run: |
-          mkdir -p zap && chmod 777 zap && cp .zap/rules.tsv zap/ && chmod 644 zap/rules.tsv
+          mkdir -p zap && chmod 777 zap && cp ../../.zap/rules.tsv zap/ && chmod 644 zap/rules.tsv
           docker run --rm --network host -v "$PWD/zap:/zap/wrk:rw,z" "$ZAP_IMAGE" \
             zap-baseline.py -t "$TARGET" -m 3 -c rules.tsv -J report.json -r report.html -I
       - name: Fail on High findings
@@ -83,7 +87,7 @@ jobs:
         with:
           name: zap-report
           path: |
-            zap/report.json
-            zap/report.html
-            server.log
+            apps/web/zap/report.json
+            apps/web/zap/report.html
+            apps/web/server.log
           retention-days: 30

@@ -1,6 +1,16 @@
+packages:
+  - apps/*
+  - services/*
+  - packages/*
+  - jobs/*
+  - tools/*
+
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
+
+onlyBuiltDependencies:
+  - esbuild
 
 # Security overrides for transitive dependencies (CI runs `pnpm audit --audit-level critical --prod`).
 overrides:

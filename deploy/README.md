@@ -18,6 +18,8 @@ az deployment group what-if -g skilient-rg -f deploy/main.bicep \
   -p webImage=ghcr.io/skilient/web:<commit> \
   -p serviceImage=ghcr.io/skilient/services:<commit> \
   -p jobImage=ghcr.io/skilient/jobs:<commit> \
+  -p ghcrUsername=Ahmed-Mursileen \
+  -p ghcrToken="$CR_PAT" \
   -p budgetContactEmails='["<alert email>"]'
 
 # Deploy after the what-if reads right.
@@ -26,6 +28,8 @@ az deployment group create -g skilient-rg -f deploy/main.bicep \
   -p webImage=ghcr.io/skilient/web:<commit> \
   -p serviceImage=ghcr.io/skilient/services:<commit> \
   -p jobImage=ghcr.io/skilient/jobs:<commit> \
+  -p ghcrUsername=Ahmed-Mursileen \
+  -p ghcrToken="$CR_PAT" \
   -p budgetContactEmails='["<alert email>"]'
 unset PG_PW
 ```
@@ -39,7 +43,7 @@ The PRD says Bicep is deployed by GitHub Actions. That needs the Postgres admin 
 ## Known gaps
 
 - Not compiled or what-if tested. Expect small syntax or property fixes on the first build.
-- Container images on GitHub Container Registry: a private image needs a registry credential on each app. Public images need nothing. Not configured here.
+- Container images on GitHub Container Registry are private. Each app and job pulls them with `ghcrToken` (a secure parameter) and `ghcrUsername`. The token sits in the apps' secret store, not Key Vault; see docs/decisions.md (2026-11-24).
 - `service` containers and jobs use the same images as the services they host, per the W0 design. `SERVICES`, `JOB` and the `*_URL` variables are assumed names; the application code must read them.
 - Cloudflare address ranges are empty, so `web` and `realtime` accept traffic from anywhere until cutover. Pass `cloudflareIpRanges` at cutover.
 - Blob containers, the database roles and the five alert rules are not in the templates. The PRD steps 2 and 3 and section "Alerts" cover them.

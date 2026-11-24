@@ -1,0 +1,27 @@
+{
+  "name": "@skilient/testing",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./postgres": "./src/postgres.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p .",
+    "lint": "eslint --max-warnings=0 .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.17.0",
+    "@connectrpc/connect": "2.3.0",
+    "@connectrpc/connect-node": "2.3.0",
+    "@skilient/host": "workspace:*",
+    "@skilient/platform": "workspace:*",
+    "@testcontainers/postgresql": "12.2.2",
+    "jose": "6.2.18",
+    "postgres": "3.4.9",
+    "testcontainers": "12.2.2",
+    "vitest": "5.0.5"
+  }
+}

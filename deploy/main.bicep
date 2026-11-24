@@ -20,6 +20,11 @@ param pgAdminLogin string = 'skilientadmin'
 @description('PostgreSQL admin password. Typed at deploy time from the password manager. Never stored in the repo or in GitHub.')
 param pgAdminPassword string
 
+@secure()
+param ghcrToken string
+
+param ghcrUsername string
+
 @description('Image for web. Pin to a commit tag.')
 param webImage string
 
@@ -84,6 +89,8 @@ module apps 'modules/apps.bicep' = {
     jobImage: jobImage
     cloudflareIpRanges: cloudflareIpRanges
     batchCron: batchCron
+    ghcrToken: ghcrToken
+    ghcrUsername: ghcrUsername
   }
 }
 

@@ -1,0 +1,20 @@
+/** T097 last step: the event feedback form after the workshop (the event already ended in run-S09.ts). */
+import { launch, context, page, ready, signIn, accounts } from "./lib/browser.ts";
+import { timedClick, setTask } from "./lib/timed.ts";
+import { sql, mainText, toastText } from "./lib/act.ts";
+import { shot } from "./lib/shot.ts";
+setTask("T097");
+const A = accounts(); const b = await launch(); const p = await page(await context(b, { device: "phone" }));
+await signIn(p, A.accounts.tester); await p.goto("/events/" + A.ids.events.workshop); await ready(p, 600);
+const form = p.locator("main form").filter({ hasText: "How was it?" }).last();
+console.log("controls:", await form.locator("input, button, select, textarea").evaluateAll((e) => e.map((x) => `${x.tagName}:${x.getAttribute("type") ?? ""}:${x.getAttribute("aria-label") ?? (x as HTMLInputElement).value ?? ""}`)));
+const radios = form.locator('input[type="radio"]');
+if (await radios.count()) await radios.nth(3).check({ force: true });
+await form.locator("button[aria-label=\"4 out of 5\"]").click();
+await form.locator("textarea").first().fill("Good pace, more practice time please.");
+const t = await timedClick(p, form.getByRole("button", { name: "Send feedback" }), "send event feedback");
+await p.waitForTimeout(1200);
+console.log("send:", t.kind, t.resultMs, t.shown, "|", await toastText(p), "|", (await mainText(p, 3000)).split("Report | ")[1]?.slice(0, 300));
+await shot(p, "T097");
+console.log("stored:", JSON.stringify(await sql`select rating, comment from public.event_feedback where user_id = ${A.accounts.tester.id}`));
+await b.close(); await sql.end();

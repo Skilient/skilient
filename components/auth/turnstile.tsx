@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface TurnstileApi {
   render(el: HTMLElement, options: Record<string, unknown>): string;
@@ -17,25 +17,37 @@ declare global {
 const SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 let scriptPromise: Promise<void> | null = null;
 
+// Never call turnstile.ready() here: api.js throws TurnstileError 3857 when it was loaded async or
+// deferred, and a script injected from JavaScript always is. render() is usable once onload fires.
 function loadScript(): Promise<void> {
   if (window.turnstile) return Promise.resolve();
   // Loaded by our own (nonce-trusted) bundle, so CSP 'strict-dynamic' allows it.
   scriptPromise ??= new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = SCRIPT_SRC;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => {
+    const fail = () => {
+      window.clearTimeout(timeout);
+      script.remove();
       scriptPromise = null;
       reject(new Error("turnstile_load_failed"));
     };
+    const timeout = window.setTimeout(fail, 15000);
+    script.src = SCRIPT_SRC;
+    script.async = true;
+    const nonce = document.querySelector<HTMLScriptElement>("script[nonce]")?.nonce;
+    if (nonce) script.nonce = nonce;
+    script.onload = () => {
+      if (!window.turnstile) return fail();
+      window.clearTimeout(timeout);
+      resolve();
+    };
+    script.onerror = fail;
     document.head.appendChild(script);
   });
   return scriptPromise;
 }
 
 /**
- * Cloudflare Turnstile (PRD 10): usually invisible ("interaction-only"). Calls onToken with
+ * Cloudflare Turnstile (PRD 10): visible verification with loading and retry feedback. Calls onToken with
  * a fresh token, or null when it expires or fails. Change `resetKey` to get a new token
  * after a submit (tokens are single-use).
  */
@@ -52,6 +64,8 @@ export function Turnstile({
 }) {
   const container = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
+  const [status, setStatus] = useState<"pending" | "verified" | "error">("pending");
+  const [attempt, setAttempt] = useState(0);
   const callback = useRef(onToken);
   useEffect(() => {
     callback.current = onToken;
@@ -59,33 +73,75 @@ export function Turnstile({
 
   useEffect(() => {
     let cancelled = false;
+    let verificationTimeout: number | undefined;
+    const pending = () => {
+      if (cancelled) return;
+      callback.current(null);
+      setStatus("pending");
+      window.clearTimeout(verificationTimeout);
+      verificationTimeout = window.setTimeout(failed, 20000);
+    };
+    const failed = () => {
+      if (cancelled) return;
+      window.clearTimeout(verificationTimeout);
+      callback.current(null);
+      setStatus("error");
+    };
     loadScript()
       .then(() => {
         if (cancelled || !container.current || !window.turnstile) return;
+        pending();
         widgetId.current = window.turnstile.render(container.current, {
           sitekey: siteKey,
           action,
           appearance: "always",
+          size: "flexible",
           theme: "auto",
-          callback: (token: string) => callback.current(token),
-          "expired-callback": () => callback.current(null),
-          "error-callback": () => callback.current(null),
+          callback: (token: string) => {
+            if (cancelled) return;
+            window.clearTimeout(verificationTimeout);
+            setStatus("verified");
+            callback.current(token);
+          },
+          "before-interactive-callback": () => window.clearTimeout(verificationTimeout),
+          "expired-callback": pending,
+          "timeout-callback": failed,
+          "unsupported-callback": failed,
+          "error-callback": failed,
         });
       })
-      .catch(() => callback.current(null));
+      .catch(failed);
     return () => {
       cancelled = true;
+      window.clearTimeout(verificationTimeout);
       if (widgetId.current && window.turnstile) window.turnstile.remove(widgetId.current);
       widgetId.current = null;
     };
-  }, [siteKey, action]);
+  }, [siteKey, action, resetKey, attempt]);
 
-  useEffect(() => {
-    if (resetKey && widgetId.current && window.turnstile) {
-      callback.current(null);
-      window.turnstile.reset(widgetId.current);
-    }
-  }, [resetKey]);
-
-  return <div ref={container} className="min-h-0 empty:hidden" data-testid="turnstile" />;
+  return (
+    <div className="flex flex-col gap-2">
+      <div ref={container} className="min-h-[65px]" data-testid="turnstile" />
+      <p role="status" className="text-body-sm text-text-secondary">
+        {status === "verified"
+          ? "Human verification complete."
+          : status === "error"
+            ? "The human check couldn't finish. Retry, or allow challenges.cloudflare.com in your browser and reload this page."
+            : "Checking you're human. Complete the check above if prompted."}
+      </p>
+      {status === "error" ? (
+        <button
+          type="button"
+          className="self-start text-body-sm font-semibold text-text-primary underline underline-offset-4"
+          onClick={() => {
+            callback.current(null);
+            setStatus("pending");
+            setAttempt((value) => value + 1);
+          }}
+        >
+          Retry human check
+        </button>
+      ) : null}
+    </div>
+  );
 }

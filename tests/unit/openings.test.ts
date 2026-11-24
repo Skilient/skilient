@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { categoryFromSlug, categoryHref, OPENING_CATEGORIES, parseOpeningFilters, visibleCategories } from "@/lib/openings/constants";
+import { cardSpan, categoryFromSlug, categoryHref, GRID_ORDER, gridOrder, OPENING_CATEGORIES, parseOpeningFilters, visibleCategories } from "@/lib/openings/constants";
 import { OPPORTUNITY_REDIRECTS } from "@/lib/openings/redirects";
 
 describe("Openings (PRD 5.34)", () => {
@@ -32,4 +32,37 @@ describe("Openings (PRD 5.34)", () => {
     // The catch-all comes last so the specific ones win.
     expect(OPPORTUNITY_REDIRECTS.at(-1)?.source).toBe("/opportunities/:path*");
   });
+
+  it("orders the grid: This week first, then the sidebar's groups, every category once", () => {
+    expect([...GRID_ORDER].sort()).toEqual([...OPENING_CATEGORIES].sort());
+    const sql = ["venture_roles", "inductions", "events", "ideas", "paths", "swaps", "this_week"] as const;
+    expect(gridOrder(sql.map((category) => ({ category }))).map((c) => c.category)).toEqual([
+      "this_week",
+      "venture_roles",
+      "ideas",
+      "inductions",
+      "events",
+      "paths",
+      "swaps",
+    ]);
+  });
+
+  it("never leaves a gap at the end of the grid, at two or three columns", () => {
+    // Columns a card takes at a given grid width, read from its classes.
+    const width = (cls: string, columns: 2 | 3) => {
+      if (cls.includes("col-span-full")) return columns;
+      const at = (prefix: string) => Number(cls.match(new RegExp(`${prefix}:col-span-(\\d)`))?.[1] ?? 0);
+      return columns === 2 ? at("@xl") || 1 : at("@4xl") || at("@xl") || 1;
+    };
+    for (let total = 2; total <= 12; total++) {
+      for (const columns of [2, 3] as const) {
+        const cells = Array.from({ length: total }, (_, i) => width(cardSpan(i, total), columns)).reduce((a, b) => a + b, 0);
+        expect(cells % columns, `${total} cards at ${columns} columns`).toBe(0);
+      }
+    }
+    expect(cardSpan(0, 7)).toBe("col-span-full");
+    expect(cardSpan(3, 7)).toBe("");
+    expect(cardSpan(6, 7)).toBe("");
+  });
+
 });

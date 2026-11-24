@@ -20,27 +20,42 @@ function todoLine(t: ProgressCardData["todo"]): string {
  * The Home progress card (PRD 5.25): tier and points, the single most valuable next step,
  * what is waiting on you, and the getting-started checklist (PRD 5.27) until it is done or
  * dismissed. Dismissible for the day. Everything is computed by SQL from existing tables.
+ *
+ * Since 2026-11-15 it sits in a column to the right of the feed when there is room ("column"),
+ * and behind a one-line chip that opens it in a sheet when there isn't ("sheet", see
+ * `ProgressChip`). It is grouped content, not a control, so it is a flat tile, not a raised card.
  */
-export function ProgressCard({ card }: { card: ProgressCardData }) {
+export function ProgressCard({ card, variant = "column" }: { card: ProgressCardData; variant?: "column" | "sheet" }) {
   if (card.dismissed) return null;
   const { todo, checklist } = card;
   const showChecklist = !checklist.dismissed && checklist.done < checklist.total;
+  const sheet = variant === "sheet";
   return (
-    <section aria-labelledby="progress-h" className="flex flex-col gap-4 rounded-lg border border-border-default bg-bg-surface p-4 shadow-1" data-testid="progress-card">
+    <section
+      aria-labelledby={sheet ? undefined : "progress-h"}
+      aria-label={sheet ? "Your progress" : undefined}
+      className={sheet ? "flex flex-col gap-4" : "neu-flat flex flex-col gap-4 p-4"}
+      data-testid={sheet ? "progress-sheet" : "progress-card"}
+      // The tour's "Your progress" step lights the column; on narrow screens it lights the chip.
+      data-tour={sheet ? undefined : "progress"}
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 flex-col gap-1">
-          <h2 id="progress-h" className="text-h4">
-            Your progress
-          </h2>
+          {sheet ? null : (
+            <h2 id="progress-h" className="text-h4">
+              Your progress
+            </h2>
+          )}
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-body">
             {card.tier ? <TierBadge tier={card.tier} /> : <span className="font-semibold">Not ranked yet</span>}
-            {card.scored ? <span className="text-text-secondary tabular-nums">{points(card.points)} points, only you see this</span> : null}
+            {card.scored ? <span className="text-body-sm text-text-secondary tabular-nums">{points(card.points)} points, only you see this</span> : null}
           </p>
         </div>
-        <DismissCardButton />
+        {sheet ? null : <DismissCardButton />}
       </div>
 
-      <div className="flex flex-col gap-2 rounded-md bg-bg-subtle p-3" data-testid="next-step">
+      <div className="neu-well flex flex-col gap-2 p-3" data-testid="next-step">
+        <p className="text-label text-text-secondary uppercase">Next step</p>
         <p className="text-h4">{card.action.title}</p>
         <p className="text-body-sm text-text-secondary">{card.action.body}</p>
         <div>
@@ -64,38 +79,52 @@ export function ProgressCard({ card }: { card: ProgressCardData }) {
       )}
 
       {showChecklist ? (
-        <details className="group rounded-md border border-border-muted" data-testid="checklist">
-          <summary className="flex cursor-pointer items-center justify-between gap-2 rounded-md px-3 py-2 text-body-sm font-semibold">
-            <span>
-              Getting started: {checklist.done} of {checklist.total}
+        // Open in the column: there is room, and the list is the point of it.
+        <details className="group" open={sheet ? undefined : true} data-testid="checklist">
+          <summary className="flex cursor-pointer flex-col gap-2 rounded-md py-1 text-body-sm font-semibold">
+            <span className="flex items-center justify-between gap-2">
+              <span>
+                Getting started: {checklist.done} of {checklist.total}
+              </span>
+              <CaretRight aria-hidden weight="bold" className="size-4 text-text-muted transition-transform group-open:rotate-90 motion-reduce:transition-none" />
             </span>
-            <CaretRight aria-hidden weight="bold" className="size-4 text-text-muted transition-transform group-open:rotate-90 motion-reduce:transition-none" />
+            {/* Progress fills, never spins (the brief). */}
+            <span aria-hidden className="neu-well-s block h-2 overflow-hidden rounded-full">
+              <span className="block h-full rounded-full bg-primary" style={{ width: `${Math.round((checklist.done / Math.max(checklist.total, 1)) * 100)}%` }} />
+            </span>
           </summary>
-          <ul className="flex flex-col gap-1 px-3 pb-3">
+          <ul className="flex flex-col gap-2 pt-3">
             {checklist.items.map((item) => (
-              <li key={item.key} className="flex items-center gap-2 text-body-sm">
+              <li key={item.key} className="flex items-start gap-2 text-body-sm">
                 {item.done ? (
-                  <CheckCircle aria-hidden weight="fill" className="size-5 shrink-0 text-success" />
+                  <CheckCircle aria-hidden weight="fill" className="mt-0.5 size-5 shrink-0 text-success" />
                 ) : (
-                  <Circle aria-hidden weight="bold" className="size-5 shrink-0 text-text-muted" />
+                  <Circle aria-hidden weight="bold" className="mt-0.5 size-5 shrink-0 text-text-muted" />
                 )}
-                <Link href={item.href as Route} className={item.done ? "text-text-secondary line-through" : "underline-offset-4 hover:underline"}>
-                  {item.label}
-                </Link>
-                <span className="sr-only">{item.done ? "(done)" : "(to do)"}</span>
-                {item.points !== null && !item.done ? (
-                  <span className="ml-auto text-caption text-text-secondary tabular-nums">
-                    +{points(item.points)}
-                    {item.note ? ` ${item.note}` : ""}
-                  </span>
-                ) : null}
+                <span className="flex min-w-0 flex-1 flex-col">
+                  <Link href={item.href as Route} className={item.done ? "text-text-secondary line-through" : "underline-offset-4 hover:underline"}>
+                    {item.label}
+                  </Link>
+                  <span className="sr-only">{item.done ? "(done)" : "(to do)"}</span>
+                  {item.points !== null && !item.done ? (
+                    <span className="text-caption text-text-secondary tabular-nums">
+                      +{points(item.points)}
+                      {item.note ? ` ${item.note}` : ""}
+                    </span>
+                  ) : null}
+                </span>
               </li>
             ))}
           </ul>
-          <div className="border-t border-border-muted px-3 py-2">
+          <div className="pt-2">
             <DismissChecklistButton />
           </div>
         </details>
+      ) : null}
+      {sheet ? (
+        <div className="border-t border-border-muted pt-3">
+          <DismissCardButton label />
+        </div>
       ) : null}
     </section>
   );

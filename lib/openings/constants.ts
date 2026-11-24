@@ -166,3 +166,41 @@ export function visibleCategories(portals: { recruiter: boolean; university: boo
     return true;
   });
 }
+
+/**
+ * The grid's reading order (2026-11-15): This week leads as a full-width banner, then the cards
+ * follow the sidebar's groups (Build, Join, Grow), then the portal cards. Never by payment.
+ */
+export const GRID_ORDER: readonly OpeningCategory[] = [
+  "this_week",
+  "venture_roles",
+  "ideas",
+  "inductions",
+  "events",
+  "paths",
+  "swaps",
+  "jobs",
+  "applications",
+  "contact_requests",
+  "competitions",
+  "job_fairs",
+];
+
+export function gridOrder<T extends { category: OpeningCategory }>(cards: readonly T[]): T[] {
+  return [...cards].sort((a, b) => GRID_ORDER.indexOf(a.category) - GRID_ORDER.indexOf(b.category));
+}
+
+/**
+ * How wide a card is in the Openings grid (one column on a phone, two from 36rem of grid width,
+ * three from 56rem). The first card is the banner; the last card widens so no row ends with a gap.
+ * `total` counts the banner. Class names are whole literals so Tailwind sees them.
+ */
+export function cardSpan(index: number, total: number): string {
+  if (index === 0) return "col-span-full";
+  if (index !== total - 1) return "";
+  const cards = total - 1;
+  const two = cards % 2 === 1 ? "@xl:col-span-2" : "";
+  const rest = cards % 3;
+  const three = rest === 1 ? "@4xl:col-span-3" : rest === 2 ? "@4xl:col-span-2" : two ? "@4xl:col-span-1" : "";
+  return [two, three].filter(Boolean).join(" ");
+}

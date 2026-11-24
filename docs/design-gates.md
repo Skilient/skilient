@@ -29,7 +29,7 @@ type-ramp and colour notes measure against the Editorial `DESIGN.md`, which phas
 (decisions 2026-11-02), so they don't apply; `DESIGN.md` and `PRODUCT.md` still describe Editorial and are flagged
 below. Every screen outside the portals was captured in all four combinations (`DESIGN_GATES_SHOTS=1`) and reviewed on
 contact sheets: desktop light for every screen, plus phone light and dark for the student-first screens with seeded
-load data (feed, Openings, My Record, Paths, Skill swap, Yearbook, Societies, Events, Tickets, Notifications, Chat,
+load data (feed, Openings, My Record, Paths, Skill swap, ~~Yearbook~~ (removed 2026-11-23), Societies, Events, Tickets, Notifications, Chat,
 Settings, event page). Against the taste pre-flight: one accent (signal orange), Phosphor at one weight, Space
 Grotesk with Spectral reserved for belief moments, no emoji, no eyebrows, no equal three-card rows, empty states
 with one sentence and one action.
@@ -154,9 +154,9 @@ gated with the portals flag on (the `@portals` pass); with portals off they 404 
 | `/me/tasks/reviews/[id]` | Student | Pass | Pass | Pass | Pass |  |
 | `/swaps` | Student | Pass | Pass | Pass | Pass |  |
 | `/swaps/[id]` | Student | Pass | Pass | Pass | Pass |  |
-| `/yearbook` | Student | Pass | Pass | Pass | Pass |  |
-| `/yearbook/me` | Student | Pass | Pass | Pass | Pass |  |
-| `/yearbook/vote` | Student | Pass | Pass | Pass | Pass |  |
+| ~~`/yearbook`~~ | Student | Pass | Pass | Pass | Pass | Removed 2026-11-23 |
+| ~~`/yearbook/me`~~ | Student | Pass | Pass | Pass | Pass | Removed 2026-11-23 |
+| ~~`/yearbook/vote`~~ | Student | Pass | Pass | Pass | Pass | Removed 2026-11-23 |
 | `/openings/venture-roles` | Student | Pass | Pass | Pass | Pass |  |
 | `/openings/inductions` | Student | Pass | Pass | Pass | Pass |  |
 | `/openings/events` | Student | Pass | Pass | Pass | Pass |  |
@@ -164,7 +164,7 @@ gated with the portals flag on (the `@portals` pass); with portals off they 404 
 | `/openings/paths` | Student | Pass | Pass | Pass | Pass | Gate A: Paths and Skill swaps highlighted "All openings" in the sidebar; both have their own row now. |
 | `/openings/swaps` | Student | Pass | Pass | Pass | Pass | Gate A: the same sidebar row fix as Paths. |
 | `/openings/this-week` | Student | Pass | Pass | Pass | Pass |  |
-| `/yearbook/[username]` | Student | Pass | Pass | Pass | Pass |  |
+| ~~`/yearbook/[username]`~~ | Student | Pass | Pass | Pass | Pass | Removed 2026-11-23 |
 | `/profile/[username]` | Student | Pass | Pass | Pass | Pass |  |
 | `/profile/[username]/activity` | Student | Pass | Pass | Pass | Pass |  |
 | `/profile/[username]/skills` | Student | Pass | Pass | Pass | Pass |  |

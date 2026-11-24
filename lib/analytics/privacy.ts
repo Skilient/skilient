@@ -36,8 +36,6 @@ const NEVER_RECORDED: RegExp[] = [
   // receipts) and a society's payment details.
   /^\/events\/[^/]+\/(check-in|attend|ticket|manage)(\/|$)/,
   /^\/societies\/[^/]+\/manage\/payments(\/|$)/,
-  // The yearbook (PRD 5.33): notes the owner hasn't approved, and the secret ballot.
-  /^\/yearbook(\/|$)/,
   /^\/ui(\/|$)/,
 ];
 

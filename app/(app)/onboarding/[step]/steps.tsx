@@ -25,6 +25,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SkillChip,
   Textarea,
 } from "@/components/ui";
 import {
@@ -189,7 +190,7 @@ export function GithubStep({
 
 // Step 4 ------------------------------------------------------------------------------
 
-export function SkillsStep() {
+export function SkillsStep({ skills, githubConnected }: { skills: { name: string; level: 1 | 2 | 3 | 4 }[]; githubConnected: boolean }) {
   return (
     <StepForm action={saveSkillsStep}>
       {() => (
@@ -199,11 +200,32 @@ export function SkillsStep() {
             raise it by confirming your work. Skills you add yourself show as &ldquo;claimed&rdquo; and earn no points until
             they&apos;re verified. Anything below the first level stays private to you.
           </p>
-          <EmptyState
-            icon={<Sparkle aria-hidden className="size-8" />}
-            title="No skills detected yet"
-            description="Connect GitHub and your verified skills appear here with their level and how to improve them."
-          />
+          {skills.length ? (
+            // The first proof: what the code they just connected already shows.
+            <div className="neu-well flex flex-col gap-3 p-4" data-testid="detected-skills">
+              <p className="text-body font-semibold text-text-primary">
+                Found in your code so far: {skills.length} {skills.length === 1 ? "skill" : "skills"}
+              </p>
+              <ul className="flex flex-wrap gap-2">
+                {skills.map((k) => (
+                  <li key={k.name}>
+                    <SkillChip name={k.name} level={k.level} verified />
+                  </li>
+                ))}
+              </ul>
+              <p className="text-body-sm text-text-secondary">More appear as the rest of your repositories are read. Each one shows how to raise its level.</p>
+            </div>
+          ) : (
+            <EmptyState
+              icon={<Sparkle aria-hidden className="size-8" />}
+              title={githubConnected ? "Reading your repositories" : "No skills detected yet"}
+              description={
+                githubConnected
+                  ? "Your code is being read now. Verified skills appear on your profile with their level, usually within a few minutes."
+                  : "Connect GitHub and your verified skills appear here with their level and how to improve them."
+              }
+            />
+          )}
         </div>
       )}
     </StepForm>
@@ -272,6 +294,7 @@ export function PeopleStep({ classmates, universityName }: { classmates: Classma
         </p>
       </section>
       {error ? <FormAlert requestId={error.requestId}>{error.message}</FormAlert> : null}
+      <p className="text-body-sm text-text-secondary sm:text-right">Nothing here is required: you can add people any time from Friends.</p>
       <Button
         size="lg"
         className="sm:self-end"

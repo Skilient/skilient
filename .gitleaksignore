@@ -5,3 +5,8 @@ a0c22d981ac8676f23635e529353c6ac348f94aa:tests/fixtures/billing/safepay/payment.
 # False positive (decisions.md 2026-10-04): a Figma file key (the id in the file's URL, not a credential) in the Figma
 # work's state file on another branch; CI scans every branch, so it failed unrelated pull requests.
 71abe4049f3de391db0f894b68dc2c8ec5ab3509:docs/figma/state.json:generic-api-key:3
+# False positive (decisions.md 2026-11-24): an Azure built-in role definition id (Key Vault Secrets User) in the
+# Azure floor's Bicep template, matched by the generic-api-key rule. It is a public GUID, not a credential.
+038fe8d25635e1644516c4a24202bdaad3cd1a42:deploy/modules/apps.bicep:generic-api-key:20
+# False positive (decisions.md 2026-11-24): a UX pilot string id (a CV id shown in the copy deck), not a credential.
+8194925c9e05d26477aaf8f29448cf9f8abd6398:docs/ux-pilot/heuristics/strings.json:generic-api-key:825

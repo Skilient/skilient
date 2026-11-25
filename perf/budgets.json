@@ -1,6 +1,167 @@
 {
   "$comment": "Server-side p95 budget for every endpoint (docs/azure/prd.md, Performance budgets). A method without a line here fails packages/contracts/test/budgets.test.ts. dbTrips is the most database round trips one call may make.",
-  "skilient.sample.v1.SampleService/Echo": { "p95Ms": 20, "dbTrips": 0 },
-  "skilient.sample.v1.SampleService/WhoAmI": { "p95Ms": 20, "dbTrips": 0 },
-  "skilient.sample_relay.v1.SampleRelayService/Relay": { "p95Ms": 40, "dbTrips": 0 }
+  "skilient.sample.v1.SampleService/Echo": {
+    "p95Ms": 20,
+    "dbTrips": 0
+  },
+  "skilient.sample.v1.SampleService/WhoAmI": {
+    "p95Ms": 20,
+    "dbTrips": 0
+  },
+  "skilient.sample_relay.v1.SampleRelayService/Relay": {
+    "p95Ms": 40,
+    "dbTrips": 0
+  },
+  "skilient.identity.v1.IdentityService/GetGateState": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.identity.v1.IdentityService/SigninStatus": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.identity.v1.IdentityService/BackupCodesRemaining": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.identity.v1.IdentityService/StaffRolesOf": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.identity.v1.IdentityService/CurrentAgreementVersion": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.identity.v1.IdentityService/OpsStaff": {
+    "p95Ms": 60,
+    "dbTrips": 1
+  },
+  "skilient.identity.v1.IdentityService/SignUp": {
+    "p95Ms": 250,
+    "dbTrips": 8
+  },
+  "skilient.identity.v1.IdentityService/VerifyEmail": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/RequestEmailCode": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/SignInWithCode": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/SignInPassword": {
+    "p95Ms": 250,
+    "dbTrips": 8
+  },
+  "skilient.identity.v1.IdentityService/SignInWithGoogle": {
+    "p95Ms": 400,
+    "dbTrips": 8
+  },
+  "skilient.identity.v1.IdentityService/Refresh": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/SignOut": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/SecurityNotMe": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/LogSecurityEvent": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/ChangePassword": {
+    "p95Ms": 250,
+    "dbTrips": 8
+  },
+  "skilient.identity.v1.IdentityService/RequestPasswordReset": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/ResetPassword": {
+    "p95Ms": 250,
+    "dbTrips": 8
+  },
+  "skilient.identity.v1.IdentityService/EnrollTotp": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/VerifyTotp": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/RemoveTotp": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/CreateBackupCodes": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/UseBackupCode": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/DeleteBackupCodes": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/AcceptAgreement": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/RequestAccountDeletion": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/CancelAccountDeletion": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/GrantStaffRole": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/RevokeStaffRole": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/OpsResetMfa": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/SanctionUser": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/LiftSanction": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/CompleteGithubLink": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/DisconnectGithub": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.identity.v1.IdentityService/GetSignupDetails": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.identity.v1.IdentityService/ListSecurityEvents": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.identity.v1.IdentityService/ListAuthenticators": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  }
 }

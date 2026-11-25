@@ -77,6 +77,9 @@ export interface Migration {
   sql: string;
 }
 
+/** The `platform` schema's own migrations: the shared event log, job queue, schedules and idempotency keys. */
+export const PLATFORM_MIGRATIONS = join(import.meta.dirname, "..", "migrations");
+
 /** The forward-only migrations in a service's `migrations/` folder, in order. Names are `0001_what.sql`. */
 export function readMigrations(dir: string): Migration[] {
   return readdirSync(dir)

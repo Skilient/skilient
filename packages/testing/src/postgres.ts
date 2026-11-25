@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { PostgreSqlContainer, type StartedPostgreSqlContainer } from "@testcontainers/postgresql";
 import postgres from "postgres";
-import { migrate, readMigrations } from "@skilient/platform/db";
+import { migrate, PLATFORM_MIGRATIONS, readMigrations } from "@skilient/platform/db";
 
 /** The same major version as the Azure server (deploy/modules/data.bicep). */
 export const POSTGRES_IMAGE = "postgres:17-alpine";
@@ -32,6 +32,8 @@ export async function startPostgres(): Promise<TestDatabase> {
   const container = await new PostgreSqlContainer(POSTGRES_IMAGE).start();
   const admin = postgres(container.getConnectionUri(), { max: 4, onnotice: () => {} });
   await admin`revoke all on schema public from public`;
+  // The shared event log and job queue come first: every service role reaches them through `svc`.
+  await migrate(admin, "platform", readMigrations(PLATFORM_MIGRATIONS));
   const opened: postgres.Sql[] = [admin];
   return {
     container,
@@ -43,6 +45,7 @@ export async function startPostgres(): Promise<TestDatabase> {
       await admin.unsafe(`create role ${role} login password '${password}' noinherit`);
       await admin.unsafe(`create schema ${schema}`);
       await admin.unsafe(`grant usage on schema ${schema} to ${role}`);
+      await admin.unsafe(`grant svc to ${role} with inherit true`);
       await migrate(admin, schema, readMigrations(migrationsDir));
       const sql = postgres({
         host: container.getHost(),

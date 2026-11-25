@@ -41,6 +41,9 @@ Key Vault is created by `deploy/`. Each secret below is entered by Ahmed once, a
 - [ ] GitHub App private key and webhook secret.
 - [ ] Payment gateway sandbox credentials, only when the billing gateway is switched on. Billing ships dormant, so this is not needed for the cutover.
 - [ ] PostHog and Sentry project keys, if they change host or project.
+- [ ] Identity signing key(s): `identity-signing-key-<kid>`, each a private Ed25519 JWK, with `IDENTITY_SIGNING_KIDS` (a plain variable, newest first) naming them. Generate one with `generateSigningKey()` in `services/identity/src/keys.ts`; never paste it into chat or a file (decision 2026-11-25, Q10).
+- [ ] `identity-totp-key`: the key that encrypts imported and new authenticator secrets (decision 2026-11-25, Q10).
+- [ ] `identity-refresh-pepper`: the secret mixed into stored refresh-token hashes (decision 2026-11-25, Q10).
 
 ## 5. Exports from Supabase (first rehearsal)
 

@@ -1,0 +1,199 @@
+{
+  "current_agreement_version": {
+    "ok": true,
+    "value": 3
+  },
+  "grant_revoke": {
+    "already_has_role": {
+      "code": "23505",
+      "message": "that account already has this role",
+      "ok": false
+    },
+    "by_moderator": {
+      "code": "42501",
+      "message": "super admins only, with two-factor on",
+      "ok": false
+    },
+    "granted": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "staff.grant",
+              "after": {
+                "roles": [
+                  "trust_reviewer"
+                ]
+              },
+              "before": {
+                "roles": []
+              },
+              "reason": "Joins the trust team.",
+              "staff_id": "<uuid:1>",
+              "target_id": "<uuid:2>",
+              "target_type": "user"
+            }
+          ],
+          "removed": []
+        },
+        "public.staff_roles": {
+          "added": [
+            {
+              "granted_by": "<uuid:1>",
+              "role": "trust_reviewer",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:2>"
+      }
+    },
+    "no_account": {
+      "code": "P0002",
+      "message": "no account with that email",
+      "ok": false
+    },
+    "no_reason": {
+      "code": "22023",
+      "message": "give a reason",
+      "ok": false
+    },
+    "no_two_factor": {
+      "code": "55000",
+      "message": "that account has no two-factor set up",
+      "ok": false
+    },
+    "revoke_by_moderator": {
+      "code": "42501",
+      "message": "super admins only, with two-factor on",
+      "ok": false
+    },
+    "revoke_missing_role": {
+      "code": "P0002",
+      "message": "that account doesn't have this role",
+      "ok": false
+    },
+    "revoke_own_super_admin": {
+      "code": "42501",
+      "message": "you can't remove your own super admin role",
+      "ok": false
+    },
+    "revoked": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "staff.revoke",
+              "after": {
+                "roles": []
+              },
+              "before": {
+                "roles": [
+                  "trust_reviewer"
+                ]
+              },
+              "reason": "Left the team.",
+              "staff_id": "<uuid:1>",
+              "target_id": "<uuid:2>",
+              "target_type": "user"
+            }
+          ],
+          "removed": []
+        },
+        "public.staff_roles": {
+          "added": [],
+          "removed": [
+            {
+              "granted_by": "<uuid:1>",
+              "role": "trust_reviewer",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": ""
+      }
+    }
+  },
+  "is_staff": {
+    "admin_aal1": {
+      "ok": true,
+      "value": false
+    },
+    "admin_aal2_any": {
+      "ok": true,
+      "value": true
+    },
+    "admin_aal2_moderator": {
+      "ok": true,
+      "value": true
+    },
+    "moderator_aal2_moderator": {
+      "ok": true,
+      "value": true
+    },
+    "moderator_aal2_super_admin": {
+      "ok": true,
+      "value": false
+    },
+    "roles_of_admin": {
+      "ok": true,
+      "value": [
+        "super_admin"
+      ]
+    },
+    "roles_of_student": {
+      "ok": true,
+      "value": []
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function is_staff",
+      "ok": false
+    },
+    "student_aal2": {
+      "ok": true,
+      "value": false
+    }
+  },
+  "ops_staff": {
+    "admin": {
+      "ok": true,
+      "value": [
+        {
+          "email": "golden.admin@golden-uni.test",
+          "is_me": true,
+          "name": "Golden 3",
+          "roles": [
+            "super_admin"
+          ],
+          "since": "<time>",
+          "two_factor": true,
+          "user_id": "<uuid:1>"
+        },
+        {
+          "email": "golden.mod@golden-uni.test",
+          "is_me": false,
+          "name": "Golden 4",
+          "roles": [
+            "moderator"
+          ],
+          "since": "<time>",
+          "two_factor": true,
+          "user_id": "<uuid:2>"
+        }
+      ]
+    },
+    "moderator": {
+      "code": "42501",
+      "message": "super admins only, with two-factor on",
+      "ok": false
+    }
+  }
+}

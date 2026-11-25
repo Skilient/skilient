@@ -1,0 +1,317 @@
+{
+  "complete_github_link": {
+    "clash_with_another_account": {
+      "changes": {
+        "private.github_link_tickets": {
+          "added": [
+            {
+              "id": "<uuid:1>",
+              "result": "clash",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "id": "<uuid:1>",
+              "result": null,
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.github_link_clashes": {
+          "added": [
+            {
+              "github_id": "9001",
+              "github_login": "golden-octo",
+              "linked_user_id": "<uuid:3>",
+              "resolved_at": null,
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "clash"
+      }
+    },
+    "linked": {
+      "changes": {
+        "private.github_link_tickets": {
+          "added": [
+            {
+              "id": "<uuid:4>",
+              "result": "linked",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": [
+            {
+              "id": "<uuid:4>",
+              "result": null,
+              "user_id": "<uuid:3>"
+            }
+          ]
+        },
+        "private.github_tokens": {
+          "added": [
+            {
+              "access_expires_at": "<time>",
+              "has_access": true,
+              "has_refresh": true,
+              "refresh_expires_at": "<time>",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.github_accounts": {
+          "added": [
+            {
+              "github_id": "9001",
+              "login": "golden-octo",
+              "revoked_at": null,
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.github_user_installations": {
+          "added": [
+            {
+              "installation_id": "7001",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "github_connected",
+              "meta": {
+                "login": "golden-octo"
+              },
+              "user_agent": null,
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.sync_jobs": {
+          "added": [
+            {
+              "pending": 1,
+              "stage": "discover",
+              "status": "queued",
+              "trigger": "connect",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "linked"
+      }
+    },
+    "ticket_expired": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": "expired"
+      }
+    },
+    "ticket_unknown": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": "expired"
+      }
+    },
+    "ticket_used_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": "expired"
+      }
+    }
+  },
+  "complete_github_link_relink": {
+    "different_github_account": {
+      "changes": {
+        "private.github_link_tickets": {
+          "added": [
+            {
+              "id": "<uuid:1>",
+              "result": "other_account",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "id": "<uuid:1>",
+              "result": null,
+              "user_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "other_account"
+      }
+    },
+    "same_github_account_new_login": {
+      "changes": {
+        "private.github_link_tickets": {
+          "added": [
+            {
+              "id": "<uuid:3>",
+              "result": "linked",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "id": "<uuid:3>",
+              "result": null,
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.github_accounts": {
+          "added": [
+            {
+              "github_id": "9001",
+              "login": "golden-octo-renamed",
+              "revoked_at": null,
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "github_id": "9001",
+              "login": "golden-octo",
+              "revoked_at": null,
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "github_connected",
+              "meta": {
+                "login": "golden-octo-renamed"
+              },
+              "user_agent": null,
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "linked"
+      }
+    }
+  },
+  "disconnect_github": {
+    "disconnected": {
+      "changes": {
+        "private.github_tokens": {
+          "added": [],
+          "removed": [
+            {
+              "access_expires_at": "<time>",
+              "has_access": true,
+              "has_refresh": true,
+              "refresh_expires_at": "<time>",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.github_accounts": {
+          "added": [],
+          "removed": [
+            {
+              "github_id": "9001",
+              "login": "golden-octo",
+              "revoked_at": null,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.github_user_installations": {
+          "added": [],
+          "removed": [
+            {
+              "installation_id": "7001",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "github_disconnected",
+              "meta": {
+                "login": "golden-octo"
+              },
+              "user_agent": null,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.sync_jobs": {
+          "added": [
+            {
+              "pending": 1,
+              "stage": "discover",
+              "status": "cancelled",
+              "trigger": "connect",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "pending": 1,
+              "stage": "discover",
+              "status": "queued",
+              "trigger": "connect",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "not_linked": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "other_user_not_linked": {
+      "ok": true,
+      "value": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function disconnect_github",
+      "ok": false
+    }
+  }
+}

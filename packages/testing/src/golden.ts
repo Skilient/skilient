@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
+import postgres from "postgres";
 
 /**
  * Golden tests (CLAUDE.md, "How to work" 4): before a service is written, each
@@ -67,10 +68,34 @@ export function golden(file: string, name: string, value: unknown, options: Norm
   return JSON.stringify(expected) === JSON.stringify(actual) ? { status: "matched" } : { status: "differs", expected, actual };
 }
 
+const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
+
+/**
+ * Golden recorders write fixture rows and delete them again, so they may only
+ * ever reach the local stack. Throws for any URL whose host is not localhost,
+ * 127.0.0.1 or [::1], for an empty or missing value, and for a Postgres URL
+ * whose `host`/`hostaddr` parameter would send the connection elsewhere.
+ * There is no fallback. The message names the host, never the credentials.
+ */
+export function assertLocalStack(url: string | null | undefined): asserts url is string {
+  if (typeof url !== "string" || url.trim() === "") throw new Error("golden recording refused: no stack URL given (local stack only)");
+  let parsed: URL;
+  try {
+    parsed = new URL(url.trim());
+  } catch {
+    throw new Error("golden recording refused: the stack URL does not parse (local stack only)");
+  }
+  const host = parsed.hostname.toLowerCase();
+  if (!LOCAL_HOSTS.has(host)) throw new Error(`golden recording refused: host "${host || "(none)"}" is not the local stack`);
+  for (const key of ["host", "hostaddr"]) {
+    if (parsed.searchParams.has(key)) throw new Error(`golden recording refused: the "${key}" parameter could point the connection elsewhere`);
+  }
+}
+
 /**
  * Calls a public function on the current stack (Supabase PostgREST RPC) as a
  * signed-in user, for recording. `token` is that user's access token on the
- * local stack; `key` is the stack's publishable key.
+ * local stack; `key` is the stack's publishable key. Local stack only.
  */
 export async function callCurrentStack(
   stack: { url: string; key: string },
@@ -78,6 +103,7 @@ export async function callCurrentStack(
   args: Record<string, unknown>,
   token?: string,
 ): Promise<{ status: number; body: unknown }> {
+  assertLocalStack(stack.url);
   const res = await fetch(`${stack.url}/rest/v1/rpc/${encodeURIComponent(fn)}`, {
     method: "POST",
     headers: {
@@ -89,4 +115,65 @@ export async function callCurrentStack(
   });
   const text = await res.text();
   return { status: res.status, body: text ? (JSON.parse(text) as unknown) : null };
+}
+
+/** Who a SQL call runs as on the current stack: a Postgres role plus the JWT claims `auth.uid()` and `auth.jwt()` read. */
+export interface StackActor {
+  role: "anon" | "authenticated" | "service_role" | "postgres";
+  claims?: Record<string, unknown>;
+}
+
+export type SqlOutcome<T> = { ok: true; value: T } | { ok: false; code: string; message: string };
+
+const ROLLBACK = Symbol("rollback");
+
+/** Switches the actor inside a transaction from `callCurrentStackSql`. `postgres` is the owner: triggers, jobs, row snapshots. */
+export async function actAs(tx: postgres.TransactionSql, actor: StackActor): Promise<void> {
+  await tx.unsafe(actor.role === "postgres" ? "reset role" : `set local role ${actor.role}`);
+  await tx`select set_config('request.jwt.claims', ${actor.claims ? JSON.stringify(actor.claims) : ""}, true)`;
+  await tx`select set_config('request.jwt.claim.sub', '', true)`;
+}
+
+/** Runs one step in a savepoint, so a refusal is recorded as its SQLSTATE and message and the transaction goes on. */
+export async function attempt<T>(tx: postgres.TransactionSql, step: (sp: postgres.TransactionSql) => Promise<T>): Promise<SqlOutcome<T>> {
+  try {
+    return { ok: true, value: (await tx.savepoint((sp) => step(sp))) as T };
+  } catch (err) {
+    const e = err as { code?: string; message?: string };
+    if (typeof e.code === "string") return { ok: false, code: e.code, message: e.message ?? "" };
+    throw err;
+  }
+}
+
+/**
+ * Calls the current stack's database directly, for what PostgREST cannot reach:
+ * private functions, triggers, scheduled jobs and row snapshots. `run` gets one
+ * transaction, starting as `postgres`; it switches actor with `actAs`. The
+ * transaction is rolled back unless `commit`, so recording leaves no rows
+ * behind (sequences still advance). Timestamps come back as the database's
+ * text so `normalise` can mask them.
+ */
+export async function callCurrentStackSql<T>(
+  dbUrl: string,
+  run: (tx: postgres.TransactionSql) => Promise<T>,
+  options: { commit?: boolean } = {},
+): Promise<SqlOutcome<T>> {
+  assertLocalStack(dbUrl);
+  const asText = { to: 25, from: [1082, 1083, 1114, 1184, 1266], serialize: (x: unknown) => String(x), parse: (x: string) => x };
+  const sql = postgres(dbUrl, { max: 1, onnotice: () => {}, types: { stackTime: asText } });
+  let value: T | undefined;
+  try {
+    await sql.begin(async (tx) => {
+      value = await run(tx);
+      if (!options.commit) throw ROLLBACK;
+    });
+    return { ok: true, value: value as T };
+  } catch (err) {
+    if (err === ROLLBACK) return { ok: true, value: value as T };
+    const e = err as { code?: string; message?: string };
+    if (typeof e.code === "string") return { ok: false, code: e.code, message: e.message ?? "" };
+    throw err;
+  } finally {
+    await sql.end({ timeout: 1 });
+  }
 }

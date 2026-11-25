@@ -5,6 +5,7 @@ export { createServiceSigner, serviceKeysFrom, verifyServiceToken, type ServiceK
 export {
   createUserTokenVerifier,
   noUserTokens,
+  type RevocationCheck,
   USER_TOKEN_AUDIENCE,
   USER_TOKEN_ISSUER,
   type UserTokenVerifier,
@@ -15,6 +16,7 @@ export { createHealth, type Health } from "./health";
 export {
   CALL_RULES,
   createBreaker,
+  propagate,
   retryReads,
   createClientFactory,
   from,
@@ -24,4 +26,11 @@ export {
   type LocalRoutes,
 } from "./client";
 export { createSecrets, envName, type Secrets } from "./secrets";
-export { defineService, type CallerPolicy, type ServiceDeps, type ServiceModule } from "./service";
+export { defineService, type CallerPolicy, type HttpReply, type HttpRoutes, type ServiceDeps, type ServiceModule } from "./service";
+export { appendEvents, createConsumer, EVENTS_CHANNEL, type Consumer, type ConsumerOptions, type EventHandler, type LoggedEvent, type NewEvent } from "./events";
+export { uuidv7 } from "./ids";
+export { createScheduler, createWorker, enqueue, nextSlot, type EnqueueOptions, type Job, type JobHandler, type Schedule, type Scheduler, type Worker, type WorkerOptions } from "./jobs";
+export { withWrite } from "./write";
+export { createRevocationCache, TOKENS_REVOKED, type RevocationCache } from "./auth/revocation";
+export { purgePlatform } from "./purge";
+export { rateLimit } from "./rate-limit";

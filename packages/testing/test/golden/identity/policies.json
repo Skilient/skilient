@@ -1,0 +1,199 @@
+{
+  "agreement_acceptances_accept_current": {
+    "own_row_current_version": {
+      "ok": true,
+      "value": 1
+    },
+    "own_row_stale_version": {
+      "code": "42501",
+      "message": "new row violates row-level security policy for table \"agreement_acceptances\"",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for table agreement_acceptances",
+      "ok": false
+    },
+    "someone_elses_row": {
+      "code": "42501",
+      "message": "new row violates row-level security policy for table \"agreement_acceptances\"",
+      "ok": false
+    }
+  },
+  "appeals_read": {
+    "accounts_aal2": 0,
+    "moderator_aal1": 0,
+    "moderator_aal2": 1,
+    "other_student": 0,
+    "owner_student": 1,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 0
+  },
+  "config_keys_staff_read": {
+    "accounts_aal2": 1,
+    "moderator_aal1": 0,
+    "moderator_aal2": 1,
+    "other_student": 0,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 1
+  },
+  "credentials_files_read": {
+    "accounts_aal2": 0,
+    "moderator_aal1": 0,
+    "moderator_aal2": 0,
+    "other_student": 0,
+    "owner_student": 1,
+    "signed_out": 0,
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 1
+  },
+  "exam_periods_read": {
+    "accounts_aal2": 1,
+    "moderator_aal1": 0,
+    "moderator_aal2": 0,
+    "other_student": 0,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 0
+  },
+  "feedback_files_read": {
+    "accounts_aal2": 1,
+    "moderator_aal1": 0,
+    "moderator_aal2": 1,
+    "other_student": 0,
+    "owner_student": 1,
+    "signed_out": 0,
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 1
+  },
+  "github_link_clashes_read_trust": {
+    "accounts_aal2": 0,
+    "moderator_aal1": 0,
+    "moderator_aal2": 0,
+    "other_student": 0,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 1
+  },
+  "job_runs_staff_read": {
+    "accounts_aal2": 1,
+    "moderator_aal1": 0,
+    "moderator_aal2": 1,
+    "other_student": 0,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 1
+  },
+  "ops_audit_log_read": {
+    "accounts_aal2": 1,
+    "moderator_aal1": 0,
+    "moderator_aal2": 1,
+    "other_student": 0,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 1
+  },
+  "platform_config_staff_read": {
+    "accounts_aal2": 1,
+    "moderator_aal1": 0,
+    "moderator_aal2": 1,
+    "other_student": 0,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 1
+  },
+  "report_cases_staff_read": {
+    "accounts_aal2": 0,
+    "moderator_aal1": 0,
+    "moderator_aal2": 1,
+    "other_student": 0,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 0
+  },
+  "report_messages_staff_read": {
+    "accounts_aal2": 0,
+    "moderator_aal1": 0,
+    "moderator_aal2": 1,
+    "other_student": 0,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 0
+  },
+  "reports_staff_read": {
+    "accounts_aal2": 0,
+    "moderator_aal1": 0,
+    "moderator_aal2": 1,
+    "other_student": 0,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 0
+  },
+  "review_flags_read": {
+    "accounts_aal2": 0,
+    "moderator_aal1": 0,
+    "moderator_aal2": 0,
+    "other_student": 0,
+    "owner_student": 1,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 1
+  },
+  "sanctions_read": {
+    "accounts_aal2": 0,
+    "moderator_aal1": 0,
+    "moderator_aal2": 1,
+    "other_student": 1,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 0
+  },
+  "staff_roles_read": {
+    "accounts_aal2": 0,
+    "moderator_aal1": 1,
+    "moderator_aal2": 1,
+    "other_student": 0,
+    "owner_student": 0,
+    "signed_out": "refused 42501",
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 0
+  },
+  "university_claims_files_read": {
+    "accounts_aal2": 1,
+    "moderator_aal1": 0,
+    "moderator_aal2": 0,
+    "other_student": 0,
+    "owner_student": 1,
+    "signed_out": 0,
+    "super_admin_aal1": 0,
+    "super_admin_aal2": 1,
+    "trust_reviewer_aal2": 0
+  }
+}

@@ -1,0 +1,530 @@
+syntax = "proto3";
+
+package skilient.identity.v1;
+
+// identity: accounts, sign-in, sessions, two-factor, signup gates, agreement versions, staff roles and
+// account deletion (docs/azure/prd.md, service catalogue and "Sign-in and sessions").
+//
+// Methods that return a secret (a session, backup codes, a TOTP secret) never store their reply under an
+// idempotency key: a repeat refuses with already_applied (decision 2026-11-25, Q2).
+// Refusals carry a short reason in the x-refusal metadata, never user content.
+service IdentityService {
+  // ---- Reads ----
+
+  // GetGateState is what the web app checks on every page: profile, onboarding, agreement, email domain, portals.
+  rpc GetGateState(GetGateStateRequest) returns (GetGateStateResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // SigninStatus says whether a captcha is needed and how long to wait before the next password try.
+  rpc SigninStatus(SigninStatusRequest) returns (SigninStatusResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // BackupCodesRemaining counts the signed-in user's unused backup codes.
+  rpc BackupCodesRemaining(BackupCodesRemainingRequest) returns (BackupCodesRemainingResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // StaffRolesOf returns staff roles for many users in one call (the batch method other services use).
+  rpc StaffRolesOf(StaffRolesOfRequest) returns (StaffRolesOfResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // CurrentAgreementVersion is the newest published agreement version, or 0 when none is published.
+  rpc CurrentAgreementVersion(CurrentAgreementVersionRequest) returns (CurrentAgreementVersionResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // OpsStaff lists every staff member (super admins, with two-factor).
+  rpc OpsStaff(OpsStaffRequest) returns (OpsStaffResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // ListSecurityEvents is the signed-in user's recent activity (Settings → Security): sign-ins, new devices,
+  // password and two-factor changes. Newest first, at most 20.
+  rpc ListSecurityEvents(ListSecurityEventsRequest) returns (ListSecurityEventsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // ListAuthenticators lists the signed-in user's verified authenticator apps (Settings → Security).
+  rpc ListAuthenticators(ListAuthenticatorsRequest) returns (ListAuthenticatorsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // GetSignupDetails gives people what a new account entered at sign-up (its name), for user.created.
+  // Event payloads never carry names, so people reads them here, in one batch call.
+  rpc GetSignupDetails(GetSignupDetailsRequest) returns (GetSignupDetailsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ---- Sign-up and sign-in ----
+
+  // SignUp checks every signup gate, creates the account and emits user.created.
+  rpc SignUp(SignUpRequest) returns (SignUpResponse);
+  // VerifyEmail confirms an email address with the code sent to it.
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
+  // RequestEmailCode sends a one-time sign-in code or link.
+  rpc RequestEmailCode(RequestEmailCodeRequest) returns (RequestEmailCodeResponse);
+  // SignInWithCode signs in with a one-time email code.
+  rpc SignInWithCode(SignInWithCodeRequest) returns (SignInWithCodeResponse);
+  // SignInPassword checks a password, counts failures, records the device and opens a session.
+  rpc SignInPassword(SignInPasswordRequest) returns (SignInPasswordResponse);
+  // SignInWithGoogle completes Google sign-in for a university Google account.
+  rpc SignInWithGoogle(SignInWithGoogleRequest) returns (SignInWithGoogleResponse);
+  // Refresh rotates the refresh token; reusing an old one ends the whole session family.
+  rpc Refresh(RefreshRequest) returns (RefreshResponse);
+  // SignOut ends this device's session (local), every other session (others) or every session (global).
+  rpc SignOut(SignOutRequest) returns (SignOutResponse);
+  // SecurityNotMe is the "this wasn't me" link in a new-device email: every session ends.
+  rpc SecurityNotMe(SecurityNotMeRequest) returns (SecurityNotMeResponse);
+  // LogSecurityEvent records one of the few events the user's own actions record.
+  rpc LogSecurityEvent(LogSecurityEventRequest) returns (LogSecurityEventResponse);
+
+  // ---- Passwords and two-factor ----
+
+  // ChangePassword checks the current password, sets a new one and ends every other session.
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  // RequestPasswordReset emails a reset link; it never says whether the account exists.
+  rpc RequestPasswordReset(RequestPasswordResetRequest) returns (RequestPasswordResetResponse);
+  // ResetPassword sets a new password from a reset link.
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
+  // EnrollTotp starts authenticator enrolment and returns the secret to show once.
+  rpc EnrollTotp(EnrollTotpRequest) returns (EnrollTotpResponse);
+  // VerifyTotp checks an authenticator code: it finishes enrolment, or steps the session up to aal2.
+  rpc VerifyTotp(VerifyTotpRequest) returns (VerifyTotpResponse);
+  // RemoveTotp removes the authenticator (two-factor session required).
+  rpc RemoveTotp(RemoveTotpRequest) returns (RemoveTotpResponse);
+  // CreateBackupCodes replaces the user's backup codes and returns them once.
+  rpc CreateBackupCodes(CreateBackupCodesRequest) returns (CreateBackupCodesResponse);
+  // UseBackupCode signs in with a backup code in place of the authenticator, which it removes.
+  rpc UseBackupCode(UseBackupCodeRequest) returns (UseBackupCodeResponse);
+  // DeleteBackupCodes removes the user's backup codes.
+  rpc DeleteBackupCodes(DeleteBackupCodesRequest) returns (DeleteBackupCodesResponse);
+
+  // ---- Agreement and deletion ----
+
+  // AcceptAgreement accepts the current agreement version.
+  rpc AcceptAgreement(AcceptAgreementRequest) returns (AcceptAgreementResponse);
+  // RequestAccountDeletion schedules the account for deletion after 14 days.
+  rpc RequestAccountDeletion(RequestAccountDeletionRequest) returns (RequestAccountDeletionResponse);
+  // CancelAccountDeletion cancels a pending deletion.
+  rpc CancelAccountDeletion(CancelAccountDeletionRequest) returns (CancelAccountDeletionResponse);
+
+  // ---- Staff and commands other services call ----
+
+  // GrantStaffRole gives a role to an account with two-factor set up (super admins, audited).
+  rpc GrantStaffRole(GrantStaffRoleRequest) returns (GrantStaffRoleResponse);
+  // RevokeStaffRole removes a role; never the last super admin (super admins, audited).
+  rpc RevokeStaffRole(RevokeStaffRoleRequest) returns (RevokeStaffRoleResponse);
+  // OpsResetMfa removes a user's two-factor after an identity check (super admins, audited).
+  rpc OpsResetMfa(OpsResetMfaRequest) returns (OpsResetMfaResponse);
+  // SanctionUser applies identity's half of a sanction: ends sessions and, for a ban, sets the ban (trust calls it).
+  rpc SanctionUser(SanctionUserRequest) returns (SanctionUserResponse);
+  // LiftSanction lifts identity's half of a ban (trust calls it).
+  rpc LiftSanction(LiftSanctionRequest) returns (LiftSanctionResponse);
+  // CompleteGithubLink records identity's security event for a GitHub link (work calls it).
+  rpc CompleteGithubLink(CompleteGithubLinkRequest) returns (CompleteGithubLinkResponse);
+  // DisconnectGithub records identity's security event for a GitHub unlink (work calls it).
+  rpc DisconnectGithub(DisconnectGithubRequest) returns (DisconnectGithubResponse);
+}
+
+enum AccountRole {
+  ACCOUNT_ROLE_UNSPECIFIED = 0;
+  ACCOUNT_ROLE_STUDENT = 1;
+  ACCOUNT_ROLE_FACULTY = 2;
+  ACCOUNT_ROLE_RECRUITER = 3;
+  ACCOUNT_ROLE_UNIVERSITY_ADMIN = 4;
+}
+
+enum StaffRole {
+  STAFF_ROLE_UNSPECIFIED = 0;
+  STAFF_ROLE_MODERATOR = 1;
+  STAFF_ROLE_TRUST_REVIEWER = 2;
+  STAFF_ROLE_ACCOUNTS = 3;
+  STAFF_ROLE_SUPER_ADMIN = 4;
+}
+
+// Portals switched on (the portals.enabled flag).
+message Portals {
+  bool recruiter = 1;
+  bool university = 2;
+  bool faculty = 3;
+}
+
+// A signed-in session. The access token lives 10 minutes; the refresh token rotates on every use.
+message Session {
+  string access_token = 1;
+  string refresh_token = 2;
+  uint32 expires_in_seconds = 3;
+  string session_id = 4;
+  // aal1, or aal2 after two-factor.
+  string aal = 5;
+}
+
+message GetGateStateRequest {}
+
+message GetGateStateResponse {
+  bool has_profile = 1;
+  AccountRole role = 2;
+  string university_id = 3;
+  bool onboarding_complete = 4;
+  uint32 onboarding_step = 5;
+  uint32 agreement_version = 6;
+  bool agreement_accepted = 7;
+  bool email_allowed = 8;
+  // active, graduate or deleting.
+  string status = 9;
+  Portals portals = 10;
+}
+
+message SigninStatusRequest {
+  string email = 1;
+  // HMAC of the client IP, hex; never the IP itself.
+  string ip_hash = 2;
+}
+
+message SigninStatusResponse {
+  uint32 failures = 1;
+  bool captcha_required = 2;
+  uint32 retry_after_seconds = 3;
+}
+
+message BackupCodesRemainingRequest {}
+
+message BackupCodesRemainingResponse {
+  uint32 remaining = 1;
+}
+
+message StaffRolesOfRequest {
+  repeated string user_ids = 1;
+}
+
+message StaffRolesOfResponse {
+  message Entry {
+    string user_id = 1;
+    repeated StaffRole roles = 2;
+  }
+  repeated Entry users = 1;
+}
+
+message CurrentAgreementVersionRequest {}
+
+message CurrentAgreementVersionResponse {
+  uint32 version = 1;
+}
+
+message OpsStaffRequest {}
+
+message OpsStaffResponse {
+  message Member {
+    string user_id = 1;
+    string email = 2;
+    repeated StaffRole roles = 3;
+    string since = 4;
+    bool is_me = 5;
+    bool two_factor = 6;
+    // From people's batch method; empty when people has no name for the account.
+    string name = 7;
+  }
+  repeated Member members = 1;
+}
+
+message ListSecurityEventsRequest {}
+
+message ListSecurityEventsResponse {
+  message Event {
+    // sign_in, new_device, sign_in_failed, sign_in_alert, password_changed, mfa_enrolled, mfa_unenrolled, not_me, ...
+    string kind = 1;
+    string at = 2;
+    string user_agent = 3;
+    // For sign_in: password, otp, google, ...
+    string method = 4;
+    bool new_device = 5;
+  }
+  repeated Event events = 1;
+}
+
+message ListAuthenticatorsRequest {}
+
+message ListAuthenticatorsResponse {
+  message Authenticator {
+    string factor_id = 1;
+    string created_at = 2;
+    string verified_at = 3;
+  }
+  repeated Authenticator authenticators = 1;
+}
+
+message GetSignupDetailsRequest {
+  repeated string user_ids = 1;
+}
+
+message GetSignupDetailsResponse {
+  message Entry {
+    string user_id = 1;
+    string full_name = 2;
+    AccountRole role = 3;
+    string university_id = 4;
+  }
+  repeated Entry users = 1;
+}
+
+message SignUpRequest {
+  string email = 1;
+  string password = 2;
+  AccountRole role = 3;
+  // Chosen when one email domain belongs to several universities.
+  string university_id = 4;
+  string full_name = 5;
+  // The agreement version the user ticked on the signup page.
+  uint32 agreement_version = 6;
+  string captcha_token = 7;
+}
+
+message SignUpResponse {
+  string user_id = 1;
+  // True when an email code was sent to confirm the address.
+  bool verification_sent = 2;
+}
+
+message VerifyEmailRequest {
+  string email = 1;
+  string code = 2;
+}
+
+message VerifyEmailResponse {
+  Session session = 1;
+}
+
+message RequestEmailCodeRequest {
+  string email = 1;
+  string captcha_token = 2;
+}
+
+message RequestEmailCodeResponse {}
+
+message SignInWithCodeRequest {
+  string email = 1;
+  string code = 2;
+  string device_hash = 3;
+  string ip_hash = 4;
+  string user_agent = 5;
+}
+
+message SignInWithCodeResponse {
+  Session session = 1;
+}
+
+message SignInPasswordRequest {
+  string email = 1;
+  string password = 2;
+  string device_hash = 3;
+  string ip_hash = 4;
+  string user_agent = 5;
+  string captcha_token = 6;
+}
+
+message SignInPasswordResponse {
+  Session session = 1;
+  // True when the session needs a two-factor step before staff or portal areas.
+  bool two_factor_required = 2;
+}
+
+message SignInWithGoogleRequest {
+  // The OAuth authorization code and the PKCE verifier from the web app's callback.
+  string code = 1;
+  string code_verifier = 2;
+  string redirect_uri = 3;
+  string device_hash = 4;
+  string ip_hash = 5;
+  string user_agent = 6;
+  // The agreement version ticked before choosing Google, if any.
+  uint32 agreement_version = 7;
+}
+
+message SignInWithGoogleResponse {
+  Session session = 1;
+  bool new_account = 2;
+}
+
+message RefreshRequest {
+  string refresh_token = 1;
+}
+
+message RefreshResponse {
+  Session session = 1;
+}
+
+enum SignOutScope {
+  SIGN_OUT_SCOPE_UNSPECIFIED = 0;
+  // This device only.
+  SIGN_OUT_SCOPE_LOCAL = 1;
+  // Every other device.
+  SIGN_OUT_SCOPE_OTHERS = 2;
+  // Every device.
+  SIGN_OUT_SCOPE_GLOBAL = 3;
+}
+
+message SignOutRequest {
+  SignOutScope scope = 1;
+}
+
+message SignOutResponse {}
+
+message SecurityNotMeRequest {
+  string token = 1;
+}
+
+message SecurityNotMeResponse {
+  bool ok = 1;
+  string email = 2;
+}
+
+message LogSecurityEventRequest {
+  // password_changed, mfa_enrolled, mfa_unenrolled or signed_out_everywhere.
+  string kind = 1;
+  string ip_hash = 2;
+  string user_agent = 3;
+}
+
+message LogSecurityEventResponse {}
+
+message ChangePasswordRequest {
+  string current_password = 1;
+  string new_password = 2;
+}
+
+message ChangePasswordResponse {
+  // A fresh session for this device; every other session has ended.
+  Session session = 1;
+}
+
+message RequestPasswordResetRequest {
+  string email = 1;
+  string captcha_token = 2;
+}
+
+message RequestPasswordResetResponse {}
+
+message ResetPasswordRequest {
+  string token = 1;
+  string new_password = 2;
+}
+
+message ResetPasswordResponse {
+  Session session = 1;
+}
+
+message EnrollTotpRequest {}
+
+message EnrollTotpResponse {
+  string factor_id = 1;
+  // Shown once, as text and as a QR code.
+  string secret = 2;
+  string otpauth_uri = 3;
+}
+
+message VerifyTotpRequest {
+  string factor_id = 1;
+  string code = 2;
+}
+
+message VerifyTotpResponse {
+  Session session = 1;
+}
+
+message RemoveTotpRequest {
+  string factor_id = 1;
+}
+
+message RemoveTotpResponse {}
+
+message CreateBackupCodesRequest {}
+
+message CreateBackupCodesResponse {
+  repeated string codes = 1;
+}
+
+message UseBackupCodeRequest {
+  string code = 1;
+}
+
+message UseBackupCodeResponse {
+  bool ok = 1;
+  Session session = 2;
+}
+
+message DeleteBackupCodesRequest {}
+
+message DeleteBackupCodesResponse {}
+
+message AcceptAgreementRequest {
+  uint32 version = 1;
+  string ip_hash = 2;
+}
+
+message AcceptAgreementResponse {}
+
+message RequestAccountDeletionRequest {}
+
+message RequestAccountDeletionResponse {
+  string delete_after = 1;
+}
+
+message CancelAccountDeletionRequest {}
+
+message CancelAccountDeletionResponse {}
+
+message GrantStaffRoleRequest {
+  string email = 1;
+  StaffRole role = 2;
+  string reason = 3;
+}
+
+message GrantStaffRoleResponse {
+  string user_id = 1;
+}
+
+message RevokeStaffRoleRequest {
+  string user_id = 1;
+  StaffRole role = 2;
+  string reason = 3;
+}
+
+message RevokeStaffRoleResponse {}
+
+message OpsResetMfaRequest {
+  string user_id = 1;
+  // How the staff member checked who the user is (at least 20 characters).
+  string identity_note = 2;
+}
+
+message OpsResetMfaResponse {}
+
+message SanctionUserRequest {
+  string user_id = 1;
+  // warn, suspend or ban.
+  string kind = 2;
+  // RFC 3339; empty for a permanent ban or a warning.
+  string until = 3;
+  string reason = 4;
+  // The sanction trust recorded, for the audit trail.
+  string sanction_id = 5;
+}
+
+message SanctionUserResponse {}
+
+message LiftSanctionRequest {
+  string user_id = 1;
+  string sanction_id = 2;
+  string reason = 3;
+}
+
+message LiftSanctionResponse {}
+
+message CompleteGithubLinkRequest {
+  string user_id = 1;
+  string github_login = 2;
+}
+
+message CompleteGithubLinkResponse {}
+
+message DisconnectGithubRequest {
+  string user_id = 1;
+  string github_login = 2;
+}
+
+message DisconnectGithubResponse {}

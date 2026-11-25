@@ -1,0 +1,550 @@
+{
+  "domain_admits_students": {
+    "any_university": {
+      "ok": true,
+      "value": true
+    },
+    "its_university": {
+      "ok": true,
+      "value": true
+    },
+    "other_university": {
+      "ok": true,
+      "value": false
+    },
+    "personal_domain": {
+      "ok": true,
+      "value": false
+    },
+    "unknown_domain": {
+      "ok": true,
+      "value": false
+    }
+  },
+  "email_domain": {
+    "\"  a@golden-uni.test \"": {
+      "ok": true,
+      "value": "golden-uni.test"
+    },
+    "\"\"": {
+      "ok": true,
+      "value": null
+    },
+    "\"a@\"": {
+      "ok": true,
+      "value": null
+    },
+    "\"a@b@golden-uni.test\"": {
+      "ok": true,
+      "value": "golden-uni.test"
+    },
+    "\"Golden.Student@Golden-Uni.TEST\"": {
+      "ok": true,
+      "value": "golden-uni.test"
+    },
+    "\"no-at-sign\"": {
+      "ok": true,
+      "value": null
+    }
+  },
+  "email_domain_allowed": {
+    "profile_at_another_university": {
+      "ok": true,
+      "value": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function email_domain_allowed",
+      "ok": false
+    },
+    "student_at_own_university": {
+      "ok": true,
+      "value": true
+    }
+  },
+  "guard_email_change": {
+    "email_to_other_university_refused": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "a university account must keep an email at its university",
+        "ok": false
+      }
+    },
+    "pending_change_to_personal_refused": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "a university account must keep an email at its university",
+        "ok": false
+      }
+    },
+    "same_university_email": {
+      "changes": {
+        "auth.users": {
+          "added": [
+            {
+              "banned_until": null,
+              "email": "golden.student2@golden-uni.test",
+              "email_change": null,
+              "id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "banned_until": null,
+              "email": "golden.student@golden-uni.test",
+              "email_change": null,
+              "id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    }
+  },
+  "guard_uni_admin_email_change": {
+    "personal_refused": {
+      "code": "42501",
+      "message": "a university account must keep an email at its university",
+      "ok": false
+    },
+    "same_university": {
+      "ok": true,
+      "value": 1
+    }
+  },
+  "handle_new_user": {
+    "not_a_university_refused": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "signup refused: golden-nowhere.test is not a university email domain",
+        "ok": false
+      }
+    },
+    "personal_domain_refused": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "signup refused: golden-mail.test is not a university email domain",
+        "ok": false
+      }
+    },
+    "student_with_agreement": {
+      "changes": {
+        "auth.users": {
+          "added": [
+            {
+              "banned_until": null,
+              "email": "golden.newbie@golden-uni.test",
+              "email_change": null,
+              "id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.agreement_acceptances": {
+          "added": [
+            {
+              "ip_hash": null,
+              "user_id": "<uuid:1>",
+              "version": 3
+            }
+          ],
+          "removed": []
+        },
+        "public.onboarding_state": {
+          "added": [
+            {
+              "completed_at": null,
+              "role": "student",
+              "step": 1,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.profiles": {
+          "added": [
+            {
+              "delete_after": null,
+              "full_name": "Golden Newbie",
+              "onboarding_complete": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:1>",
+              "visibility": "university"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "signup",
+              "meta": {
+                "provider": "email",
+                "role": "student"
+              },
+              "user_agent": null,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true
+      }
+    },
+    "student_without_agreement": {
+      "changes": {
+        "auth.users": {
+          "added": [
+            {
+              "banned_until": null,
+              "email": "golden.extra@golden-uni.test",
+              "email_change": null,
+              "id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.onboarding_state": {
+          "added": [
+            {
+              "completed_at": null,
+              "role": "student",
+              "step": 1,
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.profiles": {
+          "added": [
+            {
+              "delete_after": null,
+              "full_name": "golden.extra",
+              "onboarding_complete": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "visibility": "university"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "signup",
+              "meta": {
+                "provider": "email",
+                "role": "student"
+              },
+              "user_agent": null,
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true
+      }
+    }
+  },
+  "handle_new_user_roles": {
+    "faculty": {
+      "changes": {
+        "auth.users": {
+          "added": [
+            {
+              "banned_until": null,
+              "email": "golden.prof@golden-uni.test",
+              "email_change": null,
+              "id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.onboarding_state": {
+          "added": [
+            {
+              "completed_at": "<time>",
+              "role": "faculty",
+              "step": 6,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.profiles": {
+          "added": [
+            {
+              "delete_after": null,
+              "full_name": "golden.prof",
+              "onboarding_complete": true,
+              "role": "faculty",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:1>",
+              "visibility": "university"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "signup",
+              "meta": {
+                "provider": "email",
+                "role": "faculty"
+              },
+              "user_agent": null,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true
+      }
+    },
+    "google_ignores_role": {
+      "changes": {},
+      "result": {
+        "ok": true
+      }
+    },
+    "recruiter": {
+      "changes": {
+        "auth.users": {
+          "added": [
+            {
+              "banned_until": null,
+              "email": "golden.hr@golden-company.test",
+              "email_change": null,
+              "id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.onboarding_state": {
+          "added": [
+            {
+              "completed_at": "<time>",
+              "role": "recruiter",
+              "step": 6,
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.profiles": {
+          "added": [
+            {
+              "delete_after": null,
+              "full_name": "Golden HR",
+              "onboarding_complete": true,
+              "role": "recruiter",
+              "status": "active",
+              "university_id": null,
+              "user_id": "<uuid:3>",
+              "visibility": "friends"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "signup",
+              "meta": {
+                "provider": "email",
+                "role": "recruiter"
+              },
+              "user_agent": null,
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true
+      }
+    },
+    "recruiter_university_domain_refused": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "signup refused: golden-uni.test is not a company email domain",
+        "ok": false
+      }
+    }
+  },
+  "is_recruiter_domain": {
+    "company": {
+      "ok": true,
+      "value": true
+    },
+    "none": {
+      "ok": true,
+      "value": false
+    },
+    "personal": {
+      "ok": true,
+      "value": false
+    },
+    "university": {
+      "ok": true,
+      "value": false
+    }
+  },
+  "portals_state": {
+    "closed": {
+      "faculty": {
+        "ok": true,
+        "value": true
+      },
+      "recruiter": {
+        "ok": true,
+        "value": false
+      },
+      "state": {
+        "ok": true,
+        "value": {
+          "faculty": true,
+          "recruiter": false,
+          "university": false
+        }
+      },
+      "university": {
+        "ok": true,
+        "value": false
+      },
+      "unknown": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "open": {
+      "faculty": {
+        "ok": true,
+        "value": false
+      },
+      "recruiter": {
+        "ok": true,
+        "value": true
+      },
+      "state": {
+        "ok": true,
+        "value": {
+          "faculty": false,
+          "recruiter": true,
+          "university": true
+        }
+      },
+      "university": {
+        "ok": true,
+        "value": true
+      },
+      "unknown": {
+        "ok": true,
+        "value": false
+      }
+    }
+  },
+  "validate_signup": {
+    "portalsOff": {
+      "faculty_not_live": {
+        "ok": true,
+        "value": "Your university isn't on Skilient yet."
+      },
+      "faculty_ok": {
+        "ok": true,
+        "value": null
+      },
+      "invalid_email": {
+        "ok": true,
+        "value": "Enter a valid email address."
+      },
+      "null_email": {
+        "ok": true,
+        "value": "Enter a valid email address."
+      },
+      "recruiter_closed": {
+        "ok": true,
+        "value": "Recruiter accounts aren't open yet. Talk to us at skilient.com/recruiters."
+      },
+      "student_not_live": {
+        "ok": true,
+        "value": "Your university isn't on Skilient yet."
+      },
+      "student_ok": {
+        "ok": true,
+        "value": null
+      },
+      "student_ok_with_university": {
+        "ok": true,
+        "value": null
+      },
+      "student_personal_domain": {
+        "ok": true,
+        "value": "Use your university email."
+      },
+      "student_unknown_domain": {
+        "ok": true,
+        "value": "Your university isn't on Skilient yet."
+      },
+      "student_wrong_university": {
+        "ok": true,
+        "value": "That university doesn't use this email domain."
+      },
+      "university_admin_closed": {
+        "ok": true,
+        "value": "University accounts aren't open yet. Talk to us at skilient.com/universities."
+      }
+    },
+    "portalsOn": {
+      "faculty_closed": {
+        "ok": true,
+        "value": "Faculty accounts aren't open yet."
+      },
+      "recruiter_ok": {
+        "ok": true,
+        "value": null
+      },
+      "recruiter_personal": {
+        "ok": true,
+        "value": "Use your work email."
+      },
+      "recruiter_university_domain": {
+        "ok": true,
+        "value": "Use your company email, not a university one."
+      },
+      "university_admin_not_live": {
+        "ok": true,
+        "value": null
+      },
+      "university_admin_ok": {
+        "ok": true,
+        "value": null
+      }
+    }
+  }
+}

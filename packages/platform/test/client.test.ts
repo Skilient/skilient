@@ -1,6 +1,7 @@
 import { Code, ConnectError, createContextValues, type UnaryRequest, type UnaryResponse } from "@connectrpc/connect";
 import { describe, expect, it } from "vitest";
-import { CALL_RULES, createBreaker } from "../src/index";
+import { MethodOptions_IdempotencyLevel } from "@bufbuild/protobuf/wkt";
+import { CALL_RULES, createBreaker, propagate, serviceKeysFrom } from "../src/index";
 
 function fakeRequest(typeName = "skilient.sample.v1.SampleService"): UnaryRequest {
   return { service: { typeName }, contextValues: createContextValues() } as unknown as UnaryRequest;
@@ -59,5 +60,42 @@ describe("retry", () => {
     calls = 0;
     await expect(retryReads(next as never)(method(L.IDEMPOTENCY_UNKNOWN))).rejects.toThrow(/down/);
     expect(calls).toBe(1);
+  });
+});
+
+describe("idempotency keys on writes", () => {
+  const options = {
+    caller: "web",
+    keys: serviceKeysFrom(Buffer.alloc(32, 7).toString("base64url")),
+    serviceName: () => "sample",
+    resolveUrl: () => undefined,
+  };
+  function request(idempotency: MethodOptions_IdempotencyLevel, preset?: string): UnaryRequest {
+    const header = new Headers();
+    if (preset) header.set("idempotency-key", preset);
+    return {
+      service: { typeName: "skilient.sample.v1.SampleService" },
+      method: { idempotency },
+      header,
+      contextValues: createContextValues(),
+    } as unknown as UnaryRequest;
+  }
+  async function sent(req: UnaryRequest): Promise<string | null> {
+    let key: string | null = null;
+    await propagate(options)((async (r: UnaryRequest) => {
+      key = r.header.get("idempotency-key");
+      return {} as UnaryResponse;
+    }) as never)(req);
+    return key;
+  }
+
+  it("adds a fresh key to every write, none to reads, and keeps a caller's own key", async () => {
+    const a = await sent(request(MethodOptions_IdempotencyLevel.IDEMPOTENCY_UNKNOWN));
+    const b = await sent(request(MethodOptions_IdempotencyLevel.IDEMPOTENT));
+    expect(a).toMatch(/^[0-9a-f-]{36}$/);
+    expect(b).toMatch(/^[0-9a-f-]{36}$/);
+    expect(a).not.toBe(b);
+    expect(await sent(request(MethodOptions_IdempotencyLevel.NO_SIDE_EFFECTS))).toBeNull();
+    expect(await sent(request(MethodOptions_IdempotencyLevel.IDEMPOTENCY_UNKNOWN, "caller-key-123"))).toBe("caller-key-123");
   });
 });

@@ -1,0 +1,53 @@
+{
+  "acceptance": {
+    "accepted": {
+      "changes": {
+        "public.agreement_acceptances": {
+          "added": [
+            {
+              "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+              "user_id": "<uuid:1>",
+              "version": 3
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "extra_column_refused": {
+      "code": "42501",
+      "message": "permission denied for table agreement_acceptances",
+      "ok": false
+    },
+    "gate_after": true,
+    "gate_before": false,
+    "other_users_row_refused": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "new row violates row-level security policy for table \"agreement_acceptances\"",
+        "ok": false
+      }
+    },
+    "repeat": {
+      "changes": {},
+      "result": {
+        "code": "23505",
+        "message": "duplicate key value violates unique constraint \"agreement_acceptances_pkey\"",
+        "ok": false
+      }
+    },
+    "stale_version_refused": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "new row violates row-level security policy for table \"agreement_acceptances\"",
+        "ok": false
+      }
+    }
+  }
+}

@@ -1,0 +1,900 @@
+{
+  "log_security_event": {
+    "bad_ip_is_dropped": {
+      "changes": {
+        "private.rate_limit_events": {
+          "added": [
+            {
+              "key": "security_event:<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "mfa_enrolled",
+              "meta": {},
+              "user_agent": "golden-agent/1.0",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "invalid_kind": {
+      "code": "22023",
+      "message": "invalid event kind",
+      "ok": false
+    },
+    "password_changed": {
+      "changes": {
+        "private.rate_limit_events": {
+          "added": [
+            {
+              "key": "security_event:<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+              "kind": "password_changed",
+              "meta": {},
+              "user_agent": "golden-agent/1.0",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function log_security_event",
+      "ok": false
+    }
+  },
+  "my_gate_state": {
+    "new_student": {
+      "ok": true,
+      "value": {
+        "agreement_accepted": false,
+        "agreement_version": 3,
+        "email_allowed": true,
+        "has_profile": true,
+        "onboarding_complete": false,
+        "onboarding_step": 1,
+        "portals": {
+          "faculty": true,
+          "recruiter": false,
+          "university": false
+        },
+        "role": "student",
+        "status": "active",
+        "university_id": "<uuid:1>",
+        "username": null
+      }
+    },
+    "onboarded_student_no_agreement": {
+      "ok": true,
+      "value": {
+        "agreement_accepted": false,
+        "agreement_version": 3,
+        "email_allowed": true,
+        "has_profile": true,
+        "onboarding_complete": true,
+        "onboarding_step": 6,
+        "portals": {
+          "faculty": true,
+          "recruiter": false,
+          "university": false
+        },
+        "role": "student",
+        "status": "active",
+        "university_id": "<uuid:1>",
+        "username": "golden1"
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function my_gate_state",
+      "ok": false
+    }
+  },
+  "purge_security_data": {
+    "changes": {
+      "private.auth_failures": {
+        "added": [],
+        "removed": [
+          {
+            "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+          }
+        ]
+      },
+      "private.mfa_backup_codes": {
+        "added": [
+          {
+            "unused": 1,
+            "used": 0,
+            "user_id": "<uuid:1>"
+          }
+        ],
+        "removed": [
+          {
+            "unused": 1,
+            "used": 1,
+            "user_id": "<uuid:1>"
+          }
+        ]
+      },
+      "private.rate_limit_events": {
+        "added": [],
+        "removed": [
+          {
+            "key": "golden:old"
+          }
+        ]
+      },
+      "private.security_alert_tokens": {
+        "added": [],
+        "removed": [
+          {
+            "expires_at": "<time>",
+            "used_at": null,
+            "user_id": "<uuid:1>"
+          }
+        ]
+      },
+      "public.job_runs": {
+        "added": [
+          {
+            "error": null,
+            "job": "purge-security-data",
+            "rows": 5,
+            "status": "succeeded"
+          }
+        ],
+        "removed": []
+      },
+      "public.security_events": {
+        "added": [],
+        "removed": [
+          {
+            "ip_hash": null,
+            "kind": "sign_in",
+            "meta": {},
+            "user_agent": null,
+            "user_id": "<uuid:1>"
+          }
+        ]
+      }
+    },
+    "result": {
+      "ok": true,
+      "value": ""
+    }
+  },
+  "record_sign_in": {
+    "first_device": {
+      "changes": {
+        "private.rate_limit_events": {
+          "added": [
+            {
+              "key": "record_sign_in:<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+              "kind": "sign_in",
+              "meta": {
+                "method": "password",
+                "new_device": true
+              },
+              "user_agent": "golden-agent/1.0",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.user_devices": {
+          "added": [
+            {
+              "device_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "user_agent": "golden-agent/1.0",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "alert_token": null,
+          "new_device": true
+        }
+      }
+    },
+    "invalid_device": {
+      "code": "22023",
+      "message": "invalid device",
+      "ok": false
+    },
+    "invalid_method": {
+      "code": "22023",
+      "message": "invalid sign-in method",
+      "ok": false
+    },
+    "new_device": {
+      "changes": {
+        "private.rate_limit_events": {
+          "added": [
+            {
+              "key": "record_sign_in:<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "private.security_alert_tokens": {
+          "added": [
+            {
+              "expires_at": "<time>",
+              "used_at": null,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+              "kind": "new_device",
+              "meta": {},
+              "user_agent": "golden-agent/1.0",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+              "kind": "sign_in",
+              "meta": {
+                "method": "google",
+                "new_device": true
+              },
+              "user_agent": "golden-agent/1.0",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.user_devices": {
+          "added": [
+            {
+              "device_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "user_agent": "golden-agent/1.0",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "alert_token": "<token>",
+          "new_device": true
+        }
+      }
+    },
+    "not_me": {
+      "changes": {
+        "auth.sessions": {
+          "added": [],
+          "removed": [
+            {
+              "aal": "aal1",
+              "id": "<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "private.security_alert_tokens": {
+          "added": [
+            {
+              "expires_at": "<time>",
+              "used_at": "<time>",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "expires_at": "<time>",
+              "used_at": null,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "not_me",
+              "meta": {},
+              "user_agent": null,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "email": "golden.student@golden-uni.test",
+          "ok": true
+        }
+      }
+    },
+    "not_me_malformed": {
+      "ok": true,
+      "value": {
+        "ok": false
+      }
+    },
+    "not_me_reused": {
+      "ok": true,
+      "value": {
+        "ok": false
+      }
+    },
+    "not_me_unknown": {
+      "ok": true,
+      "value": {
+        "ok": false
+      }
+    },
+    "same_device": {
+      "changes": {
+        "private.rate_limit_events": {
+          "added": [
+            {
+              "key": "record_sign_in:<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+              "kind": "sign_in",
+              "meta": {
+                "method": "otp",
+                "new_device": false
+              },
+              "user_agent": "golden-agent/1.0",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "alert_token": null,
+          "new_device": false
+        }
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function record_sign_in",
+      "ok": false
+    }
+  },
+  "signin_failures": {
+    "failures": {
+      "1": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": false,
+            "failures": 1,
+            "notify": false,
+            "retry_after_seconds": 0
+          }
+        }
+      },
+      "2": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": false,
+            "failures": 2,
+            "notify": false,
+            "retry_after_seconds": 0
+          }
+        }
+      },
+      "3": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": true,
+            "failures": 3,
+            "notify": false,
+            "retry_after_seconds": 0
+          }
+        }
+      },
+      "4": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": true,
+            "failures": 4,
+            "notify": false,
+            "retry_after_seconds": 0
+          }
+        }
+      },
+      "5": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": true,
+            "failures": 5,
+            "notify": false,
+            "retry_after_seconds": 0
+          }
+        }
+      },
+      "6": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": true,
+            "failures": 6,
+            "notify": false,
+            "retry_after_seconds": 0
+          }
+        }
+      },
+      "7": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": true,
+            "failures": 7,
+            "notify": false,
+            "retry_after_seconds": 0
+          }
+        }
+      },
+      "8": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": true,
+            "failures": 8,
+            "notify": false,
+            "retry_after_seconds": 0
+          }
+        }
+      },
+      "9": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": true,
+            "failures": 9,
+            "notify": false,
+            "retry_after_seconds": 0
+          }
+        }
+      },
+      "10": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_alert",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              },
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": true,
+            "failures": 10,
+            "notify": true,
+            "retry_after_seconds": 2
+          }
+        }
+      },
+      "11": {
+        "changes": {
+          "private.auth_failures": {
+            "added": [
+              {
+                "key": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+              },
+              {
+                "key": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+              }
+            ],
+            "removed": []
+          },
+          "public.security_events": {
+            "added": [
+              {
+                "ip_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+                "kind": "sign_in_failed",
+                "meta": {},
+                "user_agent": null,
+                "user_id": "<uuid:1>"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": {
+            "captcha_required": true,
+            "failures": 11,
+            "notify": false,
+            "retry_after_seconds": 4
+          }
+        }
+      }
+    },
+    "fresh": {
+      "ok": true,
+      "value": {
+        "captcha_required": false,
+        "failures": 0,
+        "retry_after_seconds": 0
+      }
+    },
+    "status_after": {
+      "ok": true,
+      "value": {
+        "captcha_required": true,
+        "failures": 11,
+        "retry_after_seconds": 4
+      }
+    },
+    "unknown_email": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": {
+          "captcha_required": false,
+          "failures": 1,
+          "notify": false,
+          "retry_after_seconds": 0
+        }
+      }
+    }
+  },
+  "signin_helpers": {
+    "account_key": {
+      "ok": true,
+      "value": "acct:6b8730b1a23842c54ccf1495cf7ef3ef4771fcd5a5326ae0ec1b9ea6e5146fd6"
+    },
+    "account_key_null": {
+      "ok": true,
+      "value": "acct:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "delays": {
+      "0": {
+        "ok": true,
+        "value": 0
+      },
+      "9": {
+        "ok": true,
+        "value": 0
+      },
+      "10": {
+        "ok": true,
+        "value": 2
+      },
+      "11": {
+        "ok": true,
+        "value": 4
+      },
+      "12": {
+        "ok": true,
+        "value": 8
+      },
+      "14": {
+        "ok": true,
+        "value": 32
+      },
+      "15": {
+        "ok": true,
+        "value": 60
+      },
+      "20": {
+        "ok": true,
+        "value": 60
+      }
+    },
+    "ip_key": {
+      "ok": true,
+      "value": "ip:1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    "ip_key_invalid": {
+      "ok": true,
+      "value": null
+    }
+  }
+}

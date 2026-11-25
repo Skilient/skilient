@@ -1,0 +1,281 @@
+{
+  "account_deletion_run": {
+    "changes": {
+      "auth.sessions": {
+        "added": [],
+        "removed": [
+          {
+            "aal": "aal1",
+            "id": "<uuid:1>",
+            "user_id": "<uuid:2>"
+          }
+        ]
+      },
+      "auth.users": {
+        "added": [],
+        "removed": [
+          {
+            "banned_until": null,
+            "email": "golden.student@golden-uni.test",
+            "email_change": null,
+            "id": "<uuid:2>"
+          }
+        ]
+      },
+      "public.onboarding_state": {
+        "added": [],
+        "removed": [
+          {
+            "completed_at": "<time>",
+            "role": "student",
+            "step": 6,
+            "user_id": "<uuid:2>"
+          }
+        ]
+      },
+      "public.profiles": {
+        "added": [],
+        "removed": [
+          {
+            "delete_after": "<time>",
+            "full_name": "Golden 1",
+            "onboarding_complete": true,
+            "role": "student",
+            "status": "deleting",
+            "university_id": "<uuid:3>",
+            "user_id": "<uuid:2>",
+            "visibility": "university"
+          }
+        ]
+      },
+      "public.security_events": {
+        "added": [],
+        "removed": [
+          {
+            "ip_hash": null,
+            "kind": "signup",
+            "meta": {
+              "provider": "email",
+              "role": "student"
+            },
+            "user_agent": null,
+            "user_id": "<uuid:2>"
+          }
+        ]
+      }
+    },
+    "result": {
+      "ok": true,
+      "value": 1
+    }
+  },
+  "delete_account": {
+    "deleted": {
+      "changes": {
+        "auth.sessions": {
+          "added": [],
+          "removed": [
+            {
+              "aal": "aal1",
+              "id": "<uuid:1>",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "auth.users": {
+          "added": [],
+          "removed": [
+            {
+              "banned_until": null,
+              "email": "golden.student@golden-uni.test",
+              "email_change": null,
+              "id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.onboarding_state": {
+          "added": [],
+          "removed": [
+            {
+              "completed_at": "<time>",
+              "role": "student",
+              "step": 6,
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.profiles": {
+          "added": [],
+          "removed": [
+            {
+              "delete_after": "<time>",
+              "full_name": "Golden 1",
+              "onboarding_complete": true,
+              "role": "student",
+              "status": "deleting",
+              "university_id": "<uuid:3>",
+              "user_id": "<uuid:2>",
+              "visibility": "university"
+            }
+          ]
+        },
+        "public.security_events": {
+          "added": [],
+          "removed": [
+            {
+              "ip_hash": null,
+              "kind": "password_changed",
+              "meta": {},
+              "user_agent": null,
+              "user_id": "<uuid:2>"
+            },
+            {
+              "ip_hash": null,
+              "kind": "signup",
+              "meta": {
+                "provider": "email",
+                "role": "student"
+              },
+              "user_agent": null,
+              "user_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": ""
+      }
+    },
+    "not_due": {
+      "code": "55000",
+      "message": "this account isn't due for deletion",
+      "ok": false
+    }
+  },
+  "request_cancel": {
+    "cancel_when_none_pending": {
+      "code": "55000",
+      "message": "no deletion is pending",
+      "ok": false
+    },
+    "cancelled": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "data": {},
+              "entity_type": "account",
+              "type": "deletion_cancelled",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.profiles": {
+          "added": [
+            {
+              "delete_after": null,
+              "full_name": "Golden 1",
+              "onboarding_complete": true,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:1>",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "delete_after": "<time>",
+              "full_name": "Golden 1",
+              "onboarding_complete": true,
+              "role": "student",
+              "status": "deleting",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:1>",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "delete_after_minus_now": {
+      "ok": true,
+      "value": "14 days"
+    },
+    "not_onboarded": {
+      "code": "42501",
+      "message": "finish onboarding first",
+      "ok": false
+    },
+    "requested": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "data": {
+                "delete_after": "<time>"
+              },
+              "entity_type": "account",
+              "type": "deletion_requested",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.profiles": {
+          "added": [
+            {
+              "delete_after": "<time>",
+              "full_name": "Golden 1",
+              "onboarding_complete": true,
+              "role": "student",
+              "status": "deleting",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:1>",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "delete_after": null,
+              "full_name": "Golden 1",
+              "onboarding_complete": true,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:1>",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<time>"
+      }
+    },
+    "requested_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": "<time>"
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function request_account_deletion",
+      "ok": false
+    },
+    "staff_refused": {
+      "code": "55000",
+      "message": "staff accounts are removed by a super admin",
+      "ok": false
+    }
+  }
+}

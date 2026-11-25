@@ -1,0 +1,105 @@
+{
+  "private": {
+    "empty_key": {
+      "code": "22023",
+      "message": "invalid rate limit",
+      "ok": false
+    },
+    "hits": {
+      "1": {
+        "changes": {
+          "private.rate_limit_events": {
+            "added": [
+              {
+                "key": "golden:limit"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": true
+        }
+      },
+      "2": {
+        "changes": {
+          "private.rate_limit_events": {
+            "added": [
+              {
+                "key": "golden:limit"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": true
+        }
+      },
+      "3": {
+        "changes": {
+          "private.rate_limit_events": {
+            "added": [
+              {
+                "key": "golden:limit"
+              }
+            ],
+            "removed": []
+          }
+        },
+        "result": {
+          "ok": true,
+          "value": true
+        }
+      },
+      "4": {
+        "changes": {},
+        "result": {
+          "ok": true,
+          "value": false
+        }
+      }
+    },
+    "limit_zero": {
+      "code": "22023",
+      "message": "invalid rate limit",
+      "ok": false
+    },
+    "other_key_separate": {
+      "ok": true,
+      "value": true
+    },
+    "window_too_long": {
+      "code": "22023",
+      "message": "invalid rate limit",
+      "ok": false
+    }
+  },
+  "public": {
+    "hits": {
+      "1": {
+        "ok": true,
+        "value": true
+      },
+      "2": {
+        "ok": true,
+        "value": true
+      },
+      "3": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "signed_out": {
+      "ok": true,
+      "value": false
+    },
+    "window_zero": {
+      "code": "22023",
+      "message": "invalid rate limit",
+      "ok": false
+    }
+  }
+}

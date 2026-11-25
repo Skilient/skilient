@@ -1,0 +1,33 @@
+{
+  "name": "@skilient/identity",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./domain/password": "./src/domain/password.ts",
+    "./store/import": "./src/store/import.ts",
+    "./store/import-identities": "./src/store/import-identities.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p .",
+    "lint": "eslint --max-warnings=0 .",
+    "test": "vitest run --project unit --project refusal --project import",
+    "test:golden": "vitest run --project golden",
+    "test:contract": "vitest run --project contract --project journeys"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.17.0",
+    "@connectrpc/connect": "2.3.0",
+    "@skilient/contracts": "workspace:*",
+    "@skilient/platform": "workspace:*",
+    "bcryptjs": "3.0.2",
+    "hash-wasm": "4.12.0",
+    "jose": "6.2.18",
+    "postgres": "3.4.9",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@skilient/testing": "workspace:*"
+  }
+}

@@ -437,7 +437,7 @@ Access control moves from database policies into service code, which is the larg
 - **Two-factor:** existing authenticator secrets are imported so nobody re-enrols. Staff, recruiter and university areas still require it.
 - **Session:** a rotating refresh token, stored hashed, in a `__Secure-` HTTP-only cookie. Reuse of an old token ends the session.
 - **Access token:** a signed token valid for 10 minutes, carrying the gate flags. Keys live in Key Vault and rotate by key id.
-- **Revocation:** a sanction, role change or sign-out bumps the user's token version. `web` learns of it through the event log within a second.
+- **Revocation:** a sanction, a role change, "not me", or signing out on other devices or everywhere bumps the user's token version; every service refuses older tokens within a second, through the event log. A local sign-out ends only that device's session. `web` learns of it when its next refresh is refused (decisions 2026-11-25, Q3 and Q11).
 - **Signup gates:** university email domain, the university's live date and the portals flag are checked exactly as today.
 - **At cutover:** sessions are not imported. Everyone signs in once.
 

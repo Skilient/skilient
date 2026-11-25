@@ -1,6 +1,7 @@
 import type { ConnectRouter, ConnectRouterOptions, Interceptor, ServiceImpl, Transport } from "@connectrpc/connect";
 import { createRouterTransport } from "@connectrpc/connect";
 import type { DescService } from "@bufbuild/protobuf";
+import type postgres from "postgres";
 import {
   createClientFactory,
   createGate,
@@ -13,6 +14,7 @@ import {
   type RunningServer,
   type Secrets,
   type ServiceKeys,
+  type HttpReply,
   type ServiceModule,
   type Target,
   type UserTokenVerifier,
@@ -32,6 +34,8 @@ export interface HostOptions {
   secrets: Secrets;
   registry?: Readonly<Record<string, ServiceModule>>;
   resolveUrl?: (service: string) => string | undefined;
+  /** Opens a service's database connection as its own role. Omit for hosts whose services own no data. */
+  database?: (service: string) => postgres.Sql;
 }
 
 export interface Host {
@@ -105,6 +109,8 @@ export async function createHost(options: HostOptions): Promise<Host> {
     });
 
   const health = createHealth();
+  const pools = new Map<string, postgres.Sql>();
+  const httpRoutes = new Map<string, () => Promise<HttpReply>>();
   for (const module of modules) {
     const impl = await module.create({
       name: module.name,
@@ -112,6 +118,21 @@ export async function createHost(options: HostOptions): Promise<Host> {
       clients: clientsFor(module.name),
       logger: options.logger.child({ service: module.name }),
       secrets: options.secrets,
+      database: () => {
+        let sql = pools.get(module.name);
+        if (!sql) {
+          if (!options.database) throw new Error(`service ${module.name} needs a database, and this host was given none`);
+          sql = options.database(module.name);
+          pools.set(module.name, sql);
+        }
+        return sql;
+      },
+      http: {
+        get(path, handler) {
+          if (httpRoutes.has(path)) throw new Error(`two services register GET ${path}`);
+          httpRoutes.set(path, handler);
+        },
+      },
     });
     impls.push([module.contract, impl as Partial<ServiceImpl<DescService>>]);
     if (module.ready) health.add(module.name, module.ready);
@@ -131,6 +152,7 @@ export async function createHost(options: HostOptions): Promise<Host> {
         routes,
         router: routerOptions("http2"),
         health,
+        httpRoutes,
       });
       servers.push(server);
       return server;
@@ -139,6 +161,7 @@ export async function createHost(options: HostOptions): Promise<Host> {
       health.drain();
       await Promise.all(servers.map((s) => s.close()));
       await Promise.all(modules.map((m) => m.close?.()));
+      await Promise.all([...pools.values()].map((sql) => sql.end({ timeout: 5 })));
     },
   };
 }

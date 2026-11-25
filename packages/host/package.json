@@ -18,9 +18,11 @@
     "@bufbuild/protobuf": "2.17.0",
     "@connectrpc/connect": "2.3.0",
     "@skilient/contracts": "workspace:*",
+    "@skilient/identity": "workspace:*",
     "@skilient/platform": "workspace:*",
     "@skilient/sample": "workspace:*",
     "@skilient/sample-relay": "workspace:*",
-    "esbuild": "0.28.2"
+    "esbuild": "0.28.2",
+    "postgres": "3.4.9"
   }
 }

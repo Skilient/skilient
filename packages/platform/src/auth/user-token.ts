@@ -14,7 +14,12 @@ export interface UserTokenVerifier {
   verify(token: string): Promise<User | null>;
 }
 
-export function createUserTokenVerifier(keys: JSONWebKeySet | URL): UserTokenVerifier {
+/** Where a verifier learns that a user's tokens below some version are revoked (see revocation.ts). */
+export interface RevocationCheck {
+  isRevoked(userId: string, tokenVersion: number): boolean;
+}
+
+export function createUserTokenVerifier(keys: JSONWebKeySet | URL, options: { revocations?: RevocationCheck } = {}): UserTokenVerifier {
   const keySet = keys instanceof URL ? createRemoteJWKSet(keys, { cacheMaxAge: 10 * 60_000 }) : createLocalJWKSet(keys);
   return {
     async verify(token) {
@@ -26,7 +31,10 @@ export function createUserTokenVerifier(keys: JSONWebKeySet | URL): UserTokenVer
           clockTolerance: 5,
         });
         if (typeof payload.sub !== "string" || payload.sub.length === 0) return null;
-        return { id: payload.sub, aal: payload["aal"] === "aal2" ? "aal2" : "aal1" };
+        const tv = typeof payload["tv"] === "number" && Number.isInteger(payload["tv"]) ? payload["tv"] : 0;
+        if (options.revocations?.isRevoked(payload.sub, tv)) return null;
+        const sid = typeof payload["sid"] === "string" ? payload["sid"] : undefined;
+        return { id: payload.sub, aal: payload["aal"] === "aal2" ? "aal2" : "aal1", tokenVersion: tv, ...(sid ? { sessionId: sid } : {}) };
       } catch {
         return null;
       }

@@ -1,0 +1,459 @@
+{
+  "ban_and_lift": {
+    "banned": {
+      "changes": {
+        "auth.sessions": {
+          "added": [],
+          "removed": [
+            {
+              "aal": "aal1",
+              "id": "<uuid:1>",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "aal": "aal2",
+              "id": "<uuid:3>",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "auth.users": {
+          "added": [
+            {
+              "banned_until": "<time>",
+              "email": "golden.peer@golden-uni.test",
+              "email_change": null,
+              "id": "<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "banned_until": null,
+              "email": "golden.peer@golden-uni.test",
+              "email_change": null,
+              "id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "data": {
+                "kind": "ban",
+                "until": null
+              },
+              "entity_type": "sanction",
+              "type": "account_restricted",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "sanction.ban",
+              "after": {
+                "active": {
+                  "case_id": null,
+                  "id": "<uuid:4>",
+                  "kind": "ban",
+                  "lift_reason": null,
+                  "lifted_at": null,
+                  "per_day": null,
+                  "reason": "Repeated harassment.",
+                  "staff_id": "<uuid:5>",
+                  "until": null
+                },
+                "sanction": {
+                  "case_id": null,
+                  "id": "<uuid:4>",
+                  "kind": "ban",
+                  "lift_reason": null,
+                  "lifted_at": null,
+                  "per_day": null,
+                  "reason": "Repeated harassment.",
+                  "staff_id": "<uuid:5>",
+                  "until": null
+                }
+              },
+              "before": {
+                "active": null
+              },
+              "reason": "Repeated harassment.",
+              "staff_id": "<uuid:5>",
+              "target_id": "<uuid:2>",
+              "target_type": "user"
+            }
+          ],
+          "removed": []
+        },
+        "public.sanctions": {
+          "added": [
+            {
+              "id": "<uuid:4>",
+              "kind": "ban",
+              "lift_reason": null,
+              "lifted_at": null,
+              "lifted_by": null,
+              "reason": "Repeated harassment.",
+              "staff_id": "<uuid:5>",
+              "until": null,
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:4>"
+      }
+    },
+    "banned_again_refused": {
+      "code": "55000",
+      "message": "this account already has an active ban; lift it first",
+      "ok": false
+    },
+    "banned_until_is_permanent_sentinel": {
+      "ok": true,
+      "value": true
+    },
+    "lift_again_refused": {
+      "code": "55000",
+      "message": "that sanction was already lifted",
+      "ok": false
+    },
+    "lift_by_moderator_refused": {
+      "code": "42501",
+      "message": "your role can't lift this sanction",
+      "ok": false
+    },
+    "lifted": {
+      "changes": {
+        "auth.users": {
+          "added": [
+            {
+              "banned_until": null,
+              "email": "golden.peer@golden-uni.test",
+              "email_change": null,
+              "id": "<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "banned_until": "<time>",
+              "email": "golden.peer@golden-uni.test",
+              "email_change": null,
+              "id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "data": {
+                "kind": "ban"
+              },
+              "entity_type": "sanction",
+              "type": "restriction_lifted",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "sanction.lift",
+              "after": {
+                "case_id": null,
+                "id": "<uuid:4>",
+                "kind": "ban",
+                "lift_reason": "Appeal upheld.",
+                "lifted_at": "<time>",
+                "per_day": null,
+                "reason": "Repeated harassment.",
+                "staff_id": "<uuid:5>",
+                "until": null
+              },
+              "before": {
+                "case_id": null,
+                "id": "<uuid:4>",
+                "kind": "ban",
+                "lift_reason": null,
+                "lifted_at": null,
+                "per_day": null,
+                "reason": "Repeated harassment.",
+                "staff_id": "<uuid:5>",
+                "until": null
+              },
+              "reason": "Appeal upheld.",
+              "staff_id": "<uuid:5>",
+              "target_id": "<uuid:4>",
+              "target_type": "sanction"
+            }
+          ],
+          "removed": []
+        },
+        "public.sanctions": {
+          "added": [
+            {
+              "id": "<uuid:4>",
+              "kind": "ban",
+              "lift_reason": "Appeal upheld.",
+              "lifted_at": "<time>",
+              "lifted_by": "<uuid:5>",
+              "reason": "Repeated harassment.",
+              "staff_id": "<uuid:5>",
+              "until": null,
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "id": "<uuid:4>",
+              "kind": "ban",
+              "lift_reason": null,
+              "lifted_at": null,
+              "lifted_by": null,
+              "reason": "Repeated harassment.",
+              "staff_id": "<uuid:5>",
+              "until": null,
+              "user_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": ""
+      }
+    }
+  },
+  "refusals": {
+    "admin_without_aal2": {
+      "code": "42501",
+      "message": "moderators only, with two-factor on",
+      "ok": false
+    },
+    "bad_kind": {
+      "code": "22023",
+      "message": "choose warn, suspend or ban",
+      "ok": false
+    },
+    "moderator_ban": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "only a super admin can ban an account",
+        "ok": false
+      }
+    },
+    "no_reason": {
+      "code": "22023",
+      "message": "give a reason",
+      "ok": false
+    },
+    "past_end": {
+      "code": "22023",
+      "message": "the ban must end in the future, or leave the end empty for a permanent ban",
+      "ok": false
+    },
+    "self": {
+      "code": "42501",
+      "message": "you can't sanction your own account",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function sanction_user",
+      "ok": false
+    },
+    "student": {
+      "code": "42501",
+      "message": "moderators only, with two-factor on",
+      "ok": false
+    },
+    "unknown_account": {
+      "code": "P0002",
+      "message": "account not found",
+      "ok": false
+    }
+  },
+  "suspend": {
+    "banned_until_after_suspend": {
+      "ok": true,
+      "value": null
+    },
+    "suspend_again_refused": {
+      "code": "55000",
+      "message": "this account already has an active suspend; lift it first",
+      "ok": false
+    },
+    "suspended": {
+      "changes": {
+        "auth.sessions": {
+          "added": [],
+          "removed": [
+            {
+              "aal": "aal1",
+              "id": "<uuid:1>",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "aal": "aal2",
+              "id": "<uuid:3>",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "data": {
+                "kind": "suspend",
+                "until": "<time>"
+              },
+              "entity_type": "sanction",
+              "type": "account_restricted",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "sanction.suspend",
+              "after": {
+                "active": {
+                  "case_id": null,
+                  "id": "<uuid:4>",
+                  "kind": "suspend",
+                  "lift_reason": null,
+                  "lifted_at": null,
+                  "per_day": null,
+                  "reason": "Spam in chat.",
+                  "staff_id": "<uuid:5>",
+                  "until": "<time>"
+                },
+                "sanction": {
+                  "case_id": null,
+                  "id": "<uuid:4>",
+                  "kind": "suspend",
+                  "lift_reason": null,
+                  "lifted_at": null,
+                  "per_day": null,
+                  "reason": "Spam in chat.",
+                  "staff_id": "<uuid:5>",
+                  "until": "<time>"
+                }
+              },
+              "before": {
+                "active": null
+              },
+              "reason": "Spam in chat.",
+              "staff_id": "<uuid:5>",
+              "target_id": "<uuid:2>",
+              "target_type": "user"
+            }
+          ],
+          "removed": []
+        },
+        "public.sanctions": {
+          "added": [
+            {
+              "id": "<uuid:4>",
+              "kind": "suspend",
+              "lift_reason": null,
+              "lifted_at": null,
+              "lifted_by": null,
+              "reason": "Spam in chat.",
+              "staff_id": "<uuid:5>",
+              "until": "<time>",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:4>"
+      }
+    },
+    "too_long_for_moderator": {
+      "code": "42501",
+      "message": "moderators can suspend for at most 7 days",
+      "ok": false
+    },
+    "warn": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "data": {
+                "kind": "warn",
+                "until": null
+              },
+              "entity_type": "sanction",
+              "type": "account_restricted",
+              "user_id": "<uuid:6>"
+            }
+          ],
+          "removed": []
+        },
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "sanction.warn",
+              "after": {
+                "active": null,
+                "sanction": {
+                  "case_id": null,
+                  "id": "<uuid:7>",
+                  "kind": "warn",
+                  "lift_reason": null,
+                  "lifted_at": null,
+                  "per_day": null,
+                  "reason": "Please keep it civil.",
+                  "staff_id": "<uuid:5>",
+                  "until": null
+                }
+              },
+              "before": {
+                "active": null
+              },
+              "reason": "Please keep it civil.",
+              "staff_id": "<uuid:5>",
+              "target_id": "<uuid:6>",
+              "target_type": "user"
+            }
+          ],
+          "removed": []
+        },
+        "public.sanctions": {
+          "added": [
+            {
+              "id": "<uuid:7>",
+              "kind": "warn",
+              "lift_reason": null,
+              "lifted_at": null,
+              "lifted_by": null,
+              "reason": "Please keep it civil.",
+              "staff_id": "<uuid:5>",
+              "until": null,
+              "user_id": "<uuid:6>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:7>"
+      }
+    }
+  }
+}

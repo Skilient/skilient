@@ -1,5 +1,8 @@
 import { fromJson, toJson, type JsonValue } from "@bufbuild/protobuf";
-import { createClientFactory, startCall } from "@skilient/platform";
+import { hashPassword, verifyPassword } from "@skilient/identity/domain/password";
+import { createClientFactory, purgePlatform, startCall } from "@skilient/platform";
+import { createDb, entraPassword } from "@skilient/platform/db";
+import postgres from "postgres";
 import { boot } from "./boot";
 import { createHost, serviceNameOf } from "./host";
 import { resolveUrl } from "./placement";
@@ -11,6 +14,10 @@ import { registry } from "./registry";
  *                                 HTTP/1.1 on HTTP1_PORT (8081) for probes and tools
  *   host.mjs call <service> <Method> [json] [--url <base>] [--as <caller>]
  *                                 call one method over HTTP/2 and print the reply (operator probe)
+ *   host.mjs selfcheck             prove the image's password hashing works (Argon2id in WebAssembly)
+ *   host.mjs platform-purge        the daily platform purge (decision Q8), as the migration admin:
+ *                                 PLATFORM_ADMIN_DB_URL locally, or DB_HOST, DB_NAME and DB_ADMIN_USER
+ *                                 with the managed identity in Azure
  */
 async function serve() {
   const b = await boot();
@@ -67,7 +74,32 @@ process.on("unhandledRejection", (error) => {
   process.stderr.write(JSON.stringify({ level: "error", msg: "unhandled", error: error instanceof Error ? error.message : String(error) }) + "\n");
   process.exit(1);
 });
+async function selfcheck() {
+  const started = performance.now();
+  const hash = await hashPassword("selfcheck-only-not-a-secret");
+  const ok = (await verifyPassword(hash, "selfcheck-only-not-a-secret")) && !(await verifyPassword(hash, "wrong"));
+  process.stdout.write(JSON.stringify({ ok, argon2id_ms: Math.round(performance.now() - started) }) + "\n");
+  process.exit(ok ? 0 : 1);
+}
+
+async function platformPurge() {
+  const b = await boot(process.env, { logTo: "stderr" });
+  const env = process.env;
+  const admin = env["PLATFORM_ADMIN_DB_URL"]
+    ? postgres(env["PLATFORM_ADMIN_DB_URL"], { max: 1, onnotice: () => {} })
+    : createDb({ host: env["DB_HOST"] ?? "", database: env["DB_NAME"] ?? "", user: env["DB_ADMIN_USER"] ?? "", password: entraPassword(env), ssl: true, max: 1 }).sql;
+  try {
+    const removed = await purgePlatform(admin);
+    b.logger.info("platform_purged", { action: "platform.purge", outcome: "ok", ...removed });
+  } finally {
+    await admin.end({ timeout: 5 });
+  }
+  process.exit(0);
+}
+
 if (command === "call") await call(rest);
+else if (command === "platform-purge") await platformPurge();
+else if (command === "selfcheck") await selfcheck();
 else if (command === undefined || command === "serve") await serve();
 else {
   console.error(`unknown command ${command}`);

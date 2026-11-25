@@ -85,6 +85,11 @@ async function main() {
     const reply = JSON.parse(probe) as { message: string; servedBy: string };
     if (reply.message !== "probe" || reply.servedBy !== "echo-1") fail(`probe: ${probe}`);
     console.log("operator probe inside relay-1 reached echo-1 over HTTP/2");
+
+    // Password hashing must work inside the distroless image (Argon2id runs as WebAssembly, no native module).
+    const check = JSON.parse(docker("run", "--rm", image, "host.mjs", "selfcheck")) as { ok: boolean; argon2id_ms: number };
+    if (!check.ok) fail(`selfcheck: ${JSON.stringify(check)}`);
+    console.log(`selfcheck inside the image: Argon2id hash and verify in ${check.argon2id_ms} ms`);
     console.log("smoke: ok");
   } finally {
     for (const name of Object.values(names)) {

@@ -1,4 +1,5 @@
-// Checks every services/<name>/migrations/*.sql (CLAUDE.md, "Never"):
+// Checks every services/<name>/migrations/*.sql, and packages/platform/migrations/*.sql as schema
+// `platform` (the shared event log and job queue, owned by no service) (CLAUDE.md, "Never"):
 //   - named NNNN_what.sql;
 //   - names no other service's schema;
 //   - every table it creates gets row-level security, enabled and forced (default deny).
@@ -57,6 +58,14 @@ export function checkAll(root) {
       .sort()
       .map((f) => [f, readFileSync(join(dir, f), "utf8")]);
     problems.push(...checkService(service, files, services));
+  }
+  const platformDir = join(root, "packages", "platform", "migrations");
+  if (existsSync(platformDir)) {
+    const files = readdirSync(platformDir)
+      .filter((f) => f.endsWith(".sql"))
+      .sort()
+      .map((f) => [f, readFileSync(join(platformDir, f), "utf8")]);
+    problems.push(...checkService("platform", files, services));
   }
   return problems;
 }

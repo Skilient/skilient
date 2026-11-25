@@ -1,0 +1,302 @@
+{
+  "backup_codes": {
+    "codes_well_formed": true,
+    "create_needs_aal2": {
+      "code": "42501",
+      "message": "two-factor session required",
+      "ok": false
+    },
+    "create_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function create_mfa_backup_codes",
+      "ok": false
+    },
+    "created": {
+      "changes": {
+        "private.mfa_backup_codes": {
+          "added": [
+            {
+              "unused": 10,
+              "used": 0,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "private.rate_limit_events": {
+          "added": [
+            {
+              "key": "mfa_backup_codes:<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "mfa_backup_codes_created",
+              "meta": {},
+              "user_agent": null,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          "<code>",
+          "<code>",
+          "<code>",
+          "<code>",
+          "<code>",
+          "<code>",
+          "<code>",
+          "<code>",
+          "<code>",
+          "<code>"
+        ]
+      }
+    },
+    "remaining": {
+      "ok": true,
+      "value": 10
+    },
+    "remaining_after_use": {
+      "ok": true,
+      "value": 0
+    },
+    "remaining_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function mfa_backup_codes_remaining",
+      "ok": false
+    },
+    "use_same_code_again": {
+      "ok": true,
+      "value": false
+    },
+    "use_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function use_mfa_backup_code",
+      "ok": false
+    },
+    "use_valid_code": {
+      "changes": {
+        "auth.mfa_factors": {
+          "added": [],
+          "removed": [
+            {
+              "factor_type": "totp",
+              "id": "<uuid:2>",
+              "status": "verified",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "private.mfa_backup_codes": {
+          "added": [
+            {
+              "unused": 0,
+              "used": 1,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "unused": 10,
+              "used": 0,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "private.rate_limit_events": {
+          "added": [
+            {
+              "key": "mfa_backup_use:<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.security_events": {
+          "added": [
+            {
+              "ip_hash": null,
+              "kind": "mfa_backup_code_used",
+              "meta": {},
+              "user_agent": null,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "use_wrong_code": {
+      "ok": true,
+      "value": false
+    }
+  },
+  "delete_backup_codes": {
+    "deleted": {
+      "changes": {
+        "private.mfa_backup_codes": {
+          "added": [],
+          "removed": [
+            {
+              "unused": 10,
+              "used": 0,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function delete_mfa_backup_codes",
+      "ok": false
+    }
+  },
+  "normalize_backup_code": {
+    "\" abcde fghjk \"": {
+      "ok": true,
+      "value": "abcdefghjk"
+    },
+    "\"\"": {
+      "ok": true,
+      "value": ""
+    },
+    "\"ab-cd_ef!\"": {
+      "ok": true,
+      "value": "abcdef"
+    },
+    "\"ABCDE-FGHJK\"": {
+      "ok": true,
+      "value": "abcdefghjk"
+    },
+    "null": {
+      "ok": true,
+      "value": ""
+    }
+  },
+  "ops_reset_mfa": {
+    "admin_without_aal2": {
+      "code": "42501",
+      "message": "super admins only, with two-factor on",
+      "ok": false
+    },
+    "moderator": {
+      "code": "42501",
+      "message": "super admins only, with two-factor on",
+      "ok": false
+    },
+    "no_factor_left": {
+      "code": "55000",
+      "message": "this account has no two-factor to reset",
+      "ok": false
+    },
+    "reset": {
+      "changes": {
+        "auth.mfa_factors": {
+          "added": [],
+          "removed": [
+            {
+              "factor_type": "totp",
+              "id": "<uuid:1>",
+              "status": "verified",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "auth.sessions": {
+          "added": [],
+          "removed": [
+            {
+              "aal": "aal1",
+              "id": "<uuid:3>",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "aal": "aal2",
+              "id": "<uuid:4>",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "private.mfa_backup_codes": {
+          "added": [],
+          "removed": [
+            {
+              "unused": 10,
+              "used": 0,
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "data": {
+                "reset_at": "<time>"
+              },
+              "entity_type": "user",
+              "type": "mfa_reset",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "user.mfa_reset",
+              "after": {
+                "backup_codes": 0,
+                "factors": 0,
+                "sessions_ended": 2
+              },
+              "before": {
+                "backup_codes": 10,
+                "factors": 1
+              },
+              "reason": "Checked their student card over a video call.",
+              "staff_id": "<uuid:5>",
+              "target_id": "<uuid:2>",
+              "target_type": "user"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "golden.peer@golden-uni.test"
+      }
+    },
+    "self": {
+      "code": "42501",
+      "message": "you can't reset your own two-factor here",
+      "ok": false
+    },
+    "short_note": {
+      "code": "22023",
+      "message": "write down how you checked who they are (at least 20 characters)",
+      "ok": false
+    },
+    "unknown_account": {
+      "code": "P0002",
+      "message": "account not found",
+      "ok": false
+    }
+  }
+}

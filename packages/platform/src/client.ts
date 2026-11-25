@@ -67,7 +67,8 @@ export function startCall(call: Partial<Pick<CallInfo, "requestId" | "userToken"
   return { ...options, contextValues: values };
 }
 
-function propagate(options: ClientFactoryOptions): Interceptor {
+/** Carries the call on: request id, depth, service token, user token, and an idempotency key on writes. */
+export function propagate(options: ClientFactoryOptions): Interceptor {
   const sign = createServiceSigner(options.keys, options.caller);
   return (next) => async (req) => {
     const call = req.contextValues.get(callKey);
@@ -75,6 +76,9 @@ function propagate(options: ClientFactoryOptions): Interceptor {
     req.header.set(headers.depth, String((call?.depth ?? 0) + 1));
     req.header.set(headers.serviceToken, await sign(options.serviceName(req.service.typeName)));
     if (call?.userToken) req.header.set(headers.authorization, `Bearer ${call.userToken}`);
+    // Writes carry an idempotency key (prd.md call rules). A caller may set its own; otherwise one per call.
+    if (req.method.idempotency !== MethodOptions_IdempotencyLevel.NO_SIDE_EFFECTS && !req.header.get(headers.idempotencyKey))
+      req.header.set(headers.idempotencyKey, randomUUID());
     return next(req);
   };
 }

@@ -1,0 +1,236 @@
+{
+  "require_accounts": {
+    "holder_aal1": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "holder_aal2": {
+      "ok": true,
+      "value": "<uuid:1>"
+    },
+    "moderator_aal2": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "student_aal2": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "super_admin_aal2": {
+      "ok": true,
+      "value": "<uuid:2>"
+    }
+  },
+  "require_accounts_or_admin": {
+    "accounts_staff": {
+      "holder_aal1": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "holder_aal2": {
+        "ok": true,
+        "value": "<uuid:1>"
+      },
+      "moderator_aal2": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "signed_out": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "student_aal2": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "super_admin_aal2": {
+        "ok": true,
+        "value": "<uuid:2>"
+      }
+    },
+    "comms_role_is_not_admin": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "university_admin_no_university_given": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "university_admin_other_university": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "university_admin_own_university_aal1": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "university_admin_own_university_aal2": {
+      "ok": true,
+      "value": "<uuid:3>"
+    }
+  },
+  "require_any_staff": {
+    "holder_aal1": {
+      "code": "42501",
+      "message": "staff only, with two-factor on",
+      "ok": false
+    },
+    "holder_aal2": {
+      "ok": true,
+      "value": "<uuid:1>"
+    },
+    "moderator_aal2": {
+      "ok": true,
+      "value": "<uuid:2>"
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "staff only, with two-factor on",
+      "ok": false
+    },
+    "student_aal2": {
+      "code": "42501",
+      "message": "staff only, with two-factor on",
+      "ok": false
+    },
+    "super_admin_aal2": {
+      "ok": true,
+      "value": "<uuid:3>"
+    }
+  },
+  "require_appeal_decider": {
+    "moderator_decides_moderator_appeal": {
+      "ok": true,
+      "value": "<uuid:1>"
+    },
+    "moderator_made_the_original_decision": {
+      "code": "42501",
+      "message": "you made the original decision, so another staff member must decide this appeal",
+      "ok": false
+    },
+    "moderator_without_aal2": {
+      "code": "42501",
+      "message": "staff only, with two-factor on",
+      "ok": false
+    },
+    "student": {
+      "code": "42501",
+      "message": "staff only, with two-factor on",
+      "ok": false
+    },
+    "super_admin_on_any_appeal": {
+      "ok": true,
+      "value": "<uuid:2>"
+    },
+    "trust_reviewer_on_moderator_appeal": {
+      "code": "42501",
+      "message": "your role can't decide this appeal",
+      "ok": false
+    },
+    "trust_reviewer_on_trust_appeal": {
+      "ok": true,
+      "value": "<uuid:3>"
+    }
+  },
+  "require_moderator": {
+    "holder_aal1": {
+      "code": "42501",
+      "message": "moderators only, with two-factor on",
+      "ok": false
+    },
+    "holder_aal2": {
+      "ok": true,
+      "value": "<uuid:1>"
+    },
+    "moderator_aal2": {
+      "ok": true,
+      "value": "<uuid:2>"
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "moderators only, with two-factor on",
+      "ok": false
+    },
+    "student_aal2": {
+      "code": "42501",
+      "message": "moderators only, with two-factor on",
+      "ok": false
+    },
+    "super_admin_aal2": {
+      "ok": true,
+      "value": "<uuid:3>"
+    }
+  },
+  "require_super_admin": {
+    "moderator_aal2": {
+      "code": "42501",
+      "message": "super admins only, with two-factor on",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "super admins only, with two-factor on",
+      "ok": false
+    },
+    "student_aal2": {
+      "code": "42501",
+      "message": "super admins only, with two-factor on",
+      "ok": false
+    },
+    "super_admin_aal1": {
+      "code": "42501",
+      "message": "super admins only, with two-factor on",
+      "ok": false
+    },
+    "super_admin_aal2": {
+      "ok": true,
+      "value": "<uuid:1>"
+    }
+  },
+  "require_trust_reviewer": {
+    "holder_aal1": {
+      "code": "42501",
+      "message": "trust reviewers only, with two-factor on",
+      "ok": false
+    },
+    "holder_aal2": {
+      "ok": true,
+      "value": "<uuid:1>"
+    },
+    "moderator_aal2": {
+      "code": "42501",
+      "message": "trust reviewers only, with two-factor on",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "trust reviewers only, with two-factor on",
+      "ok": false
+    },
+    "student_aal2": {
+      "code": "42501",
+      "message": "trust reviewers only, with two-factor on",
+      "ok": false
+    },
+    "super_admin_aal2": {
+      "ok": true,
+      "value": "<uuid:2>"
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { expressConnectMiddleware } from "@connectrpc/connect-express";
 import { connectNodeAdapter } from "@connectrpc/connect-node";
 import express from "express";
 import type { Health } from "../health";
+import type { HttpReply } from "../service";
 
 export interface ServerOptions {
   /** HTTP/2 without TLS (h2c): calls between containers. */
@@ -16,6 +17,8 @@ export interface ServerOptions {
   routes: (router: ConnectRouter) => void;
   router: ConnectRouterOptions;
   health: Health;
+  /** Plain GET routes served on the HTTP/1.1 port, before the Connect routes. */
+  httpRoutes?: ReadonlyMap<string, () => Promise<HttpReply>>;
 }
 
 export interface RunningServer {
@@ -68,6 +71,16 @@ export async function startServer(options: ServerOptions): Promise<RunningServer
       const result = await options.health.ready();
       res.status(result.ok ? 200 : 503).json(result);
     });
+    for (const [path, handler] of options.httpRoutes ?? new Map()) {
+      app.get(path, async (_req, res) => {
+        try {
+          const reply = await handler();
+          res.status(reply.status).set(reply.headers ?? {}).json(reply.body);
+        } catch {
+          res.status(500).json({ error: "internal_error" });
+        }
+      });
+    }
     app.use(expressConnectMiddleware({ ...options.router, routes: options.routes }));
     h1 = http.createServer(app);
     h1.keepAliveTimeout = 65_000;

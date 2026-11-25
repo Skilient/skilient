@@ -4,6 +4,10 @@ export interface User {
   id: string;
   /** Authentication assurance level from the access token: aal2 after two-factor. */
   aal: "aal1" | "aal2";
+  /** The user's token version when the token was minted (`tv`); a sign-out, sanction or role change bumps it. */
+  tokenVersion?: number;
+  /** The session the token belongs to (`sid`). */
+  sessionId?: string;
 }
 
 /** What the platform verified about one call, before the handler runs. */
@@ -32,6 +36,8 @@ export const headers = {
   depth: "x-skilient-depth",
   serviceToken: "x-skilient-service",
   authorization: "authorization",
+  /** Client-made key on every write; a repeat returns the first result (see write.ts). */
+  idempotencyKey: "idempotency-key",
 } as const;
 
 export const MAX_DEPTH = 2;

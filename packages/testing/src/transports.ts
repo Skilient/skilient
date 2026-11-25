@@ -2,7 +2,8 @@ import { randomBytes } from "node:crypto";
 import type { DescService } from "@bufbuild/protobuf";
 import { createClient, type CallOptions, type Client, type Interceptor } from "@connectrpc/connect";
 import { createConnectTransport } from "@connectrpc/connect-node";
-import { createClientFactory, createLogger, createSecrets, startCall, type RunningServer } from "@skilient/platform";
+import { createClientFactory, createLogger, createSecrets, envName, startCall, type RunningServer, type UserTokenVerifier } from "@skilient/platform";
+import type postgres from "postgres";
 import { createHost, serviceNameOf, type Host } from "@skilient/host";
 import { afterAll, beforeAll, describe } from "vitest";
 import { testKeys, type TestKeys } from "./keys";
@@ -32,11 +33,21 @@ export interface ContractEnv {
  * `memory` calls through ConnectRPC's in-memory transport, as co-hosted services
  * do; `http2` starts a real server on a free port and calls it over h2c.
  */
-export function describeTransports(services: string[], body: (env: () => ContractEnv) => void): void {
+export interface TransportOptions {
+  /** A service's database connection (e.g. a role in a test container), for services that own data. */
+  database?: (service: string) => postgres.Sql;
+  /** Secrets the services read (e.g. a generated signing key), as SECRET_<NAME> values. */
+  secrets?: Record<string, string>;
+  /** The user-token verifier the gate uses; defaults to the test key's (e.g. identity's own keys plus revocation). */
+  users?: UserTokenVerifier;
+}
+
+export function describeTransports(services: string[], body: (env: () => ContractEnv) => void, options: TransportOptions | (() => Promise<TransportOptions>) = {}): void {
   for (const transport of ["memory", "http2"] as const) {
     describe(`over ${transport}`, () => {
       let env: ContractEnv | undefined;
       beforeAll(async () => {
+        const opts = typeof options === "function" ? await options() : options;
         const keys = await testKeys();
         const logs: Record<string, unknown>[] = [];
         const logger = createLogger({ level: "debug", write: (line) => logs.push(JSON.parse(line) as Record<string, unknown>) });
@@ -46,10 +57,11 @@ export function describeTransports(services: string[], body: (env: () => Contrac
           services,
           instance: `test-${transport}`,
           keys: keys.keys,
-          users: keys.users,
+          users: opts.users ?? keys.users,
           logHashKey: randomBytes(16).toString("hex"),
           logger,
-          secrets: createSecrets({ env: {} }),
+          secrets: createSecrets({ env: Object.fromEntries(Object.entries(opts.secrets ?? {}).map(([k, v]) => [envName(k), v])) }),
+          database: opts.database,
           resolveUrl: () => url,
         });
         if (transport === "http2") {

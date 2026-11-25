@@ -1,0 +1,546 @@
+{
+  "learn": {
+    "restart": {
+      "changes": {
+        "public.tour_progress": {
+          "added": [],
+          "removed": [
+            {
+              "completed": true,
+              "skipped": true,
+              "step": 2,
+              "tour_id": "student",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "restart_unknown": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "save_after_completed": {
+      "changes": {
+        "public.tour_progress": {
+          "added": [
+            {
+              "completed": true,
+              "skipped": true,
+              "step": 2,
+              "tour_id": "student",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "completed": true,
+              "skipped": false,
+              "step": 9,
+              "tour_id": "student",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "save_bad_step": {
+      "code": "22023",
+      "message": "unknown step",
+      "ok": false
+    },
+    "save_completed": {
+      "changes": {
+        "public.tour_progress": {
+          "added": [
+            {
+              "completed": true,
+              "skipped": false,
+              "step": 9,
+              "tour_id": "student",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "completed": false,
+              "skipped": false,
+              "step": 3,
+              "tour_id": "student",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "save_not_onboarded": {
+      "code": "42501",
+      "message": "finish onboarding first",
+      "ok": false
+    },
+    "save_progress": {
+      "changes": {
+        "public.tour_progress": {
+          "added": [
+            {
+              "completed": false,
+              "skipped": false,
+              "step": 3,
+              "tour_id": "student",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "save_unknown_outcome": {
+      "code": "22023",
+      "message": "unknown outcome",
+      "ok": false
+    },
+    "save_unknown_tour": {
+      "code": "22023",
+      "message": "unknown tour",
+      "ok": false
+    },
+    "tip": {
+      "changes": {
+        "public.tips_seen": {
+          "added": [
+            {
+              "tip_id": "cv",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "tip_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "tip_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function see_tip",
+      "ok": false
+    },
+    "tip_unknown": {
+      "code": "22023",
+      "message": "unknown tip",
+      "ok": false
+    },
+    "tips_read_own": {
+      "ok": true,
+      "value": [
+        {
+          "tip_id": "cv"
+        }
+      ]
+    },
+    "tour_after": {
+      "ok": true,
+      "value": {
+        "completed": true,
+        "skipped": true,
+        "started": true,
+        "step": 2
+      }
+    },
+    "tour_after_progress": {
+      "ok": true,
+      "value": {
+        "completed": false,
+        "skipped": false,
+        "started": true,
+        "step": 3
+      }
+    },
+    "tour_fresh": {
+      "ok": true,
+      "value": {
+        "completed": false,
+        "skipped": false,
+        "started": false,
+        "step": 0
+      }
+    },
+    "tour_not_onboarded": {
+      "code": "42501",
+      "message": "finish onboarding first",
+      "ok": false
+    },
+    "tour_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function tour_state",
+      "ok": false
+    },
+    "ui": {
+      "changes": {
+        "public.ui_state": {
+          "added": [
+            {
+              "key": "checklist_dismissed",
+              "user_id": "<uuid:1>",
+              "value": "true"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "ui_date": {
+      "changes": {
+        "public.ui_state": {
+          "added": [
+            {
+              "key": "progress_card_dismissed_on",
+              "user_id": "<uuid:1>",
+              "value": "\"2026-11-25\""
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "ui_not_onboarded": {
+      "code": "42501",
+      "message": "finish onboarding first",
+      "ok": false
+    },
+    "ui_null": {
+      "code": "22023",
+      "message": "that value is too long",
+      "ok": false
+    },
+    "ui_read_other": {
+      "ok": true,
+      "value": []
+    },
+    "ui_read_own": {
+      "ok": true,
+      "value": [
+        {
+          "key": "checklist_dismissed",
+          "value": "false"
+        },
+        {
+          "key": "progress_card_dismissed_on",
+          "value": "\"2026-11-25\""
+        }
+      ]
+    },
+    "ui_replace": {
+      "changes": {
+        "public.ui_state": {
+          "added": [
+            {
+              "key": "checklist_dismissed",
+              "user_id": "<uuid:1>",
+              "value": "false"
+            }
+          ],
+          "removed": [
+            {
+              "key": "checklist_dismissed",
+              "user_id": "<uuid:1>",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "ui_too_long": {
+      "code": "22023",
+      "message": "that value is too long",
+      "ok": false
+    },
+    "ui_unknown_key": {
+      "code": "22023",
+      "message": "unknown setting",
+      "ok": false
+    }
+  },
+  "shell_reads": {
+    "ali": {
+      "getting_started": {
+        "ok": true,
+        "value": {
+          "done": 0,
+          "items": [
+            {
+              "done": false,
+              "href": "/settings/profile",
+              "key": "profile",
+              "label": "Finish your profile",
+              "note": null,
+              "points": null
+            },
+            {
+              "done": false,
+              "href": "/settings/github",
+              "key": "github",
+              "label": "Connect GitHub",
+              "note": null,
+              "points": null
+            },
+            {
+              "done": false,
+              "href": "/me/skills",
+              "key": "l2",
+              "label": "Reach your first L2 skill",
+              "note": null,
+              "points": 15
+            },
+            {
+              "done": false,
+              "href": "/ventures",
+              "key": "venture",
+              "label": "Join or start a venture",
+              "note": "when it completes",
+              "points": 150
+            },
+            {
+              "done": false,
+              "href": "/me/work?tab=endorsements",
+              "key": "endorsement",
+              "label": "Get your first endorsement",
+              "note": null,
+              "points": 15
+            },
+            {
+              "done": false,
+              "href": "/me/cv",
+              "key": "cv",
+              "label": "Build your CV",
+              "note": null,
+              "points": null
+            }
+          ],
+          "total": 6
+        }
+      },
+      "inputs": {
+        "formula_points": {
+          "ok": true,
+          "value": {
+            "endorsement": 15,
+            "l2": 15,
+            "venture": 150
+          }
+        },
+        "next_tier": {
+          "ok": true,
+          "value": {
+            "current": null,
+            "needs": [
+              {
+                "have": 0,
+                "key": "peer_verified_entries",
+                "need": 1
+              }
+            ],
+            "next": "raw"
+          }
+        }
+      },
+      "nav_badges": {
+        "ok": true,
+        "value": {
+          "chat": 0,
+          "friends": 2,
+          "notifications": 2,
+          "openings": 0,
+          "ventures": 0
+        }
+      },
+      "next_best_action": {
+        "ok": true,
+        "value": {
+          "body": "Verified work starts with a team project. Find one to join or start your own.",
+          "href": "/ventures",
+          "key": "join_venture",
+          "title": "Join or start a venture"
+        }
+      },
+      "todo_counts": {
+        "ok": true,
+        "value": {
+          "applications": 0,
+          "confirm": 0,
+          "endorse": 0,
+          "invites": 0,
+          "requests": 2,
+          "total": 2
+        }
+      }
+    },
+    "bina": {
+      "getting_started": {
+        "ok": true,
+        "value": {
+          "done": 1,
+          "items": [
+            {
+              "done": true,
+              "href": "/settings/profile",
+              "key": "profile",
+              "label": "Finish your profile",
+              "note": null,
+              "points": null
+            },
+            {
+              "done": false,
+              "href": "/settings/github",
+              "key": "github",
+              "label": "Connect GitHub",
+              "note": null,
+              "points": null
+            },
+            {
+              "done": false,
+              "href": "/me/skills",
+              "key": "l2",
+              "label": "Reach your first L2 skill",
+              "note": null,
+              "points": 15
+            },
+            {
+              "done": false,
+              "href": "/ventures",
+              "key": "venture",
+              "label": "Join or start a venture",
+              "note": "when it completes",
+              "points": 150
+            },
+            {
+              "done": false,
+              "href": "/me/work?tab=endorsements",
+              "key": "endorsement",
+              "label": "Get your first endorsement",
+              "note": null,
+              "points": 15
+            },
+            {
+              "done": false,
+              "href": "/me/cv",
+              "key": "cv",
+              "label": "Build your CV",
+              "note": null,
+              "points": null
+            }
+          ],
+          "total": 6
+        }
+      },
+      "inputs": {
+        "formula_points": {
+          "ok": true,
+          "value": {
+            "endorsement": 15,
+            "l2": 15,
+            "venture": 150
+          }
+        },
+        "next_tier": {
+          "ok": true,
+          "value": {
+            "current": null,
+            "needs": [
+              {
+                "have": 0,
+                "key": "peer_verified_entries",
+                "need": 1
+              }
+            ],
+            "next": "raw"
+          }
+        }
+      },
+      "nav_badges": {
+        "ok": true,
+        "value": {
+          "chat": 0,
+          "friends": 0,
+          "notifications": 0,
+          "openings": 0,
+          "ventures": 0
+        }
+      },
+      "next_best_action": {
+        "ok": true,
+        "value": {
+          "body": "Verified work starts with a team project. Find one to join or start your own.",
+          "href": "/ventures",
+          "key": "join_venture",
+          "title": "Join or start a venture"
+        }
+      },
+      "todo_counts": {
+        "ok": true,
+        "value": {
+          "applications": 0,
+          "confirm": 0,
+          "endorse": 0,
+          "invites": 0,
+          "requests": 0,
+          "total": 0
+        }
+      }
+    },
+    "getting_started_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function getting_started",
+      "ok": false
+    },
+    "not_onboarded": {
+      "code": "42501",
+      "message": "finish onboarding first",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function nav_badges",
+      "ok": false
+    }
+  }
+}

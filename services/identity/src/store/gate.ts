@@ -1,4 +1,4 @@
-import { refuse } from "@skilient/platform";
+import { appendEvents, refuse } from "@skilient/platform";
 import type postgres from "postgres";
 import { emailDomain } from "../domain/email";
 import { gateState, guardEmailChange, tokenGateFlags, type GateState, type ProfileFacts, type ProfileStatus } from "../domain/gate-state";
@@ -129,5 +129,12 @@ export async function changeEmail(tx: postgres.TransactionSql, userId: string, c
   if (refused) throw refuse("not_allowed", refused);
   if (after == null || after === user.email) return 0;
   const done = await tx`update identity.users set email = ${after}, updated_at = now() where id = ${userId}`;
+  if (done.count !== 1) throw refuse("conflict", "email not changed");
+  // People keeps each account's email domain for onboarding (decision 2026-11-25, W2 Q9). A domain is not
+  // personal data, so it may travel in the event log; the address itself never does.
+  const domain = emailDomain(after);
+  if (domain !== emailDomain(user.email)) await appendEvents(tx, [{ type: EMAIL_DOMAIN_CHANGED, subjects: [userId], payload: { user_id: userId, email_domain: domain } }]);
   return done.count;
 }
+
+export const EMAIL_DOMAIN_CHANGED = "user.email_domain_changed";

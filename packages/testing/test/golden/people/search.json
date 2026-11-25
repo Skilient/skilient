@@ -1,0 +1,444 @@
+{
+  "helpers": {
+    "\"\"": {
+      "contains": {
+        "ok": true,
+        "value": "%%"
+      },
+      "prefix": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "\"%_\\\\\"": {
+      "contains": {
+        "ok": true,
+        "value": "%\\%\\_\\\\%"
+      },
+      "prefix": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "\"a\"": {
+      "contains": {
+        "ok": true,
+        "value": "%a%"
+      },
+      "prefix": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "\"ali zyx\"": {
+      "contains": {
+        "ok": true,
+        "value": "%ali zyx%"
+      },
+      "prefix": {
+        "ok": true,
+        "value": "'ali':* & 'zyx':*"
+      }
+    },
+    "\"C++ dev\"": {
+      "contains": {
+        "ok": true,
+        "value": "%C++ dev%"
+      },
+      "prefix": {
+        "ok": true,
+        "value": "'dev':*"
+      }
+    },
+    "\"o'brien\"": {
+      "contains": {
+        "ok": true,
+        "value": "%o'brien%"
+      },
+      "prefix": {
+        "ok": true,
+        "value": "'brien':*"
+      }
+    },
+    "\"one two three four five six seven eight nine\"": {
+      "contains": {
+        "ok": true,
+        "value": "%one two three four five six seven eight nine%"
+      },
+      "prefix": {
+        "ok": true,
+        "value": "'one':* & 'two':* & 'three':* & 'four':* & 'five':* & 'six':* & 'seven':* & 'eight':*"
+      }
+    },
+    "null": {
+      "contains": {
+        "ok": true,
+        "value": "%%"
+      },
+      "prefix": {
+        "ok": true,
+        "value": null
+      }
+    }
+  },
+  "people_you_may_know": {
+    "after_dismiss": {
+      "ok": true,
+      "value": []
+    },
+    "after_friend": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "graduation_year": 2027,
+          "name": "Staff Plomt",
+          "reason": "Same batch · 1 mutual friend",
+          "username": "pg_staff"
+        }
+      ]
+    },
+    "ali_default": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "graduation_year": 2027,
+          "name": "Bina Zyxwar",
+          "reason": "Same batch",
+          "username": "pg_bina"
+        },
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "graduation_year": 2027,
+          "name": "Staff Plomt",
+          "reason": "Same batch",
+          "username": "pg_staff"
+        }
+      ]
+    },
+    "ali_limit_0": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "graduation_year": 2027,
+          "name": "Bina Zyxwar",
+          "reason": "Same batch",
+          "username": "pg_bina"
+        }
+      ]
+    },
+    "ali_limit_1": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "graduation_year": 2027,
+          "name": "Bina Zyxwar",
+          "reason": "Same batch",
+          "username": "pg_bina"
+        }
+      ]
+    },
+    "bina_muted_ali": {
+      "ok": true,
+      "value": []
+    },
+    "chand_pending_request": {
+      "ok": true,
+      "value": []
+    },
+    "dismiss": {
+      "changes": {
+        "public.pymk_dismissals": {
+          "added": [
+            {
+              "dismissed_id": "<uuid:1>",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "dismiss_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "dismiss_self": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    },
+    "dismiss_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function dismiss_suggestion",
+      "ok": false
+    },
+    "dismiss_unknown": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    },
+    "eman": {
+      "ok": true,
+      "value": []
+    },
+    "not_onboarded": {
+      "code": "42501",
+      "message": "finish onboarding first",
+      "ok": false
+    },
+    "pure_department_key": {
+      "empty": {
+        "ok": true,
+        "value": null
+      },
+      "null": {
+        "ok": true,
+        "value": null
+      },
+      "spaces": {
+        "ok": true,
+        "value": "computer science"
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function people_you_may_know",
+      "ok": false
+    }
+  },
+  "search_people": {
+    "batch_filter": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "friendship": "friends",
+          "full_name": "Bina Zyxwar",
+          "graduation_year": 2027,
+          "skills": [],
+          "university": "People Golden University A",
+          "user_id": "<uuid:1>",
+          "username": "pg_bina"
+        }
+      ]
+    },
+    "batch_filter_other_university": {
+      "ok": true,
+      "value": []
+    },
+    "blocked_hidden": {
+      "ok": true,
+      "value": []
+    },
+    "by_other_surname": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Electrical Engineering",
+          "friendship": "request_received",
+          "full_name": "Eman Qorvel",
+          "graduation_year": 2028,
+          "skills": [],
+          "university": "People Golden University B",
+          "user_id": "<uuid:2>",
+          "username": "pg_eman"
+        },
+        {
+          "avatar_path": null,
+          "department": "Electrical Engineering",
+          "friendship": "request_sent",
+          "full_name": "Chand Qorvel",
+          "graduation_year": 2027,
+          "skills": [],
+          "university": "People Golden University B",
+          "user_id": "<uuid:3>",
+          "username": "pg_chand"
+        }
+      ]
+    },
+    "by_prefix_words": {
+      "ok": true,
+      "value": []
+    },
+    "by_surname": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Software Engineering",
+          "friendship": "none",
+          "full_name": "Dua Zyxwar",
+          "graduation_year": 2026,
+          "skills": [],
+          "university": "People Golden University A",
+          "user_id": "<uuid:4>",
+          "username": "pg_dua"
+        },
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "friendship": "friends",
+          "full_name": "Bina Zyxwar",
+          "graduation_year": 2027,
+          "skills": [],
+          "university": "People Golden University A",
+          "user_id": "<uuid:1>",
+          "username": "pg_bina"
+        }
+      ]
+    },
+    "by_username_exact": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Software Engineering",
+          "friendship": "none",
+          "full_name": "Dua Zyxwar",
+          "graduation_year": 2026,
+          "skills": [],
+          "university": "People Golden University A",
+          "user_id": "<uuid:4>",
+          "username": "pg_dua"
+        }
+      ]
+    },
+    "department_filter": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Software Engineering",
+          "friendship": "none",
+          "full_name": "Dua Zyxwar",
+          "graduation_year": 2026,
+          "skills": [],
+          "university": "People Golden University A",
+          "user_id": "<uuid:4>",
+          "username": "pg_dua"
+        }
+      ]
+    },
+    "department_in_scope": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "friendship": "friends",
+          "full_name": "Ali Zyxwar",
+          "graduation_year": 2027,
+          "skills": [],
+          "university": "People Golden University A",
+          "user_id": "<uuid:5>",
+          "username": "pg_ali"
+        },
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "friendship": "none",
+          "full_name": "Staff Plomt",
+          "graduation_year": 2027,
+          "skills": [],
+          "university": "People Golden University A",
+          "user_id": "<uuid:6>",
+          "username": "pg_staff"
+        }
+      ]
+    },
+    "department_out_of_scope": {
+      "ok": true,
+      "value": []
+    },
+    "empty": {
+      "ok": true,
+      "value": []
+    },
+    "like_metacharacters": {
+      "ok": true,
+      "value": []
+    },
+    "offset": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "friendship": "friends",
+          "full_name": "Bina Zyxwar",
+          "graduation_year": 2027,
+          "skills": [],
+          "university": "People Golden University A",
+          "user_id": "<uuid:1>",
+          "username": "pg_bina"
+        }
+      ]
+    },
+    "one_letter": {
+      "ok": true,
+      "value": []
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function search_people",
+      "ok": false
+    },
+    "skill_filter": {
+      "ok": true,
+      "value": []
+    },
+    "university_filter": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Electrical Engineering",
+          "friendship": "request_received",
+          "full_name": "Eman Qorvel",
+          "graduation_year": 2028,
+          "skills": [],
+          "university": "People Golden University B",
+          "user_id": "<uuid:2>",
+          "username": "pg_eman"
+        },
+        {
+          "avatar_path": null,
+          "department": "Electrical Engineering",
+          "friendship": "request_sent",
+          "full_name": "Chand Qorvel",
+          "graduation_year": 2027,
+          "skills": [],
+          "university": "People Golden University B",
+          "user_id": "<uuid:3>",
+          "username": "pg_chand"
+        }
+      ]
+    }
+  },
+  "search_rate_limit": {
+    "last": {
+      "code": "54000",
+      "message": "you're searching too fast",
+      "ok": false
+    },
+    "refused_at": 61
+  }
+}

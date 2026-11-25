@@ -5,6 +5,9 @@ export { createServiceSigner, serviceKeysFrom, verifyServiceToken, type ServiceK
 export {
   createUserTokenVerifier,
   noUserTokens,
+  refuseIfRestricted,
+  restrictionOf,
+  RESTRICTED,
   type RevocationCheck,
   USER_TOKEN_AUDIENCE,
   USER_TOKEN_ISSUER,

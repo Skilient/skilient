@@ -152,6 +152,10 @@
     "p95Ms": 60,
     "dbTrips": 6
   },
+  "skilient.identity.v1.IdentityService/CheckEmailDomains": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
   "skilient.identity.v1.IdentityService/GetSignupDetails": {
     "p95Ms": 30,
     "dbTrips": 1
@@ -163,5 +167,241 @@
   "skilient.identity.v1.IdentityService/ListAuthenticators": {
     "p95Ms": 30,
     "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/GetShell": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/TodoCounts": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/NextBestAction": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/GettingStarted": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/LearnState": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/GetMyProfile": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/GetProfile": {
+    "p95Ms": 60,
+    "dbTrips": 4
+  },
+  "skilient.people.v1.PeopleService/ProfileCards": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/ResolveUsernames": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/Relations": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/UsernameAvailable": {
+    "p95Ms": 40,
+    "dbTrips": 4
+  },
+  "skilient.people.v1.PeopleService/UpdateProfile": {
+    "p95Ms": 80,
+    "dbTrips": 10
+  },
+  "skilient.people.v1.PeopleService/SetProfileImage": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.people.v1.PeopleService/SetReadReceipts": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.people.v1.PeopleService/SetLeaderboardOptOut": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.people.v1.PeopleService/GetOnboarding": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/DepartmentOptions": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/Classmates": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/SetMyUniversity": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.people.v1.PeopleService/SaveUniversityStep": {
+    "p95Ms": 100,
+    "dbTrips": 14
+  },
+  "skilient.people.v1.PeopleService/SaveProfileStep": {
+    "p95Ms": 80,
+    "dbTrips": 10
+  },
+  "skilient.people.v1.PeopleService/SaveGithubStep": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.people.v1.PeopleService/SaveSkillsStep": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.people.v1.PeopleService/SaveLookingForStep": {
+    "p95Ms": 80,
+    "dbTrips": 10
+  },
+  "skilient.people.v1.PeopleService/CompleteOnboarding": {
+    "p95Ms": 80,
+    "dbTrips": 10
+  },
+  "skilient.people.v1.PeopleService/ListFriends": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/ListFriendRequests": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/ListBlocks": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/ListMutes": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/FriendshipState": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/PendingFriendRequestCount": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/SendFriendRequest": {
+    "p95Ms": 80,
+    "dbTrips": 10
+  },
+  "skilient.people.v1.PeopleService/RespondFriendRequest": {
+    "p95Ms": 60,
+    "dbTrips": 8
+  },
+  "skilient.people.v1.PeopleService/CancelFriendRequest": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.people.v1.PeopleService/Unfriend": {
+    "p95Ms": 60,
+    "dbTrips": 8
+  },
+  "skilient.people.v1.PeopleService/BlockUser": {
+    "p95Ms": 60,
+    "dbTrips": 10
+  },
+  "skilient.people.v1.PeopleService/UnblockUser": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.people.v1.PeopleService/MuteUser": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.people.v1.PeopleService/SearchPeople": {
+    "p95Ms": 80,
+    "dbTrips": 4
+  },
+  "skilient.people.v1.PeopleService/PeopleYouMayKnow": {
+    "p95Ms": 80,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/DismissSuggestion": {
+    "p95Ms": 40,
+    "dbTrips": 4
+  },
+  "skilient.people.v1.PeopleService/SetUiState": {
+    "p95Ms": 40,
+    "dbTrips": 4
+  },
+  "skilient.people.v1.PeopleService/SaveTour": {
+    "p95Ms": 40,
+    "dbTrips": 4
+  },
+  "skilient.people.v1.PeopleService/RestartTour": {
+    "p95Ms": 40,
+    "dbTrips": 4
+  },
+  "skilient.people.v1.PeopleService/SeeTip": {
+    "p95Ms": 40,
+    "dbTrips": 4
+  },
+  "skilient.people.v1.PeopleService/ListUniversities": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/RequestUniversity": {
+    "p95Ms": 100,
+    "dbTrips": 10
+  },
+  "skilient.people.v1.PeopleService/ConfirmUniversityRequest": {
+    "p95Ms": 40,
+    "dbTrips": 3
+  },
+  "skilient.people.v1.PeopleService/UnsubscribeUniversityRequest": {
+    "p95Ms": 40,
+    "dbTrips": 3
+  },
+  "skilient.people.v1.PeopleService/OpsUniversityRequests": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/OpsBatches": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/OpsSetUniversityLive": {
+    "p95Ms": 100,
+    "dbTrips": 10
+  },
+  "skilient.people.v1.PeopleService/OpsOpenAllUniversities": {
+    "p95Ms": 250,
+    "dbTrips": 30
+  },
+  "skilient.people.v1.PeopleService/OpsAddUniDomain": {
+    "p95Ms": 100,
+    "dbTrips": 10
+  },
+  "skilient.people.v1.PeopleService/OpsSetFinalYearBatch": {
+    "p95Ms": 80,
+    "dbTrips": 8
+  },
+  "skilient.people.v1.PeopleService/SaveDepartment": {
+    "p95Ms": 80,
+    "dbTrips": 10
+  },
+  "skilient.people.v1.PeopleService/DeleteDepartment": {
+    "p95Ms": 80,
+    "dbTrips": 8
+  },
+  "skilient.people.v1.PeopleService/SaveProgramme": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.people.v1.PeopleService/DeleteProgramme": {
+    "p95Ms": 60,
+    "dbTrips": 6
   }
 }

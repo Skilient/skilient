@@ -63,6 +63,31 @@ resource pg 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
   ]
 }
 
+@description('Extensions services may create (packages/platform/migrations/0003_extensions.sql; docs/azure/prd.md, "Extensions kept").')
+param pgExtensions string = 'PG_TRGM,UNACCENT,BTREE_GIN,PGCRYPTO,PG_STAT_STATEMENTS'
+
+// Azure only lets a database create allow-listed extensions (decision 2026-11-25, W2 Q6). pg_stat_statements
+// also needs `shared_preload_libraries` to include it, which takes a server restart; neither has been
+// compiled or deployed yet (decision 2026-11-22: Bicep is uncompiled in the sandbox).
+resource pgExtensionsConfig 'Microsoft.DBforPostgreSQL/flexibleServers/configurations@2024-08-01' = {
+  parent: pg
+  name: 'azure.extensions'
+  properties: {
+    value: pgExtensions
+    source: 'user-override'
+  }
+}
+
+resource pgPreload 'Microsoft.DBforPostgreSQL/flexibleServers/configurations@2024-08-01' = {
+  parent: pg
+  name: 'shared_preload_libraries'
+  properties: {
+    value: 'pg_stat_statements'
+    source: 'user-override'
+  }
+  dependsOn: [pgExtensionsConfig]
+}
+
 resource db 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2024-08-01' = {
   parent: pg
   name: 'skilient'

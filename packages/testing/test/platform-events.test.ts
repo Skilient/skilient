@@ -128,4 +128,55 @@ describe("platform event log", () => {
     }
     await alpha.begin((tx) => appendEvents(tx, [{ type: "pii.check", payload: { user_id: "u", email_hash: "h0", tv: 2, reason: "sign_out" } }]));
   });
+
+  it("prepare runs once per batch and hands its result to every event (W2 Q2)", async () => {
+    await alpha.begin((tx) => appendEvents(tx, [1, 2, 3].map((n) => ({ type: "prep.batch", payload: { n } }))));
+    const calls: number[] = [];
+    const seen: string[] = [];
+    const consumer = createConsumer({
+      sql: beta,
+      name: "beta.prepare",
+      types: ["prep.batch"],
+      prepare: async (events) => {
+        calls.push(events.length);
+        return new Map(events.map((e) => [e.id, `p${String(e.payload["n"])}`]));
+      },
+      handle: async (_tx, e, prepared) => void seen.push(prepared.get(e.id)!),
+    });
+    expect(await consumer.runOnce()).toBe(3);
+    expect(calls).toEqual([3]);
+    expect(seen).toEqual(["p1", "p2", "p3"]);
+    expect(await consumer.runOnce()).toBe(0);
+    expect(calls).toEqual([3]); // an empty batch never calls prepare
+  });
+
+  it("a prepare failure leaves the cursor where it was and applies nothing", async () => {
+    await alpha.begin((tx) => appendEvents(tx, [{ type: "prep.fail", payload: { n: 1 } }]));
+    let fail = true;
+    const seen: unknown[] = [];
+    const consumer = createConsumer({
+      sql: beta,
+      name: "beta.prepare-fail",
+      types: ["prep.fail"],
+      prepare: async () => {
+        if (fail) throw new Error("owner down");
+        return "ok";
+      },
+      handle: async (_tx, e, prepared) => void seen.push([e.payload["n"], prepared]),
+    });
+    await expect(consumer.runOnce()).rejects.toThrow("owner down");
+    const [cursor] = await beta`select last_seq::text from platform.cursors where consumer = 'beta.prepare-fail'`;
+    expect(cursor).toBeUndefined();
+    expect(await beta`select * from platform.applied_events where consumer = 'beta.prepare-fail'`).toHaveLength(0);
+    fail = false;
+    expect(await consumer.runOnce()).toBe(1);
+    expect(seen).toEqual([[1, "ok"]]);
+  });
+
+  it("the shared extensions schema works for a service role (W2 Q6)", async () => {
+    const [row] = await alpha<{ s: number; u: string }[]>`select extensions.similarity('Zyxwar', 'zyxwr') > 0.3 as s, extensions.unaccent('Ãli') as u`;
+    expect(row).toEqual({ s: true, u: "Ali" });
+    const [h] = await alpha<{ h: string }[]>`select encode(extensions.digest('x', 'sha256'), 'hex') as h`;
+    expect(h!.h).toHaveLength(64);
+  });
 });

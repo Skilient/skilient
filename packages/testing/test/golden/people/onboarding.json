@@ -1,0 +1,1151 @@
+{
+  "departments": {
+    "create": {
+      "changes": {
+        "public.departments": {
+          "added": [
+            {
+              "name": "Electrical Engineering",
+              "university_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:2>"
+      }
+    },
+    "delete_department": {
+      "changes": {
+        "public.departments": {
+          "added": [],
+          "removed": [
+            {
+              "name": "Software Engineering and AI",
+              "university_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Software Engineering and AI",
+              "department_id": null,
+              "full_name": "Dua Zyxwar",
+              "graduated": false,
+              "graduation_year": 2026,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:1>",
+              "user_id": "<uuid:3>",
+              "username": "pg_dua",
+              "visibility": "friends"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Software Engineering and AI",
+              "department_id": "<uuid:4>",
+              "full_name": "Dua Zyxwar",
+              "graduated": false,
+              "graduation_year": 2026,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:1>",
+              "user_id": "<uuid:3>",
+              "username": "pg_dua",
+              "visibility": "friends"
+            }
+          ]
+        },
+        "public.programmes": {
+          "added": [],
+          "removed": [
+            {
+              "department": "Software Engineering and AI",
+              "name": "BS Artificial Intelligence"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "delete_department_again": {
+      "code": "P0002",
+      "message": "department not found",
+      "ok": false
+    },
+    "delete_programme": {
+      "changes": {
+        "public.programmes": {
+          "added": [],
+          "removed": [
+            {
+              "department": "Computer Science",
+              "name": "BS Data Science"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "delete_programme_again": {
+      "code": "P0002",
+      "message": "programme not found",
+      "ok": false
+    },
+    "department_options_after": {
+      "ok": true,
+      "value": {
+        "department_id": "<uuid:5>",
+        "departments": [
+          {
+            "id": "<uuid:5>",
+            "name": "Computer Science",
+            "programmes": [
+              "BS Computer Science"
+            ]
+          },
+          {
+            "id": "<uuid:2>",
+            "name": "Electrical Engineering",
+            "programmes": []
+          }
+        ],
+        "own_list": true
+      }
+    },
+    "duplicate": {
+      "code": "23505",
+      "message": "you already have a department with that name",
+      "ok": false
+    },
+    "programme": {
+      "changes": {
+        "public.programmes": {
+          "added": [
+            {
+              "department": "Software Engineering and AI",
+              "name": "BS Artificial Intelligence"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    },
+    "programme_again": {
+      "code": "23505",
+      "message": "that programme is already listed",
+      "ok": false
+    },
+    "programme_unknown_department": {
+      "code": "P0002",
+      "message": "department not found",
+      "ok": false
+    },
+    "rename": {
+      "changes": {
+        "public.departments": {
+          "added": [
+            {
+              "name": "Software Engineering and AI",
+              "university_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "name": "Software Engineering",
+              "university_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Software Engineering and AI",
+              "department_id": "<uuid:4>",
+              "full_name": "Dua Zyxwar",
+              "graduated": false,
+              "graduation_year": 2026,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:1>",
+              "user_id": "<uuid:3>",
+              "username": "pg_dua",
+              "visibility": "friends"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Software Engineering",
+              "department_id": "<uuid:4>",
+              "full_name": "Dua Zyxwar",
+              "graduated": false,
+              "graduation_year": 2026,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:1>",
+              "user_id": "<uuid:3>",
+              "username": "pg_dua",
+              "visibility": "friends"
+            }
+          ]
+        },
+        "public.profiles_public_card": {
+          "added": [
+            {
+              "department": "Software Engineering and AI",
+              "full_name": "Dua Zyxwar",
+              "graduation_year": 2026,
+              "user_id": "<uuid:3>",
+              "username": "pg_dua"
+            }
+          ],
+          "removed": [
+            {
+              "department": "Software Engineering",
+              "full_name": "Dua Zyxwar",
+              "graduation_year": 2026,
+              "user_id": "<uuid:3>",
+              "username": "pg_dua"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:4>"
+      }
+    },
+    "rename_unknown": {
+      "code": "P0002",
+      "message": "department not found",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function save_department",
+      "ok": false
+    },
+    "student": {
+      "code": "42501",
+      "message": "you don't have access to this part of the university portal",
+      "ok": false
+    },
+    "too_short": {
+      "code": "22023",
+      "message": "department names are 2 to 80 characters",
+      "ok": false
+    },
+    "without_two_factor": {
+      "code": "42501",
+      "message": "turn on two-factor sign-in to use the university portal",
+      "ok": false
+    }
+  },
+  "wizard": {
+    "complete": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "complete_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "completed_write_refused": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "permission denied for table onboarding_state",
+        "ok": false
+      }
+    },
+    "department_options": {
+      "ok": true,
+      "value": {
+        "department_id": null,
+        "departments": [
+          {
+            "id": "<uuid:1>",
+            "name": "Computer Science",
+            "programmes": [
+              "BS Computer Science",
+              "BS Data Science"
+            ]
+          },
+          {
+            "id": "<uuid:2>",
+            "name": "Software Engineering",
+            "programmes": []
+          }
+        ],
+        "own_list": true
+      }
+    },
+    "department_options_b": {
+      "ok": true,
+      "value": {
+        "department_id": null,
+        "departments": [],
+        "own_list": false
+      }
+    },
+    "department_options_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function department_options",
+      "ok": false
+    },
+    "details": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "permission denied for table profiles",
+        "ok": false
+      }
+    },
+    "incomplete": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "null_university": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "signed_out_complete": {
+      "code": "42501",
+      "message": "permission denied for function complete_onboarding",
+      "ok": false
+    },
+    "signed_out_university": {
+      "code": "42501",
+      "message": "permission denied for function set_my_university",
+      "ok": false
+    },
+    "start": {
+      "ok": true,
+      "value": [
+        {
+          "completed_at": null,
+          "data": {},
+          "role": "student",
+          "step": 1
+        }
+      ]
+    },
+    "step_out_of_range": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "new row for relation \"onboarding_state\" violates check constraint \"onboarding_state_step_check\"",
+        "ok": false
+      }
+    },
+    "step_write_other": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": 0
+      }
+    },
+    "step_write_own": {
+      "changes": {
+        "public.onboarding_state": {
+          "added": [
+            {
+              "completed": false,
+              "data": {
+                "github": "skipped"
+              },
+              "role": "student",
+              "step": 2,
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": [
+            {
+              "completed": false,
+              "data": {},
+              "role": "student",
+              "step": 1,
+              "user_id": "<uuid:3>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "still_incomplete_no_username": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "university_a": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:3>",
+              "username": null,
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:5>",
+              "user_id": "<uuid:3>",
+              "username": null,
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "university_after_complete": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:5>",
+              "user_id": "<uuid:3>",
+              "username": "pg_newbie",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:3>",
+              "username": "pg_newbie",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "university_d": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:5>",
+              "user_id": "<uuid:3>",
+              "username": null,
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": null,
+              "user_id": "<uuid:3>",
+              "username": null,
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "username": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:3>",
+              "username": "pg_newbie",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:3>",
+              "username": null,
+              "visibility": "university"
+            }
+          ]
+        },
+        "public.profiles_public_card": {
+          "added": [
+            {
+              "department": null,
+              "full_name": "Newbie Plomt",
+              "graduation_year": null,
+              "user_id": "<uuid:3>",
+              "username": "pg_newbie"
+            }
+          ],
+          "removed": [
+            {
+              "department": null,
+              "full_name": "Newbie Plomt",
+              "graduation_year": null,
+              "user_id": "<uuid:3>",
+              "username": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "wrong_university": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    }
+  },
+  "wizard_complete": {
+    "advance1": {
+      "changes": {
+        "public.onboarding_state": {
+          "added": [
+            {
+              "completed": false,
+              "data": {},
+              "role": "student",
+              "step": 2,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "completed": false,
+              "data": {},
+              "role": "student",
+              "step": 1,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "complete": {
+      "changes": {
+        "public.onboarding_state": {
+          "added": [
+            {
+              "completed": true,
+              "data": {
+                "github": "skipped",
+                "skills_seen": true
+              },
+              "role": "student",
+              "step": 6,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "completed": false,
+              "data": {
+                "github": "skipped",
+                "skills_seen": true
+              },
+              "role": "student",
+              "step": 4,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.profiles": {
+          "added": [
+            {
+              "bio": "Hello",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "computer science",
+              "department_id": "<uuid:2>",
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": 2028,
+              "leaderboard_opt_out": false,
+              "looking_for": [
+                "internship"
+              ],
+              "onboarding_complete": true,
+              "programme": "BS Data Science",
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:3>",
+              "user_id": "<uuid:1>",
+              "username": "pg_newbie",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": "Hello",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "computer science",
+              "department_id": "<uuid:2>",
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": 2028,
+              "leaderboard_opt_out": false,
+              "looking_for": [
+                "internship"
+              ],
+              "onboarding_complete": false,
+              "programme": "BS Data Science",
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:3>",
+              "user_id": "<uuid:1>",
+              "username": "pg_newbie",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "complete_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "not_yet": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "options_after": {
+      "ok": true,
+      "value": {
+        "department_id": "<uuid:2>",
+        "departments": [
+          {
+            "id": "<uuid:2>",
+            "name": "Computer Science",
+            "programmes": [
+              "BS Computer Science",
+              "BS Data Science"
+            ]
+          },
+          {
+            "id": "<uuid:4>",
+            "name": "Software Engineering",
+            "programmes": []
+          }
+        ],
+        "own_list": true
+      }
+    },
+    "step1": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "computer science",
+              "department_id": "<uuid:2>",
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": 2028,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": "BS Data Science",
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:3>",
+              "user_id": "<uuid:1>",
+              "username": null,
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:3>",
+              "user_id": "<uuid:1>",
+              "username": null,
+              "visibility": "university"
+            }
+          ]
+        },
+        "public.profiles_public_card": {
+          "added": [
+            {
+              "department": "computer science",
+              "full_name": "Newbie Plomt",
+              "graduation_year": 2028,
+              "user_id": "<uuid:1>",
+              "username": null
+            }
+          ],
+          "removed": [
+            {
+              "department": null,
+              "full_name": "Newbie Plomt",
+              "graduation_year": null,
+              "user_id": "<uuid:1>",
+              "username": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "step2": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": "Hello",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "computer science",
+              "department_id": "<uuid:2>",
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": 2028,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": "BS Data Science",
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:3>",
+              "user_id": "<uuid:1>",
+              "username": "pg_newbie",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "computer science",
+              "department_id": "<uuid:2>",
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": 2028,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": "BS Data Science",
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:3>",
+              "user_id": "<uuid:1>",
+              "username": null,
+              "visibility": "university"
+            }
+          ]
+        },
+        "public.profiles_public_card": {
+          "added": [
+            {
+              "department": "computer science",
+              "full_name": "Newbie Plomt",
+              "graduation_year": 2028,
+              "user_id": "<uuid:1>",
+              "username": "pg_newbie"
+            }
+          ],
+          "removed": [
+            {
+              "department": "computer science",
+              "full_name": "Newbie Plomt",
+              "graduation_year": 2028,
+              "user_id": "<uuid:1>",
+              "username": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "step3": {
+      "changes": {
+        "public.onboarding_state": {
+          "added": [
+            {
+              "completed": false,
+              "data": {
+                "github": "skipped",
+                "skills_seen": true
+              },
+              "role": "student",
+              "step": 4,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "completed": false,
+              "data": {},
+              "role": "student",
+              "step": 2,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "step5": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": "Hello",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "computer science",
+              "department_id": "<uuid:2>",
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": 2028,
+              "leaderboard_opt_out": false,
+              "looking_for": [
+                "internship"
+              ],
+              "onboarding_complete": false,
+              "programme": "BS Data Science",
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:3>",
+              "user_id": "<uuid:1>",
+              "username": "pg_newbie",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": "Hello",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "computer science",
+              "department_id": "<uuid:2>",
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": 2028,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": "BS Data Science",
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:3>",
+              "user_id": "<uuid:1>",
+              "username": "pg_newbie",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "university": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:3>",
+              "user_id": "<uuid:1>",
+              "username": null,
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": null,
+              "department_id": null,
+              "full_name": "Newbie Plomt",
+              "graduated": false,
+              "graduation_year": null,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": false,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": null,
+              "user_id": "<uuid:1>",
+              "username": null,
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "university_after_complete": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    }
+  }
+}

@@ -49,6 +49,11 @@ service IdentityService {
   rpc GetSignupDetails(GetSignupDetailsRequest) returns (GetSignupDetailsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
+  // CheckEmailDomains says which domains are public email providers', for people's university requests and
+  // staff domain additions (decision 2026-11-25, W2 Q7). People only; one database trip.
+  rpc CheckEmailDomains(CheckEmailDomainsRequest) returns (CheckEmailDomainsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 
   // ---- Sign-up and sign-in ----
 
@@ -258,8 +263,25 @@ message GetSignupDetailsResponse {
     string full_name = 2;
     AccountRole role = 3;
     string university_id = 4;
+    // The domain of the account's email address (not personal data), so people can offer the universities
+    // that own it during onboarding (decision 2026-11-25, W2 Q9).
+    string email_domain = 5;
   }
   repeated Entry users = 1;
+}
+
+message CheckEmailDomainsRequest {
+  // At most 50 domains, lower case.
+  repeated string domains = 1;
+}
+
+message CheckEmailDomainsResponse {
+  message Entry {
+    string domain = 1;
+    // A public email provider's domain (gmail.com, ...), which can never be a university domain.
+    bool personal = 2;
+  }
+  repeated Entry domains = 1;
 }
 
 message SignUpRequest {

@@ -8,6 +8,8 @@ export interface User {
   tokenVersion?: number;
   /** The session the token belongs to (`sid`). */
   sessionId?: string;
+  /** A suspension or ban in force when the token was minted (`rst`); absent once `until` has passed. */
+  restriction?: { kind: "suspend" | "ban"; until: string | null };
 }
 
 /** What the platform verified about one call, before the handler runs. */

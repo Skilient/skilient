@@ -35,3 +35,10 @@ export async function verifiedAuthenticators(db: postgres.Sql, userId: string) {
     select id::text, created_at::text, verified_at::text from identity.totp_factors
      where user_id = ${userId} and status = 'verified' order by created_at`;
 }
+
+/** Which of these domains are public email providers' (CheckEmailDomains, decision 2026-11-25 W2 Q7): one trip. */
+export async function personalDomains(db: postgres.Sql | postgres.TransactionSql, domains: readonly string[]): Promise<Set<string>> {
+  const rows = await db<{ domain: string }[]>`
+    select domain from identity.personal_email_domains where domain = any(${[...domains]}::text[])`;
+  return new Set(rows.map((r) => r.domain));
+}

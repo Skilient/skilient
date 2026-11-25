@@ -1,7 +1,7 @@
 /** The export parser and hash formats; the import itself is tested in services/identity/test/import. */
 import { hashAlgorithm } from "@skilient/identity/domain/password";
 import { describe, expect, it } from "vitest";
-import { parseExport, parseFactorExport } from "../src/auth-import";
+import { parseExport, parseFactorExport, parsePersonalDomainExport } from "../src/auth-import";
 
 describe("hash formats", () => {
   it("recognises bcrypt and refuses anything else", () => {
@@ -25,5 +25,14 @@ describe("factor export", () => {
     const bad = JSON.stringify({ ...row, id: "nope" });
     expect(() => parseFactorExport(bad)).toThrow(/factor export line 1: id/);
     expect(() => parseFactorExport(bad)).not.toThrow(/JBSWY3DPEHPK3PXP/);
+  });
+});
+
+describe("personal email domain export", () => {
+  it("parses public.personal_email_domains rows and rejects a malformed line", () => {
+    const fixture = ['{"domain":"gmail.com"}', '{"domain":"Yahoo.COM"}', "", '{"domain":"hotmail.com"}'].join("\n");
+    expect(parsePersonalDomainExport(fixture)).toEqual(["gmail.com", "Yahoo.COM", "hotmail.com"]);
+    expect(() => parsePersonalDomainExport('{"domain":"x"}')).toThrow(/personal domain export line 1: domain/);
+    expect(() => parsePersonalDomainExport('{"name":"gmail.com"}')).toThrow(/personal domain export line 1/);
   });
 });

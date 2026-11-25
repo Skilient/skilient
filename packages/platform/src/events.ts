@@ -88,15 +88,24 @@ export async function appendEvents(tx: postgres.TransactionSql, events: readonly
   return ids;
 }
 
-export type EventHandler = (tx: postgres.TransactionSql, event: LoggedEvent) => Promise<void>;
+/** Handles one event; `prepared` is what the consumer's `prepare` returned for the batch (undefined without one). */
+export type EventHandler<P = undefined> = (tx: postgres.TransactionSql, event: LoggedEvent, prepared: P) => Promise<void>;
 
-export interface ConsumerOptions {
+export interface ConsumerOptions<P = undefined> {
   sql: postgres.Sql;
   /** Unique per consumer and prefixed with the service, e.g. `people.user-created`. */
   name: string;
   /** Event types to read. */
   types: readonly string[];
-  handle: EventHandler;
+  handle: EventHandler<P>;
+  /**
+   * Runs once per batch, after the batch is read and before any event is handled, and its result is passed to
+   * every `handle` call (decision 2026-11-25, W2 Q2): a consumer that needs another service's data for its
+   * events makes one batch call here instead of one call per event. It must not write. The batch's transaction
+   * stays open during the call (bounded by the call deadline); if it throws, the whole batch rolls back, the
+   * cursor stays where it was, and the batch is retried on the next wake (logged once per failure).
+   */
+  prepare?: (events: readonly LoggedEvent[]) => Promise<P>;
   batch?: number;
   /** Poll interval when no NOTIFY arrives (a safety net, not the main path). */
   pollMs?: number;
@@ -113,7 +122,7 @@ export interface Consumer {
 
 const CONSUMER = /^[a-z][a-z0-9_.-]{0,99}$/;
 
-export function createConsumer(options: ConsumerOptions): Consumer {
+export function createConsumer<P = undefined>(options: ConsumerOptions<P>): Consumer {
   const { sql, name, types, handle } = options;
   if (!CONSUMER.test(name)) throw new Error(`consumer name "${name}" must match ${CONSUMER}`);
   const batch = options.batch ?? 100;
@@ -136,11 +145,12 @@ export function createConsumer(options: ConsumerOptions): Consumer {
            and type = any(${[...types]}::text[])
          order by txid, seq
          limit ${batch}`;
+      const prepared = (rows.length > 0 && options.prepare ? await options.prepare(rows) : undefined) as P;
       for (const event of rows) {
         const fresh = await tx`
           insert into platform.applied_events (consumer, event_id) values (${name}, ${event.id})
           on conflict do nothing returning 1`;
-        if (fresh.count === 1) await tx.savepoint((sp) => handle(sp, event));
+        if (fresh.count === 1) await tx.savepoint((sp) => handle(sp, event, prepared));
       }
       const last = rows.at(-1);
       if (last)

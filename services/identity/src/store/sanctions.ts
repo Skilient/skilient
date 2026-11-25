@@ -2,7 +2,7 @@ import { refuse } from "@skilient/platform";
 import type postgres from "postgres";
 import { isStaff, requireAnyStaff, requireModerator, type Actor } from "../authorize";
 import { audit } from "./audit";
-import { revokeAllSessions } from "./sessions";
+import { bumpTokenVersion, revokeAllSessions } from "./sessions";
 
 /**
  * Identity's half of a sanction (decision 2026-11-25: trust's writes into identity data go through identity
@@ -148,4 +148,6 @@ export async function liftSanction(tx: Tx, actor: Actor, input: { userId: string
     if (!stillBanned) await tx`update identity.users set banned_until = null, updated_at = now() where id = ${input.userId}`;
   }
   await audit(tx, { staffId: me, action: "sanction.lift", targetType: "sanction", targetId: input.sanctionId, reason, before: markJson(before), after: markJson(after) });
+  // The access token's restriction claim clears at the next refresh, not when the token expires (W2 Q10).
+  if (after.kind !== "warn") await bumpTokenVersion(tx, input.userId, "sanction_lifted");
 }

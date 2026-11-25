@@ -1,0 +1,906 @@
+{
+  "accept_blocked": {
+    "accept_blocked": {
+      "changes": {},
+      "result": {
+        "code": "P0002",
+        "message": "that request is no longer pending",
+        "ok": false
+      }
+    },
+    "accept_ok": {
+      "changes": {
+        "public.friend_requests": {
+          "added": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": true,
+              "sender_id": "<uuid:2>",
+              "status": "accepted"
+            }
+          ],
+          "removed": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": false,
+              "sender_id": "<uuid:2>",
+              "status": "pending"
+            }
+          ]
+        },
+        "public.friendships": {
+          "added": [
+            {
+              "user_id_a": "<uuid:2>",
+              "user_id_b": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "friend_request",
+              "type": "friend_accepted",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "decline_blocked": {
+      "changes": {
+        "public.friend_requests": {
+          "added": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": true,
+              "sender_id": "<uuid:3>",
+              "status": "declined"
+            }
+          ],
+          "removed": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": false,
+              "sender_id": "<uuid:3>",
+              "status": "pending"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    }
+  },
+  "blocks": {
+    "block_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "block_friend": {
+      "changes": {
+        "public.blocks": {
+          "added": [
+            {
+              "blocked_id": "<uuid:1>",
+              "blocker_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.friendships": {
+          "added": [],
+          "removed": [
+            {
+              "user_id_a": "<uuid:2>",
+              "user_id_b": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "block_self": {
+      "code": "22023",
+      "message": "you can't block yourself",
+      "ok": false
+    },
+    "block_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function block_user",
+      "ok": false
+    },
+    "block_unknown": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    },
+    "blocked_deletes_block": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "permission denied for table blocks",
+        "ok": false
+      }
+    },
+    "blocked_inserts_friendship": {
+      "code": "42501",
+      "message": "permission denied for table friendships",
+      "ok": false
+    },
+    "blocked_inserts_request": {
+      "code": "42501",
+      "message": "permission denied for table friend_requests",
+      "ok": false
+    },
+    "blocked_reads_blocks": {
+      "ok": true,
+      "value": []
+    },
+    "blocked_sends_request": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    },
+    "blocker_mutes_blocked": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    },
+    "blocker_reads_blocks": {
+      "ok": true,
+      "value": [
+        {
+          "blocked_id": "<uuid:1>",
+          "blocker_id": "<uuid:2>"
+        }
+      ]
+    },
+    "blocker_sends_request": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    },
+    "my_blocks": {
+      "ok": true,
+      "value": [
+        {
+          "full_name": "Bina Zyxwar",
+          "username": "pg_bina"
+        }
+      ]
+    },
+    "my_blocks_blocked_side": {
+      "ok": true,
+      "value": []
+    },
+    "my_blocks_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function my_blocks",
+      "ok": false
+    },
+    "receiver_blocks_sender_of_pending_request": {
+      "ok": true,
+      "value": null
+    },
+    "unblock": {
+      "changes": {
+        "public.blocks": {
+          "added": [],
+          "removed": [
+            {
+              "blocked_id": "<uuid:1>",
+              "blocker_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "unblock_again": {
+      "code": "P0002",
+      "message": "you haven't blocked that person",
+      "ok": false
+    },
+    "unblock_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function unblock_user",
+      "ok": false
+    },
+    "unblock_unknown": {
+      "code": "P0002",
+      "message": "you haven't blocked that person",
+      "ok": false
+    }
+  },
+  "mutes": {
+    "direct_insert": {
+      "code": "42501",
+      "message": "permission denied for table user_mutes",
+      "ok": false
+    },
+    "list": {
+      "ok": true,
+      "value": [
+        {
+          "full_name": "Bina Zyxwar",
+          "username": "pg_bina"
+        },
+        {
+          "full_name": "Eman Qorvel",
+          "username": "pg_eman"
+        }
+      ]
+    },
+    "list_after": {
+      "ok": true,
+      "value": [
+        {
+          "full_name": "Eman Qorvel",
+          "username": "pg_eman"
+        }
+      ]
+    },
+    "list_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function my_mutes",
+      "ok": false
+    },
+    "mute": {
+      "changes": {
+        "public.user_mutes": {
+          "added": [
+            {
+              "muted_id": "<uuid:1>",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "mute_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "mute_blocked_by_them": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    },
+    "mute_second": {
+      "changes": {
+        "public.user_mutes": {
+          "added": [
+            {
+              "muted_id": "<uuid:3>",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "mute_self": {
+      "code": "22023",
+      "message": "you can't mute yourself",
+      "ok": false
+    },
+    "mute_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function mute_user",
+      "ok": false
+    },
+    "mute_unknown": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    },
+    "unmute": {
+      "changes": {
+        "public.user_mutes": {
+          "added": [],
+          "removed": [
+            {
+              "muted_id": "<uuid:1>",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "unmute_not_muted": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    }
+  },
+  "requests": {
+    "accept": {
+      "changes": {
+        "public.friend_requests": {
+          "added": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": true,
+              "sender_id": "<uuid:2>",
+              "status": "accepted"
+            }
+          ],
+          "removed": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": false,
+              "sender_id": "<uuid:2>",
+              "status": "pending"
+            }
+          ]
+        },
+        "public.friendships": {
+          "added": [
+            {
+              "user_id_a": "<uuid:2>",
+              "user_id_b": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "friend_request",
+              "type": "friend_accepted",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "accept_again": {
+      "code": "P0002",
+      "message": "that request is no longer pending",
+      "ok": false
+    },
+    "ali_friends": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "full_name": "Bina Zyxwar",
+          "graduation_year": 2027,
+          "user_id": "<uuid:3>",
+          "username": "pg_bina"
+        }
+      ]
+    },
+    "already_friends": {
+      "code": "23505",
+      "message": "you're already friends",
+      "ok": false
+    },
+    "cancel": {
+      "changes": {
+        "public.friend_requests": {
+          "added": [],
+          "removed": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": false,
+              "sender_id": "<uuid:4>",
+              "status": "pending"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [],
+          "removed": [
+            {
+              "actor_id": "<uuid:4>",
+              "entity_type": "friend_request",
+              "type": "friend_request",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "cancel_again": {
+      "code": "P0002",
+      "message": "that request is no longer pending",
+      "ok": false
+    },
+    "cancel_by_receiver": {
+      "code": "P0002",
+      "message": "that request is no longer pending",
+      "ok": false
+    },
+    "chand_requests": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Software Engineering",
+          "direction": "sent",
+          "full_name": "Dua Zyxwar",
+          "graduation_year": 2026,
+          "user_id": "<uuid:1>",
+          "username": "pg_dua"
+        }
+      ]
+    },
+    "chand_to_dua": {
+      "changes": {
+        "public.friend_requests": {
+          "added": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": false,
+              "sender_id": "<uuid:2>",
+              "status": "pending"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "friend_request",
+              "type": "friend_request",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          {
+            "request_id": "<uuid:5>",
+            "status": "pending"
+          }
+        ]
+      }
+    },
+    "decline": {
+      "changes": {
+        "public.friend_requests": {
+          "added": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": true,
+              "sender_id": "<uuid:6>",
+              "status": "declined"
+            }
+          ],
+          "removed": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": false,
+              "sender_id": "<uuid:6>",
+              "status": "pending"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "dua_friends": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Electrical Engineering",
+          "full_name": "Chand Qorvel",
+          "graduation_year": 2027,
+          "user_id": "<uuid:2>",
+          "username": "pg_chand"
+        }
+      ]
+    },
+    "dua_pending_count": {
+      "ok": true,
+      "value": 3
+    },
+    "dua_requests": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "department": "Electrical Engineering",
+          "direction": "received",
+          "full_name": "Chand Qorvel",
+          "graduation_year": 2027,
+          "user_id": "<uuid:2>",
+          "username": "pg_chand"
+        },
+        {
+          "avatar_path": null,
+          "department": "Electrical Engineering",
+          "direction": "received",
+          "full_name": "Eman Qorvel",
+          "graduation_year": 2028,
+          "user_id": "<uuid:6>",
+          "username": "pg_eman"
+        },
+        {
+          "avatar_path": null,
+          "department": "Computer Science",
+          "direction": "received",
+          "full_name": "Staff Plomt",
+          "graduation_year": 2027,
+          "user_id": "<uuid:4>",
+          "username": "pg_staff"
+        }
+      ]
+    },
+    "duplicate_from_other_side_accepts": {
+      "changes": {
+        "public.friend_requests": {
+          "added": [
+            {
+              "receiver_id": "<uuid:3>",
+              "responded": true,
+              "sender_id": "<uuid:7>",
+              "status": "accepted"
+            }
+          ],
+          "removed": [
+            {
+              "receiver_id": "<uuid:3>",
+              "responded": false,
+              "sender_id": "<uuid:7>",
+              "status": "pending"
+            }
+          ]
+        },
+        "public.friendships": {
+          "added": [
+            {
+              "user_id_a": "<uuid:7>",
+              "user_id_b": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:3>",
+              "entity_type": "friend_request",
+              "type": "friend_accepted",
+              "user_id": "<uuid:7>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          {
+            "request_id": "<uuid:8>",
+            "status": "accepted"
+          }
+        ]
+      }
+    },
+    "eman_to_dua": {
+      "changes": {
+        "public.friend_requests": {
+          "added": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": false,
+              "sender_id": "<uuid:6>",
+              "status": "pending"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:6>",
+              "entity_type": "friend_request",
+              "type": "friend_request",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          {
+            "request_id": "<uuid:9>",
+            "status": "pending"
+          }
+        ]
+      }
+    },
+    "resend_after_decline": {
+      "changes": {},
+      "result": {
+        "code": "54000",
+        "message": "wait a few seconds before sending another request",
+        "ok": false
+      }
+    },
+    "respond_by_sender": {
+      "code": "P0002",
+      "message": "that request is no longer pending",
+      "ok": false
+    },
+    "self": {
+      "code": "22023",
+      "message": "you can't send a friend request to yourself",
+      "ok": false
+    },
+    "send": {
+      "changes": {
+        "public.friend_requests": {
+          "added": [
+            {
+              "receiver_id": "<uuid:3>",
+              "responded": false,
+              "sender_id": "<uuid:7>",
+              "status": "pending"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:7>",
+              "entity_type": "friend_request",
+              "type": "friend_request",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          {
+            "request_id": "<uuid:8>",
+            "status": "pending"
+          }
+        ]
+      }
+    },
+    "send_again_rate_limited": {
+      "changes": {},
+      "result": {
+        "code": "54000",
+        "message": "wait a few seconds before sending another request",
+        "ok": false
+      }
+    },
+    "signed_out_cancel": {
+      "code": "42501",
+      "message": "permission denied for function cancel_friend_request",
+      "ok": false
+    },
+    "signed_out_count": {
+      "code": "42501",
+      "message": "permission denied for function pending_friend_request_count",
+      "ok": false
+    },
+    "signed_out_respond": {
+      "code": "42501",
+      "message": "permission denied for function respond_friend_request",
+      "ok": false
+    },
+    "signed_out_send": {
+      "code": "42501",
+      "message": "permission denied for function send_friend_request",
+      "ok": false
+    },
+    "staff_to_dua": {
+      "changes": {
+        "public.friend_requests": {
+          "added": [
+            {
+              "receiver_id": "<uuid:1>",
+              "responded": false,
+              "sender_id": "<uuid:4>",
+              "status": "pending"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:4>",
+              "entity_type": "friend_request",
+              "type": "friend_request",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          {
+            "request_id": "<uuid:10>",
+            "status": "pending"
+          }
+        ]
+      }
+    },
+    "unknown": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    }
+  },
+  "state_and_unfriend": {
+    "blocked_by_me": {
+      "ok": true,
+      "value": [
+        {
+          "has_request": false,
+          "state": "blocked"
+        }
+      ]
+    },
+    "blocked_me": {
+      "ok": true,
+      "value": []
+    },
+    "friends": {
+      "ok": true,
+      "value": [
+        {
+          "has_request": false,
+          "state": "friends"
+        }
+      ]
+    },
+    "none": {
+      "ok": true,
+      "value": [
+        {
+          "has_request": false,
+          "state": "none"
+        }
+      ]
+    },
+    "received": {
+      "ok": true,
+      "value": [
+        {
+          "has_request": true,
+          "state": "received"
+        }
+      ]
+    },
+    "self": {
+      "ok": true,
+      "value": [
+        {
+          "has_request": false,
+          "state": "self"
+        }
+      ]
+    },
+    "sent": {
+      "ok": true,
+      "value": [
+        {
+          "has_request": true,
+          "state": "sent"
+        }
+      ]
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function friendship_state",
+      "ok": false
+    },
+    "unfriend": {
+      "changes": {
+        "public.friendships": {
+          "added": [],
+          "removed": [
+            {
+              "user_id_a": "<uuid:1>",
+              "user_id_b": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "unfriend_again": {
+      "code": "P0002",
+      "message": "you're not friends with that person",
+      "ok": false
+    },
+    "unfriend_pending_request_only": {
+      "code": "P0002",
+      "message": "you're not friends with that person",
+      "ok": false
+    },
+    "unfriend_self": {
+      "code": "P0002",
+      "message": "you're not friends with that person",
+      "ok": false
+    },
+    "unfriend_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function unfriend",
+      "ok": false
+    },
+    "unfriend_unknown": {
+      "code": "P0002",
+      "message": "you're not friends with that person",
+      "ok": false
+    },
+    "unknown": {
+      "ok": true,
+      "value": []
+    }
+  }
+}

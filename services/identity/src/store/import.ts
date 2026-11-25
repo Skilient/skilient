@@ -104,3 +104,18 @@ export async function importTotpFactors(sql: postgres.Sql, totpKey: Buffer, fact
   });
   return report;
 }
+
+/**
+ * Supabase `public.personal_email_domains` rows (W1 follow-up closed in W2, decision 2026-11-25): the public
+ * email providers' domains the signup gate refuses. Only tests seeded the list before; production fills it
+ * here at cutover. Domains are lower-cased; existing rows are kept. Returns how many were added.
+ */
+export async function importPersonalDomains(sql: postgres.Sql, domains: readonly string[]): Promise<number> {
+  const clean = [...new Set(domains.map((d) => d.trim().toLowerCase()))];
+  const bad = clean.filter((d) => !/^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$/.test(d));
+  if (bad.length) throw new Error(`personal domain import: ${bad.length} malformed domain(s); nothing imported`);
+  if (clean.length === 0) return 0;
+  const done = await sql`
+    insert into identity.personal_email_domains (domain) select unnest(${clean}::text[]) on conflict (domain) do nothing`;
+  return done.count;
+}

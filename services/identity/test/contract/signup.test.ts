@@ -155,7 +155,7 @@ describeTransports(
       expect(JSON.stringify(event!.payload)).not.toMatch(/contract-uni|Contract Person/);
       // People reads the name in one batch call; web may not.
       const details = await id("people").getSignupDetails({ userIds: [r.userId, "9a000000-0000-4000-8000-0000000000ff"] }, env().call());
-      expect(details.users).toEqual([expect.objectContaining({ userId: r.userId, fullName: "Contract Person", role: AccountRole.STUDENT, universityId: UNI })]);
+      expect(details.users).toEqual([expect.objectContaining({ userId: r.userId, fullName: "Contract Person", role: AccountRole.STUDENT, universityId: UNI, emailDomain: "contract-uni.test" })]);
       await expect(id().getSignupDetails({ userIds: [r.userId] }, env().call())).rejects.toSatisfy((e) => ConnectError.from(e).code === Code.PermissionDenied);
       await expect(id("people").getSignupDetails({ userIds: ["nope"] }, env().call())).rejects.toSatisfy((e) => reason(e) === "invalid_input");
 
@@ -240,6 +240,18 @@ describeTransports(
       expect((await id().getGateState({}, as(s.accessToken))).agreementAccepted).toBe(true);
       await expect(id().acceptAgreement({ version: 1, ipHash: IP }, env().call())).rejects.toSatisfy((e) => ConnectError.from(e).code === Code.Unauthenticated);
       await expect(id().getGateState({}, env().call())).rejects.toSatisfy((e) => ConnectError.from(e).code === Code.Unauthenticated);
+    });
+
+    it("CheckEmailDomains tells people which domains are personal (W2 Q7)", async () => {
+      await world.sql`insert into identity.personal_email_domains (domain) values ('contract-mail.test') on conflict do nothing`;
+      const r = await id("people").checkEmailDomains({ domains: ["Contract-Mail.TEST", "contract-uni.test"] }, env().call());
+      expect(r.domains.map((d) => [d.domain, d.personal])).toEqual([
+        ["contract-mail.test", true],
+        ["contract-uni.test", false],
+      ]);
+      await expect(id().checkEmailDomains({ domains: ["contract-uni.test"] }, env().call())).rejects.toSatisfy((e) => ConnectError.from(e).code === Code.PermissionDenied);
+      await expect(id("people").checkEmailDomains({ domains: Array.from({ length: 51 }, (_, i) => `d${i}.test`) }, env().call())).rejects.toSatisfy((e) => reason(e) === "invalid_input");
+      await expect(id("people").checkEmailDomains({ domains: ["not a domain"] }, env().call())).rejects.toSatisfy((e) => reason(e) === "invalid_input");
     });
 
     it("Google: a university account signs up as a student, then signs in by its Google id", async () => {

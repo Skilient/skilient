@@ -119,9 +119,10 @@ export async function createAccount(tx: Tx, input: NewAccount): Promise<{ userId
 
 /** What a new account entered at sign-up, for people (GetSignupDetails), in one round trip. */
 export async function signupDetails(db: postgres.Sql | Tx, userIds: readonly string[]) {
-  return db<{ user_id: string; full_name: string; role: AccountRole; university_id: string | null }[]>`
-    select user_id::text, full_name, role, university_id::text from identity.signup_details
-     where user_id = any(${[...userIds]}::uuid[]) order by user_id`;
+  return db<{ user_id: string; full_name: string; role: AccountRole; university_id: string | null; email_domain: string | null }[]>`
+    select s.user_id::text, s.full_name, s.role, s.university_id::text, nullif(split_part(u.email, '@', 2), '') as email_domain
+      from identity.signup_details s join identity.users u on u.id = s.user_id
+     where s.user_id = any(${[...userIds]}::uuid[]) order by s.user_id`;
 }
 
 const RLS = 'new row violates row-level security policy for table "agreement_acceptances"';

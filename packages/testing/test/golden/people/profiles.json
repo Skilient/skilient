@@ -1,0 +1,1718 @@
+{
+  "privacy_settings": {
+    "opt_in": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:1>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "username": "pg_ali",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:1>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": true,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "username": "pg_ali",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "opt_not_onboarded": {
+      "code": "42501",
+      "message": "finish onboarding first",
+      "ok": false
+    },
+    "opt_null": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "opt_out": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:1>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": true,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "username": "pg_ali",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:1>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "username": "pg_ali",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "opt_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function set_leaderboard_opt_out",
+      "ok": false
+    },
+    "receipts_after": {
+      "ok": true,
+      "value": [
+        {
+          "read_receipts": false
+        }
+      ]
+    },
+    "receipts_default": {
+      "ok": true,
+      "value": [
+        {
+          "read_receipts": true
+        }
+      ]
+    },
+    "receipts_null_means_on": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:1>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "username": "pg_ali",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": false,
+              "department": "Computer Science",
+              "department_id": "<uuid:1>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "username": "pg_ali",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "receipts_off": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": false,
+              "department": "Computer Science",
+              "department_id": "<uuid:1>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "username": "pg_ali",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:1>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "username": "pg_ali",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "receipts_read_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function my_chat_settings",
+      "ok": false
+    },
+    "receipts_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function set_read_receipts",
+      "ok": false
+    }
+  },
+  "profile_update": {
+    "bad_username": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "new row for relation \"profiles\" violates check constraint \"profiles_username_check\"",
+        "ok": false
+      }
+    },
+    "clear_name": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "new row for relation \"profiles\" violates check constraint \"profiles_full_name_check\"",
+        "ok": false
+      }
+    },
+    "department_free_text_without_list": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Physics",
+              "department_id": null,
+              "full_name": "Chand Qorvel",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:1>",
+              "user_id": "<uuid:2>",
+              "username": "pg_chand",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Electrical Engineering",
+              "department_id": null,
+              "full_name": "Chand Qorvel",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:1>",
+              "user_id": "<uuid:2>",
+              "username": "pg_chand",
+              "visibility": "university"
+            }
+          ]
+        },
+        "public.profiles_public_card": {
+          "added": [
+            {
+              "department": "Physics",
+              "full_name": "Chand Qorvel",
+              "graduation_year": 2027,
+              "user_id": "<uuid:2>",
+              "username": "pg_chand"
+            }
+          ],
+          "removed": [
+            {
+              "department": "Electrical Engineering",
+              "full_name": "Chand Qorvel",
+              "graduation_year": 2027,
+              "user_id": "<uuid:2>",
+              "username": "pg_chand"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "department_in_list_other_case": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "software engineering",
+              "department_id": "<uuid:3>",
+              "full_name": "Bina Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:5>",
+              "username": "pg_bina",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Bina Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:5>",
+              "username": "pg_bina",
+              "visibility": "university"
+            }
+          ]
+        },
+        "public.profiles_public_card": {
+          "added": [
+            {
+              "department": "software engineering",
+              "full_name": "Bina Zyxwar",
+              "graduation_year": 2027,
+              "user_id": "<uuid:5>",
+              "username": "pg_bina"
+            }
+          ],
+          "removed": [
+            {
+              "department": "Computer Science",
+              "full_name": "Bina Zyxwar",
+              "graduation_year": 2027,
+              "user_id": "<uuid:5>",
+              "username": "pg_bina"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "department_not_in_list": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "choose one of your university's departments",
+        "ok": false
+      }
+    },
+    "long_bio": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "new row for relation \"profiles\" violates check constraint \"profiles_bio_check\"",
+        "ok": false
+      }
+    },
+    "looking_for_and_recruiter": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": "Builds robots",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [
+                "internship",
+                "job"
+              ],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": true,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:7>",
+              "username": "pg_ali_two",
+              "visibility": "global"
+            }
+          ],
+          "removed": [
+            {
+              "bio": "Builds robots",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:7>",
+              "username": "pg_ali_two",
+              "visibility": "global"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "new_name": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": "Builds robots",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Ali Zyxwar-Khan",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [
+                "internship",
+                "job"
+              ],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": true,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:7>",
+              "username": "pg_ali_two",
+              "visibility": "global"
+            }
+          ],
+          "removed": [
+            {
+              "bio": "Builds robots",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [
+                "internship",
+                "job"
+              ],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": true,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:7>",
+              "username": "pg_ali_two",
+              "visibility": "global"
+            }
+          ]
+        },
+        "public.profiles_public_card": {
+          "added": [
+            {
+              "department": "Computer Science",
+              "full_name": "Ali Zyxwar-Khan",
+              "graduation_year": 2027,
+              "user_id": "<uuid:7>",
+              "username": "pg_ali_two"
+            }
+          ],
+          "removed": [
+            {
+              "department": "Computer Science",
+              "full_name": "Ali Zyxwar",
+              "graduation_year": 2027,
+              "user_id": "<uuid:7>",
+              "username": "pg_ali_two"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "not_granted_column": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "permission denied for table profiles",
+        "ok": false
+      }
+    },
+    "own_bio_visibility": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": "Builds robots",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:7>",
+              "username": "pg_ali",
+              "visibility": "global"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:7>",
+              "username": "pg_ali",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "own_username": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": "Builds robots",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:7>",
+              "username": "pg_ali_two",
+              "visibility": "global"
+            }
+          ],
+          "removed": [
+            {
+              "bio": "Builds robots",
+              "campus": "Main",
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:7>",
+              "username": "pg_ali",
+              "visibility": "global"
+            }
+          ]
+        },
+        "public.profiles_public_card": {
+          "added": [
+            {
+              "department": "Computer Science",
+              "full_name": "Ali Zyxwar",
+              "graduation_year": 2027,
+              "user_id": "<uuid:7>",
+              "username": "pg_ali_two"
+            }
+          ],
+          "removed": [
+            {
+              "department": "Computer Science",
+              "full_name": "Ali Zyxwar",
+              "graduation_year": 2027,
+              "user_id": "<uuid:7>",
+              "username": "pg_ali"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "reserved_username": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "new row for relation \"profiles\" violates check constraint \"profiles_username_check\"",
+        "ok": false
+      }
+    },
+    "role_column": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "permission denied for table profiles",
+        "ok": false
+      }
+    },
+    "signed_out": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "permission denied for table profiles",
+        "ok": false
+      }
+    },
+    "someone_elses_row": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": 0
+      }
+    },
+    "taken_username": {
+      "changes": {},
+      "result": {
+        "code": "23505",
+        "message": "duplicate key value violates unique constraint \"profiles_username_key\"",
+        "ok": false
+      }
+    }
+  },
+  "signup_rows": {
+    "seeded": {
+      "public.onboarding_state": {
+        "added": [
+          {
+            "completed": true,
+            "data": {},
+            "role": "student",
+            "step": 6,
+            "user_id": "<uuid:1>"
+          },
+          {
+            "completed": true,
+            "data": {},
+            "role": "student",
+            "step": 6,
+            "user_id": "<uuid:2>"
+          },
+          {
+            "completed": true,
+            "data": {},
+            "role": "student",
+            "step": 6,
+            "user_id": "<uuid:3>"
+          },
+          {
+            "completed": true,
+            "data": {},
+            "role": "student",
+            "step": 6,
+            "user_id": "<uuid:4>"
+          },
+          {
+            "completed": true,
+            "data": {},
+            "role": "student",
+            "step": 6,
+            "user_id": "<uuid:5>"
+          },
+          {
+            "completed": false,
+            "data": {},
+            "role": "student",
+            "step": 1,
+            "user_id": "<uuid:6>"
+          },
+          {
+            "completed": true,
+            "data": {},
+            "role": "student",
+            "step": 6,
+            "user_id": "<uuid:7>"
+          },
+          {
+            "completed": true,
+            "data": {},
+            "role": "university_admin",
+            "step": 6,
+            "user_id": "<uuid:8>"
+          }
+        ],
+        "removed": []
+      },
+      "public.profiles": {
+        "added": [
+          {
+            "bio": null,
+            "campus": null,
+            "chat_read_receipts": true,
+            "department": "Computer Science",
+            "department_id": "<uuid:9>",
+            "full_name": "Ali Zyxwar",
+            "graduated": false,
+            "graduation_year": 2027,
+            "leaderboard_opt_out": false,
+            "looking_for": [],
+            "onboarding_complete": true,
+            "programme": null,
+            "recruiter_visible": false,
+            "role": "student",
+            "status": "active",
+            "university_id": "<uuid:10>",
+            "user_id": "<uuid:1>",
+            "username": "pg_ali",
+            "visibility": "university"
+          },
+          {
+            "bio": null,
+            "campus": null,
+            "chat_read_receipts": true,
+            "department": "Computer Science",
+            "department_id": "<uuid:9>",
+            "full_name": "Bina Zyxwar",
+            "graduated": false,
+            "graduation_year": 2027,
+            "leaderboard_opt_out": false,
+            "looking_for": [],
+            "onboarding_complete": true,
+            "programme": null,
+            "recruiter_visible": false,
+            "role": "student",
+            "status": "active",
+            "university_id": "<uuid:10>",
+            "user_id": "<uuid:2>",
+            "username": "pg_bina",
+            "visibility": "university"
+          },
+          {
+            "bio": null,
+            "campus": null,
+            "chat_read_receipts": true,
+            "department": "Electrical Engineering",
+            "department_id": null,
+            "full_name": "Chand Qorvel",
+            "graduated": false,
+            "graduation_year": 2027,
+            "leaderboard_opt_out": false,
+            "looking_for": [],
+            "onboarding_complete": true,
+            "programme": null,
+            "recruiter_visible": false,
+            "role": "student",
+            "status": "active",
+            "university_id": "<uuid:11>",
+            "user_id": "<uuid:3>",
+            "username": "pg_chand",
+            "visibility": "university"
+          },
+          {
+            "bio": null,
+            "campus": null,
+            "chat_read_receipts": true,
+            "department": "Software Engineering",
+            "department_id": "<uuid:12>",
+            "full_name": "Dua Zyxwar",
+            "graduated": false,
+            "graduation_year": 2026,
+            "leaderboard_opt_out": false,
+            "looking_for": [],
+            "onboarding_complete": true,
+            "programme": null,
+            "recruiter_visible": false,
+            "role": "student",
+            "status": "active",
+            "university_id": "<uuid:10>",
+            "user_id": "<uuid:4>",
+            "username": "pg_dua",
+            "visibility": "friends"
+          },
+          {
+            "bio": null,
+            "campus": null,
+            "chat_read_receipts": true,
+            "department": "Electrical Engineering",
+            "department_id": null,
+            "full_name": "Eman Qorvel",
+            "graduated": false,
+            "graduation_year": 2028,
+            "leaderboard_opt_out": false,
+            "looking_for": [],
+            "onboarding_complete": true,
+            "programme": null,
+            "recruiter_visible": false,
+            "role": "student",
+            "status": "active",
+            "university_id": "<uuid:11>",
+            "user_id": "<uuid:5>",
+            "username": "pg_eman",
+            "visibility": "global"
+          },
+          {
+            "bio": null,
+            "campus": null,
+            "chat_read_receipts": true,
+            "department": null,
+            "department_id": null,
+            "full_name": "Newbie Plomt",
+            "graduated": false,
+            "graduation_year": null,
+            "leaderboard_opt_out": false,
+            "looking_for": [],
+            "onboarding_complete": false,
+            "programme": null,
+            "recruiter_visible": false,
+            "role": "student",
+            "status": "active",
+            "university_id": null,
+            "user_id": "<uuid:6>",
+            "username": null,
+            "visibility": "university"
+          },
+          {
+            "bio": null,
+            "campus": null,
+            "chat_read_receipts": true,
+            "department": "Computer Science",
+            "department_id": "<uuid:9>",
+            "full_name": "Staff Plomt",
+            "graduated": false,
+            "graduation_year": 2027,
+            "leaderboard_opt_out": false,
+            "looking_for": [],
+            "onboarding_complete": true,
+            "programme": null,
+            "recruiter_visible": false,
+            "role": "student",
+            "status": "active",
+            "university_id": "<uuid:10>",
+            "user_id": "<uuid:7>",
+            "username": "pg_staff",
+            "visibility": "university"
+          },
+          {
+            "bio": null,
+            "campus": null,
+            "chat_read_receipts": true,
+            "department": null,
+            "department_id": null,
+            "full_name": "Office Plomt",
+            "graduated": false,
+            "graduation_year": null,
+            "leaderboard_opt_out": false,
+            "looking_for": [],
+            "onboarding_complete": true,
+            "programme": null,
+            "recruiter_visible": false,
+            "role": "university_admin",
+            "status": "active",
+            "university_id": "<uuid:10>",
+            "user_id": "<uuid:8>",
+            "username": null,
+            "visibility": "friends"
+          }
+        ],
+        "removed": []
+      },
+      "public.profiles_public_card": {
+        "added": [
+          {
+            "department": "Computer Science",
+            "full_name": "Ali Zyxwar",
+            "graduation_year": 2027,
+            "user_id": "<uuid:1>",
+            "username": "pg_ali"
+          },
+          {
+            "department": "Computer Science",
+            "full_name": "Bina Zyxwar",
+            "graduation_year": 2027,
+            "user_id": "<uuid:2>",
+            "username": "pg_bina"
+          },
+          {
+            "department": "Electrical Engineering",
+            "full_name": "Chand Qorvel",
+            "graduation_year": 2027,
+            "user_id": "<uuid:3>",
+            "username": "pg_chand"
+          },
+          {
+            "department": "Software Engineering",
+            "full_name": "Dua Zyxwar",
+            "graduation_year": 2026,
+            "user_id": "<uuid:4>",
+            "username": "pg_dua"
+          },
+          {
+            "department": "Electrical Engineering",
+            "full_name": "Eman Qorvel",
+            "graduation_year": 2028,
+            "user_id": "<uuid:5>",
+            "username": "pg_eman"
+          },
+          {
+            "department": null,
+            "full_name": "Newbie Plomt",
+            "graduation_year": null,
+            "user_id": "<uuid:6>",
+            "username": null
+          },
+          {
+            "department": "Computer Science",
+            "full_name": "Staff Plomt",
+            "graduation_year": 2027,
+            "user_id": "<uuid:7>",
+            "username": "pg_staff"
+          },
+          {
+            "department": null,
+            "full_name": "Office Plomt",
+            "graduation_year": null,
+            "user_id": "<uuid:8>",
+            "username": null
+          }
+        ],
+        "removed": []
+      }
+    }
+  },
+  "username_available": {
+    "\"  pg_free_name  \"": {
+      "ok": true,
+      "value": true
+    },
+    "\"ab\"": {
+      "ok": true,
+      "value": false
+    },
+    "\"admin\"": {
+      "ok": true,
+      "value": false
+    },
+    "\"has-dash\"": {
+      "ok": true,
+      "value": false
+    },
+    "\"PG_ALI\"": {
+      "ok": true,
+      "value": false
+    },
+    "\"pg_bina\"": {
+      "ok": true,
+      "value": true
+    },
+    "\"pg_free_name\"": {
+      "ok": true,
+      "value": true
+    },
+    "\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"": {
+      "ok": true,
+      "value": false
+    },
+    "null": {
+      "ok": true,
+      "value": false
+    },
+    "own_name_for_ali": {
+      "ok": true,
+      "value": true
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function username_available",
+      "ok": false
+    }
+  },
+  "username_rate_limit": {
+    "last": {
+      "code": "54000",
+      "message": "too many username checks",
+      "ok": false
+    },
+    "refused_at": 121
+  },
+  "visibility": {
+    "card_unknown": {
+      "ok": true,
+      "value": []
+    },
+    "pg_ali": {
+      "ali": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Computer Science",
+              "full_name": "Ali Zyxwar",
+              "graduation_year": 2027,
+              "user_id": "<uuid:1>",
+              "username": "pg_ali"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": [
+            {
+              "bio": null,
+              "full_name": "Ali Zyxwar",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:1>",
+              "username": "pg_ali"
+            }
+          ]
+        }
+      },
+      "bina": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Computer Science",
+              "full_name": "Ali Zyxwar",
+              "graduation_year": 2027,
+              "user_id": "<uuid:1>",
+              "username": "pg_ali"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": [
+            {
+              "bio": null,
+              "full_name": "Ali Zyxwar",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:1>",
+              "username": "pg_ali"
+            }
+          ]
+        }
+      },
+      "chand": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Computer Science",
+              "full_name": "Ali Zyxwar",
+              "graduation_year": 2027,
+              "user_id": "<uuid:1>",
+              "username": "pg_ali"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": []
+        }
+      },
+      "dua": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Computer Science",
+              "full_name": "Ali Zyxwar",
+              "graduation_year": 2027,
+              "user_id": "<uuid:1>",
+              "username": "pg_ali"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": [
+            {
+              "bio": null,
+              "full_name": "Ali Zyxwar",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:1>",
+              "username": "pg_ali"
+            }
+          ]
+        }
+      },
+      "eman": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Computer Science",
+              "full_name": "Ali Zyxwar",
+              "graduation_year": 2027,
+              "user_id": "<uuid:1>",
+              "username": "pg_ali"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": []
+        }
+      },
+      "signed_out": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "code": "42501",
+          "message": "permission denied for function get_profile_card",
+          "ok": false
+        },
+        "full": {
+          "code": "42501",
+          "message": "permission denied for table profiles",
+          "ok": false
+        }
+      }
+    },
+    "pg_chand": {
+      "ali": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Electrical Engineering",
+              "full_name": "Chand Qorvel",
+              "graduation_year": 2027,
+              "user_id": "<uuid:3>",
+              "username": "pg_chand"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": []
+        }
+      },
+      "bina": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Electrical Engineering",
+              "full_name": "Chand Qorvel",
+              "graduation_year": 2027,
+              "user_id": "<uuid:3>",
+              "username": "pg_chand"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": []
+        }
+      },
+      "chand": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Electrical Engineering",
+              "full_name": "Chand Qorvel",
+              "graduation_year": 2027,
+              "user_id": "<uuid:3>",
+              "username": "pg_chand"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": [
+            {
+              "bio": null,
+              "full_name": "Chand Qorvel",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:3>",
+              "username": "pg_chand"
+            }
+          ]
+        }
+      },
+      "dua": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Electrical Engineering",
+              "full_name": "Chand Qorvel",
+              "graduation_year": 2027,
+              "user_id": "<uuid:3>",
+              "username": "pg_chand"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": []
+        }
+      },
+      "eman": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "ok": true,
+          "value": []
+        },
+        "full": {
+          "ok": true,
+          "value": []
+        }
+      },
+      "signed_out": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "code": "42501",
+          "message": "permission denied for function get_profile_card",
+          "ok": false
+        },
+        "full": {
+          "code": "42501",
+          "message": "permission denied for table profiles",
+          "ok": false
+        }
+      }
+    },
+    "pg_dua": {
+      "ali": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Software Engineering",
+              "full_name": "Dua Zyxwar",
+              "graduation_year": 2026,
+              "user_id": "<uuid:5>",
+              "username": "pg_dua"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": [
+            {
+              "bio": null,
+              "full_name": "Dua Zyxwar",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:5>",
+              "username": "pg_dua"
+            }
+          ]
+        }
+      },
+      "bina": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Software Engineering",
+              "full_name": "Dua Zyxwar",
+              "graduation_year": 2026,
+              "user_id": "<uuid:5>",
+              "username": "pg_dua"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": []
+        }
+      },
+      "chand": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Software Engineering",
+              "full_name": "Dua Zyxwar",
+              "graduation_year": 2026,
+              "user_id": "<uuid:5>",
+              "username": "pg_dua"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": []
+        }
+      },
+      "dua": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Software Engineering",
+              "full_name": "Dua Zyxwar",
+              "graduation_year": 2026,
+              "user_id": "<uuid:5>",
+              "username": "pg_dua"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": [
+            {
+              "bio": null,
+              "full_name": "Dua Zyxwar",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:5>",
+              "username": "pg_dua"
+            }
+          ]
+        }
+      },
+      "eman": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Software Engineering",
+              "full_name": "Dua Zyxwar",
+              "graduation_year": 2026,
+              "user_id": "<uuid:5>",
+              "username": "pg_dua"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": []
+        }
+      },
+      "signed_out": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "code": "42501",
+          "message": "permission denied for function get_profile_card",
+          "ok": false
+        },
+        "full": {
+          "code": "42501",
+          "message": "permission denied for table profiles",
+          "ok": false
+        }
+      }
+    },
+    "pg_eman": {
+      "ali": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Electrical Engineering",
+              "full_name": "Eman Qorvel",
+              "graduation_year": 2028,
+              "user_id": "<uuid:6>",
+              "username": "pg_eman"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": [
+            {
+              "bio": null,
+              "full_name": "Eman Qorvel",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:6>",
+              "username": "pg_eman"
+            }
+          ]
+        }
+      },
+      "bina": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Electrical Engineering",
+              "full_name": "Eman Qorvel",
+              "graduation_year": 2028,
+              "user_id": "<uuid:6>",
+              "username": "pg_eman"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": [
+            {
+              "bio": null,
+              "full_name": "Eman Qorvel",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:6>",
+              "username": "pg_eman"
+            }
+          ]
+        }
+      },
+      "chand": {
+        "can_view": {
+          "ok": true,
+          "value": false
+        },
+        "card": {
+          "ok": true,
+          "value": []
+        },
+        "full": {
+          "ok": true,
+          "value": []
+        }
+      },
+      "dua": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Electrical Engineering",
+              "full_name": "Eman Qorvel",
+              "graduation_year": 2028,
+              "user_id": "<uuid:6>",
+              "username": "pg_eman"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": [
+            {
+              "bio": null,
+              "full_name": "Eman Qorvel",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:6>",
+              "username": "pg_eman"
+            }
+          ]
+        }
+      },
+      "eman": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "ok": true,
+          "value": [
+            {
+              "department": "Electrical Engineering",
+              "full_name": "Eman Qorvel",
+              "graduation_year": 2028,
+              "user_id": "<uuid:6>",
+              "username": "pg_eman"
+            }
+          ]
+        },
+        "full": {
+          "ok": true,
+          "value": [
+            {
+              "bio": null,
+              "full_name": "Eman Qorvel",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:6>",
+              "username": "pg_eman"
+            }
+          ]
+        }
+      },
+      "signed_out": {
+        "can_view": {
+          "ok": true,
+          "value": true
+        },
+        "card": {
+          "code": "42501",
+          "message": "permission denied for function get_profile_card",
+          "ok": false
+        },
+        "full": {
+          "code": "42501",
+          "message": "permission denied for table profiles",
+          "ok": false
+        }
+      }
+    },
+    "public_card_table_direct": {
+      "code": "42501",
+      "message": "permission denied for table profiles_public_card",
+      "ok": false
+    }
+  }
+}

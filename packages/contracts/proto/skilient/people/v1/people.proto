@@ -1,0 +1,920 @@
+syntax = "proto3";
+
+package skilient.people.v1;
+
+// people: profiles, universities and departments, friends, blocks, mutes, privacy settings, onboarding,
+// tours and tips, the page shell, people search and suggestions (docs/azure/prd.md, service catalogue;
+// docs/azure/people-function-bins.md maps every ported SQL function to a method here).
+//
+// Refusals carry a short snake_case reason in the x-refusal metadata (services/people/src/refusals.ts lists
+// each with today's wording for web). Times are RFC 3339 strings; an empty string means none.
+// Roles: student | faculty | recruiter | university_admin. Visibility: friends | university | global.
+// Status: active | graduate | deleting.
+service PeopleService {
+  // ---- The page shell (one call per page; one database trip) ----
+
+  // GetShell is what every signed-in page needs: the viewer's card, the student tour and the nav badges.
+  rpc GetShell(GetShellRequest) returns (GetShellResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // TodoCounts is the to-do total and its parts (Home's progress card).
+  rpc TodoCounts(TodoCountsRequest) returns (TodoCountsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // NextBestAction is the one next step the progress card suggests.
+  rpc NextBestAction(NextBestActionRequest) returns (NextBestActionResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // GettingStarted is the first-weeks checklist.
+  rpc GettingStarted(GettingStartedRequest) returns (GettingStartedResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // LearnState is the viewer's small UI flags, tips seen and one tour's progress.
+  rpc LearnState(LearnStateRequest) returns (LearnStateResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ---- Profiles ----
+
+  // GetMyProfile is the viewer's own profile with every privacy setting (Settings → Profile and Privacy).
+  rpc GetMyProfile(GetMyProfileRequest) returns (GetMyProfileResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // GetProfile opens a profile by username: the full profile, the restricted card, or not found. Counts
+  // toward the viewer's 300 profile views a day, so it is not side-effect free.
+  rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
+  // ProfileCards is the batch read other services use for names, usernames, avatars and universities.
+  rpc ProfileCards(ProfileCardsRequest) returns (ProfileCardsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // ResolveUsernames turns usernames into user ids, in one call.
+  rpc ResolveUsernames(ResolveUsernamesRequest) returns (ResolveUsernamesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // Relations says, for one user and many others, who are friends, blocked either way, or muted.
+  rpc Relations(RelationsRequest) returns (RelationsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // UsernameAvailable checks a username (120 checks an hour per user).
+  rpc UsernameAvailable(UsernameAvailableRequest) returns (UsernameAvailableResponse);
+  // UpdateProfile changes the fields a user may edit on their own profile.
+  rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse);
+  // SetProfileImage records (or clears) the avatar or cover image the media service stored for the user.
+  rpc SetProfileImage(SetProfileImageRequest) returns (SetProfileImageResponse);
+  // SetReadReceipts turns chat read receipts on or off.
+  rpc SetReadReceipts(SetReadReceiptsRequest) returns (SetReadReceiptsResponse);
+  // SetLeaderboardOptOut hides or shows the user on leaderboards.
+  rpc SetLeaderboardOptOut(SetLeaderboardOptOutRequest) returns (SetLeaderboardOptOutResponse);
+
+  // ---- Onboarding ----
+
+  // GetOnboarding is the wizard's state, the profile so far, the universities that own the email domain and
+  // the departments to choose from.
+  rpc GetOnboarding(GetOnboardingRequest) returns (GetOnboardingResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // DepartmentOptions lists the departments and programmes of the viewer's university.
+  rpc DepartmentOptions(DepartmentOptionsRequest) returns (DepartmentOptionsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // Classmates lists onboarded people in the viewer's department and batch (onboarding step 6).
+  rpc Classmates(ClassmatesRequest) returns (ClassmatesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // SetMyUniversity picks one of the universities that own the student's email domain, before onboarding ends.
+  rpc SetMyUniversity(SetMyUniversityRequest) returns (SetMyUniversityResponse);
+  // SaveUniversityStep saves step 1 (university, department, programme, batch, campus).
+  rpc SaveUniversityStep(SaveUniversityStepRequest) returns (SaveUniversityStepResponse);
+  // SaveProfileStep saves step 2 (username and intro).
+  rpc SaveProfileStep(SaveProfileStepRequest) returns (SaveProfileStepResponse);
+  // SaveGithubStep records step 3's choice (the link itself is work's).
+  rpc SaveGithubStep(SaveGithubStepRequest) returns (SaveGithubStepResponse);
+  // SaveSkillsStep records that step 4 was seen.
+  rpc SaveSkillsStep(SaveSkillsStepRequest) returns (SaveSkillsStepResponse);
+  // SaveLookingForStep saves step 5 (what the student is looking for, recruiter visibility).
+  rpc SaveLookingForStep(SaveLookingForStepRequest) returns (SaveLookingForStepResponse);
+  // CompleteOnboarding finishes the wizard when username, university, department and batch are set.
+  rpc CompleteOnboarding(CompleteOnboardingRequest) returns (CompleteOnboardingResponse);
+
+  // ---- Friends, blocks, mutes ----
+
+  rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc ListFriendRequests(ListFriendRequestsRequest) returns (ListFriendRequestsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc ListBlocks(ListBlocksRequest) returns (ListBlocksResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc ListMutes(ListMutesRequest) returns (ListMutesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // FriendshipState is the viewer's relation to one username (self, friends, sent, received, blocked, none).
+  rpc FriendshipState(FriendshipStateRequest) returns (FriendshipStateResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc PendingFriendRequestCount(PendingFriendRequestCountRequest) returns (PendingFriendRequestCountResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // SendFriendRequest sends a request, or accepts theirs when they already asked.
+  rpc SendFriendRequest(SendFriendRequestRequest) returns (SendFriendRequestResponse);
+  rpc RespondFriendRequest(RespondFriendRequestRequest) returns (RespondFriendRequestResponse);
+  rpc CancelFriendRequest(CancelFriendRequestRequest) returns (CancelFriendRequestResponse);
+  rpc Unfriend(UnfriendRequest) returns (UnfriendResponse);
+  // BlockUser ends any friendship and request between the two; the other person isn't told.
+  rpc BlockUser(BlockUserRequest) returns (BlockUserResponse);
+  rpc UnblockUser(UnblockUserRequest) returns (UnblockUserResponse);
+  rpc MuteUser(MuteUserRequest) returns (MuteUserResponse);
+
+  // ---- Search and suggestions ----
+
+  // SearchPeople finds people by name, username or department (60 searches a minute per user).
+  rpc SearchPeople(SearchPeopleRequest) returns (SearchPeopleResponse);
+  rpc PeopleYouMayKnow(PeopleYouMayKnowRequest) returns (PeopleYouMayKnowResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc DismissSuggestion(DismissSuggestionRequest) returns (DismissSuggestionResponse);
+
+  // ---- Tours, tips, small UI state ----
+
+  rpc SetUiState(SetUiStateRequest) returns (SetUiStateResponse);
+  rpc SaveTour(SaveTourRequest) returns (SaveTourResponse);
+  rpc RestartTour(RestartTourRequest) returns (RestartTourResponse);
+  rpc SeeTip(SeeTipRequest) returns (SeeTipResponse);
+
+  // ---- Universities ----
+
+  // ListUniversities lists universities (with whether signups are open), optionally those owning a domain.
+  rpc ListUniversities(ListUniversitiesRequest) returns (ListUniversitiesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // RequestUniversity asks to be emailed when a university joins (signed out; the email stays in people).
+  rpc RequestUniversity(RequestUniversityRequest) returns (RequestUniversityResponse);
+  rpc ConfirmUniversityRequest(ConfirmUniversityRequestRequest) returns (ConfirmUniversityRequestResponse);
+  rpc UnsubscribeUniversityRequest(UnsubscribeUniversityRequestRequest) returns (UnsubscribeUniversityRequestResponse);
+
+  // ---- Staff (accounts or super admin, with two-factor; audited before and after) ----
+
+  rpc OpsUniversityRequests(OpsUniversityRequestsRequest) returns (OpsUniversityRequestsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc OpsBatches(OpsBatchesRequest) returns (OpsBatchesResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc OpsSetUniversityLive(OpsSetUniversityLiveRequest) returns (OpsSetUniversityLiveResponse);
+  rpc OpsOpenAllUniversities(OpsOpenAllUniversitiesRequest) returns (OpsOpenAllUniversitiesResponse);
+  rpc OpsAddUniDomain(OpsAddUniDomainRequest) returns (OpsAddUniDomainResponse);
+  rpc OpsSetFinalYearBatch(OpsSetFinalYearBatchRequest) returns (OpsSetFinalYearBatchResponse);
+
+  // ---- Departments and programmes (market only: the university portal checks the seat first) ----
+
+  rpc SaveDepartment(SaveDepartmentRequest) returns (SaveDepartmentResponse);
+  rpc DeleteDepartment(DeleteDepartmentRequest) returns (DeleteDepartmentResponse);
+  rpc SaveProgramme(SaveProgrammeRequest) returns (SaveProgrammeResponse);
+  rpc DeleteProgramme(DeleteProgrammeRequest) returns (DeleteProgrammeResponse);
+}
+
+// ---------------------------------------------------------------------------
+// Shared shapes
+// ---------------------------------------------------------------------------
+
+// A person as other people see them in lists (friends, requests, search, suggestions).
+message PersonCard {
+  string user_id = 1;
+  string username = 2;
+  string full_name = 3;
+  // Empty unless the viewer may see the full profile.
+  string avatar_path = 4;
+  string department = 5;
+  // 0 when not set.
+  int32 graduation_year = 6;
+}
+
+message TourProgress {
+  bool started = 1;
+  int32 step = 2;
+  bool completed = 3;
+  bool skipped = 4;
+}
+
+message Department {
+  string id = 1;
+  string name = 2;
+  repeated string programmes = 3;
+}
+
+message University {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  bool live = 4;
+}
+
+// ---------------------------------------------------------------------------
+// Shell
+// ---------------------------------------------------------------------------
+
+message GetShellRequest {}
+
+message GetShellResponse {
+  message Me {
+    string user_id = 1;
+    string full_name = 2;
+    string username = 3;
+    string avatar_path = 4;
+    string university_id = 5;
+    string university_name = 6;
+    string role = 7;
+    string status = 8;
+    bool onboarding_complete = 9;
+  }
+  message Badges {
+    int32 chat = 1;
+    int32 notifications = 2;
+    int32 friends = 3;
+    int32 ventures = 4;
+    int32 openings = 5;
+  }
+  Me me = 1;
+  // The student tour, for onboarded students only.
+  TourProgress tour = 2;
+  // Absent until onboarding is complete.
+  Badges badges = 3;
+}
+
+message TodoCountsRequest {}
+
+message TodoCountsResponse {
+  int32 total = 1;
+  int32 requests = 2;
+  int32 applications = 3;
+  int32 invites = 4;
+  int32 confirm = 5;
+  int32 endorse = 6;
+}
+
+message NextBestActionRequest {}
+
+message NextBestActionResponse {
+  string key = 1;
+  string title = 2;
+  string body = 3;
+  string href = 4;
+}
+
+message GettingStartedRequest {}
+
+message GettingStartedResponse {
+  message Item {
+    string key = 1;
+    string label = 2;
+    string href = 3;
+    // 0 with has_points false when the item earns no points.
+    double points = 4;
+    bool has_points = 5;
+    string note = 6;
+    bool done = 7;
+  }
+  repeated Item items = 1;
+  int32 done = 2;
+  int32 total = 3;
+}
+
+message LearnStateRequest {
+  // student, faculty, recruiter or uni_admin.
+  string tour = 1;
+}
+
+message LearnStateResponse {
+  message UiValue {
+    string key = 1;
+    // The stored JSON value.
+    string value_json = 2;
+  }
+  repeated UiValue ui = 1;
+  repeated string tips_seen = 2;
+  TourProgress tour = 3;
+}
+
+// ---------------------------------------------------------------------------
+// Profiles
+// ---------------------------------------------------------------------------
+
+message GetMyProfileRequest {}
+
+message GetMyProfileResponse {
+  string user_id = 1;
+  string role = 2;
+  string university_id = 3;
+  string university_name = 4;
+  string full_name = 5;
+  string username = 6;
+  string department = 7;
+  string department_id = 8;
+  string programme = 9;
+  int32 graduation_year = 10;
+  string campus = 11;
+  string bio = 12;
+  string avatar_path = 13;
+  string cover_path = 14;
+  string visibility = 15;
+  bool recruiter_visible = 16;
+  repeated string looking_for = 17;
+  bool onboarding_complete = 18;
+  bool read_receipts = 19;
+  bool leaderboard_opt_out = 20;
+  string status = 21;
+  string delete_after = 22;
+}
+
+message GetProfileRequest {
+  string username = 1;
+}
+
+message GetProfileResponse {
+  message Full {
+    string user_id = 1;
+    string username = 2;
+    string full_name = 3;
+    string university_name = 4;
+    string department = 5;
+    string programme = 6;
+    int32 graduation_year = 7;
+    string campus = 8;
+    string bio = 9;
+    string avatar_path = 10;
+    string cover_path = 11;
+    string visibility = 12;
+    repeated string looking_for = 13;
+    bool is_owner = 14;
+  }
+  message Card {
+    string user_id = 1;
+    string username = 2;
+    string full_name = 3;
+    string department = 4;
+    int32 graduation_year = 5;
+  }
+  oneof result {
+    Full full = 1;
+    Card card = 2;
+    // No such person, or a block either way.
+    bool not_found = 3;
+  }
+}
+
+message ProfileCardsRequest {
+  // At most 500.
+  repeated string user_ids = 1;
+}
+
+message ProfileCardsResponse {
+  message Entry {
+    string user_id = 1;
+    string username = 2;
+    string full_name = 3;
+    string avatar_path = 4;
+    string department = 5;
+    int32 graduation_year = 6;
+    string university_id = 7;
+    string university_name = 8;
+    string role = 9;
+    string status = 10;
+    string visibility = 11;
+  }
+  repeated Entry users = 1;
+}
+
+message ResolveUsernamesRequest {
+  // At most 500.
+  repeated string usernames = 1;
+}
+
+message ResolveUsernamesResponse {
+  message Entry {
+    // As asked.
+    string username = 1;
+    string user_id = 2;
+  }
+  // Only the usernames that exist.
+  repeated Entry users = 1;
+}
+
+message RelationsRequest {
+  string user_id = 1;
+  // At most 500.
+  repeated string other_ids = 2;
+}
+
+message RelationsResponse {
+  message Entry {
+    string other_id = 1;
+    bool friends = 2;
+    // A block in either direction.
+    bool blocked = 3;
+    // user_id has muted other_id.
+    bool muted = 4;
+  }
+  repeated Entry others = 1;
+}
+
+message UsernameAvailableRequest {
+  string username = 1;
+}
+
+message UsernameAvailableResponse {
+  bool available = 1;
+}
+
+message UpdateProfileRequest {
+  optional string full_name = 1;
+  optional string username = 2;
+  optional string bio = 3;
+  optional string campus = 4;
+  optional string programme = 5;
+  optional string department = 6;
+  optional int32 graduation_year = 7;
+  optional string visibility = 8;
+  // Set together with looking_for_set (an empty list clears it).
+  repeated string looking_for = 9;
+  bool looking_for_set = 10;
+  optional bool recruiter_visible = 11;
+  // An empty string clears a text field.
+}
+
+message UpdateProfileResponse {}
+
+message SetProfileImageRequest {
+  // avatar or cover.
+  string kind = 1;
+  // The stored file's path ("<user id>/<uuid>.webp"); empty removes the image.
+  string path = 2;
+}
+
+message SetProfileImageResponse {}
+
+message SetReadReceiptsRequest {
+  bool on = 1;
+}
+
+message SetReadReceiptsResponse {}
+
+message SetLeaderboardOptOutRequest {
+  bool out = 1;
+}
+
+message SetLeaderboardOptOutResponse {
+  bool out = 1;
+}
+
+// ---------------------------------------------------------------------------
+// Onboarding
+// ---------------------------------------------------------------------------
+
+message GetOnboardingRequest {}
+
+message GetOnboardingResponse {
+  int32 step = 1;
+  // The wizard's notes (github choice, skills seen), as JSON.
+  string data_json = 2;
+  bool completed = 3;
+  GetMyProfileResponse profile = 4;
+  // The universities that own the student's email domain.
+  repeated University universities = 5;
+  bool own_list = 6;
+  repeated Department departments = 7;
+}
+
+message DepartmentOptionsRequest {}
+
+message DepartmentOptionsResponse {
+  bool own_list = 1;
+  string department_id = 2;
+  repeated Department departments = 3;
+}
+
+message ClassmatesRequest {
+  // At most 30; 12 when 0.
+  int32 limit = 1;
+}
+
+message ClassmatesResponse {
+  repeated PersonCard people = 1;
+}
+
+message SetMyUniversityRequest {
+  string university_id = 1;
+}
+
+message SetMyUniversityResponse {
+  bool set = 1;
+}
+
+message SaveUniversityStepRequest {
+  // Empty keeps the university already set.
+  string university_id = 1;
+  string department = 2;
+  string programme = 3;
+  int32 graduation_year = 4;
+  string campus = 5;
+}
+
+message SaveProfileStepRequest {
+  string username = 1;
+  string bio = 2;
+}
+
+message SaveGithubStepRequest {
+  // connected, later or skipped.
+  string choice = 1;
+}
+
+message SaveSkillsStepRequest {}
+
+message SaveLookingForStepRequest {
+  repeated string looking_for = 1;
+  bool recruiter_visible = 2;
+}
+
+message SaveUniversityStepResponse {
+  // The step to show next (1-6).
+  int32 next_step = 1;
+}
+
+message SaveProfileStepResponse {
+  // The step to show next (1-6).
+  int32 next_step = 1;
+}
+
+message SaveGithubStepResponse {
+  // The step to show next (1-6).
+  int32 next_step = 1;
+}
+
+message SaveSkillsStepResponse {
+  // The step to show next (1-6).
+  int32 next_step = 1;
+}
+
+message SaveLookingForStepResponse {
+  // The step to show next (1-6).
+  int32 next_step = 1;
+}
+
+message CompleteOnboardingRequest {}
+
+message CompleteOnboardingResponse {
+  // False while username, university, department or batch is missing.
+  bool completed = 1;
+}
+
+// ---------------------------------------------------------------------------
+// Friends, blocks, mutes
+// ---------------------------------------------------------------------------
+
+message ListFriendsRequest {}
+
+message ListFriendsResponse {
+  message Friend {
+    PersonCard person = 1;
+    string since = 2;
+  }
+  repeated Friend friends = 1;
+}
+
+message ListFriendRequestsRequest {}
+
+message ListFriendRequestsResponse {
+  message Request {
+    string id = 1;
+    // received or sent.
+    string direction = 2;
+    PersonCard person = 3;
+    string created_at = 4;
+  }
+  repeated Request requests = 1;
+}
+
+message ListBlocksRequest {}
+
+message ListBlocksResponse {
+  message Blocked {
+    string username = 1;
+    string full_name = 2;
+    string created_at = 3;
+  }
+  repeated Blocked blocked = 1;
+}
+
+message ListMutesRequest {}
+
+message ListMutesResponse {
+  message Muted {
+    string username = 1;
+    string full_name = 2;
+    string created_at = 3;
+  }
+  repeated Muted muted = 1;
+}
+
+message FriendshipStateRequest {
+  string username = 1;
+}
+
+message FriendshipStateResponse {
+  // self, friends, sent, received, blocked or none; empty when not found (or they blocked the viewer).
+  string state = 1;
+  string request_id = 2;
+}
+
+message PendingFriendRequestCountRequest {}
+
+message PendingFriendRequestCountResponse {
+  int32 count = 1;
+}
+
+message SendFriendRequestRequest {
+  string username = 1;
+}
+
+message SendFriendRequestResponse {
+  string request_id = 1;
+  // pending, or accepted when they had already asked.
+  string status = 2;
+}
+
+message RespondFriendRequestRequest {
+  string request_id = 1;
+  bool accept = 2;
+}
+
+message RespondFriendRequestResponse {}
+
+message CancelFriendRequestRequest {
+  string request_id = 1;
+}
+
+message CancelFriendRequestResponse {}
+
+message UnfriendRequest {
+  string username = 1;
+}
+
+message UnfriendResponse {}
+
+message BlockUserRequest {
+  string username = 1;
+}
+
+message BlockUserResponse {}
+
+message UnblockUserRequest {
+  string username = 1;
+}
+
+message UnblockUserResponse {}
+
+message MuteUserRequest {
+  string username = 1;
+  // False unmutes.
+  bool mute = 2;
+}
+
+message MuteUserResponse {}
+
+// ---------------------------------------------------------------------------
+// Search and suggestions
+// ---------------------------------------------------------------------------
+
+message SearchPeopleRequest {
+  string q = 1;
+  string department = 2;
+  string skill = 3;
+  // A university slug.
+  string university = 4;
+  int32 offset = 5;
+  // A graduation year; 0 for any.
+  int32 batch = 6;
+}
+
+message SearchPeopleResponse {
+  message Result {
+    PersonCard person = 1;
+    string university = 2;
+    repeated string skills = 3;
+    // friends, request_sent, request_received or none.
+    string friendship = 4;
+  }
+  repeated Result results = 1;
+}
+
+message PeopleYouMayKnowRequest {
+  // 1-30; 8 when 0.
+  int32 limit = 1;
+}
+
+message PeopleYouMayKnowResponse {
+  message Suggestion {
+    string username = 1;
+    string full_name = 2;
+    string avatar_path = 3;
+    string department = 4;
+    int32 graduation_year = 5;
+    // "Same batch · 2 mutual friends"
+    string reason = 6;
+  }
+  repeated Suggestion suggestions = 1;
+}
+
+message DismissSuggestionRequest {
+  string username = 1;
+}
+
+message DismissSuggestionResponse {}
+
+// ---------------------------------------------------------------------------
+// Tours, tips, UI state
+// ---------------------------------------------------------------------------
+
+message SetUiStateRequest {
+  // progress_card_dismissed_on, checklist_dismissed or uni_questions_dismissed.
+  string key = 1;
+  // A JSON value of at most 100 characters.
+  string value_json = 2;
+}
+
+message SetUiStateResponse {}
+
+message SaveTourRequest {
+  string tour = 1;
+  int32 step = 2;
+  // progress, completed or skipped.
+  string outcome = 3;
+}
+
+message SaveTourResponse {}
+
+message RestartTourRequest {
+  string tour = 1;
+}
+
+message RestartTourResponse {}
+
+message SeeTipRequest {
+  // opportunities, venture, cv, score or privacy.
+  string tip = 1;
+}
+
+message SeeTipResponse {}
+
+// ---------------------------------------------------------------------------
+// Universities
+// ---------------------------------------------------------------------------
+
+message ListUniversitiesRequest {
+  // When set, only the universities that own this email domain (for students).
+  string domain = 1;
+}
+
+message ListUniversitiesResponse {
+  repeated University universities = 1;
+}
+
+message RequestUniversityRequest {
+  string email = 1;
+  string university_name = 2;
+  bool consent = 3;
+  // The confirmation token web emails (only its hash is stored).
+  string token = 4;
+  // The requester's network, hashed, for the rate limit.
+  string ip_hash = 5;
+}
+
+message RequestUniversityResponse {
+  // created or exists.
+  string status = 1;
+  string university = 2;
+}
+
+message ConfirmUniversityRequestRequest {
+  string token = 1;
+}
+
+message ConfirmUniversityRequestResponse {
+  string university = 1;
+}
+
+message UnsubscribeUniversityRequestRequest {
+  string token = 1;
+}
+
+message UnsubscribeUniversityRequestResponse {
+  bool unsubscribed = 1;
+}
+
+message OpsUniversityRequestsRequest {}
+
+message OpsUniversityRequestsResponse {
+  message Group {
+    string domain = 1;
+    string university_id = 2;
+    string university = 3;
+    bool live = 4;
+    int32 requests = 5;
+    int32 confirmed = 6;
+    int32 notified = 7;
+    string latest = 8;
+  }
+  repeated Group groups = 1;
+}
+
+message OpsBatchesRequest {}
+
+message OpsBatchesResponse {
+  message University {
+    string university_id = 1;
+    string name = 2;
+    int32 final_year_batch = 3;
+    int32 students = 4;
+    int32 graduates = 5;
+  }
+  repeated University universities = 1;
+}
+
+message OpsSetUniversityLiveRequest {
+  string university_id = 1;
+  bool live = 2;
+  string reason = 3;
+}
+
+message OpsSetUniversityLiveResponse {
+  string live_at = 1;
+}
+
+message OpsOpenAllUniversitiesRequest {
+  string reason = 1;
+}
+
+message OpsOpenAllUniversitiesResponse {
+  int32 opened = 1;
+}
+
+message OpsAddUniDomainRequest {
+  string university_id = 1;
+  string domain = 2;
+  // student, faculty or both.
+  string kind = 3;
+  string reason = 4;
+}
+
+message OpsAddUniDomainResponse {}
+
+message OpsSetFinalYearBatchRequest {
+  string university_id = 1;
+  // 0 clears it (back to the 1 September rule).
+  int32 batch = 2;
+  string reason = 3;
+}
+
+message OpsSetFinalYearBatchResponse {}
+
+// ---------------------------------------------------------------------------
+// Departments and programmes (market only)
+// ---------------------------------------------------------------------------
+
+message SaveDepartmentRequest {
+  // The university the caller's seat is at (market checks the seat).
+  string university_id = 1;
+  // Empty creates one.
+  string id = 2;
+  string name = 3;
+}
+
+message SaveDepartmentResponse {
+  string id = 1;
+}
+
+message DeleteDepartmentRequest {
+  string university_id = 1;
+  string id = 2;
+}
+
+message DeleteDepartmentResponse {}
+
+message SaveProgrammeRequest {
+  string university_id = 1;
+  string department_id = 2;
+  string name = 3;
+}
+
+message SaveProgrammeResponse {
+  string id = 1;
+}
+
+message DeleteProgrammeRequest {
+  string university_id = 1;
+  string id = 2;
+}
+
+message DeleteProgrammeResponse {}

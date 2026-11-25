@@ -17,6 +17,8 @@ export interface TokenClaims {
   sid: string;
   /** Gate flags for web (decision 2026-11-25, Q1): what it would otherwise ask for on every page. */
   gate?: Record<string, unknown>;
+  /** A suspension or ban in force (decision 2026-11-25, W2 Q10); every service refuses writes while it lasts. */
+  rst?: { kind: "suspend" | "ban"; until: string | null };
 }
 
 export interface SigningKeys {
@@ -46,7 +48,7 @@ export async function loadSigningKeys(secrets: Secrets, kidsVariable: string | u
   return {
     kid,
     sign: (claims) =>
-      new SignJWT({ aal: claims.aal, tv: claims.tv, sid: claims.sid, ...(claims.gate ? { gate: claims.gate } : {}) })
+      new SignJWT({ aal: claims.aal, tv: claims.tv, sid: claims.sid, ...(claims.gate ? { gate: claims.gate } : {}), ...(claims.rst ? { rst: claims.rst } : {}) })
         .setProtectedHeader({ alg: "EdDSA", kid })
         .setSubject(claims.sub)
         .setIssuer(USER_TOKEN_ISSUER)

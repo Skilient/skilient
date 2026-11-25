@@ -229,6 +229,9 @@ importers:
       '@skilient/identity':
         specifier: workspace:*
         version: link:../../services/identity
+      '@skilient/people':
+        specifier: workspace:*
+        version: link:../../services/people
       '@skilient/platform':
         specifier: workspace:*
         version: link:../platform
@@ -355,6 +358,37 @@ importers:
       '@skilient/testing':
         specifier: workspace:*
         version: link:../../packages/testing
+
+  services/people:
+    dependencies:
+      '@bufbuild/protobuf':
+        specifier: 2.17.0
+        version: 2.17.0
+      '@connectrpc/connect':
+        specifier: 2.3.0
+        version: 2.3.0(@bufbuild/protobuf@2.17.0)
+      '@skilient/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@skilient/platform':
+        specifier: workspace:*
+        version: link:../../packages/platform
+      postgres:
+        specifier: 3.4.9
+        version: 3.4.9
+      zod:
+        specifier: 4.6.5
+        version: 4.6.5
+    devDependencies:
+      '@skilient/identity':
+        specifier: workspace:*
+        version: link:../identity
+      '@skilient/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      jose:
+        specifier: 6.2.18
+        version: 6.2.18
 
   services/sample:
     dependencies:

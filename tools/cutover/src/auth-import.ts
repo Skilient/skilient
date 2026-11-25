@@ -58,5 +58,13 @@ function parseLines<T>(jsonl: string, schema: z.ZodType<T>, what: string): T[] {
     });
 }
 
+/** Supabase `public.personal_email_domains` rows, one JSON object per line: `{"domain": "gmail.com"}`. */
+export const ExportedPersonalDomain = z.object({ domain: z.string().min(3).max(253) });
+export type ExportedPersonalDomain = z.infer<typeof ExportedPersonalDomain>;
+
+export function parsePersonalDomainExport(jsonl: string): string[] {
+  return parseLines(jsonl, ExportedPersonalDomain, "personal domain export").map((r) => r.domain);
+}
+
 /** Identity owns the writes to its schema; the cutover tool only hands it the parsed export. */
-export { importTotpFactors, importUsers, type ImportReport, type TotpImportReport } from "@skilient/identity/store/import";
+export { importPersonalDomains, importTotpFactors, importUsers, type ImportReport, type TotpImportReport } from "@skilient/identity/store/import";

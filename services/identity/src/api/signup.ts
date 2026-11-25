@@ -138,7 +138,7 @@ export function signupApi(deps: ApiDeps): Partial<ServiceImpl<typeof IdentitySer
     async getSignupDetails(req) {
       const ids = parse(UserIds, req.userIds);
       const rows = await signupDetails(sql, ids);
-      return { users: rows.map((r) => ({ userId: r.user_id, fullName: r.full_name, role: ROLE_OUT[r.role], universityId: r.university_id ?? "" })) };
+      return { users: rows.map((r) => ({ userId: r.user_id, fullName: r.full_name, role: ROLE_OUT[r.role], universityId: r.university_id ?? "", emailDomain: r.email_domain ?? "" })) };
     },
 
     async signUp(req, ctx) {

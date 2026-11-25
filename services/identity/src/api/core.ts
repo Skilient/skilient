@@ -11,7 +11,7 @@ import {
 import { callOf, refuse, withWrite } from "@skilient/platform";
 import { z } from "zod";
 import type { ApiDeps } from "../deps";
-import { backupCodesRemaining, currentAgreementVersion, recentSecurityEvents, staffRolesOf, verifiedAuthenticators } from "../store/reads";
+import { backupCodesRemaining, currentAgreementVersion, personalDomains, recentSecurityEvents, staffRolesOf, verifiedAuthenticators } from "../store/reads";
 import { logSecurityEvent, securityNotMe, signinStatus } from "../store/signin";
 
 
@@ -25,6 +25,7 @@ const ROLE: Record<string, StaffRole> = {
 const Email = z.string().max(320);
 const IpHash = z.string().max(64);
 const UserIds = z.array(z.uuid()).max(500);
+const Domains = z.array(z.string().trim().toLowerCase().regex(/^[a-z0-9.-]{1,253}$/)).max(50);
 
 function parse<T>(schema: z.ZodType<T>, value: unknown): T {
   const r = schema.safeParse(value);
@@ -54,6 +55,12 @@ export function coreApi({ sql }: ApiDeps): Partial<ServiceImpl<typeof IdentitySe
       const ids = parse(UserIds, req.userIds);
       const roles = await staffRolesOf(sql, ids);
       return { users: ids.map((userId) => ({ userId, roles: (roles.get(userId) ?? []).map((r) => ROLE[r]!).filter(Boolean) })) };
+    },
+
+    async checkEmailDomains(req) {
+      const domains = parse(Domains, req.domains);
+      const personal = await personalDomains(sql, domains);
+      return { domains: domains.map((domain) => ({ domain, personal: personal.has(domain) })) };
     },
 
     async backupCodesRemaining(_req, ctx) {

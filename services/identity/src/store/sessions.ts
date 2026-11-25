@@ -32,7 +32,23 @@ const newRefresh = () => randomBytes(32).toString("base64url");
 async function accessToken(tx: Tx, ctx: SessionContext, userId: string, sessionId: string, aal: "aal1" | "aal2"): Promise<string> {
   const [user] = await tx<{ token_version: number }[]>`select token_version from identity.users where id = ${userId}`;
   if (!user) throw refuse("not_found", "account not found");
-  return ctx.keys.sign({ sub: userId, aal, tv: user.token_version, sid: sessionId, gate: await ctx.gateFlags(tx, userId) });
+  const rst = await activeRestriction(tx, userId);
+  return ctx.keys.sign({ sub: userId, aal, tv: user.token_version, sid: sessionId, gate: await ctx.gateFlags(tx, userId), ...(rst ? { rst } : {}) });
+}
+
+/**
+ * The restriction in force, for the access token's `rst` claim (decision 2026-11-25, advisor, W2 Q10; prd.md
+ * "Restriction and role flags: in the session token"): a ban before a suspension, the longest first. Every
+ * service refuses a restricted user's writes from the claim (platform `refuseIfRestricted`), as today's
+ * `refuse_if_restricted` trigger did. Sanctions and lifts bump the token version, so the claim is current at
+ * the next token.
+ */
+export async function activeRestriction(tx: Tx, userId: string): Promise<{ kind: "suspend" | "ban"; until: string | null } | null> {
+  const [row] = await tx<{ kind: "suspend" | "ban"; until: Date | null }[]>`
+    select kind, until from identity.sanction_marks
+     where user_id = ${userId} and kind in ('suspend', 'ban') and lifted_at is null and (until is null or until > now())
+     order by kind = 'ban' desc, until desc nulls first limit 1`;
+  return row ? { kind: row.kind, until: row.until ? row.until.toISOString() : null } : null;
 }
 
 /** Opens a session for a user who has just proved who they are. */

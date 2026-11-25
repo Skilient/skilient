@@ -22,12 +22,12 @@ import {
   StaffRole,
   type IdentityService,
 } from "@skilient/contracts/identity/v1/identity_pb";
-import { callOf, refuse, withWrite } from "@skilient/platform";
+import { callOf, from, refuse, withWrite } from "@skilient/platform";
 import { z } from "zod";
 import type { ApiDeps } from "../deps";
 import { cancelAccountDeletion, requestAccountDeletion } from "../store/deletion";
 import { recordGithubEvent } from "../store/github";
-import { noPeopleNames, type PeopleNames } from "../store/people-names";
+import { peopleNamesVia, type PeopleNames } from "../store/people-names";
 import { liftSanction, sanctionUser } from "../store/sanctions";
 import { grantStaffRole, loadActor, opsStaff, opsResetMfa, revokeStaffRole } from "../store/staff";
 
@@ -60,14 +60,19 @@ const roleName = (role: StaffRole): string => ROLE_NAME[role] ?? "";
  * authorises in the store, and runs one transaction with its audit row and events under the call's
  * idempotency key. The gate has already checked the caller service (src/authorize.ts `callers`).
  */
-export function staffApi(deps: ApiDeps, people: PeopleNames = noPeopleNames): Partial<ServiceImpl<typeof IdentityService>> {
+export function staffApi(deps: ApiDeps, people?: PeopleNames): Partial<ServiceImpl<typeof IdentityService>> {
   const { sql, logger, mailer } = deps;
   const user = (ctx: HandlerContext) => callOf(ctx).user;
 
   return {
     async opsStaff(_req, ctx) {
       const actor = await loadActor(sql, user(ctx));
-      const members = await opsStaff(sql, actor, people);
+      const names =
+        people ??
+        peopleNamesVia(deps.clients, from(ctx), (e) =>
+          deps.logger.warn("ops_staff.names_unavailable", { action: "OpsStaff", outcome: "degraded", error_code: e instanceof Error ? e.message.slice(0, 60) : "unknown" }),
+        );
+      const members = await opsStaff(sql, actor, names);
       return {
         members: members.map((m) => ({
           userId: m.user_id,

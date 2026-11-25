@@ -1,0 +1,1173 @@
+{
+  "graduate_rollover": {
+    "again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": 0
+      }
+    },
+    "before_september_2027": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Software Engineering",
+              "department_id": "<uuid:1>",
+              "full_name": "Dua Zyxwar",
+              "graduated": true,
+              "graduation_year": 2026,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "graduate",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "username": "pg_dua",
+              "visibility": "friends"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Software Engineering",
+              "department_id": "<uuid:1>",
+              "full_name": "Dua Zyxwar",
+              "graduated": false,
+              "graduation_year": 2026,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:3>",
+              "username": "pg_dua",
+              "visibility": "friends"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "early_batch_at_b": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Electrical Engineering",
+              "department_id": null,
+              "full_name": "Eman Qorvel",
+              "graduated": true,
+              "graduation_year": 2028,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "graduate",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:5>",
+              "username": "pg_eman",
+              "visibility": "global"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Electrical Engineering",
+              "department_id": null,
+              "full_name": "Eman Qorvel",
+              "graduated": false,
+              "graduation_year": 2028,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:5>",
+              "username": "pg_eman",
+              "visibility": "global"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "final_year_of": {
+      "a_rule": {
+        "ok": true,
+        "value": true
+      },
+      "b_set": {
+        "ok": true,
+        "value": 2028
+      },
+      "unknown": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "on_september_1_2027": {
+      "changes": {
+        "public.profiles": {
+          "added": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Ali Zyxwar",
+              "graduated": true,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "graduate",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:7>",
+              "username": "pg_ali",
+              "visibility": "university"
+            },
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Bina Zyxwar",
+              "graduated": true,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "graduate",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:8>",
+              "username": "pg_bina",
+              "visibility": "university"
+            },
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Electrical Engineering",
+              "department_id": null,
+              "full_name": "Chand Qorvel",
+              "graduated": true,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "graduate",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:9>",
+              "username": "pg_chand",
+              "visibility": "university"
+            },
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Staff Plomt",
+              "graduated": true,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "graduate",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:10>",
+              "username": "pg_staff",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Ali Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:7>",
+              "username": "pg_ali",
+              "visibility": "university"
+            },
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Bina Zyxwar",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:8>",
+              "username": "pg_bina",
+              "visibility": "university"
+            },
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Electrical Engineering",
+              "department_id": null,
+              "full_name": "Chand Qorvel",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:4>",
+              "user_id": "<uuid:9>",
+              "username": "pg_chand",
+              "visibility": "university"
+            },
+            {
+              "bio": null,
+              "campus": null,
+              "chat_read_receipts": true,
+              "department": "Computer Science",
+              "department_id": "<uuid:6>",
+              "full_name": "Staff Plomt",
+              "graduated": false,
+              "graduation_year": 2027,
+              "leaderboard_opt_out": false,
+              "looking_for": [],
+              "onboarding_complete": true,
+              "programme": null,
+              "recruiter_visible": false,
+              "role": "student",
+              "status": "active",
+              "university_id": "<uuid:2>",
+              "user_id": "<uuid:10>",
+              "username": "pg_staff",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 4
+      }
+    },
+    "university_live": {
+      "a": {
+        "ok": true,
+        "value": true
+      },
+      "c": {
+        "ok": true,
+        "value": false
+      }
+    }
+  },
+  "requests": {
+    "again_same_email": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": {
+          "status": "exists",
+          "university": "People Golden University C"
+        }
+      }
+    },
+    "bad_email": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "Enter a valid email address.",
+        "ok": false
+      }
+    },
+    "closed_known_university": {
+      "changes": {
+        "public.university_requests": {
+          "added": [
+            {
+              "confirmed": false,
+              "consent": true,
+              "domain": "people-c.test",
+              "email": "student@people-c.test",
+              "university_id": "<uuid:1>",
+              "university_name": null,
+              "unsubscribed": false
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "status": "created",
+          "university": "People Golden University C"
+        }
+      }
+    },
+    "confirm": {
+      "changes": {
+        "public.university_requests": {
+          "added": [
+            {
+              "confirmed": true,
+              "consent": true,
+              "domain": "people-c.test",
+              "email": "student@people-c.test",
+              "university_id": "<uuid:1>",
+              "university_name": null,
+              "unsubscribed": false
+            }
+          ],
+          "removed": [
+            {
+              "confirmed": false,
+              "consent": true,
+              "domain": "people-c.test",
+              "email": "student@people-c.test",
+              "university_id": "<uuid:1>",
+              "university_name": null,
+              "unsubscribed": false
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "university": "People Golden University C"
+        }
+      }
+    },
+    "confirm_after_unsubscribe": {
+      "code": "P0002",
+      "message": "That link has expired or was already used to unsubscribe.",
+      "ok": false
+    },
+    "confirm_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": {
+          "university": "People Golden University C"
+        }
+      }
+    },
+    "confirm_named": {
+      "changes": {
+        "public.university_requests": {
+          "added": [
+            {
+              "confirmed": true,
+              "consent": true,
+              "domain": "people-new.test",
+              "email": "x@people-new.test",
+              "university_id": null,
+              "university_name": "People New University",
+              "unsubscribed": false
+            }
+          ],
+          "removed": [
+            {
+              "confirmed": false,
+              "consent": true,
+              "domain": "people-new.test",
+              "email": "x@people-new.test",
+              "university_id": null,
+              "university_name": "People New University",
+              "unsubscribed": false
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "university": "People New University"
+        }
+      }
+    },
+    "confirm_unknown": {
+      "code": "P0002",
+      "message": "That link has expired or was already used to unsubscribe.",
+      "ok": false
+    },
+    "live_university": {
+      "changes": {},
+      "result": {
+        "code": "55000",
+        "message": "Your university is already on Skilient. Join now.",
+        "ok": false
+      }
+    },
+    "no_consent": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "Tick the box so we can email you when your university joins.",
+        "ok": false
+      }
+    },
+    "personal_domain": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "Use your university email.",
+        "ok": false
+      }
+    },
+    "short_token": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "missing token",
+        "ok": false
+      }
+    },
+    "staff_view": {
+      "ok": true,
+      "value": [
+        {
+          "confirmed": 1,
+          "domain": "people-c.test",
+          "latest": "<time>",
+          "live": false,
+          "notified": 0,
+          "requests": 1,
+          "university": "People Golden University C",
+          "university_id": "<uuid:1>"
+        },
+        {
+          "confirmed": 0,
+          "domain": "people-new.test",
+          "latest": "<time>",
+          "live": false,
+          "notified": 0,
+          "requests": 1,
+          "university": "People New University",
+          "university_id": null
+        }
+      ]
+    },
+    "staff_view_aal1": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "staff_view_student": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "unknown_domain_named": {
+      "changes": {
+        "public.university_requests": {
+          "added": [
+            {
+              "confirmed": false,
+              "consent": true,
+              "domain": "people-new.test",
+              "email": "x@people-new.test",
+              "university_id": null,
+              "university_name": "People New University",
+              "unsubscribed": false
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "status": "created",
+          "university": "People New University"
+        }
+      }
+    },
+    "unknown_domain_no_name": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "Enter your university's name.",
+        "ok": false
+      }
+    },
+    "unknown_domain_short_name": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "Enter your university's name.",
+        "ok": false
+      }
+    },
+    "unsubscribe": {
+      "changes": {
+        "public.university_requests": {
+          "added": [
+            {
+              "confirmed": true,
+              "consent": true,
+              "domain": "people-new.test",
+              "email": "x@people-new.test",
+              "university_id": null,
+              "university_name": "People New University",
+              "unsubscribed": true
+            }
+          ],
+          "removed": [
+            {
+              "confirmed": true,
+              "consent": true,
+              "domain": "people-new.test",
+              "email": "x@people-new.test",
+              "university_id": null,
+              "university_name": "People New University",
+              "unsubscribed": false
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "unsubscribe_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "unsubscribe_unknown": {
+      "ok": true,
+      "value": false
+    }
+  },
+  "staff": {
+    "add_domain": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "uni.domain_add",
+              "after": {
+                "domain": "students.people-b.test",
+                "kind": "student"
+              },
+              "before": {},
+              "reason": "second domain",
+              "staff_id": "<uuid:1>",
+              "target_id": "<uuid:2>",
+              "target_type": "university"
+            }
+          ],
+          "removed": []
+        },
+        "public.university_domains": {
+          "added": [
+            {
+              "domain": "students.people-b.test",
+              "kind": "student",
+              "source": "ops",
+              "university_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "add_domain_invalid": {
+      "code": "22023",
+      "message": "that isn't a domain",
+      "ok": false
+    },
+    "add_domain_kind": {
+      "code": "22023",
+      "message": "choose who the domain is for",
+      "ok": false
+    },
+    "add_domain_no_reason": {
+      "code": "22023",
+      "message": "give a reason",
+      "ok": false
+    },
+    "add_domain_personal": {
+      "code": "22023",
+      "message": "public email domains can never be university domains",
+      "ok": false
+    },
+    "add_domain_taken": {
+      "code": "23505",
+      "message": "that domain already belongs to a university",
+      "ok": false
+    },
+    "batches": {
+      "ok": true,
+      "value": [
+        {
+          "final_year_batch": null,
+          "graduates": "0",
+          "name": "People Golden University A",
+          "students": "4",
+          "university_id": "<uuid:3>"
+        },
+        {
+          "final_year_batch": null,
+          "graduates": "0",
+          "name": "People Golden University B",
+          "students": "2",
+          "university_id": "<uuid:2>"
+        },
+        {
+          "final_year_batch": null,
+          "graduates": "0",
+          "name": "People Golden University C",
+          "students": "0",
+          "university_id": "<uuid:4>"
+        },
+        {
+          "final_year_batch": null,
+          "graduates": "0",
+          "name": "People Golden University D",
+          "students": "0",
+          "university_id": "<uuid:5>"
+        }
+      ]
+    },
+    "close_c": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "uni.close",
+              "after": {
+                "live_at": null
+              },
+              "before": {
+                "live_at": "<time>"
+              },
+              "reason": "paused",
+              "staff_id": "<uuid:1>",
+              "target_id": "<uuid:4>",
+              "target_type": "university"
+            }
+          ],
+          "removed": []
+        },
+        "public.universities": {
+          "added": [
+            {
+              "final_year_batch": null,
+              "id": "<uuid:4>",
+              "live": false,
+              "name": "People Golden University C",
+              "slug": "people-golden-c"
+            }
+          ],
+          "removed": [
+            {
+              "final_year_batch": null,
+              "id": "<uuid:4>",
+              "live": true,
+              "name": "People Golden University C",
+              "slug": "people-golden-c"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "final_year": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "university.final_year_batch",
+              "after": {
+                "final_year_batch": 2026
+              },
+              "before": {
+                "final_year_batch": null
+              },
+              "reason": "early exams",
+              "staff_id": "<uuid:1>",
+              "target_id": "<uuid:3>",
+              "target_type": "university"
+            }
+          ],
+          "removed": []
+        },
+        "public.universities": {
+          "added": [
+            {
+              "final_year_batch": 2026,
+              "id": "<uuid:3>",
+              "live": true,
+              "name": "People Golden University A",
+              "slug": "people-golden-a"
+            }
+          ],
+          "removed": [
+            {
+              "final_year_batch": null,
+              "id": "<uuid:3>",
+              "live": true,
+              "name": "People Golden University A",
+              "slug": "people-golden-a"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "final_year_bad": {
+      "code": "22023",
+      "message": "enter a graduating year",
+      "ok": false
+    },
+    "final_year_clear": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "university.final_year_batch",
+              "after": {
+                "final_year_batch": null
+              },
+              "before": {
+                "final_year_batch": 2026
+              },
+              "reason": "back to rule",
+              "staff_id": "<uuid:1>",
+              "target_id": "<uuid:3>",
+              "target_type": "university"
+            }
+          ],
+          "removed": []
+        },
+        "public.universities": {
+          "added": [
+            {
+              "final_year_batch": null,
+              "id": "<uuid:3>",
+              "live": true,
+              "name": "People Golden University A",
+              "slug": "people-golden-a"
+            }
+          ],
+          "removed": [
+            {
+              "final_year_batch": 2026,
+              "id": "<uuid:3>",
+              "live": true,
+              "name": "People Golden University A",
+              "slug": "people-golden-a"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "final_year_short_reason": {
+      "code": "22023",
+      "message": "give a reason of 3 to 500 characters",
+      "ok": false
+    },
+    "final_year_unknown": {
+      "code": "P0002",
+      "message": "university not found",
+      "ok": false
+    },
+    "no_reason": {
+      "code": "22023",
+      "message": "give a reason",
+      "ok": false
+    },
+    "open_all": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "uni.open_all",
+              "after": {
+                "opened": [
+                  "<uuid:4>"
+                ]
+              },
+              "before": {
+                "closed": 1
+              },
+              "reason": "public launch",
+              "staff_id": "<uuid:1>",
+              "target_id": "all",
+              "target_type": "university"
+            }
+          ],
+          "removed": []
+        },
+        "public.universities": {
+          "added": [
+            {
+              "final_year_batch": null,
+              "id": "<uuid:4>",
+              "live": true,
+              "name": "People Golden University C",
+              "slug": "people-golden-c"
+            }
+          ],
+          "removed": [
+            {
+              "final_year_batch": null,
+              "id": "<uuid:4>",
+              "live": false,
+              "name": "People Golden University C",
+              "slug": "people-golden-c"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "open_all_again": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "uni.open_all",
+              "after": {
+                "opened": []
+              },
+              "before": {
+                "closed": 0
+              },
+              "reason": "public launch",
+              "staff_id": "<uuid:1>",
+              "target_id": "all",
+              "target_type": "university"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 0
+      }
+    },
+    "open_c": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "uni.open",
+              "after": {
+                "live_at": "<time>"
+              },
+              "before": {
+                "live_at": null
+              },
+              "reason": "launch day",
+              "staff_id": "<uuid:1>",
+              "target_id": "<uuid:4>",
+              "target_type": "university"
+            }
+          ],
+          "removed": []
+        },
+        "public.universities": {
+          "added": [
+            {
+              "final_year_batch": null,
+              "id": "<uuid:4>",
+              "live": true,
+              "name": "People Golden University C",
+              "slug": "people-golden-c"
+            }
+          ],
+          "removed": [
+            {
+              "final_year_batch": null,
+              "id": "<uuid:4>",
+              "live": false,
+              "name": "People Golden University C",
+              "slug": "people-golden-c"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<time>"
+      }
+    },
+    "open_c_again": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "uni.open",
+              "after": {
+                "live_at": "<time>"
+              },
+              "before": {
+                "live_at": "<time>"
+              },
+              "reason": "again",
+              "staff_id": "<uuid:1>",
+              "target_id": "<uuid:4>",
+              "target_type": "university"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<time>"
+      }
+    },
+    "personal_domain_direct_insert": {
+      "code": "23514",
+      "message": "a public email domain can't be a university domain",
+      "ok": false
+    },
+    "refused_aal1": {
+      "batches": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "domain": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "final_year": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "live": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "open_all": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      }
+    },
+    "refused_signed_out": {
+      "batches": {
+        "code": "42501",
+        "message": "permission denied for function ops_batches",
+        "ok": false
+      },
+      "domain": {
+        "code": "42501",
+        "message": "permission denied for function ops_add_uni_domain",
+        "ok": false
+      },
+      "final_year": {
+        "code": "42501",
+        "message": "permission denied for function ops_set_final_year_batch",
+        "ok": false
+      },
+      "live": {
+        "code": "42501",
+        "message": "permission denied for function ops_set_university_live",
+        "ok": false
+      },
+      "open_all": {
+        "code": "42501",
+        "message": "permission denied for function ops_open_all_universities",
+        "ok": false
+      }
+    },
+    "refused_student": {
+      "batches": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "domain": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "final_year": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "live": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      },
+      "open_all": {
+        "code": "42501",
+        "message": "accounts staff only, with two-factor on",
+        "ok": false
+      }
+    },
+    "unknown_university": {
+      "code": "P0002",
+      "message": "university not found",
+      "ok": false
+    }
+  },
+  "sync_hec": {
+    "first": {
+      "changes": {
+        "public.universities": {
+          "added": [
+            {
+              "final_year_batch": null,
+              "id": "<uuid:1>",
+              "live": true,
+              "name": "People HEC One",
+              "slug": "people-golden-hec-one"
+            },
+            {
+              "final_year_batch": null,
+              "id": "<uuid:2>",
+              "live": true,
+              "name": "People HEC Two",
+              "slug": "people-golden-hec-two"
+            }
+          ],
+          "removed": []
+        },
+        "public.university_domains": {
+          "added": [
+            {
+              "domain": "one.people-hec.test",
+              "kind": "both",
+              "source": "hec_seed",
+              "university_id": "<uuid:1>"
+            },
+            {
+              "domain": "one2.people-hec.test",
+              "kind": "both",
+              "source": "hec_seed",
+              "university_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": ""
+      }
+    },
+    "not_an_array": {
+      "code": "22023",
+      "message": "sync_hec_universities expects a JSON array",
+      "ok": false
+    },
+    "update_drops_domain": {
+      "changes": {
+        "public.university_domains": {
+          "added": [],
+          "removed": [
+            {
+              "domain": "one2.people-hec.test",
+              "kind": "both",
+              "source": "hec_seed",
+              "university_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "$comment": "Every event type in platform.events: who must publish it and who must handle it, and the workstream that owes it. tools/lint/test/events.test.ts fails when a service in services/ does not declare (src/events.ts) an event it owes, or publishes one not listed here. Payloads carry ids, flags, hashes and staff-curated catalogue labels only.",
+  "events": {
+    "user.created": {
+      "producers": [
+        "identity"
+      ],
+      "consumers": [
+        "people"
+      ],
+      "payload": "user_id, role, university_id, provider, visibility, onboarding defaults, status, agreement_accepted"
+    },
+    "user.deleted": {
+      "producers": [
+        "identity"
+      ],
+      "consumers": [
+        "people",
+        "content",
+        "messaging",
+        "work",
+        "ranking",
+        "community",
+        "credentials",
+        "notify",
+        "trust",
+        "market",
+        "billing",
+        "media"
+      ],
+      "payload": "user_id; every service removes the user's rows and publishes user.deletion_confirmed"
+    },
+    "user.deletion_requested": {
+      "producers": [
+        "identity"
+      ],
+      "consumers": [
+        "people"
+      ],
+      "payload": "delete_after"
+    },
+    "user.deletion_cancelled": {
+      "producers": [
+        "identity"
+      ],
+      "consumers": [
+        "people"
+      ],
+      "payload": "(subject only)"
+    },
+    "user.deletion_confirmed": {
+      "producers": [
+        "people",
+        "content",
+        "messaging",
+        "work",
+        "ranking",
+        "community",
+        "credentials",
+        "notify",
+        "trust",
+        "market",
+        "billing",
+        "media"
+      ],
+      "consumers": [
+        "identity"
+      ],
+      "payload": "user_id; producer role identifies the service"
+    },
+    "user.tokens_revoked": {
+      "producers": [
+        "identity"
+      ],
+      "consumers": [],
+      "payload": "tv, reason; read by every service's token verifier (platform revocation cache), not a consumer"
+    },
+    "session.revoked": {
+      "producers": [
+        "identity"
+      ],
+      "consumers": [],
+      "payload": "session_id, reason"
+    },
+    "user.two_factor_changed": {
+      "producers": [
+        "identity"
+      ],
+      "consumers": [],
+      "payload": "on, reason"
+    },
+    "user.mfa_reset": {
+      "producers": [
+        "identity"
+      ],
+      "consumers": [],
+      "payload": "reset_at"
+    },
+    "user.email_domain_changed": {
+      "producers": [
+        "identity"
+      ],
+      "consumers": [
+        "people"
+      ],
+      "payload": "user_id, email_domain"
+    },
+    "audit.recorded": {
+      "producers": [
+        "identity",
+        "people"
+      ],
+      "consumers": [
+        "trust"
+      ],
+      "payload": "audit_id, action, target_type, target_id; trust builds the /ops audit view (W10)"
+    },
+    "university.domains_changed": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "identity",
+        "notify"
+      ],
+      "payload": "university_id, live_at, domains [{domain, kind}]; notify sends launch emails when live_at is set (W9)"
+    },
+    "profile.gate_changed": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "identity"
+      ],
+      "payload": "user_id, has_profile, role, university_id, onboarding_complete, onboarding_step, status"
+    },
+    "profile.updated": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "messaging",
+        "ranking",
+        "market",
+        "trust"
+      ],
+      "payload": "ids, enums and flags of the profile (no names, no city)"
+    },
+    "profile.image_replaced": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "media"
+      ],
+      "payload": "user_id, which image; media deletes the old file (W9)"
+    },
+    "friendship.changed": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "content",
+        "messaging"
+      ],
+      "payload": "user_a, user_b, friends"
+    },
+    "friend_request.changed": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "sender, receiver, status"
+    },
+    "block.changed": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "content",
+        "messaging"
+      ],
+      "payload": "blocker, blocked, blocked flag"
+    },
+    "mute.changed": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "user_id, muted_id, muted flag"
+    },
+    "onboarding.advanced": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "trust"
+      ],
+      "payload": "user_id, step; trust forwards to analytics (W10)"
+    },
+    "onboarding.completed": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "trust"
+      ],
+      "payload": "user_id; trust forwards to analytics (W10)"
+    },
+    "tour.ended": {
+      "producers": [
+        "people"
+      ],
+      "consumers": [
+        "trust"
+      ],
+      "payload": "user_id, tour, how; trust forwards to analytics (W10)"
+    },
+    "config.portals_changed": {
+      "producers": [
+        "trust"
+      ],
+      "consumers": [
+        "identity"
+      ],
+      "payload": "recruiter, university, faculty (W10)"
+    },
+    "org.member_changed": {
+      "producers": [
+        "market"
+      ],
+      "consumers": [
+        "identity"
+      ],
+      "payload": "user_id, org_domain or null (W11)"
+    },
+    "badge.count_changed": {
+      "producers": [
+        "notify",
+        "messaging",
+        "work",
+        "community",
+        "market"
+      ],
+      "consumers": [
+        "people"
+      ],
+      "payload": "user_id, key, count (absolute); keys allow-listed per producer in services/people/src/store/copies.ts"
+    },
+    "milestone.reached": {
+      "producers": [
+        "work",
+        "credentials",
+        "ranking"
+      ],
+      "consumers": [
+        "people"
+      ],
+      "payload": "user_id, key"
+    },
+    "milestone.cleared": {
+      "producers": [
+        "work",
+        "credentials",
+        "ranking"
+      ],
+      "consumers": [
+        "people"
+      ],
+      "payload": "user_id, key"
+    },
+    "fact.value_changed": {
+      "producers": [
+        "work",
+        "ranking"
+      ],
+      "consumers": [
+        "people"
+      ],
+      "payload": "user_id, key, value (schema per key in people)"
+    },
+    "skill.changed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "people"
+      ],
+      "payload": "user_id, skill_id, skill_label (catalogue), level"
+    },
+    "group.member_changed": {
+      "producers": [
+        "work",
+        "community"
+      ],
+      "consumers": [
+        "people"
+      ],
+      "payload": "kind, group_id, user_id, member (ids only)"
+    }
+  }
+}

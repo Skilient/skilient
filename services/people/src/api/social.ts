@@ -41,7 +41,7 @@ import {
   unfriend,
 } from "../store/friends";
 import { peopleYouMayKnow, searchPeople } from "../store/search";
-import { iso, meOf, parse, Username, Uuid, write } from "./util";
+import { iso, meOf, parse, Username, Uuid, countedRead, write } from "./util";
 
 const card = (r: { user_id: string; username: string | null; full_name: string; avatar_path: string | null; department: string | null; graduation_year: number | null }) => ({
   userId: r.user_id,
@@ -139,7 +139,7 @@ export function socialApi(deps: ApiDeps): Partial<ServiceImpl<typeof PeopleServi
         z.object({ q: z.string().max(200), department: z.string().max(80), skill: z.string().max(80), university: z.string().max(100), offset: z.number().int(), batch: z.number().int() }),
         req,
       );
-      return write(deps, ctx, SearchPeopleRequestSchema, SearchPeopleResponseSchema, req, async (tx) => {
+      return countedRead(deps, ctx, SearchPeopleRequestSchema, SearchPeopleResponseSchema, req, async (tx) => {
         const rows = await searchPeople(tx, meOf(ctx), {
           q: r.q,
           department: r.department || null,

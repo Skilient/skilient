@@ -439,6 +439,9 @@ importers:
       '@skilient/identity':
         specifier: workspace:*
         version: link:../../services/identity
+      '@skilient/people':
+        specifier: workspace:*
+        version: link:../../services/people
       zod:
         specifier: 4.6.5
         version: 4.6.5

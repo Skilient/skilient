@@ -84,3 +84,19 @@ export async function createUser(sql: postgres.Sql, email: string, password: str
 
 export const DEVICE = "d".repeat(64);
 export const IP = "1".repeat(64);
+
+/** Identity's gate copy of one university's domains (for other services' tests, which may not name identity's schema). */
+export async function gateDomains(sql: postgres.Sql, universityId: string): Promise<{ domain: string; kind: string }[]> {
+  return sql<{ domain: string; kind: string }[]>`select domain, kind from identity.allowed_domains where university_id = ${universityId} order by domain`;
+}
+
+/** Identity's gate copy of profile facts for these accounts, in id order. */
+export async function gateProfileFacts(sql: postgres.Sql, ids: readonly string[]): Promise<{ has_profile: boolean; onboarding_complete: boolean }[]> {
+  return sql<{ has_profile: boolean; onboarding_complete: boolean }[]>`
+    select has_profile, onboarding_complete from identity.profile_facts where user_id = any(${[...ids]}::uuid[]) order by user_id`;
+}
+
+/** An account with no password (as the cutover import creates before its hash arrives). */
+export async function createBareUser(sql: postgres.Sql, id: string, email: string): Promise<void> {
+  await sql`insert into identity.users (id, email, email_confirmed_at) values (${id}, ${email.toLowerCase()}, now())`;
+}

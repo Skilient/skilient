@@ -158,7 +158,8 @@ describeTransports(
       const s = (await id().verifyEmail({ email: waiting, code }, env().call())).session!;
       expect((await id().getGateState({}, as(s.accessToken))).universityId).toBe(closed.id);
     });
-    it.todo("W2/W13: the landing field's wording (\"X isn't on Skilient yet\", \"We don't recognise this university\") and university requests sent once are people's and web's");
+    // The university request sent once is people's and covered by its contract test (people.test.ts, "signed-out university requests").
+    it.todo("W13: the landing field's wording (\"X isn't on Skilient yet\", \"We don't recognise this university\")");
 
     it("sign-up refusals carry codes and create nothing (breached, short, signed-out gate)", async () => {
       const email = unique(NUTECH.domain);

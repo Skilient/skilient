@@ -33,7 +33,7 @@ import {
   type ProfilePatch,
   type ProfileRow,
 } from "../store/profiles";
-import { iso, meOf, parse, text, UserIds, Username, Uuid, write } from "./util";
+import { iso, meOf, parse, text, UserIds, Username, Uuid, countedRead, write } from "./util";
 
 const Visibility = z.enum(["friends", "university", "global"]);
 const LookingFor = z.array(z.enum(["internship", "job", "teammates", "project", "mentorship"])).max(5);
@@ -80,7 +80,7 @@ export function profilesApi(deps: ApiDeps): Partial<ServiceImpl<typeof PeopleSer
 
     async getProfile(req, ctx) {
       const username = parse(Username, req.username);
-      return write(deps, ctx, GetProfileRequestSchema, GetProfileResponseSchema, req, async (tx) => {
+      return countedRead(deps, ctx, GetProfileRequestSchema, GetProfileResponseSchema, req, async (tx) => {
         const r = await getProfile(tx, meOf(ctx), username);
         if (r.kind === "full") {
           const p = r.profile;
@@ -147,7 +147,7 @@ export function profilesApi(deps: ApiDeps): Partial<ServiceImpl<typeof PeopleSer
 
     async usernameAvailable(req, ctx) {
       const name = parse(Username, req.username);
-      return write(deps, ctx, UsernameAvailableRequestSchema, UsernameAvailableResponseSchema, req, async (tx) =>
+      return countedRead(deps, ctx, UsernameAvailableRequestSchema, UsernameAvailableResponseSchema, req, async (tx) =>
         create(UsernameAvailableResponseSchema, { available: await usernameAvailable(tx, meOf(ctx), name) }),
       );
     },

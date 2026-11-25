@@ -119,3 +119,43 @@ export async function importPersonalDomains(sql: postgres.Sql, domains: readonly
     insert into identity.personal_email_domains (domain) select unnest(${clean}::text[]) on conflict (domain) do nothing`;
   return done.count;
 }
+
+/**
+ * Existing sanctions (Supabase `public.sanctions`), so identity's half of each restriction carries over:
+ * the one-restriction-at-a-time rule, LiftSanction, and the restriction claim in access tokens. Only user
+ * sanctions of the kinds identity knows (warn, suspend, ban) come across; organisation sanctions and
+ * throttles are market's and trust's. A row whose account is missing is skipped and reported.
+ */
+export interface ImportedSanction {
+  id: string;
+  user_id: string | null;
+  kind: string;
+  until: string | null;
+  reason: string;
+  staff_id: string;
+  created_at: string;
+  lifted_at: string | null;
+  lifted_by: string | null;
+  lift_reason: string | null;
+}
+
+export async function importSanctionMarks(sql: postgres.Sql, rows: readonly ImportedSanction[]): Promise<{ imported: number; skipped: number; missingAccounts: string[] }> {
+  const usable = rows.filter((r) => r.user_id && ["warn", "suspend", "ban"].includes(r.kind));
+  const missingAccounts: string[] = [];
+  let imported = 0;
+  await sql.begin(async (tx) => {
+    for (const r of usable) {
+      const [user] = await tx`select 1 from identity.users where id = ${r.user_id!}`;
+      if (!user) {
+        missingAccounts.push(r.id);
+        continue;
+      }
+      const done = await tx`
+        insert into identity.sanction_marks (sanction_id, user_id, kind, until, reason, staff_id, created_at, lifted_at, lifted_by, lift_reason)
+        values (${r.id}, ${r.user_id!}, ${r.kind}, ${r.until}, ${r.reason}, ${r.staff_id}, ${r.created_at}, ${r.lifted_at}, ${r.lifted_by}, ${r.lift_reason})
+        on conflict (sanction_id) do nothing`;
+      imported += done.count;
+    }
+  });
+  return { imported, skipped: rows.length - usable.length, missingAccounts };
+}

@@ -29,13 +29,13 @@ Status values: **ticked** (evidence exists), **partial** (part ticked, the rest 
 | 19 | Imported hashes verify | local fixtures: `test/import/auth-import.test.ts`; production algorithm bcrypt `$2a$` cost 10 confirmed by Ahmed and Huziafa (`docs/decisions.md`); Argon2id rehash at sign-in (`sessions.test.ts`) and in the image (`host.mjs selfcheck` in the smoke test) | 2026-11-25 | ticked |
 | 20 | Existing auth specs pass (sign-up, sign-in, two-factor, password change, deletion, signup gates) | `services/identity/test/journeys/*.test.ts`: one journey per spec test on both transports (Q5); web-only parts are `it.todo` for W13 | 2026-11-25 | ticked under decision Q5; the Playwright specs themselves run in W13 |
 | 21 | Typecheck, lint, unit and contract tests green | "Results" below | 2026-11-25 | see "Results" |
-| 22 | CI run on `azure` | needs the work committed and pushed, which only Ahmed asks for; then `gh workflow run ci.yml --ref azure` | | pending Ahmed |
+| 22 | CI run on `azure` | run 45595907252 on a6d8af8: success | 2026-11-25 | ticked |
 | 23 | Duplicate sign-up wording | `src/api/signup.ts`: a confirmed address is refused with `already_registered` (web shows today's message), an unconfirmed one gets a fresh code; `test/contract/signup.test.ts`, journey "a duplicate email is told to sign in instead" | 2026-11-25 | ticked (Ahmed chose today's message) |
 
 ## What is left for later workstreams
 
-- People (W2), trust (W10) and market (W11) must publish the events identity's gate copies consume, and people must send `profile.gate_changed` for every imported account before cutover.
-- Trust must not audit identity's half of a sanction twice (W10). Existing sanctions need importing into `identity.sanction_marks` (W14).
+- Trust (W10) and market (W11) must publish the events identity's gate copies consume (`config.portals_changed`, `org.member_changed`); `packages/contracts/events.json` holds them and `tools/lint/test/events.test.ts` fails if either service lands without them. People's imports send `profile.gate_changed` (built, 2026-11-26).
+- Trust must not audit identity's half of a sanction twice (W10). Existing sanctions: `importSanctionMarks` is built and tested (`test/import/sanctions-import.test.ts`); W14 runs it on the real export.
 - Web (W13): map identity's refusal codes to today's wording; refresh the token after agreement acceptance and onboarding (gate flags can be up to 10 minutes old); call identity instead of Supabase Auth; run the Playwright auth specs.
 
 ## Results (2026-11-25, local)

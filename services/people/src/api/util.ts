@@ -28,6 +28,23 @@ export function write<I extends DescMessage, O extends DescMessage>(
   return withWrite(ctx, deps.sql, { input, output }, req, body);
 }
 
+/**
+ * A read that is a write only because it counts toward a rate limit (profile views, people search, the
+ * username check). It runs like a write but stores no reply under the idempotency key: the reply is profile
+ * or search data, and keeping a second copy for 24 hours serves nothing. A repeat of the same key is
+ * refused (already_applied); clients send a new key per call.
+ */
+export function countedRead<I extends DescMessage, O extends DescMessage>(
+  deps: ApiDeps,
+  ctx: HandlerContext,
+  input: I,
+  output: O,
+  req: MessageShape<I>,
+  body: (tx: postgres.TransactionSql) => Promise<MessageShape<O>>,
+): Promise<MessageShape<O>> {
+  return withWrite(ctx, deps.sql, { input, output }, req, body, { storeReply: false });
+}
+
 /** Text fields: "" means none. */
 export const text = (s: string) => (s === "" ? null : s);
 /** Times as RFC 3339; "" for none. */

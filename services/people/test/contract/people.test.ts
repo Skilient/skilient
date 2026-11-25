@@ -88,6 +88,22 @@ describeTransports(
       await expect(people().getShell({}, env().call())).rejects.toSatisfy((e) => reason(e) === "not_signed_in");
     });
 
+    it("profile view, people search and the username check keep no reply under their idempotency key", async () => {
+      const viewer = await student(w, { fullName: "Counted Viewer" });
+      const target = await student(w, { fullName: "Counted Target" });
+      const name = await usernameOf(w, target.id);
+      const keys = { profile: crypto.randomUUID(), search: crypto.randomUUID(), username: crypto.randomUUID() };
+      await people().getProfile({ username: name }, asUser(viewer.token, keys.profile));
+      await people().searchPeople({ q: "Counted" }, asUser(viewer.token, keys.search));
+      await people().usernameAvailable({ username: "counted_free_name" }, asUser(viewer.token, keys.username));
+      const rows = await w.people<{ key: string; status: string; has_reply: boolean }[]>`
+        select key, status, response is not null as has_reply from platform.idempotency where key = any(${Object.values(keys)})`;
+      expect(rows).toHaveLength(3);
+      for (const r of rows) expect([r.status, r.has_reply]).toEqual(["done", false]);
+      // A repeat of the same key is refused rather than answered from a stored copy.
+      await expect(people().getProfile({ username: name }, asUser(viewer.token, keys.profile))).rejects.toSatisfy((e) => reason(e) === "already_applied");
+    });
+
     it("profiles: full, card or not found by visibility and blocks; edits publish profile.updated without names", async () => {
       const owner = await student(w, { fullName: "Vis Owner" });
       const classmate = await student(w, { fullName: "Classmate" });
@@ -181,6 +197,10 @@ describeTransports(
       const email = unique("brand-new-uni.test");
       const r = await people().requestUniversity({ email, universityName: "Brand New University", consent: true, token, ipHash: "1".repeat(64) }, env().call());
       expect(r).toMatchObject({ status: "created", university: "Brand New University" });
+      // Sent once (marketing.spec.ts:219): the same address again is recognised, not stored twice.
+      const again = await people().requestUniversity({ email, universityName: "Brand New University", consent: true, token: `${token}x`, ipHash: "1".repeat(64) }, env().call());
+      expect(again).toMatchObject({ status: "exists", university: "Brand New University" });
+      expect(await w.people`select count(*)::int as n from people.university_requests where email = ${email}`).toEqual([{ n: 1 }]);
       expect((await people().confirmUniversityRequest({ token }, env().call())).university).toBe("Brand New University");
       const [leak] = await w.people`select count(*)::int as n from platform.events where payload::text like ${"%" + email + "%"}`;
       expect(leak).toEqual({ n: 0 });

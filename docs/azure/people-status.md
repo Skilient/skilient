@@ -27,7 +27,8 @@ Status values: **ticked** (evidence exists), **partial** (part ticked, the rest 
 | 17 | Staff methods: role and two-factor from identity, audit before and after | `src/api/universities.ts` (`staff()`), `people.audit_log` + `audit.recorded`; goldens universities.json#staff and #requests; contract test | 2026-11-25 | ticked |
 | 18 | Typecheck, lint, unit, refusal, golden, contract, journeys, budget | "Results" below | 2026-11-25 | see "Results" |
 | 19 | people_you_may_know's limit | `services/people/src/store/search.ts` applies `least(greatest(coalesce(limit, 8), 1), 30)`; `search.json#people_you_may_know` re-recorded with the limit (Ahmed's approval); replay matches | 2026-11-25 | ticked (Ahmed chose to apply the limit) |
-| 20 | CI run on `azure` | needs the work committed and pushed, which only Ahmed asks for | | pending Ahmed |
+| 20 | CI run on `azure` | run 45682818412 on c749daf: success | 2026-11-25 | ticked |
+| 21 | Open items after W2 (2026-11-26) | profile, search and username replies not stored (`countedRead`; contract test); event registry `packages/contracts/events.json` + `src/events.ts` + `tools/lint/test/events.test.ts`; cutover import `src/store/import.ts` + `test/import/cutover-import.test.ts`, sanctions in identity (`test/import/sanctions-import.test.ts`), parsers in `tools/cutover`; `docs/azure/journey-handoff.md` with its check; CLAUDE.md code map | 2026-11-26 | ticked |
 
 ## Left for later workstreams
 
@@ -38,7 +39,7 @@ Status values: **ticked** (evidence exists), **partial** (part ticked, the rest 
 - W10 trust: forward `onboarding.*`, `tour.ended`, `profile.updated` to analytics; build `/ops` audit from `audit.recorded`; publish `config.changed` for the graduation rule.
 - W11 market: check the university seat before calling the department and programme methods; own `ops_uni_list` / `ops_uni_record` / `ops_assign_uni_owner` and `landing_stats` (Ahmed).
 - W13 web: map people's refusal reasons to today's wording (`services/people/src/refusals.ts` holds both); call `GetShell` once per page; run the Playwright friends, onboarding and student-portal specs.
-- W14 cutover: import people's rows with ids kept, compute `email_domain` from `auth.users`, emit `profile.gate_changed` for every profile and `university.domains_changed` for every university.
+- W14 cutover: run the import built in `src/store/import.ts` (order in `tools/cutover/src/people-import.ts`) against the real exports, then compare identity's gate copies with people's rows. Every other workstream's event obligations are in `packages/contracts/events.json`; journey to-dos in `docs/azure/journey-handoff.md`.
 
 ## Results (2026-11-25, local)
 

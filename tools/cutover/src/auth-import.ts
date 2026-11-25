@@ -68,3 +68,31 @@ export function parsePersonalDomainExport(jsonl: string): string[] {
 
 /** Identity owns the writes to its schema; the cutover tool only hands it the parsed export. */
 export { importPersonalDomains, importTotpFactors, importUsers, type ImportReport, type TotpImportReport } from "@skilient/identity/store/import";
+
+/** Supabase `public.sanctions` rows; identity keeps the user ones (`importSanctionMarks`). */
+export const ExportedSanction = z.object({
+  id: z.uuid(),
+  user_id: z.uuid().nullable(),
+  kind: z.string(),
+  until: z.string().nullable(),
+  reason: z.string(),
+  staff_id: z.uuid(),
+  created_at: z.string(),
+  lifted_at: z.string().nullable(),
+  lifted_by: z.uuid().nullable(),
+  lift_reason: z.string().nullable(),
+});
+export type ExportedSanction = z.infer<typeof ExportedSanction>;
+
+export function parseSanctionExport(jsonl: string): ExportedSanction[] {
+  return jsonl
+    .split("\n")
+    .filter((line) => line.trim() !== "")
+    .map((line, i) => {
+      const parsed = ExportedSanction.safeParse(JSON.parse(line));
+      if (!parsed.success) throw new Error(`sanctions line ${i + 1}: ${parsed.error.issues[0]?.message ?? "invalid"}`);
+      return parsed.data;
+    });
+}
+
+export { importSanctionMarks } from "@skilient/identity/store/import";

@@ -8,6 +8,7 @@ export default defineConfig({
     projects: [
       { test: { name: "unit", include: ["test/unit/**/*.test.ts"] } },
       { test: { name: "refusal", include: ["test/refusal/**/*.test.ts"], testTimeout: 60_000, hookTimeout: 120_000 } },
+      { test: { name: "import", include: ["test/import/**/*.test.ts"], testTimeout: 90_000, hookTimeout: 180_000 } },
       { test: { name: "budget", include: ["test/budget/**/*.test.ts"], testTimeout: 120_000, hookTimeout: 180_000 } },
       { test: { name: "contract", include: ["test/contract/**/*.test.ts"], testTimeout: 60_000, hookTimeout: 180_000 } },
       // Service-level journeys mirroring the friends, onboarding and student-portal specs (decision W2 Q3).

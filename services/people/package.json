@@ -11,7 +11,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p .",
     "lint": "eslint --max-warnings=0 .",
-    "test": "vitest run --project unit --project refusal && vitest run --project budget",
+    "test": "vitest run --project unit --project refusal --project import && vitest run --project budget",
     "test:golden": "vitest run --project golden",
     "test:contract": "vitest run --project contract --project journeys"
   },

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@skilient/identity": "workspace:*",
+    "@skilient/people": "workspace:*",
     "zod": "4.6.5"
   },
   "devDependencies": {

@@ -69,7 +69,6 @@ describeTransports(
         await expect(j.feed(reader.token, "university", "all", "not-a-cursor")).rejects.toSatisfy((e) => reason(e) === "bad_cursor");
       });
 
-      it.todo("W5 work: updates from a followed venture come after the ranked posts (followed-updates)");
       it.todo("W13: the feed's infinite scroll and \"Load more\", the end-of-feed marker, axe");
     });
   },

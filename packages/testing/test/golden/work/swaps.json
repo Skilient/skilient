@@ -1,0 +1,333 @@
+{
+  "swap": {
+    "accept": {
+      "changes": {
+        "public.swaps": {
+          "added": [
+            {
+              "close_reason": null,
+              "learner_id": "<uuid:1>",
+              "note": "Please",
+              "offered_skill_id": "python",
+              "preferred_times": "Evenings",
+              "skill_id": "typescript",
+              "status": "accepted",
+              "teacher_id": "<uuid:2>"
+            },
+            {
+              "close_reason": null,
+              "learner_id": "<uuid:2>",
+              "note": null,
+              "offered_skill_id": null,
+              "preferred_times": null,
+              "skill_id": "python",
+              "status": "accepted",
+              "teacher_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "close_reason": null,
+              "learner_id": "<uuid:1>",
+              "note": "Please",
+              "offered_skill_id": "python",
+              "preferred_times": "Evenings",
+              "skill_id": "typescript",
+              "status": "requested",
+              "teacher_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "accept_again": {
+      "code": "55000",
+      "message": "this request is no longer open",
+      "ok": false
+    },
+    "again": {
+      "code": "23505",
+      "message": "you already have an open swap with them for this skill",
+      "ok": false
+    },
+    "confirm": {
+      "changes": {
+        "public.swap_notes": {
+          "added": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "Thank you",
+              "status": "pending",
+              "teacher_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.swap_sessions": {
+          "added": [
+            {
+              "confirmed_minutes": 60,
+              "minutes": 60,
+              "no_show_reason": null,
+              "place": "Library, room 2",
+              "status": "confirmed"
+            }
+          ],
+          "removed": [
+            {
+              "confirmed_minutes": null,
+              "minutes": 60,
+              "no_show_reason": null,
+              "place": "Library, room 2",
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "confirm_future": {
+      "code": "55000",
+      "message": "confirm a session once it has started",
+      "ok": false
+    },
+    "confirm_no_reason": {
+      "code": "22023",
+      "message": "say why it didn't happen",
+      "ok": false
+    },
+    "confirm_teacher": {
+      "code": "42501",
+      "message": "the learner confirms a session",
+      "ok": false
+    },
+    "end": {
+      "changes": {
+        "public.swaps": {
+          "added": [
+            {
+              "close_reason": "ended",
+              "learner_id": "<uuid:1>",
+              "note": "Please",
+              "offered_skill_id": "python",
+              "preferred_times": "Evenings",
+              "skill_id": "typescript",
+              "status": "closed",
+              "teacher_id": "<uuid:2>"
+            },
+            {
+              "close_reason": "ended",
+              "learner_id": "<uuid:2>",
+              "note": null,
+              "offered_skill_id": null,
+              "preferred_times": null,
+              "skill_id": "python",
+              "status": "closed",
+              "teacher_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "close_reason": null,
+              "learner_id": "<uuid:1>",
+              "note": "Please",
+              "offered_skill_id": "python",
+              "preferred_times": "Evenings",
+              "skill_id": "typescript",
+              "status": "accepted",
+              "teacher_id": "<uuid:2>"
+            },
+            {
+              "close_reason": null,
+              "learner_id": "<uuid:2>",
+              "note": null,
+              "offered_skill_id": null,
+              "preferred_times": null,
+              "skill_id": "python",
+              "status": "accepted",
+              "teacher_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "end_again": {
+      "code": "55000",
+      "message": "this swap isn't open",
+      "ok": false
+    },
+    "not_taught": {
+      "code": "P0002",
+      "message": "they don't teach that skill in swaps",
+      "ok": false
+    },
+    "offer": {
+      "changes": {
+        "public.swap_offers": {
+          "added": [
+            {
+              "note": "Happy to teach",
+              "skill_id": "typescript",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "offer_back_no_l2": {
+      "code": "22023",
+      "message": "you can offer back a skill you hold at L2 or higher",
+      "ok": false
+    },
+    "offer_no_l2": {
+      "code": "42501",
+      "message": "you can teach skills you hold at L2 or higher",
+      "ok": false
+    },
+    "other_university": {
+      "code": "42501",
+      "message": "you can ask teachers at your own university",
+      "ok": false
+    },
+    "propose": {
+      "changes": {
+        "public.swap_sessions": {
+          "added": [
+            {
+              "confirmed_minutes": null,
+              "minutes": 60,
+              "no_show_reason": null,
+              "place": "Library, room 2",
+              "status": "proposed"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:3>"
+      }
+    },
+    "propose_long": {
+      "code": "22023",
+      "message": "a session is 15 minutes to 4 hours",
+      "ok": false
+    },
+    "propose_no_place": {
+      "code": "22023",
+      "message": "say where, or paste a link (up to 200 characters)",
+      "ok": false
+    },
+    "propose_past": {
+      "code": "22023",
+      "message": "pick a time in the next 60 days",
+      "ok": false
+    },
+    "request": {
+      "changes": {
+        "public.swaps": {
+          "added": [
+            {
+              "close_reason": null,
+              "learner_id": "<uuid:1>",
+              "note": "Please",
+              "offered_skill_id": "python",
+              "preferred_times": "Evenings",
+              "skill_id": "typescript",
+              "status": "requested",
+              "teacher_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:4>"
+      }
+    },
+    "respond": {
+      "changes": {
+        "public.swap_sessions": {
+          "added": [
+            {
+              "confirmed_minutes": null,
+              "minutes": 60,
+              "no_show_reason": null,
+              "place": "Library, room 2",
+              "status": "accepted"
+            }
+          ],
+          "removed": [
+            {
+              "confirmed_minutes": null,
+              "minutes": 60,
+              "no_show_reason": null,
+              "place": "Library, room 2",
+              "status": "proposed"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "respond_not_teacher": {
+      "code": "P0002",
+      "message": "swap not found",
+      "ok": false
+    },
+    "respond_own": {
+      "code": "42501",
+      "message": "the other side accepts a session you proposed",
+      "ok": false
+    },
+    "self": {
+      "code": "P0002",
+      "message": "teacher not found",
+      "ok": false
+    },
+    "want": {
+      "changes": {
+        "public.swap_wants": {
+          "added": [
+            {
+              "note": null,
+              "skill_id": "typescript",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "want_unknown": {
+      "code": "P0002",
+      "message": "skill not found",
+      "ok": false
+    }
+  }
+}

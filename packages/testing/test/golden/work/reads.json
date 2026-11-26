@@ -1,0 +1,183 @@
+{
+  "views": {
+    "browse_my_university": {
+      "ok": true,
+      "value": []
+    },
+    "browse_open_roles": {
+      "ok": true,
+      "value": [
+        {
+          "members": 2,
+          "open_slots": 1,
+          "owner_username": "wk_omar",
+          "status": "recruiting",
+          "team_size": 4,
+          "title": "Heron Robotics",
+          "university_name": "Work Golden University A",
+          "visibility": "university"
+        }
+      ]
+    },
+    "browse_projects_a": {
+      "ok": true,
+      "value": [
+        {
+          "members": 2,
+          "open_slots": 1,
+          "owner_username": "wk_omar",
+          "status": "recruiting",
+          "team_size": 4,
+          "title": "Heron Robotics",
+          "university_name": "Work Golden University A",
+          "visibility": "university"
+        }
+      ]
+    },
+    "browse_projects_b": {
+      "ok": true,
+      "value": []
+    },
+    "browse_startups_b": {
+      "ok": true,
+      "value": [
+        {
+          "members": 1,
+          "open_slots": 0,
+          "owner_username": "wk_mina",
+          "status": "in_progress",
+          "team_size": 3,
+          "title": "Plover Pay",
+          "university_name": "Work Golden University A",
+          "visibility": "public"
+        }
+      ]
+    },
+    "browse_status": {
+      "ok": true,
+      "value": []
+    },
+    "by_link": {
+      "ok": true,
+      "value": [
+        {
+          "status": "in_progress",
+          "title": "Plover Pay",
+          "visibility": "unlisted"
+        }
+      ]
+    },
+    "by_link_blocked": {
+      "ok": true,
+      "value": []
+    },
+    "by_link_counts": {
+      "ok": true,
+      "value": [
+        {
+          "deliverables": 0,
+          "followers": 0,
+          "members": 1,
+          "updates": 0
+        }
+      ]
+    },
+    "by_link_team": {
+      "ok": true,
+      "value": [
+        {
+          "full_name": "Mina Heron",
+          "is_owner": true,
+          "profile_visible": false,
+          "team_role": "lead",
+          "username": null
+        }
+      ]
+    },
+    "counts": {
+      "ok": true,
+      "value": [
+        {
+          "deliverables": 0,
+          "followers": 0,
+          "members": 2,
+          "updates": 0
+        }
+      ]
+    },
+    "counts_hidden": {
+      "ok": true,
+      "value": []
+    },
+    "profile_other_university": {
+      "ok": true,
+      "value": [
+        {
+          "is_owner": true,
+          "status": "in_progress",
+          "team_role": "lead",
+          "title": "Plover Pay"
+        }
+      ]
+    },
+    "profile_self": {
+      "ok": true,
+      "value": [
+        {
+          "is_owner": false,
+          "status": "recruiting",
+          "team_role": "developer",
+          "title": "Heron Robotics"
+        },
+        {
+          "is_owner": true,
+          "status": "in_progress",
+          "team_role": "lead",
+          "title": "Plover Pay"
+        }
+      ]
+    },
+    "team_classmate": {
+      "ok": true,
+      "value": [
+        {
+          "full_name": "Omar Heron",
+          "is_owner": true,
+          "profile_visible": true,
+          "team_role": "lead",
+          "username": "wk_omar"
+        },
+        {
+          "full_name": "Mina Heron",
+          "is_owner": false,
+          "profile_visible": false,
+          "team_role": "developer",
+          "username": null
+        }
+      ]
+    },
+    "team_member": {
+      "ok": true,
+      "value": [
+        {
+          "full_name": "Omar Heron",
+          "is_owner": true,
+          "profile_visible": true,
+          "team_role": "lead",
+          "username": "wk_omar"
+        },
+        {
+          "full_name": "Mina Heron",
+          "is_owner": false,
+          "profile_visible": false,
+          "team_role": "developer",
+          "username": null
+        }
+      ]
+    },
+    "team_other_university": {
+      "ok": true,
+      "value": []
+    }
+  }
+}

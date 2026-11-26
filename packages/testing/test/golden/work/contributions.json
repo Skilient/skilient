@@ -1,0 +1,164 @@
+{
+  "log_correct_confirm": {
+    "confirm": {
+      "changes": {
+        "public.contribution_confirmations": {
+          "added": [
+            {
+              "confirmer_id": "<uuid:1>",
+              "confirmer_role": "peer",
+              "description": "Built and documented the API"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "confirm_a_correction": {
+      "code": "22023",
+      "message": "confirm the entry, not a correction",
+      "ok": false
+    },
+    "confirm_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "confirm_outsider": {
+      "code": "42501",
+      "message": "members only",
+      "ok": false
+    },
+    "confirm_own": {
+      "code": "42501",
+      "message": "you can't confirm your own entry",
+      "ok": false
+    },
+    "correct": {
+      "changes": {
+        "public.contributions": {
+          "added": [
+            {
+              "correction": true,
+              "description": "Built and documented the API",
+              "evidence_url": null,
+              "hours": "4.00",
+              "kind": "docs",
+              "skill_ids": [
+                "typescript"
+              ],
+              "source": "manual",
+              "user_id": "<uuid:2>",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:3>"
+      }
+    },
+    "correct_a_correction": {
+      "code": "22023",
+      "message": "correct the original entry",
+      "ok": false
+    },
+    "correct_late": {
+      "code": "55000",
+      "message": "entries can be corrected for 24 hours",
+      "ok": false
+    },
+    "correct_not_author": {
+      "code": "42501",
+      "message": "only its author can correct an entry",
+      "ok": false
+    },
+    "log": {
+      "changes": {
+        "public.contributions": {
+          "added": [
+            {
+              "correction": false,
+              "description": "Built the API",
+              "evidence_url": "https://example.com/pr/1",
+              "hours": "3.50",
+              "kind": "code",
+              "skill_ids": [
+                "react"
+              ],
+              "source": "manual",
+              "user_id": "<uuid:2>",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:4>"
+      }
+    },
+    "log_abandoned": {
+      "code": "55000",
+      "message": "this venture is abandoned, so its log is locked",
+      "ok": false
+    },
+    "log_foreign_skill": {
+      "code": "22023",
+      "message": "tag only the venture's own skills",
+      "ok": false
+    },
+    "log_four_skills": {
+      "code": "23514",
+      "message": "tag up to 3 skills",
+      "ok": false
+    },
+    "log_outsider": {
+      "code": "42501",
+      "message": "members only",
+      "ok": false
+    },
+    "status": {
+      "ok": true,
+      "value": [
+        {
+          "by_member": true,
+          "confirmations": 0,
+          "confirmed_by_me": false,
+          "corrected": false,
+          "description": "Old work",
+          "kind": "code",
+          "peer_verified": false,
+          "source": "manual"
+        },
+        {
+          "by_member": true,
+          "confirmations": 1,
+          "confirmed_by_me": true,
+          "corrected": true,
+          "description": "Built and documented the API",
+          "kind": "docs",
+          "peer_verified": true,
+          "source": "manual"
+        }
+      ]
+    },
+    "verified_contributors": {
+      "ok": true,
+      "value": 1
+    },
+    "verified_contributors_outsider": {
+      "ok": true,
+      "value": null
+    }
+  }
+}

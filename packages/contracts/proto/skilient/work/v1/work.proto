@@ -1,0 +1,1491 @@
+syntax = "proto3";
+
+package skilient.work.v1;
+
+// work: ventures (roles, questions, members, applications, invites, follows, updates, deliverables,
+// completions), the contribution log, the GitHub connection and its evidence, skills and levels,
+// endorsements, credentials, code checks, paths, proof tasks and skill swaps (docs/azure/prd.md, service
+// catalogue; docs/azure/work-function-bins.md maps every ported SQL function to a method here).
+//
+// Refusals carry a short snake_case reason in the x-refusal metadata (services/work/src/refusals.ts lists each
+// with today's wording for web). Times are RFC 3339 strings; an empty string means none. Names, usernames and
+// avatars are people's: methods return user ids, and web asks people's ProfileCards for the faces, except
+// where a method says it returns names.
+// Venture types: project | startup. Statuses: recruiting | in_progress | completed | abandoned.
+// Visibility: public | university | unlisted. Stages: idea | prototype | launched | revenue.
+// Team roles: lead | developer | designer | researcher | other.
+service WorkService {
+  // ---- Ventures ----
+
+  // CreateVenture creates a venture with its roles and questions; the creator is its owner and lead.
+  rpc CreateVenture(CreateVentureRequest) returns (CreateVentureResponse);
+  // UpdateVenture changes the owner's venture; only the fields present change.
+  rpc UpdateVenture(UpdateVentureRequest) returns (UpdateVentureResponse);
+  // TransitionVenture moves the owner's venture on: recruiting → in_progress | abandoned, in_progress →
+  // completed | abandoned. Completing needs 2 members, a deliverable and 2 verified contributors.
+  rpc TransitionVenture(TransitionVentureRequest) returns (TransitionVentureResponse);
+  // GetVenture is the venture page: the venture, its team, roles, questions, counts and the reader's state.
+  rpc GetVenture(GetVentureRequest) returns (GetVentureResponse);
+  // BrowseVentures lists ventures the reader can see, newest first.
+  rpc BrowseVentures(BrowseVenturesRequest) returns (BrowseVenturesResponse);
+  // SearchVentures is Explore's Ventures tab (60 searches a minute).
+  rpc SearchVentures(SearchVenturesRequest) returns (SearchVenturesResponse);
+  // ProfileVentures lists a person's ventures as the reader may see them.
+  rpc ProfileVentures(ProfileVenturesRequest) returns (ProfileVenturesResponse);
+  // VentureUpdates lists a venture's updates, newest first, with their images.
+  rpc VentureUpdates(VentureUpdatesRequest) returns (VentureUpdatesResponse);
+  // FollowedVentureUpdates is the feed's strip: recent updates from ventures the reader follows.
+  rpc FollowedVentureUpdates(FollowedVentureUpdatesRequest) returns (FollowedVentureUpdatesResponse);
+  // Deliverables lists a venture's deliverable links (members only).
+  rpc Deliverables(DeliverablesRequest) returns (DeliverablesResponse);
+  // OwnerInvites lists the owner's pending invites for a venture.
+  rpc OwnerInvites(OwnerInvitesRequest) returns (OwnerInvitesResponse);
+  // MyRequests lists the reader's applications (sent and received) with their messages, and invites.
+  rpc MyRequests(MyRequestsRequest) returns (MyRequestsResponse);
+
+  rpc ApplyToVenture(ApplyToVentureRequest) returns (ApplyToVentureResponse);
+  rpc DecideApplication(DecideApplicationRequest) returns (DecideApplicationResponse);
+  rpc WithdrawApplication(WithdrawApplicationRequest) returns (WithdrawApplicationResponse);
+  rpc AddApplicationMessage(AddApplicationMessageRequest) returns (AddApplicationMessageResponse);
+  rpc InviteToVenture(InviteToVentureRequest) returns (InviteToVentureResponse);
+  rpc RespondInvite(RespondInviteRequest) returns (RespondInviteResponse);
+  rpc RevokeInvite(RevokeInviteRequest) returns (RevokeInviteResponse);
+  rpc LeaveVenture(LeaveVentureRequest) returns (LeaveVentureResponse);
+  rpc RemoveVentureMember(RemoveVentureMemberRequest) returns (RemoveVentureMemberResponse);
+  rpc SetMemberRole(SetMemberRoleRequest) returns (SetMemberRoleResponse);
+  rpc TransferVentureOwnership(TransferVentureOwnershipRequest) returns (TransferVentureOwnershipResponse);
+  rpc SaveVentureRole(SaveVentureRoleRequest) returns (SaveVentureRoleResponse);
+  rpc DeleteVentureRole(DeleteVentureRoleRequest) returns (DeleteVentureRoleResponse);
+  rpc SetVentureQuestions(SetVentureQuestionsRequest) returns (SetVentureQuestionsResponse);
+  rpc AddVentureDeliverable(AddVentureDeliverableRequest) returns (AddVentureDeliverableResponse);
+  rpc RemoveVentureDeliverable(RemoveVentureDeliverableRequest) returns (RemoveVentureDeliverableResponse);
+  rpc FollowVenture(FollowVentureRequest) returns (FollowVentureResponse);
+  // PostVentureUpdate posts a member's update with up to 4 images.
+  rpc PostVentureUpdate(PostVentureUpdateRequest) returns (PostVentureUpdateResponse);
+  rpc DeleteVentureUpdate(DeleteVentureUpdateRequest) returns (DeleteVentureUpdateResponse);
+
+  // ---- Contributions ----
+
+  rpc LogContribution(LogContributionRequest) returns (LogContributionResponse);
+  // CorrectContribution adds a correction of the author's own manual entry (within 24 hours).
+  rpc CorrectContribution(CorrectContributionRequest) returns (CorrectContributionResponse);
+  // ConfirmContribution is a teammate's confirmation; it makes the entry peer-verified.
+  rpc ConfirmContribution(ConfirmContributionRequest) returns (ConfirmContributionResponse);
+  // Contributions lists a venture's log with each entry's current text and status.
+  rpc Contributions(ContributionsRequest) returns (ContributionsResponse);
+  rpc VerifiedContributors(VerifiedContributorsRequest) returns (VerifiedContributorsResponse);
+  // ContributionSummary counts a person's entries and verified entries per venture.
+  rpc ContributionSummary(ContributionSummaryRequest) returns (ContributionSummaryResponse);
+
+  // ---- GitHub ----
+
+  // ConnectGithub binds the signed-in student to the GitHub account behind an OAuth code from the App's
+  // install-and-authorise flow (web's callback passes the code and installation id; 10 an hour), then starts
+  // the first sync. Statuses: linked | clash | other_account | failed.
+  rpc ConnectGithub(ConnectGithubRequest) returns (ConnectGithubResponse);
+  rpc DisconnectGithub(DisconnectGithubRequest) returns (DisconnectGithubResponse);
+  // RequestGithubResync starts a sync (5 an hour); false when not connected.
+  rpc RequestGithubResync(RequestGithubResyncRequest) returns (RequestGithubResyncResponse);
+  // SetRepoExcluded keeps a shared repository out of (or back in) the evidence.
+  rpc SetRepoExcluded(SetRepoExcludedRequest) returns (SetRepoExcludedResponse);
+  // GithubOverview is the GitHub settings card: the account, the latest sync, the shared repositories.
+  rpc GithubOverview(GithubOverviewRequest) returns (GithubOverviewResponse);
+  // OwnerRepos lists the reader's shared repositories a venture can link.
+  rpc OwnerRepos(OwnerReposRequest) returns (OwnerReposResponse);
+  // LinkVentureRepo links one of the owner's shared repositories to the venture (0 unlinks).
+  rpc LinkVentureRepo(LinkVentureRepoRequest) returns (LinkVentureRepoResponse);
+  // RecordGithubWebhook stores a delivery web verified (signature checked there), once, and queues it.
+  rpc RecordGithubWebhook(RecordGithubWebhookRequest) returns (RecordGithubWebhookResponse);
+
+  // ---- Skills ----
+
+  // MySkills lists the reader's skills at L1 or above, with the held-commit count.
+  rpc MySkills(MySkillsRequest) returns (MySkillsResponse);
+  // SkillEvidence is the skill drawer: the reader's newest evidence for one skill and the proofs behind L2-L4.
+  rpc SkillEvidence(SkillEvidenceRequest) returns (SkillEvidenceResponse);
+  // SkillCatalogue lists the taxonomy (all live skills, or the ids asked).
+  rpc SkillCatalogue(SkillCatalogueRequest) returns (SkillCatalogueResponse);
+  // SkillsOf lists other people's skills at L1 or above (profiles; people and market as callers).
+  rpc SkillsOf(SkillsOfRequest) returns (SkillsOfResponse);
+
+  // ---- Endorsements ----
+
+  // Endorse a teammate for up to 5 skills per venture (20 a month), each optionally on one of their entries.
+  rpc Endorse(EndorseRequest) returns (EndorseResponse);
+  rpc HideEndorsement(HideEndorsementRequest) returns (HideEndorsementResponse);
+  // EndorseOptions is the endorse sheet on a venture's Team tab.
+  rpc EndorseOptions(EndorseOptionsRequest) returns (EndorseOptionsResponse);
+  // EndorsementsFor lists a profile's endorsements as the reader may see them.
+  rpc EndorsementsFor(EndorsementsForRequest) returns (EndorsementsForResponse);
+
+  // ---- Credentials ----
+
+  rpc SubmitCredential(SubmitCredentialRequest) returns (SubmitCredentialResponse);
+  rpc DeleteCredential(DeleteCredentialRequest) returns (DeleteCredentialResponse);
+  rpc MyCredentials(MyCredentialsRequest) returns (MyCredentialsResponse);
+  rpc CredentialsFor(CredentialsForRequest) returns (CredentialsForResponse);
+
+  // ---- Code checks ----
+
+  rpc RequestCodeCheck(RequestCodeCheckRequest) returns (RequestCodeCheckResponse);
+  rpc StartCodeCheck(StartCodeCheckRequest) returns (StartCodeCheckResponse);
+  rpc SaveCodeCheck(SaveCodeCheckRequest) returns (SaveCodeCheckResponse);
+  rpc CodeCheckState(CodeCheckStateRequest) returns (CodeCheckStateResponse);
+  rpc MyCodeCheck(MyCodeCheckRequest) returns (MyCodeCheckResponse);
+  // CodeCheckSnippet serves the check's lines from GitHub to the student during the check (starting the clock)
+  // or to the staff grader who claimed it.
+  rpc CodeCheckSnippet(CodeCheckSnippetRequest) returns (CodeCheckSnippetResponse);
+
+  // ---- Paths and proof tasks ----
+
+  rpc MyPaths(MyPathsRequest) returns (MyPathsResponse);
+  rpc PathView(PathViewRequest) returns (PathViewResponse);
+  rpc FollowPath(FollowPathRequest) returns (FollowPathResponse);
+  rpc PathSkillDrawer(PathSkillDrawerRequest) returns (PathSkillDrawerResponse);
+  rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
+  rpc LinkTaskRepo(LinkTaskRepoRequest) returns (LinkTaskRepoResponse);
+  rpc SubmitTask(SubmitTaskRequest) returns (SubmitTaskResponse);
+  rpc AbandonTask(AbandonTaskRequest) returns (AbandonTaskResponse);
+  rpc ChooseTaskCodeCheck(ChooseTaskCodeCheckRequest) returns (ChooseTaskCodeCheckResponse);
+  rpc MyTask(MyTaskRequest) returns (MyTaskResponse);
+  rpc TaskReviewPage(TaskReviewPageRequest) returns (TaskReviewPageResponse);
+  rpc AcceptTaskReview(AcceptTaskReviewRequest) returns (AcceptTaskReviewResponse);
+  rpc DeclineTaskReview(DeclineTaskReviewRequest) returns (DeclineTaskReviewResponse);
+  rpc ReviewTask(ReviewTaskRequest) returns (ReviewTaskResponse);
+
+  // ---- Skill swaps ----
+
+  rpc SaveSwapOffer(SaveSwapOfferRequest) returns (SaveSwapOfferResponse);
+  rpc SaveSwapWant(SaveSwapWantRequest) returns (SaveSwapWantResponse);
+  rpc RequestSwap(RequestSwapRequest) returns (RequestSwapResponse);
+  rpc RespondSwap(RespondSwapRequest) returns (RespondSwapResponse);
+  rpc CancelSwapRequest(CancelSwapRequestRequest) returns (CancelSwapRequestResponse);
+  rpc EndSwap(EndSwapRequest) returns (EndSwapResponse);
+  rpc ProposeSwapSession(ProposeSwapSessionRequest) returns (ProposeSwapSessionResponse);
+  rpc RespondSwapSession(RespondSwapSessionRequest) returns (RespondSwapSessionResponse);
+  rpc CancelSwapSession(CancelSwapSessionRequest) returns (CancelSwapSessionResponse);
+  rpc ConfirmSwapSession(ConfirmSwapSessionRequest) returns (ConfirmSwapSessionResponse);
+  rpc DecideSwapNote(DecideSwapNoteRequest) returns (DecideSwapNoteResponse);
+  rpc SwapsPage(SwapsPageRequest) returns (SwapsPageResponse);
+  rpc SwapPage(SwapPageRequest) returns (SwapPageResponse);
+  rpc SwapTeachers(SwapTeachersRequest) returns (SwapTeachersResponse);
+  rpc SwapNotesFor(SwapNotesForRequest) returns (SwapNotesForResponse);
+
+  // ---- Staff (Trust reviewers on two-factor; every write audited before and after) ----
+
+  rpc OpsCredentialQueue(OpsCredentialQueueRequest) returns (OpsCredentialQueueResponse);
+  rpc OpsCredentialCase(OpsCredentialCaseRequest) returns (OpsCredentialCaseResponse);
+  rpc OpsClaimCredential(OpsClaimCredentialRequest) returns (OpsClaimCredentialResponse);
+  rpc OpsReviewCredential(OpsReviewCredentialRequest) returns (OpsReviewCredentialResponse);
+  rpc OpsCodeCheckQueue(OpsCodeCheckQueueRequest) returns (OpsCodeCheckQueueResponse);
+  rpc OpsCodeCheckCase(OpsCodeCheckCaseRequest) returns (OpsCodeCheckCaseResponse);
+  rpc OpsClaimCodeCheck(OpsClaimCodeCheckRequest) returns (OpsClaimCodeCheckResponse);
+  rpc OpsGradeCodeCheck(OpsGradeCodeCheckRequest) returns (OpsGradeCodeCheckResponse);
+  rpc OpsReviewFlagQueue(OpsReviewFlagQueueRequest) returns (OpsReviewFlagQueueResponse);
+  rpc OpsReviewFlagCase(OpsReviewFlagCaseRequest) returns (OpsReviewFlagCaseResponse);
+  rpc OpsClaimReviewFlag(OpsClaimReviewFlagRequest) returns (OpsClaimReviewFlagResponse);
+  rpc OpsResolveReviewFlag(OpsResolveReviewFlagRequest) returns (OpsResolveReviewFlagResponse);
+
+  // ---- Batch reads for other services ----
+
+  // VentureCards is the venture block on content's invite and Shipped cards, as viewer_id sees it (content).
+  rpc VentureCards(VentureCardsRequest) returns (VentureCardsResponse);
+  // VentureTitles names team chats (messaging).
+  rpc VentureTitles(VentureTitlesRequest) returns (VentureTitlesResponse);
+}
+
+// ---- Ventures ----
+
+message RoleInput {
+  string title = 1;
+  repeated string skill_ids = 2;
+  int32 slots = 3;
+}
+
+message CreateVentureRequest {
+  string type = 1;
+  string title = 2;
+  string description = 3;
+  // Empty means public.
+  string visibility = 4;
+  string stage = 5;
+  string pitch_url = 6;
+  string affiliation = 7;
+  repeated string skill_ids = 8;
+  // 0 means 4.
+  int32 team_size = 9;
+  // At most 6.
+  repeated RoleInput roles = 10;
+  // At most 3.
+  repeated string questions = 11;
+}
+
+message CreateVentureResponse {
+  string venture_id = 1;
+}
+
+message UpdateVentureRequest {
+  string venture_id = 1;
+  optional string title = 2;
+  optional string description = 3;
+  optional string visibility = 4;
+  // Present and empty clears the stage, the pitch link or the affiliation.
+  optional string stage = 5;
+  optional string pitch_url = 6;
+  optional string affiliation = 7;
+  // Replaces the tags when set_skill_ids is true.
+  bool set_skill_ids = 8;
+  repeated string skill_ids = 9;
+  optional int32 team_size = 10;
+}
+
+message UpdateVentureResponse {}
+
+message TransitionVentureRequest {
+  string venture_id = 1;
+  string to = 2;
+}
+
+message TransitionVentureResponse {}
+
+message GetVentureRequest {
+  string venture_id = 1;
+}
+
+message Venture {
+  string id = 1;
+  string type = 2;
+  string title = 3;
+  string description = 4;
+  string status = 5;
+  string visibility = 6;
+  string stage = 7;
+  string pitch_url = 8;
+  string affiliation = 9;
+  repeated string skill_ids = 10;
+  int32 team_size = 11;
+  string owner_id = 12;
+  string university_id = 13;
+  string repo_full_name = 14;
+  string created_at = 15;
+  string completed_at = 16;
+  string abandoned_at = 17;
+  int64 repo_id = 18;
+}
+
+message TeamMember {
+  string user_id = 1;
+  string team_role = 2;
+  string joined_at = 3;
+  bool is_owner = 4;
+  // Whether the reader may open this member's profile (username and avatar shown).
+  bool profile_visible = 5;
+}
+
+message VentureRole {
+  string id = 1;
+  string title = 2;
+  repeated string skill_ids = 3;
+  int32 slots = 4;
+  int32 filled = 5;
+}
+
+message VentureQuestion {
+  int32 position = 1;
+  string body = 2;
+}
+
+message GetVentureResponse {
+  // Unset when the reader can't see the venture.
+  Venture venture = 1;
+  // Reached by its link only (an unlisted venture the reader isn't part of): no roles or questions.
+  bool by_link_only = 2;
+  repeated TeamMember team = 3;
+  repeated VentureRole roles = 4;
+  repeated VentureQuestion questions = 5;
+  int32 members = 6;
+  int32 followers = 7;
+  int32 deliverables = 8;
+  int32 updates = 9;
+  bool is_member = 10;
+  bool is_owner = 11;
+  bool following = 12;
+  string pending_application_id = 13;
+  string pending_invite_id = 14;
+  string viewer_university_id = 15;
+}
+
+message BrowseVenturesRequest {
+  string type = 1;
+  string status = 2;
+  bool open_roles = 3;
+  bool my_university = 4;
+  string before = 5;
+  // 0 means 20; at most 50.
+  int32 limit = 6;
+}
+
+message SearchVenturesRequest {
+  string q = 1;
+  string type = 2;
+  string skill_id = 3;
+  string university_id = 4;
+  int32 offset = 5;
+}
+
+message VentureSummary {
+  string id = 1;
+  string type = 2;
+  string title = 3;
+  string summary = 4;
+  string status = 5;
+  string visibility = 6;
+  string stage = 7;
+  repeated string skill_ids = 8;
+  string university_id = 9;
+  string owner_id = 10;
+  int32 members = 11;
+  int32 team_size = 12;
+  int32 open_slots = 13;
+  string created_at = 14;
+}
+
+message BrowseVenturesResponse {
+  repeated VentureSummary ventures = 1;
+}
+
+message ProfileVenturesRequest {
+  string user_id = 1;
+}
+
+message ProfileVenturesResponse {
+  message Entry {
+    string id = 1;
+    string type = 2;
+    string title = 3;
+    string status = 4;
+    string team_role = 5;
+    bool is_owner = 6;
+    string joined_at = 7;
+  }
+  repeated Entry ventures = 1;
+}
+
+message Media {
+  string path = 1;
+  int32 width = 2;
+  int32 height = 3;
+}
+
+message VentureUpdatesRequest {
+  string venture_id = 1;
+}
+
+message FollowedVentureUpdatesRequest {}
+
+message VentureUpdate {
+  string id = 1;
+  string venture_id = 2;
+  string venture_title = 3;
+  string author_id = 4;
+  string body = 5;
+  repeated Media media = 6;
+  string created_at = 7;
+  bool can_delete = 8;
+}
+
+message VentureUpdatesResponse {
+  repeated VentureUpdate updates = 1;
+}
+
+message DeliverablesRequest {
+  string venture_id = 1;
+}
+
+message DeliverablesResponse {
+  message Entry {
+    string id = 1;
+    string label = 2;
+    string url = 3;
+    string added_by = 4;
+    string created_at = 5;
+  }
+  repeated Entry deliverables = 1;
+}
+
+message OwnerInvitesRequest {
+  string venture_id = 1;
+}
+
+message OwnerInvitesResponse {
+  message Entry {
+    string id = 1;
+    string invitee_id = 2;
+    string created_at = 3;
+  }
+  repeated Entry invites = 1;
+}
+
+message MyRequestsRequest {}
+
+message MyRequestsResponse {
+  message Message {
+    int64 id = 1;
+    string sender_id = 2;
+    string body = 3;
+    string created_at = 4;
+  }
+  message Application {
+    string id = 1;
+    string venture_id = 2;
+    string venture_title = 3;
+    string venture_type = 4;
+    string role_id = 5;
+    string role_title = 6;
+    string candidate_id = 7;
+    string owner_id = 8;
+    string status = 9;
+    string message = 10;
+    // The answers as JSON: [{position, question, answer}].
+    string answers_json = 11;
+    string created_at = 12;
+    string decided_at = 13;
+    repeated Message messages = 14;
+    // Whether the reader is the candidate (sent) or the owner (received).
+    bool sent = 15;
+  }
+  message Invite {
+    string id = 1;
+    string venture_id = 2;
+    string venture_title = 3;
+    string venture_type = 4;
+    string inviter_id = 5;
+    string status = 6;
+    string created_at = 7;
+  }
+  repeated Application applications = 1;
+  repeated Invite invites = 2;
+}
+
+message ApplyToVentureRequest {
+  string venture_id = 1;
+  string role_id = 2;
+  string message = 3;
+  repeated string answers = 4;
+}
+
+message ApplyToVentureResponse {
+  string application_id = 1;
+}
+
+message DecideApplicationRequest {
+  string application_id = 1;
+  bool accept = 2;
+}
+
+message DecideApplicationResponse {
+  string status = 1;
+}
+
+message WithdrawApplicationRequest {
+  string application_id = 1;
+}
+
+message WithdrawApplicationResponse {
+  bool withdrawn = 1;
+}
+
+message AddApplicationMessageRequest {
+  string application_id = 1;
+  string body = 2;
+}
+
+message AddApplicationMessageResponse {
+  int64 message_id = 1;
+}
+
+message InviteToVentureRequest {
+  string venture_id = 1;
+  string username = 2;
+}
+
+message InviteToVentureResponse {
+  string invite_id = 1;
+}
+
+message RespondInviteRequest {
+  string invite_id = 1;
+  bool accept = 2;
+}
+
+message RespondInviteResponse {
+  string status = 1;
+}
+
+message RevokeInviteRequest {
+  string invite_id = 1;
+}
+
+message RevokeInviteResponse {
+  bool revoked = 1;
+}
+
+message LeaveVentureRequest {
+  string venture_id = 1;
+}
+
+message LeaveVentureResponse {}
+
+message RemoveVentureMemberRequest {
+  string venture_id = 1;
+  string member_id = 2;
+}
+
+message RemoveVentureMemberResponse {}
+
+message SetMemberRoleRequest {
+  string venture_id = 1;
+  string member_id = 2;
+  string team_role = 3;
+}
+
+message SetMemberRoleResponse {}
+
+message TransferVentureOwnershipRequest {
+  string venture_id = 1;
+  string member_id = 2;
+}
+
+message TransferVentureOwnershipResponse {}
+
+message SaveVentureRoleRequest {
+  string venture_id = 1;
+  // Empty adds a role.
+  string role_id = 2;
+  string title = 3;
+  repeated string skill_ids = 4;
+  int32 slots = 5;
+}
+
+message SaveVentureRoleResponse {
+  string role_id = 1;
+}
+
+message DeleteVentureRoleRequest {
+  string venture_id = 1;
+  string role_id = 2;
+}
+
+message DeleteVentureRoleResponse {}
+
+message SetVentureQuestionsRequest {
+  string venture_id = 1;
+  repeated string questions = 2;
+}
+
+message SetVentureQuestionsResponse {}
+
+message AddVentureDeliverableRequest {
+  string venture_id = 1;
+  string label = 2;
+  string url = 3;
+}
+
+message AddVentureDeliverableResponse {
+  string deliverable_id = 1;
+}
+
+message RemoveVentureDeliverableRequest {
+  string deliverable_id = 1;
+}
+
+message RemoveVentureDeliverableResponse {
+  bool removed = 1;
+}
+
+message FollowVentureRequest {
+  string venture_id = 1;
+  bool follow = 2;
+}
+
+message FollowVentureResponse {
+  bool following = 1;
+}
+
+message PostVentureUpdateRequest {
+  string venture_id = 1;
+  string body = 2;
+  // At most 4; each in the poster's folder of the venture-media bucket.
+  repeated Media media = 3;
+}
+
+message PostVentureUpdateResponse {
+  string update_id = 1;
+}
+
+message DeleteVentureUpdateRequest {
+  string update_id = 1;
+}
+
+message DeleteVentureUpdateResponse {
+  bool deleted = 1;
+}
+
+// ---- Contributions ----
+
+message LogContributionRequest {
+  string venture_id = 1;
+  // code | design | research | docs | management | other
+  string kind = 2;
+  string description = 3;
+  string evidence_url = 4;
+  // 0 means none; up to 100.
+  double hours = 5;
+  // Up to 3 of the venture's own skills.
+  repeated string skill_ids = 6;
+}
+
+message LogContributionResponse {
+  string contribution_id = 1;
+}
+
+message CorrectContributionRequest {
+  string original_id = 1;
+  string kind = 2;
+  string description = 3;
+  string evidence_url = 4;
+  double hours = 5;
+  repeated string skill_ids = 6;
+}
+
+message ConfirmContributionRequest {
+  string contribution_id = 1;
+}
+
+message ConfirmContributionResponse {
+  bool confirmed = 1;
+}
+
+message ContributionsRequest {
+  string venture_id = 1;
+}
+
+message Contribution {
+  // The original entry's id; current_id is its newest correction (or itself).
+  string id = 1;
+  string venture_id = 2;
+  string user_id = 3;
+  string current_id = 4;
+  string kind = 5;
+  string description = 6;
+  string evidence_url = 7;
+  double hours = 8;
+  // manual | github
+  string source = 9;
+  string commit_sha = 10;
+  string created_at = 11;
+  string corrected_at = 12;
+  int32 confirmations = 13;
+  bool verified = 14;
+  bool before_venture = 15;
+  repeated string skill_ids = 16;
+  string ai_agent = 17;
+  // The reader has confirmed the current text.
+  bool confirmed_by_me = 18;
+  // The author is still on the team.
+  bool by_member = 19;
+}
+
+message ContributionsResponse {
+  repeated Contribution contributions = 1;
+}
+
+message VerifiedContributorsRequest {
+  string venture_id = 1;
+}
+
+message VerifiedContributorsResponse {
+  int32 count = 1;
+}
+
+message ContributionSummaryRequest {
+  string user_id = 1;
+}
+
+message ContributionSummaryResponse {
+  message Entry {
+    string venture_id = 1;
+    int32 entries = 2;
+    int32 verified = 3;
+  }
+  repeated Entry ventures = 1;
+}
+
+// ---- Batch reads ----
+
+message VentureCardsRequest {
+  // The reader; empty for none.
+  string viewer_id = 1;
+  // At most 200.
+  repeated string venture_ids = 2;
+}
+
+message VentureCardsResponse {
+  message Role {
+    string title = 1;
+    int32 open = 2;
+  }
+  message Member {
+    string user_id = 1;
+    // Whether the reader may open this member's profile.
+    bool profile_visible = 2;
+  }
+  message Card {
+    string id = 1;
+    string title = 2;
+    string type = 3;
+    string status = 4;
+    string visibility = 5;
+    int32 members = 6;
+    int32 team_size = 7;
+    bool is_member = 8;
+    // The reader's newest application status, or empty.
+    string my_application = 9;
+    repeated Role roles = 10;
+    // Owner first, then by joining; members blocked with the reader left out.
+    repeated Member team = 11;
+  }
+  // Only the ventures the reader may see.
+  repeated Card cards = 1;
+}
+
+message VentureTitlesRequest {
+  // At most 500.
+  repeated string venture_ids = 1;
+}
+
+message VentureTitlesResponse {
+  message Entry {
+    string venture_id = 1;
+    string title = 2;
+  }
+  repeated Entry ventures = 1;
+}
+
+// ---- GitHub ----
+
+message ConnectGithubRequest {
+  string code = 1;
+  // 0 when GitHub sent none.
+  int64 installation_id = 2;
+}
+
+message ConnectGithubResponse {
+  string status = 1;
+}
+
+message DisconnectGithubRequest {}
+
+message DisconnectGithubResponse {
+  bool disconnected = 1;
+}
+
+message RequestGithubResyncRequest {}
+
+message RequestGithubResyncResponse {
+  bool started = 1;
+}
+
+message SetRepoExcludedRequest {
+  int64 repo_id = 1;
+  bool excluded = 2;
+}
+
+message SetRepoExcludedResponse {}
+
+message GithubOverviewRequest {
+  // False skips the repository list.
+  bool with_repos = 1;
+}
+
+message GithubOverviewResponse {
+  message Repo {
+    int64 repo_id = 1;
+    string full_name = 2;
+    bool private = 3;
+    // owned | collaborator | fork | template; empty until classified.
+    string kind = 4;
+    bool excluded = 5;
+    string harvested_at = 6;
+  }
+  message Sync {
+    // queued | running | done | failed | cancelled
+    string status = 1;
+    string stage = 2;
+    int32 repos_total = 3;
+    int32 repos_done = 4;
+    int32 commits_analysed = 5;
+    int32 skills_found = 6;
+    string created_at = 7;
+    string finished_at = 8;
+  }
+  bool connected = 1;
+  string login = 2;
+  string connected_at = 3;
+  string revoked_at = 4;
+  Sync sync = 5;
+  repeated Repo repos = 6;
+}
+
+message OwnerReposRequest {}
+
+message OwnerReposResponse {
+  message Repo {
+    int64 repo_id = 1;
+    string full_name = 2;
+  }
+  repeated Repo repos = 1;
+}
+
+message LinkVentureRepoRequest {
+  string venture_id = 1;
+  int64 repo_id = 2;
+}
+
+message LinkVentureRepoResponse {}
+
+message RecordGithubWebhookRequest {
+  string delivery_id = 1;
+  string event = 2;
+  string action = 3;
+  int64 installation_id = 4;
+  // The delivery's JSON body as web received it (trimmed to what the stages read).
+  string payload_json = 5;
+}
+
+message RecordGithubWebhookResponse {
+  bool recorded = 1;
+}
+
+// ---- Skills ----
+
+message MySkillsRequest {}
+
+message SkillLevel {
+  string skill_id = 1;
+  int32 level = 2;
+  int32 active_days = 3;
+  int32 lines = 4;
+  int32 hits = 5;
+  int32 repos = 6;
+  string last_used_at = 7;
+  int32 ai_lines = 8;
+  bool ai_assisted = 9;
+  bool peer_verified = 10;
+}
+
+message MySkillsResponse {
+  repeated SkillLevel skills = 1;
+  // Commits held back for a Trust review ("some activity is being reviewed").
+  int32 held_commits = 2;
+  string github_login = 3;
+}
+
+message SkillEvidenceRequest {
+  string skill_id = 1;
+}
+
+message SkillEvidenceResponse {
+  message Item {
+    int64 repo_id = 1;
+    string repo_full_name = 2;
+    string sha = 3;
+    repeated string detectors = 4;
+    repeated string paths = 5;
+    int32 lines = 6;
+    string occurred_at = 7;
+    // counted | held | excluded | pending
+    string status = 8;
+    string exclusion = 9;
+    bool signed = 10;
+    string ai_agent = 11;
+  }
+  message Proof {
+    // pull_request | contribution | endorsement | ai_pull_request | code_check | proof_task
+    string kind = 1;
+    int32 level = 2;
+    string title = 3;
+    string detail = 4;
+    string url = 5;
+    string venture_id = 6;
+    // For an endorsement: who (names from people).
+    string endorser_id = 7;
+    string occurred_at = 8;
+  }
+  repeated Item items = 1;
+  int32 total = 2;
+  repeated Proof proofs = 3;
+}
+
+message SkillCatalogueRequest {
+  // Empty lists every live skill.
+  repeated string skill_ids = 1;
+}
+
+message SkillCatalogueResponse {
+  message Skill {
+    string id = 1;
+    string name = 2;
+    // language | framework | library | tool | platform | practice
+    string category = 3;
+    string parent_id = 4;
+  }
+  repeated Skill skills = 1;
+}
+
+message SkillsOfRequest {
+  // At most 500.
+  repeated string user_ids = 1;
+}
+
+message SkillsOfResponse {
+  message Entry {
+    string user_id = 1;
+    string skill_id = 2;
+    int32 level = 3;
+    bool peer_verified = 4;
+    bool ai_assisted = 5;
+  }
+  repeated Entry skills = 1;
+}
+
+// ---- Shared ----
+
+// A page read as JSON: the shape is the old function's document, with user ids where it carried names (names,
+// usernames and avatars come from people's ProfileCards).
+
+// ---- Endorsements ----
+
+message EndorseRequest {
+  message Item {
+    string skill_id = 1;
+    // One of the endorsee's entries in this venture that shows the skill; empty for none.
+    string evidence_id = 2;
+  }
+  string endorsee_id = 1;
+  string venture_id = 2;
+  repeated Item items = 3;
+  string note = 4;
+}
+
+message EndorseResponse {
+  int32 given = 1;
+}
+
+message HideEndorsementRequest {
+  string endorsement_id = 1;
+  bool hidden = 2;
+}
+
+message HideEndorsementResponse {
+  bool hidden = 1;
+}
+
+message EndorseOptionsRequest {
+  string venture_id = 1;
+}
+
+message EndorseOptionsResponse {
+  int32 month_left = 1;
+  // [{user_id, profile_visible, skills:[{id,name,from_venture}], given:[skill], evidence:[{id,description,kind,source,peer_verified,skills}]}]
+  string teammates_json = 2;
+}
+
+message EndorsementsForRequest {
+  string user_id = 1;
+}
+
+message EndorsementsForResponse {
+  message Entry {
+    string id = 1;
+    string skill_id = 2;
+    string skill_name = 3;
+    string endorser_id = 4;
+    bool endorser_visible = 5;
+    string venture_id = 6;
+    string venture_title = 7;
+    string note = 8;
+    bool has_evidence = 9;
+    bool hidden = 10;
+    string created_at = 11;
+    string endorser_kind = 12;
+  }
+  repeated Entry endorsements = 1;
+}
+
+// ---- Credentials ----
+
+message SubmitCredentialRequest {
+  // The uploaded file: {user}/{uuid}.pdf|webp in the credentials store (media, W9).
+  string path = 1;
+  string title = 2;
+  string issuer = 3;
+  // YYYY-MM-DD
+  string issued_on = 4;
+  string expires_on = 5;
+  string verify_url = 6;
+}
+
+message SubmitCredentialResponse {
+  string credential_id = 1;
+}
+
+message DeleteCredentialRequest {
+  string credential_id = 1;
+}
+
+message DeleteCredentialResponse {}
+
+message MyCredentialsRequest {}
+
+message Credential {
+  string id = 1;
+  string title = 2;
+  string issuer = 3;
+  string issued_on = 4;
+  string expires_on = 5;
+  string verify_url = 6;
+  string file_type = 7;
+  // pending | approved | rejected | expired
+  string status = 8;
+  string review_reason = 9;
+  bool recognised = 10;
+  string created_at = 11;
+}
+
+message MyCredentialsResponse {
+  repeated Credential credentials = 1;
+}
+
+message CredentialsForRequest {
+  string user_id = 1;
+}
+
+message CredentialsForResponse {
+  repeated Credential credentials = 1;
+}
+
+// ---- Code checks ----
+
+message RequestCodeCheckRequest {
+  string skill_id = 1;
+}
+
+message RequestCodeCheckResponse {
+  string check_id = 1;
+}
+
+message StartCodeCheckRequest {
+  string check_id = 1;
+}
+
+message StartCodeCheckResponse {
+  // Set when the check was already in progress.
+  string deadline_at = 1;
+}
+
+message SaveCodeCheckRequest {
+  string check_id = 1;
+  // what | why | change
+  map<string, string> answers = 2;
+  bool submit = 3;
+}
+
+message SaveCodeCheckResponse {
+  string status = 1;
+}
+
+message CodeCheckStateRequest {
+  string skill_id = 1;
+}
+
+message CodeCheckStateResponse {
+  string check_id = 1;
+  string status = 2;
+  // Today's wording of what blocks a new check, or empty.
+  string blocker = 3;
+}
+
+message MyCodeCheckRequest {
+  string check_id = 1;
+}
+
+message MyCodeCheckResponse {
+  string json = 1;
+}
+
+message CodeCheckSnippetRequest {
+  string check_id = 1;
+}
+
+message CodeCheckSnippetResponse {
+  string path = 1;
+  int32 start_line = 2;
+  repeated string lines = 3;
+}
+
+// ---- Paths and tasks ----
+
+message MyPathsRequest {}
+
+message PathViewRequest {
+  string role = 1;
+}
+
+message FollowPathRequest {
+  string role = 1;
+  bool follow = 2;
+}
+
+message FollowPathResponse {}
+
+message PathSkillDrawerRequest {
+  string skill_id = 1;
+  string role = 2;
+}
+
+message StartTaskRequest {
+  string task_id = 1;
+}
+
+message StartTaskResponse {
+  string attempt_id = 1;
+}
+
+message LinkTaskRepoRequest {
+  string attempt_id = 1;
+  int64 repo_id = 2;
+}
+
+message LinkTaskRepoResponse {}
+
+message SubmitTaskRequest {
+  string attempt_id = 1;
+}
+
+message SubmitTaskResponse {
+  string status = 1;
+}
+
+message AbandonTaskRequest {
+  string attempt_id = 1;
+}
+
+message AbandonTaskResponse {}
+
+message ChooseTaskCodeCheckRequest {
+  string attempt_id = 1;
+}
+
+message ChooseTaskCodeCheckResponse {
+  string check_id = 1;
+}
+
+message MyTaskRequest {
+  string attempt_id = 1;
+}
+
+message TaskReviewPageRequest {
+  string review_id = 1;
+}
+
+message ReviewTaskRequest {
+  string review_id = 1;
+  bool confirm = 2;
+  string note = 3;
+  // One tick per checklist item, in order.
+  repeated bool ticks = 4;
+}
+
+// ---- Swaps ----
+
+message RequestSwapRequest {
+  string teacher_username = 1;
+  string skill_id = 2;
+  string note = 3;
+  string preferred_times = 4;
+  // A skill offered back (a mutual swap); empty for none.
+  string offered_skill_id = 5;
+}
+
+message RequestSwapResponse {
+  string swap_id = 1;
+}
+
+message RespondSwapRequest {
+  string swap_id = 1;
+  bool accept = 2;
+}
+
+message ProposeSwapSessionRequest {
+  string swap_id = 1;
+  string starts_at = 2;
+  int32 minutes = 3;
+  string place = 4;
+}
+
+message ProposeSwapSessionResponse {
+  string session_id = 1;
+}
+
+message RespondSwapSessionRequest {
+  string session_id = 1;
+  bool accept = 2;
+}
+
+message ConfirmSwapSessionRequest {
+  string session_id = 1;
+  bool happened = 2;
+  int32 minutes = 3;
+  // teacher_absent | learner_absent | rescheduled | other, when it didn't happen.
+  string reason = 4;
+  string note = 5;
+}
+
+message DecideSwapNoteRequest {
+  string note_id = 1;
+  bool approve = 2;
+}
+
+message SwapsPageRequest {}
+
+message SwapTeachersRequest {
+  string skill_id = 1;
+}
+
+message SwapNotesForRequest {
+  string user_id = 1;
+}
+
+// ---- Staff ----
+
+message OpsReviewCredentialRequest {
+  string credential_id = 1;
+  bool approve = 2;
+  string reason = 3;
+  // A recognised issuer's id when approving; empty for none.
+  string issuer_id = 4;
+}
+
+message OpsGradeCodeCheckRequest {
+  string check_id = 1;
+  // {behaviour|design|change|accuracy: {pass, comment}} as JSON.
+  string rubric_json = 2;
+  string feedback = 3;
+}
+
+message OpsResolveReviewFlagRequest {
+  string flag_id = 1;
+  bool upheld = 2;
+  string note = 3;
+}
+
+// ---- Per-method messages (each RPC its own request and response) ----
+
+message SearchVenturesResponse {
+  repeated VentureSummary ventures = 1;
+}
+
+message FollowedVentureUpdatesResponse {
+  repeated VentureUpdate updates = 1;
+}
+
+message CorrectContributionResponse {
+  string contribution_id = 1;
+}
+
+message MyPathsResponse {
+  string json = 1;
+}
+
+message PathViewResponse {
+  string json = 1;
+}
+
+message PathSkillDrawerResponse {
+  string json = 1;
+}
+
+message MyTaskResponse {
+  string json = 1;
+}
+
+message TaskReviewPageResponse {
+  string json = 1;
+}
+
+message AcceptTaskReviewRequest {
+  string review_id = 1;
+}
+
+message AcceptTaskReviewResponse {}
+
+message DeclineTaskReviewRequest {
+  string review_id = 1;
+}
+
+message DeclineTaskReviewResponse {}
+
+message ReviewTaskResponse {}
+
+message SaveSwapOfferRequest {
+  string skill_id = 1;
+  string note = 2;
+  bool on = 3;
+}
+
+message SaveSwapOfferResponse {}
+
+message SaveSwapWantRequest {
+  string skill_id = 1;
+  string note = 2;
+  bool on = 3;
+}
+
+message SaveSwapWantResponse {}
+
+message RespondSwapResponse {}
+
+message CancelSwapRequestRequest {
+  string swap_id = 1;
+}
+
+message CancelSwapRequestResponse {}
+
+message EndSwapRequest {
+  string swap_id = 1;
+}
+
+message EndSwapResponse {}
+
+message RespondSwapSessionResponse {}
+
+message CancelSwapSessionRequest {
+  string session_id = 1;
+}
+
+message CancelSwapSessionResponse {}
+
+message ConfirmSwapSessionResponse {}
+
+message DecideSwapNoteResponse {}
+
+message SwapsPageResponse {
+  string json = 1;
+}
+
+message SwapPageRequest {
+  string swap_id = 1;
+}
+
+message SwapPageResponse {
+  string json = 1;
+}
+
+message SwapTeachersResponse {
+  string json = 1;
+}
+
+message SwapNotesForResponse {
+  string json = 1;
+}
+
+message OpsCredentialQueueRequest {
+  // credentials: pending | reviewed; code checks: submitted | graded; review flags: open.
+  string status = 1;
+}
+
+message OpsCredentialQueueResponse {
+  string json = 1;
+}
+
+message OpsCredentialCaseRequest {
+  string id = 1;
+}
+
+message OpsCredentialCaseResponse {
+  string json = 1;
+}
+
+message OpsClaimCredentialRequest {
+  string id = 1;
+  bool claim = 2;
+}
+
+message OpsClaimCredentialResponse {
+  bool ok = 1;
+}
+
+message OpsReviewCredentialResponse {
+  bool ok = 1;
+}
+
+message OpsCodeCheckQueueRequest {
+  // credentials: pending | reviewed; code checks: submitted | graded; review flags: open.
+  string status = 1;
+}
+
+message OpsCodeCheckQueueResponse {
+  string json = 1;
+}
+
+message OpsCodeCheckCaseRequest {
+  string id = 1;
+}
+
+message OpsCodeCheckCaseResponse {
+  string json = 1;
+}
+
+message OpsClaimCodeCheckRequest {
+  string id = 1;
+  bool claim = 2;
+}
+
+message OpsClaimCodeCheckResponse {
+  bool ok = 1;
+}
+
+message OpsGradeCodeCheckResponse {
+  bool ok = 1;
+}
+
+message OpsReviewFlagQueueRequest {
+  // credentials: pending | reviewed; code checks: submitted | graded; review flags: open.
+  string status = 1;
+}
+
+message OpsReviewFlagQueueResponse {
+  string json = 1;
+}
+
+message OpsReviewFlagCaseRequest {
+  string id = 1;
+}
+
+message OpsReviewFlagCaseResponse {
+  string json = 1;
+}
+
+message OpsClaimReviewFlagRequest {
+  string id = 1;
+  bool claim = 2;
+}
+
+message OpsClaimReviewFlagResponse {
+  bool ok = 1;
+}
+
+message OpsResolveReviewFlagResponse {
+  bool ok = 1;
+}

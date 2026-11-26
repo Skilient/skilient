@@ -1,0 +1,177 @@
+{
+  "student": {
+    "no_github": {
+      "code": "55000",
+      "message": "connect GitHub first",
+      "ok": false
+    },
+    "no_l2": {
+      "code": "55000",
+      "message": "a code check needs the skill at L2 from your own commits",
+      "ok": false
+    },
+    "open": {
+      "code": "55000",
+      "message": "you already have a code check open for this skill",
+      "ok": false
+    },
+    "requested": {
+      "changes": {
+        "public.code_checks": {
+          "added": [
+            {
+              "answers": {},
+              "skill_id": "python",
+              "started": false,
+              "status": "preparing",
+              "submitted": false,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:2>"
+      }
+    },
+    "save": {
+      "changes": {
+        "public.code_checks": {
+          "added": [
+            {
+              "answers": {
+                "what": "Adds"
+              },
+              "skill_id": "python",
+              "started": true,
+              "status": "in_progress",
+              "submitted": false,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "answers": {},
+              "skill_id": "python",
+              "started": true,
+              "status": "in_progress",
+              "submitted": false,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "in_progress"
+      }
+    },
+    "save_after": {
+      "code": "55000",
+      "message": "this code check isn't open for answers",
+      "ok": false
+    },
+    "save_bad_keys": {
+      "code": "22023",
+      "message": "answer the three questions",
+      "ok": false
+    },
+    "save_not_served": {
+      "code": "55000",
+      "message": "this code check isn't open for answers",
+      "ok": false
+    },
+    "start": {
+      "changes": {
+        "public.code_checks": {
+          "added": [
+            {
+              "answers": {},
+              "skill_id": "python",
+              "started": true,
+              "status": "in_progress",
+              "submitted": false,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "answers": {},
+              "skill_id": "python",
+              "started": false,
+              "status": "ready",
+              "submitted": false,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "start_not_mine": {
+      "code": "P0002",
+      "message": "code check not found",
+      "ok": false
+    },
+    "start_preparing": {
+      "code": "55000",
+      "message": "this code check isn't ready to start",
+      "ok": false
+    },
+    "state": {
+      "ok": true,
+      "value": [
+        {
+          "blocker": "you already have a code check open for this skill",
+          "status": "preparing"
+        }
+      ]
+    },
+    "submit": {
+      "changes": {
+        "public.code_checks": {
+          "added": [
+            {
+              "answers": {
+                "change": "sum()",
+                "what": "Adds",
+                "why": "Totals"
+              },
+              "skill_id": "python",
+              "started": true,
+              "status": "submitted",
+              "submitted": true,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "answers": {
+                "what": "Adds"
+              },
+              "skill_id": "python",
+              "started": true,
+              "status": "in_progress",
+              "submitted": false,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "submitted"
+      }
+    },
+    "unknown_skill": {
+      "code": "P0002",
+      "message": "skill not found",
+      "ok": false
+    }
+  }
+}

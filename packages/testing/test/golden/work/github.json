@@ -1,0 +1,588 @@
+{
+  "pipeline": {
+    "backdated_push": {
+      "changes": {
+        "public.github_commits": {
+          "added": [
+            {
+              "exclusion": null,
+              "extracted": true,
+              "files": 1,
+              "meaningful_lines": 5,
+              "repo_id": "8101",
+              "seen_via": "push",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5",
+              "status": "held",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.review_flags": {
+          "added": [
+            {
+              "key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5",
+              "kind": "backdating",
+              "status": "open",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "clash": {
+      "changes": {
+        "public.github_link_clashes": {
+          "added": [
+            {
+              "github_id": "9001",
+              "github_login": "omar-gh",
+              "linked_user_id": "<uuid:1>",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "clash"
+      }
+    },
+    "classify": {
+      "changes": {
+        "public.github_user_repos": {
+          "added": [
+            {
+              "excluded": false,
+              "full_name": "omar-gh/app",
+              "installation_id": "777",
+              "kind": "owned",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "excluded": false,
+              "full_name": "omar-gh/app",
+              "installation_id": "777",
+              "kind": null,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "owned"
+      }
+    },
+    "disconnect": {
+      "changes": {
+        "public.github_accounts": {
+          "added": [],
+          "removed": [
+            {
+              "github_id": "9001",
+              "login": "omar-gh",
+              "revoked": false,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.github_commits": {
+          "added": [],
+          "removed": [
+            {
+              "exclusion": null,
+              "extracted": true,
+              "files": 1,
+              "meaningful_lines": 60,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0",
+              "status": "counted",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "exclusion": null,
+              "extracted": true,
+              "files": 1,
+              "meaningful_lines": 60,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+              "status": "counted",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "exclusion": null,
+              "extracted": true,
+              "files": 1,
+              "meaningful_lines": 60,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+              "status": "counted",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "exclusion": null,
+              "extracted": true,
+              "files": 1,
+              "meaningful_lines": 5,
+              "repo_id": "8101",
+              "seen_via": "push",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5",
+              "status": "held",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "exclusion": "merge",
+              "extracted": true,
+              "files": 0,
+              "meaningful_lines": 0,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9",
+              "status": "excluded",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.github_user_repos": {
+          "added": [],
+          "removed": [
+            {
+              "excluded": false,
+              "full_name": "omar-gh/app",
+              "installation_id": "777",
+              "kind": "owned",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.skill_evidence": {
+          "added": [],
+          "removed": [
+            {
+              "detectors": [
+                "lines"
+              ],
+              "lines": 60,
+              "paths": [
+                "m0.py"
+              ],
+              "repo_id": "8101",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0",
+              "skill_id": "python",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "detectors": [
+                "lines"
+              ],
+              "lines": 60,
+              "paths": [
+                "m1.py"
+              ],
+              "repo_id": "8101",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+              "skill_id": "python",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "detectors": [
+                "lines"
+              ],
+              "lines": 60,
+              "paths": [
+                "m2.py"
+              ],
+              "repo_id": "8101",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+              "skill_id": "python",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.sync_jobs": {
+          "added": [
+            {
+              "stage": "discover",
+              "status": "cancelled",
+              "trigger": "resync",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "stage": "discover",
+              "status": "queued",
+              "trigger": "resync",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.user_skills": {
+          "added": [],
+          "removed": [
+            {
+              "active_days": 3,
+              "hits": 0,
+              "level": 2,
+              "lines": 180,
+              "repos": 1,
+              "skill_id": "python",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "disconnect_again": {
+      "ok": true,
+      "value": false
+    },
+    "discover": {
+      "changes": {
+        "public.github_user_repos": {
+          "added": [
+            {
+              "excluded": false,
+              "full_name": "omar-gh/app",
+              "installation_id": "777",
+              "kind": null,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          "8101"
+        ]
+      }
+    },
+    "extract_0": {
+      "changes": {
+        "public.github_commits": {
+          "added": [
+            {
+              "exclusion": null,
+              "extracted": true,
+              "files": 1,
+              "meaningful_lines": 60,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0",
+              "status": "counted",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "exclusion": null,
+              "extracted": false,
+              "files": 0,
+              "meaningful_lines": 0,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0",
+              "status": "pending",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.skill_evidence": {
+          "added": [
+            {
+              "detectors": [
+                "lines"
+              ],
+              "lines": 60,
+              "paths": [
+                "m0.py"
+              ],
+              "repo_id": "8101",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0",
+              "skill_id": "python",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "extract_1": {
+      "changes": {
+        "public.github_commits": {
+          "added": [
+            {
+              "exclusion": null,
+              "extracted": true,
+              "files": 1,
+              "meaningful_lines": 60,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+              "status": "counted",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "exclusion": null,
+              "extracted": false,
+              "files": 0,
+              "meaningful_lines": 0,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+              "status": "pending",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.skill_evidence": {
+          "added": [
+            {
+              "detectors": [
+                "lines"
+              ],
+              "lines": 60,
+              "paths": [
+                "m1.py"
+              ],
+              "repo_id": "8101",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+              "skill_id": "python",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "extract_2": {
+      "changes": {
+        "public.github_commits": {
+          "added": [
+            {
+              "exclusion": null,
+              "extracted": true,
+              "files": 1,
+              "meaningful_lines": 60,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+              "status": "counted",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "exclusion": null,
+              "extracted": false,
+              "files": 0,
+              "meaningful_lines": 0,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+              "status": "pending",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.skill_evidence": {
+          "added": [
+            {
+              "detectors": [
+                "lines"
+              ],
+              "lines": 60,
+              "paths": [
+                "m2.py"
+              ],
+              "repo_id": "8101",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+              "skill_id": "python",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "extract_again": {
+      "ok": true,
+      "value": false
+    },
+    "harvest": {
+      "changes": {
+        "public.github_commits": {
+          "added": [
+            {
+              "exclusion": null,
+              "extracted": false,
+              "files": 0,
+              "meaningful_lines": 0,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0",
+              "status": "pending",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "exclusion": null,
+              "extracted": false,
+              "files": 0,
+              "meaningful_lines": 0,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+              "status": "pending",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "exclusion": null,
+              "extracted": false,
+              "files": 0,
+              "meaningful_lines": 0,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+              "status": "pending",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "exclusion": "merge",
+              "extracted": true,
+              "files": 0,
+              "meaningful_lines": 0,
+              "repo_id": "8101",
+              "seen_via": "harvest",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9",
+              "status": "excluded",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0",
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2"
+        ]
+      }
+    },
+    "link": {
+      "changes": {
+        "public.github_accounts": {
+          "added": [
+            {
+              "github_id": "9001",
+              "login": "omar-gh",
+              "revoked": false,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.sync_jobs": {
+          "added": [
+            {
+              "stage": "discover",
+              "status": "queued",
+              "trigger": "connect",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "linked"
+      }
+    },
+    "other_account": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": "other_account"
+      }
+    },
+    "recompute": {
+      "changes": {
+        "public.user_skills": {
+          "added": [
+            {
+              "active_days": 3,
+              "hits": 0,
+              "level": 2,
+              "lines": 180,
+              "repos": 1,
+              "skill_id": "python",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "resync": {
+      "changes": {
+        "public.sync_jobs": {
+          "added": [
+            {
+              "stage": "discover",
+              "status": "queued",
+              "trigger": "resync",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "resync_not_connected": {
+      "ok": true,
+      "value": false
+    }
+  }
+}

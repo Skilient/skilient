@@ -82,7 +82,6 @@ describeTransports(
 
       it.todo("W13: the Message button on a profile, the empty state, the composer (Enter sends, sending marks), the image picker, axe in both themes");
       it.todo("W9: the image is re-encoded and stored in chat-media; reading it needs a signed link");
-      it.todo("W5: the venture is created and the application accepted through work (here its events are published as work will)");
     });
 
     describe("chat.spec: a DM whose other member deleted their account still loads, read-only", () => {

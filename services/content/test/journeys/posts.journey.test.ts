@@ -101,7 +101,6 @@ describeTransports(
         expect((await j.feed(voter.token, "global", "events")).items).toEqual([]);
       });
 
-      it.todo("W5 work: a venture invite shows Apply with its open roles and Apply opens the venture; a venture update takes images");
       it.todo("W9 media: venture update images are re-encoded and stored under post-media");
       it.todo("W13: the composer has no Event type for students, the poll composer defaults to Global on the Global tab, axe on the feed filters");
     });

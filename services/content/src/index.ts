@@ -3,9 +3,9 @@ import { createScheduler, createWorker, defineService, type Consumer, type Sched
 import type postgres from "postgres";
 import { createApi } from "./api";
 import { callers } from "./authorize";
-import { noMediaCheck, noSocieties, noVentures } from "./deps";
+import { noMediaCheck, noSocieties } from "./deps";
 import { contentJobs, contentSchedules } from "./jobs";
-import { identityPort, peoplePort, shippedNames } from "./ports";
+import { identityPort, peoplePort, shippedNames, venturePort } from "./ports";
 import { cachedConfig } from "./store/config";
 import { copiesConsumer } from "./store/copies";
 import { dnsResolver } from "./store/links";
@@ -37,7 +37,7 @@ export default defineService({
       scheduler = createScheduler({ sql, schedules: contentSchedules(), logger: deps.logger });
       await scheduler.start();
       worker.start();
-      consumers = [copiesConsumer({ sql, names: shippedNames(people), logger: deps.logger })];
+      consumers = [copiesConsumer({ sql, names: shippedNames(people, deps.clients), logger: deps.logger })];
       for (const c of consumers) await c.start();
     }
     return createApi({
@@ -45,7 +45,7 @@ export default defineService({
       logger: deps.logger,
       people,
       identity: identityPort(deps.clients),
-      ventures: noVentures,
+      ventures: venturePort(deps.clients),
       societies: noSocieties,
       media: noMediaCheck,
       config,

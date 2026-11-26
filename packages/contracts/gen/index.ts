@@ -7,5 +7,6 @@ import { PeopleService as PeopleService_3 } from "./skilient/people/v1/people_pb
 import { RealtimeService as RealtimeService_4 } from "./skilient/realtime/v1/realtime_pb";
 import { SampleService as SampleService_5 } from "./skilient/sample/v1/sample_pb";
 import { SampleRelayService as SampleRelayService_6 } from "./skilient/sample_relay/v1/sample_relay_pb";
+import { WorkService as WorkService_7 } from "./skilient/work/v1/work_pb";
 
-export const allServices: readonly DescService[] = [ContentService_0, IdentityService_1, MessagingService_2, PeopleService_3, RealtimeService_4, SampleService_5, SampleRelayService_6];
+export const allServices: readonly DescService[] = [ContentService_0, IdentityService_1, MessagingService_2, PeopleService_3, RealtimeService_4, SampleService_5, SampleRelayService_6, WorkService_7];

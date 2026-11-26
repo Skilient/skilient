@@ -21,6 +21,7 @@
     "@skilient/identity": "workspace:*",
     "@skilient/content": "workspace:*",
     "@skilient/messaging": "workspace:*",
+    "@skilient/work": "workspace:*",
     "@skilient/people": "workspace:*",
     "@skilient/realtime": "workspace:*",
     "@skilient/platform": "workspace:*",

@@ -7,7 +7,8 @@
       ],
       "consumers": [
         "people",
-        "content"
+        "content",
+        "work"
       ],
       "payload": "user_id, role, university_id, provider, visibility, onboarding defaults, status, agreement_accepted"
     },
@@ -109,7 +110,8 @@
     "audit.recorded": {
       "producers": [
         "identity",
-        "people"
+        "people",
+        "work"
       ],
       "consumers": [
         "trust"
@@ -144,7 +146,8 @@
         "ranking",
         "market",
         "trust",
-        "content"
+        "content",
+        "work"
       ],
       "payload": "ids, enums and flags of the profile (no names, no city); department_hash (sha256 of the department text, W3)"
     },
@@ -163,7 +166,8 @@
       ],
       "consumers": [
         "content",
-        "messaging"
+        "messaging",
+        "work"
       ],
       "payload": "user_a, user_b, friends"
     },
@@ -182,7 +186,8 @@
       ],
       "consumers": [
         "content",
-        "messaging"
+        "messaging",
+        "work"
       ],
       "payload": "blocker, blocked, blocked flag"
     },
@@ -303,9 +308,11 @@
       "consumers": [
         "people",
         "content",
-        "messaging"
+        "messaging",
+        "notify",
+        "trust"
       ],
-      "payload": "kind, group_id, user_id, member, role (member | officer | president; optional, societies) (ids only)"
+      "payload": "kind, group_id, user_id, member, role (member | officer | president; optional, societies), actor_id (optional) (ids only); notify's member left/removed notices (W9)"
     },
     "post.created": {
       "producers": [
@@ -352,9 +359,11 @@
       ],
       "consumers": [
         "content",
-        "messaging"
+        "messaging",
+        "notify",
+        "trust"
       ],
-      "payload": "venture_id, owner_id, university_id, status, visibility (W5): invite posts"
+      "payload": "venture_id, owner_id, university_id, status, visibility; previous_owner_id, previous_status, actor_id when they apply (W5): content's invite checks, messaging's team chat and pins, notify's ownership and closing notices (W9), trust's analytics (W10)"
     },
     "venture.follow_changed": {
       "producers": [
@@ -375,7 +384,7 @@
         "credentials",
         "notify"
       ],
-      "payload": "venture_id, owner_id, university_id, visibility (W5): content's Shipped post, ranking facts, a Record entry, a notification"
+      "payload": "venture_id, owner_id, university_id, visibility, member_ids (W5): content's Shipped post, ranking facts, a Record entry, notify's completed and endorse-your-teammates notices"
     },
     "society.status_changed": {
       "producers": [
@@ -487,6 +496,113 @@
         "messaging"
       ],
       "payload": "user_a, user_b, reason (application | swap), allowed (W5): DMs an accepted application or a skill swap opens"
+    },
+    "application.changed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "notify",
+        "trust"
+      ],
+      "payload": "application_id, venture_id, candidate_id, owner_id, status (pending | accepted | declined | withdrawn | closed), previous_status (W5): notify's application notices (W9), trust's analytics (W10)"
+    },
+    "venture.invite_changed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "invite_id, venture_id, invitee_id, inviter_id, status (pending | accepted | declined | revoked), previous_status (W5): notify's invite notices; a revoked invite takes back its unread notice (W9)"
+    },
+    "endorsement.given": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "ranking",
+        "credentials",
+        "notify"
+      ],
+      "payload": "endorsement_ids, endorser_id, endorsee_id, venture_id, skill_ids (W5): ranking facts (W6), notify's endorsement notice (W9)"
+    },
+    "endorsement.hidden": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "ranking"
+      ],
+      "payload": "endorsement_id, endorsee_id, hidden (W5): ranking stops or resumes counting it (W6)"
+    },
+    "credential.changed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "notify",
+        "media",
+        "ranking"
+      ],
+      "payload": "credential_id, user_id, status (approved | rejected | expired | deleted | file_removed), file_path when the file can go (W5): notify's review and expiry notices, media deletes the file (W9), ranking (W6)"
+    },
+    "code_check.changed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "check_id, user_id, skill_id, status (W5): notify's ready, graded and expired notices (W9)"
+    },
+    "task.completed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "credentials",
+        "notify",
+        "trust"
+      ],
+      "payload": "user_id, attempt_id, skill_id, skill_label and task_title (catalogue text), verified_by (W5): the Record entry (W8), notify (W9), analytics (W10)"
+    },
+    "task_review.changed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "review_id, attempt_id, reviewer_id, student_id, status (offered | needs_changes) (W5): notify (W9)"
+    },
+    "swap.changed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "swap_id, teacher_id, learner_id, skill_id, status, actor_id, session_id or note_id when they apply (W5): notify's swap notices and reminders (W9)"
+    },
+    "swap.closed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "credentials",
+        "notify"
+      ],
+      "payload": "swap_id, teacher_id, learner_id, skill_id, sessions, minutes, last_session_on (W5): the teacher's Taught entry (W8)"
+    },
+    "swap.flagged": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "ranking"
+      ],
+      "payload": "kind (swap_repeat | swap_ring), members, swap_ids or window_days (W5): ranking's anti-gaming flags, deduplicated there (W6)"
     }
   }
 }

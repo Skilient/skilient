@@ -587,5 +587,429 @@
   "skilient.content.v1.ContentService/CanListenFeed": {
     "p95Ms": 20,
     "dbTrips": 1
+  },
+  "skilient.work.v1.WorkService/CreateVenture": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/UpdateVenture": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/TransitionVenture": {
+    "p95Ms": 400,
+    "dbTrips": 40
+  },
+  "skilient.work.v1.WorkService/GetVenture": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/BrowseVentures": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/SearchVentures": {
+    "p95Ms": 250,
+    "dbTrips": 4
+  },
+  "skilient.work.v1.WorkService/ProfileVentures": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/VentureUpdates": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/FollowedVentureUpdates": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/Deliverables": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/OwnerInvites": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/MyRequests": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/ApplyToVenture": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/DecideApplication": {
+    "p95Ms": 300,
+    "dbTrips": 30
+  },
+  "skilient.work.v1.WorkService/WithdrawApplication": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/AddApplicationMessage": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/InviteToVenture": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/RespondInvite": {
+    "p95Ms": 300,
+    "dbTrips": 30
+  },
+  "skilient.work.v1.WorkService/RevokeInvite": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/LeaveVenture": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/RemoveVentureMember": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/SetMemberRole": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/TransferVentureOwnership": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/SaveVentureRole": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/DeleteVentureRole": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/SetVentureQuestions": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/AddVentureDeliverable": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/RemoveVentureDeliverable": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/FollowVenture": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/PostVentureUpdate": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/DeleteVentureUpdate": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/LogContribution": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/CorrectContribution": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/ConfirmContribution": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/Contributions": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/VerifiedContributors": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/ContributionSummary": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/ConnectGithub": {
+    "p95Ms": 2000,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/DisconnectGithub": {
+    "p95Ms": 300,
+    "dbTrips": 30
+  },
+  "skilient.work.v1.WorkService/RequestGithubResync": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/SetRepoExcluded": {
+    "p95Ms": 300,
+    "dbTrips": 30
+  },
+  "skilient.work.v1.WorkService/GithubOverview": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/OwnerRepos": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/LinkVentureRepo": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/RecordGithubWebhook": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/MySkills": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/SkillEvidence": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/SkillCatalogue": {
+    "p95Ms": 50,
+    "dbTrips": 2
+  },
+  "skilient.work.v1.WorkService/SkillsOf": {
+    "p95Ms": 100,
+    "dbTrips": 2
+  },
+  "skilient.work.v1.WorkService/Endorse": {
+    "p95Ms": 400,
+    "dbTrips": 60
+  },
+  "skilient.work.v1.WorkService/HideEndorsement": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/EndorseOptions": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/EndorsementsFor": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/SubmitCredential": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/DeleteCredential": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/MyCredentials": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/CredentialsFor": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/RequestCodeCheck": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/StartCodeCheck": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/SaveCodeCheck": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/CodeCheckState": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/MyCodeCheck": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/CodeCheckSnippet": {
+    "p95Ms": 1500,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/MyPaths": {
+    "p95Ms": 300,
+    "dbTrips": 40
+  },
+  "skilient.work.v1.WorkService/PathView": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/FollowPath": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/PathSkillDrawer": {
+    "p95Ms": 300,
+    "dbTrips": 30
+  },
+  "skilient.work.v1.WorkService/StartTask": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/LinkTaskRepo": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/SubmitTask": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/AbandonTask": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/ChooseTaskCodeCheck": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/MyTask": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/TaskReviewPage": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/AcceptTaskReview": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/DeclineTaskReview": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/ReviewTask": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/SaveSwapOffer": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/SaveSwapWant": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/RequestSwap": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/RespondSwap": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/CancelSwapRequest": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/EndSwap": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/ProposeSwapSession": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/RespondSwapSession": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/CancelSwapSession": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/ConfirmSwapSession": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/DecideSwapNote": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/SwapsPage": {
+    "p95Ms": 300,
+    "dbTrips": 40
+  },
+  "skilient.work.v1.WorkService/SwapPage": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/SwapTeachers": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/SwapNotesFor": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/OpsCredentialQueue": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/OpsCredentialCase": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/OpsClaimCredential": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/OpsReviewCredential": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/OpsCodeCheckQueue": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/OpsCodeCheckCase": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/OpsClaimCodeCheck": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/OpsGradeCodeCheck": {
+    "p95Ms": 400,
+    "dbTrips": 40
+  },
+  "skilient.work.v1.WorkService/OpsReviewFlagQueue": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/OpsReviewFlagCase": {
+    "p95Ms": 150,
+    "dbTrips": 8
+  },
+  "skilient.work.v1.WorkService/OpsClaimReviewFlag": {
+    "p95Ms": 250,
+    "dbTrips": 24
+  },
+  "skilient.work.v1.WorkService/OpsResolveReviewFlag": {
+    "p95Ms": 400,
+    "dbTrips": 40
+  },
+  "skilient.work.v1.WorkService/VentureCards": {
+    "p95Ms": 100,
+    "dbTrips": 2
+  },
+  "skilient.work.v1.WorkService/VentureTitles": {
+    "p95Ms": 50,
+    "dbTrips": 2
   }
 }

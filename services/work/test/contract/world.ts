@@ -1,0 +1,107 @@
+/**
+ * The contract world for work: messaging's world (identity, people, content, messaging, realtime, each under its
+ * own role) plus work's schema, a fake GitHub (fake-github.ts) and the GitHub App's secrets, generated for the
+ * run (never stored): an RSA key for the App JWT, a client secret, the token key. Work's background jobs are
+ * off; tests run the copies consumers with `drain` and the job queue with `runJobs`.
+ */
+import { generateKeyPairSync, randomBytes } from "node:crypto";
+import { join } from "node:path";
+import { createWorker } from "@skilient/platform";
+import type { TransportOptions } from "@skilient/testing";
+import type postgres from "postgres";
+import { drainCopies as drainMessaging, messagingWorld, type MessagingWorld } from "../../../messaging/test/contract/world";
+import { workJobs } from "../../src/jobs";
+import { copiesConsumer, COPIES_CONSUMER, COPY_EVENTS } from "../../src/store/copies";
+import { APP_ID, FakeGithub } from "./fake-github";
+
+export const MIGRATIONS = join(import.meta.dirname, "../../migrations");
+export { connect, NU, NUTECH, student, stopWorlds } from "../../../messaging/test/contract/world";
+
+export interface WorkWorld extends MessagingWorld {
+  work: postgres.Sql;
+  github: FakeGithub;
+  tokenKey: Buffer;
+}
+
+const secrets = {
+  privateKey: generateKeyPairSync("rsa", { modulusLength: 2048 }).privateKey.export({ type: "pkcs8", format: "pem" }).toString(),
+  clientSecret: randomBytes(16).toString("hex"),
+  tokenKey: randomBytes(32),
+};
+
+export function workWorld(onWorld: (w: WorkWorld) => void, worlds: WorkWorld[] = []): () => Promise<TransportOptions> {
+  process.env["WORK_JOBS"] = "off";
+  process.env["WORK_GITHUB_APP_ID"] = APP_ID;
+  process.env["WORK_GITHUB_CLIENT_ID"] = "Iv1.fake";
+  let base: MessagingWorld | undefined;
+  const start = messagingWorld((w) => (base = w), []);
+  return async () => {
+    const github = new FakeGithub();
+    await github.start();
+    process.env["WORK_GITHUB_API_URL"] = github.url;
+    process.env["WORK_GITHUB_WEB_URL"] = github.url;
+    const o = await start();
+    const work = await base!.pg.service("work", MIGRATIONS);
+    const w: WorkWorld = { ...base!, work, github, tokenKey: secrets.tokenKey };
+    const stop = w.pg.stop.bind(w.pg);
+    w.pg.stop = async () => {
+      await github.stop();
+      await stop();
+    };
+    worlds.push(w);
+    onWorld(w);
+    const db = o.database!;
+    return {
+      ...o,
+      secrets: {
+        ...o.secrets,
+        "github-app-private-key": secrets.privateKey,
+        "github-app-client-secret": secrets.clientSecret,
+        "work-github-token-key": secrets.tokenKey.toString("base64url"),
+      },
+      database: (s: string) => (s === "work" ? work : db(s)),
+    };
+  };
+}
+
+/** Runs every copies consumer (content's, messaging's, work's) until each has read everything it handles. */
+export async function drainCopies(w: WorkWorld): Promise<void> {
+  await drainMessaging(w);
+  const c = copiesConsumer({ sql: w.work });
+  for (let i = 0; i < 100; i++) {
+    const [pending] = await w.work`
+      select count(*)::int as n from platform.events e
+       where e.type = any(${[...COPY_EVENTS]}::text[])
+         and not exists (select 1 from platform.applied_events a where a.consumer = ${COPIES_CONSUMER} and a.event_id = e.id)`;
+    if (pending!.n === 0) return drainMessaging(w);
+    await c.runOnce();
+    await new Promise((r) => setTimeout(r, 10));
+  }
+  throw new Error("work's copies consumer did not catch up");
+}
+
+/** Runs work's queued jobs (the harvest stages and anything else queued) until none is left. */
+export async function runJobs(w: WorkWorld, rounds = 50): Promise<number> {
+  const worker = createWorker({
+    sql: w.work,
+    workerId: "test",
+    handlers: workJobs({
+      logger: { info: () => {}, warn: () => {}, error: () => {} } as never,
+      harvest: {
+        cfg: { appId: APP_ID, clientId: "Iv1.fake", clientSecret: secrets.clientSecret, privateKey: secrets.privateKey, apiUrl: w.github.url, webUrl: w.github.url },
+        tokenKey: secrets.tokenKey,
+      },
+    }),
+    backoffMs: () => 0,
+  });
+  let total = 0;
+  for (let i = 0; i < rounds; i++) {
+    const n = await worker.runOnce();
+    total += n;
+    if (n === 0) {
+      const [q] = await w.work<{ n: number }[]>`select count(*)::int as n from platform.jobs where status = 'queued' and run_at <= now()`;
+      if (q!.n === 0) return total;
+    }
+  }
+  return total;
+}

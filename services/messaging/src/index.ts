@@ -3,8 +3,7 @@ import { defineService, type Consumer } from "@skilient/platform";
 import type postgres from "postgres";
 import { createApi } from "./api";
 import { callers } from "./authorize";
-import { noVentureTitles } from "./deps";
-import { contentPort, peoplePort } from "./ports";
+import { contentPort, peoplePort, venturePort } from "./ports";
 import { copiesConsumer } from "./store/copies";
 
 let sql: postgres.Sql | undefined;
@@ -26,7 +25,7 @@ export default defineService({
       consumers = [copiesConsumer({ sql, logger: deps.logger })];
       for (const c of consumers) await c.start();
     }
-    return createApi({ sql, logger: deps.logger, people: peoplePort(deps.clients), content: contentPort(deps.clients), ventures: noVentureTitles });
+    return createApi({ sql, logger: deps.logger, people: peoplePort(deps.clients), content: contentPort(deps.clients), ventures: venturePort(deps.clients) });
   },
   async ready() {
     if (!sql) return false;

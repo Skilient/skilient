@@ -1,0 +1,490 @@
+{
+  "create_venture": {
+    "created": {
+      "changes": {
+        "public.venture_members": {
+          "added": [
+            {
+              "team_role": "lead",
+              "user_id": "<uuid:1>",
+              "venture": "Heron Labs"
+            }
+          ],
+          "removed": []
+        },
+        "public.venture_questions": {
+          "added": [
+            {
+              "body": "Why us?",
+              "position": 1,
+              "venture": "Heron Labs"
+            }
+          ],
+          "removed": []
+        },
+        "public.venture_roles": {
+          "added": [
+            {
+              "filled": 0,
+              "skill_ids": [
+                "python"
+              ],
+              "slots": 2,
+              "title": "Backend",
+              "venture": "Heron Labs"
+            }
+          ],
+          "removed": []
+        },
+        "public.ventures": {
+          "added": [
+            {
+              "abandoned": false,
+              "affiliation": "Incubator",
+              "completed": false,
+              "owner_id": "<uuid:1>",
+              "pitch_url": "https://heron.example/pitch",
+              "skill_ids": [
+                "python",
+                "react"
+              ],
+              "stage": "prototype",
+              "status": "recruiting",
+              "team_size": 5,
+              "title": "Heron Labs",
+              "type": "startup",
+              "university_id": "<uuid:2>",
+              "visibility": "public"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:3>"
+      }
+    },
+    "defaults": {
+      "changes": {
+        "public.venture_members": {
+          "added": [
+            {
+              "team_role": "lead",
+              "user_id": "<uuid:4>",
+              "venture": "Plover Notes"
+            }
+          ],
+          "removed": []
+        },
+        "public.ventures": {
+          "added": [
+            {
+              "abandoned": false,
+              "affiliation": null,
+              "completed": false,
+              "owner_id": "<uuid:4>",
+              "pitch_url": null,
+              "skill_ids": [],
+              "stage": null,
+              "status": "recruiting",
+              "team_size": 4,
+              "title": "Plover Notes",
+              "type": "project",
+              "university_id": "<uuid:5>",
+              "visibility": "public"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    },
+    "project_with_stage": {
+      "code": "23514",
+      "message": "new row for relation \"ventures\" violates check constraint \"ventures_check\"",
+      "ok": false
+    },
+    "short_title": {
+      "code": "23514",
+      "message": "new row for relation \"ventures\" violates check constraint \"ventures_title_check\"",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function create_venture",
+      "ok": false
+    },
+    "too_many_questions": {
+      "code": "22023",
+      "message": "too many roles or questions",
+      "ok": false
+    },
+    "too_many_roles": {
+      "code": "22023",
+      "message": "too many roles or questions",
+      "ok": false
+    },
+    "unknown_skill": {
+      "code": "22023",
+      "message": "unknown skill",
+      "ok": false
+    }
+  },
+  "update_transition": {
+    "abandon_open": {
+      "changes": {
+        "public.ventures": {
+          "added": [
+            {
+              "abandoned": true,
+              "affiliation": null,
+              "completed": false,
+              "owner_id": "<uuid:1>",
+              "pitch_url": null,
+              "skill_ids": [
+                "python"
+              ],
+              "stage": null,
+              "status": "abandoned",
+              "team_size": 3,
+              "title": "Plover Pay",
+              "type": "startup",
+              "university_id": "<uuid:2>",
+              "visibility": "public"
+            }
+          ],
+          "removed": [
+            {
+              "abandoned": false,
+              "affiliation": null,
+              "completed": false,
+              "owner_id": "<uuid:1>",
+              "pitch_url": null,
+              "skill_ids": [
+                "python"
+              ],
+              "stage": null,
+              "status": "in_progress",
+              "team_size": 3,
+              "title": "Plover Pay",
+              "type": "startup",
+              "university_id": "<uuid:2>",
+              "visibility": "public"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "complete": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "venture",
+              "type": "endorse_teammates",
+              "user_id": "<uuid:3>"
+            },
+            {
+              "actor_id": null,
+              "entity_type": "venture",
+              "type": "endorse_teammates",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "actor_id": "<uuid:3>",
+              "entity_type": "venture",
+              "type": "venture_completed",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.venture_completion_members": {
+          "added": [
+            {
+              "github_days": 0,
+              "unconfirmed_entries": 0,
+              "user_id": "<uuid:3>",
+              "venture": "Heron Robotics 2",
+              "verified_entries": 1
+            },
+            {
+              "github_days": 0,
+              "unconfirmed_entries": 0,
+              "user_id": "<uuid:1>",
+              "venture": "Heron Robotics 2",
+              "verified_entries": 1
+            }
+          ],
+          "removed": []
+        },
+        "public.venture_completions": {
+          "added": [
+            {
+              "backfilled": false,
+              "deliverables": 1,
+              "owner_id": "<uuid:3>",
+              "skill_tags": 1,
+              "team_size": 2,
+              "venture": "Heron Robotics 2",
+              "verified_members": 2,
+              "weeks": "2.86"
+            }
+          ],
+          "removed": []
+        },
+        "public.ventures": {
+          "added": [
+            {
+              "abandoned": false,
+              "affiliation": null,
+              "completed": true,
+              "owner_id": "<uuid:3>",
+              "pitch_url": null,
+              "skill_ids": [
+                "typescript"
+              ],
+              "stage": null,
+              "status": "completed",
+              "team_size": 5,
+              "title": "Heron Robotics 2",
+              "type": "project",
+              "university_id": "<uuid:2>",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "abandoned": false,
+              "affiliation": null,
+              "completed": false,
+              "owner_id": "<uuid:3>",
+              "pitch_url": null,
+              "skill_ids": [
+                "typescript"
+              ],
+              "stage": null,
+              "status": "in_progress",
+              "team_size": 5,
+              "title": "Heron Robotics 2",
+              "type": "project",
+              "university_id": "<uuid:2>",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "complete_no_deliverable": {
+      "code": "23514",
+      "message": "add at least one deliverable link before completing",
+      "ok": false
+    },
+    "complete_unverified": {
+      "code": "23514",
+      "message": "at least 2 members need a peer-verified contribution before completing",
+      "ok": false
+    },
+    "completed_to_abandoned": {
+      "code": "55000",
+      "message": "a completed venture can't become abandoned",
+      "ok": false
+    },
+    "recruiting_to_completed": {
+      "code": "55000",
+      "message": "a recruiting venture can't become completed",
+      "ok": false
+    },
+    "to_in_progress": {
+      "changes": {
+        "public.ventures": {
+          "added": [
+            {
+              "abandoned": false,
+              "affiliation": null,
+              "completed": false,
+              "owner_id": "<uuid:3>",
+              "pitch_url": null,
+              "skill_ids": [
+                "typescript"
+              ],
+              "stage": null,
+              "status": "in_progress",
+              "team_size": 5,
+              "title": "Heron Robotics 2",
+              "type": "project",
+              "university_id": "<uuid:2>",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "abandoned": false,
+              "affiliation": null,
+              "completed": false,
+              "owner_id": "<uuid:3>",
+              "pitch_url": null,
+              "skill_ids": [
+                "typescript"
+              ],
+              "stage": null,
+              "status": "recruiting",
+              "team_size": 5,
+              "title": "Heron Robotics 2",
+              "type": "project",
+              "university_id": "<uuid:2>",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "update": {
+      "changes": {
+        "public.venture_members": {
+          "added": [
+            {
+              "team_role": "lead",
+              "user_id": "<uuid:3>",
+              "venture": "Heron Robotics 2"
+            },
+            {
+              "team_role": "developer",
+              "user_id": "<uuid:1>",
+              "venture": "Heron Robotics 2"
+            }
+          ],
+          "removed": [
+            {
+              "team_role": "lead",
+              "user_id": "<uuid:3>",
+              "venture": "Heron Robotics"
+            },
+            {
+              "team_role": "developer",
+              "user_id": "<uuid:1>",
+              "venture": "Heron Robotics"
+            }
+          ]
+        },
+        "public.venture_questions": {
+          "added": [
+            {
+              "body": "What have you built before?",
+              "position": 1,
+              "venture": "Heron Robotics 2"
+            }
+          ],
+          "removed": [
+            {
+              "body": "What have you built before?",
+              "position": 1,
+              "venture": "Heron Robotics"
+            }
+          ]
+        },
+        "public.venture_roles": {
+          "added": [
+            {
+              "filled": 0,
+              "skill_ids": [
+                "react"
+              ],
+              "slots": 1,
+              "title": "Frontend",
+              "venture": "Heron Robotics 2"
+            }
+          ],
+          "removed": [
+            {
+              "filled": 0,
+              "skill_ids": [
+                "react"
+              ],
+              "slots": 1,
+              "title": "Frontend",
+              "venture": "Heron Robotics"
+            }
+          ]
+        },
+        "public.ventures": {
+          "added": [
+            {
+              "abandoned": false,
+              "affiliation": null,
+              "completed": false,
+              "owner_id": "<uuid:3>",
+              "pitch_url": null,
+              "skill_ids": [
+                "typescript"
+              ],
+              "stage": null,
+              "status": "recruiting",
+              "team_size": 5,
+              "title": "Heron Robotics 2",
+              "type": "project",
+              "university_id": "<uuid:2>",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "abandoned": false,
+              "affiliation": null,
+              "completed": false,
+              "owner_id": "<uuid:3>",
+              "pitch_url": null,
+              "skill_ids": [
+                "react",
+                "typescript"
+              ],
+              "stage": null,
+              "status": "recruiting",
+              "team_size": 4,
+              "title": "Heron Robotics",
+              "type": "project",
+              "university_id": "<uuid:2>",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "update_completed": {
+      "code": "55000",
+      "message": "this venture is completed",
+      "ok": false
+    },
+    "update_not_owner": {
+      "code": "42501",
+      "message": "only the owner can do this",
+      "ok": false
+    },
+    "update_unknown": {
+      "code": "P0002",
+      "message": "venture not found",
+      "ok": false
+    }
+  }
+}

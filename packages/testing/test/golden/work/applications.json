@@ -1,0 +1,654 @@
+{
+  "apply": {
+    "again": {
+      "code": "23505",
+      "message": "you already have a pending application to this venture",
+      "ok": false
+    },
+    "applied": {
+      "changes": {
+        "public.application_threads": {
+          "added": [
+            {
+              "answers": [
+                {
+                  "answer": "A drone",
+                  "position": 1,
+                  "question": "What have you built before?"
+                }
+              ],
+              "candidate_id": "<uuid:1>",
+              "decided": false,
+              "message": "I can help",
+              "owner_id": "<uuid:2>",
+              "role": "Frontend",
+              "status": "pending",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "application",
+              "type": "application_received",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:3>"
+      }
+    },
+    "blocked_owner": {
+      "code": "P0002",
+      "message": "venture not found",
+      "ok": false
+    },
+    "graduate": {
+      "code": "42501",
+      "message": "graduates can't join university-only ventures",
+      "ok": false
+    },
+    "long_answer": {
+      "code": "22023",
+      "message": "answer every question (up to 500 characters each)",
+      "ok": false
+    },
+    "member": {
+      "code": "23505",
+      "message": "already a member",
+      "ok": false
+    },
+    "other_university": {
+      "code": "P0002",
+      "message": "venture not found",
+      "ok": false
+    },
+    "public_no_questions": {
+      "changes": {
+        "public.application_threads": {
+          "added": [
+            {
+              "answers": [],
+              "candidate_id": "<uuid:4>",
+              "decided": false,
+              "message": "Count me in",
+              "owner_id": "<uuid:5>",
+              "role": null,
+              "status": "pending",
+              "venture": "Plover Pay"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:4>",
+              "entity_type": "application",
+              "type": "application_received",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    },
+    "role_filled": {
+      "code": "23514",
+      "message": "that role is already filled",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function apply_to_venture",
+      "ok": false
+    },
+    "unknown_role": {
+      "code": "P0002",
+      "message": "role not found",
+      "ok": false
+    },
+    "unlisted": {
+      "code": "P0002",
+      "message": "venture not found",
+      "ok": false
+    },
+    "wrong_answers": {
+      "code": "22023",
+      "message": "answer every question (up to 500 characters each)",
+      "ok": false
+    }
+  },
+  "decide": {
+    "accept": {
+      "changes": {
+        "public.application_threads": {
+          "added": [
+            {
+              "answers": [
+                {
+                  "answer": "Robots",
+                  "position": 1,
+                  "question": "What have you built before?"
+                }
+              ],
+              "candidate_id": "<uuid:1>",
+              "decided": true,
+              "message": "Pick me",
+              "owner_id": "<uuid:2>",
+              "role": "Frontend",
+              "status": "accepted",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": [
+            {
+              "answers": [
+                {
+                  "answer": "Robots",
+                  "position": 1,
+                  "question": "What have you built before?"
+                }
+              ],
+              "candidate_id": "<uuid:1>",
+              "decided": false,
+              "message": "Pick me",
+              "owner_id": "<uuid:2>",
+              "role": "Frontend",
+              "status": "pending",
+              "venture": "Heron Robotics"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "application",
+              "type": "application_decided",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.venture_members": {
+          "added": [
+            {
+              "team_role": "other",
+              "user_id": "<uuid:1>",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": []
+        },
+        "public.venture_roles": {
+          "added": [
+            {
+              "filled": 1,
+              "skill_ids": [
+                "react"
+              ],
+              "slots": 1,
+              "title": "Frontend",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": [
+            {
+              "filled": 0,
+              "skill_ids": [
+                "react"
+              ],
+              "slots": 1,
+              "title": "Frontend",
+              "venture": "Heron Robotics"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "accepted"
+      }
+    },
+    "accept_again": {
+      "code": "55000",
+      "message": "this application was already accepted",
+      "ok": false
+    },
+    "decide_not_owner": {
+      "code": "42501",
+      "message": "only the owner can do this",
+      "ok": false
+    },
+    "decide_unknown": {
+      "code": "P0002",
+      "message": "application not found",
+      "ok": false
+    },
+    "decide_withdrawn": {
+      "code": "55000",
+      "message": "this application was already withdrawn",
+      "ok": false
+    },
+    "decline": {
+      "changes": {
+        "public.application_threads": {
+          "added": [
+            {
+              "answers": [
+                {
+                  "answer": "Apps",
+                  "position": 1,
+                  "question": "What have you built before?"
+                }
+              ],
+              "candidate_id": "<uuid:3>",
+              "decided": true,
+              "message": "Me too",
+              "owner_id": "<uuid:2>",
+              "role": null,
+              "status": "declined",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": [
+            {
+              "answers": [
+                {
+                  "answer": "Apps",
+                  "position": 1,
+                  "question": "What have you built before?"
+                }
+              ],
+              "candidate_id": "<uuid:3>",
+              "decided": false,
+              "message": "Me too",
+              "owner_id": "<uuid:2>",
+              "role": null,
+              "status": "pending",
+              "venture": "Heron Robotics"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "application",
+              "type": "application_decided",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "declined"
+      }
+    },
+    "message_after": {
+      "code": "P0002",
+      "message": "application not found",
+      "ok": false
+    },
+    "message_candidate": {
+      "changes": {
+        "public.application_messages": {
+          "added": [
+            {
+              "body": "When do we start?",
+              "sender_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "string"
+      }
+    },
+    "message_outsider": {
+      "code": "P0002",
+      "message": "application not found",
+      "ok": false
+    },
+    "message_owner": {
+      "changes": {
+        "public.application_messages": {
+          "added": [
+            {
+              "body": "Monday",
+              "sender_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "string"
+      }
+    },
+    "withdraw": {
+      "changes": {
+        "public.application_threads": {
+          "added": [
+            {
+              "answers": [],
+              "candidate_id": "<uuid:4>",
+              "decided": true,
+              "message": "Hello",
+              "owner_id": "<uuid:5>",
+              "role": null,
+              "status": "withdrawn",
+              "venture": "Plover Pay"
+            }
+          ],
+          "removed": [
+            {
+              "answers": [],
+              "candidate_id": "<uuid:4>",
+              "decided": false,
+              "message": "Hello",
+              "owner_id": "<uuid:5>",
+              "role": null,
+              "status": "pending",
+              "venture": "Plover Pay"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:4>",
+              "entity_type": "application",
+              "type": "application_withdrawn",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "withdraw_again": {
+      "ok": true,
+      "value": null
+    }
+  },
+  "invites": {
+    "accept": {
+      "changes": {
+        "public.application_threads": {
+          "added": [
+            {
+              "answers": [
+                {
+                  "answer": "x",
+                  "position": 1,
+                  "question": "What have you built before?"
+                }
+              ],
+              "candidate_id": "<uuid:1>",
+              "decided": true,
+              "message": "Also applying",
+              "owner_id": "<uuid:2>",
+              "role": null,
+              "status": "closed",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": [
+            {
+              "answers": [
+                {
+                  "answer": "x",
+                  "position": 1,
+                  "question": "What have you built before?"
+                }
+              ],
+              "candidate_id": "<uuid:1>",
+              "decided": false,
+              "message": "Also applying",
+              "owner_id": "<uuid:2>",
+              "role": null,
+              "status": "pending",
+              "venture": "Heron Robotics"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "venture_invite",
+              "type": "invite_answered",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "actor_id": null,
+              "entity_type": "application",
+              "type": "application_decided",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.venture_invites": {
+          "added": [
+            {
+              "invitee_id": "<uuid:1>",
+              "inviter_id": "<uuid:2>",
+              "responded": true,
+              "status": "accepted",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": [
+            {
+              "invitee_id": "<uuid:1>",
+              "inviter_id": "<uuid:2>",
+              "responded": false,
+              "status": "pending",
+              "venture": "Heron Robotics"
+            }
+          ]
+        },
+        "public.venture_members": {
+          "added": [
+            {
+              "team_role": "other",
+              "user_id": "<uuid:1>",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "accepted"
+      }
+    },
+    "accept_again": {
+      "code": "55000",
+      "message": "this invite was already accepted",
+      "ok": false
+    },
+    "again": {
+      "code": "23505",
+      "message": "already invited",
+      "ok": false
+    },
+    "blocked": {
+      "code": "P0002",
+      "message": "no student with that username",
+      "ok": false
+    },
+    "decline": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:3>",
+              "entity_type": "venture_invite",
+              "type": "invite_answered",
+              "user_id": "<uuid:4>"
+            }
+          ],
+          "removed": []
+        },
+        "public.venture_invites": {
+          "added": [
+            {
+              "invitee_id": "<uuid:3>",
+              "inviter_id": "<uuid:4>",
+              "responded": true,
+              "status": "declined",
+              "venture": "Plover Pay"
+            }
+          ],
+          "removed": [
+            {
+              "invitee_id": "<uuid:3>",
+              "inviter_id": "<uuid:4>",
+              "responded": false,
+              "status": "pending",
+              "venture": "Plover Pay"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "declined"
+      }
+    },
+    "invite": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "venture_invite",
+              "type": "invite_received",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.venture_invites": {
+          "added": [
+            {
+              "invitee_id": "<uuid:1>",
+              "inviter_id": "<uuid:2>",
+              "responded": false,
+              "status": "pending",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:5>"
+      }
+    },
+    "member": {
+      "code": "23505",
+      "message": "already a member",
+      "ok": false
+    },
+    "not_owner": {
+      "code": "42501",
+      "message": "only the owner can do this",
+      "ok": false
+    },
+    "other_university": {
+      "code": "42501",
+      "message": "this venture is for its university only",
+      "ok": false
+    },
+    "respond_not_invitee": {
+      "code": "P0002",
+      "message": "invite not found",
+      "ok": false
+    },
+    "respond_revoked": {
+      "code": "55000",
+      "message": "this invite was already revoked",
+      "ok": false
+    },
+    "revoke": {
+      "changes": {
+        "public.notifications": {
+          "added": [],
+          "removed": [
+            {
+              "actor_id": "<uuid:4>",
+              "entity_type": "venture_invite",
+              "type": "invite_received",
+              "user_id": "<uuid:6>"
+            }
+          ]
+        },
+        "public.venture_invites": {
+          "added": [
+            {
+              "invitee_id": "<uuid:6>",
+              "inviter_id": "<uuid:4>",
+              "responded": true,
+              "status": "revoked",
+              "venture": "Plover Pay"
+            }
+          ],
+          "removed": [
+            {
+              "invitee_id": "<uuid:6>",
+              "inviter_id": "<uuid:4>",
+              "responded": false,
+              "status": "pending",
+              "venture": "Plover Pay"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "revoke_again": {
+      "ok": true,
+      "value": false
+    },
+    "revoke_not_owner": {
+      "code": "42501",
+      "message": "only the owner can do this",
+      "ok": false
+    },
+    "unknown": {
+      "code": "P0002",
+      "message": "no student with that username",
+      "ok": false
+    }
+  }
+}

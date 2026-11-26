@@ -2,7 +2,8 @@ import type { CallOptions } from "@connectrpc/connect";
 import { ContentService } from "@skilient/contracts/content/v1/content_pb";
 import { PeopleService } from "@skilient/contracts/people/v1/people_pb";
 import type { ClientFactory } from "@skilient/platform";
-import type { ContentPort, PeoplePort } from "./deps";
+import { WorkService } from "@skilient/contracts/work/v1/work_pb";
+import type { ContentPort, PeoplePort, VenturePort } from "./deps";
 
 /** Messaging's calls to people: one batch call each, never one per user. */
 export function peoplePort(clients: ClientFactory): PeoplePort {
@@ -17,6 +18,17 @@ export function peoplePort(clients: ClientFactory): PeoplePort {
       if (usernames.length === 0) return new Map();
       const r = await client().resolveUsernames({ usernames: [...usernames] }, call as CallOptions);
       return new Map(r.users.map((u) => [u.username, u.userId]));
+    },
+  };
+}
+
+/** Team chat titles: work's VentureTitles, one batch call. */
+export function venturePort(clients: ClientFactory): VenturePort {
+  return {
+    async titles(ventureIds, call) {
+      if (ventureIds.length === 0) return new Map();
+      const r = await clients.client(WorkService).ventureTitles({ ventureIds: [...ventureIds] }, call as CallOptions);
+      return new Map(r.ventures.map((v) => [v.ventureId, v.title]));
     },
   };
 }

@@ -109,6 +109,27 @@ export async function cards(
     ventures.length ? deps.ventures.cards(me, ventures, call) : Promise.resolve(new Map<string, unknown>()),
     societies.length ? deps.societies.cards(societies, call) : Promise.resolve(new Map<string, unknown>()),
   ]);
+  // Shipped cards list the team (owner first): names from people, in one more batch call for the ids the
+  // authors' call didn't cover; a username only where the viewer may open the profile (venture_team's rule).
+  type Team = { user_id: string; profile_visible: boolean }[];
+  const teamOf = (r: CardRow) => (r.type === "shipped" && r.venture_id ? (((ventureCards.get(r.venture_id) as { team_ids?: Team } | undefined)?.team_ids ?? []) as Team) : []);
+  const missing = [...new Set(rows.flatMap((r) => teamOf(r).map((m) => m.user_id)))].filter((id) => !people.has(id));
+  const more = missing.length ? await deps.people.cards(missing, call) : new Map<string, PersonCard>();
+  const venture = (r: CardRow) => {
+    const c = r.venture_id ? (ventureCards.get(r.venture_id) as Record<string, unknown> | undefined) : undefined;
+    if (!c) return null;
+    const { team_ids: _ids, ...block } = c;
+    return {
+      ...block,
+      team:
+        r.type === "shipped"
+          ? teamOf(r).map((m) => {
+              const p = people.get(m.user_id) ?? more.get(m.user_id);
+              return { name: p?.fullName ?? "", username: m.profile_visible ? (p?.username ?? null) : null };
+            })
+          : null,
+    };
+  };
   return rows.map((r) => {
     const a = people.get(r.author_id);
     return {
@@ -116,7 +137,7 @@ export async function cards(
       author_username: a?.username ?? "",
       author_name: a?.fullName ?? "",
       author_avatar_path: r.author_visible ? (a?.avatarPath ?? "") : "",
-      venture: r.venture_id ? (ventureCards.get(r.venture_id) ?? null) : null,
+      venture: venture(r),
       society: r.society_id ? (societyCards.get(r.society_id) ?? null) : null,
     };
   });

@@ -1,0 +1,149 @@
+{
+  "tasks_paths": {
+    "abandon": {
+      "changes": {
+        "public.task_attempts": {
+          "added": [
+            {
+              "repo_full_name": null,
+              "route": null,
+              "status": "abandoned",
+              "task": "Containerise one of your projects",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "repo_full_name": null,
+              "route": null,
+              "status": "started",
+              "task": "Containerise one of your projects",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "abandon_again": {
+      "code": "55000",
+      "message": "this task isn't open",
+      "ok": false
+    },
+    "follow": {
+      "changes": {
+        "public.path_follows": {
+          "added": [
+            {
+              "role": "devops",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "follow_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "follow_second": {
+      "changes": {
+        "public.path_follows": {
+          "added": [
+            {
+              "role": "frontend",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "follow_third": {
+      "code": "23514",
+      "message": "you can follow up to 2 paths; unfollow one first",
+      "ok": false
+    },
+    "follow_unknown": {
+      "code": "P0002",
+      "message": "path not found",
+      "ok": false
+    },
+    "link_no_github": {
+      "code": "55000",
+      "message": "connect GitHub first",
+      "ok": false
+    },
+    "link_unknown_repo": {
+      "code": "22023",
+      "message": "pick one of your connected repositories",
+      "ok": false
+    },
+    "start": {
+      "changes": {
+        "public.task_attempts": {
+          "added": [
+            {
+              "repo_full_name": null,
+              "route": null,
+              "status": "started",
+              "task": "Containerise one of your projects",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:2>"
+      }
+    },
+    "start_again_same": {
+      "ok": true,
+      "value": true
+    },
+    "start_unknown": {
+      "code": "P0002",
+      "message": "task not found",
+      "ok": false
+    },
+    "submit_no_repo": {
+      "code": "55000",
+      "message": "link a repository first",
+      "ok": false
+    },
+    "unfollow": {
+      "changes": {
+        "public.path_follows": {
+          "added": [],
+          "removed": [
+            {
+              "role": "devops",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    }
+  }
+}

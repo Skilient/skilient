@@ -1,0 +1,514 @@
+{
+  "follow_updates": {
+    "delete_by_owner": {
+      "changes": {
+        "public.venture_updates": {
+          "added": [],
+          "removed": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "Arm works!",
+              "venture": "Heron Robotics"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "delete_not_author": {
+      "ok": true,
+      "value": null
+    },
+    "delete_own": {
+      "changes": {
+        "public.venture_updates": {
+          "added": [],
+          "removed": [
+            {
+              "author_id": "<uuid:2>",
+              "body": "Owner note",
+              "venture": "Heron Robotics"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "follow_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "follow_public": {
+      "changes": {
+        "public.venture_follows": {
+          "added": [
+            {
+              "user_id": "<uuid:3>",
+              "venture": "Plover Pay"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "follow_university": {
+      "code": "42501",
+      "message": "only public ventures can be followed",
+      "ok": false
+    },
+    "unfollow": {
+      "changes": {
+        "public.venture_follows": {
+          "added": [],
+          "removed": [
+            {
+              "user_id": "<uuid:3>",
+              "venture": "Plover Pay"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "update_abandoned": {
+      "code": "55000",
+      "message": "this venture is abandoned",
+      "ok": false
+    },
+    "update_member": {
+      "changes": {
+        "public.venture_updates": {
+          "added": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "Arm works!",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:4>"
+      }
+    },
+    "update_outsider": {
+      "code": "42501",
+      "message": "members only",
+      "ok": false
+    }
+  },
+  "members": {
+    "old_owner_leaves": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "venture",
+              "type": "member_left",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.venture_members": {
+          "added": [],
+          "removed": [
+            {
+              "team_role": "lead",
+              "user_id": "<uuid:1>",
+              "venture": "Heron Robotics"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "outsider_leaves": {
+      "code": "P0002",
+      "message": "not a member",
+      "ok": false
+    },
+    "owner_leaves": {
+      "code": "55000",
+      "message": "transfer ownership before leaving",
+      "ok": false
+    },
+    "pending_follows_owner": {
+      "ok": true,
+      "value": [
+        {
+          "owner_id": "<uuid:2>"
+        }
+      ]
+    },
+    "remove": {
+      "changes": {},
+      "result": {
+        "code": "55000",
+        "message": "the owner can't be removed",
+        "ok": false
+      }
+    },
+    "remove_not_member": {
+      "code": "P0002",
+      "message": "not a member",
+      "ok": false
+    },
+    "remove_owner": {
+      "code": "55000",
+      "message": "the owner can't be removed",
+      "ok": false
+    },
+    "set_role": {
+      "changes": {
+        "public.venture_members": {
+          "added": [
+            {
+              "team_role": "designer",
+              "user_id": "<uuid:2>",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": [
+            {
+              "team_role": "developer",
+              "user_id": "<uuid:2>",
+              "venture": "Heron Robotics"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "set_role_not_member": {
+      "code": "P0002",
+      "message": "not a member",
+      "ok": false
+    },
+    "set_role_not_owner": {
+      "code": "42501",
+      "message": "only the owner can do this",
+      "ok": false
+    },
+    "transfer": {
+      "changes": {
+        "public.application_threads": {
+          "added": [
+            {
+              "answers": [
+                {
+                  "answer": "x",
+                  "position": 1,
+                  "question": "What have you built before?"
+                }
+              ],
+              "candidate_id": "<uuid:3>",
+              "decided": false,
+              "message": "Hi",
+              "owner_id": "<uuid:2>",
+              "role": null,
+              "status": "pending",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": [
+            {
+              "answers": [
+                {
+                  "answer": "x",
+                  "position": 1,
+                  "question": "What have you built before?"
+                }
+              ],
+              "candidate_id": "<uuid:3>",
+              "decided": false,
+              "message": "Hi",
+              "owner_id": "<uuid:1>",
+              "role": null,
+              "status": "pending",
+              "venture": "Heron Robotics"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "venture",
+              "type": "ownership_transferred",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.ventures": {
+          "added": [
+            {
+              "abandoned": false,
+              "affiliation": null,
+              "completed": false,
+              "owner_id": "<uuid:2>",
+              "pitch_url": null,
+              "skill_ids": [
+                "react",
+                "typescript"
+              ],
+              "stage": null,
+              "status": "recruiting",
+              "team_size": 4,
+              "title": "Heron Robotics",
+              "type": "project",
+              "university_id": "<uuid:4>",
+              "visibility": "university"
+            }
+          ],
+          "removed": [
+            {
+              "abandoned": false,
+              "affiliation": null,
+              "completed": false,
+              "owner_id": "<uuid:1>",
+              "pitch_url": null,
+              "skill_ids": [
+                "react",
+                "typescript"
+              ],
+              "stage": null,
+              "status": "recruiting",
+              "team_size": 4,
+              "title": "Heron Robotics",
+              "type": "project",
+              "university_id": "<uuid:4>",
+              "visibility": "university"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "transfer_not_member": {
+      "code": "22023",
+      "message": "the new owner must be a member",
+      "ok": false
+    }
+  },
+  "roles_deliverables": {
+    "add_role": {
+      "changes": {
+        "public.venture_roles": {
+          "added": [
+            {
+              "filled": 0,
+              "skill_ids": [
+                "typescript"
+              ],
+              "slots": 2,
+              "title": "Backend",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:1>"
+      }
+    },
+    "delete_role": {
+      "changes": {
+        "public.venture_roles": {
+          "added": [],
+          "removed": [
+            {
+              "filled": 0,
+              "skill_ids": [
+                "react",
+                "typescript"
+              ],
+              "slots": 2,
+              "title": "Frontend dev",
+              "venture": "Heron Robotics"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "deliverable_http": {
+      "code": "23514",
+      "message": "new row for relation \"venture_deliverables\" violates check constraint \"venture_deliverables_url_check\"",
+      "ok": false
+    },
+    "deliverable_member": {
+      "changes": {
+        "public.venture_deliverables": {
+          "added": [
+            {
+              "added_by": "<uuid:2>",
+              "label": "Repo",
+              "url": "https://example.com/r",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:3>"
+      }
+    },
+    "deliverable_outsider": {
+      "code": "42501",
+      "message": "members only",
+      "ok": false
+    },
+    "edit_role": {
+      "changes": {
+        "public.venture_roles": {
+          "added": [
+            {
+              "filled": 0,
+              "skill_ids": [
+                "react",
+                "typescript"
+              ],
+              "slots": 2,
+              "title": "Frontend dev",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": [
+            {
+              "filled": 0,
+              "skill_ids": [
+                "react"
+              ],
+              "slots": 1,
+              "title": "Frontend",
+              "venture": "Heron Robotics"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:4>"
+      }
+    },
+    "edit_unknown_role": {
+      "code": "P0002",
+      "message": "role not found",
+      "ok": false
+    },
+    "four_questions": {
+      "code": "22023",
+      "message": "at most 3 questions",
+      "ok": false
+    },
+    "questions": {
+      "changes": {
+        "public.venture_questions": {
+          "added": [
+            {
+              "body": "First?",
+              "position": 1,
+              "venture": "Heron Robotics"
+            },
+            {
+              "body": "Second?",
+              "position": 2,
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": [
+            {
+              "body": "What have you built before?",
+              "position": 1,
+              "venture": "Heron Robotics"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "remove_deliverable_gone": {
+      "ok": true,
+      "value": false
+    },
+    "remove_deliverable_outsider": {
+      "code": "42501",
+      "message": "only the owner or who added it",
+      "ok": false
+    },
+    "remove_deliverable_owner": {
+      "changes": {
+        "public.venture_deliverables": {
+          "added": [],
+          "removed": [
+            {
+              "added_by": "<uuid:2>",
+              "label": "Repo",
+              "url": "https://example.com/r",
+              "venture": "Heron Robotics"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "role_not_owner": {
+      "code": "42501",
+      "message": "only the owner can do this",
+      "ok": false
+    },
+    "role_unknown_skill": {
+      "code": "22023",
+      "message": "unknown skill",
+      "ok": false
+    },
+    "seventh_role": {
+      "code": "22023",
+      "message": "at most 6 roles",
+      "ok": false
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "endorse": {
+    "again": {
+      "code": "23505",
+      "message": "you already endorsed them for React",
+      "ok": false
+    },
+    "empty": {
+      "code": "22023",
+      "message": "choose at least one skill",
+      "ok": false
+    },
+    "endorse": {
+      "changes": {
+        "public.endorsements": {
+          "added": [
+            {
+              "endorsee_id": "<uuid:1>",
+              "endorser_id": "<uuid:2>",
+              "evidence": true,
+              "hidden": false,
+              "note": "Great work",
+              "skill_id": "react",
+              "venture": "Heron Robotics"
+            },
+            {
+              "endorsee_id": "<uuid:1>",
+              "endorser_id": "<uuid:2>",
+              "evidence": false,
+              "hidden": false,
+              "note": "Great work",
+              "skill_id": "typescript",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 2
+      }
+    },
+    "evidence_not_theirs": {
+      "code": "22023",
+      "message": "that evidence isn't one of their entries in this venture",
+      "ok": false
+    },
+    "for_classmate": {
+      "ok": true,
+      "value": []
+    },
+    "for_classmate_hidden": {
+      "ok": true,
+      "value": []
+    },
+    "for_endorsee": {
+      "ok": true,
+      "value": [
+        {
+          "endorser_id": "<uuid:2>",
+          "has_evidence": true,
+          "hidden": false,
+          "note": "Great work",
+          "skill_id": "react",
+          "skill_name": "React",
+          "venture_title": "Heron Robotics"
+        },
+        {
+          "endorser_id": "<uuid:2>",
+          "has_evidence": false,
+          "hidden": false,
+          "note": "Great work",
+          "skill_id": "typescript",
+          "skill_name": "TypeScript",
+          "venture_title": "Heron Robotics"
+        }
+      ]
+    },
+    "foreign_skill": {
+      "code": "22023",
+      "message": "that skill isn't one of the venture's skills or theirs",
+      "ok": false
+    },
+    "hide": {
+      "changes": {
+        "public.endorsements": {
+          "added": [
+            {
+              "endorsee_id": "<uuid:1>",
+              "endorser_id": "<uuid:2>",
+              "evidence": true,
+              "hidden": true,
+              "note": "Great work",
+              "skill_id": "react",
+              "venture": "Heron Robotics"
+            }
+          ],
+          "removed": [
+            {
+              "endorsee_id": "<uuid:1>",
+              "endorser_id": "<uuid:2>",
+              "evidence": true,
+              "hidden": false,
+              "note": "Great work",
+              "skill_id": "react",
+              "venture": "Heron Robotics"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "hide_not_mine": {
+      "code": "P0002",
+      "message": "endorsement not found",
+      "ok": false
+    },
+    "long_note": {
+      "code": "23514",
+      "message": "keep the note under 280 characters",
+      "ok": false
+    },
+    "not_in_progress": {
+      "code": "55000",
+      "message": "endorsements open once the venture is in progress",
+      "ok": false
+    },
+    "not_teammate": {
+      "code": "P0002",
+      "message": "teammate not found",
+      "ok": false
+    },
+    "outsider": {
+      "code": "P0002",
+      "message": "venture not found",
+      "ok": false
+    },
+    "self": {
+      "code": "42501",
+      "message": "you can't endorse yourself",
+      "ok": false
+    },
+    "too_many": {
+      "code": "23514",
+      "message": "you can endorse up to 5 skills per teammate per venture",
+      "ok": false
+    },
+    "twice_in_one": {
+      "code": "22023",
+      "message": "each skill once",
+      "ok": false
+    }
+  }
+}

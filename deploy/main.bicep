@@ -21,18 +21,18 @@ param pgAdminLogin string = 'skilientadmin'
 param pgAdminPassword string
 
 @secure()
-param ghcrToken string
+param ghcrToken string = ''
 
-param ghcrUsername string
+param ghcrUsername string = ''
 
 @description('Image for web. Pin to a commit tag.')
-param webImage string
+param webImage string = ''
 
 @description('Image for the service containers (core-a, core-b, realtime). One image, the SERVICES variable picks what each container hosts.')
-param serviceImage string
+param serviceImage string = ''
 
 @description('Image for the jobs (render, harvest, batch, migrate). The JOB variable picks which one runs.')
-param jobImage string
+param jobImage string = ''
 
 @description('Cloudflare address ranges allowed to reach web and realtime. Empty until cutover, when they are added.')
 param cloudflareIpRanges array = []
@@ -45,6 +45,27 @@ param budgetStartDate string = '2026-12-01T00:00:00Z'
 
 @description('Batch job schedule, cron in UTC. 20:00 UTC is 01:00 in Pakistan.')
 param batchCron string = '0 20 * * *'
+
+@description('false deploys everything except the containers and jobs (network, monitoring, database, Key Vault, storage, budget), for when the images do not exist yet. The image and GHCR parameters are then ignored.')
+param deployApps bool = true
+
+@description('Availability zone for the PostgreSQL server: \'1\', \'2\' or \'3\'. Empty lets Azure choose. Pin one when Azure refuses the size in the zone it picks (SkuNotAvailable).')
+@allowed([
+  ''
+  '1'
+  '2'
+  '3'
+])
+param pgZone string = ''
+
+@description('GitHub App ID (a number; not secret). Empty leaves GitHub off: work refuses Connect GitHub and the harvest job does nothing.')
+param githubAppId string = ''
+
+@description('GitHub App client ID (Iv1... or Iv23...; not secret). Set together with githubAppId.')
+param githubClientId string = ''
+
+@description('GitHub App slug (its URL name), for web\'s install link (W13). Empty leaves it unset.')
+param githubAppSlug string = ''
 
 module network 'modules/network.bicep' = {
   name: 'network'
@@ -71,10 +92,11 @@ module data 'modules/data.bicep' = {
     postgresSubnetId: network.outputs.postgresSubnetId
     pgAdminLogin: pgAdminLogin
     pgAdminPassword: pgAdminPassword
+    pgZone: pgZone
   }
 }
 
-module apps 'modules/apps.bicep' = {
+module apps 'modules/apps.bicep' = if (deployApps) {
   name: 'apps'
   params: {
     location: location
@@ -89,6 +111,9 @@ module apps 'modules/apps.bicep' = {
     jobImage: jobImage
     cloudflareIpRanges: cloudflareIpRanges
     batchCron: batchCron
+    githubAppId: githubAppId
+    githubClientId: githubClientId
+    githubAppSlug: githubAppSlug
     ghcrToken: ghcrToken
     ghcrUsername: ghcrUsername
   }
@@ -123,7 +148,7 @@ resource budget 'Microsoft.Consumption/budgets@2023-05-01' = {
   }
 }
 
-output webFqdn string = apps.outputs.webFqdn
-output realtimeFqdn string = apps.outputs.realtimeFqdn
+output webFqdn string = deployApps ? apps!.outputs.webFqdn : ''
+output realtimeFqdn string = deployApps ? apps!.outputs.realtimeFqdn : ''
 output postgresFqdn string = data.outputs.postgresFqdn
 output keyVaultName string = data.outputs.keyVaultName

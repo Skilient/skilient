@@ -38,8 +38,8 @@ Key Vault is created by `deploy/`. Each secret below is entered by Ahmed once, a
 - [x] Web Push VAPID key pair. Done 2026-11-22: the old private key could not be exported, so a new pair was generated with `web-push` and loaded into Supabase Vault as `vapid_public_key`, `vapid_private_key` and `vapid_subject`. Vercel `NEXT_PUBLIC_VAPID_PUBLIC_KEY` set to match. Zero push subscriptions existed, so no devices needed re-subscribing. Test push on 2026-11-22 reached a phone. Azure: copy the three values into Key Vault at cutover (do not use `scripts/restore/vapid-keys.mjs`). See `decisions.md`.
 - [ ] Brevo API key and the Brevo webhook bearer secret.
 - [ ] Cloudflare Turnstile secret key (the site key is public and goes in the web configuration).
-- [ ] GitHub App private key and webhook secret. work reads them as `github-app-private-key` and `github-app-client-secret` (the App's client secret), with the App id and client id as plain variables `WORK_GITHUB_APP_ID` and `WORK_GITHUB_CLIENT_ID` (W5).
-- [ ] `work-github-token-key`: 32 random bytes (base64url) that seal students' GitHub tokens in work's database (decision 2026-11-26, W5). Tokens in Supabase Vault are not exported: students reconnect GitHub after the cutover (decision 2026-11-26).
+- [x] (private key and client secret loaded 2026-11-26 by Ahmed into `skilient-kv-tohnfutbiqx5`; webhook secret still to do) GitHub App private key and webhook secret. work reads them as `github-app-private-key` and `github-app-client-secret` (the App's client secret), with the App id and client id as plain variables `WORK_GITHUB_APP_ID` and `WORK_GITHUB_CLIENT_ID` (W5), passed as deploy parameters. Commands: `deploy/README.md` "Turning GitHub on".
+- [x] (loaded 2026-11-26 by Ahmed) `work-github-token-key`: 32 random bytes (base64url) that seal students' GitHub tokens in work's database (decision 2026-11-26, W5). Tokens in Supabase Vault are not exported: students reconnect GitHub after the cutover (decision 2026-11-26).
 - [ ] Payment gateway sandbox credentials, only when the billing gateway is switched on. Billing ships dormant, so this is not needed for the cutover.
 - [ ] PostHog and Sentry project keys, if they change host or project.
 - [ ] Identity signing key(s): `identity-signing-key-<kid>`, each a private Ed25519 JWK, with `IDENTITY_SIGNING_KIDS` (a plain variable, newest first) naming them. Generate one with `generateSigningKey()` in `services/identity/src/keys.ts`; never paste it into chat or a file (decision 2026-11-25, Q10).
@@ -69,7 +69,7 @@ Done under two-person review. Nothing is written to disk in plain text; the PRD'
 These stay as they are until cutover, when the URLs change:
 
 - [ ] Brevo webhook URL (PRD cutover, T+45 minutes).
-- [ ] GitHub App webhook and callback URLs.
+- [ ] GitHub App webhook and callback URLs. SkilientApp (App ID 5098600, https://github.com/apps/skilientapp), General page: Callback URL → `https://www.skilient.com/api/github/callback`, Webhook URL → `https://www.skilient.com/api/github/webhook`; then redeliver one delivery and check for 200. Steps in `deploy/README.md` "Turning GitHub on", step 3.
 - [ ] Turnstile hostnames.
 
 ## 9. Rehearsals and sign-off

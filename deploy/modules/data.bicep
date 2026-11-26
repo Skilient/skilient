@@ -6,6 +6,9 @@ param vnetId string
 param postgresSubnetId string
 param pgAdminLogin string
 
+@description('Availability zone for the server; empty lets Azure choose.')
+param pgZone string = ''
+
 @secure()
 param pgAdminPassword string
 
@@ -35,9 +38,14 @@ resource pg 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
   }
   properties: {
     version: '17'
+    availabilityZone: empty(pgZone) ? null : pgZone
     administratorLogin: pgAdminLogin
     administratorLoginPassword: pgAdminPassword
     storage: {
+      // Classic Premium SSD. Left unset, Azure may pick Premium SSD v2, which refuses Burstable sizes
+      // (the first deploy failed with SkuNotAvailable; decision 2026-11-26).
+      type: 'Premium_LRS'
+      tier: 'P4'
       storageSizeGB: 32
       autoGrow: 'Disabled'
     }

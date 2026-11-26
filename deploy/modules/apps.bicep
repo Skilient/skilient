@@ -16,6 +16,30 @@ param jobImage string
 param cloudflareIpRanges array
 param batchCron string
 
+// GitHub App identifiers (not secrets; the private key and client secret are Key Vault secrets the services read).
+// Empty values are left out of the containers' environment, which keeps GitHub off.
+param githubAppId string = ''
+param githubClientId string = ''
+param githubAppSlug string = ''
+
+// work's GitHub variables, for the container that hosts work (core-b) and the harvest job.
+var workGithubEnv = empty(githubAppId) || empty(githubClientId) ? [] : [
+  {
+    name: 'WORK_GITHUB_APP_ID'
+    value: githubAppId
+  }
+  {
+    name: 'WORK_GITHUB_CLIENT_ID'
+    value: githubClientId
+  }
+]
+var webGithubEnv = empty(githubAppSlug) ? [] : [
+  {
+    name: 'GITHUB_APP_SLUG'
+    value: githubAppSlug
+  }
+]
+
 // GHCR pull credentials. The token is a deviation from the Key Vault-only rule; see docs/decisions.md.
 @secure()
 param ghcrToken string
@@ -129,7 +153,7 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = {
             cpu: json('0.5')
             memory: '1Gi'
           }
-          env: [
+          env: concat([
             {
               name: 'CORE_A_URL'
               value: 'https://${coreA.properties.configuration.ingress.fqdn}'
@@ -142,7 +166,7 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = {
               name: 'REALTIME_URL'
               value: 'https://${realtime.properties.configuration.ingress.fqdn}'
             }
-          ]
+          ], webGithubEnv)
         }
       ]
       scale: {
@@ -210,8 +234,12 @@ resource coreA 'Microsoft.App/containerApps@2024-03-01' = {
               value: 'identity,people,content,notify,trust,media'
             }
             {
-              name: 'POSTGRES_HOST'
+              name: 'DB_HOST'
               value: postgresFqdn
+            }
+            {
+              name: 'DB_NAME'
+              value: 'skilient'
             }
             {
               name: 'KEY_VAULT_URL'
@@ -283,14 +311,18 @@ resource coreB 'Microsoft.App/containerApps@2024-03-01' = {
             cpu: json('0.25')
             memory: '0.5Gi'
           }
-          env: [
+          env: concat([
             {
               name: 'SERVICES'
               value: 'messaging,community,work,ranking,credentials,market,billing'
             }
             {
-              name: 'POSTGRES_HOST'
+              name: 'DB_HOST'
               value: postgresFqdn
+            }
+            {
+              name: 'DB_NAME'
+              value: 'skilient'
             }
             {
               name: 'KEY_VAULT_URL'
@@ -300,7 +332,7 @@ resource coreB 'Microsoft.App/containerApps@2024-03-01' = {
               name: 'STORAGE_ACCOUNT'
               value: storage.name
             }
-          ]
+          ], workGithubEnv)
         }
       ]
       scale: {
@@ -370,8 +402,12 @@ resource realtime 'Microsoft.App/containerApps@2024-03-01' = {
               value: 'realtime'
             }
             {
-              name: 'POSTGRES_HOST'
+              name: 'DB_HOST'
               value: postgresFqdn
+            }
+            {
+              name: 'DB_NAME'
+              value: 'skilient'
             }
             {
               name: 'KEY_VAULT_URL'
@@ -442,8 +478,12 @@ resource renderJob 'Microsoft.App/jobs@2024-03-01' = {
               value: 'render'
             }
             {
-              name: 'POSTGRES_HOST'
+              name: 'DB_HOST'
               value: postgresFqdn
+            }
+            {
+              name: 'DB_NAME'
+              value: 'skilient'
             }
             {
               name: 'KEY_VAULT_URL'
@@ -498,20 +538,24 @@ resource harvestJob 'Microsoft.App/jobs@2024-03-01' = {
             cpu: json('0.25')
             memory: '0.5Gi'
           }
-          env: [
+          env: concat([
             {
               name: 'JOB'
               value: 'harvest'
             }
             {
-              name: 'POSTGRES_HOST'
+              name: 'DB_HOST'
               value: postgresFqdn
+            }
+            {
+              name: 'DB_NAME'
+              value: 'skilient'
             }
             {
               name: 'KEY_VAULT_URL'
               value: kv.properties.vaultUri
             }
-          ]
+          ], workGithubEnv)
         }
       ]
     }
@@ -567,8 +611,12 @@ resource batchJob 'Microsoft.App/jobs@2024-03-01' = {
               value: 'batch'
             }
             {
-              name: 'POSTGRES_HOST'
+              name: 'DB_HOST'
               value: postgresFqdn
+            }
+            {
+              name: 'DB_NAME'
+              value: 'skilient'
             }
             {
               name: 'KEY_VAULT_URL'
@@ -625,8 +673,12 @@ resource migrateJob 'Microsoft.App/jobs@2024-03-01' = {
               value: 'migrate'
             }
             {
-              name: 'POSTGRES_HOST'
+              name: 'DB_HOST'
               value: postgresFqdn
+            }
+            {
+              name: 'DB_NAME'
+              value: 'skilient'
             }
           ]
         }

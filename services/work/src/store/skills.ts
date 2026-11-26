@@ -156,18 +156,18 @@ async function recomputeOne(tx: Tx, userId: string): Promise<void> {
           is distinct from
           (excluded.level, excluded.active_days, excluded.lines, excluded.hits, excluded.repos, excluded.last_used_at,
            excluded.ai_lines, excluded.ai_assisted, excluded.peer_verified)`;
-  const after = await tx<{ skill_id: string; level: number; name: string }[]>`
-    select u.skill_id, u.level, s.name from work.user_skills u join work.skills s on s.id = u.skill_id where u.user_id = ${userId}`;
+  const after = await tx<{ skill_id: string; level: number; name: string; category: string | null }[]>`
+    select u.skill_id, u.level, s.name, s.category from work.user_skills u join work.skills s on s.id = u.skill_id where u.user_id = ${userId}`;
   const afterMap = new Map(after.map((r) => [r.skill_id, r]));
   const [found] = await tx<{ n: number }[]>`select count(*)::int as n from work.user_skills where user_id = ${userId} and level >= 1`;
   await tx`update work.github_sync_jobs set skills_found = ${found!.n}, updated_at = now() where user_id = ${userId} and status in ('queued', 'running')`;
   const events: NewEvent[] = [];
   for (const r of after)
-    if (before.get(r.skill_id) !== r.level) events.push(skillChanged(userId, r.skill_id, r.name, r.level));
+    if (before.get(r.skill_id) !== r.level) events.push(skillChanged(userId, r.skill_id, r.name, r.level, r.category));
   const gone = [...before.keys()].filter((s) => !afterMap.has(s));
   if (gone.length) {
-    const names = await tx<{ id: string; name: string }[]>`select id, name from work.skills where id = any(${gone}::text[])`;
-    for (const n of names) events.push(skillChanged(userId, n.id, n.name, 0));
+    const names = await tx<{ id: string; name: string; category: string | null }[]>`select id, name, category from work.skills where id = any(${gone}::text[])`;
+    for (const n of names) events.push(skillChanged(userId, n.id, n.name, 0, n.category));
   }
   const hadL2 = [...before.values()].some((l) => l >= 2);
   const hasL2 = after.some((r) => r.level >= 2);
@@ -175,10 +175,11 @@ async function recomputeOne(tx: Tx, userId: string): Promise<void> {
   await publish(tx, events);
 }
 
-const skillChanged = (userId: string, skillId: string, label: string, level: number): NewEvent => ({
+/** `skill.changed`: level, catalogue label and category (ranking's span bonus, W6). */
+const skillChanged = (userId: string, skillId: string, label: string, level: number, category: string | null): NewEvent => ({
   type: "skill.changed",
   subjects: [userId],
-  payload: { user_id: userId, skill_id: skillId, skill_label: label, level },
+  payload: { user_id: userId, skill_id: skillId, skill_label: label, level, category },
 });
 
 /** `refresh_peer_verified(user)`: after endorsements change (the recompute also sets it). */
@@ -302,6 +303,14 @@ export async function recordPullRequest(
       set pr_github_id = excluded.pr_github_id, repo_full_name = excluded.repo_full_name, repo_private = excluded.repo_private,
           merged_at = excluded.merged_at, approver_github_id = excluded.approver_github_id, counted = excluded.counted,
           exclusion = excluded.exclusion, files = excluded.files, seen_at = now()`;
+  // ranking's copy (W6): Work's pull request points and the consistency weeks.
+  await publish(tx, [
+    {
+      type: "pull_request.recorded",
+      subjects: [userId],
+      payload: { user_id: userId, repo_id: p.repo_github_id, number: p.number, repo: p.repo_full_name, merged_at: new Date(p.merged_at).toISOString(), counted: p.exclusion === null },
+    },
+  ]);
   await tx`delete from work.github_pr_skills where user_id = ${userId} and repo_github_id = ${p.repo_github_id} and number = ${p.number}`;
   if (p.skills.length)
     await tx`

@@ -1,0 +1,163 @@
+{
+  "staff": {
+    "aal1": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "add": {
+      "code": "23514",
+      "message": "this overlaps an exam period already entered for that university",
+      "ok": false
+    },
+    "audit": [
+      {
+        "action": "exam_period.add",
+        "after": {
+          "ends_on": "2027-01-14",
+          "starts_on": "2026-12-01",
+          "university_id": "<uuid:1>"
+        },
+        "before": {},
+        "reason": "Finals",
+        "staff_id": "<uuid:2>",
+        "target_type": "exam_period"
+      },
+      {
+        "action": "exam_period.add",
+        "after": {
+          "ends_on": "2026-12-24",
+          "starts_on": "2026-12-20",
+          "university_id": "<uuid:3>"
+        },
+        "before": {},
+        "reason": "Retakes",
+        "staff_id": "<uuid:2>",
+        "target_type": "exam_period"
+      }
+    ],
+    "backwards": {
+      "code": "22023",
+      "message": "the end date must be on or after the start date",
+      "ok": false
+    },
+    "list": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "created_by_name": "Ref Q9 Kestrel",
+          "ends_on": "2026-12-24",
+          "id": "<uuid:4>",
+          "reason": "Retakes",
+          "starts_on": "2026-12-20",
+          "university_id": "<uuid:3>",
+          "university_name": "Ranking Golden University B"
+        },
+        {
+          "created_at": "<time>",
+          "created_by_name": "Ref Q9 Kestrel",
+          "ends_on": "2027-01-14",
+          "id": "<uuid:5>",
+          "reason": "Finals",
+          "starts_on": "2026-12-01",
+          "university_id": "<uuid:1>",
+          "university_name": "Ranking Golden University A"
+        },
+        {
+          "created_at": "<time>",
+          "created_by_name": null,
+          "ends_on": "2026-11-13",
+          "id": "<uuid:6>",
+          "reason": "Mid-terms",
+          "starts_on": "2026-10-15",
+          "university_id": "<uuid:3>",
+          "university_name": "Ranking Golden University B"
+        }
+      ]
+    },
+    "list_aal1": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "list_after": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "created_by_name": "Ref Q9 Kestrel",
+          "ends_on": "2026-12-24",
+          "id": "<uuid:4>",
+          "reason": "Retakes",
+          "starts_on": "2026-12-20",
+          "university_id": "<uuid:3>",
+          "university_name": "Ranking Golden University B"
+        },
+        {
+          "created_at": "<time>",
+          "created_by_name": "Ref Q9 Kestrel",
+          "ends_on": "2027-01-14",
+          "id": "<uuid:5>",
+          "reason": "Finals",
+          "starts_on": "2026-12-01",
+          "university_id": "<uuid:1>",
+          "university_name": "Ranking Golden University A"
+        },
+        {
+          "created_at": "<time>",
+          "created_by_name": null,
+          "ends_on": "2026-11-13",
+          "id": "<uuid:6>",
+          "reason": "Mid-terms",
+          "starts_on": "2026-10-15",
+          "university_id": "<uuid:3>",
+          "university_name": "Ranking Golden University B"
+        }
+      ]
+    },
+    "not_staff": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "other_university": {
+      "ok": true,
+      "value": "<uuid:4>"
+    },
+    "overlap": {
+      "code": "23514",
+      "message": "this overlaps an exam period already entered for that university",
+      "ok": false
+    },
+    "remove": {
+      "code": "UNDEFINED_VALUE",
+      "message": "UNDEFINED_VALUE: Undefined values are not allowed",
+      "ok": false
+    },
+    "remove_short_reason": {
+      "code": "UNDEFINED_VALUE",
+      "message": "UNDEFINED_VALUE: Undefined values are not allowed",
+      "ok": false
+    },
+    "remove_unknown": {
+      "code": "P0002",
+      "message": "exam period not found",
+      "ok": false
+    },
+    "short_reason": {
+      "code": "22023",
+      "message": "give a reason",
+      "ok": false
+    },
+    "too_long": {
+      "ok": true,
+      "value": "<uuid:5>"
+    },
+    "unknown_university": {
+      "code": "P0002",
+      "message": "university not found",
+      "ok": false
+    }
+  }
+}

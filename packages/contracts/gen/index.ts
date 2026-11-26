@@ -4,9 +4,10 @@ import { ContentService as ContentService_0 } from "./skilient/content/v1/conten
 import { IdentityService as IdentityService_1 } from "./skilient/identity/v1/identity_pb";
 import { MessagingService as MessagingService_2 } from "./skilient/messaging/v1/messaging_pb";
 import { PeopleService as PeopleService_3 } from "./skilient/people/v1/people_pb";
-import { RealtimeService as RealtimeService_4 } from "./skilient/realtime/v1/realtime_pb";
-import { SampleService as SampleService_5 } from "./skilient/sample/v1/sample_pb";
-import { SampleRelayService as SampleRelayService_6 } from "./skilient/sample_relay/v1/sample_relay_pb";
-import { WorkService as WorkService_7 } from "./skilient/work/v1/work_pb";
+import { RankingService as RankingService_4 } from "./skilient/ranking/v1/ranking_pb";
+import { RealtimeService as RealtimeService_5 } from "./skilient/realtime/v1/realtime_pb";
+import { SampleService as SampleService_6 } from "./skilient/sample/v1/sample_pb";
+import { SampleRelayService as SampleRelayService_7 } from "./skilient/sample_relay/v1/sample_relay_pb";
+import { WorkService as WorkService_8 } from "./skilient/work/v1/work_pb";
 
-export const allServices: readonly DescService[] = [ContentService_0, IdentityService_1, MessagingService_2, PeopleService_3, RealtimeService_4, SampleService_5, SampleRelayService_6, WorkService_7];
+export const allServices: readonly DescService[] = [ContentService_0, IdentityService_1, MessagingService_2, PeopleService_3, RankingService_4, RealtimeService_5, SampleService_6, SampleRelayService_7, WorkService_8];

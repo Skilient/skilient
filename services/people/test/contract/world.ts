@@ -173,3 +173,7 @@ export async function publishAs(w: PeopleWorld, role: postgres.Sql, type: string
   void w;
   await role.begin((tx) => appendEvents(tx, [{ type, subjects: typeof payload["user_id"] === "string" ? [payload["user_id"]] : [], payload }]));
 }
+
+/** The shell facts people holds for a user (fact.value_changed keys), for the owners' tests (W6 ranking). */
+export const factKeysOf = (w: PeopleWorld, userId: string) =>
+  w.people<{ key: string }[]>`select key from people.fact_values where user_id = ${userId} order by key`.then((r) => r.map((x) => x.key));

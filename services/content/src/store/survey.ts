@@ -109,6 +109,7 @@ export async function answerSurvey(tx: Tx, me: string | null, postId: string, an
      where a.post_id = ${postId} and a.user_id = ${me} and ${canViewPost(tx, me)}`;
   if (!a) throw refused("no_question");
   if (!a.viewed || latencyMs < c["survey.min_latency_ms"]) throw refused("read_first");
+  let weight: number;
   if (a.had !== null) {
     // A change, while the answer is open: the update is the check (and the row lock against a parallel change).
     const [changed] = await tx<{ was: boolean }[]>`
@@ -117,17 +118,17 @@ export async function answerSurvey(tx: Tx, me: string | null, postId: string, an
        where r.post_id = ${postId} and r.user_id = ${me} and now() < r.locked_at
       returning old.answer as was`;
     if (!changed) throw refused("answer_final");
-    const weight = Number(a.had_weight);
+    weight = Number(a.had_weight);
     await countAnswer(tx, postId, a.dimension, a.author_id, { answer: changed.was, weight }, { answer, weight });
   } else {
-    const weight = responseWeight({ friendOrTeammate: a.friend_or_teammate, newAccount: a.new_account, prior: a.prior, variation: a.variation }, c);
+    weight = responseWeight({ friendOrTeammate: a.friend_or_teammate, newAccount: a.new_account, prior: a.prior, variation: a.variation }, c);
     await tx`
       insert into content.survey_responses (post_id, user_id, question_id, dimension, answer, latency_ms, weight, locked_at)
       values (${postId}, ${me}, ${a.question_id}, ${a.dimension}, ${answer}, ${latencyMs}, ${weight},
               now() + make_interval(mins => ${c["survey.change_minutes"]}))`;
     await countAnswer(tx, postId, a.dimension, a.author_id, null, { answer, weight });
   }
-  await appendEvents(tx, [{ type: "survey.answered", subjects: [postId, me], payload: { post_id: postId, user_id: me, dimension: a.dimension, answer } }]);
+  await appendEvents(tx, [{ type: "survey.answered", subjects: [postId, me], payload: { post_id: postId, user_id: me, dimension: a.dimension, answer, weight } }]);
 }
 
 /** `stats_on_response`: the post's counts, answers and positives, and Appropriate flags from non-friends. */

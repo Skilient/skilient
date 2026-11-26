@@ -173,8 +173,9 @@ export async function myTask(tx: Tx, meId: string | null, attemptId: string) {
 
 /**
  * `task_peer_ok(reviewer, student, skill)`: a different, onboarded student at L2+ in the skill, not a friend or
- * blocked, under the weekly review limit. The ring flags (ranking's, W6) and sanctions (trust's, W10) the check
- * read today join when those services publish them (docs/decisions.md 2026-11-26).
+ * blocked, never paired with the student in an open or upheld ring, swap ring or swap repeat flag (ranking's,
+ * copied from `ranking_flag.changed`), under the weekly review limit. Sanctions (trust's, W10) join when trust
+ * publishes them (docs/decisions.md 2026-11-26).
  */
 const peerOk = (db: Db, reviewer: string, studentColumn: string, skillColumn: string, weekly: number) => db`(
   ${db(studentColumn)} <> ${reviewer}::uuid
@@ -182,6 +183,7 @@ const peerOk = (db: Db, reviewer: string, studentColumn: string, skillColumn: st
   and exists (select 1 from work.members p where p.user_id = ${reviewer} and p.role = 'student' and coalesce(p.status, '') <> 'deleting' and p.onboarding_complete)
   and not exists (select 1 from work.friendships f where f.user_id_a = least(${reviewer}::uuid, ${db(studentColumn)}) and f.user_id_b = greatest(${reviewer}::uuid, ${db(studentColumn)}))
   and not exists (select 1 from work.blocks b where (b.blocker_id = ${reviewer} and b.blocked_id = ${db(studentColumn)}) or (b.blocker_id = ${db(studentColumn)} and b.blocked_id = ${reviewer}))
+  and not exists (select 1 from work.ranking_flags f where f.members @> array[${reviewer}::uuid, ${db(studentColumn)}])
   and (select count(*) from work.task_reviews r where r.reviewer_id = ${reviewer} and r.status in ('accepted', 'confirmed', 'needs_changes')
         and r.responded_at > now() - interval '7 days') < ${weekly})`;
 

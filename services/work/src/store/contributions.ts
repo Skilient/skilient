@@ -1,6 +1,7 @@
 import { rateLimit, uuidv7 } from "@skilient/platform";
 import { refused } from "../refusals";
 import { canViewVenture, requireUser, type Db, type Tx } from "./db";
+import { contributionConfirmed, contributionsLogged, publish, type LoggedRow } from "./publish";
 import { refreshVentureShell, teamOf } from "./shell";
 
 /**
@@ -45,9 +46,11 @@ export async function logContribution(tx: Tx, me: string | null, ventureId: stri
   const user = await requireContributor(tx, me, ventureId);
   if (!(await rateLimit(tx, `contribution:${user}`, 20, 86_400))) throw refused("rate_limited");
   const id = uuidv7();
-  await tx`
+  const logged = await tx<LoggedRow[]>`
     insert into work.contributions (id, venture_id, user_id, kind, description, evidence_url, hours, skill_ids)
-    values (${id}, ${ventureId}, ${user}, ${e.kind}, ${e.description.trim()}, ${e.evidence_url?.trim() || null}, ${e.hours}, ${await entrySkills(tx, ventureId, e.skill_ids)})`;
+    values (${id}, ${ventureId}, ${user}, ${e.kind}, ${e.description.trim()}, ${e.evidence_url?.trim() || null}, ${e.hours}, ${await entrySkills(tx, ventureId, e.skill_ids)})
+     returning id::text, venture_id::text, user_id::text, source, before_venture, corrects_id::text, created_at`;
+  await publish(tx, contributionsLogged(logged));
   await refreshVentureShell(tx, await teamOf(tx, ventureId));
   return id;
 }
@@ -66,10 +69,12 @@ export async function correctContribution(tx: Tx, meId: string | null, originalI
   if (o.late) throw refused("correct_window");
   if (!(await rateLimit(tx, `contribution:${me.id}`, 20, 86_400))) throw refused("rate_limited");
   const id = uuidv7();
-  await tx`
+  const logged = await tx<LoggedRow[]>`
     insert into work.contributions (id, venture_id, user_id, kind, description, evidence_url, hours, corrects_id, skill_ids)
     values (${id}, ${o.venture_id}, ${me.id}, ${e.kind}, ${e.description.trim()}, ${e.evidence_url?.trim() || null}, ${e.hours}, ${originalId},
-            ${await entrySkills(tx, o.venture_id, e.skill_ids)})`;
+            ${await entrySkills(tx, o.venture_id, e.skill_ids)})
+     returning id::text, venture_id::text, user_id::text, source, before_venture, corrects_id::text, created_at`;
+  await publish(tx, contributionsLogged(logged));
   // contributions_recompute_corrections: a correction can drop a confirmed skill.
   await recompute(tx, [me.id]);
   await refreshVentureShell(tx, await teamOf(tx, o.venture_id));
@@ -89,7 +94,9 @@ export async function confirmContribution(tx: Tx, meId: string | null, entryId: 
   await requireContributor(tx, me.id, o.venture_id);
   const [cur] = await tx<{ id: string }[]>`
     select c.id::text from work.contributions c where c.id = ${entryId} or c.corrects_id = ${entryId} order by c.created_at desc, (c.id = ${entryId}) limit 1`;
-  const r = await tx`insert into work.contribution_confirmations (contribution_id, confirmer_id) values (${cur!.id}, ${me.id}) on conflict do nothing returning 1`;
+  const r = await tx<{ created_at: Date }[]>`
+    insert into work.contribution_confirmations (contribution_id, confirmer_id) values (${cur!.id}, ${me.id}) on conflict do nothing returning created_at`;
+  if (r.length) await publish(tx, [contributionConfirmed(cur!.id, me.id, r[0]!.created_at)]);
   // contribution_confirmations_recompute: the author's skills (L3).
   if (r.length) {
     await recompute(tx, [o.user_id]);
@@ -168,7 +175,8 @@ export async function syncVentureCommits(tx: Tx, ventureId: string, userId: stri
        and c.occurred_at >= v.created_at - interval '6 months'
        and (${userId}::uuid is null or c.user_id = ${userId}::uuid)
     on conflict (venture_id, user_id, commit_sha) where commit_sha is not null do nothing
-    returning 1`;
+    returning id::text, venture_id::text, user_id::text, source, before_venture, corrects_id::text, created_at`;
+  await publish(tx, contributionsLogged(r as unknown as LoggedRow[]));
   return r.length;
 }
 

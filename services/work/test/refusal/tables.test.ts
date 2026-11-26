@@ -35,7 +35,7 @@ describe("work tables refuse every other service", () => {
   });
 
   it("has every table under forced row-level security with one policy, for work's role", async () => {
-    expect(TABLES.length).toBe(58);
+    expect(TABLES.length).toBe(59);
     const rows = await pg.admin<{ relname: string; rls: boolean; forced: boolean; policies: string[] }[]>`
       select c.relname, c.relrowsecurity as rls, c.relforcerowsecurity as forced,
              coalesce((select array_agg(array_to_string(p.roles::text[], ',')) from pg_policies p where p.schemaname = 'work' and p.tablename = c.relname), '{}') as policies

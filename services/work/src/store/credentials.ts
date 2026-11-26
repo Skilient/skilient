@@ -84,11 +84,23 @@ export async function deleteCredential(tx: Tx, meId: string | null, id: string):
 }
 
 /** `credential.changed` {credential_id, user_id, status, file_path when the file can go}: notify (W9), media (W9), ranking (W6). */
-const credentialChanged = (id: string, userId: string, status: string, filePath: string | null = null) => ({
+const credentialChanged = (id: string, userId: string, status: string, filePath: string | null = null, facts: CredentialFacts | null = null) => ({
   type: "credential.changed",
   subjects: [id, userId],
-  payload: { credential_id: id, user_id: userId, status, file_path: filePath },
+  payload: { credential_id: id, user_id: userId, status, file_path: filePath, ...(facts ?? {}) },
 });
+
+/** What ranking scores a credential on (W6): expiry, a recognised issuer, when it was added. */
+interface CredentialFacts {
+  expires_on: string | null;
+  recognised: boolean;
+  created_at: string;
+}
+const credentialFacts = async (tx: Tx, id: string): Promise<CredentialFacts | null> => {
+  const [c] = await tx<{ expires_on: string | null; recognised: boolean; created_at: Date }[]>`
+    select expires_on::text, recognised_issuer_id is not null as recognised, created_at from work.credentials where id = ${id}`;
+  return c ? { expires_on: c.expires_on, recognised: c.recognised, created_at: c.created_at.toISOString() } : null;
+};
 
 /** The student's own credentials (Settings, /me/credentials). */
 export const myCredentials = (db: Db, me: string) =>
@@ -191,7 +203,7 @@ export async function reviewCredential(tx: Tx, staff: string, id: string, approv
     before: { status: c.status },
     after: { status, recognised_issuer: recognised },
   });
-  await publish(tx, [credentialChanged(id, c.user_id, status)]);
+  await publish(tx, [credentialChanged(id, c.user_id, status, null, await credentialFacts(tx, id))]);
 }
 
 /**

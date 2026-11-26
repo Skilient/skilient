@@ -1011,5 +1011,69 @@
   "skilient.work.v1.WorkService/VentureTitles": {
     "p95Ms": 50,
     "dbTrips": 2
+  },
+  "skilient.ranking.v1.RankingService/Leaderboard": {
+    "p95Ms": 80,
+    "dbTrips": 4
+  },
+  "skilient.ranking.v1.RankingService/LeaderboardMe": {
+    "p95Ms": 80,
+    "dbTrips": 4
+  },
+  "skilient.ranking.v1.RankingService/LeaderboardFilters": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.ranking.v1.RankingService/MyScore": {
+    "p95Ms": 80,
+    "dbTrips": 5
+  },
+  "skilient.ranking.v1.RankingService/TiersFor": {
+    "p95Ms": 40,
+    "dbTrips": 2
+  },
+  "skilient.ranking.v1.RankingService/TiersOf": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.ranking.v1.RankingService/RankingFlagQueue": {
+    "p95Ms": 60,
+    "dbTrips": 1
+  },
+  "skilient.ranking.v1.RankingService/RankingFlagCase": {
+    "p95Ms": 80,
+    "dbTrips": 3
+  },
+  "skilient.ranking.v1.RankingService/ClaimRankingFlag": {
+    "p95Ms": 120,
+    "dbTrips": 5
+  },
+  "skilient.ranking.v1.RankingService/ReviewRankingFlag": {
+    "p95Ms": 150,
+    "dbTrips": 7
+  },
+  "skilient.ranking.v1.RankingService/ExamPeriodList": {
+    "p95Ms": 60,
+    "dbTrips": 1
+  },
+  "skilient.ranking.v1.RankingService/AddExamPeriod": {
+    "p95Ms": 120,
+    "dbTrips": 7
+  },
+  "skilient.ranking.v1.RankingService/RemoveExamPeriod": {
+    "p95Ms": 120,
+    "dbTrips": 5
+  },
+  "skilient.ranking.v1.RankingService/UniExamPeriods": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.ranking.v1.RankingService/UniAddExamPeriod": {
+    "p95Ms": 120,
+    "dbTrips": 8
+  },
+  "skilient.ranking.v1.RankingService/UniRemoveExamPeriod": {
+    "p95Ms": 80,
+    "dbTrips": 4
   }
 }

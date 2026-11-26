@@ -2,7 +2,7 @@
  * The people parts of apps/web/tests/e2e/student-portal.spec.ts, the privacy centre (decision W2 Q3:
  * visibility, recruiter visibility, leaderboard opt-out, chat read receipts, the blocked list, each stored by
  * people, enforced by its reads and published for the services that act on it) and leaderboard.spec.ts's
- * opt-out (people records and publishes it; the board itself is W6). One journey per spec test.
+ * opt-out (people records and publishes it; ranking's journey checks the board). One journey per spec test.
  */
 import { describeTransports } from "@skilient/testing";
 import { afterAll, describe, expect, it } from "vitest";
@@ -123,7 +123,7 @@ describeTransports(
         expect((await flags(s.id))["leaderboard_opt_out"]).toBe(false);
       });
 
-      it.todo("W6 ranking: an opted-out student is left off every board");
+      // The board itself (an opted-out student is left off every board): services/ranking/test/journeys/ranking.journey.test.ts.
       it.todo("W11 market: who viewed my profile and blocked companies (portal off)");
     });
   },

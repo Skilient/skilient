@@ -1,0 +1,2007 @@
+{
+  "boards": {
+    "anon": {
+      "code": "42501",
+      "message": "permission denied for function leaderboard",
+      "ok": false
+    },
+    "bad_scope": {
+      "code": "22023",
+      "message": "choose university or global",
+      "ok": false
+    },
+    "batch": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "full_name": "Ref R5 Kestrel",
+          "is_me": false,
+          "place": "1",
+          "rank": "1",
+          "tier": "flare",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r5",
+          "weekly_change": "2"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R1 Kestrel",
+          "is_me": true,
+          "place": "2",
+          "rank": "2",
+          "tier": "shine",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r1",
+          "weekly_change": "-1"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R2 Kestrel",
+          "is_me": false,
+          "place": "3",
+          "rank": "3",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r2",
+          "weekly_change": "-1"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R3 Kestrel",
+          "is_me": false,
+          "place": "4",
+          "rank": "4",
+          "tier": "raw",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r3",
+          "weekly_change": null
+        }
+      ]
+    },
+    "blocker": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "full_name": "Ref R10 Kestrel",
+          "is_me": false,
+          "place": "1",
+          "rank": "1",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r10",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R5 Kestrel",
+          "is_me": false,
+          "place": "2",
+          "rank": "2",
+          "tier": "flare",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r5",
+          "weekly_change": "1"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R1 Kestrel",
+          "is_me": false,
+          "place": "3",
+          "rank": "3",
+          "tier": "shine",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r1",
+          "weekly_change": "-2"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R2 Kestrel",
+          "is_me": true,
+          "place": "4",
+          "rank": "4",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r2",
+          "weekly_change": "-2"
+        }
+      ]
+    },
+    "department": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "full_name": "Ref R10 Kestrel",
+          "is_me": false,
+          "place": "1",
+          "rank": "1",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r10",
+          "weekly_change": null
+        }
+      ]
+    },
+    "department_spaces": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "full_name": "Ref R10 Kestrel",
+          "is_me": false,
+          "place": "1",
+          "rank": "1",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r10",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R5 Kestrel",
+          "is_me": false,
+          "place": "2",
+          "rank": "2",
+          "tier": "flare",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r5",
+          "weekly_change": "1"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R1 Kestrel",
+          "is_me": true,
+          "place": "3",
+          "rank": "3",
+          "tier": "shine",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r1",
+          "weekly_change": "-2"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R2 Kestrel",
+          "is_me": false,
+          "place": "4",
+          "rank": "4",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r2",
+          "weekly_change": "-2"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R3 Kestrel",
+          "is_me": false,
+          "place": "5",
+          "rank": "5",
+          "tier": "raw",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r3",
+          "weekly_change": null
+        }
+      ]
+    },
+    "filters_a": {
+      "ok": true,
+      "value": {
+        "batches": [
+          2028,
+          2027,
+          2026
+        ],
+        "departments": [
+          "Computer Science",
+          "Software Engineering"
+        ]
+      }
+    },
+    "filters_b": {
+      "ok": true,
+      "value": {
+        "batches": [
+          2027
+        ],
+        "departments": [
+          "Computer Science"
+        ]
+      }
+    },
+    "global": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "full_name": "Ref R10 Kestrel",
+          "is_me": false,
+          "place": "1",
+          "rank": "1",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r10",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R5 Kestrel",
+          "is_me": false,
+          "place": "2",
+          "rank": "2",
+          "tier": "flare",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r5",
+          "weekly_change": "1"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R1 Kestrel",
+          "is_me": true,
+          "place": "3",
+          "rank": "3",
+          "tier": "shine",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r1",
+          "weekly_change": "-2"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R2 Kestrel",
+          "is_me": false,
+          "place": "4",
+          "rank": "4",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r2",
+          "weekly_change": "-2"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R7 Kestrel",
+          "is_me": false,
+          "place": "5",
+          "rank": "5",
+          "tier": "spark",
+          "university_name": "Ranking Golden University B",
+          "username": "rk_r7",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R3 Kestrel",
+          "is_me": false,
+          "place": "6",
+          "rank": "6",
+          "tier": "raw",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r3",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R9 Kestrel",
+          "is_me": false,
+          "place": "7",
+          "rank": "7",
+          "tier": "raw",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r9",
+          "weekly_change": null
+        }
+      ]
+    },
+    "me_department": {
+      "ok": true,
+      "value": {
+        "held": false,
+        "opted_out": false,
+        "place": null,
+        "rank": null,
+        "ranked": false,
+        "scored": true,
+        "size": 1,
+        "tier": null,
+        "total": 442.5,
+        "weekly_change": null
+      }
+    },
+    "me_graduate": {
+      "ok": true,
+      "value": {
+        "held": false,
+        "opted_out": false,
+        "place": null,
+        "rank": null,
+        "ranked": true,
+        "scored": true,
+        "size": 5,
+        "tier": "raw",
+        "total": 0,
+        "weekly_change": null
+      }
+    },
+    "me_graduate_global": {
+      "ok": true,
+      "value": {
+        "held": false,
+        "opted_out": false,
+        "place": 7,
+        "rank": 7,
+        "ranked": true,
+        "scored": true,
+        "size": 7,
+        "tier": "raw",
+        "total": 0,
+        "weekly_change": null
+      }
+    },
+    "me_opted_out": {
+      "ok": true,
+      "value": {
+        "held": false,
+        "opted_out": true,
+        "place": null,
+        "rank": null,
+        "ranked": true,
+        "scored": true,
+        "size": 5,
+        "tier": "radiant",
+        "total": 496.42,
+        "weekly_change": null
+      }
+    },
+    "me_r1": {
+      "ok": true,
+      "value": {
+        "held": false,
+        "opted_out": false,
+        "place": 3,
+        "rank": 3,
+        "ranked": true,
+        "scored": true,
+        "size": 5,
+        "tier": "shine",
+        "total": 514,
+        "weekly_change": -2
+      }
+    },
+    "me_r1_global": {
+      "ok": true,
+      "value": {
+        "held": false,
+        "opted_out": false,
+        "place": 3,
+        "rank": 3,
+        "ranked": true,
+        "scored": true,
+        "size": 7,
+        "tier": "shine",
+        "total": 514,
+        "weekly_change": -2
+      }
+    },
+    "me_unranked": {
+      "ok": true,
+      "value": {
+        "held": false,
+        "opted_out": false,
+        "place": null,
+        "rank": null,
+        "ranked": false,
+        "scored": true,
+        "size": 5,
+        "tier": null,
+        "total": 39.38,
+        "weekly_change": null
+      }
+    },
+    "other_university": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "full_name": "Ref R7 Kestrel",
+          "is_me": true,
+          "place": "1",
+          "rank": "1",
+          "tier": "spark",
+          "university_name": "Ranking Golden University B",
+          "username": "rk_r7",
+          "weekly_change": null
+        }
+      ]
+    },
+    "university": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "full_name": "Ref R10 Kestrel",
+          "is_me": false,
+          "place": "1",
+          "rank": "1",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r10",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R5 Kestrel",
+          "is_me": false,
+          "place": "2",
+          "rank": "2",
+          "tier": "flare",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r5",
+          "weekly_change": "1"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R1 Kestrel",
+          "is_me": true,
+          "place": "3",
+          "rank": "3",
+          "tier": "shine",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r1",
+          "weekly_change": "-2"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R2 Kestrel",
+          "is_me": false,
+          "place": "4",
+          "rank": "4",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r2",
+          "weekly_change": "-2"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R3 Kestrel",
+          "is_me": false,
+          "place": "5",
+          "rank": "5",
+          "tier": "raw",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r3",
+          "weekly_change": null
+        }
+      ]
+    },
+    "university_after_3": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "full_name": "Ref R2 Kestrel",
+          "is_me": false,
+          "place": "4",
+          "rank": "4",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r2",
+          "weekly_change": "-2"
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R3 Kestrel",
+          "is_me": false,
+          "place": "5",
+          "rank": "5",
+          "tier": "raw",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r3",
+          "weekly_change": null
+        }
+      ]
+    }
+  },
+  "score": {
+    "anon": {
+      "code": "42501",
+      "message": "permission denied for function my_score",
+      "ok": false
+    },
+    "next_r6": {
+      "ok": true,
+      "value": {
+        "current": "radiant",
+        "needs": [
+          {
+            "have": 496.42,
+            "key": "points",
+            "need": 2000
+          },
+          {
+            "have": 1,
+            "key": "active_ventures",
+            "need": 2
+          },
+          {
+            "have": 1,
+            "key": "counting_endorsements",
+            "need": 3
+          },
+          {
+            "have": 42.9,
+            "key": "top_share",
+            "need": 2
+          },
+          {
+            "have": 0,
+            "key": "teacher_or_hire",
+            "need": 1
+          }
+        ],
+        "next": "luminary"
+      }
+    },
+    "next_r8": {
+      "ok": true,
+      "value": {
+        "current": null,
+        "needs": [
+          {
+            "have": 0,
+            "key": "peer_verified_entries",
+            "need": 1
+          }
+        ],
+        "next": "raw"
+      }
+    },
+    "r1": {
+      "ok": true,
+      "value": {
+        "adjustments": 0,
+        "below_since": "2026-12-09",
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [
+              {
+                "id": "<uuid:1>",
+                "points": 60,
+                "recognised": true
+              },
+              {
+                "id": "<uuid:2>",
+                "points": 40,
+                "recognised": false
+              }
+            ],
+            "points": 100
+          },
+          "endorsements": {
+            "counting": 2,
+            "items": [
+              {
+                "endorser_id": "<uuid:3>",
+                "id": "<uuid:4>",
+                "mutual": true,
+                "points": 5.25,
+                "ring": false,
+                "skill_id": "react",
+                "venture_id": "<uuid:5>",
+                "weight": 0.7
+              },
+              {
+                "endorser_id": "<uuid:6>",
+                "id": "<uuid:7>",
+                "mutual": false,
+                "points": 7.5,
+                "ring": false,
+                "skill_id": "typescript",
+                "venture_id": "<uuid:5>",
+                "weight": 0.5
+              }
+            ],
+            "points": 12.75
+          },
+          "facts": {
+            "active_ventures": 1,
+            "completed_ventures": 1,
+            "counting_endorsements": 2,
+            "hire": false,
+            "max_level": 4,
+            "peer_verified_entries": 4,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 1,
+              "joins": 3,
+              "points": 14
+            },
+            "consistency": {
+              "points": 20,
+              "weeks": 2
+            },
+            "content": {
+              "average": 80,
+              "points": 80,
+              "posts": [
+                {
+                  "index": 80,
+                  "post_id": "<uuid:8>"
+                }
+              ]
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 8,
+              "last_active": "<time>",
+              "weeks": 0
+            },
+            "peak": 114,
+            "points": 114,
+            "raw": 114
+          },
+          "proof": 400,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": true,
+            "categories": 3,
+            "items": [
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "python"
+              },
+              {
+                "level": 3,
+                "points": 20,
+                "skill_id": "react"
+              },
+              {
+                "level": 2,
+                "points": 15,
+                "skill_id": "docker"
+              },
+              {
+                "level": 2,
+                "points": 15,
+                "skill_id": "typescript"
+              }
+            ],
+            "points": 82.5
+          },
+          "total": 514,
+          "work": {
+            "points": 204.75,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": [
+              {
+                "completed_at": "<time>",
+                "complexity": 1.05,
+                "creator": true,
+                "median": 2,
+                "points": 204.75,
+                "share": 1,
+                "units": 4,
+                "venture_id": "<uuid:5>"
+              }
+            ]
+          }
+        },
+        "exam": null,
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "last_week": {
+          "components": {},
+          "tier": "shine",
+          "total": 600,
+          "week": "2026-11-22"
+        },
+        "momentum": 114,
+        "names": {
+          "credentials": {
+            "225c4b4f-02b9-4ac8-883c-515f800682e0": "Cloud Practitioner",
+            "e1b9d826-8afc-4fb0-826c-2f63fca3882a": "Local course"
+          },
+          "people": {
+            "93200000-0000-4000-8000-000000000002": {
+              "name": "Ref R2 Kestrel",
+              "username": "rk_r2"
+            },
+            "93200000-0000-4000-8000-000000000003": {
+              "name": "Ref R3 Kestrel",
+              "username": "rk_r3"
+            }
+          },
+          "posts": {
+            "109657da-c023-47dc-8ad3-d85693167fb8": "Reference post p1"
+          },
+          "record": {},
+          "skills": {
+            "docker": "Docker",
+            "python": "Python",
+            "react": "React",
+            "typescript": "TypeScript"
+          },
+          "ventures": {
+            "93200000-0000-4000-8000-00000000a001": "Timetable"
+          }
+        },
+        "next": {
+          "current": "shine",
+          "needs": [
+            {
+              "have": 514,
+              "key": "points",
+              "need": 1000
+            },
+            {
+              "have": 1,
+              "key": "active_ventures",
+              "need": 2
+            },
+            {
+              "have": 2,
+              "key": "counting_endorsements",
+              "need": 3
+            },
+            {
+              "have": 28.6,
+              "key": "top_share",
+              "need": 10
+            }
+          ],
+          "next": "radiant"
+        },
+        "percentile": 0.714285714285714,
+        "proof": 400,
+        "published_at": "<time>",
+        "ranked": true,
+        "scored": true,
+        "tier": "shine",
+        "tier_met": "spark",
+        "total": 514
+      }
+    },
+    "r10": {
+      "ok": true,
+      "value": {
+        "adjustments": 0,
+        "below_since": null,
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [],
+            "points": 0
+          },
+          "endorsements": {
+            "counting": 20,
+            "items": [
+              {
+                "endorser_id": "<uuid:9>",
+                "id": "<uuid:10>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "go",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:12>",
+                "id": "<uuid:13>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "go",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:14>",
+                "id": "<uuid:15>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "go",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:16>",
+                "id": "<uuid:17>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "rust",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:14>",
+                "id": "<uuid:18>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "rust",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:19>",
+                "id": "<uuid:20>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "rust",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:9>",
+                "id": "<uuid:21>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "rust",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:22>",
+                "id": "<uuid:23>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "go",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:24>",
+                "id": "<uuid:25>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "go",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:26>",
+                "id": "<uuid:27>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "rust",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:28>",
+                "id": "<uuid:29>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "rust",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:16>",
+                "id": "<uuid:30>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "go",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:12>",
+                "id": "<uuid:31>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "rust",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:22>",
+                "id": "<uuid:32>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "rust",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:24>",
+                "id": "<uuid:33>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "rust",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:34>",
+                "id": "<uuid:35>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "rust",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:26>",
+                "id": "<uuid:36>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "go",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:28>",
+                "id": "<uuid:37>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "go",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:34>",
+                "id": "<uuid:38>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "go",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              },
+              {
+                "endorser_id": "<uuid:19>",
+                "id": "<uuid:39>",
+                "mutual": false,
+                "points": 22.5,
+                "ring": false,
+                "skill_id": "go",
+                "venture_id": "<uuid:11>",
+                "weight": 1.5
+              }
+            ],
+            "points": 375
+          },
+          "facts": {
+            "active_ventures": 1,
+            "completed_ventures": 0,
+            "counting_endorsements": 20,
+            "hire": false,
+            "max_level": 4,
+            "peer_verified_entries": 1,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 0,
+              "points": 0
+            },
+            "consistency": {
+              "points": 0,
+              "weeks": 0
+            },
+            "content": {
+              "average": 0,
+              "points": 0,
+              "posts": []
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 0.5,
+              "inactive_days": 191,
+              "last_active": "<time>",
+              "weeks": 25
+            },
+            "peak": 0,
+            "points": 0,
+            "raw": 0
+          },
+          "proof": 875,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": true,
+            "categories": 6,
+            "items": [
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "aws"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "django"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "docker"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "flask"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "go"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "java"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "jest"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "kotlin"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "kubernetes"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "linting"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "numpy"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "pandas"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "postgresql"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "python"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "pytorch"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "react"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "redis"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "rust"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "swift"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "terraform"
+              },
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "vue"
+              }
+            ],
+            "points": 500
+          },
+          "total": 875,
+          "work": {
+            "points": 0,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": []
+          }
+        },
+        "exam": null,
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "last_week": null,
+        "momentum": 0,
+        "names": {
+          "credentials": {},
+          "people": {
+            "93200000-0000-4000-8000-000000000101": {
+              "name": "Ref Q1 Kestrel",
+              "username": "rk_q1"
+            },
+            "93200000-0000-4000-8000-000000000102": {
+              "name": "Ref Q2 Kestrel",
+              "username": "rk_q2"
+            },
+            "93200000-0000-4000-8000-000000000103": {
+              "name": "Ref Q3 Kestrel",
+              "username": "rk_q3"
+            },
+            "93200000-0000-4000-8000-000000000104": {
+              "name": "Ref Q4 Kestrel",
+              "username": "rk_q4"
+            },
+            "93200000-0000-4000-8000-000000000105": {
+              "name": "Ref Q5 Kestrel",
+              "username": "rk_q5"
+            },
+            "93200000-0000-4000-8000-000000000106": {
+              "name": "Ref Q6 Kestrel",
+              "username": "rk_q6"
+            },
+            "93200000-0000-4000-8000-000000000107": {
+              "name": "Ref Q7 Kestrel",
+              "username": "rk_q7"
+            },
+            "93200000-0000-4000-8000-000000000108": {
+              "name": "Ref Q8 Kestrel",
+              "username": "rk_q8"
+            },
+            "93200000-0000-4000-8000-000000000109": {
+              "name": "Ref Q9 Kestrel",
+              "username": "rk_q9"
+            },
+            "93200000-0000-4000-8000-000000000110": {
+              "name": "Ref Q10 Kestrel",
+              "username": "rk_q10"
+            }
+          },
+          "posts": {},
+          "record": {},
+          "skills": {
+            "aws": "Amazon Web Services",
+            "django": "Django",
+            "docker": "Docker",
+            "flask": "Flask",
+            "go": "Go",
+            "java": "Java",
+            "jest": "Jest",
+            "kotlin": "Kotlin",
+            "kubernetes": "Kubernetes",
+            "linting": "Linting and code style",
+            "numpy": "NumPy",
+            "pandas": "pandas",
+            "postgresql": "PostgreSQL",
+            "python": "Python",
+            "pytorch": "PyTorch",
+            "react": "React",
+            "redis": "Redis",
+            "rust": "Rust",
+            "swift": "Swift",
+            "terraform": "Terraform",
+            "vue": "Vue"
+          },
+          "ventures": {}
+        },
+        "next": {
+          "current": "spark",
+          "needs": [
+            {
+              "have": 1,
+              "key": "active_ventures",
+              "need": 2
+            }
+          ],
+          "next": "flare"
+        },
+        "percentile": 1,
+        "proof": 875,
+        "published_at": "<time>",
+        "ranked": true,
+        "scored": true,
+        "tier": "spark",
+        "tier_met": "spark",
+        "total": 875
+      }
+    },
+    "r11": {
+      "ok": true,
+      "value": {
+        "adjustments": 0,
+        "below_since": null,
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [],
+            "points": 0
+          },
+          "endorsements": {
+            "counting": 0,
+            "items": [],
+            "points": 0
+          },
+          "facts": {
+            "active_ventures": 0,
+            "completed_ventures": 0,
+            "counting_endorsements": 0,
+            "hire": false,
+            "max_level": 0,
+            "peer_verified_entries": 0,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 0,
+              "points": 0
+            },
+            "consistency": {
+              "points": 0,
+              "weeks": 0
+            },
+            "content": {
+              "average": 0,
+              "points": 0,
+              "posts": []
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 0,
+              "last_active": null,
+              "weeks": 0
+            },
+            "peak": 0,
+            "points": 0,
+            "raw": 0
+          },
+          "proof": 85,
+          "record": {
+            "items": [
+              {
+                "id": "<uuid:40>",
+                "kind": "office_bearer",
+                "points": 35,
+                "society_id": "<uuid:41>",
+                "year": 2025
+              },
+              {
+                "id": "<uuid:42>",
+                "kind": "result",
+                "points": 30,
+                "society_id": "<uuid:41>",
+                "year": 2026
+              },
+              {
+                "id": "<uuid:43>",
+                "kind": "result",
+                "points": 15,
+                "society_id": "<uuid:44>",
+                "year": 2026
+              },
+              {
+                "id": "<uuid:45>",
+                "kind": "volunteer",
+                "points": 12,
+                "society_id": "<uuid:44>",
+                "year": 2026
+              },
+              {
+                "id": "<uuid:46>",
+                "kind": "volunteer",
+                "points": 8,
+                "society_id": "<uuid:44>",
+                "year": 2026
+              }
+            ],
+            "points": 85,
+            "societies": [
+              {
+                "points": 50,
+                "raw": 65,
+                "society_id": "<uuid:41>"
+              },
+              {
+                "points": 35,
+                "raw": 35,
+                "society_id": "<uuid:44>"
+              }
+            ]
+          },
+          "skills": {
+            "bonus": false,
+            "categories": 0,
+            "items": [],
+            "points": 0
+          },
+          "total": 85,
+          "work": {
+            "points": 0,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": []
+          }
+        },
+        "exam": null,
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "last_week": null,
+        "momentum": 0,
+        "names": {
+          "credentials": {},
+          "people": {},
+          "posts": {},
+          "record": {
+            "1571f5bd-092e-4530-8441-d3ca0094995a": {
+              "code": "93R0000007",
+              "issuer": "Ref Debating Society",
+              "line": "6 h",
+              "title": "Reference volunteer"
+            },
+            "1d0148be-5db0-45b3-82de-0920e8370286": {
+              "code": "93R0000003",
+              "issuer": "Ref CS Society",
+              "line": "1st of 12 teams",
+              "title": "Reference result"
+            },
+            "31545adc-a1f6-4ddb-8811-9dd6382a1b76": {
+              "code": "93R0000005",
+              "issuer": "Ref Debating Society",
+              "line": "3rd of 8",
+              "title": "Reference result"
+            },
+            "48b9afca-a355-4376-8d94-420109132520": {
+              "code": "93R0000001",
+              "issuer": "Ref CS Society",
+              "line": "Reference term",
+              "title": "Reference office_bearer"
+            },
+            "6360b643-147a-4d6e-84dc-b1f8735ec144": {
+              "code": "93R0000008",
+              "issuer": "Ref Debating Society",
+              "line": "5 h",
+              "title": "Reference volunteer"
+            }
+          },
+          "skills": {},
+          "ventures": {}
+        },
+        "next": {
+          "current": null,
+          "needs": [
+            {
+              "have": 0,
+              "key": "peer_verified_entries",
+              "need": 1
+            }
+          ],
+          "next": "raw"
+        },
+        "percentile": null,
+        "proof": 85,
+        "published_at": "<time>",
+        "ranked": false,
+        "scored": true,
+        "tier": null,
+        "tier_met": null,
+        "total": 85
+      }
+    },
+    "r4": {
+      "ok": true,
+      "value": {
+        "adjustments": 0,
+        "below_since": null,
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [],
+            "points": 0
+          },
+          "endorsements": {
+            "counting": 0,
+            "items": [],
+            "points": 0
+          },
+          "facts": {
+            "active_ventures": 0,
+            "completed_ventures": 1,
+            "counting_endorsements": 0,
+            "hire": false,
+            "max_level": 0,
+            "peer_verified_entries": 0,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 0,
+              "points": 0
+            },
+            "consistency": {
+              "points": 0,
+              "weeks": 0
+            },
+            "content": {
+              "average": 0,
+              "points": 0,
+              "posts": []
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 0.78,
+              "inactive_days": 95,
+              "last_active": "<time>",
+              "weeks": 11
+            },
+            "peak": 0,
+            "points": 0,
+            "raw": 0
+          },
+          "proof": 39.38,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": false,
+            "categories": 0,
+            "items": [],
+            "points": 0
+          },
+          "total": 39.38,
+          "work": {
+            "points": 39.38,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": [
+              {
+                "completed_at": "<time>",
+                "complexity": 1.05,
+                "creator": false,
+                "median": 2,
+                "points": 39.38,
+                "share": 0.25,
+                "units": 0.5,
+                "venture_id": "<uuid:5>"
+              }
+            ]
+          }
+        },
+        "exam": null,
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "last_week": null,
+        "momentum": 0,
+        "names": {
+          "credentials": {},
+          "people": {},
+          "posts": {},
+          "record": {},
+          "skills": {},
+          "ventures": {
+            "93200000-0000-4000-8000-00000000a001": "Timetable"
+          }
+        },
+        "next": {
+          "current": null,
+          "needs": [
+            {
+              "have": 0,
+              "key": "peer_verified_entries",
+              "need": 1
+            }
+          ],
+          "next": "raw"
+        },
+        "percentile": null,
+        "proof": 39.38,
+        "published_at": "<time>",
+        "ranked": false,
+        "scored": true,
+        "tier": null,
+        "tier_met": null,
+        "total": 39.38
+      }
+    },
+    "r5": {
+      "ok": true,
+      "value": {
+        "adjustments": 0,
+        "below_since": "2026-12-09",
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [
+              {
+                "id": "<uuid:47>",
+                "points": 60,
+                "recognised": true
+              },
+              {
+                "id": "<uuid:48>",
+                "points": 60,
+                "recognised": true
+              },
+              {
+                "id": "<uuid:49>",
+                "points": 60,
+                "recognised": true
+              }
+            ],
+            "points": 125
+          },
+          "endorsements": {
+            "counting": 1,
+            "items": [
+              {
+                "endorser_id": "<uuid:50>",
+                "id": "<uuid:51>",
+                "mutual": true,
+                "points": 9.75,
+                "ring": false,
+                "skill_id": "python",
+                "venture_id": "<uuid:52>",
+                "weight": 1.3
+              }
+            ],
+            "points": 9.75
+          },
+          "facts": {
+            "active_ventures": 1,
+            "completed_ventures": 1,
+            "counting_endorsements": 1,
+            "hire": false,
+            "max_level": 3,
+            "peer_verified_entries": 3,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 12,
+              "points": 40
+            },
+            "consistency": {
+              "points": 20,
+              "weeks": 2
+            },
+            "content": {
+              "average": 67.5,
+              "points": 106.98,
+              "posts": [
+                {
+                  "index": 80,
+                  "post_id": "<uuid:53>"
+                },
+                {
+                  "index": 55,
+                  "post_id": "<uuid:54>"
+                }
+              ]
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 3,
+              "last_active": "<time>",
+              "weeks": 0
+            },
+            "peak": 166.98,
+            "points": 166.98,
+            "raw": 166.98
+          },
+          "proof": 421.38,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": true,
+            "categories": 4,
+            "items": [
+              {
+                "level": 3,
+                "points": 20,
+                "skill_id": "django"
+              },
+              {
+                "level": 3,
+                "points": 20,
+                "skill_id": "python"
+              },
+              {
+                "level": 2,
+                "points": 15,
+                "skill_id": "postgresql"
+              },
+              {
+                "level": 2,
+                "points": 15,
+                "skill_id": "pytest"
+              }
+            ],
+            "points": 77
+          },
+          "total": 588.36,
+          "work": {
+            "points": 209.63,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": [
+              {
+                "completed_at": "<time>",
+                "complexity": 1.075,
+                "creator": true,
+                "median": 3,
+                "points": 209.63,
+                "share": 1,
+                "units": 3,
+                "venture_id": "<uuid:52>"
+              }
+            ]
+          }
+        },
+        "exam": null,
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "last_week": {
+          "components": {},
+          "tier": "flare",
+          "total": 100,
+          "week": "2026-11-22"
+        },
+        "momentum": 166.98,
+        "names": {
+          "credentials": {
+            "5c345741-43b0-4f06-887a-b088aad1a4ff": "SQL",
+            "ef9cadca-294b-45f8-8c12-12f98ac3697e": "Django",
+            "f9909059-27db-4619-8930-eb76536673d2": "Python"
+          },
+          "people": {
+            "93200000-0000-4000-8000-000000000006": {
+              "name": "Ref R6 Kestrel",
+              "username": "rk_r6"
+            }
+          },
+          "posts": {
+            "2ae8f7ef-97d7-48cf-835d-1323a2a2c2cd": "Reference post p5a",
+            "b22e1468-bfd0-4a10-838d-7fd1f7354d7a": "Reference post p5b"
+          },
+          "record": {},
+          "skills": {
+            "django": "Django",
+            "postgresql": "PostgreSQL",
+            "pytest": "pytest",
+            "python": "Python"
+          },
+          "ventures": {
+            "93200000-0000-4000-8000-00000000a002": "Canteen"
+          }
+        },
+        "next": {
+          "current": "flare",
+          "needs": [
+            {
+              "have": 1,
+              "key": "active_ventures",
+              "need": 2
+            },
+            {
+              "have": 1,
+              "key": "counting_endorsements",
+              "need": 3
+            }
+          ],
+          "next": "shine"
+        },
+        "percentile": 0.857142857142857,
+        "proof": 421.38,
+        "published_at": "<time>",
+        "ranked": true,
+        "scored": true,
+        "tier": "flare",
+        "tier_met": "spark",
+        "total": 588.36
+      }
+    },
+    "r7": {
+      "ok": true,
+      "value": {
+        "adjustments": 0,
+        "below_since": null,
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [],
+            "points": 0
+          },
+          "endorsements": {
+            "counting": 0,
+            "items": [],
+            "points": 0
+          },
+          "facts": {
+            "active_ventures": 1,
+            "completed_ventures": 0,
+            "counting_endorsements": 0,
+            "hire": false,
+            "max_level": 2,
+            "peer_verified_entries": 20,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 0,
+              "points": 0
+            },
+            "consistency": {
+              "points": 10,
+              "weeks": 1
+            },
+            "content": {
+              "average": 80,
+              "points": 80,
+              "posts": [
+                {
+                  "index": 80,
+                  "post_id": "<uuid:55>"
+                }
+              ]
+            },
+            "decay": {
+              "exam_days": 30,
+              "exam_today": false,
+              "factor": 0.94,
+              "inactive_days": 40,
+              "last_active": "<time>",
+              "weeks": 3
+            },
+            "peak": 220,
+            "points": 88,
+            "raw": 90
+          },
+          "proof": 30,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": false,
+            "categories": 1,
+            "items": [
+              {
+                "level": 2,
+                "points": 15,
+                "skill_id": "css"
+              },
+              {
+                "level": 2,
+                "points": 15,
+                "skill_id": "html"
+              }
+            ],
+            "points": 30
+          },
+          "total": 118,
+          "work": {
+            "points": 0,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": []
+          }
+        },
+        "exam": null,
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "last_week": null,
+        "momentum": 88,
+        "names": {
+          "credentials": {},
+          "people": {},
+          "posts": {
+            "dcb06213-6fed-4a9f-8121-7cb981ed55de": "Reference post p7"
+          },
+          "record": {},
+          "skills": {
+            "css": "CSS",
+            "html": "HTML"
+          },
+          "ventures": {}
+        },
+        "next": {
+          "current": "spark",
+          "needs": [
+            {
+              "have": 118,
+              "key": "points",
+              "need": 250
+            },
+            {
+              "have": 1,
+              "key": "active_ventures",
+              "need": 2
+            },
+            {
+              "have": 0,
+              "key": "counting_endorsements",
+              "need": 3
+            }
+          ],
+          "next": "flare"
+        },
+        "percentile": 0.285714285714286,
+        "proof": 30,
+        "published_at": "<time>",
+        "ranked": true,
+        "scored": true,
+        "tier": "spark",
+        "tier_met": "spark",
+        "total": 118
+      }
+    }
+  },
+  "tiers": {
+    "anon": {
+      "code": "42501",
+      "message": "permission denied for function tiers_for",
+      "ok": false
+    },
+    "r1": {
+      "ok": true,
+      "value": [
+        {
+          "tier": "shine",
+          "user_id": "<uuid:1>"
+        },
+        {
+          "tier": "raw",
+          "user_id": "<uuid:2>"
+        },
+        {
+          "tier": "flare",
+          "user_id": "<uuid:3>"
+        },
+        {
+          "tier": "radiant",
+          "user_id": "<uuid:4>"
+        },
+        {
+          "tier": "spark",
+          "user_id": "<uuid:5>"
+        },
+        {
+          "tier": "spark",
+          "user_id": "<uuid:6>"
+        }
+      ]
+    },
+    "r2": {
+      "ok": true,
+      "value": [
+        {
+          "tier": "shine",
+          "user_id": "<uuid:1>"
+        },
+        {
+          "tier": "flare",
+          "user_id": "<uuid:3>"
+        },
+        {
+          "tier": "radiant",
+          "user_id": "<uuid:4>"
+        },
+        {
+          "tier": "spark",
+          "user_id": "<uuid:5>"
+        },
+        {
+          "tier": "spark",
+          "user_id": "<uuid:6>"
+        }
+      ]
+    },
+    "too_many": {
+      "code": "22023",
+      "message": "at most 200 people at a time",
+      "ok": false
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { rateLimit, uuidv7 } from "@skilient/platform";
 import { refused, type RefusalReason } from "../refusals";
 import { blockedBetween, requireUser, validSkillIds, type Me, type Tx } from "./db";
-import { memberChanged, publish, ventureCompleted, ventureRow, ventureUpdated, type VentureRow } from "./publish";
+import { completionOf, memberChanged, publish, ventureCompleted, ventureRow, ventureUpdated, type VentureRow } from "./publish";
 import { refreshVentureShell, teamOf } from "./shell";
 import { syncVentureCommits } from "./contributions";
 
@@ -221,7 +221,7 @@ export async function transitionVenture(tx: Tx, me: string | null, ventureId: st
   if (to === "completed") {
     await recordCompletion(tx, ventureId);
     const members = await tx<{ user_id: string }[]>`select user_id::text from work.venture_members where venture_id = ${ventureId} order by joined_at`;
-    events.push(ventureCompleted(after, members.map((m) => m.user_id)));
+    events.push(ventureCompleted(after, members.map((m) => m.user_id), await completionOf(tx, ventureId)));
   }
   await publish(tx, events);
   await refreshVentureShell(tx, [after.owner_id, ...invitees, ...(await teamOf(tx, ventureId))]);

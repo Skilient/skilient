@@ -29,6 +29,9 @@ export const events = {
     "swap.flagged",
     "audit.recorded",
     "user.deletion_confirmed",
+    "contribution.logged",
+    "contribution.confirmed",
+    "pull_request.recorded",
   ],
   handles: [...COPY_EVENTS],
 } as const;

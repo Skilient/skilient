@@ -50,10 +50,17 @@ export const followChanged = (ventureId: string, userId: string, following: bool
   payload: { venture_id: ventureId, user_id: userId, following },
 });
 
-export const ventureCompleted = (v: VentureRow, memberIds: readonly string[]): NewEvent => ({
+export const ventureCompleted = (v: VentureRow, memberIds: readonly string[], completion: Record<string, unknown> | null = null): NewEvent => ({
   type: "venture.completed",
   subjects: [v.id, ...memberIds],
-  payload: { venture_id: v.id, owner_id: v.owner_id, university_id: v.university_id, visibility: v.visibility, member_ids: [...memberIds] },
+  payload: {
+    venture_id: v.id,
+    owner_id: v.owner_id,
+    university_id: v.university_id,
+    visibility: v.visibility,
+    member_ids: [...memberIds],
+    ...(completion ? { completion } : {}),
+  },
 });
 
 export const applicationChanged = (a: { id: string; venture_id: string; candidate_id: string; owner_id: string; status: string; previous_status: string | null }): NewEvent => ({
@@ -75,3 +82,49 @@ export const conversationAllowed = (a: string, b: string, reason: "application" 
 });
 
 export const publish = (tx: Tx, events: NewEvent[]) => (events.length ? appendEvents(tx, events) : Promise.resolve());
+
+/** A contribution row as ranking copies it (`contribution.logged`, W6: verified entries, consistency, the decay clock). */
+export interface LoggedRow {
+  id: string;
+  venture_id: string;
+  user_id: string;
+  source: string;
+  before_venture: boolean;
+  corrects_id: string | null;
+  created_at: Date;
+}
+
+export const contributionsLogged = (rows: readonly LoggedRow[]): NewEvent[] =>
+  rows.map((c) => ({
+    type: "contribution.logged",
+    subjects: [c.id, c.user_id],
+    payload: {
+      contribution_id: c.id,
+      venture_id: c.venture_id,
+      user_id: c.user_id,
+      source: c.source,
+      before_venture: c.before_venture,
+      corrects_id: c.corrects_id,
+      created_at: new Date(c.created_at).toISOString(),
+    },
+  }));
+
+/** `contribution.confirmed` (W6: verified entries and citizenship). */
+export const contributionConfirmed = (contributionId: string, confirmerId: string, at: Date): NewEvent => ({
+  type: "contribution.confirmed",
+  subjects: [contributionId, confirmerId],
+  payload: { contribution_id: contributionId, confirmer_id: confirmerId, confirmed_at: new Date(at).toISOString() },
+});
+
+/**
+ * `venture.completed`'s completion, as work froze it (W6: ranking scores Work from it): the complexity inputs and
+ * each member's units.
+ */
+export async function completionOf(tx: Tx, ventureId: string): Promise<Record<string, unknown> | null> {
+  const [c] = await tx<{ completed_at: Date; team_size: number; weeks: string; skill_tags: number; deliverables: number; verified_members: number }[]>`
+    select completed_at, team_size, weeks::text, skill_tags, deliverables, verified_members from work.venture_completions where venture_id = ${ventureId}`;
+  if (!c) return null;
+  const members = await tx<{ user_id: string; github_days: number; verified_entries: number; unconfirmed_entries: number }[]>`
+    select user_id::text, github_days, verified_entries, unconfirmed_entries from work.venture_completion_members where venture_id = ${ventureId} order by user_id`;
+  return { ...c, completed_at: c.completed_at.toISOString(), weeks: Number(c.weeks), members: [...members] };
+}

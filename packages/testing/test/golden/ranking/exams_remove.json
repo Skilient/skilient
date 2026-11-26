@@ -1,0 +1,71 @@
+{
+  "remove": {
+    "add": {
+      "ok": true,
+      "value": "<uuid:1>"
+    },
+    "audit": [
+      {
+        "action": "exam_period.add",
+        "after": {
+          "ends_on": "2027-02-10",
+          "starts_on": "2027-02-01",
+          "university_id": "<uuid:2>"
+        },
+        "before": {},
+        "reason": "Mid-terms",
+        "staff_id": "<uuid:3>",
+        "target_type": "exam_period"
+      },
+      {
+        "action": "exam_period.remove",
+        "after": {
+          "removed": true
+        },
+        "before": {
+          "ends_on": "2027-02-10",
+          "reason": "Mid-terms",
+          "starts_on": "2027-02-01",
+          "university_id": "<uuid:2>"
+        },
+        "reason": "Entered by mistake",
+        "staff_id": "<uuid:3>",
+        "target_type": "exam_period"
+      }
+    ],
+    "list_after": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "created_by_name": null,
+          "ends_on": "2026-11-13",
+          "id": "<uuid:4>",
+          "reason": "Mid-terms",
+          "starts_on": "2026-10-15",
+          "university_id": "<uuid:5>",
+          "university_name": "Ranking Golden University B"
+        }
+      ]
+    },
+    "remove": {
+      "ok": true,
+      "value": null
+    },
+    "remove_again": {
+      "code": "P0002",
+      "message": "exam period not found",
+      "ok": false
+    },
+    "remove_not_staff": {
+      "code": "42501",
+      "message": "accounts staff only, with two-factor on",
+      "ok": false
+    },
+    "remove_short_reason": {
+      "code": "22023",
+      "message": "give a reason",
+      "ok": false
+    }
+  }
+}

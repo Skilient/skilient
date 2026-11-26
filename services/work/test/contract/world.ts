@@ -105,3 +105,11 @@ export async function runJobs(w: WorkWorld, rounds = 50): Promise<number> {
   }
   return total;
 }
+
+/** work's copy of ranking's tiers (compute_paths' seniors), for ranking's hand-off tests (W6). */
+export const rankingTiersOf = (w: WorkWorld, userIds: string[]) =>
+  w.work<{ tier: string; ranked: boolean }[]>`select tier, ranked from work.ranking_tiers where user_id = any(${userIds}::uuid[]) order by user_id`.then((r) => [...r]);
+
+/** work's copy of ranking's ring and swap flags (the peer-review check), for ranking's hand-off tests (W6). */
+export const rankingFlagsOf = (w: WorkWorld, members: string[]) =>
+  w.work<{ flag_id: string; status: string }[]>`select flag_id::text, status from work.ranking_flags where members @> ${members}::uuid[] order by flag_id`.then((r) => [...r]);

@@ -108,7 +108,7 @@ describeTransports(
       const skills = await work().mySkills({}, read(dev.token));
       expect(skills.skills.find((s) => s.skillId === "python")).toMatchObject({ level: 2, activeDays: 3, repos: 1 });
       const changed = (await events("skill.changed", dev.id)).map((e) => e.payload);
-      expect(changed).toContainEqual({ user_id: dev.id, skill_id: "python", skill_label: "Python", level: 2 });
+      expect(changed).toContainEqual({ user_id: dev.id, skill_id: "python", skill_label: "Python", level: 2, category: "language" });
       expect((await events("milestone.reached", dev.id)).map((e) => e.payload["key"])).toEqual(expect.arrayContaining(["github.connected", "skills.l2"]));
       // The drawer: the three commits, counted.
       const drawer = await work().skillEvidence({ skillId: "python" }, read(dev.token));

@@ -1,0 +1,1843 @@
+{
+  "rapid_gain": {
+    "adjustments": [
+      {
+        "case_id": null,
+        "flag_id": "<uuid:1>",
+        "kind": "rapid_gain",
+        "points": "-414.00",
+        "reason": "Gain not earned",
+        "severity": null,
+        "staff_id": "<uuid:2>",
+        "user_id": "<uuid:3>"
+      }
+    ],
+    "after": [
+      {
+        "adjustments": "-414.00",
+        "below_since": "2026-12-09",
+        "components": {
+          "adjustments": {
+            "items": [
+              {
+                "case_id": null,
+                "created_at": "<time>",
+                "flag_id": "<uuid:1>",
+                "id": "<uuid:4>",
+                "kind": "rapid_gain",
+                "points": -414,
+                "severity": null
+              }
+            ],
+            "points": -414
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [
+              {
+                "id": "<uuid:5>",
+                "points": 60,
+                "recognised": true
+              },
+              {
+                "id": "<uuid:6>",
+                "points": 40,
+                "recognised": false
+              }
+            ],
+            "points": 100
+          },
+          "endorsements": {
+            "counting": 2,
+            "items": [
+              {
+                "endorser_id": "<uuid:7>",
+                "id": "<uuid:8>",
+                "mutual": true,
+                "points": 5.25,
+                "ring": false,
+                "skill_id": "react",
+                "venture_id": "<uuid:9>",
+                "weight": 0.7
+              },
+              {
+                "endorser_id": "<uuid:10>",
+                "id": "<uuid:11>",
+                "mutual": false,
+                "points": 7.5,
+                "ring": false,
+                "skill_id": "typescript",
+                "venture_id": "<uuid:9>",
+                "weight": 0.5
+              }
+            ],
+            "points": 12.75
+          },
+          "facts": {
+            "active_ventures": 1,
+            "completed_ventures": 1,
+            "counting_endorsements": 2,
+            "hire": false,
+            "max_level": 4,
+            "peer_verified_entries": 4,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 1,
+              "joins": 3,
+              "points": 14
+            },
+            "consistency": {
+              "points": 20,
+              "weeks": 2
+            },
+            "content": {
+              "average": 80,
+              "points": 80,
+              "posts": [
+                {
+                  "index": 80,
+                  "post_id": "<uuid:12>"
+                }
+              ]
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 9,
+              "last_active": "<time>",
+              "weeks": 0
+            },
+            "peak": 114,
+            "points": 114,
+            "raw": 114
+          },
+          "proof": 400,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": true,
+            "categories": 3,
+            "items": [
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "python"
+              },
+              {
+                "level": 3,
+                "points": 20,
+                "skill_id": "react"
+              },
+              {
+                "level": 2,
+                "points": 15,
+                "skill_id": "docker"
+              },
+              {
+                "level": 2,
+                "points": 15,
+                "skill_id": "typescript"
+              }
+            ],
+            "points": 82.5
+          },
+          "total": 100,
+          "work": {
+            "points": 204.75,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": [
+              {
+                "completed_at": "<time>",
+                "complexity": 1.05,
+                "creator": true,
+                "median": 2,
+                "points": 204.75,
+                "share": 1,
+                "units": 4,
+                "venture_id": "<uuid:9>"
+              }
+            ]
+          }
+        },
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "momentum": "114.00",
+        "momentum_peak": "114.00",
+        "percentile": 0.285714285714286,
+        "proof": "400.00",
+        "ranked": true,
+        "tier": "shine",
+        "tier_met": "spark",
+        "total": "100.00",
+        "user_id": "<uuid:3>"
+      }
+    ],
+    "audit": [
+      {
+        "action": "ranking_flag.claim",
+        "after": {
+          "claimed_by": "<uuid:2>"
+        },
+        "before": {
+          "claimed_by": null
+        },
+        "reason": "claimed to review",
+        "staff_id": "<uuid:2>",
+        "target_type": "anti_gaming_flag"
+      },
+      {
+        "action": "ranking_flag.uphold",
+        "after": {
+          "adjustment": -414,
+          "status": "upheld"
+        },
+        "before": {
+          "kind": "rapid_gain",
+          "status": "open"
+        },
+        "reason": "Gain not earned",
+        "staff_id": "<uuid:2>",
+        "target_type": "anti_gaming_flag"
+      }
+    ],
+    "board": {
+      "ok": true,
+      "value": [
+        {
+          "avatar_path": null,
+          "full_name": "Ref R10 Kestrel",
+          "is_me": false,
+          "place": "1",
+          "rank": "1",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r10",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R5 Kestrel",
+          "is_me": false,
+          "place": "2",
+          "rank": "2",
+          "tier": "flare",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r5",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R6 Kestrel",
+          "is_me": false,
+          "place": "3",
+          "rank": "3",
+          "tier": "radiant",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r6",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R2 Kestrel",
+          "is_me": true,
+          "place": "4",
+          "rank": "4",
+          "tier": "spark",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r2",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R1 Kestrel",
+          "is_me": false,
+          "place": "5",
+          "rank": "5",
+          "tier": "shine",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r1",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R3 Kestrel",
+          "is_me": false,
+          "place": "6",
+          "rank": "6",
+          "tier": "raw",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r3",
+          "weekly_change": null
+        },
+        {
+          "avatar_path": null,
+          "full_name": "Ref R9 Kestrel",
+          "is_me": false,
+          "place": "7",
+          "rank": "7",
+          "tier": "raw",
+          "university_name": "Ranking Golden University A",
+          "username": "rk_r9",
+          "weekly_change": null
+        }
+      ]
+    },
+    "case": {
+      "ok": true,
+      "value": {
+        "claimed_by_me": null,
+        "claimed_by_name": null,
+        "created_at": "<time>",
+        "detail": {
+          "completions": 0,
+          "exempt": 204.75,
+          "from": {
+            "adjustments": null,
+            "credentials": null,
+            "endorsements": null,
+            "momentum": null,
+            "record": 0,
+            "skills": null,
+            "total": null,
+            "work": 0
+          },
+          "from_total": 100,
+          "gain": 414,
+          "reason": "gain",
+          "run_on": "2026-12-09",
+          "to": {
+            "adjustments": 0,
+            "credentials": 100,
+            "endorsements": 12.75,
+            "momentum": 114,
+            "record": 0,
+            "skills": 82.5,
+            "total": 514,
+            "work": 204.75
+          },
+          "to_total": 514,
+          "ventures": [
+            {
+              "completed_at": "<time>",
+              "complexity": 1.05,
+              "creator": true,
+              "median": 2,
+              "points": 204.75,
+              "share": 1,
+              "units": 4,
+              "venture_id": "<uuid:9>"
+            }
+          ]
+        },
+        "endorsements": [],
+        "id": "<uuid:1>",
+        "is_member": false,
+        "kind": "rapid_gain",
+        "members": [
+          {
+            "name": "Ref R1 Kestrel",
+            "tier": "shine",
+            "total": 100,
+            "university": "Ranking Golden University A",
+            "user_id": "<uuid:3>",
+            "username": "rk_r1"
+          }
+        ],
+        "reason": null,
+        "reviewed_at": null,
+        "reviewer_name": null,
+        "status": "open"
+      }
+    },
+    "claim": {
+      "ok": true,
+      "value": null
+    },
+    "flags": [
+      {
+        "applied": false,
+        "claimed_by": null,
+        "detail": {
+          "completions": 0,
+          "exempt": 204.75,
+          "from": {
+            "adjustments": null,
+            "credentials": null,
+            "endorsements": null,
+            "momentum": null,
+            "record": 0,
+            "skills": null,
+            "total": null,
+            "work": 0
+          },
+          "from_total": 100,
+          "gain": 414,
+          "reason": "gain",
+          "run_on": "2026-12-09",
+          "to": {
+            "adjustments": 0,
+            "credentials": 100,
+            "endorsements": 12.75,
+            "momentum": 114,
+            "record": 0,
+            "skills": 82.5,
+            "total": 514,
+            "work": 204.75
+          },
+          "to_total": 514,
+          "ventures": [
+            {
+              "completed_at": "<time>",
+              "complexity": 1.05,
+              "creator": true,
+              "median": 2,
+              "points": 204.75,
+              "share": 1,
+              "units": 4,
+              "venture_id": "<uuid:9>"
+            }
+          ]
+        },
+        "endorsement_ids": [],
+        "kind": "rapid_gain",
+        "members": [
+          "<uuid:3>"
+        ],
+        "reason": null,
+        "reviewed_by": null,
+        "status": "open",
+        "user_id": "<uuid:3>"
+      }
+    ],
+    "flags_after": [
+      {
+        "applied": true,
+        "claimed_by": null,
+        "detail": {
+          "completions": 0,
+          "exempt": 204.75,
+          "from": {
+            "adjustments": null,
+            "credentials": null,
+            "endorsements": null,
+            "momentum": null,
+            "record": 0,
+            "skills": null,
+            "total": null,
+            "work": 0
+          },
+          "from_total": 100,
+          "gain": 414,
+          "reason": "gain",
+          "run_on": "2026-12-09",
+          "to": {
+            "adjustments": 0,
+            "credentials": 100,
+            "endorsements": 12.75,
+            "momentum": 114,
+            "record": 0,
+            "skills": 82.5,
+            "total": 514,
+            "work": 204.75
+          },
+          "to_total": 514,
+          "ventures": [
+            {
+              "completed_at": "<time>",
+              "complexity": 1.05,
+              "creator": true,
+              "median": 2,
+              "points": 204.75,
+              "share": 1,
+              "units": 4,
+              "venture_id": "<uuid:9>"
+            }
+          ]
+        },
+        "endorsement_ids": [],
+        "kind": "rapid_gain",
+        "members": [
+          "<uuid:3>"
+        ],
+        "reason": "Gain not earned",
+        "reviewed_by": "<uuid:2>",
+        "status": "upheld",
+        "user_id": "<uuid:3>"
+      }
+    ],
+    "held": [
+      {
+        "adjustments": "0.00",
+        "below_since": "2026-12-09",
+        "components": {
+          "work": {
+            "points": 0,
+            "ventures": []
+          }
+        },
+        "formula_version": 2,
+        "held": true,
+        "held_total": "514.00",
+        "momentum": "0.00",
+        "momentum_peak": "0.00",
+        "percentile": 0.285714285714286,
+        "proof": "0.00",
+        "ranked": true,
+        "tier": "shine",
+        "tier_met": "raw",
+        "total": "100.00",
+        "user_id": "<uuid:3>"
+      }
+    ],
+    "me": {
+      "ok": true,
+      "value": {
+        "held": true,
+        "opted_out": false,
+        "place": 5,
+        "rank": 5,
+        "ranked": true,
+        "scored": true,
+        "size": 7,
+        "tier": "shine",
+        "total": 100,
+        "weekly_change": null
+      }
+    },
+    "queue": {
+      "ok": true,
+      "value": [
+        {
+          "claimed_by_me": null,
+          "claimed_by_name": null,
+          "created_at": "<time>",
+          "endorsements": 0,
+          "from_total": "100.00",
+          "gain": "414.00",
+          "id": "<uuid:1>",
+          "kind": "rapid_gain",
+          "member_names": [
+            "Ref R1 Kestrel"
+          ],
+          "reviewed_at": null,
+          "status": "open",
+          "to_total": "514.00"
+        }
+      ]
+    },
+    "uphold": {
+      "ok": true,
+      "value": null
+    }
+  },
+  "rapid_gain_cleared": {
+    "after": [
+      {
+        "adjustments": "0.00",
+        "below_since": "2026-12-09",
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [
+              {
+                "id": "<uuid:1>",
+                "points": 60,
+                "recognised": true
+              },
+              {
+                "id": "<uuid:2>",
+                "points": 40,
+                "recognised": false
+              }
+            ],
+            "points": 100
+          },
+          "endorsements": {
+            "counting": 2,
+            "items": [
+              {
+                "endorser_id": "<uuid:3>",
+                "id": "<uuid:4>",
+                "mutual": true,
+                "points": 5.25,
+                "ring": false,
+                "skill_id": "react",
+                "venture_id": "<uuid:5>",
+                "weight": 0.7
+              },
+              {
+                "endorser_id": "<uuid:6>",
+                "id": "<uuid:7>",
+                "mutual": false,
+                "points": 7.5,
+                "ring": false,
+                "skill_id": "typescript",
+                "venture_id": "<uuid:5>",
+                "weight": 0.5
+              }
+            ],
+            "points": 12.75
+          },
+          "facts": {
+            "active_ventures": 1,
+            "completed_ventures": 1,
+            "counting_endorsements": 2,
+            "hire": false,
+            "max_level": 4,
+            "peer_verified_entries": 4,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 1,
+              "joins": 3,
+              "points": 14
+            },
+            "consistency": {
+              "points": 20,
+              "weeks": 2
+            },
+            "content": {
+              "average": 80,
+              "points": 80,
+              "posts": [
+                {
+                  "index": 80,
+                  "post_id": "<uuid:8>"
+                }
+              ]
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 9,
+              "last_active": "<time>",
+              "weeks": 0
+            },
+            "peak": 114,
+            "points": 114,
+            "raw": 114
+          },
+          "proof": 400,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": true,
+            "categories": 3,
+            "items": [
+              {
+                "level": 4,
+                "points": 25,
+                "skill_id": "python"
+              },
+              {
+                "level": 3,
+                "points": 20,
+                "skill_id": "react"
+              },
+              {
+                "level": 2,
+                "points": 15,
+                "skill_id": "docker"
+              },
+              {
+                "level": 2,
+                "points": 15,
+                "skill_id": "typescript"
+              }
+            ],
+            "points": 82.5
+          },
+          "total": 514,
+          "work": {
+            "points": 204.75,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": [
+              {
+                "completed_at": "<time>",
+                "complexity": 1.05,
+                "creator": true,
+                "median": 2,
+                "points": 204.75,
+                "share": 1,
+                "units": 4,
+                "venture_id": "<uuid:5>"
+              }
+            ]
+          }
+        },
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "momentum": "114.00",
+        "momentum_peak": "114.00",
+        "percentile": 0.714285714285714,
+        "proof": "400.00",
+        "ranked": true,
+        "tier": "shine",
+        "tier_met": "spark",
+        "total": "514.00",
+        "user_id": "<uuid:9>"
+      }
+    ],
+    "clear": {
+      "ok": true,
+      "value": null
+    },
+    "flags_after": [
+      {
+        "applied": true,
+        "claimed_by": null,
+        "detail": {
+          "completions": 0,
+          "exempt": 204.75,
+          "from": {
+            "adjustments": null,
+            "credentials": null,
+            "endorsements": null,
+            "momentum": null,
+            "record": 0,
+            "skills": null,
+            "total": null,
+            "work": 0
+          },
+          "from_total": 100,
+          "gain": 414,
+          "reason": "gain",
+          "run_on": "2026-12-09",
+          "to": {
+            "adjustments": 0,
+            "credentials": 100,
+            "endorsements": 12.75,
+            "momentum": 114,
+            "record": 0,
+            "skills": 82.5,
+            "total": 514,
+            "work": 204.75
+          },
+          "to_total": 514,
+          "ventures": [
+            {
+              "completed_at": "<time>",
+              "complexity": 1.05,
+              "creator": true,
+              "median": 2,
+              "points": 204.75,
+              "share": 1,
+              "units": 4,
+              "venture_id": "<uuid:5>"
+            }
+          ]
+        },
+        "endorsement_ids": [],
+        "kind": "rapid_gain",
+        "members": [
+          "<uuid:9>"
+        ],
+        "reason": "Earned it",
+        "reviewed_by": "<uuid:10>",
+        "status": "cleared",
+        "user_id": "<uuid:9>"
+      }
+    ]
+  },
+  "ring": {
+    "after": [
+      {
+        "adjustments": "0.00",
+        "below_since": null,
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [],
+            "points": 0
+          },
+          "endorsements": {
+            "counting": 1,
+            "items": [
+              {
+                "endorser_id": "<uuid:1>",
+                "id": "<uuid:2>",
+                "mutual": true,
+                "points": 3.75,
+                "ring": false,
+                "skill_id": "python",
+                "venture_id": "<uuid:3>",
+                "weight": 0.5
+              }
+            ],
+            "points": 3.75
+          },
+          "facts": {
+            "active_ventures": 0,
+            "completed_ventures": 0,
+            "counting_endorsements": 1,
+            "hire": false,
+            "max_level": 0,
+            "peer_verified_entries": 0,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 0,
+              "points": 0
+            },
+            "consistency": {
+              "points": 0,
+              "weeks": 0
+            },
+            "content": {
+              "average": 0,
+              "points": 0,
+              "posts": []
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 0,
+              "last_active": null,
+              "weeks": 0
+            },
+            "peak": 0,
+            "points": 0,
+            "raw": 0
+          },
+          "proof": 3.75,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": false,
+            "categories": 0,
+            "items": [],
+            "points": 0
+          },
+          "total": 3.75,
+          "work": {
+            "points": 0,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": []
+          }
+        },
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "momentum": "0.00",
+        "momentum_peak": "0.00",
+        "percentile": null,
+        "proof": "3.75",
+        "ranked": false,
+        "tier": null,
+        "tier_met": null,
+        "total": "3.75",
+        "user_id": "<uuid:4>"
+      },
+      {
+        "adjustments": "0.00",
+        "below_since": null,
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [],
+            "points": 0
+          },
+          "endorsements": {
+            "counting": 1,
+            "items": [
+              {
+                "endorser_id": "<uuid:4>",
+                "id": "<uuid:5>",
+                "mutual": true,
+                "points": 3.75,
+                "ring": false,
+                "skill_id": "python",
+                "venture_id": "<uuid:3>",
+                "weight": 0.5
+              }
+            ],
+            "points": 3.75
+          },
+          "facts": {
+            "active_ventures": 0,
+            "completed_ventures": 0,
+            "counting_endorsements": 1,
+            "hire": false,
+            "max_level": 0,
+            "peer_verified_entries": 0,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 0,
+              "points": 0
+            },
+            "consistency": {
+              "points": 0,
+              "weeks": 0
+            },
+            "content": {
+              "average": 0,
+              "points": 0,
+              "posts": []
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 0,
+              "last_active": null,
+              "weeks": 0
+            },
+            "peak": 0,
+            "points": 0,
+            "raw": 0
+          },
+          "proof": 3.75,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": false,
+            "categories": 0,
+            "items": [],
+            "points": 0
+          },
+          "total": 3.75,
+          "work": {
+            "points": 0,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": []
+          }
+        },
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "momentum": "0.00",
+        "momentum_peak": "0.00",
+        "percentile": null,
+        "proof": "3.75",
+        "ranked": false,
+        "tier": null,
+        "tier_met": null,
+        "total": "3.75",
+        "user_id": "<uuid:1>"
+      }
+    ],
+    "audit": [
+      {
+        "action": "ranking_flag.claim",
+        "after": {
+          "claimed_by": "<uuid:6>"
+        },
+        "before": {
+          "claimed_by": null
+        },
+        "reason": "claimed to review",
+        "staff_id": "<uuid:6>",
+        "target_type": "anti_gaming_flag"
+      },
+      {
+        "action": "ranking_flag.clear",
+        "after": {
+          "adjustment": null,
+          "status": "cleared"
+        },
+        "before": {
+          "kind": "ring",
+          "status": "open"
+        },
+        "reason": "They built it together",
+        "staff_id": "<uuid:6>",
+        "target_type": "anti_gaming_flag"
+      }
+    ],
+    "case": {
+      "ok": true,
+      "value": {
+        "claimed_by_me": null,
+        "claimed_by_name": null,
+        "created_at": "<time>",
+        "detail": {
+          "window_days": 180
+        },
+        "endorsements": [
+          {
+            "created_at": "<time>",
+            "deliverables": 0,
+            "endorsee": "Ref Q6 Kestrel",
+            "endorser": "Ref Q5 Kestrel",
+            "hidden": false,
+            "id": "<uuid:5>",
+            "skill": "Python",
+            "venture": "Ring venture",
+            "venture_status": "in_progress"
+          },
+          {
+            "created_at": "<time>",
+            "deliverables": 0,
+            "endorsee": "Ref Q5 Kestrel",
+            "endorser": "Ref Q6 Kestrel",
+            "hidden": false,
+            "id": "<uuid:2>",
+            "skill": "Python",
+            "venture": "Ring venture",
+            "venture_status": "in_progress"
+          }
+        ],
+        "id": "<uuid:7>",
+        "is_member": false,
+        "kind": "ring",
+        "members": [
+          {
+            "name": "Ref Q5 Kestrel",
+            "tier": null,
+            "total": 0,
+            "university": "Ranking Golden University A",
+            "user_id": "<uuid:4>",
+            "username": "rk_q5"
+          },
+          {
+            "name": "Ref Q6 Kestrel",
+            "tier": null,
+            "total": 0,
+            "university": "Ranking Golden University A",
+            "user_id": "<uuid:1>",
+            "username": "rk_q6"
+          }
+        ],
+        "reason": null,
+        "reviewed_at": null,
+        "reviewer_name": null,
+        "status": "open"
+      }
+    },
+    "case_claimed": {
+      "ok": true,
+      "value": {
+        "claimed_by_me": true,
+        "claimed_by_name": "Ref Q9 Kestrel",
+        "created_at": "<time>",
+        "detail": {
+          "window_days": 180
+        },
+        "endorsements": [
+          {
+            "created_at": "<time>",
+            "deliverables": 0,
+            "endorsee": "Ref Q6 Kestrel",
+            "endorser": "Ref Q5 Kestrel",
+            "hidden": false,
+            "id": "<uuid:5>",
+            "skill": "Python",
+            "venture": "Ring venture",
+            "venture_status": "in_progress"
+          },
+          {
+            "created_at": "<time>",
+            "deliverables": 0,
+            "endorsee": "Ref Q5 Kestrel",
+            "endorser": "Ref Q6 Kestrel",
+            "hidden": false,
+            "id": "<uuid:2>",
+            "skill": "Python",
+            "venture": "Ring venture",
+            "venture_status": "in_progress"
+          }
+        ],
+        "id": "<uuid:7>",
+        "is_member": false,
+        "kind": "ring",
+        "members": [
+          {
+            "name": "Ref Q5 Kestrel",
+            "tier": null,
+            "total": 0,
+            "university": "Ranking Golden University A",
+            "user_id": "<uuid:4>",
+            "username": "rk_q5"
+          },
+          {
+            "name": "Ref Q6 Kestrel",
+            "tier": null,
+            "total": 0,
+            "university": "Ranking Golden University A",
+            "user_id": "<uuid:1>",
+            "username": "rk_q6"
+          }
+        ],
+        "reason": null,
+        "reviewed_at": null,
+        "reviewer_name": null,
+        "status": "open"
+      }
+    },
+    "case_unknown": {
+      "ok": true,
+      "value": null
+    },
+    "claim": {
+      "ok": true,
+      "value": null
+    },
+    "flags": [
+      {
+        "applied": false,
+        "claimed_by": null,
+        "detail": {
+          "window_days": 180
+        },
+        "endorsement_ids": [
+          "<uuid:5>",
+          "<uuid:2>"
+        ],
+        "kind": "ring",
+        "members": [
+          "<uuid:4>",
+          "<uuid:1>"
+        ],
+        "reason": "They built it together",
+        "reviewed_by": "<uuid:6>",
+        "status": "cleared",
+        "user_id": null
+      }
+    ],
+    "flags_after": [
+      {
+        "applied": false,
+        "claimed_by": null,
+        "detail": {
+          "window_days": 180
+        },
+        "endorsement_ids": [
+          "<uuid:5>",
+          "<uuid:2>"
+        ],
+        "kind": "ring",
+        "members": [
+          "<uuid:4>",
+          "<uuid:1>"
+        ],
+        "reason": "They built it together",
+        "reviewed_by": "<uuid:6>",
+        "status": "cleared",
+        "user_id": null
+      }
+    ],
+    "found": [
+      {
+        "applied": false,
+        "claimed_by": null,
+        "detail": {
+          "window_days": 180
+        },
+        "endorsement_ids": [
+          "<uuid:5>",
+          "<uuid:2>"
+        ],
+        "kind": "ring",
+        "members": [
+          "<uuid:4>",
+          "<uuid:1>"
+        ],
+        "reason": null,
+        "reviewed_by": null,
+        "status": "open",
+        "user_id": null
+      }
+    ],
+    "q5": [
+      {
+        "adjustments": "0.00",
+        "below_since": null,
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [],
+            "points": 0
+          },
+          "endorsements": {
+            "counting": 0,
+            "items": [
+              {
+                "endorser_id": "<uuid:1>",
+                "id": "<uuid:2>",
+                "mutual": true,
+                "points": 0,
+                "ring": true,
+                "skill_id": "python",
+                "venture_id": "<uuid:3>",
+                "weight": 1.5
+              }
+            ],
+            "points": 0
+          },
+          "facts": {
+            "active_ventures": 0,
+            "completed_ventures": 0,
+            "counting_endorsements": 0,
+            "hire": false,
+            "max_level": 0,
+            "peer_verified_entries": 0,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 0,
+              "points": 0
+            },
+            "consistency": {
+              "points": 0,
+              "weeks": 0
+            },
+            "content": {
+              "average": 0,
+              "points": 0,
+              "posts": []
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 0,
+              "last_active": null,
+              "weeks": 0
+            },
+            "peak": 0,
+            "points": 0,
+            "raw": 0
+          },
+          "proof": 0,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": false,
+            "categories": 0,
+            "items": [],
+            "points": 0
+          },
+          "total": 0,
+          "work": {
+            "points": 0,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": []
+          }
+        },
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "momentum": "0.00",
+        "momentum_peak": "0.00",
+        "percentile": null,
+        "proof": "0.00",
+        "ranked": false,
+        "tier": null,
+        "tier_met": null,
+        "total": "0.00",
+        "user_id": "<uuid:4>"
+      },
+      {
+        "adjustments": "0.00",
+        "below_since": null,
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [],
+            "points": 0
+          },
+          "endorsements": {
+            "counting": 0,
+            "items": [
+              {
+                "endorser_id": "<uuid:4>",
+                "id": "<uuid:5>",
+                "mutual": true,
+                "points": 0,
+                "ring": true,
+                "skill_id": "python",
+                "venture_id": "<uuid:3>",
+                "weight": 1.5
+              }
+            ],
+            "points": 0
+          },
+          "facts": {
+            "active_ventures": 0,
+            "completed_ventures": 0,
+            "counting_endorsements": 0,
+            "hire": false,
+            "max_level": 0,
+            "peer_verified_entries": 0,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 0,
+              "points": 0
+            },
+            "consistency": {
+              "points": 0,
+              "weeks": 0
+            },
+            "content": {
+              "average": 0,
+              "points": 0,
+              "posts": []
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 0,
+              "last_active": null,
+              "weeks": 0
+            },
+            "peak": 0,
+            "points": 0,
+            "raw": 0
+          },
+          "proof": 0,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": false,
+            "categories": 0,
+            "items": [],
+            "points": 0
+          },
+          "total": 0,
+          "work": {
+            "points": 0,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": []
+          }
+        },
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "momentum": "0.00",
+        "momentum_peak": "0.00",
+        "percentile": null,
+        "proof": "0.00",
+        "ranked": false,
+        "tier": null,
+        "tier_met": null,
+        "total": "0.00",
+        "user_id": "<uuid:1>"
+      }
+    ],
+    "queue": {
+      "ok": true,
+      "value": [
+        {
+          "claimed_by_me": null,
+          "claimed_by_name": null,
+          "created_at": "<time>",
+          "endorsements": 2,
+          "from_total": null,
+          "gain": null,
+          "id": "<uuid:7>",
+          "kind": "ring",
+          "member_names": [
+            "Ref Q5 Kestrel",
+            "Ref Q6 Kestrel"
+          ],
+          "reviewed_at": null,
+          "status": "open",
+          "to_total": null
+        }
+      ]
+    },
+    "queue_aal1": {
+      "code": "42501",
+      "message": "trust reviewers only, with two-factor on",
+      "ok": false
+    },
+    "queue_not_staff": {
+      "code": "42501",
+      "message": "trust reviewers only, with two-factor on",
+      "ok": false
+    },
+    "release_unclaimed": {
+      "code": "55000",
+      "message": "you haven't claimed this flag",
+      "ok": false
+    },
+    "review": {
+      "ok": true,
+      "value": null
+    },
+    "review_again": {
+      "code": "55000",
+      "message": "this flag isn't waiting for review",
+      "ok": false
+    },
+    "review_short_reason": {
+      "code": "22023",
+      "message": "give a reason",
+      "ok": false
+    },
+    "review_unclaimed": {
+      "code": "55000",
+      "message": "claim the flag before deciding",
+      "ok": false
+    },
+    "reviewed": {
+      "ok": true,
+      "value": [
+        {
+          "claimed_by_me": null,
+          "claimed_by_name": null,
+          "created_at": "<time>",
+          "endorsements": 2,
+          "from_total": null,
+          "gain": null,
+          "id": "<uuid:7>",
+          "kind": "ring",
+          "member_names": [
+            "Ref Q5 Kestrel",
+            "Ref Q6 Kestrel"
+          ],
+          "reviewed_at": "<time>",
+          "status": "cleared",
+          "to_total": null
+        }
+      ]
+    }
+  },
+  "ring_upheld": {
+    "after": [
+      {
+        "adjustments": "0.00",
+        "below_since": null,
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [],
+            "points": 0
+          },
+          "endorsements": {
+            "counting": 0,
+            "items": [
+              {
+                "endorser_id": "<uuid:1>",
+                "id": "<uuid:2>",
+                "mutual": true,
+                "points": 0,
+                "ring": true,
+                "skill_id": "python",
+                "venture_id": "<uuid:3>",
+                "weight": 0.5
+              }
+            ],
+            "points": 0
+          },
+          "facts": {
+            "active_ventures": 0,
+            "completed_ventures": 0,
+            "counting_endorsements": 0,
+            "hire": false,
+            "max_level": 0,
+            "peer_verified_entries": 0,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 0,
+              "points": 0
+            },
+            "consistency": {
+              "points": 0,
+              "weeks": 0
+            },
+            "content": {
+              "average": 0,
+              "points": 0,
+              "posts": []
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 0,
+              "last_active": null,
+              "weeks": 0
+            },
+            "peak": 0,
+            "points": 0,
+            "raw": 0
+          },
+          "proof": 0,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": false,
+            "categories": 0,
+            "items": [],
+            "points": 0
+          },
+          "total": 0,
+          "work": {
+            "points": 0,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": []
+          }
+        },
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "momentum": "0.00",
+        "momentum_peak": "0.00",
+        "percentile": null,
+        "proof": "0.00",
+        "ranked": false,
+        "tier": null,
+        "tier_met": null,
+        "total": "0.00",
+        "user_id": "<uuid:4>"
+      },
+      {
+        "adjustments": "0.00",
+        "below_since": null,
+        "components": {
+          "adjustments": {
+            "items": [],
+            "points": 0
+          },
+          "as_of": "<time>",
+          "credentials": {
+            "items": [],
+            "points": 0
+          },
+          "endorsements": {
+            "counting": 0,
+            "items": [
+              {
+                "endorser_id": "<uuid:4>",
+                "id": "<uuid:5>",
+                "mutual": true,
+                "points": 0,
+                "ring": true,
+                "skill_id": "python",
+                "venture_id": "<uuid:3>",
+                "weight": 0.5
+              }
+            ],
+            "points": 0
+          },
+          "facts": {
+            "active_ventures": 0,
+            "completed_ventures": 0,
+            "counting_endorsements": 0,
+            "hire": false,
+            "max_level": 0,
+            "peer_verified_entries": 0,
+            "teacher_endorsement": false
+          },
+          "momentum": {
+            "citizenship": {
+              "confirmations": 0,
+              "joins": 0,
+              "points": 0
+            },
+            "consistency": {
+              "points": 0,
+              "weeks": 0
+            },
+            "content": {
+              "average": 0,
+              "points": 0,
+              "posts": []
+            },
+            "decay": {
+              "exam_days": 0,
+              "exam_today": false,
+              "factor": 1,
+              "inactive_days": 0,
+              "last_active": null,
+              "weeks": 0
+            },
+            "peak": 0,
+            "points": 0,
+            "raw": 0
+          },
+          "proof": 0,
+          "record": {
+            "items": [],
+            "points": 0,
+            "societies": []
+          },
+          "skills": {
+            "bonus": false,
+            "categories": 0,
+            "items": [],
+            "points": 0
+          },
+          "total": 0,
+          "work": {
+            "points": 0,
+            "prs": {
+              "count": 0,
+              "items": [],
+              "points": 0
+            },
+            "ventures": []
+          }
+        },
+        "formula_version": 2,
+        "held": false,
+        "held_total": null,
+        "momentum": "0.00",
+        "momentum_peak": "0.00",
+        "percentile": null,
+        "proof": "0.00",
+        "ranked": false,
+        "tier": null,
+        "tier_met": null,
+        "total": "0.00",
+        "user_id": "<uuid:1>"
+      }
+    ],
+    "audit": [
+      {
+        "action": "ranking_flag.claim",
+        "after": {
+          "claimed_by": "<uuid:6>"
+        },
+        "before": {
+          "claimed_by": null
+        },
+        "reason": "claimed to review",
+        "staff_id": "<uuid:6>",
+        "target_type": "anti_gaming_flag"
+      },
+      {
+        "action": "ranking_flag.claim",
+        "after": {
+          "claimed_by": "<uuid:6>"
+        },
+        "before": {
+          "claimed_by": null
+        },
+        "reason": "claimed to review",
+        "staff_id": "<uuid:6>",
+        "target_type": "anti_gaming_flag"
+      },
+      {
+        "action": "ranking_flag.release",
+        "after": {
+          "claimed_by": null
+        },
+        "before": {
+          "claimed_by": "<uuid:6>"
+        },
+        "reason": "released",
+        "staff_id": "<uuid:6>",
+        "target_type": "anti_gaming_flag"
+      },
+      {
+        "action": "ranking_flag.uphold",
+        "after": {
+          "adjustment": null,
+          "status": "upheld"
+        },
+        "before": {
+          "kind": "ring",
+          "status": "open"
+        },
+        "reason": "Traded endorsements",
+        "staff_id": "<uuid:6>",
+        "target_type": "anti_gaming_flag"
+      }
+    ],
+    "claim": {
+      "ok": true,
+      "value": null
+    },
+    "claim_again": {
+      "ok": true,
+      "value": null
+    },
+    "flags_after": [
+      {
+        "applied": false,
+        "claimed_by": null,
+        "detail": {
+          "window_days": 180
+        },
+        "endorsement_ids": [
+          "<uuid:5>",
+          "<uuid:2>"
+        ],
+        "kind": "ring",
+        "members": [
+          "<uuid:4>",
+          "<uuid:1>"
+        ],
+        "reason": "Traded endorsements",
+        "reviewed_by": "<uuid:6>",
+        "status": "upheld",
+        "user_id": null
+      }
+    ],
+    "member_case": {
+      "ok": true,
+      "value": {
+        "claimed_by_me": null,
+        "claimed_by_name": null,
+        "created_at": "<time>",
+        "detail": {
+          "window_days": 180
+        },
+        "endorsements": [
+          {
+            "created_at": "<time>",
+            "deliverables": 0,
+            "endorsee": "Ref Q6 Kestrel",
+            "endorser": "Ref Q5 Kestrel",
+            "hidden": false,
+            "id": "<uuid:5>",
+            "skill": "Python",
+            "venture": "Ring venture",
+            "venture_status": "in_progress"
+          },
+          {
+            "created_at": "<time>",
+            "deliverables": 0,
+            "endorsee": "Ref Q5 Kestrel",
+            "endorser": "Ref Q6 Kestrel",
+            "hidden": false,
+            "id": "<uuid:2>",
+            "skill": "Python",
+            "venture": "Ring venture",
+            "venture_status": "in_progress"
+          }
+        ],
+        "id": "<uuid:7>",
+        "is_member": true,
+        "kind": "ring",
+        "members": [
+          {
+            "name": "Ref Q5 Kestrel",
+            "tier": null,
+            "total": 0,
+            "university": "Ranking Golden University A",
+            "user_id": "<uuid:4>",
+            "username": "rk_q5"
+          },
+          {
+            "name": "Ref Q6 Kestrel",
+            "tier": null,
+            "total": 0,
+            "university": "Ranking Golden University A",
+            "user_id": "<uuid:1>",
+            "username": "rk_q6"
+          }
+        ],
+        "reason": null,
+        "reviewed_at": null,
+        "reviewer_name": null,
+        "status": "open"
+      }
+    },
+    "member_claim": {
+      "code": "42501",
+      "message": "you can't review a flag about yourself",
+      "ok": false
+    },
+    "other_claim": {
+      "code": "42501",
+      "message": "you can't review a flag about yourself",
+      "ok": false
+    },
+    "release": {
+      "ok": true,
+      "value": null
+    },
+    "uphold": {
+      "ok": true,
+      "value": null
+    }
+  }
+}

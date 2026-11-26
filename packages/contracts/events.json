@@ -111,7 +111,8 @@
       "producers": [
         "identity",
         "people",
-        "work"
+        "work",
+        "ranking"
       ],
       "consumers": [
         "trust"
@@ -167,7 +168,8 @@
       "consumers": [
         "content",
         "messaging",
-        "work"
+        "work",
+        "ranking"
       ],
       "payload": "user_a, user_b, friends"
     },
@@ -187,7 +189,8 @@
       "consumers": [
         "content",
         "messaging",
-        "work"
+        "work",
+        "ranking"
       ],
       "payload": "blocker, blocked, blocked flag"
     },
@@ -261,8 +264,7 @@
     "milestone.reached": {
       "producers": [
         "work",
-        "credentials",
-        "ranking"
+        "credentials"
       ],
       "consumers": [
         "people"
@@ -272,8 +274,7 @@
     "milestone.cleared": {
       "producers": [
         "work",
-        "credentials",
-        "ranking"
+        "credentials"
       ],
       "consumers": [
         "people"
@@ -296,9 +297,10 @@
       ],
       "consumers": [
         "people",
-        "content"
+        "content",
+        "ranking"
       ],
-      "payload": "user_id, skill_id, skill_label (catalogue), level"
+      "payload": "user_id, skill_id, skill_label (catalogue), level; category (catalogue, W6: ranking span bonus)"
     },
     "group.member_changed": {
       "producers": [
@@ -320,7 +322,8 @@
       ],
       "consumers": [
         "notify",
-        "trust"
+        "trust",
+        "ranking"
       ],
       "payload": "post_id, author_id, type, audience, university_id, society_id, venture_id (W3); notify tells society followers (W9), trust forwards analytics (W10)"
     },
@@ -330,7 +333,8 @@
       ],
       "consumers": [
         "media",
-        "trust"
+        "trust",
+        "ranking"
       ],
       "payload": "post_id, author_id, reason (deleted | removed | account_deleted), media_paths; media deletes the files (W9)"
     },
@@ -349,9 +353,10 @@
         "content"
       ],
       "consumers": [
-        "trust"
+        "trust",
+        "ranking"
       ],
-      "payload": "post_id, user_id, dimension, answer (analytics, W10)"
+      "payload": "post_id, user_id, dimension, answer (analytics, W10); weight (the answer weight, W6: ranking quality index)"
     },
     "venture.updated": {
       "producers": [
@@ -361,7 +366,8 @@
         "content",
         "messaging",
         "notify",
-        "trust"
+        "trust",
+        "ranking"
       ],
       "payload": "venture_id, owner_id, university_id, status, visibility; previous_owner_id, previous_status, actor_id when they apply (W5): content's invite checks, messaging's team chat and pins, notify's ownership and closing notices (W9), trust's analytics (W10)"
     },
@@ -384,16 +390,17 @@
         "credentials",
         "notify"
       ],
-      "payload": "venture_id, owner_id, university_id, visibility, member_ids (W5): content's Shipped post, ranking facts, a Record entry, notify's completed and endorse-your-teammates notices"
+      "payload": "venture_id, owner_id, university_id, visibility, member_ids (W5): content's Shipped post, ranking facts, a Record entry, notify's completed and endorse-your-teammates notices; completion {completed_at, team_size, weeks, skill_tags, deliverables, verified_members, members [{user_id, github_days, verified_entries, unconfirmed_entries}]}, frozen at completion (W6: ranking scores Work from it)"
     },
     "society.status_changed": {
       "producers": [
         "community"
       ],
       "consumers": [
-        "content"
+        "content",
+        "ranking"
       ],
-      "payload": "society_id, university_id, status (W7): posting as a verified society"
+      "payload": "society_id, university_id, status (W7): posting as a verified society; verified_at (W7 for W6: the Record hold)"
     },
     "university_seat.changed": {
       "producers": [
@@ -427,9 +434,10 @@
         "trust"
       ],
       "consumers": [
-        "content"
+        "content",
+        "ranking"
       ],
-      "payload": "key, version, value (W10); content keeps feed.* and survey.*"
+      "payload": "key, version, value (W10); content keeps feed.* and survey.*; ranking keeps ranking.formula, feed.score and teacher.limits (W6)"
     },
     "moderation.removed": {
       "producers": [
@@ -503,7 +511,8 @@
       ],
       "consumers": [
         "notify",
-        "trust"
+        "trust",
+        "ranking"
       ],
       "payload": "application_id, venture_id, candidate_id, owner_id, status (pending | accepted | declined | withdrawn | closed), previous_status (W5): notify's application notices (W9), trust's analytics (W10)"
     },
@@ -545,7 +554,7 @@
         "media",
         "ranking"
       ],
-      "payload": "credential_id, user_id, status (approved | rejected | expired | deleted | file_removed), file_path when the file can go (W5): notify's review and expiry notices, media deletes the file (W9), ranking (W6)"
+      "payload": "credential_id, user_id, status (approved | rejected | expired | deleted | file_removed), file_path when the file can go (W5): notify's review and expiry notices, media deletes the file (W9), ranking (W6); expires_on, recognised, created_at with every status but deleted (W6)"
     },
     "code_check.changed": {
       "producers": [
@@ -603,6 +612,100 @@
         "ranking"
       ],
       "payload": "kind (swap_repeat | swap_ring), members, swap_ids or window_days (W5): ranking's anti-gaming flags, deduplicated there (W6)"
+    },
+    "contribution.logged": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "ranking"
+      ],
+      "payload": "contribution_id, venture_id, user_id, source (manual | github), before_venture, corrects_id, created_at (W5 for W6): ranking verified entries, consistency, decay"
+    },
+    "contribution.confirmed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "ranking"
+      ],
+      "payload": "contribution_id, confirmer_id, confirmed_at (W5 for W6): ranking verified entries, citizenship"
+    },
+    "pull_request.recorded": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "ranking"
+      ],
+      "payload": "user_id, repo_id, number, repo (owner/name), merged_at, counted (W5 for W6): ranking Work and consistency"
+    },
+    "tier.changed": {
+      "producers": [
+        "ranking"
+      ],
+      "consumers": [
+        "work",
+        "notify",
+        "trust"
+      ],
+      "payload": "user_id, tier (or null), ranked, previous_tier (W6): work keeps paths seniors (work.ranking_tiers), notify a tier-up notice (W9), trust analytics (W10)"
+    },
+    "ranking.published": {
+      "producers": [
+        "ranking"
+      ],
+      "consumers": [
+        "trust"
+      ],
+      "payload": "run_on, formula_version, students, held (W6): /ops metrics (W10)"
+    },
+    "ranking_flag.changed": {
+      "producers": [
+        "ranking"
+      ],
+      "consumers": [
+        "work"
+      ],
+      "payload": "flag_id, kind (ring | rapid_gain | swap_ring | swap_repeat), members, status (open | cleared | upheld) (W6): work peer-review check leaves out open and upheld ring and swap flags"
+    },
+    "record.sealed": {
+      "producers": [
+        "credentials"
+      ],
+      "consumers": [
+        "ranking",
+        "notify"
+      ],
+      "payload": "entry_id, user_id, kind, issuer_type, issuer_id, occurred_on, signed_at, evidence {role, place, entrants, minutes} (W8): ranking Record component (W6), notify a new-entry notice (W9)"
+    },
+    "record.revoked": {
+      "producers": [
+        "credentials"
+      ],
+      "consumers": [
+        "ranking",
+        "notify"
+      ],
+      "payload": "entry_id, status (revoked | superseded) (W8): ranking drops it (W6), notify the revocation notice (W9)"
+    },
+    "case.resolved": {
+      "producers": [
+        "trust"
+      ],
+      "consumers": [
+        "ranking"
+      ],
+      "payload": "case_id, owner_id, severity (low | medium | high, or null when dismissed), staff_id, resolved_at (W10): ranking penalties for 12 months (W6)"
+    },
+    "case.overturned": {
+      "producers": [
+        "trust"
+      ],
+      "consumers": [
+        "ranking"
+      ],
+      "payload": "case_id (W10): an appeal overturned the decision; ranking removes its penalty (W6)"
     }
   }
 }

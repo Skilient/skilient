@@ -18,9 +18,11 @@ import { recomputeUserSkills } from "./skills";
  * | friendship.changed  | people   | can_view_profile on team lists                                             |
  * | block.changed       | people   | blocked owners, hidden members, refused invites and endorsements           |
  * | user.deleted        | identity | the user's rows, as the stack's cascades did; user.deletion_confirmed      |
+ * | tier.changed        | ranking  | work.ranking_tiers (compute_paths' seniors)                                |
+ * | ranking_flag.changed| ranking  | work.ranking_flags (the proof-task peer-review check)                      |
  */
 export const COPIES_CONSUMER = "work.copies";
-export const COPY_EVENTS = ["user.created", "profile.updated", "friendship.changed", "block.changed", "user.deleted"] as const;
+export const COPY_EVENTS = ["user.created", "profile.updated", "friendship.changed", "block.changed", "user.deleted", "tier.changed", "ranking_flag.changed"] as const;
 
 const OWNER: Record<(typeof COPY_EVENTS)[number], readonly string[]> = {
   "user.created": ["svc_identity"],
@@ -28,6 +30,8 @@ const OWNER: Record<(typeof COPY_EVENTS)[number], readonly string[]> = {
   "friendship.changed": ["svc_people"],
   "block.changed": ["svc_people"],
   "user.deleted": ["svc_identity"],
+  "tier.changed": ["svc_ranking"],
+  "ranking_flag.changed": ["svc_ranking"],
 };
 
 const id = z.uuid();
@@ -47,6 +51,8 @@ const S = {
   }),
   friendship: z.object({ user_a: id, user_b: id, friends: z.boolean() }),
   block: z.object({ blocker_id: id, blocked_id: id, blocked: z.boolean() }),
+  tier: z.object({ user_id: id, tier: z.enum(["raw", "spark", "flare", "shine", "radiant", "luminary"]).nullable(), ranked: z.boolean() }),
+  flag: z.object({ flag_id: id, kind: z.string().max(40), members: z.array(id).max(50), status: z.enum(["open", "cleared", "upheld"]) }),
 };
 
 export type CopyOutcome = "applied" | "ignored" | "wrong_producer" | "invalid_payload" | "unknown_type";
@@ -100,6 +106,27 @@ export async function applyCopyEvent(tx: Tx, event: Pick<LoggedEvent, "type" | "
         await swapsOnBlock(tx, p.blocker_id, p.blocked_id);
       }
       else await tx`delete from work.blocks where blocker_id = ${p.blocker_id} and blocked_id = ${p.blocked_id}`;
+      return "applied";
+    }
+    case "tier.changed": {
+      const p = parse(S.tier);
+      if (!p) return "invalid_payload";
+      if (p.tier === null) await tx`delete from work.ranking_tiers where user_id = ${p.user_id}`;
+      else
+        await tx`
+          insert into work.ranking_tiers (user_id, tier, ranked) values (${p.user_id}, ${p.tier}, ${p.ranked})
+          on conflict (user_id) do update set tier = excluded.tier, ranked = excluded.ranked, updated_at = now()`;
+      return "applied";
+    }
+    case "ranking_flag.changed": {
+      const p = parse(S.flag);
+      if (!p) return "invalid_payload";
+      if (!["ring", "swap_ring", "swap_repeat"].includes(p.kind)) return "ignored";
+      if (p.status === "cleared") await tx`delete from work.ranking_flags where flag_id = ${p.flag_id}`;
+      else
+        await tx`
+          insert into work.ranking_flags (flag_id, kind, members, status) values (${p.flag_id}, ${p.kind}, ${p.members}::uuid[], ${p.status})
+          on conflict (flag_id) do update set members = excluded.members, status = excluded.status, updated_at = now()`;
       return "applied";
     }
     case "user.deleted": {

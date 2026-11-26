@@ -12,7 +12,7 @@ export const callers: CallerPolicy<typeof IdentityService> = {
   getGateState: WEB,
   signinStatus: WEB,
   backupCodesRemaining: WEB,
-  staffRolesOf: ["web", "people", "content", "trust", "work", "credentials", "market"],
+  staffRolesOf: ["web", "people", "content", "trust", "work", "ranking", "credentials", "market"],
   currentAgreementVersion: WEB,
   opsStaff: WEB,
   getSignupDetails: ["people"],

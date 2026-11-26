@@ -1,0 +1,253 @@
+syntax = "proto3";
+
+package skilient.ranking.v1;
+
+// ranking: the score formula, the nightly run, tiers, leaderboards, the score page, anti-gaming flags,
+// adjustments, snapshots and exam periods (docs/azure/prd.md, service catalogue; docs/azure/ranking-function-bins.md
+// maps every ported SQL function to a method here).
+//
+// Refusals carry a short snake_case reason in the x-refusal metadata (services/ranking/src/refusals.ts lists each
+// with today's wording for web). Times are RFC 3339 strings and dates YYYY-MM-DD; an empty string means none.
+// Names, usernames, avatars and university names are people's: methods return ids, and web asks people's
+// ProfileCards for the faces. Tiers: raw | spark | flare | shine | radiant | luminary ("" for none).
+// Others see rank, tier and weekly change, never points; the owner sees every component on the score page.
+service RankingService {
+  // ---- Students ----
+
+  // Leaderboard is one page of a board (50 after a position): the reader's university (optionally one
+  // department and one batch) or global. Opted-out, unranked and deleting students are left out, and blocked
+  // people skipped (ranks keep their gaps).
+  rpc Leaderboard(LeaderboardRequest) returns (LeaderboardResponse);
+  // LeaderboardMe is the reader's own place on a board, pinned above it.
+  rpc LeaderboardMe(LeaderboardMeRequest) returns (LeaderboardMeResponse);
+  // LeaderboardFilters lists the departments (as people's department hashes) and batches of the reader's
+  // university, for the board's filters.
+  rpc LeaderboardFilters(LeaderboardFiltersRequest) returns (LeaderboardFiltersResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // MyScore is the score page: the published components (JSON), the change since the last snapshot, decay, the
+  // exam pause, a held gain and what the next tier needs.
+  rpc MyScore(MyScoreRequest) returns (MyScoreResponse);
+  // TiersFor is the tier of each person on a page of cards (at most 200), for a signed-in reader; blocked people
+  // and those without a tier are left out. One call per page.
+  rpc TiersFor(TiersForRequest) returns (TiersForResponse);
+  // TiersOf is the published tier of each person for services that show it without a reader (the CV, talent
+  // search, /ops). At most 500.
+  rpc TiersOf(TiersOfRequest) returns (TiersOfResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ---- Staff: ranking flags (trust reviewers, two-factor; every write audited before and after) ----
+
+  // RankingFlagQueue lists open flags, oldest first, or those reviewed in the last 30 days ("reviewed").
+  rpc RankingFlagQueue(RankingFlagQueueRequest) returns (RankingFlagQueueResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // RankingFlagCase is one flag with its members' published scores and the endorsements behind it.
+  rpc RankingFlagCase(RankingFlagCaseRequest) returns (RankingFlagCaseResponse);
+  // ClaimRankingFlag claims (or releases) a flag to review; never one about yourself.
+  rpc ClaimRankingFlag(ClaimRankingFlagRequest) returns (ClaimRankingFlagResponse);
+  // ReviewRankingFlag clears or upholds a claimed flag. An upheld rapid gain becomes a negative adjustment.
+  rpc ReviewRankingFlag(ReviewRankingFlagRequest) returns (ReviewRankingFlagResponse);
+
+  // ---- Staff: exam periods (accounts staff, two-factor; audited) ----
+
+  rpc ExamPeriodList(ExamPeriodListRequest) returns (ExamPeriodListResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // AddExamPeriod adds a university's exam period: at most 45 days, no overlap.
+  rpc AddExamPeriod(AddExamPeriodRequest) returns (AddExamPeriodResponse);
+  rpc RemoveExamPeriod(RemoveExamPeriodRequest) returns (RemoveExamPeriodResponse);
+
+  // ---- The university portal (market only: it checks the admin's seat and keeps the university's audit) ----
+
+  rpc UniExamPeriods(UniExamPeriodsRequest) returns (UniExamPeriodsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // UniAddExamPeriod: at most 45 days, no overlap, at most 90 exam days a calendar year.
+  rpc UniAddExamPeriod(UniAddExamPeriodRequest) returns (UniAddExamPeriodResponse);
+  rpc UniRemoveExamPeriod(UniRemoveExamPeriodRequest) returns (UniRemoveExamPeriodResponse);
+}
+
+// scope: university | global.
+message LeaderboardRequest {
+  string scope = 1;
+  optional string department = 2;
+  optional int32 batch = 3;
+  int32 after = 4;
+}
+message BoardRow {
+  int64 place = 1;
+  int64 rank = 2;
+  optional int64 weekly_change = 3;
+  string user_id = 4;
+  string university_id = 5;
+  string tier = 6;
+  bool is_me = 7;
+}
+message LeaderboardResponse {
+  repeated BoardRow rows = 1;
+}
+
+message LeaderboardMeRequest {
+  string scope = 1;
+  optional string department = 2;
+  optional int32 batch = 3;
+}
+message LeaderboardMeResponse {
+  bool opted_out = 1;
+  bool ranked = 2;
+  bool scored = 3;
+  optional double total = 4;
+  string tier = 5;
+  bool held = 6;
+  optional int64 rank = 7;
+  optional int64 place = 8;
+  optional int64 weekly_change = 9;
+  int64 size = 10;
+}
+
+message LeaderboardFiltersRequest {}
+message LeaderboardFiltersResponse {
+  repeated string department_hashes = 1;
+  repeated int32 batches = 2;
+}
+
+message MyScoreRequest {}
+// score_json: {scored, formula_version, components, total, proof, momentum, adjustments, ranked, tier, tier_met,
+// percentile, below_since, held, held_total, published_at, last_week, exam, next, names: {skills},
+// evidence: {ventures, people, credentials, record, posts}} (ids web resolves with their owners), or
+// {scored: false, next, formula_version}.
+message MyScoreResponse {
+  string score_json = 1;
+}
+
+message TiersForRequest {
+  repeated string user_ids = 1;
+}
+message UserTier {
+  string user_id = 1;
+  string tier = 2;
+}
+message TiersForResponse {
+  repeated UserTier tiers = 1;
+}
+
+message TiersOfRequest {
+  repeated string user_ids = 1;
+}
+message PublishedTier {
+  string user_id = 1;
+  string tier = 2;
+  bool ranked = 3;
+}
+message TiersOfResponse {
+  repeated PublishedTier tiers = 1;
+}
+
+// status: open | reviewed.
+message RankingFlagQueueRequest {
+  string status = 1;
+}
+// kind: ring | rapid_gain | swap_ring | swap_repeat. status: open | cleared | upheld.
+message RankingFlag {
+  string id = 1;
+  string kind = 2;
+  repeated string member_ids = 3;
+  optional double gain = 4;
+  optional double from_total = 5;
+  optional double to_total = 6;
+  int32 endorsements = 7;
+  string status = 8;
+  string claimed_by = 9;
+  bool claimed_by_me = 10;
+  string created_at = 11;
+  string reviewed_at = 12;
+}
+message RankingFlagQueueResponse {
+  repeated RankingFlag flags = 1;
+}
+
+message RankingFlagCaseRequest {
+  string id = 1;
+}
+// case_json: {id, kind, status, detail, reason, created_at, reviewed_at, claimed_by, claimed_by_me, is_member,
+// reviewed_by, members: [{user_id, university_id, total, tier}], endorsements: [{id, endorser_id, endorsee_id,
+// skill_id, skill_label, venture_id, venture_status, deliverables, hidden, created_at}]}; empty when unknown.
+message RankingFlagCaseResponse {
+  bool found = 1;
+  string case_json = 2;
+}
+
+message ClaimRankingFlagRequest {
+  string id = 1;
+  bool claim = 2;
+}
+message ClaimRankingFlagResponse {}
+
+message ReviewRankingFlagRequest {
+  string id = 1;
+  bool uphold = 2;
+  string reason = 3;
+}
+message ReviewRankingFlagResponse {}
+
+message ExamPeriod {
+  string id = 1;
+  string university_id = 2;
+  string starts_on = 3;
+  string ends_on = 4;
+  string reason = 5;
+  string created_by = 6;
+  string created_at = 7;
+}
+
+message ExamPeriodListRequest {}
+message ExamPeriodListResponse {
+  repeated ExamPeriod periods = 1;
+}
+
+message AddExamPeriodRequest {
+  string university_id = 1;
+  string starts_on = 2;
+  string ends_on = 3;
+  string reason = 4;
+}
+message AddExamPeriodResponse {
+  string id = 1;
+}
+
+message RemoveExamPeriodRequest {
+  string id = 1;
+  string reason = 2;
+}
+message RemoveExamPeriodResponse {}
+
+message UniExamPeriodsRequest {
+  string university_id = 1;
+}
+message UniExamPeriodsResponse {
+  repeated ExamPeriod periods = 1;
+}
+
+// actor_id: the university admin market checked.
+message UniAddExamPeriodRequest {
+  string university_id = 1;
+  string actor_id = 2;
+  string starts_on = 3;
+  string ends_on = 4;
+  string reason = 5;
+}
+message UniAddExamPeriodResponse {
+  string id = 1;
+}
+
+message UniRemoveExamPeriodRequest {
+  string university_id = 1;
+  string id = 2;
+  string reason = 3;
+}
+message UniRemoveExamPeriodResponse {
+  string starts_on = 1;
+  string ends_on = 2;
+}

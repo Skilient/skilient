@@ -170,7 +170,7 @@ One Postgres server holds a separate schema for each service, and the database i
 
 ### Layout
 
-- **Server:** Azure Database for PostgreSQL Flexible Server, PostgreSQL 17, Central India, one database named `skilient`.
+- **Server:** Azure Database for PostgreSQL Flexible Server, PostgreSQL 17, UAE North, one database named `skilient`.
 - **Schemas:** `identity`, `people`, `content`, `messaging`, `work`, `ranking`, `community`, `credentials`, `notify`, `trust`, `market`, `billing`, `media`, and `platform` for the shared event log and job queue.
 - **Roles:** one login role per service, with rights on its own schema and on `platform` only. Row-level security stays on every table as default-deny, with one policy: the owning role.
 - **Keys:** every id is a UUID. New rows use UUIDv7, so recent rows sit together in the index. Existing ids are kept.
@@ -334,7 +334,7 @@ Speed comes from doing less per request: no database call to check the session, 
 
 **Network**
 
-- Everything in one region, Central India.
+- Everything in one region, UAE North (decision 2026-11-26; it replaced Central India, which measured about 200 ms round trip from Pakistan against about 65 ms to Microsoft's UAE edge).
 - HTTP/2 with kept-alive connections between containers; binary Protobuf payloads.
 - Co-hosted services call each other as functions, with no network hop at all.
 
@@ -364,7 +364,7 @@ Speed comes from doing less per request: no database call to check the session, 
 
 ## Azure resources and deployment layout
 
-The floor uses five kinds of Azure resource in one resource group in Central India; growth adds containers and a bigger database, never a new kind of resource before 20,000 accounts.
+The floor uses five kinds of Azure resource in one resource group in UAE North; growth adds containers and a bigger database, never a new kind of resource before 20,000 accounts.
 
 ### Resources at the floor
 
@@ -530,7 +530,7 @@ Fourteen services are more moving parts than one database. Three things keep tha
 
 ## Cost and capacity
 
-At beta size the bill is about $57 a month and holds 30 people online comfortably, about 75 for a few hours. All figures are US dollars a month at list price in Central India, from `floor_model.py`.
+At beta size the bill is about $57 a month and holds 30 people online comfortably, about 75 for a few hours. All figures are US dollars a month at list price in Central India, from `floor_model.py`. The floor now runs in UAE North (decision 2026-11-26), where Container Apps prices are the same and B1ms is $0.0200 an hour instead of $0.0245 (Azure retail prices API, 2026-11-26), about $3.30 a month less; the tables are not re-run.
 
 ### The floor bill
 

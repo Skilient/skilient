@@ -9,6 +9,9 @@ param pgAdminLogin string
 @description('Availability zone for the server; empty lets Azure choose.')
 param pgZone string = ''
 
+@description('false skips the PostgreSQL server and everything on it (configurations, database). For while the subscription cannot create the size yet.')
+param deployDatabase bool = true
+
 @secure()
 param pgAdminPassword string
 
@@ -29,7 +32,7 @@ resource dnsLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-
   }
 }
 
-resource pg 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
+resource pg 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = if (deployDatabase) {
   name: '${prefix}-pg'
   location: location
   sku: {
@@ -77,7 +80,7 @@ param pgExtensions string = 'PG_TRGM,UNACCENT,BTREE_GIN,PGCRYPTO,PG_STAT_STATEME
 // Azure only lets a database create allow-listed extensions (decision 2026-11-25, W2 Q6). pg_stat_statements
 // also needs `shared_preload_libraries` to include it, which takes a server restart; neither has been
 // compiled or deployed yet (decision 2026-11-22: Bicep is uncompiled in the sandbox).
-resource pgExtensionsConfig 'Microsoft.DBforPostgreSQL/flexibleServers/configurations@2024-08-01' = {
+resource pgExtensionsConfig 'Microsoft.DBforPostgreSQL/flexibleServers/configurations@2024-08-01' = if (deployDatabase) {
   parent: pg
   name: 'azure.extensions'
   properties: {
@@ -86,7 +89,7 @@ resource pgExtensionsConfig 'Microsoft.DBforPostgreSQL/flexibleServers/configura
   }
 }
 
-resource pgPreload 'Microsoft.DBforPostgreSQL/flexibleServers/configurations@2024-08-01' = {
+resource pgPreload 'Microsoft.DBforPostgreSQL/flexibleServers/configurations@2024-08-01' = if (deployDatabase) {
   parent: pg
   name: 'shared_preload_libraries'
   properties: {
@@ -96,7 +99,7 @@ resource pgPreload 'Microsoft.DBforPostgreSQL/flexibleServers/configurations@202
   dependsOn: [pgExtensionsConfig]
 }
 
-resource db 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2024-08-01' = {
+resource db 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2024-08-01' = if (deployDatabase) {
   parent: pg
   name: 'skilient'
   properties: {
@@ -136,6 +139,6 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   }
 }
 
-output postgresFqdn string = pg.properties.fullyQualifiedDomainName
+output postgresFqdn string = deployDatabase ? pg!.properties.fullyQualifiedDomainName : ''
 output storageAccountName string = storage.name
 output keyVaultName string = kv.name

@@ -5,8 +5,8 @@
 
 targetScope = 'resourceGroup'
 
-@description('Azure region. The PRD fixes Central India.')
-param location string = 'centralindia'
+@description('Azure region. UAE North (decision 2026-11-26: Pakistani traffic enters Microsoft\'s network in the UAE; Central India measured about 200 ms round trip from Pakistan).')
+param location string = 'uaenorth'
 
 @description('Resource name prefix. Lowercase letters and digits only.')
 @minLength(3)
@@ -18,7 +18,7 @@ param pgAdminLogin string = 'skilientadmin'
 
 @secure()
 @description('PostgreSQL admin password. Typed at deploy time from the password manager. Never stored in the repo or in GitHub.')
-param pgAdminPassword string
+param pgAdminPassword string = ''
 
 @secure()
 param ghcrToken string = ''
@@ -58,6 +58,9 @@ param deployApps bool = true
 ])
 param pgZone string = ''
 
+@description('false skips the PostgreSQL server (and its database). Use while the subscription is blocked from the size; a later deploy with true adds it. The containers need it, so deployApps=true requires it.')
+param deployDatabase bool = true
+
 @description('GitHub App ID (a number; not secret). Empty leaves GitHub off: work refuses Connect GitHub and the harvest job does nothing.')
 param githubAppId string = ''
 
@@ -93,10 +96,11 @@ module data 'modules/data.bicep' = {
     pgAdminLogin: pgAdminLogin
     pgAdminPassword: pgAdminPassword
     pgZone: pgZone
+    deployDatabase: deployDatabase
   }
 }
 
-module apps 'modules/apps.bicep' = if (deployApps) {
+module apps 'modules/apps.bicep' = if (deployApps && deployDatabase) {
   name: 'apps'
   params: {
     location: location
@@ -148,7 +152,7 @@ resource budget 'Microsoft.Consumption/budgets@2023-05-01' = {
   }
 }
 
-output webFqdn string = deployApps ? apps!.outputs.webFqdn : ''
-output realtimeFqdn string = deployApps ? apps!.outputs.realtimeFqdn : ''
+output webFqdn string = deployApps && deployDatabase ? apps!.outputs.webFqdn : ''
+output realtimeFqdn string = deployApps && deployDatabase ? apps!.outputs.realtimeFqdn : ''
 output postgresFqdn string = data.outputs.postgresFqdn
 output keyVaultName string = data.outputs.keyVaultName

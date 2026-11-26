@@ -21,7 +21,7 @@ This branch (`azure`) moves the backend from Supabase to Azure. Until the cutove
 - Node 22, TypeScript strict, pnpm. Monorepo: `apps/web` (the Next.js app, unchanged), `services/<name>/`, `jobs/`, `packages/`, `deploy/` (Bicep), `tools/cutover/`, `perf/`.
 - Web: Next.js 16 App Router, React 19, Tailwind CSS v4 (CSS-first, `@theme inline`, no config file). Fonts and icons as in the product spec: Space Grotesk (labels and body), Spectral (belief moments, `font-serif`), JetBrains Mono (proof), Barlow in the CV, Montserrat only in the wordmark. Icons: Phosphor.
 - Backend: 12 domain services (`identity`, `people`, `content`, `messaging`, `work`, `ranking`, `community`, `credentials`, `notify`, `trust`, `market`, `billing`) and 2 platform services (`realtime`, `media`). Express 5 as the HTTP server; ConnectRPC over HTTP/2 with Protobuf contracts, in-memory transport when co-hosted; Zod inside services; `postgres.js` with Kysely; Vitest, Playwright, k6; distroless images.
-- Azure, Central India: Container Apps (`web`, `core-a`, `core-b`, jobs), Azure Database for PostgreSQL Flexible Server (private, virtual network), Blob Storage, Key Vault, Log Analytics with Application Insights, Azure Monitor alerts, budgets. Bicep, deployed by GitHub Actions.
+- Azure, UAE North (decision 2026-11-26): Container Apps (`web`, `core-a`, `core-b`, jobs), Azure Database for PostgreSQL Flexible Server (private, virtual network), Blob Storage, Key Vault, Log Analytics with Application Insights, Azure Monitor alerts, budgets. Bicep, deployed by GitHub Actions.
 - Outside Azure: Cloudflare Free, GitHub Container Registry, Brevo (email), PostHog (EU), Sentry.
 
 ## Never

@@ -9,7 +9,9 @@ The floor from `docs/azure/prd.md`: `web`, `core-a`, `core-b`, `realtime` (Conta
 Run from a machine with Azure CLI 2.x and an account that can create resources in the subscription. Pick the subscription first with `az account set --subscription <name>`.
 
 ```bash
-az group create --name skilient-rg --location centralindia
+# First time only. skilient-rg already exists (its metadata sits in centralindia, which does not
+# matter: resources take their region from the template's location, uaenorth). Do not re-run.
+az group create --name skilient-rg --location uaenorth
 
 # Preview. The password prompt is hidden and the value stays out of shell history.
 printf 'Postgres admin password: '; read -rs PG_PW; echo
@@ -39,6 +41,8 @@ unset PG_PW
 ### Before the images exist: the foundation only
 
 No workflow pushes images to GHCR yet, and only the services image has a Dockerfile (`packages/host/Dockerfile`); `web` and `jobs` have none. Until they exist, deploy everything except the containers with `deployApps=false`: network, monitoring, the database, Key Vault, storage and the budget. This is enough to load secrets into Key Vault. The database runs (and costs) from here on.
+
+While the subscription cannot create the database size yet (`docs/azure/deploy-status.md`), add `-p deployDatabase=false`: everything else is created and no admin password is needed. A later deploy without it adds the server.
 
 ```bash
 # Once per subscription: the resource providers the floor uses.
@@ -86,25 +90,26 @@ VAULT=$(az keyvault list -g "$RG" --query "[?starts_with(name,'skilient-kv-')].n
 [ -n "$VAULT" ] || { echo "No skilient-kv-* vault in $RG: run 'Deploy (first time)' first."; return 1 2>/dev/null || exit 1; }
 VAULT_ID=$(az keyvault show -n "$VAULT" --query id -o tsv)
 
-# The vault uses Azure RBAC: give yourself write access to secrets (once; takes a minute to apply).
+# The vault uses Azure RBAC: give yourself write access to secrets (once per vault). It takes a minute or two
+# to apply: wait before the next lines, or the first upload is refused (ForbiddenByRbac). Each shred runs only
+# if its upload succeeded (&&), so a refused upload never destroys the file.
 az role assignment create --role "Key Vault Secrets Officer" \
   --assignee "$(az ad signed-in-user show --query id -o tsv)" --scope "$VAULT_ID"
 
 # 1. The App's private key: on the App's page, General → Private keys → Generate a private key (a .pem downloads).
-az keyvault secret set --vault-name "$VAULT" --name github-app-private-key \
-  --file ~/Downloads/skilientapp.*.private-key.pem -o none
-shred -u ~/Downloads/skilientapp.*.private-key.pem
+#    Name the exact file: GitHub names it skilientapp.<date>.private-key.pem, and an older key may sit next to it.
+ls -l ~/Downloads/skilientapp.*.private-key.pem
+KEY=~/Downloads/skilientapp.<today, YYYY-MM-DD>.private-key.pem
+az keyvault secret set --vault-name "$VAULT" --name github-app-private-key --file "$KEY" -o none && shred -u "$KEY"; unset KEY
 
 # 2. The App's client secret: General → Client secrets → Generate a new client secret. Paste at the hidden prompt.
 umask 077; printf 'Client secret: '; read -rs CS; echo; printf '%s' "$CS" > "$HOME/.cs.tmp"; unset CS
-az keyvault secret set --vault-name "$VAULT" --name github-app-client-secret --file "$HOME/.cs.tmp" -o none
-shred -u "$HOME/.cs.tmp"
+az keyvault secret set --vault-name "$VAULT" --name github-app-client-secret --file "$HOME/.cs.tmp" -o none && shred -u "$HOME/.cs.tmp"
 
 # 3. The key that seals students' GitHub tokens: 32 random bytes, base64url. Generate once; never rotate casually
 #    (a new key makes every stored token unreadable and students must reconnect).
 umask 077; openssl rand 32 | base64 | tr '+/' '-_' | tr -d '=\n' > "$HOME/.tk.tmp"
-az keyvault secret set --vault-name "$VAULT" --name work-github-token-key --file "$HOME/.tk.tmp" -o none
-shred -u "$HOME/.tk.tmp"
+az keyvault secret set --vault-name "$VAULT" --name work-github-token-key --file "$HOME/.tk.tmp" -o none && shred -u "$HOME/.tk.tmp"
 
 # Check: names only, never values.
 az keyvault secret list --vault-name "$VAULT" --query "[?starts_with(name,'github-') || name=='work-github-token-key'].name" -o tsv

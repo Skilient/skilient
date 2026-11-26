@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package skilient.realtime.v1;
+
+// realtime: holds one WebSocket per visible tab (GET /realtime on the HTTP/1.1 port, upgraded), checks each
+// subscription with the owning service, and forwards what services publish with Postgres NOTIFY on the
+// `realtime` channel (docs/azure/prd.md, "Realtime"). It owns no data. Topics: user:{id} (badges and
+// notifications; the user only), thread:{id} (chat; messaging's CanListen), event:{id} (headcount; community,
+// W7).
+//
+// The socket protocol (JSON text frames): the first frame is {"type":"auth","token":"<access token>"}; then
+// {"type":"subscribe","topic":"thread:<id>"} / {"type":"unsubscribe","topic":...}. The server answers
+// {"type":"ready"}, {"type":"subscribed","topic":...} or {"type":"refused","topic":...,"reason":...}, and
+// delivers {"type":"message","topic":...,"event":...,"payload":{...},"id":"<delivery id>"}.
+service RealtimeService {
+  // Stats is this replica's sockets and subscriptions, for /ops.
+  rpc Stats(StatsRequest) returns (StatsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+}
+
+message StatsRequest {}
+
+message StatsResponse {
+  int32 sockets = 1;
+  int32 subscriptions = 2;
+  int64 delivered = 3;
+}

@@ -1,4 +1,4 @@
-import { appendEvents, rateLimit, uuidv7, type NewEvent } from "@skilient/platform";
+import { appendEvents, publishRealtime, rateLimit, uuidv7, type NewEvent } from "@skilient/platform";
 import { normaliseUsername } from "../domain/profile";
 import { refused } from "../refusals";
 import { canViewSql, requireOnboarded } from "./profiles";
@@ -71,6 +71,7 @@ export async function sendFriendRequest(tx: Tx, me: string | null, username: str
     const [x, y] = pair(me, other);
     await tx`insert into people.friendships (user_id_a, user_id_b) values (${x}, ${y}) on conflict do nothing`;
     await appendEvents(tx, [requestChanged(theirs.id, other, me, "accepted"), friendship(me, other, true)]);
+    await liveFriendsBadge(tx, me);
     return [{ request_id: theirs.id, status: "accepted" }];
   }
   // refuse_if_restricted guarded the insert of a new request (accepting theirs inserts none).
@@ -80,6 +81,7 @@ export async function sendFriendRequest(tx: Tx, me: string | null, username: str
   const done = await tx`insert into people.friend_requests (id, sender_id, receiver_id) values (${id}, ${me}, ${other}) on conflict do nothing`;
   if (done.count !== 1) throw refused("request_exists");
   await appendEvents(tx, [requestChanged(id, me, other, "pending")]);
+  await liveFriendsBadge(tx, other);
   return [{ request_id: id, status: "pending" }];
 }
 
@@ -98,6 +100,7 @@ export async function respondFriendRequest(tx: Tx, me: string | null, requestId:
     events.push(friendship(me, req.sender_id, true));
   }
   await appendEvents(tx, events);
+  await liveFriendsBadge(tx, me);
 }
 
 /** `cancel_friend_request` */
@@ -107,6 +110,16 @@ export async function cancelFriendRequest(tx: Tx, me: string | null, requestId: 
     delete from people.friend_requests where id = ${requestId} and sender_id = ${me} and status = 'pending' returning receiver_id::text`;
   if (!gone) throw refused("request_not_pending");
   await appendEvents(tx, [requestChanged(requestId, me, gone.receiver_id, "cancelled")]);
+  await liveFriendsBadge(tx, gone.receiver_id);
+}
+
+/**
+ * The Friends badge, live (W4): the receiver's pending-request count to their user:{id} topic, sent by realtime
+ * when this transaction commits (the open page updates without a reload).
+ */
+async function liveFriendsBadge(tx: Tx, userId: string): Promise<void> {
+  const [row] = await tx<{ n: number }[]>`select count(*)::int as n from people.friend_requests where receiver_id = ${userId} and status = 'pending'`;
+  await publishRealtime(tx, { topic: `user:${userId}`, event: "badge", payload: { key: "friends", count: row!.n } });
 }
 
 /** `unfriend` */

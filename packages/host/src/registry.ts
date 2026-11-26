@@ -1,7 +1,9 @@
 import type { ServiceModule } from "@skilient/platform";
 import content from "@skilient/content";
 import identity from "@skilient/identity";
+import messaging from "@skilient/messaging";
 import people from "@skilient/people";
+import realtime from "@skilient/realtime";
 import sample from "@skilient/sample";
 import sampleRelay from "@skilient/sample-relay";
 
@@ -9,7 +11,9 @@ import sampleRelay from "@skilient/sample-relay";
 export const registry: Readonly<Record<string, ServiceModule>> = {
   [content.name]: content as unknown as ServiceModule,
   [identity.name]: identity as unknown as ServiceModule,
+  [messaging.name]: messaging as unknown as ServiceModule,
   [people.name]: people as unknown as ServiceModule,
+  [realtime.name]: realtime as unknown as ServiceModule,
   [sample.name]: sample as unknown as ServiceModule,
   [sampleRelay.name]: sampleRelay as unknown as ServiceModule,
 };

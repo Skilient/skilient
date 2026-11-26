@@ -29,4 +29,7 @@ export const callers: CallerPolicy<typeof ContentService> = {
   postInsights: WEB,
   feedPage: WEB,
   visiblePosts: ["web", "messaging", "notify", "trust", "market"],
+  linkPreviews: ["messaging"],
+  queueLinkPreviews: ["messaging"],
+  canListenFeed: ["realtime"],
 };

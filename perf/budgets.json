@@ -483,5 +483,109 @@
   "skilient.content.v1.ContentService/VisiblePosts": {
     "p95Ms": 30,
     "dbTrips": 1
+  },
+  "skilient.content.v1.ContentService/LinkPreviews": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.content.v1.ContentService/QueueLinkPreviews": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.messaging.v1.MessagingService/GetOrCreateDm": {
+    "p95Ms": 40,
+    "dbTrips": 8
+  },
+  "skilient.messaging.v1.MessagingService/MyThreads": {
+    "p95Ms": 60,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/UnreadChatCount": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/VentureChat": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/ThreadPeople": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/MuteThread": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.messaging.v1.MessagingService/MarkThreadRead": {
+    "p95Ms": 40,
+    "dbTrips": 7
+  },
+  "skilient.messaging.v1.MessagingService/DmReceipt": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/SendMessage": {
+    "p95Ms": 150,
+    "dbTrips": 16
+  },
+  "skilient.messaging.v1.MessagingService/EditMessage": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.messaging.v1.MessagingService/DeleteMessage": {
+    "p95Ms": 40,
+    "dbTrips": 7
+  },
+  "skilient.messaging.v1.MessagingService/ThreadMessages": {
+    "p95Ms": 60,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/ToggleReaction": {
+    "p95Ms": 40,
+    "dbTrips": 9
+  },
+  "skilient.messaging.v1.MessagingService/PinMessage": {
+    "p95Ms": 40,
+    "dbTrips": 8
+  },
+  "skilient.messaging.v1.MessagingService/ThreadPins": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/SearchChats": {
+    "p95Ms": 80,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/ShareTargets": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/SharePost": {
+    "p95Ms": 150,
+    "dbTrips": 40
+  },
+  "skilient.messaging.v1.MessagingService/UndoShare": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.messaging.v1.MessagingService/CanListen": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/OpenContactThread": {
+    "p95Ms": 40,
+    "dbTrips": 7
+  },
+  "skilient.messaging.v1.MessagingService/CloseThread": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.realtime.v1.RealtimeService/Stats": {
+    "p95Ms": 10,
+    "dbTrips": 0
+  },
+  "skilient.content.v1.ContentService/CanListenFeed": {
+    "p95Ms": 20,
+    "dbTrips": 1
   }
 }

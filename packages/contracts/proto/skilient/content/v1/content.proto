@@ -82,6 +82,17 @@ service ContentService {
   rpc VisiblePosts(VisiblePostsRequest) returns (VisiblePostsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
+  // LinkPreviews is the cached preview for each URL that has one (links in chat messages; W4).
+  rpc LinkPreviews(LinkPreviewsRequest) returns (LinkPreviewsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // QueueLinkPreviews asks for previews of links not fetched in the last 7 days (links in chat messages; W4).
+  rpc QueueLinkPreviews(QueueLinkPreviewsRequest) returns (QueueLinkPreviewsResponse);
+  // CanListenFeed says whether a user may listen to a feed's live topic: their university's, or the Global
+  // Feed (the all-zero id) for anyone signed in (realtime asks; the new-posts pill; W4).
+  rpc CanListenFeed(CanListenFeedRequest) returns (CanListenFeedResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 message Media {
@@ -380,6 +391,38 @@ message VisiblePostsRequest {
   string viewer_id = 1;
   // At most 100.
   repeated string post_ids = 2;
+}
+
+message LinkPreviewsRequest {
+  // At most 100.
+  repeated string urls = 1;
+}
+
+message LinkPreviewsResponse {
+  message Preview {
+    string url = 1;
+    string title = 2;
+    string description = 3;
+    string image_url = 4;
+    string site_name = 5;
+  }
+  repeated Preview previews = 1;
+}
+
+message QueueLinkPreviewsRequest {
+  // At most 10.
+  repeated string urls = 1;
+}
+
+message QueueLinkPreviewsResponse {}
+
+message CanListenFeedRequest {
+  string user_id = 1;
+  string feed_id = 2;
+}
+
+message CanListenFeedResponse {
+  bool allowed = 1;
 }
 
 message VisiblePostsResponse {

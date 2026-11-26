@@ -8,16 +8,20 @@ import {
   DeletePostResponseSchema,
   EditPostRequestSchema,
   EditPostResponseSchema,
+  QueueLinkPreviewsRequestSchema,
+  QueueLinkPreviewsResponseSchema,
   RsvpEventRequestSchema,
   RsvpEventResponseSchema,
   VotePollRequestSchema,
   VotePollResponseSchema,
 } from "@skilient/contracts/content/v1/content_pb";
-import { callOf } from "@skilient/platform";
+import { callOf, GLOBAL_FEED } from "@skilient/platform";
 import { z } from "zod";
 import type { ApiDeps } from "../deps";
 import { cardRows, cards } from "../store/cards";
 import { canViewPost } from "../store/db";
+import { urlHash } from "../domain/links/url";
+import { queuePreview } from "../store/links";
 import { createPost, deletePost, editPost, listPosts, pinnedAnnouncement, rsvpEvent, votePoll } from "../store/posts";
 import { cardMessage, Ids, meOf, onward, OptionalUuid, parse, restrictedOf, Uuid, write } from "./util";
 
@@ -123,6 +127,29 @@ export function postsApi(deps: ApiDeps): Partial<ServiceImpl<typeof ContentServi
     },
     async pinnedUniversityAnnouncement(_req, ctx) {
       return { postId: (await pinnedAnnouncement(sql, meOf(ctx), true)) ?? "" };
+    },
+    async linkPreviews(req) {
+      const urls = parse(z.array(z.string().max(2000)).max(100), req.urls);
+      if (urls.length === 0) return { previews: [] };
+      const rows = await sql<{ url: string; title: string | null; description: string | null; image_url: string | null; site_name: string | null }[]>`
+        select url, title, description, image_url, site_name from content.link_previews
+         where url_hash = any(${urls.map(urlHash)}::text[]) and status = 'ok'`;
+      return {
+        previews: rows.map((r) => ({ url: r.url, title: r.title ?? "", description: r.description ?? "", imageUrl: r.image_url ?? "", siteName: r.site_name ?? "" })),
+      };
+    },
+    async queueLinkPreviews(req, ctx) {
+      const urls = parse(z.array(z.string().regex(/^https?:\/\/\S+$/).max(2000)).max(10), req.urls);
+      return write(deps, ctx, QueueLinkPreviewsRequestSchema, QueueLinkPreviewsResponseSchema, req, async (tx) => {
+        for (const url of new Set(urls)) await queuePreview(tx, url);
+        return create(QueueLinkPreviewsResponseSchema);
+      });
+    },
+    async canListenFeed(req) {
+      const r = parse(z.object({ userId: Uuid, feedId: Uuid }), req);
+      const [m] = await sql<{ ok: boolean }[]>`
+        select ${r.feedId}::uuid = ${GLOBAL_FEED}::uuid or university_id = ${r.feedId}::uuid as ok from content.members where user_id = ${r.userId}`;
+      return { allowed: m?.ok ?? false };
     },
     async visiblePosts(req) {
       const r = parse(z.object({ viewerId: OptionalUuid, postIds: Ids(100) }), req);

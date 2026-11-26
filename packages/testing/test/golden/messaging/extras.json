@@ -1,0 +1,697 @@
+{
+  "pins": {
+    "deleted_message": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "only the venture owner can pin messages in the team chat",
+        "ok": false
+      }
+    },
+    "fourth_is_refused": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "up to 3 messages can be pinned; unpin one first",
+        "ok": false
+      }
+    },
+    "in_a_dm": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "only the venture owner can pin messages in the team chat",
+        "ok": false
+      }
+    },
+    "non_owner_member": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "only the venture owner can pin messages in the team chat",
+        "ok": false
+      }
+    },
+    "outsider": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "only the venture owner can pin messages in the team chat",
+        "ok": false
+      }
+    },
+    "owner_not_in_the_chat_yet": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "only the venture owner can pin messages in the team chat",
+        "ok": false
+      }
+    },
+    "pin_four_after_unpin": {
+      "changes": {
+        "public.chat_pins": {
+          "added": [
+            {
+              "body": "pin four",
+              "pinned_by": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "pin_one": {
+      "changes": {
+        "public.chat_pins": {
+          "added": [
+            {
+              "body": "pin one",
+              "pinned_by": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "pin_one_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "pin_three": {
+      "changes": {
+        "public.chat_pins": {
+          "added": [
+            {
+              "body": "pin three",
+              "pinned_by": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "pin_two": {
+      "changes": {
+        "public.chat_pins": {
+          "added": [
+            {
+              "body": "pin two",
+              "pinned_by": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "pins_as_amna": {
+      "ok": true,
+      "value": [
+        {
+          "by_amna": true,
+          "excerpt": "pin one"
+        },
+        {
+          "by_amna": false,
+          "excerpt": "pin two"
+        },
+        {
+          "by_amna": true,
+          "excerpt": "pin three"
+        }
+      ]
+    },
+    "pins_as_outsider": {
+      "ok": true,
+      "value": []
+    },
+    "pins_final_as_faiz": {
+      "ok": true,
+      "value": [
+        {
+          "excerpt": "pin two"
+        },
+        {
+          "excerpt": "pin three"
+        },
+        {
+          "excerpt": "pin four"
+        }
+      ]
+    },
+    "pins_not_a_member_of_dm": {
+      "ok": true,
+      "value": []
+    },
+    "pins_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function thread_pins",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function pin_message",
+      "ok": false
+    },
+    "unknown_message": {
+      "code": "42501",
+      "message": "only the venture owner can pin messages in the team chat",
+      "ok": false
+    },
+    "unpin_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "unpin_one": {
+      "changes": {
+        "public.chat_pins": {
+          "added": [],
+          "removed": [
+            {
+              "body": "pin one",
+              "pinned_by": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    }
+  },
+  "reactions": {
+    "add": {
+      "changes": {
+        "public.message_reactions": {
+          "added": [
+            {
+              "body": "react to me",
+              "emoji": "👍",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "add_heart": {
+      "changes": {
+        "public.message_reactions": {
+          "added": [
+            {
+              "body": "react to me",
+              "emoji": "❤️",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "bad_emoji": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "pick one of the six reactions",
+        "ok": false
+      }
+    },
+    "deleted_message": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "that message isn't available",
+        "ok": false
+      }
+    },
+    "empty_emoji": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "pick one of the six reactions",
+        "ok": false
+      }
+    },
+    "group_amna_reacts": {
+      "changes": {
+        "public.message_reactions": {
+          "added": [
+            {
+              "body": "team news",
+              "emoji": "🎉",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "group_bashir_reacts": {
+      "changes": {
+        "public.message_reactions": {
+          "added": [
+            {
+              "body": "team news",
+              "emoji": "🎉",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "group_summary_after_amna_blocks_bashir": {
+      "ok": true,
+      "value": [
+        {
+          "body": "team news",
+          "reactions": [
+            {
+              "count": 1,
+              "emoji": "🎉",
+              "mine": true
+            }
+          ]
+        }
+      ]
+    },
+    "group_summary_as_bashir": {
+      "ok": true,
+      "value": [
+        {
+          "body": "team news",
+          "reactions": [
+            {
+              "count": 1,
+              "emoji": "🎉",
+              "mine": true
+            }
+          ]
+        }
+      ]
+    },
+    "group_summary_as_faiz": {
+      "ok": true,
+      "value": [
+        {
+          "body": "team news",
+          "reactions": [
+            {
+              "count": 2,
+              "emoji": "🎉",
+              "mine": false
+            }
+          ]
+        }
+      ]
+    },
+    "group_summary_before_block": {
+      "ok": true,
+      "value": [
+        {
+          "body": "team news",
+          "reactions": [
+            {
+              "count": 2,
+              "emoji": "🎉",
+              "mine": true
+            }
+          ]
+        }
+      ]
+    },
+    "not_a_member": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "that message isn't available",
+        "ok": false
+      }
+    },
+    "null_emoji": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "pick one of the six reactions",
+        "ok": false
+      }
+    },
+    "other_person_adds": {
+      "changes": {
+        "public.message_reactions": {
+          "added": [
+            {
+              "body": "react to me",
+              "emoji": "😂",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "react_in_the_blocked_dm": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "that message isn't available",
+        "ok": false
+      }
+    },
+    "same_again_takes_it_back": {
+      "changes": {
+        "public.message_reactions": {
+          "added": [],
+          "removed": [
+            {
+              "body": "react to me",
+              "emoji": "👍",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": false
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function toggle_reaction",
+      "ok": false
+    },
+    "summary_after": {
+      "ok": true,
+      "value": [
+        {
+          "body": "react to me",
+          "reactions": [
+            {
+              "count": 2,
+              "emoji": "😂",
+              "mine": true
+            }
+          ]
+        }
+      ]
+    },
+    "summary_as_amna": {
+      "ok": true,
+      "value": [
+        {
+          "body": "react to me",
+          "reactions": [
+            {
+              "count": 1,
+              "emoji": "👍",
+              "mine": true
+            }
+          ]
+        }
+      ]
+    },
+    "summary_as_bashir": {
+      "ok": true,
+      "value": [
+        {
+          "body": "react to me",
+          "reactions": [
+            {
+              "count": 1,
+              "emoji": "👍",
+              "mine": false
+            }
+          ]
+        }
+      ]
+    },
+    "summary_not_a_member": {
+      "ok": true,
+      "value": []
+    },
+    "switch_to_laugh": {
+      "changes": {
+        "public.message_reactions": {
+          "added": [
+            {
+              "body": "react to me",
+              "emoji": "😂",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "body": "react to me",
+              "emoji": "❤️",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": true
+      }
+    },
+    "unknown_message": {
+      "code": "42501",
+      "message": "that message isn't available",
+      "ok": false
+    }
+  },
+  "search": {
+    "after_amna_blocks_bashir": {
+      "ok": true,
+      "value": [
+        {
+          "excerpt": "world cup team meeting",
+          "sender_name": "Faiz Kestrel",
+          "thread_title": "Kestrel Robotics"
+        }
+      ]
+    },
+    "bashir": {
+      "ok": true,
+      "value": [
+        {
+          "excerpt": "world of bashir",
+          "sender_name": "You",
+          "thread_title": "Kestrel Robotics"
+        },
+        {
+          "excerpt": "world cup team meeting",
+          "sender_name": "Faiz Kestrel",
+          "thread_title": "Kestrel Robotics"
+        },
+        {
+          "excerpt": "worldwide plans for friday",
+          "sender_name": "You",
+          "thread_title": "Amna Kestrel"
+        },
+        {
+          "excerpt": "hello world",
+          "sender_name": "Amna Kestrel",
+          "thread_title": "Amna Kestrel"
+        }
+      ]
+    },
+    "case_and_punctuation": {
+      "ok": true,
+      "value": [
+        {
+          "excerpt": "Planning, plans; PLANS!",
+          "sender_name": "You",
+          "thread_title": "Bashir Kestrel"
+        },
+        {
+          "excerpt": "worldwide plans for friday",
+          "sender_name": "Bashir Kestrel",
+          "thread_title": "Bashir Kestrel"
+        }
+      ]
+    },
+    "empty": {
+      "ok": true,
+      "value": []
+    },
+    "no_match": {
+      "ok": true,
+      "value": []
+    },
+    "null_query": {
+      "ok": true,
+      "value": []
+    },
+    "one_letter": {
+      "ok": true,
+      "value": []
+    },
+    "one_thread": {
+      "ok": true,
+      "value": [
+        {
+          "excerpt": "worldwide plans for friday",
+          "sender_name": "Bashir Kestrel",
+          "thread_title": "Bashir Kestrel"
+        },
+        {
+          "excerpt": "hello world",
+          "sender_name": "You",
+          "thread_title": "Bashir Kestrel"
+        }
+      ]
+    },
+    "one_thread_not_mine": {
+      "ok": true,
+      "value": []
+    },
+    "only_symbols": {
+      "ok": true,
+      "value": []
+    },
+    "prefix": {
+      "ok": true,
+      "value": [
+        {
+          "excerpt": "world of bashir",
+          "sender_name": "Bashir Kestrel",
+          "thread_title": "Kestrel Robotics"
+        },
+        {
+          "excerpt": "world cup team meeting",
+          "sender_name": "Faiz Kestrel",
+          "thread_title": "Kestrel Robotics"
+        },
+        {
+          "excerpt": "worldwide plans for friday",
+          "sender_name": "Bashir Kestrel",
+          "thread_title": "Bashir Kestrel"
+        },
+        {
+          "excerpt": "hello world",
+          "sender_name": "You",
+          "thread_title": "Bashir Kestrel"
+        }
+      ]
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function search_chats",
+      "ok": false
+    },
+    "the_other_pair_sees_their_own_chat": {
+      "ok": true,
+      "value": [
+        {
+          "excerpt": "world secret between faiz and erum",
+          "sender_name": "You",
+          "thread_title": "Faiz Kestrel"
+        }
+      ]
+    },
+    "two_letters": {
+      "ok": true,
+      "value": [
+        {
+          "excerpt": "world of bashir",
+          "sender_name": "Bashir Kestrel",
+          "thread_title": "Kestrel Robotics"
+        },
+        {
+          "excerpt": "world cup team meeting",
+          "sender_name": "Faiz Kestrel",
+          "thread_title": "Kestrel Robotics"
+        },
+        {
+          "excerpt": "worldwide plans for friday",
+          "sender_name": "Bashir Kestrel",
+          "thread_title": "Bashir Kestrel"
+        },
+        {
+          "excerpt": "hello world",
+          "sender_name": "You",
+          "thread_title": "Bashir Kestrel"
+        }
+      ]
+    },
+    "two_words": {
+      "ok": true,
+      "value": [
+        {
+          "excerpt": "worldwide plans for friday",
+          "sender_name": "Bashir Kestrel",
+          "thread_title": "Bashir Kestrel"
+        }
+      ]
+    },
+    "whole_word": {
+      "ok": true,
+      "value": [
+        {
+          "excerpt": "world of bashir",
+          "sender_name": "Bashir Kestrel",
+          "thread_title": "Kestrel Robotics"
+        },
+        {
+          "excerpt": "world cup team meeting",
+          "sender_name": "Faiz Kestrel",
+          "thread_title": "Kestrel Robotics"
+        },
+        {
+          "excerpt": "worldwide plans for friday",
+          "sender_name": "Bashir Kestrel",
+          "thread_title": "Bashir Kestrel"
+        },
+        {
+          "excerpt": "hello world",
+          "sender_name": "You",
+          "thread_title": "Bashir Kestrel"
+        }
+      ]
+    }
+  }
+}

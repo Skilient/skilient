@@ -1,0 +1,698 @@
+{
+  "dm_receipt": {
+    "amna_off": {
+      "amna": {
+        "ok": true,
+        "value": "none"
+      },
+      "bashir": {
+        "ok": true,
+        "value": "none"
+      },
+      "outsider": {
+        "ok": true,
+        "value": "none"
+      },
+      "team_chat_as_amna": {
+        "ok": true,
+        "value": "none"
+      }
+    },
+    "bashir_off": {
+      "amna": {
+        "ok": true,
+        "value": "none"
+      },
+      "bashir": {
+        "ok": true,
+        "value": "none"
+      },
+      "outsider": {
+        "ok": true,
+        "value": "none"
+      },
+      "team_chat_as_amna": {
+        "ok": true,
+        "value": "none"
+      }
+    },
+    "both_on": {
+      "amna": {
+        "ok": true,
+        "value": "bashir_last_read"
+      },
+      "bashir": {
+        "ok": true,
+        "value": "amna_last_read"
+      },
+      "outsider": {
+        "ok": true,
+        "value": "none"
+      },
+      "team_chat_as_amna": {
+        "ok": true,
+        "value": "none"
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function dm_receipt",
+      "ok": false
+    }
+  },
+  "get_or_create_dm": {
+    "blocked_friend": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    },
+    "blocked_friend_other_way": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    },
+    "friends_again_same_thread": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": "<uuid:1>"
+      }
+    },
+    "friends_first_time": {
+      "changes": {
+        "public.chat_thread_members": {
+          "added": [
+            {
+              "mute_kind": null,
+              "muted": false,
+              "thread": "dm:<uuid:2>:<uuid:3>",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "mute_kind": null,
+              "muted": false,
+              "thread": "dm:<uuid:2>:<uuid:3>",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.chat_threads": {
+          "added": [
+            {
+              "closed": false,
+              "has_last": false,
+              "thread": "dm:<uuid:2>:<uuid:3>",
+              "type": "dm"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:1>"
+      }
+    },
+    "not_friends": {
+      "code": "42501",
+      "message": "you can message friends, or the people on an application or skill swap you share",
+      "ok": false
+    },
+    "other_side_same_thread": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": "<uuid:1>"
+      }
+    },
+    "same_ids": {
+      "a": true
+    },
+    "self": {
+      "code": "22023",
+      "message": "you can't message yourself",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function get_or_create_dm",
+      "ok": false
+    },
+    "unknown": {
+      "code": "P0002",
+      "message": "no one has that username",
+      "ok": false
+    }
+  },
+  "mark_read": {
+    "after": {
+      "members": [
+        {
+          "read_now": true,
+          "user_id": "<uuid:1>"
+        },
+        {
+          "read_now": true,
+          "user_id": "<uuid:2>"
+        }
+      ],
+      "notifications": [
+        {
+          "is_read": true,
+          "type": "chat_message",
+          "user_id": "<uuid:1>"
+        }
+      ]
+    },
+    "again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "amna_reads": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "before": {
+      "members": [
+        {
+          "read_now": false,
+          "user_id": "<uuid:1>"
+        },
+        {
+          "read_now": true,
+          "user_id": "<uuid:2>"
+        }
+      ],
+      "notifications": [
+        {
+          "is_read": false,
+          "type": "chat_message",
+          "user_id": "<uuid:1>"
+        }
+      ]
+    },
+    "not_a_member": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you're not in this chat",
+        "ok": false
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function mark_thread_read",
+      "ok": false
+    },
+    "unknown_thread": {
+      "code": "42501",
+      "message": "you're not in this chat",
+      "ok": false
+    }
+  },
+  "mute": {
+    "five_again": {
+      "changes": {
+        "public.chat_thread_members": {
+          "added": [
+            {
+              "mute_kind": "until",
+              "muted": true,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "mute_kind": null,
+              "muted": false,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "five_hours": {
+      "changes": {
+        "public.chat_thread_members": {
+          "added": [
+            {
+              "mute_kind": "until",
+              "muted": true,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "mute_kind": null,
+              "muted": false,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "for_ever_8760": {
+      "changes": {
+        "public.chat_thread_members": {
+          "added": [
+            {
+              "mute_kind": "infinity",
+              "muted": true,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "mute_kind": "until",
+              "muted": true,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "minus_one_clears": {
+      "changes": {
+        "public.chat_thread_members": {
+          "added": [
+            {
+              "mute_kind": null,
+              "muted": false,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "mute_kind": "infinity",
+              "muted": true,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "not_a_member": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you're not in this chat",
+        "ok": false
+      }
+    },
+    "null_hours_clears": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function mute_thread",
+      "ok": false
+    },
+    "zero_clears": {
+      "changes": {
+        "public.chat_thread_members": {
+          "added": [
+            {
+              "mute_kind": null,
+              "muted": false,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "mute_kind": "until",
+              "muted": true,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    }
+  },
+  "my_threads": {
+    "mg_amna": {
+      "threads": {
+        "ok": true,
+        "value": [
+          {
+            "last_message": "b3",
+            "last_sender_is_me": false,
+            "muted": false,
+            "title": "Bashir Kestrel",
+            "type": "dm",
+            "unread": 2,
+            "username": "mg_bashir"
+          },
+          {
+            "last_message": "g1",
+            "last_sender_is_me": false,
+            "muted": true,
+            "title": "Kestrel Robotics",
+            "type": "group",
+            "unread": 1,
+            "username": null
+          }
+        ]
+      },
+      "unread_chat_count": {
+        "ok": true,
+        "value": 2
+      }
+    },
+    "mg_bashir": {
+      "threads": {
+        "ok": true,
+        "value": [
+          {
+            "last_message": "b3",
+            "last_sender_is_me": true,
+            "muted": false,
+            "title": "Amna Kestrel",
+            "type": "dm",
+            "unread": 1,
+            "username": "mg_amna"
+          },
+          {
+            "last_message": "Message deleted",
+            "last_sender_is_me": false,
+            "muted": false,
+            "title": "Chaman Wyvern",
+            "type": "dm",
+            "unread": 0,
+            "username": "mg_chaman"
+          },
+          {
+            "last_message": "g1",
+            "last_sender_is_me": false,
+            "muted": false,
+            "title": "Kestrel Robotics",
+            "type": "group",
+            "unread": 1,
+            "username": null
+          }
+        ]
+      },
+      "unread_chat_count": {
+        "ok": true,
+        "value": 2
+      }
+    },
+    "mg_daud": {
+      "threads": {
+        "ok": true,
+        "value": [
+          {
+            "last_message": "Shared a post",
+            "last_sender_is_me": false,
+            "muted": false,
+            "title": "Faiz Kestrel",
+            "type": "dm",
+            "unread": 1,
+            "username": "mg_faiz"
+          }
+        ]
+      },
+      "unread_chat_count": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "mg_erum": {
+      "threads": {
+        "ok": true,
+        "value": [
+          {
+            "last_message": "Image",
+            "last_sender_is_me": true,
+            "muted": false,
+            "title": "Faiz Kestrel",
+            "type": "dm",
+            "unread": 0,
+            "username": null
+          }
+        ]
+      },
+      "unread_chat_count": {
+        "ok": true,
+        "value": 0
+      }
+    },
+    "mg_faiz": {
+      "threads": {
+        "ok": true,
+        "value": [
+          {
+            "last_message": "Shared a post",
+            "last_sender_is_me": true,
+            "muted": false,
+            "title": "Daud Kestrel",
+            "type": "dm",
+            "unread": 0,
+            "username": null
+          },
+          {
+            "last_message": "Image",
+            "last_sender_is_me": false,
+            "muted": false,
+            "title": "Erum Wyvern",
+            "type": "dm",
+            "unread": 1,
+            "username": null
+          }
+        ]
+      },
+      "unread_chat_count": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "signed_out": {
+      "threads": {
+        "code": "42501",
+        "message": "permission denied for function my_threads",
+        "ok": false
+      },
+      "unread_chat_count": {
+        "code": "42501",
+        "message": "permission denied for function unread_chat_count",
+        "ok": false
+      }
+    }
+  },
+  "thread_people": {
+    "after_amna_blocks_bashir": {
+      "dm_as_amna": {
+        "ok": true,
+        "value": []
+      },
+      "dm_as_bashir": {
+        "ok": true,
+        "value": []
+      },
+      "dm_as_outsider": {
+        "ok": true,
+        "value": []
+      },
+      "team_as_amna": {
+        "ok": true,
+        "value": [
+          {
+            "blocked": false,
+            "is_me": true,
+            "name": "Amna Kestrel",
+            "username": "mg_amna"
+          },
+          {
+            "blocked": true,
+            "is_me": false,
+            "name": "Blocked member",
+            "username": null
+          }
+        ]
+      },
+      "team_as_bashir": {
+        "ok": true,
+        "value": [
+          {
+            "blocked": false,
+            "is_me": true,
+            "name": "Bashir Kestrel",
+            "username": "mg_bashir"
+          },
+          {
+            "blocked": true,
+            "is_me": false,
+            "name": "Blocked member",
+            "username": null
+          }
+        ]
+      },
+      "team_as_faiz": {
+        "ok": true,
+        "value": []
+      },
+      "team_as_outsider": {
+        "ok": true,
+        "value": []
+      }
+    },
+    "before_block": {
+      "dm_as_amna": {
+        "ok": true,
+        "value": [
+          {
+            "blocked": false,
+            "is_me": true,
+            "name": "Amna Kestrel",
+            "username": "mg_amna"
+          },
+          {
+            "blocked": false,
+            "is_me": false,
+            "name": "Bashir Kestrel",
+            "username": "mg_bashir"
+          }
+        ]
+      },
+      "dm_as_bashir": {
+        "ok": true,
+        "value": [
+          {
+            "blocked": false,
+            "is_me": false,
+            "name": "Amna Kestrel",
+            "username": "mg_amna"
+          },
+          {
+            "blocked": false,
+            "is_me": true,
+            "name": "Bashir Kestrel",
+            "username": "mg_bashir"
+          }
+        ]
+      },
+      "dm_as_outsider": {
+        "ok": true,
+        "value": []
+      },
+      "team_as_amna": {
+        "ok": true,
+        "value": [
+          {
+            "blocked": false,
+            "is_me": true,
+            "name": "Amna Kestrel",
+            "username": "mg_amna"
+          },
+          {
+            "blocked": false,
+            "is_me": false,
+            "name": "Bashir Kestrel",
+            "username": "mg_bashir"
+          }
+        ]
+      },
+      "team_as_bashir": {
+        "ok": true,
+        "value": [
+          {
+            "blocked": false,
+            "is_me": false,
+            "name": "Amna Kestrel",
+            "username": "mg_amna"
+          },
+          {
+            "blocked": false,
+            "is_me": true,
+            "name": "Bashir Kestrel",
+            "username": "mg_bashir"
+          }
+        ]
+      },
+      "team_as_faiz": {
+        "ok": true,
+        "value": []
+      },
+      "team_as_outsider": {
+        "ok": true,
+        "value": []
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function thread_people",
+      "ok": false
+    }
+  },
+  "venture_chat": {
+    "mg_amna": {
+      "is_team_chat": true,
+      "null": false,
+      "ok": true
+    },
+    "mg_bashir": {
+      "is_team_chat": true,
+      "null": false,
+      "ok": true
+    },
+    "mg_erum": {
+      "is_team_chat": false,
+      "null": true,
+      "ok": true
+    },
+    "mg_faiz": {
+      "is_team_chat": false,
+      "null": true,
+      "ok": true
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function venture_chat",
+      "ok": false
+    },
+    "unknown_venture": {
+      "ok": true,
+      "value": null
+    }
+  }
+}

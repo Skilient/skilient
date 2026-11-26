@@ -1,4 +1,7 @@
+import type { IncomingMessage } from "node:http";
+import type { Duplex } from "node:stream";
 import type { DescService } from "@bufbuild/protobuf";
+import type { UserTokenVerifier } from "./auth/user-token";
 import type postgres from "postgres";
 import type { ServiceImpl } from "@connectrpc/connect";
 import type { ClientFactory } from "./client";
@@ -23,6 +26,8 @@ export interface ServiceDeps {
   database(): postgres.Sql;
   /** Plain HTTP GET routes on the HTTP/1.1 port, for what is not an RPC (e.g. identity's public signing keys). */
   http: HttpRoutes;
+  /** The host's user-token verifier, for a service that authenticates outside an RPC (realtime's sockets). */
+  users: UserTokenVerifier;
 }
 
 export interface HttpReply {
@@ -31,8 +36,13 @@ export interface HttpReply {
   headers?: Record<string, string>;
 }
 
+/** Takes over an HTTP/1.1 upgrade request (a WebSocket) for one path. */
+export type UpgradeHandler = (req: IncomingMessage, socket: Duplex, head: Buffer) => void;
+
 export interface HttpRoutes {
   get(path: string, handler: () => Promise<HttpReply>): void;
+  /** Upgrades on the HTTP/1.1 port (realtime's sockets). */
+  upgrade(path: string, handler: UpgradeHandler): void;
 }
 
 export interface ServiceModule<S extends DescService = DescService> {

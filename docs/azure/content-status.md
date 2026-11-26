@@ -29,7 +29,7 @@ Status values: **ticked** (evidence exists), **partial** (part ticked, the rest 
 - W5 work: publish `venture.updated`, `venture.follow_changed`, `venture.completed` (content makes the Shipped post; content's `shippedNames` port needs work's venture titles), `skill.changed`, `group.member_changed` for ventures; serve a venture batch read for cards (content's `VenturePort`); own venture-update media and followed venture updates.
 - W7 community: publish `society.status_changed` and society `group.member_changed` with `role`; serve the society block for cards (`SocietyPort`).
 - W9 notify and media: handle `post.created` (society followers), `comment.created` (comment, reply, mention notices; read the excerpt from content), `post.removed` (delete files); media's file check behind content's `MediaPort`.
-- W10 trust: publish `config.changed`, `content.removed`/`content.restored`, `post.reports_changed`; forward content's events to analytics.
+- W10 trust: publish `config.changed`, `moderation.removed`/`moderation.restored`, `post.reports_changed`; forward content's events to analytics.
 - W11 market: publish `university_seat.changed`, `university_hide.changed`, the university feed module; write announcement targets through a content method.
 - W12 billing: publish `entitlement.changed` (post insights).
 - W13 web: call FeedPage with `with_cards` (one call for the feed's data), map content's refusal reasons to today's wording (`src/refusals.ts`).

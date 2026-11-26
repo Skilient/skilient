@@ -1,0 +1,1059 @@
+{
+  "delete": {
+    "own_image_returns_path": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "",
+              "deleted": true,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:1>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:1>:<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "body": "",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": "<uuid:3>/<uuid:4>.webp",
+              "reply": false,
+              "sender_id": "<uuid:1>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:1>:<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:3>/<uuid:4>.webp"
+      }
+    },
+    "own_text_returns_no_path": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "",
+              "deleted": true,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:1>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:1>:<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "body": "bye",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:1>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:1>:<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function delete_message",
+      "ok": false
+    },
+    "someone_elses": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you can only delete your own messages",
+        "ok": false
+      }
+    },
+    "twice": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you can only delete your own messages",
+        "ok": false
+      }
+    },
+    "unknown_message": {
+      "code": "42501",
+      "message": "you can only delete your own messages",
+      "ok": false
+    }
+  },
+  "edit": {
+    "10001_characters": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "messages are up to 10,000 characters",
+        "ok": false
+      }
+    },
+    "blank_text": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you can only edit your own messages",
+        "ok": false
+      }
+    },
+    "deleted": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you can only edit your own messages",
+        "ok": false
+      }
+    },
+    "empty_text": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you can only edit your own messages",
+        "ok": false
+      }
+    },
+    "image_message_gets_a_caption": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "a caption",
+              "deleted": false,
+              "edited": true,
+              "link_url": null,
+              "media_path": "<uuid:1>/<uuid:2>.webp",
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ],
+          "removed": [
+            {
+              "body": "",
+              "deleted": false,
+              "edited": true,
+              "link_url": null,
+              "media_path": "<uuid:1>/<uuid:2>.webp",
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "image_message_to_empty_text": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "",
+              "deleted": false,
+              "edited": true,
+              "link_url": null,
+              "media_path": "<uuid:1>/<uuid:2>.webp",
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ],
+          "removed": [
+            {
+              "body": "",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": "<uuid:1>/<uuid:2>.webp",
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "in_a_blocked_dm": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you can only edit your own messages",
+        "ok": false
+      }
+    },
+    "null_text": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you can only edit your own messages",
+        "ok": false
+      }
+    },
+    "own": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "my edited text",
+              "deleted": false,
+              "edited": true,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ],
+          "removed": [
+            {
+              "body": "my text",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "own_with_a_link": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "see https://example.com/page now",
+              "deleted": false,
+              "edited": true,
+              "link_url": "https://example.com/page",
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ],
+          "removed": [
+            {
+              "body": "my edited text",
+              "deleted": false,
+              "edited": true,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function edit_message",
+      "ok": false
+    },
+    "someone_elses": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you can only edit your own messages",
+        "ok": false
+      }
+    },
+    "unknown_message": {
+      "code": "42501",
+      "message": "you can only edit your own messages",
+      "ok": false
+    }
+  },
+  "send": {
+    "10001_characters": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "messages are up to 10,000 characters",
+        "ok": false
+      }
+    },
+    "blank_body": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "write a message or add an image",
+        "ok": false
+      }
+    },
+    "blocked_dm": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "this conversation is closed",
+        "ok": false
+      }
+    },
+    "blocked_dm_by_the_blocker": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "this conversation is closed",
+        "ok": false
+      }
+    },
+    "closed_thread": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "this conversation is closed",
+        "ok": false
+      }
+    },
+    "closed_thread_other_side": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "this conversation is closed",
+        "ok": false
+      }
+    },
+    "empty_body": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "write a message or add an image",
+        "ok": false
+      }
+    },
+    "exactly_10000_characters": {
+      "ok": true,
+      "value": true
+    },
+    "image_for_another_thread": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "the image is missing; attach it again",
+        "ok": false
+      }
+    },
+    "image_not_uploaded": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "the image is missing; attach it again",
+        "ok": false
+      }
+    },
+    "image_uploaded_by_sender": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": "<uuid:1>/<uuid:2>.webp",
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:5>"
+      }
+    },
+    "image_uploaded_by_someone_else": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "the image is missing; attach it again",
+        "ok": false
+      }
+    },
+    "not_a_member": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you're not in this chat",
+        "ok": false
+      }
+    },
+    "null_body": {
+      "changes": {},
+      "result": {
+        "code": "23514",
+        "message": "write a message or add an image",
+        "ok": false
+      }
+    },
+    "reply": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "a reply",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": true,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    },
+    "reply_on_another_thread": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "that message is no longer here to reply to",
+        "ok": false
+      }
+    },
+    "reply_to_deleted": {
+      "changes": {},
+      "result": {
+        "code": "22023",
+        "message": "that message is no longer here to reply to",
+        "ok": false
+      }
+    },
+    "reply_to_own_message": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "a follow-up",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": true,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:7>"
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function send_message",
+      "ok": false
+    },
+    "team_chat_member": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "hello team",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "group:<uuid:8>"
+            }
+          ],
+          "removed": []
+        },
+        "public.chat_threads": {
+          "added": [
+            {
+              "closed": false,
+              "has_last": true,
+              "thread": "group:<uuid:8>",
+              "type": "group"
+            }
+          ],
+          "removed": [
+            {
+              "closed": false,
+              "has_last": false,
+              "thread": "group:<uuid:8>",
+              "type": "group"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:3>",
+              "entity_type": "chat_thread",
+              "type": "chat_message",
+              "user_id": "<uuid:4>"
+            }
+          ],
+          "removed": [
+            {
+              "actor_id": "<uuid:9>",
+              "entity_type": "chat_thread",
+              "type": "chat_message",
+              "user_id": "<uuid:4>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:10>"
+      }
+    },
+    "team_chat_outsider": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you're not in this chat",
+        "ok": false
+      }
+    },
+    "text_to_a_friend": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "hello there",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:3>",
+              "shared": false,
+              "shares_post": false,
+              "thread": "dm:<uuid:3>:<uuid:4>"
+            }
+          ],
+          "removed": []
+        },
+        "public.chat_threads": {
+          "added": [
+            {
+              "closed": false,
+              "has_last": true,
+              "thread": "dm:<uuid:3>:<uuid:4>",
+              "type": "dm"
+            }
+          ],
+          "removed": [
+            {
+              "closed": false,
+              "has_last": false,
+              "thread": "dm:<uuid:3>:<uuid:4>",
+              "type": "dm"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:3>",
+              "entity_type": "chat_thread",
+              "type": "chat_message",
+              "user_id": "<uuid:4>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:11>"
+      }
+    },
+    "unknown_thread": {
+      "code": "42501",
+      "message": "you're not in this chat",
+      "ok": false
+    }
+  },
+  "send_rate_limit": {
+    "another_sender_not_limited": {
+      "ok": true,
+      "value": "<uuid:1>"
+    },
+    "first_refusal_at": 31,
+    "ok_count": 30,
+    "refusal": "54000: you're sending messages too fast",
+    "sent": 30
+  },
+  "thread_messages": {
+    "before_25_minutes_ago": {
+      "ok": true,
+      "value": [
+        {
+          "body": "",
+          "deleted": true,
+          "edited": false,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": null,
+          "shared": false
+        },
+        {
+          "body": "two",
+          "deleted": false,
+          "edited": false,
+          "from_amna": false,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": true,
+          "link": null,
+          "pinned": true,
+          "reactions": [],
+          "reply_excerpt": "one",
+          "shared": false
+        },
+        {
+          "body": "one",
+          "deleted": false,
+          "edited": true,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [
+            {
+              "count": 1,
+              "emoji": "👍",
+              "mine": true
+            },
+            {
+              "count": 1,
+              "emoji": "❤️",
+              "mine": false
+            }
+          ],
+          "reply_excerpt": null,
+          "shared": false
+        }
+      ]
+    },
+    "before_the_beginning": {
+      "ok": true,
+      "value": []
+    },
+    "blocked_dm_as_amna": {
+      "ok": true,
+      "value": []
+    },
+    "blocked_dm_as_bashir": {
+      "ok": true,
+      "value": []
+    },
+    "default_page_as_amna": {
+      "ok": true,
+      "value": [
+        {
+          "body": "",
+          "deleted": false,
+          "edited": false,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": true,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": null,
+          "shared": true
+        },
+        {
+          "body": "six",
+          "deleted": false,
+          "edited": false,
+          "from_amna": false,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": true,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": "Shared a post",
+          "shared": false
+        },
+        {
+          "body": "five, with a link https://example.com/five",
+          "deleted": false,
+          "edited": false,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": true,
+          "link": null,
+          "pinned": false,
+          "reactions": [
+            {
+              "count": 1,
+              "emoji": "🎉",
+              "mine": true
+            }
+          ],
+          "reply_excerpt": "Image",
+          "shared": false
+        },
+        {
+          "body": "",
+          "deleted": false,
+          "edited": false,
+          "from_amna": false,
+          "has_image": true,
+          "has_post": false,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": null,
+          "shared": false
+        },
+        {
+          "body": "",
+          "deleted": true,
+          "edited": false,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": null,
+          "shared": false
+        },
+        {
+          "body": "two",
+          "deleted": false,
+          "edited": false,
+          "from_amna": false,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": true,
+          "link": null,
+          "pinned": true,
+          "reactions": [],
+          "reply_excerpt": "one",
+          "shared": false
+        },
+        {
+          "body": "one",
+          "deleted": false,
+          "edited": true,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [
+            {
+              "count": 1,
+              "emoji": "👍",
+              "mine": true
+            },
+            {
+              "count": 1,
+              "emoji": "❤️",
+              "mine": false
+            }
+          ],
+          "reply_excerpt": null,
+          "shared": false
+        }
+      ]
+    },
+    "default_page_as_bashir": {
+      "ok": true,
+      "value": [
+        {
+          "body": "",
+          "deleted": false,
+          "edited": false,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": true,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": null,
+          "shared": true
+        },
+        {
+          "body": "six",
+          "deleted": false,
+          "edited": false,
+          "from_amna": false,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": true,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": "Shared a post",
+          "shared": false
+        },
+        {
+          "body": "five, with a link https://example.com/five",
+          "deleted": false,
+          "edited": false,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": true,
+          "link": null,
+          "pinned": false,
+          "reactions": [
+            {
+              "count": 1,
+              "emoji": "🎉",
+              "mine": false
+            }
+          ],
+          "reply_excerpt": "Image",
+          "shared": false
+        },
+        {
+          "body": "",
+          "deleted": false,
+          "edited": false,
+          "from_amna": false,
+          "has_image": true,
+          "has_post": false,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": null,
+          "shared": false
+        },
+        {
+          "body": "",
+          "deleted": true,
+          "edited": false,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": null,
+          "shared": false
+        },
+        {
+          "body": "two",
+          "deleted": false,
+          "edited": false,
+          "from_amna": false,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": true,
+          "link": null,
+          "pinned": true,
+          "reactions": [],
+          "reply_excerpt": "one",
+          "shared": false
+        },
+        {
+          "body": "one",
+          "deleted": false,
+          "edited": true,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [
+            {
+              "count": 1,
+              "emoji": "👍",
+              "mine": false
+            },
+            {
+              "count": 1,
+              "emoji": "❤️",
+              "mine": true
+            }
+          ],
+          "reply_excerpt": null,
+          "shared": false
+        }
+      ]
+    },
+    "limit_0_is_1": {
+      "ok": true,
+      "value": [
+        {
+          "body": "",
+          "deleted": false,
+          "edited": false,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": true,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": null,
+          "shared": true
+        }
+      ]
+    },
+    "limit_1000_is_100": {
+      "ok": true,
+      "value": "7"
+    },
+    "limit_3": {
+      "ok": true,
+      "value": [
+        {
+          "body": "",
+          "deleted": false,
+          "edited": false,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": true,
+          "is_reply": false,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": null,
+          "shared": true
+        },
+        {
+          "body": "six",
+          "deleted": false,
+          "edited": false,
+          "from_amna": false,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": true,
+          "link": null,
+          "pinned": false,
+          "reactions": [],
+          "reply_excerpt": "Shared a post",
+          "shared": false
+        },
+        {
+          "body": "five, with a link https://example.com/five",
+          "deleted": false,
+          "edited": false,
+          "from_amna": true,
+          "has_image": false,
+          "has_post": false,
+          "is_reply": true,
+          "link": null,
+          "pinned": false,
+          "reactions": [
+            {
+              "count": 1,
+              "emoji": "🎉",
+              "mine": true
+            }
+          ],
+          "reply_excerpt": "Image",
+          "shared": false
+        }
+      ]
+    },
+    "not_a_member": {
+      "ok": true,
+      "value": []
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function thread_messages",
+      "ok": false
+    }
+  }
+}

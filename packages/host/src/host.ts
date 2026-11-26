@@ -17,6 +17,7 @@ import {
   type HttpReply,
   type ServiceModule,
   type Target,
+  type UpgradeHandler,
   type UserTokenVerifier,
 } from "@skilient/platform";
 import { registry as defaultRegistry } from "./registry";
@@ -111,6 +112,7 @@ export async function createHost(options: HostOptions): Promise<Host> {
   const health = createHealth();
   const pools = new Map<string, postgres.Sql>();
   const httpRoutes = new Map<string, () => Promise<HttpReply>>();
+  const upgradeRoutes = new Map<string, UpgradeHandler>();
   for (const module of modules) {
     const impl = await module.create({
       name: module.name,
@@ -132,7 +134,12 @@ export async function createHost(options: HostOptions): Promise<Host> {
           if (httpRoutes.has(path)) throw new Error(`two services register GET ${path}`);
           httpRoutes.set(path, handler);
         },
+        upgrade(path, handler) {
+          if (upgradeRoutes.has(path)) throw new Error(`two services register an upgrade on ${path}`);
+          upgradeRoutes.set(path, handler);
+        },
       },
+      users: options.users,
     });
     impls.push([module.contract, impl as Partial<ServiceImpl<DescService>>]);
     if (module.ready) health.add(module.name, module.ready);
@@ -153,6 +160,7 @@ export async function createHost(options: HostOptions): Promise<Host> {
         router: routerOptions("http2"),
         health,
         httpRoutes,
+        upgradeRoutes,
       });
       servers.push(server);
       return server;

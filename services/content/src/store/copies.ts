@@ -23,7 +23,7 @@ import type { Tx } from "./db";
  * | university_hide.changed     | market (W11) | a post or comment hidden by its university                        |
  * | entitlement.changed         | billing (W12) | post insights                                                    |
  * | config.changed              | trust (W10) | feed.* and survey.* settings                                       |
- * | content.removed / content.restored | trust (W10) | staff removal of a post or comment                          |
+ * | moderation.removed / moderation.restored | trust (W10) | staff removal of a post or comment                          |
  * | post.reports_changed        | trust (W10) | open reports (the held stage)                                      |
  * | user.deleted                | identity  | every row of the user's; user.deletion_confirmed                     |
  */
@@ -45,8 +45,8 @@ export const COPY_EVENTS = [
   "university_hide.changed",
   "entitlement.changed",
   "config.changed",
-  "content.removed",
-  "content.restored",
+  "moderation.removed",
+  "moderation.restored",
   "post.reports_changed",
 ] as const;
 
@@ -67,8 +67,8 @@ const OWNER: Record<(typeof COPY_EVENTS)[number], readonly string[]> = {
   "university_hide.changed": ["svc_market"],
   "entitlement.changed": ["svc_billing"],
   "config.changed": ["svc_trust"],
-  "content.removed": ["svc_trust"],
-  "content.restored": ["svc_trust"],
+  "moderation.removed": ["svc_trust"],
+  "moderation.restored": ["svc_trust"],
   "post.reports_changed": ["svc_trust"],
 };
 
@@ -283,11 +283,11 @@ export async function applyCopyEvent(
          where content.config.version < excluded.version`;
       return "applied";
     }
-    case "content.removed":
-    case "content.restored": {
+    case "moderation.removed":
+    case "moderation.restored": {
       const p = parse(S.removal);
       if (!p) return "invalid_payload";
-      const removed = type === "content.removed";
+      const removed = type === "moderation.removed";
       if (p.target_type === "comment") {
         await tx`update content.post_comments set removed_by = ${removed ? (p.staff_id ?? null) : null},
                    deleted_at = case when ${removed} then coalesce(deleted_at, now()) else deleted_at end where id = ${p.target_id}`;

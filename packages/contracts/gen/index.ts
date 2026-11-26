@@ -2,8 +2,10 @@
 import type { DescService } from "@bufbuild/protobuf";
 import { ContentService as ContentService_0 } from "./skilient/content/v1/content_pb";
 import { IdentityService as IdentityService_1 } from "./skilient/identity/v1/identity_pb";
-import { PeopleService as PeopleService_2 } from "./skilient/people/v1/people_pb";
-import { SampleService as SampleService_3 } from "./skilient/sample/v1/sample_pb";
-import { SampleRelayService as SampleRelayService_4 } from "./skilient/sample_relay/v1/sample_relay_pb";
+import { MessagingService as MessagingService_2 } from "./skilient/messaging/v1/messaging_pb";
+import { PeopleService as PeopleService_3 } from "./skilient/people/v1/people_pb";
+import { RealtimeService as RealtimeService_4 } from "./skilient/realtime/v1/realtime_pb";
+import { SampleService as SampleService_5 } from "./skilient/sample/v1/sample_pb";
+import { SampleRelayService as SampleRelayService_6 } from "./skilient/sample_relay/v1/sample_relay_pb";
 
-export const allServices: readonly DescService[] = [ContentService_0, IdentityService_1, PeopleService_2, SampleService_3, SampleRelayService_4];
+export const allServices: readonly DescService[] = [ContentService_0, IdentityService_1, MessagingService_2, PeopleService_3, RealtimeService_4, SampleService_5, SampleRelayService_6];

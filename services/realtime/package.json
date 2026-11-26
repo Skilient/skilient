@@ -1,0 +1,29 @@
+{
+  "name": "@skilient/realtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./hub": "./src/hub.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p .",
+    "lint": "eslint --max-warnings=0 .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.17.0",
+    "@connectrpc/connect": "2.3.0",
+    "@skilient/contracts": "workspace:*",
+    "@skilient/platform": "workspace:*",
+    "postgres": "3.4.9",
+    "ws": "8.22.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@skilient/identity": "workspace:*",
+    "@skilient/testing": "workspace:*",
+    "@types/ws": "8.18.1"
+  }
+}

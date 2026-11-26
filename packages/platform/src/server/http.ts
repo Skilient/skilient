@@ -6,7 +6,7 @@ import { expressConnectMiddleware } from "@connectrpc/connect-express";
 import { connectNodeAdapter } from "@connectrpc/connect-node";
 import express from "express";
 import type { Health } from "../health";
-import type { HttpReply } from "../service";
+import type { HttpReply, UpgradeHandler } from "../service";
 
 export interface ServerOptions {
   /** HTTP/2 without TLS (h2c): calls between containers. */
@@ -19,6 +19,8 @@ export interface ServerOptions {
   health: Health;
   /** Plain GET routes served on the HTTP/1.1 port, before the Connect routes. */
   httpRoutes?: ReadonlyMap<string, () => Promise<HttpReply>>;
+  /** Upgrade handlers (WebSockets) on the HTTP/1.1 port, by path; any other upgrade is refused. */
+  upgradeRoutes?: ReadonlyMap<string, UpgradeHandler>;
 }
 
 export interface RunningServer {
@@ -84,6 +86,13 @@ export async function startServer(options: ServerOptions): Promise<RunningServer
     app.use(expressConnectMiddleware({ ...options.router, routes: options.routes }));
     h1 = http.createServer(app);
     h1.keepAliveTimeout = 65_000;
+    const upgrades = options.upgradeRoutes ?? new Map<string, UpgradeHandler>();
+    h1.on("upgrade", (req, socket, head) => {
+      const path = new URL(req.url ?? "/", "http://localhost").pathname;
+      const handler = upgrades.get(path);
+      if (!handler) return void socket.destroy();
+      handler(req, socket, head);
+    });
     http1Port = await listen(h1, options.http1Port, host);
   }
 

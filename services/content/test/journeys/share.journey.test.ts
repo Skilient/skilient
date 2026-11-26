@@ -35,7 +35,7 @@ describeTransports(
         expect((await j.cards(recipient.token, [postId])).map((c) => [c.body, c.authorName])).toEqual([[text, "Sharer Saad"]]);
 
         // Removed by moderation: the reader's card no longer shows it, and messaging may not send it any more.
-        await j.publish("trust", "content.removed", [postId], { target_type: "post", target_id: postId, staff_id: null });
+        await j.publish("trust", "moderation.removed", [postId], { target_type: "post", target_id: postId, staff_id: null });
         expect(await visible(recipient.id, postId)).toBe(false);
         expect(await j.opens(recipient.token, postId)).toBe(false);
 
@@ -58,7 +58,6 @@ describeTransports(
         expect(await j.opens(recipient.token, third)).toBe(false);
       });
 
-      it.todo("W4 messaging: the sheet sends the post as a DM message with a note, Undo takes it back within 15 seconds, and the chat shows the shared card, then \"This post isn't available\"");
       it.todo("W13: the share dialog (focus, keyboard, note field) and axe in both themes on the post page and the chat");
     });
   },

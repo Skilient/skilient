@@ -189,7 +189,7 @@ describeTransports(
       expect((await w.content`select count(*)::int as n from content.posts where author_id = ${owner.id} and type = 'shipped'`)[0]).toEqual({ n: 1 });
 
       const { postId } = await content().createPost(newPost("To be removed"), asUser(owner.token));
-      await publishAs(await roleOf("trust"), "content.removed", [postId], { target_type: "post", target_id: postId, staff_id: null });
+      await publishAs(await roleOf("trust"), "moderation.removed", [postId], { target_type: "post", target_id: postId, staff_id: null });
       await drainCopies(w);
       expect((await content().postCards({ postIds: [postId] }, asUser(reader.token, null))).cards).toHaveLength(0);
 

@@ -232,12 +232,18 @@ importers:
       '@skilient/identity':
         specifier: workspace:*
         version: link:../../services/identity
+      '@skilient/messaging':
+        specifier: workspace:*
+        version: link:../../services/messaging
       '@skilient/people':
         specifier: workspace:*
         version: link:../../services/people
       '@skilient/platform':
         specifier: workspace:*
         version: link:../platform
+      '@skilient/realtime':
+        specifier: workspace:*
+        version: link:../../services/realtime
       '@skilient/sample':
         specifier: workspace:*
         version: link:../../services/sample
@@ -396,6 +402,55 @@ importers:
         specifier: workspace:*
         version: link:../../packages/testing
 
+  services/messaging:
+    dependencies:
+      '@bufbuild/protobuf':
+        specifier: 2.17.0
+        version: 2.17.0
+      '@connectrpc/connect':
+        specifier: 2.3.0
+        version: 2.3.0(@bufbuild/protobuf@2.17.0)
+      '@skilient/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@skilient/platform':
+        specifier: workspace:*
+        version: link:../../packages/platform
+      postgres:
+        specifier: 3.4.9
+        version: 3.4.9
+      zod:
+        specifier: 4.6.5
+        version: 4.6.5
+    devDependencies:
+      '@skilient/content':
+        specifier: workspace:*
+        version: link:../content
+      '@skilient/host':
+        specifier: workspace:*
+        version: link:../../packages/host
+      '@skilient/identity':
+        specifier: workspace:*
+        version: link:../identity
+      '@skilient/people':
+        specifier: workspace:*
+        version: link:../people
+      '@skilient/realtime':
+        specifier: workspace:*
+        version: link:../realtime
+      '@skilient/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      '@types/ws':
+        specifier: 8.18.1
+        version: 8.18.1
+      jose:
+        specifier: 6.2.18
+        version: 6.2.18
+      ws:
+        specifier: 8.22.0
+        version: 8.22.0
+
   services/people:
     dependencies:
       '@bufbuild/protobuf':
@@ -426,6 +481,40 @@ importers:
       jose:
         specifier: 6.2.18
         version: 6.2.18
+
+  services/realtime:
+    dependencies:
+      '@bufbuild/protobuf':
+        specifier: 2.17.0
+        version: 2.17.0
+      '@connectrpc/connect':
+        specifier: 2.3.0
+        version: 2.3.0(@bufbuild/protobuf@2.17.0)
+      '@skilient/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@skilient/platform':
+        specifier: workspace:*
+        version: link:../../packages/platform
+      postgres:
+        specifier: 3.4.9
+        version: 3.4.9
+      ws:
+        specifier: 8.22.0
+        version: 8.22.0
+      zod:
+        specifier: 4.6.5
+        version: 4.6.5
+    devDependencies:
+      '@skilient/identity':
+        specifier: workspace:*
+        version: link:../identity
+      '@skilient/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      '@types/ws':
+        specifier: 8.18.1
+        version: 8.18.1
 
   services/sample:
     dependencies:
@@ -2543,6 +2632,9 @@ packages:
 
   '@types/use-sync-external-store@0.0.6':
     resolution: {integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==}
+
+  '@types/ws@8.18.1':
+    resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
   '@typescript-eslint/eslint-plugin@8.74.0':
     resolution: {integrity: sha512-z3KXk1+Vm+d82ZRplOoC89ho4Rf1da5ju6sx8//92GnN532U62DGPjECXkkVqtYzIv0zoJlpO39SX2Z9tk6LVw==}
@@ -7315,6 +7407,10 @@ snapshots:
     optional: true
 
   '@types/use-sync-external-store@0.0.6': {}
+
+  '@types/ws@8.18.1':
+    dependencies:
+      '@types/node': 26.6.6
 
   '@typescript-eslint/eslint-plugin@8.74.0(@typescript-eslint/parser@8.74.0(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3)':
     dependencies:

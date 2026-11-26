@@ -1,4 +1,4 @@
-import { appendEvents, rateLimit, uuidv7 } from "@skilient/platform";
+import { appendEvents, GLOBAL_FEED, publishRealtime, rateLimit, uuidv7 } from "@skilient/platform";
 import { extractLink } from "../domain/links/url";
 import { refused } from "../refusals";
 import { canViewPost, type Db, type Tx } from "./db";
@@ -150,6 +150,8 @@ export async function createPost(tx: Tx, me: string | null, p: NewPost, checks: 
       payload: { post_id: id, author_id: me, type, audience, university_id: universityId, society_id: societyId, venture_id: ventureId },
     },
   ]);
+  // The new-posts pill (W4): readers of this feed hear that a post arrived; the pill loads it.
+  await publishRealtime(tx, { topic: `feed:${audience === "global" ? GLOBAL_FEED : universityId}`, event: "post.created", payload: { post_id: id, author_id: me } });
   return id;
 }
 

@@ -91,7 +91,6 @@ describeTransports(
         expect((await j.people().getProfile({ username: blocker.username }, j.as(blocked.token))).result).toMatchObject({ case: "full", value: { fullName: "Bushra Blocker" } });
       });
 
-      it.todo("W4 realtime: the receiver's open page shows the badge without a reload");
       it.todo("W13 web: axe on /friends (empty, sent, received), the block dialog and the profile");
     });
   },

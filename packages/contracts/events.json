@@ -302,7 +302,8 @@
       ],
       "consumers": [
         "people",
-        "content"
+        "content",
+        "messaging"
       ],
       "payload": "kind, group_id, user_id, member, role (member | officer | president; optional, societies) (ids only)"
     },
@@ -350,7 +351,8 @@
         "work"
       ],
       "consumers": [
-        "content"
+        "content",
+        "messaging"
       ],
       "payload": "venture_id, owner_id, university_id, status, visibility (W5): invite posts"
     },
@@ -420,16 +422,17 @@
       ],
       "payload": "key, version, value (W10); content keeps feed.* and survey.*"
     },
-    "content.removed": {
+    "moderation.removed": {
       "producers": [
         "trust"
       ],
       "consumers": [
-        "content"
+        "content",
+        "messaging"
       ],
-      "payload": "target_type (post | comment), target_id, staff_id (W10)"
+      "payload": "target_type (post | comment | message), target_id, staff_id (W10)"
     },
-    "content.restored": {
+    "moderation.restored": {
       "producers": [
         "trust"
       ],
@@ -446,6 +449,44 @@
         "content"
       ],
       "payload": "post_id, reports (open reports, absolute) (W10): the held stage"
+    },
+    "message.sent": {
+      "producers": [
+        "messaging"
+      ],
+      "consumers": [
+        "notify",
+        "trust"
+      ],
+      "payload": "message_id, thread_id, sender_id, recipient_ids (not muted, not blocked) (W4); notify's chat notice and push (W9), trust's analytics (W10). Live delivery is realtime's NOTIFY, not this event"
+    },
+    "message.deleted": {
+      "producers": [
+        "messaging"
+      ],
+      "consumers": [
+        "notify",
+        "media"
+      ],
+      "payload": "message_ids, thread_id, sender_id, media_paths, undone_share (W4); notify takes back the chat notices of an undone share (W9), media deletes the files (W9)"
+    },
+    "thread.read": {
+      "producers": [
+        "messaging"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "thread_id, user_id (W4); notify marks the thread's chat notices read (W9)"
+    },
+    "conversation.allowed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "messaging"
+      ],
+      "payload": "user_a, user_b, reason (application | swap), allowed (W5): DMs an accepted application or a skill swap opens"
     }
   }
 }

@@ -1,0 +1,488 @@
+{
+  "share_post": {
+    "a_dm_she_is_not_in": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you're not in this chat",
+        "ok": false
+      }
+    },
+    "a_note_of_exactly_1000_characters": {
+      "ok": true,
+      "value": 1
+    },
+    "a_post_she_cannot_see": {
+      "changes": {},
+      "result": {
+        "code": "P0002",
+        "message": "that post isn't available to share",
+        "ok": false
+      }
+    },
+    "an_unknown_thread": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you can share into DMs and venture chats",
+        "ok": false
+      }
+    },
+    "into_a_dm_and_the_team_chat_with_a_note": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "look at this",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:1>",
+              "shared": true,
+              "shares_post": true,
+              "thread": "dm:<uuid:1>:<uuid:2>"
+            },
+            {
+              "body": "look at this",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:1>",
+              "shared": true,
+              "shares_post": true,
+              "thread": "group:<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.chat_threads": {
+          "added": [
+            {
+              "closed": false,
+              "has_last": true,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "type": "dm"
+            },
+            {
+              "closed": false,
+              "has_last": true,
+              "thread": "group:<uuid:3>",
+              "type": "group"
+            }
+          ],
+          "removed": [
+            {
+              "closed": false,
+              "has_last": false,
+              "thread": "dm:<uuid:1>:<uuid:2>",
+              "type": "dm"
+            },
+            {
+              "closed": false,
+              "has_last": false,
+              "thread": "group:<uuid:3>",
+              "type": "group"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "chat_thread",
+              "type": "chat_message",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "chat_thread",
+              "type": "chat_message",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          "<uuid:4>",
+          "<uuid:5>"
+        ]
+      }
+    },
+    "into_a_dm_with_someone_who_blocked_her": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "this conversation is closed",
+        "ok": false
+      }
+    },
+    "one_good_one_foreign_thread_sends_nothing": {
+      "changes": {},
+      "result": {
+        "code": "42501",
+        "message": "you're not in this chat",
+        "ok": false
+      }
+    },
+    "share_message_lists": {
+      "team_chat": {
+        "ok": true,
+        "value": [
+          {
+            "body": "look at this",
+            "shared": true
+          }
+        ]
+      },
+      "threads": {
+        "ok": true,
+        "value": [
+          {
+            "body": "look at this",
+            "has_post": true,
+            "shared": true
+          }
+        ]
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function share_post",
+      "ok": false
+    },
+    "the_same_thread_twice_sends_once": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "twice",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:1>",
+              "shared": true,
+              "shares_post": true,
+              "thread": "dm:<uuid:1>:<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "chat_thread",
+              "type": "chat_message",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          "<uuid:6>"
+        ]
+      }
+    },
+    "undo_after_20_seconds": {
+      "changes": {},
+      "result": {
+        "code": "55000",
+        "message": "too late to undo",
+        "ok": false
+      }
+    },
+    "undo_again_is_too_late": {
+      "changes": {},
+      "result": {
+        "code": "55000",
+        "message": "too late to undo",
+        "ok": false
+      }
+    },
+    "undo_by_someone_else": {
+      "changes": {},
+      "result": {
+        "code": "55000",
+        "message": "too late to undo",
+        "ok": false
+      }
+    },
+    "undo_nothing": {
+      "changes": {},
+      "result": {
+        "code": "55000",
+        "message": "too late to undo",
+        "ok": false
+      }
+    },
+    "undo_null": {
+      "changes": {},
+      "result": {
+        "code": "55000",
+        "message": "too late to undo",
+        "ok": false
+      }
+    },
+    "undo_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function undo_share",
+      "ok": false
+    },
+    "undo_within_15_seconds": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [],
+          "removed": [
+            {
+              "body": "look at this",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:1>",
+              "shared": true,
+              "shares_post": true,
+              "thread": "dm:<uuid:1>:<uuid:2>"
+            },
+            {
+              "body": "look at this",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:1>",
+              "shared": true,
+              "shares_post": true,
+              "thread": "group:<uuid:3>"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [],
+          "removed": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "chat_thread",
+              "type": "chat_message",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "chat_thread",
+              "type": "chat_message",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 2
+      }
+    },
+    "without_a_note": {
+      "changes": {
+        "public.chat_messages": {
+          "added": [
+            {
+              "body": "",
+              "deleted": false,
+              "edited": false,
+              "link_url": null,
+              "media_path": null,
+              "reply": false,
+              "sender_id": "<uuid:1>",
+              "shared": true,
+              "shares_post": true,
+              "thread": "dm:<uuid:1>:<uuid:7>"
+            }
+          ],
+          "removed": []
+        },
+        "public.chat_threads": {
+          "added": [
+            {
+              "closed": false,
+              "has_last": true,
+              "thread": "dm:<uuid:1>:<uuid:7>",
+              "type": "dm"
+            }
+          ],
+          "removed": [
+            {
+              "closed": false,
+              "has_last": false,
+              "thread": "dm:<uuid:1>:<uuid:7>",
+              "type": "dm"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "chat_thread",
+              "type": "chat_message",
+              "user_id": "<uuid:7>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          "<uuid:8>"
+        ]
+      }
+    }
+  },
+  "share_targets": {
+    "a_stranger": {
+      "ok": true,
+      "value": [
+        {
+          "has_last_at": false,
+          "title": "Amna Kestrel",
+          "type": "dm",
+          "username": null
+        }
+      ]
+    },
+    "bashir": {
+      "ok": true,
+      "value": [
+        {
+          "has_last_at": true,
+          "title": "Amna Kestrel",
+          "type": "dm",
+          "username": "mg_amna"
+        },
+        {
+          "has_last_at": true,
+          "title": "Kestrel Robotics",
+          "type": "group",
+          "username": null
+        }
+      ]
+    },
+    "blank_query": {
+      "ok": true,
+      "value": [
+        {
+          "has_last_at": true,
+          "title": "Daud Kestrel",
+          "type": "dm",
+          "username": "mg_daud"
+        },
+        {
+          "has_last_at": true,
+          "title": "Bashir Kestrel",
+          "type": "dm",
+          "username": "mg_bashir"
+        },
+        {
+          "has_last_at": true,
+          "title": "Kestrel Robotics",
+          "type": "group",
+          "username": null
+        },
+        {
+          "has_last_at": false,
+          "title": "Chaman Wyvern",
+          "type": "dm",
+          "username": "mg_chaman"
+        }
+      ]
+    },
+    "by_first_name": {
+      "ok": true,
+      "value": [
+        {
+          "has_last_at": true,
+          "title": "Bashir Kestrel",
+          "type": "dm",
+          "username": "mg_bashir"
+        }
+      ]
+    },
+    "by_upper_case_name": {
+      "ok": true,
+      "value": [
+        {
+          "has_last_at": true,
+          "title": "Daud Kestrel",
+          "type": "dm",
+          "username": "mg_daud"
+        }
+      ]
+    },
+    "by_venture_title": {
+      "ok": true,
+      "value": [
+        {
+          "has_last_at": true,
+          "title": "Kestrel Robotics",
+          "type": "group",
+          "username": null
+        }
+      ]
+    },
+    "everything": {
+      "ok": true,
+      "value": [
+        {
+          "has_last_at": true,
+          "title": "Daud Kestrel",
+          "type": "dm",
+          "username": "mg_daud"
+        },
+        {
+          "has_last_at": true,
+          "title": "Bashir Kestrel",
+          "type": "dm",
+          "username": "mg_bashir"
+        },
+        {
+          "has_last_at": true,
+          "title": "Kestrel Robotics",
+          "type": "group",
+          "username": null
+        },
+        {
+          "has_last_at": false,
+          "title": "Chaman Wyvern",
+          "type": "dm",
+          "username": "mg_chaman"
+        }
+      ]
+    },
+    "no_match": {
+      "ok": true,
+      "value": []
+    },
+    "pattern_characters_are_literal": {
+      "ok": true,
+      "value": []
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function share_targets",
+      "ok": false
+    }
+  }
+}

@@ -52,7 +52,7 @@ export async function drainCopies(w: ContentWorld): Promise<void> {
        where e.type in ('user.created', 'user.deleted', 'profile.updated', 'friendship.changed', 'block.changed', 'mute.changed', 'group.member_changed',
                         'venture.updated', 'venture.follow_changed', 'venture.completed', 'skill.changed', 'society.status_changed',
                         'university_seat.changed', 'university_hide.changed', 'entitlement.changed', 'config.changed',
-                        'content.removed', 'content.restored', 'post.reports_changed')
+                        'moderation.removed', 'moderation.restored', 'post.reports_changed')
          and not exists (select 1 from platform.applied_events a where a.consumer = ${COPIES_CONSUMER} and a.event_id = e.id)`;
     if (pending!.n === 0) return;
     await c.runOnce();

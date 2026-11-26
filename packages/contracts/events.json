@@ -6,7 +6,8 @@
         "identity"
       ],
       "consumers": [
-        "people"
+        "people",
+        "content"
       ],
       "payload": "user_id, role, university_id, provider, visibility, onboarding defaults, status, agreement_accepted"
     },
@@ -142,9 +143,10 @@
         "messaging",
         "ranking",
         "market",
-        "trust"
+        "trust",
+        "content"
       ],
-      "payload": "ids, enums and flags of the profile (no names, no city)"
+      "payload": "ids, enums and flags of the profile (no names, no city); department_hash (sha256 of the department text, W3)"
     },
     "profile.image_replaced": {
       "producers": [
@@ -288,7 +290,8 @@
         "work"
       ],
       "consumers": [
-        "people"
+        "people",
+        "content"
       ],
       "payload": "user_id, skill_id, skill_label (catalogue), level"
     },
@@ -298,9 +301,151 @@
         "community"
       ],
       "consumers": [
-        "people"
+        "people",
+        "content"
       ],
-      "payload": "kind, group_id, user_id, member (ids only)"
+      "payload": "kind, group_id, user_id, member, role (member | officer | president; optional, societies) (ids only)"
+    },
+    "post.created": {
+      "producers": [
+        "content"
+      ],
+      "consumers": [
+        "notify",
+        "trust"
+      ],
+      "payload": "post_id, author_id, type, audience, university_id, society_id, venture_id (W3); notify tells society followers (W9), trust forwards analytics (W10)"
+    },
+    "post.removed": {
+      "producers": [
+        "content"
+      ],
+      "consumers": [
+        "media",
+        "trust"
+      ],
+      "payload": "post_id, author_id, reason (deleted | removed | account_deleted), media_paths; media deletes the files (W9)"
+    },
+    "comment.created": {
+      "producers": [
+        "content"
+      ],
+      "consumers": [
+        "notify",
+        "trust"
+      ],
+      "payload": "comment_id, post_id, author_id, post_author_id, parent_author_id, mentioned_ids; notify reads the excerpt back through content (W9)"
+    },
+    "survey.answered": {
+      "producers": [
+        "content"
+      ],
+      "consumers": [
+        "trust"
+      ],
+      "payload": "post_id, user_id, dimension, answer (analytics, W10)"
+    },
+    "venture.updated": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "venture_id, owner_id, university_id, status, visibility (W5): invite posts"
+    },
+    "venture.follow_changed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "venture_id, user_id, following (W5): feed relevance"
+    },
+    "venture.completed": {
+      "producers": [
+        "work"
+      ],
+      "consumers": [
+        "content",
+        "ranking",
+        "credentials",
+        "notify"
+      ],
+      "payload": "venture_id, owner_id, university_id, visibility (W5): content's Shipped post, ranking facts, a Record entry, a notification"
+    },
+    "society.status_changed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "society_id, university_id, status (W7): posting as a verified society"
+    },
+    "university_seat.changed": {
+      "producers": [
+        "market"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "user_id, university_id, role (null when the seat ends) (W11): announcement reach, university hides"
+    },
+    "university_hide.changed": {
+      "producers": [
+        "market"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "target_type (post | comment), target_id, hidden (W11)"
+    },
+    "entitlement.changed": {
+      "producers": [
+        "billing"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "subject_id, key, value (null or false when it ends) (W12); every service that gates a paid action copies it"
+    },
+    "config.changed": {
+      "producers": [
+        "trust"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "key, version, value (W10); content keeps feed.* and survey.*"
+    },
+    "content.removed": {
+      "producers": [
+        "trust"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "target_type (post | comment), target_id, staff_id (W10)"
+    },
+    "content.restored": {
+      "producers": [
+        "trust"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "target_type, target_id (W10; an appeal overturned)"
+    },
+    "post.reports_changed": {
+      "producers": [
+        "trust"
+      ],
+      "consumers": [
+        "content"
+      ],
+      "payload": "post_id, reports (open reports, absolute) (W10): the held stage"
     }
   }
 }

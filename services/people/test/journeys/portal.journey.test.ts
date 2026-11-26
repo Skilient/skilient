@@ -86,7 +86,6 @@ describeTransports(
 
       it.todo("W13 web: the phone shell (dock, header, shorter tour) and the welcome film's skip and replay");
       it.todo("W10 trust: feedback (send, follow its status, read the reply)");
-      it.todo("W3 content: a graduate's posts go to the Global Feed only");
       it.todo("W13 web: a deleting account is locked to /settings/account/delete");
     });
 

@@ -1,0 +1,308 @@
+{
+  "save": {
+    "a_user_cannot_save": {
+      "code": "42501",
+      "message": "permission denied for function save_link_preview",
+      "ok": false
+    },
+    "bad_status": {
+      "code": "23514",
+      "message": "new row for relation \"link_previews\" violates check constraint \"link_previews_status_check\"",
+      "ok": false
+    },
+    "card_after_failed_has_no_link": {
+      "ok": true,
+      "value": [
+        {
+          "link": null
+        }
+      ]
+    },
+    "card_after_ok": {
+      "ok": true,
+      "value": [
+        {
+          "link": {
+            "description": "A description",
+            "image_url": "https://img.example.test/i.png",
+            "site_name": "Example",
+            "title": "A title",
+            "url": "https://example.test/save/me"
+          }
+        }
+      ]
+    },
+    "card_before": {
+      "ok": true,
+      "value": [
+        {
+          "link": null
+        }
+      ]
+    },
+    "card_for_another_reader": {
+      "ok": true,
+      "value": [
+        {
+          "link": {
+            "description": null,
+            "image_url": null,
+            "site_name": null,
+            "title": "Back again",
+            "url": "https://example.test/save/me"
+          }
+        }
+      ]
+    },
+    "card_for_another_university": {
+      "ok": true,
+      "value": []
+    },
+    "image_over_http_dropped": {
+      "ok": true,
+      "value": null
+    },
+    "long_fields_cut": {
+      "ok": true,
+      "value": null
+    },
+    "row_after_failed": {
+      "ok": true,
+      "value": [
+        {
+          "description": null,
+          "description_length": null,
+          "image_url": null,
+          "site_length": null,
+          "site_name": null,
+          "status": "failed",
+          "title": null,
+          "title_length": null
+        }
+      ]
+    },
+    "row_after_http_image": {
+      "ok": true,
+      "value": [
+        {
+          "description": "Description",
+          "description_length": 11,
+          "image_url": null,
+          "site_length": 7,
+          "site_name": "Example",
+          "status": "ok",
+          "title": "Title",
+          "title_length": 5
+        }
+      ]
+    },
+    "row_after_long_fields": {
+      "ok": true,
+      "value": [
+        {
+          "description": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "description_length": 500,
+          "image_url": null,
+          "site_length": 100,
+          "site_name": "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+          "status": "ok",
+          "title": "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+          "title_length": 300
+        }
+      ]
+    },
+    "row_after_ok": {
+      "ok": true,
+      "value": [
+        {
+          "description": "A description",
+          "description_length": 13,
+          "image_url": "https://img.example.test/i.png",
+          "site_length": 7,
+          "site_name": "Example",
+          "status": "ok",
+          "title": "A title",
+          "title_length": 7
+        }
+      ]
+    },
+    "row_after_upsert": {
+      "ok": true,
+      "value": [
+        {
+          "description": "A new description",
+          "description_length": 17,
+          "image_url": "https://img.example.test/j.png",
+          "site_length": 9,
+          "site_name": "Example 2",
+          "status": "ok",
+          "title": "A new title",
+          "title_length": 11
+        }
+      ]
+    },
+    "save_failed": {
+      "ok": true,
+      "value": null
+    },
+    "save_ok": {
+      "ok": true,
+      "value": null
+    },
+    "signed_out_cannot_save": {
+      "code": "42501",
+      "message": "permission denied for function save_link_preview",
+      "ok": false
+    },
+    "upsert_changes_the_row": {
+      "ok": true,
+      "value": null
+    }
+  },
+  "trigger": {
+    "after_inserts": [
+      {
+        "body": "Link: (http://plain.example.test/path).",
+        "length": 30,
+        "link_url": "http://plain.example.test/path"
+      },
+      {
+        "body": "Link: brackets [https://b.example.test/x]; end",
+        "length": 24,
+        "link_url": "https://b.example.test/x"
+      },
+      {
+        "body": "Link: fresh https://fresh.example.test/f",
+        "length": 28,
+        "link_url": "https://fresh.example.test/f"
+      },
+      {
+        "body": "Link: none here",
+        "length": null,
+        "link_url": null
+      },
+      {
+        "body": "Link: not http ftp://files.example.test/f",
+        "length": null,
+        "link_url": null
+      },
+      {
+        "body": "Link: question? https://q.example.test/p?x=1?",
+        "length": 28,
+        "link_url": "https://q.example.test/p?x=1"
+      },
+      {
+        "body": "Link: see https://example.test/a, and more",
+        "length": 22,
+        "link_url": "https://example.test/a"
+      },
+      {
+        "body": "Link: stale https://stale.example.test/s",
+        "length": 28,
+        "link_url": "https://stale.example.test/s"
+      },
+      {
+        "body": "Link: two https://one.example.test/1 and https://two.example.test/2",
+        "length": 26,
+        "link_url": "https://one.example.test/1"
+      },
+      {
+        "body": "Link: very long https://long.example.test/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "length": 1976,
+        "link_url": "https://long.example.test/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    ],
+    "after_updates": [
+      {
+        "body": "Link: (http://plain.example.test/path).",
+        "length": 30,
+        "link_url": "http://plain.example.test/path"
+      },
+      {
+        "body": "Link: brackets [https://b.example.test/x]; end",
+        "length": 24,
+        "link_url": "https://b.example.test/x"
+      },
+      {
+        "body": "Link: fresh https://fresh.example.test/f",
+        "length": 28,
+        "link_url": "https://fresh.example.test/f"
+      },
+      {
+        "body": "Link: gone",
+        "length": null,
+        "link_url": null
+      },
+      {
+        "body": "Link: not http ftp://files.example.test/f",
+        "length": null,
+        "link_url": null
+      },
+      {
+        "body": "Link: question? https://q.example.test/p?x=1?",
+        "length": 28,
+        "link_url": "https://q.example.test/p?x=1"
+      },
+      {
+        "body": "Link: see https://example.test/a, and more",
+        "length": 22,
+        "link_url": "https://example.test/a"
+      },
+      {
+        "body": "Link: stale https://stale.example.test/s",
+        "length": 28,
+        "link_url": "https://stale.example.test/s"
+      },
+      {
+        "body": "Link: two https://one.example.test/1 and https://two.example.test/2",
+        "length": 26,
+        "link_url": "https://one.example.test/1"
+      },
+      {
+        "body": "Link: very long https://long.example.test/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "length": 1976,
+        "link_url": "https://long.example.test/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    ],
+    "insert: Link: (http://plain.example.test/path).": [
+      "http://plain.example.test/path"
+    ],
+    "insert: Link: brackets [https://b.example.test/x": [
+      "https://b.example.test/x"
+    ],
+    "insert: Link: fresh https://fresh.example.test/f": [],
+    "insert: Link: none here": [],
+    "insert: Link: not http ftp://files.example.test/": [],
+    "insert: Link: question? https://q.example.test/p": [
+      "https://q.example.test/p?x=1"
+    ],
+    "insert: Link: see https://example.test/a, and mo": [
+      "https://example.test/a"
+    ],
+    "insert: Link: stale https://stale.example.test/s": [
+      "https://stale.example.test/s"
+    ],
+    "insert: Link: two https://one.example.test/1 and": [
+      "https://one.example.test/1"
+    ],
+    "insert: Link: very long https://long.example.tes": [
+      "https://long.example.test/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx... (1976 characters)"
+    ],
+    "update_adds_a_link": [
+      "https://later.example.test/l"
+    ],
+    "update_other_link": [
+      "https://moved.example.test/m"
+    ],
+    "update_removes_link": [],
+    "update_same_link_not_queued_again": [],
+    "url_hash": {
+      "ok": true,
+      "value": "37f58c3315be7800d9d1452bf60ed10134e4cee73b8fde8ae2ba692ab4bc01e0"
+    },
+    "url_hash_is_case_sensitive": {
+      "ok": true,
+      "value": "fe3efc00a12d615094eb5d1df62829455f931f581a2609dc75a47a168af35329"
+    }
+  }
+}

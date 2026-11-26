@@ -403,5 +403,85 @@
   "skilient.people.v1.PeopleService/DeleteProgramme": {
     "p95Ms": 60,
     "dbTrips": 6
+  },
+  "skilient.content.v1.ContentService/CreatePost": {
+    "p95Ms": 60,
+    "dbTrips": 14
+  },
+  "skilient.content.v1.ContentService/EditPost": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.content.v1.ContentService/DeletePost": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.content.v1.ContentService/VotePoll": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.content.v1.ContentService/RsvpEvent": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.content.v1.ContentService/PostCards": {
+    "p95Ms": 60,
+    "dbTrips": 1
+  },
+  "skilient.content.v1.ContentService/ListPosts": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.content.v1.ContentService/PinnedAnnouncement": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.content.v1.ContentService/PinnedUniversityAnnouncement": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.content.v1.ContentService/AddComment": {
+    "p95Ms": 60,
+    "dbTrips": 9
+  },
+  "skilient.content.v1.ContentService/DeleteComment": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.content.v1.ContentService/PinComment": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.content.v1.ContentService/HidePost": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.content.v1.ContentService/PostComments": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.content.v1.ContentService/SurveyForPosts": {
+    "p95Ms": 60,
+    "dbTrips": 7
+  },
+  "skilient.content.v1.ContentService/AnswerSurvey": {
+    "p95Ms": 40,
+    "dbTrips": 10
+  },
+  "skilient.content.v1.ContentService/RecordViews": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.content.v1.ContentService/PostInsights": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.content.v1.ContentService/FeedPage": {
+    "p95Ms": 120,
+    "dbTrips": 4
+  },
+  "skilient.content.v1.ContentService/VisiblePosts": {
+    "p95Ms": 30,
+    "dbTrips": 1
   }
 }

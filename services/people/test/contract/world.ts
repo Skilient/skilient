@@ -19,6 +19,7 @@ import { importPersonalDomains } from "../../../identity/src/store/import";
 import { signupDetails } from "../../../identity/src/store/signup";
 import { lifecycleConsumer } from "../../src/store/lifecycle";
 import { applyUserCreated } from "../../src/store/lifecycle";
+import { profileFlags, publishProfile } from "../../src/store/publish";
 import { publishDomains } from "../../src/store/universities";
 
 export const MIGRATIONS = join(import.meta.dirname, "../../migrations");
@@ -146,12 +147,17 @@ export async function student(
   if (opts.onboard !== false) {
     const o = opts.onboard ?? {};
     const username = o.username ?? `u${Date.now().toString(36)}${++n}`;
-    await w.people`
-      update people.profiles p set username = ${username}, department = ${o.department ?? "Computer Science"}, graduation_year = ${o.year ?? 2027},
-             visibility = ${o.visibility ?? "university"}, onboarding_complete = true,
-             department_id = (select d.id from people.departments d where d.university_id = p.university_id and lower(d.name) = lower(${o.department ?? "Computer Science"}))
-       where user_id = ${id}`;
-    await w.people`update people.onboarding_state set step = 6, completed_at = now() where user_id = ${id}`;
+    // As the wizard's last step: the rows, then profile.updated for the services that copy it (W3).
+    await w.people.begin(async (tx) => {
+      const before = await profileFlags(tx, id);
+      await tx`
+        update people.profiles p set username = ${username}, department = ${o.department ?? "Computer Science"}, graduation_year = ${o.year ?? 2027},
+               visibility = ${o.visibility ?? "university"}, onboarding_complete = true,
+               department_id = (select d.id from people.departments d where d.university_id = p.university_id and lower(d.name) = lower(${o.department ?? "Computer Science"}))
+         where user_id = ${id}`;
+      await tx`update people.onboarding_state set step = 6, completed_at = now() where user_id = ${id}`;
+      await publishProfile(tx, id, before);
+    });
   }
   return { id, email, token: await w.token(id, opts.staffRoles?.length ? "aal2" : "aal1") };
 }

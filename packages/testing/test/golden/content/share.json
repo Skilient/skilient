@@ -1,0 +1,59 @@
+{
+  "visibility": {
+    "blocked_author": {
+      "code": "P0002",
+      "message": "that post isn't available to share",
+      "ok": false
+    },
+    "held_post_of_someone_else": {
+      "code": "P0002",
+      "message": "that post isn't available to share",
+      "ok": false
+    },
+    "no_threads": {
+      "code": "22023",
+      "message": "pick a chat",
+      "ok": false
+    },
+    "note_1001_characters": {
+      "code": "23514",
+      "message": "notes are up to 1,000 characters",
+      "ok": false
+    },
+    "null_post": {
+      "code": "P0002",
+      "message": "that post isn't available to share",
+      "ok": false
+    },
+    "null_threads": {
+      "code": "22023",
+      "message": "pick a chat",
+      "ok": false
+    },
+    "other_university_post": {
+      "code": "P0002",
+      "message": "that post isn't available to share",
+      "ok": false
+    },
+    "removed_post": {
+      "code": "P0002",
+      "message": "that post isn't available to share",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function share_post",
+      "ok": false
+    },
+    "six_threads": {
+      "code": "23514",
+      "message": "share to up to 5 chats at once",
+      "ok": false
+    },
+    "unknown_post": {
+      "code": "P0002",
+      "message": "that post isn't available to share",
+      "ok": false
+    }
+  }
+}

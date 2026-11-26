@@ -19,6 +19,7 @@
     "@connectrpc/connect": "2.3.0",
     "@skilient/contracts": "workspace:*",
     "@skilient/identity": "workspace:*",
+    "@skilient/content": "workspace:*",
     "@skilient/people": "workspace:*",
     "@skilient/platform": "workspace:*",
     "@skilient/sample": "workspace:*",

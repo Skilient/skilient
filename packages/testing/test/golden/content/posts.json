@@ -1,0 +1,2568 @@
+{
+  "cards": {
+    "as_asma": {
+      "ok": true,
+      "value": [
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Card: with pictures",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": null,
+          "media": [
+            {
+              "height": 600,
+              "path": "<uuid:1>/<uuid:2>.webp",
+              "width": 800
+            },
+            {
+              "height": 600,
+              "path": "<uuid:1>/<uuid:3>.webp",
+              "width": 800
+            }
+          ],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "global",
+          "author_muted": false,
+          "author_name": "Cyra Thandor",
+          "author_username": "ct_cyra",
+          "body": "Card: global from B",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: open poll",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": false,
+            "closes_at": "<time>",
+            "my_vote": 1,
+            "options": [
+              {
+                "label": "Cats",
+                "position": 1,
+                "votes": 1
+              },
+              {
+                "label": "Dogs",
+                "position": 2,
+                "votes": 2
+              }
+            ],
+            "total": 3
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: closed poll",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": true,
+            "closes_at": "<time>",
+            "my_vote": null,
+            "options": [
+              {
+                "label": "Yes",
+                "position": 1,
+                "votes": 1
+              },
+              {
+                "label": "No",
+                "position": 2,
+                "votes": 0
+              }
+            ],
+            "total": 1
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: poll nobody voted on",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": false,
+            "closes_at": "<time>",
+            "my_vote": null,
+            "options": [
+              {
+                "label": "A",
+                "position": 1,
+                "votes": null
+              },
+              {
+                "label": "B",
+                "position": 2,
+                "votes": null
+              }
+            ],
+            "total": 0
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: event",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": {
+            "going": 2,
+            "interested": 1,
+            "mine": "going",
+            "place": "Main hall",
+            "starts_at": "<time>",
+            "url": null
+          },
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "event",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": true,
+          "author_name": "Staff Plinder",
+          "author_username": "ct_staff",
+          "body": "Card: by someone Asma muted",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: has a link https://example.test/article/cards",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": {
+            "description": "About something",
+            "image_url": "https://example.test/i.png",
+            "site_name": "Example",
+            "title": "An article",
+            "url": "https://example.test/article/cards"
+          },
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: with comments",
+          "can_edit": false,
+          "comment_count": 1,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Card: asma just posted",
+          "can_edit": true,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        }
+      ]
+    },
+    "as_bilal": {
+      "ok": true,
+      "value": [
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Card: with pictures",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [
+            {
+              "height": 600,
+              "path": "<uuid:1>/<uuid:2>.webp",
+              "width": 800
+            },
+            {
+              "height": 600,
+              "path": "<uuid:1>/<uuid:3>.webp",
+              "width": 800
+            }
+          ],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "global",
+          "author_muted": false,
+          "author_name": "Cyra Thandor",
+          "author_username": "ct_cyra",
+          "body": "Card: global from B",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: open poll",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": false,
+            "closes_at": "<time>",
+            "my_vote": null,
+            "options": [
+              {
+                "label": "Cats",
+                "position": 1,
+                "votes": 1
+              },
+              {
+                "label": "Dogs",
+                "position": 2,
+                "votes": 2
+              }
+            ],
+            "total": 3
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: closed poll",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": true,
+            "closes_at": "<time>",
+            "my_vote": null,
+            "options": [
+              {
+                "label": "Yes",
+                "position": 1,
+                "votes": 1
+              },
+              {
+                "label": "No",
+                "position": 2,
+                "votes": 0
+              }
+            ],
+            "total": 1
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: poll nobody voted on",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": false,
+            "closes_at": "<time>",
+            "my_vote": null,
+            "options": [
+              {
+                "label": "A",
+                "position": 1,
+                "votes": 0
+              },
+              {
+                "label": "B",
+                "position": 2,
+                "votes": 0
+              }
+            ],
+            "total": 0
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: event",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": {
+            "going": 2,
+            "interested": 1,
+            "mine": null,
+            "place": "Main hall",
+            "starts_at": "<time>",
+            "url": null
+          },
+          "is_mine": true,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "event",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Danyal Vorquil",
+          "author_username": "ct_danyal",
+          "body": "Card: by someone Asma blocked",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Staff Plinder",
+          "author_username": "ct_staff",
+          "body": "Card: by someone Asma muted",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: held",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "held",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: has a link https://example.test/article/cards",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": {
+            "description": "About something",
+            "image_url": "https://example.test/i.png",
+            "site_name": "Example",
+            "title": "An article",
+            "url": "https://example.test/article/cards"
+          },
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: with comments",
+          "can_edit": false,
+          "comment_count": 2,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Card: asma just posted",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        }
+      ]
+    },
+    "as_cyra": {
+      "ok": true,
+      "value": [
+        {
+          "audience": "global",
+          "author_muted": false,
+          "author_name": "Cyra Thandor",
+          "author_username": "ct_cyra",
+          "body": "Card: global from B",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        }
+      ]
+    },
+    "as_danyal": {
+      "ok": true,
+      "value": [
+        {
+          "audience": "global",
+          "author_muted": false,
+          "author_name": "Cyra Thandor",
+          "author_username": "ct_cyra",
+          "body": "Card: global from B",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: open poll",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": false,
+            "closes_at": "<time>",
+            "my_vote": 2,
+            "options": [
+              {
+                "label": "Cats",
+                "position": 1,
+                "votes": 1
+              },
+              {
+                "label": "Dogs",
+                "position": 2,
+                "votes": 2
+              }
+            ],
+            "total": 3
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: closed poll",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": true,
+            "closes_at": "<time>",
+            "my_vote": 1,
+            "options": [
+              {
+                "label": "Yes",
+                "position": 1,
+                "votes": 1
+              },
+              {
+                "label": "No",
+                "position": 2,
+                "votes": 0
+              }
+            ],
+            "total": 1
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: poll nobody voted on",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": false,
+            "closes_at": "<time>",
+            "my_vote": null,
+            "options": [
+              {
+                "label": "A",
+                "position": 1,
+                "votes": null
+              },
+              {
+                "label": "B",
+                "position": 2,
+                "votes": null
+              }
+            ],
+            "total": 0
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: event",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": {
+            "going": 2,
+            "interested": 1,
+            "mine": "interested",
+            "place": "Main hall",
+            "starts_at": "<time>",
+            "url": null
+          },
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "event",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Danyal Vorquil",
+          "author_username": "ct_danyal",
+          "body": "Card: by someone Asma blocked",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Staff Plinder",
+          "author_username": "ct_staff",
+          "body": "Card: by someone Asma muted",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: has a link https://example.test/article/cards",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": {
+            "description": "About something",
+            "image_url": "https://example.test/i.png",
+            "site_name": "Example",
+            "title": "An article",
+            "url": "https://example.test/article/cards"
+          },
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: with comments",
+          "can_edit": false,
+          "comment_count": 2,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        }
+      ]
+    },
+    "as_staff": {
+      "ok": true,
+      "value": [
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Card: with pictures",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [
+            {
+              "height": 600,
+              "path": "<uuid:1>/<uuid:2>.webp",
+              "width": 800
+            },
+            {
+              "height": 600,
+              "path": "<uuid:1>/<uuid:3>.webp",
+              "width": 800
+            }
+          ],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "global",
+          "author_muted": false,
+          "author_name": "Cyra Thandor",
+          "author_username": "ct_cyra",
+          "body": "Card: global from B",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: open poll",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": false,
+            "closes_at": "<time>",
+            "my_vote": 2,
+            "options": [
+              {
+                "label": "Cats",
+                "position": 1,
+                "votes": 1
+              },
+              {
+                "label": "Dogs",
+                "position": 2,
+                "votes": 2
+              }
+            ],
+            "total": 3
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: closed poll",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": true,
+            "closes_at": "<time>",
+            "my_vote": null,
+            "options": [
+              {
+                "label": "Yes",
+                "position": 1,
+                "votes": 1
+              },
+              {
+                "label": "No",
+                "position": 2,
+                "votes": 0
+              }
+            ],
+            "total": 1
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: poll nobody voted on",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": {
+            "closed": false,
+            "closes_at": "<time>",
+            "my_vote": null,
+            "options": [
+              {
+                "label": "A",
+                "position": 1,
+                "votes": null
+              },
+              {
+                "label": "B",
+                "position": 2,
+                "votes": null
+              }
+            ],
+            "total": 0
+          },
+          "society": null,
+          "stage": "seed",
+          "type": "poll",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: event",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": {
+            "going": 2,
+            "interested": 1,
+            "mine": "going",
+            "place": "Main hall",
+            "starts_at": "<time>",
+            "url": null
+          },
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "event",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Danyal Vorquil",
+          "author_username": "ct_danyal",
+          "body": "Card: by someone Asma blocked",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Staff Plinder",
+          "author_username": "ct_staff",
+          "body": "Card: by someone Asma muted",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": true,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: has a link https://example.test/article/cards",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": {
+            "description": "About something",
+            "image_url": "https://example.test/i.png",
+            "site_name": "Example",
+            "title": "An article",
+            "url": "https://example.test/article/cards"
+          },
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Bilal Vorquil",
+          "author_username": "ct_bilal",
+          "body": "Card: with comments",
+          "can_edit": false,
+          "comment_count": 2,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        },
+        {
+          "audience": "university",
+          "author_muted": false,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Card: asma just posted",
+          "can_edit": false,
+          "comment_count": 0,
+          "edited": false,
+          "event": null,
+          "is_mine": false,
+          "link": null,
+          "media": [],
+          "pinned": false,
+          "poll": null,
+          "society": null,
+          "stage": "seed",
+          "type": "general",
+          "venture": null
+        }
+      ]
+    },
+    "empty_list": {
+      "ok": true,
+      "value": []
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function post_cards",
+      "ok": false
+    }
+  },
+  "create": {
+    "announcement_not_staff": {
+      "code": "42501",
+      "message": "only Skilient staff post announcements for now",
+      "ok": false
+    },
+    "empty_body": {
+      "code": "23514",
+      "message": "posts are 1 to 2,000 characters",
+      "ok": false
+    },
+    "event_without_society": {
+      "code": "42501",
+      "message": "only society officers post events",
+      "ok": false
+    },
+    "five_images": {
+      "code": "23514",
+      "message": "up to 4 images per post",
+      "ok": false
+    },
+    "general_university_with_images": {
+      "changes": {
+        "public.post_media": {
+          "added": [
+            {
+              "body": "Hello from A, with pictures",
+              "height": 600,
+              "path": "<uuid:1>/<uuid:2>.webp",
+              "position": 1,
+              "width": 800
+            },
+            {
+              "body": "Hello from A, with pictures",
+              "height": 480,
+              "path": "<uuid:1>/<uuid:3>.webp",
+              "position": 2,
+              "width": 640
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Hello from A, with pictures",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": []
+        },
+        "public.posts": {
+          "added": [
+            {
+              "audience": "university",
+              "author_id": "<uuid:1>",
+              "body": "Hello from A, with pictures",
+              "edited": false,
+              "link_url": null,
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "general",
+              "university_id": "<uuid:4>",
+              "venture_id": null
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:5>"
+      }
+    },
+    "global_general": {
+      "changes": {
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Hello world from B",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": []
+        },
+        "public.posts": {
+          "added": [
+            {
+              "audience": "global",
+              "author_id": "<uuid:6>",
+              "body": "Hello world from B",
+              "edited": false,
+              "link_url": null,
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "general",
+              "university_id": "<uuid:7>",
+              "venture_id": null
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:8>"
+      }
+    },
+    "graduate_global_post": {
+      "changes": {
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Alumni hello",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": []
+        },
+        "public.posts": {
+          "added": [
+            {
+              "audience": "global",
+              "author_id": "<uuid:9>",
+              "body": "Alumni hello",
+              "edited": false,
+              "link_url": null,
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "general",
+              "university_id": "<uuid:4>",
+              "venture_id": null
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:10>"
+      }
+    },
+    "graduate_university_post": {
+      "code": "42501",
+      "message": "graduates post to the Global Feed only",
+      "ok": false
+    },
+    "images_on_poll": {
+      "code": "22023",
+      "message": "images go on general, invite and event posts",
+      "ok": false
+    },
+    "link_url": {
+      "changes": {
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Read https://example.test/a/b?c=1). Then reply.",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": []
+        },
+        "public.posts": {
+          "added": [
+            {
+              "audience": "university",
+              "author_id": "<uuid:11>",
+              "body": "Read https://example.test/a/b?c=1). Then reply.",
+              "edited": false,
+              "link_url": "https://example.test/a/b?c=1",
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "general",
+              "university_id": "<uuid:4>",
+              "venture_id": null
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:12>"
+      }
+    },
+    "long_body": {
+      "code": "23514",
+      "message": "posts are 1 to 2,000 characters",
+      "ok": false
+    },
+    "not_onboarded": {
+      "code": "42501",
+      "message": "finish setting up your account first",
+      "ok": false
+    },
+    "poll": {
+      "changes": {
+        "public.poll_options": {
+          "added": [
+            {
+              "body": "Tabs or spaces?",
+              "label": "Tabs",
+              "position": 1
+            },
+            {
+              "body": "Tabs or spaces?",
+              "label": "Spaces",
+              "position": 2
+            },
+            {
+              "body": "Tabs or spaces?",
+              "label": "Both",
+              "position": 3
+            }
+          ],
+          "removed": []
+        },
+        "public.post_polls": {
+          "added": [
+            {
+              "body": "Tabs or spaces?",
+              "days": 3
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Tabs or spaces?",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": []
+        },
+        "public.posts": {
+          "added": [
+            {
+              "audience": "global",
+              "author_id": "<uuid:13>",
+              "body": "Tabs or spaces?",
+              "edited": false,
+              "link_url": null,
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "poll",
+              "university_id": "<uuid:4>",
+              "venture_id": null
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:14>"
+      }
+    },
+    "poll_eight_days": {
+      "code": "23514",
+      "message": "polls close after 1 to 7 days",
+      "ok": false
+    },
+    "poll_one_option": {
+      "code": "23514",
+      "message": "polls have 2 to 4 options",
+      "ok": false
+    },
+    "second_within_30s": {
+      "code": "54000",
+      "message": "wait 30 seconds between posts",
+      "ok": false
+    },
+    "shipped_refused": {
+      "code": "42501",
+      "message": "Shipped posts are created when a venture completes",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function create_post",
+      "ok": false
+    },
+    "someone_elses_image": {
+      "code": "22023",
+      "message": "an image is missing; upload it again",
+      "ok": false
+    },
+    "staff_announcement_pinned": {
+      "changes": {
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Platform news",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": []
+        },
+        "public.posts": {
+          "added": [
+            {
+              "audience": "global",
+              "author_id": "<uuid:15>",
+              "body": "Platform news",
+              "edited": false,
+              "link_url": null,
+              "pinned": true,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "announcement",
+              "university_id": "<uuid:4>",
+              "venture_id": null
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:16>"
+      }
+    },
+    "unknown_type": {
+      "code": "22023",
+      "message": "unknown post type or audience",
+      "ok": false
+    }
+  },
+  "delete": {
+    "own_plain": {
+      "changes": {
+        "public.post_stats": {
+          "added": [],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Delete me plain",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        },
+        "public.posts": {
+          "added": [],
+          "removed": [
+            {
+              "audience": "university",
+              "author_id": "<uuid:1>",
+              "body": "Delete me plain",
+              "edited": false,
+              "link_url": null,
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "general",
+              "university_id": "<uuid:2>",
+              "venture_id": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": []
+      }
+    },
+    "own_with_media": {
+      "changes": {
+        "public.post_media": {
+          "added": [],
+          "removed": [
+            {
+              "body": "Delete me with pictures",
+              "height": 600,
+              "path": "<uuid:1>/<uuid:3>.webp",
+              "position": 1,
+              "width": 800
+            },
+            {
+              "body": "Delete me with pictures",
+              "height": 600,
+              "path": "<uuid:1>/<uuid:4>.webp",
+              "position": 2,
+              "width": 800
+            }
+          ]
+        },
+        "public.post_stats": {
+          "added": [],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Delete me with pictures",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        },
+        "public.posts": {
+          "added": [],
+          "removed": [
+            {
+              "audience": "university",
+              "author_id": "<uuid:1>",
+              "body": "Delete me with pictures",
+              "edited": false,
+              "link_url": null,
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "general",
+              "university_id": "<uuid:2>",
+              "venture_id": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          "<uuid:1>/<uuid:3>.webp",
+          "<uuid:1>/<uuid:4>.webp"
+        ]
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function delete_post",
+      "ok": false
+    },
+    "someone_elses": {
+      "code": "42501",
+      "message": "you can only delete your own posts",
+      "ok": false
+    },
+    "twice": {
+      "code": "42501",
+      "message": "you can only delete your own posts",
+      "ok": false
+    }
+  },
+  "edit": {
+    "after_window": {
+      "code": "55000",
+      "message": "posts can be edited for 15 minutes after posting",
+      "ok": false
+    },
+    "empty_body": {
+      "code": "23514",
+      "message": "posts are 1 to 2,000 characters",
+      "ok": false
+    },
+    "null_body": {
+      "code": "23514",
+      "message": "posts are 1 to 2,000 characters",
+      "ok": false
+    },
+    "own_again": {
+      "changes": {
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Edited a second time",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Edited text, trimmed",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        },
+        "public.posts": {
+          "added": [
+            {
+              "audience": "university",
+              "author_id": "<uuid:1>",
+              "body": "Edited a second time",
+              "edited": true,
+              "link_url": null,
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "general",
+              "university_id": "<uuid:2>",
+              "venture_id": null
+            }
+          ],
+          "removed": [
+            {
+              "audience": "university",
+              "author_id": "<uuid:1>",
+              "body": "Edited text, trimmed",
+              "edited": true,
+              "link_url": null,
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "general",
+              "university_id": "<uuid:2>",
+              "venture_id": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "own_fresh": {
+      "changes": {
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Edited text, trimmed",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Edit me now",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        },
+        "public.posts": {
+          "added": [
+            {
+              "audience": "university",
+              "author_id": "<uuid:1>",
+              "body": "Edited text, trimmed",
+              "edited": true,
+              "link_url": null,
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "general",
+              "university_id": "<uuid:2>",
+              "venture_id": null
+            }
+          ],
+          "removed": [
+            {
+              "audience": "university",
+              "author_id": "<uuid:1>",
+              "body": "Edit me now",
+              "edited": false,
+              "link_url": null,
+              "pinned": false,
+              "removed": false,
+              "society_id": null,
+              "stage": "seed",
+              "type": "general",
+              "university_id": "<uuid:2>",
+              "venture_id": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function edit_post",
+      "ok": false
+    },
+    "someone_elses": {
+      "code": "42501",
+      "message": "you can only edit your own posts",
+      "ok": false
+    },
+    "too_long": {
+      "code": "23514",
+      "message": "posts are 1 to 2,000 characters",
+      "ok": false
+    },
+    "unknown_post": {
+      "code": "42501",
+      "message": "you can only edit your own posts",
+      "ok": false
+    }
+  },
+  "list_posts": {
+    "author_asma_own": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: asma own"
+        }
+      ]
+    },
+    "author_bilal": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: uni general 1"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni event"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni announcement"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: hidden by asma"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: global from A"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: oldest"
+        }
+      ]
+    },
+    "author_blocked": {
+      "ok": true,
+      "value": []
+    },
+    "author_staff_muted_still_listed": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: by muted author"
+        }
+      ]
+    },
+    "before_without_id": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: uni announcement"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: asma own"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: global from A"
+        }
+      ]
+    },
+    "filter_announcements": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: uni announcement"
+        }
+      ]
+    },
+    "filter_events": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: uni event"
+        }
+      ]
+    },
+    "filter_shipped": {
+      "ok": true,
+      "value": []
+    },
+    "filter_ventures": {
+      "ok": true,
+      "value": []
+    },
+    "global": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: global from A"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: global from B"
+        }
+      ]
+    },
+    "global_as_cyra": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: global from A"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: global from B"
+        }
+      ]
+    },
+    "limit_over_cap": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: uni general 1"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni event"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni announcement"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: asma own"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: global from A"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: oldest"
+        }
+      ]
+    },
+    "limit_zero_is_one": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: uni general 1"
+        }
+      ]
+    },
+    "page_1_of_3": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: uni general 1"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni event"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni announcement"
+        }
+      ]
+    },
+    "page_2_before_cursor": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: asma own"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: global from A"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: oldest"
+        }
+      ]
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function list_posts",
+      "ok": false
+    },
+    "university_all": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: uni general 1"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni event"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni announcement"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: asma own"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: global from A"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: oldest"
+        }
+      ]
+    },
+    "university_as_cyra": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: global from B"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni B only"
+        }
+      ]
+    },
+    "university_default_filter": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: uni general 1"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni event"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni announcement"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: asma own"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: global from A"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: oldest"
+        }
+      ]
+    },
+    "unknown_filter_means_all": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "List: uni general 1"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni event"
+        },
+        {
+          "created_at": "<time>",
+          "id": "List: uni announcement"
+        }
+      ]
+    },
+    "unknown_scope": {
+      "ok": true,
+      "value": []
+    }
+  },
+  "pinned": {
+    "hide_platform": {
+      "changes": {
+        "public.post_hides": {
+          "added": [
+            {
+              "body": "Pinned: platform news",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Pinned: platform news",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 1,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Pinned: platform news",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "hide_university": {
+      "changes": {
+        "public.post_hides": {
+          "added": [
+            {
+              "body": "Pinned: university notice",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Pinned: university notice",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 1,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Pinned: university notice",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "platform_after_hide": {
+      "ok": true,
+      "value": [
+        {
+          "id": null
+        }
+      ]
+    },
+    "platform_asma": {
+      "ok": true,
+      "value": [
+        {
+          "id": "Pinned: platform news"
+        }
+      ]
+    },
+    "platform_cyra": {
+      "ok": true,
+      "value": [
+        {
+          "id": "Pinned: platform news"
+        }
+      ]
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function pinned_announcement",
+      "ok": false
+    },
+    "university_after_hide": {
+      "ok": true,
+      "value": [
+        {
+          "id": null
+        }
+      ]
+    },
+    "university_asma": {
+      "ok": true,
+      "value": [
+        {
+          "id": "Pinned: university notice"
+        }
+      ]
+    },
+    "university_bilal": {
+      "ok": true,
+      "value": [
+        {
+          "id": "Pinned: university notice"
+        }
+      ]
+    },
+    "university_bilal_unaffected": {
+      "ok": true,
+      "value": [
+        {
+          "id": "Pinned: university notice"
+        }
+      ]
+    },
+    "university_cyra_other_university": {
+      "ok": true,
+      "value": [
+        {
+          "id": null
+        }
+      ]
+    }
+  },
+  "rsvp": {
+    "bad_status": {
+      "code": "22P02",
+      "message": "invalid input value for enum rsvp_status: \"maybe\"",
+      "ok": false
+    },
+    "clear": {
+      "changes": {
+        "public.event_rsvps": {
+          "added": [],
+          "removed": [
+            {
+              "body": "Open day",
+              "status": "interested",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "clear_when_none": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "ended_three_hours_ago": {
+      "changes": {
+        "public.event_rsvps": {
+          "added": [
+            {
+              "body": "Just ended meetup",
+              "status": "going",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "global_from_other_university": {
+      "changes": {
+        "public.event_rsvps": {
+          "added": [
+            {
+              "body": "Global meetup",
+              "status": "interested",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "going": {
+      "changes": {
+        "public.event_rsvps": {
+          "added": [
+            {
+              "body": "Open day",
+              "status": "going",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "interested_changes": {
+      "changes": {
+        "public.event_rsvps": {
+          "added": [
+            {
+              "body": "Open day",
+              "status": "interested",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "body": "Open day",
+              "status": "going",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "not_an_event": {
+      "code": "P0002",
+      "message": "that event doesn't exist",
+      "ok": false
+    },
+    "other_university": {
+      "code": "P0002",
+      "message": "that event doesn't exist",
+      "ok": false
+    },
+    "past_event": {
+      "code": "55000",
+      "message": "this event has already happened",
+      "ok": false
+    },
+    "second_user": {
+      "changes": {
+        "public.event_rsvps": {
+          "added": [
+            {
+              "body": "Open day",
+              "status": "going",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function rsvp_event",
+      "ok": false
+    }
+  },
+  "vote_poll": {
+    "author_votes_own": {
+      "changes": {
+        "public.poll_votes": {
+          "added": [
+            {
+              "body": "Colour poll",
+              "position": 1,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "bad_option": {
+      "code": "22023",
+      "message": "pick one of the options",
+      "ok": false
+    },
+    "closed": {
+      "code": "55000",
+      "message": "this poll has closed",
+      "ok": false
+    },
+    "global_from_other_university": {
+      "changes": {
+        "public.poll_votes": {
+          "added": [
+            {
+              "body": "Global poll",
+              "position": 1,
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "not_a_poll": {
+      "code": "P0002",
+      "message": "that poll doesn't exist",
+      "ok": false
+    },
+    "option_zero": {
+      "code": "22023",
+      "message": "pick one of the options",
+      "ok": false
+    },
+    "other_university": {
+      "code": "P0002",
+      "message": "that poll doesn't exist",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function vote_poll",
+      "ok": false
+    },
+    "unknown_post": {
+      "code": "P0002",
+      "message": "that poll doesn't exist",
+      "ok": false
+    },
+    "vote": {
+      "changes": {
+        "public.poll_votes": {
+          "added": [
+            {
+              "body": "Colour poll",
+              "position": 2,
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "vote_twice": {
+      "code": "23505",
+      "message": "you've already voted",
+      "ok": false
+    }
+  }
+}

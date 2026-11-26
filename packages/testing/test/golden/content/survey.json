@@ -1,0 +1,1317 @@
+{
+  "answer": {
+    "after_lock": {
+      "code": "23505",
+      "message": "your answer is final",
+      "ok": false
+    },
+    "answer": {
+      "changes": {
+        "public.micro_survey_responses": {
+          "added": [
+            {
+              "answer": true,
+              "body": "Answer: post A",
+              "dimension": "interesting",
+              "latency_ms": 1500,
+              "user_id": "<uuid:1>",
+              "weight": "1.000"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 1,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 1,
+              "reports": 0,
+              "views": 1
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 1
+            }
+          ]
+        },
+        "public.post_survey_counts": {
+          "added": [
+            {
+              "assigned": 1,
+              "body": "Answer: post A",
+              "crosses": 0,
+              "dimension": "interesting",
+              "ticks": 1,
+              "weighted_crosses": "0",
+              "weighted_ticks": "1.000"
+            }
+          ],
+          "removed": [
+            {
+              "assigned": 1,
+              "body": "Answer: post A",
+              "crosses": 0,
+              "dimension": "interesting",
+              "ticks": 0,
+              "weighted_crosses": "0",
+              "weighted_ticks": "0"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "assign": {
+      "changes": {
+        "public.micro_survey_assignments": {
+          "added": [
+            {
+              "body": "Answer: post A",
+              "dimension": "interesting",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_survey_counts": {
+          "added": [
+            {
+              "assigned": 1,
+              "body": "Answer: post A",
+              "crosses": 0,
+              "dimension": "interesting",
+              "ticks": 0,
+              "weighted_crosses": "0",
+              "weighted_ticks": "0"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          {
+            "dimension": "interesting"
+          }
+        ]
+      }
+    },
+    "change_within_window": {
+      "changes": {
+        "public.micro_survey_responses": {
+          "added": [
+            {
+              "answer": false,
+              "body": "Answer: post A",
+              "dimension": "interesting",
+              "latency_ms": 1500,
+              "user_id": "<uuid:1>",
+              "weight": "1.000"
+            }
+          ],
+          "removed": [
+            {
+              "answer": true,
+              "body": "Answer: post A",
+              "dimension": "interesting",
+              "latency_ms": 1500,
+              "user_id": "<uuid:1>",
+              "weight": "1.000"
+            }
+          ]
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 1,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 1
+            }
+          ],
+          "removed": [
+            {
+              "answers": 1,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 1,
+              "reports": 0,
+              "views": 1
+            }
+          ]
+        },
+        "public.post_survey_counts": {
+          "added": [
+            {
+              "assigned": 1,
+              "body": "Answer: post A",
+              "crosses": 1,
+              "dimension": "interesting",
+              "ticks": 0,
+              "weighted_crosses": "1.000",
+              "weighted_ticks": "0.000"
+            }
+          ],
+          "removed": [
+            {
+              "assigned": 1,
+              "body": "Answer: post A",
+              "crosses": 0,
+              "dimension": "interesting",
+              "ticks": 1,
+              "weighted_crosses": "0",
+              "weighted_ticks": "1.000"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "friend_and_new_account": {
+      "changes": {
+        "public.micro_survey_responses": {
+          "added": [
+            {
+              "answer": false,
+              "body": "Answer: post A",
+              "dimension": "credible",
+              "latency_ms": 1200,
+              "user_id": "<uuid:2>",
+              "weight": "0.250"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 4,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 1,
+              "reports": 0,
+              "views": 4
+            }
+          ],
+          "removed": [
+            {
+              "answers": 3,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 1,
+              "reports": 0,
+              "views": 4
+            }
+          ]
+        },
+        "public.post_survey_counts": {
+          "added": [
+            {
+              "assigned": 1,
+              "body": "Answer: post A",
+              "crosses": 1,
+              "dimension": "credible",
+              "ticks": 0,
+              "weighted_crosses": "0.250",
+              "weighted_ticks": "0"
+            }
+          ],
+          "removed": [
+            {
+              "assigned": 1,
+              "body": "Answer: post A",
+              "crosses": 0,
+              "dimension": "credible",
+              "ticks": 0,
+              "weighted_crosses": "0",
+              "weighted_ticks": "0"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "friend_of_the_author_weighs_half": {
+      "changes": {
+        "public.micro_survey_responses": {
+          "added": [
+            {
+              "answer": true,
+              "body": "Answer: post A",
+              "dimension": "interesting",
+              "latency_ms": 1200,
+              "user_id": "<uuid:3>",
+              "weight": "0.500"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 2,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 1,
+              "reports": 0,
+              "views": 2
+            }
+          ],
+          "removed": [
+            {
+              "answers": 1,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 2
+            }
+          ]
+        },
+        "public.post_survey_counts": {
+          "added": [
+            {
+              "assigned": 2,
+              "body": "Answer: post A",
+              "crosses": 1,
+              "dimension": "interesting",
+              "ticks": 1,
+              "weighted_crosses": "1.000",
+              "weighted_ticks": "0.500"
+            }
+          ],
+          "removed": [
+            {
+              "assigned": 2,
+              "body": "Answer: post A",
+              "crosses": 1,
+              "dimension": "interesting",
+              "ticks": 0,
+              "weighted_crosses": "1.000",
+              "weighted_ticks": "0.000"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "invisible_post_no_question": {
+      "code": "P0002",
+      "message": "there's no question for you on this post",
+      "ok": false
+    },
+    "new_account_weighs_half": {
+      "changes": {
+        "public.micro_survey_responses": {
+          "added": [
+            {
+              "answer": false,
+              "body": "Answer: post A",
+              "dimension": "relevant",
+              "latency_ms": 1200,
+              "user_id": "<uuid:4>",
+              "weight": "0.500"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 3,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 1,
+              "reports": 0,
+              "views": 3
+            }
+          ],
+          "removed": [
+            {
+              "answers": 2,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 1,
+              "reports": 0,
+              "views": 3
+            }
+          ]
+        },
+        "public.post_survey_counts": {
+          "added": [
+            {
+              "assigned": 1,
+              "body": "Answer: post A",
+              "crosses": 1,
+              "dimension": "relevant",
+              "ticks": 0,
+              "weighted_crosses": "0.500",
+              "weighted_ticks": "0"
+            }
+          ],
+          "removed": [
+            {
+              "assigned": 1,
+              "body": "Answer: post A",
+              "crosses": 0,
+              "dimension": "relevant",
+              "ticks": 0,
+              "weighted_crosses": "0",
+              "weighted_ticks": "0"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "no_answer": {
+      "code": "22023",
+      "message": "answer yes or no",
+      "ok": false
+    },
+    "no_latency": {
+      "code": "55000",
+      "message": "take a moment to read the post first",
+      "ok": false
+    },
+    "no_question_yet": {
+      "code": "P0002",
+      "message": "there's no question for you on this post",
+      "ok": false
+    },
+    "not_viewed_yet": {
+      "code": "55000",
+      "message": "take a moment to read the post first",
+      "ok": false
+    },
+    "record_view": {
+      "changes": {
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 1
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Answer: post A",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        },
+        "public.post_views": {
+          "added": [
+            {
+              "body": "Answer: post A",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function answer_survey",
+      "ok": false
+    },
+    "straight_liner_weighs_less": {
+      "changes": {
+        "public.micro_survey_responses": {
+          "added": [
+            {
+              "answer": true,
+              "body": "Answer: global post",
+              "dimension": "relevant",
+              "latency_ms": 1500,
+              "user_id": "<uuid:5>",
+              "weight": "0.300"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 1,
+              "appropriate_flags": 0,
+              "body": "Answer: global post",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 1,
+              "reports": 0,
+              "views": 1
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Answer: global post",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 1
+            }
+          ]
+        },
+        "public.post_survey_counts": {
+          "added": [
+            {
+              "assigned": 1,
+              "body": "Answer: global post",
+              "crosses": 0,
+              "dimension": "relevant",
+              "ticks": 1,
+              "weighted_crosses": "0",
+              "weighted_ticks": "0.300"
+            }
+          ],
+          "removed": [
+            {
+              "assigned": 1,
+              "body": "Answer: global post",
+              "crosses": 0,
+              "dimension": "relevant",
+              "ticks": 0,
+              "weighted_crosses": "0",
+              "weighted_ticks": "0"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "too_fast": {
+      "code": "55000",
+      "message": "take a moment to read the post first",
+      "ok": false
+    }
+  },
+  "insights": {
+    "bilal_without_entitlement": {
+      "code": "42501",
+      "message": "post insights come with Student Pro",
+      "ok": false
+    },
+    "not_the_author": {
+      "code": "42501",
+      "message": "insights are for the post's author",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function post_insights",
+      "ok": false
+    },
+    "unknown_post": {
+      "code": "42501",
+      "message": "insights are for the post's author",
+      "ok": false
+    },
+    "with_entitlement": {
+      "ok": true,
+      "value": [
+        {
+          "commenters": 0,
+          "crosses": 1,
+          "dimension": "informative",
+          "label": "Informative",
+          "ticks": 2,
+          "views": 5,
+          "weighted_rate": "0.600"
+        },
+        {
+          "commenters": 0,
+          "crosses": 1,
+          "dimension": "credible",
+          "label": "Credible",
+          "ticks": 1,
+          "views": 5,
+          "weighted_rate": "0.333"
+        }
+      ]
+    },
+    "with_entitlement_still_not_for_others_posts": {
+      "code": "42501",
+      "message": "insights are for the post's author",
+      "ok": false
+    },
+    "without_entitlement": {
+      "code": "42501",
+      "message": "post insights come with Student Pro",
+      "ok": false
+    }
+  },
+  "record_views": {
+    "author_views_own_held_post": {
+      "changes": {
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Views: held",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 1
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Views: held",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        },
+        "public.post_views": {
+          "added": [
+            {
+              "body": "Views: held",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 1
+      }
+    },
+    "empty": {
+      "ok": true,
+      "value": 0
+    },
+    "mixed": {
+      "changes": {
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Views: global post",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 1
+            },
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Views: uni post",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 1
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Views: global post",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            },
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Views: uni post",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        },
+        "public.post_views": {
+          "added": [
+            {
+              "body": "Views: global post",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "body": "Views: uni post",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 2
+      }
+    },
+    "null": {
+      "ok": true,
+      "value": 0
+    },
+    "other_reader": {
+      "changes": {
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Views: global post",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 2
+            },
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Views: only at B",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 1
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Views: global post",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 1
+            },
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Views: only at B",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        },
+        "public.post_views": {
+          "added": [
+            {
+              "body": "Views: global post",
+              "user_id": "<uuid:3>"
+            },
+            {
+              "body": "Views: only at B",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 2
+      }
+    },
+    "repeat": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": 0
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function record_views",
+      "ok": false
+    }
+  },
+  "stats": {
+    "answers": [
+      {
+        "ok": true,
+        "value": null
+      },
+      {
+        "ok": true,
+        "value": null
+      },
+      {
+        "ok": true,
+        "value": null
+      }
+    ],
+    "changes": {
+      "public.micro_survey_assignments": {
+        "added": [
+          {
+            "body": "Stats: global post by Bilal",
+            "dimension": "interesting",
+            "user_id": "<uuid:1>"
+          },
+          {
+            "body": "Stats: global post by Bilal",
+            "dimension": "informative",
+            "user_id": "<uuid:2>"
+          },
+          {
+            "body": "Stats: global post by Bilal",
+            "dimension": "credible",
+            "user_id": "<uuid:3>"
+          }
+        ],
+        "removed": []
+      },
+      "public.micro_survey_responses": {
+        "added": [
+          {
+            "answer": true,
+            "body": "Stats: global post by Bilal",
+            "dimension": "interesting",
+            "latency_ms": 1500,
+            "user_id": "<uuid:1>",
+            "weight": "1.000"
+          },
+          {
+            "answer": true,
+            "body": "Stats: global post by Bilal",
+            "dimension": "informative",
+            "latency_ms": 1500,
+            "user_id": "<uuid:2>",
+            "weight": "1.000"
+          },
+          {
+            "answer": false,
+            "body": "Stats: global post by Bilal",
+            "dimension": "credible",
+            "latency_ms": 1500,
+            "user_id": "<uuid:3>",
+            "weight": "1.000"
+          }
+        ],
+        "removed": []
+      },
+      "public.notifications": {
+        "added": [
+          {
+            "actor_id": "<uuid:1>",
+            "entity_type": "post",
+            "type": "comment_received",
+            "user_id": "<uuid:4>"
+          },
+          {
+            "actor_id": "<uuid:2>",
+            "entity_type": "post",
+            "type": "comment_received",
+            "user_id": "<uuid:4>"
+          },
+          {
+            "actor_id": "<uuid:3>",
+            "entity_type": "post",
+            "type": "comment_received",
+            "user_id": "<uuid:4>"
+          }
+        ],
+        "removed": []
+      },
+      "public.post_comments": {
+        "added": [
+          {
+            "author_id": "<uuid:1>",
+            "body": "A comment that is long enough",
+            "deleted": false,
+            "pinned": false,
+            "post": "Stats: global post by Bilal",
+            "reply": false
+          },
+          {
+            "author_id": "<uuid:2>",
+            "body": "From another university, long enough",
+            "deleted": false,
+            "pinned": false,
+            "post": "Stats: global post by Bilal",
+            "reply": false
+          },
+          {
+            "author_id": "<uuid:3>",
+            "body": "short",
+            "deleted": false,
+            "pinned": false,
+            "post": "Stats: global post by Bilal",
+            "reply": false
+          }
+        ],
+        "removed": []
+      },
+      "public.post_hides": {
+        "added": [
+          {
+            "body": "Stats: global post by Bilal",
+            "user_id": "<uuid:1>"
+          }
+        ],
+        "removed": []
+      },
+      "public.post_stats": {
+        "added": [
+          {
+            "answers": 3,
+            "appropriate_flags": 0,
+            "body": "Stats: global post by Bilal",
+            "commenter_universities": 2,
+            "commenters": 2,
+            "hides": 1,
+            "positives": 2,
+            "reports": 0,
+            "views": 3
+          }
+        ],
+        "removed": [
+          {
+            "answers": 0,
+            "appropriate_flags": 0,
+            "body": "Stats: global post by Bilal",
+            "commenter_universities": 0,
+            "commenters": 0,
+            "hides": 0,
+            "positives": 0,
+            "reports": 0,
+            "views": 0
+          }
+        ]
+      },
+      "public.post_survey_counts": {
+        "added": [
+          {
+            "assigned": 1,
+            "body": "Stats: global post by Bilal",
+            "crosses": 1,
+            "dimension": "credible",
+            "ticks": 0,
+            "weighted_crosses": "1.000",
+            "weighted_ticks": "0"
+          },
+          {
+            "assigned": 2,
+            "body": "Stats: global post by Bilal",
+            "crosses": 0,
+            "dimension": "informative",
+            "ticks": 1,
+            "weighted_crosses": "0",
+            "weighted_ticks": "1.000"
+          },
+          {
+            "assigned": 1,
+            "body": "Stats: global post by Bilal",
+            "crosses": 0,
+            "dimension": "interesting",
+            "ticks": 1,
+            "weighted_crosses": "0",
+            "weighted_ticks": "1.000"
+          }
+        ],
+        "removed": [
+          {
+            "assigned": 1,
+            "body": "Stats: global post by Bilal",
+            "crosses": 0,
+            "dimension": "informative",
+            "ticks": 0,
+            "weighted_crosses": "0",
+            "weighted_ticks": "0"
+          }
+        ]
+      },
+      "public.post_views": {
+        "added": [
+          {
+            "body": "Stats: global post by Bilal",
+            "user_id": "<uuid:1>"
+          },
+          {
+            "body": "Stats: global post by Bilal",
+            "user_id": "<uuid:2>"
+          },
+          {
+            "body": "Stats: global post by Bilal",
+            "user_id": "<uuid:3>"
+          }
+        ],
+        "removed": []
+      }
+    },
+    "comments": [
+      {
+        "ok": true,
+        "value": "<uuid:5>"
+      },
+      {
+        "ok": true,
+        "value": "<uuid:6>"
+      },
+      {
+        "ok": true,
+        "value": "<uuid:7>"
+      }
+    ],
+    "hide": {
+      "ok": true,
+      "value": null
+    },
+    "views": [
+      {
+        "ok": true,
+        "value": 1
+      },
+      {
+        "ok": true,
+        "value": 1
+      },
+      {
+        "ok": true,
+        "value": 1
+      }
+    ]
+  },
+  "survey_for_posts": {
+    "asma_again_is_stable": {
+      "ok": true,
+      "value": [
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": null,
+          "my_answer": null,
+          "post_id": "Survey: a poll",
+          "public_line": {}
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": "interesting",
+          "my_answer": null,
+          "post_id": "Survey: event by Bilal",
+          "public_line": {}
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": "interesting",
+          "my_answer": null,
+          "post_id": "Survey: general by Bilal",
+          "public_line": {
+            "informative": {
+              "count": 3,
+              "phrase": "find this informative"
+            },
+            "interesting": {
+              "count": 4,
+              "phrase": "find this interesting"
+            }
+          }
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": "interesting",
+          "my_answer": null,
+          "post_id": "Survey: global by Cyra",
+          "public_line": {}
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": null,
+          "my_answer": null,
+          "post_id": "Survey: own post",
+          "public_line": {}
+        }
+      ]
+    },
+    "asma_first_time": {
+      "ok": true,
+      "value": [
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": null,
+          "my_answer": null,
+          "post_id": "Survey: a poll",
+          "public_line": {}
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": "interesting",
+          "my_answer": null,
+          "post_id": "Survey: event by Bilal",
+          "public_line": {}
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": "interesting",
+          "my_answer": null,
+          "post_id": "Survey: general by Bilal",
+          "public_line": {
+            "informative": {
+              "count": 3,
+              "phrase": "find this informative"
+            },
+            "interesting": {
+              "count": 4,
+              "phrase": "find this interesting"
+            }
+          }
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": "interesting",
+          "my_answer": null,
+          "post_id": "Survey: global by Cyra",
+          "public_line": {}
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": null,
+          "my_answer": null,
+          "post_id": "Survey: own post",
+          "public_line": {}
+        }
+      ]
+    },
+    "assignments_after_first": {
+      "public.micro_survey_assignments": {
+        "added": [
+          {
+            "body": "Survey: event by Bilal",
+            "dimension": "interesting",
+            "user_id": "<uuid:1>"
+          },
+          {
+            "body": "Survey: general by Bilal",
+            "dimension": "interesting",
+            "user_id": "<uuid:1>"
+          },
+          {
+            "body": "Survey: global by Cyra",
+            "dimension": "interesting",
+            "user_id": "<uuid:1>"
+          }
+        ],
+        "removed": []
+      },
+      "public.post_survey_counts": {
+        "added": [
+          {
+            "assigned": 1,
+            "body": "Survey: event by Bilal",
+            "crosses": 0,
+            "dimension": "interesting",
+            "ticks": 0,
+            "weighted_crosses": "0",
+            "weighted_ticks": "0"
+          },
+          {
+            "assigned": 1,
+            "body": "Survey: general by Bilal",
+            "crosses": 0,
+            "dimension": "interesting",
+            "ticks": 4,
+            "weighted_crosses": "0",
+            "weighted_ticks": "0"
+          },
+          {
+            "assigned": 1,
+            "body": "Survey: global by Cyra",
+            "crosses": 0,
+            "dimension": "interesting",
+            "ticks": 0,
+            "weighted_crosses": "0",
+            "weighted_ticks": "0"
+          }
+        ],
+        "removed": [
+          {
+            "assigned": 0,
+            "body": "Survey: general by Bilal",
+            "crosses": 0,
+            "dimension": "interesting",
+            "ticks": 4,
+            "weighted_crosses": "0",
+            "weighted_ticks": "0"
+          }
+        ]
+      }
+    },
+    "assignments_after_second": {},
+    "cyra_sees_global_and_own_university": {
+      "ok": true,
+      "value": [
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": null,
+          "my_answer": null,
+          "post_id": "Survey: global by Cyra",
+          "public_line": {}
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": null,
+          "my_answer": null,
+          "post_id": "Survey: only at B",
+          "public_line": {}
+        }
+      ]
+    },
+    "empty_list": {
+      "ok": true,
+      "value": []
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function survey_for_posts",
+      "ok": false
+    },
+    "staff_gets_the_other_general": {
+      "ok": true,
+      "value": [
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": null,
+          "my_answer": null,
+          "post_id": "Survey: a poll",
+          "public_line": {}
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": "interesting",
+          "my_answer": null,
+          "post_id": "Survey: own post",
+          "public_line": {}
+        },
+        {
+          "answered": false,
+          "can_change": false,
+          "dimension": "interesting",
+          "my_answer": null,
+          "post_id": "Survey: second general",
+          "public_line": {}
+        }
+      ]
+    }
+  }
+}

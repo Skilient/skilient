@@ -18,6 +18,8 @@ export interface ProfileFlags {
   role: string;
   university_id: string | null;
   department_id: string | null;
+  /** sha256 of the department text, for content's exact same-programme match (W3); never the text. */
+  department_hash: string | null;
   graduation_year: number | null;
   visibility: string;
   status: string;
@@ -33,7 +35,8 @@ export interface ProfileFlags {
 
 export async function profileFlags(db: Db, userId: string): Promise<ProfileFlags | undefined> {
   const [row] = await db<ProfileFlags[]>`
-    select p.user_id::text, p.role, p.university_id::text, p.department_id::text, p.graduation_year, p.visibility, p.status,
+    select p.user_id::text, p.role, p.university_id::text, p.department_id::text,
+           case when p.department is not null then encode(sha256(convert_to(p.department, 'UTF8')), 'hex') end as department_hash, p.graduation_year, p.visibility, p.status,
            p.chat_read_receipts as read_receipts, p.leaderboard_opt_out, p.recruiter_visible, p.looking_for, p.availability,
            p.remote_ok, p.onboarding_complete, coalesce(o.step, 1)::int as onboarding_step
       from people.profiles p left join people.onboarding_state o on o.user_id = p.user_id

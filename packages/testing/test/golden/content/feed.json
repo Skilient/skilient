@@ -1,0 +1,785 @@
+{
+  "compute_stage": {
+    "answers_with_low_positive_rate": {
+      "ok": true,
+      "value": "limited"
+    },
+    "boost_is_sticky_as_full": {
+      "ok": true,
+      "value": "full"
+    },
+    "boost_needs_two_universities": {
+      "ok": true,
+      "value": "limited"
+    },
+    "credible_below_threshold": {
+      "ok": true,
+      "value": "limited"
+    },
+    "demoted_by_credible": {
+      "ok": true,
+      "value": "demoted"
+    },
+    "demoted_by_hides": {
+      "ok": true,
+      "value": "demoted"
+    },
+    "friend_commenters_do_not_count": {
+      "ok": true,
+      "value": "limited"
+    },
+    "full_by_answers": {
+      "ok": true,
+      "value": "full"
+    },
+    "full_by_three_non_friend_commenters": {
+      "ok": true,
+      "value": "full"
+    },
+    "full_is_sticky": {
+      "ok": true,
+      "value": "full"
+    },
+    "global_boost_by_answers": {
+      "ok": true,
+      "value": "global_boost"
+    },
+    "global_boost_by_commenters": {
+      "ok": true,
+      "value": "global_boost"
+    },
+    "held_beats_everything": {
+      "ok": true,
+      "value": "held"
+    },
+    "held_by_reports": {
+      "ok": true,
+      "value": "held"
+    },
+    "limited_when_new_but_30_views": {
+      "ok": true,
+      "value": "limited"
+    },
+    "limited_when_older": {
+      "ok": true,
+      "value": "limited"
+    },
+    "not_demoted_under_ten_views": {
+      "ok": true,
+      "value": "limited"
+    },
+    "seed_when_new": {
+      "ok": true,
+      "value": "seed"
+    },
+    "short_comments_do_not_count": {
+      "ok": true,
+      "value": "limited"
+    },
+    "two_reports_not_held": {
+      "ok": true,
+      "value": "limited"
+    },
+    "university_post_never_boosted": {
+      "ok": true,
+      "value": "full"
+    },
+    "unknown_post": {
+      "ok": true,
+      "value": null
+    }
+  },
+  "page": {
+    "bad_cursor": {
+      "code": "22023",
+      "message": "bad cursor",
+      "ok": false
+    },
+    "bad_filter": {
+      "code": "22023",
+      "message": "unknown filter",
+      "ok": false
+    },
+    "cursor_with_bad_offset": {
+      "code": "22023",
+      "message": "bad cursor",
+      "ok": false
+    },
+    "empty_filter_is_all": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal general",
+          "rank": 1
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: staff limited",
+          "rank": 2
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: danyal full",
+          "rank": 3
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: asma own",
+          "rank": 4
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from bilal",
+          "rank": 5
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal event",
+          "rank": 6
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal announcement",
+          "rank": 7
+        }
+      ]
+    },
+    "filter_announcements": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal announcement",
+          "rank": 1
+        }
+      ]
+    },
+    "filter_events": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal event",
+          "rank": 1
+        }
+      ]
+    },
+    "filter_shipped": {
+      "ok": true,
+      "value": []
+    },
+    "filter_societies": {
+      "ok": true,
+      "value": []
+    },
+    "filter_ventures": {
+      "ok": true,
+      "value": []
+    },
+    "global": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from bilal",
+          "rank": 1
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from cyra",
+          "rank": 2
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from esha",
+          "rank": 3
+        }
+      ]
+    },
+    "global_as_cyra": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from bilal",
+          "rank": 1
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from cyra",
+          "rank": 2
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from esha",
+          "rank": 3
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from a blocked graduate",
+          "rank": 4
+        }
+      ]
+    },
+    "limit_over_cap": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal general",
+          "rank": 1
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: staff limited",
+          "rank": 2
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: danyal full",
+          "rank": 3
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: asma own",
+          "rank": 4
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from bilal",
+          "rank": 5
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal event",
+          "rank": 6
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal announcement",
+          "rank": 7
+        }
+      ]
+    },
+    "limit_zero_is_one": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": "<uuid:1>:1",
+          "post_id": "Feed: bilal general",
+          "rank": 1
+        }
+      ]
+    },
+    "page_2_cursor_is_over": {
+      "ok": true,
+      "value": [
+        {
+          "cursors": 0,
+          "n": 2
+        }
+      ]
+    },
+    "page_of_two": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": "<uuid:2>:2",
+          "post_id": "Feed: danyal full",
+          "rank": 1
+        },
+        {
+          "next_cursor": "<uuid:2>:2",
+          "post_id": "Feed: global from bilal",
+          "rank": 2
+        }
+      ]
+    },
+    "same_cursor_other_audience": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from bilal",
+          "rank": 1
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from cyra",
+          "rank": 2
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from esha",
+          "rank": 3
+        }
+      ]
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function feed_page",
+      "ok": false
+    },
+    "university_as_bilal": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal general",
+          "rank": 1
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: staff limited",
+          "rank": 2
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: danyal full",
+          "rank": 3
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: asma own",
+          "rank": 4
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from a blocked graduate",
+          "rank": 5
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from bilal",
+          "rank": 6
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal event",
+          "rank": 7
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal announcement",
+          "rank": 8
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: hidden by asma",
+          "rank": 9
+        }
+      ]
+    },
+    "university_as_cyra": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from cyra",
+          "rank": 1
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: global from esha",
+          "rank": 2
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: only at B",
+          "rank": 3
+        }
+      ]
+    },
+    "university_page_1": {
+      "changes": {
+        "public.feed_sessions": {
+          "added": [
+            {
+              "audience": "university",
+              "filter": "all",
+              "posts": 7,
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": [
+          {
+            "next_cursor": "<uuid:4>:5",
+            "post_id": "Feed: bilal general",
+            "rank": 1
+          },
+          {
+            "next_cursor": "<uuid:4>:5",
+            "post_id": "Feed: staff limited",
+            "rank": 2
+          },
+          {
+            "next_cursor": "<uuid:4>:5",
+            "post_id": "Feed: danyal full",
+            "rank": 3
+          },
+          {
+            "next_cursor": "<uuid:4>:5",
+            "post_id": "Feed: asma own",
+            "rank": 4
+          },
+          {
+            "next_cursor": "<uuid:4>:5",
+            "post_id": "Feed: global from bilal",
+            "rank": 5
+          }
+        ]
+      }
+    },
+    "university_page_2": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal event",
+          "rank": 6
+        },
+        {
+          "next_cursor": null,
+          "post_id": "Feed: bilal announcement",
+          "rank": 7
+        }
+      ]
+    },
+    "unknown_session_cursor": {
+      "ok": true,
+      "value": [
+        {
+          "next_cursor": "<uuid:5>:5",
+          "post_id": "Feed: bilal general",
+          "rank": 1
+        },
+        {
+          "next_cursor": "<uuid:5>:5",
+          "post_id": "Feed: staff limited",
+          "rank": 2
+        },
+        {
+          "next_cursor": "<uuid:5>:5",
+          "post_id": "Feed: danyal full",
+          "rank": 3
+        },
+        {
+          "next_cursor": "<uuid:5>:5",
+          "post_id": "Feed: asma own",
+          "rank": 4
+        },
+        {
+          "next_cursor": "<uuid:5>:5",
+          "post_id": "Feed: global from bilal",
+          "rank": 5
+        }
+      ]
+    }
+  },
+  "score": {
+    "after_asma_befriends_bilal": {
+      "bilal_limited_for_asma": {
+        "ok": true,
+        "value": "0.074837"
+      },
+      "bilal_limited_for_cyra": {
+        "ok": true,
+        "value": "0.017818"
+      },
+      "bilal_seed_for_asma": {
+        "ok": true,
+        "value": "0.123968"
+      },
+      "bilal_seed_for_cyra": {
+        "ok": true,
+        "value": "0.073790"
+      },
+      "cyra_boost_for_asma": {
+        "ok": true,
+        "value": "0.029770"
+      },
+      "cyra_boost_for_cyra": {
+        "ok": true,
+        "value": "0.035724"
+      },
+      "cyra_full_for_asma": {
+        "ok": true,
+        "value": "0.044546"
+      },
+      "cyra_full_for_cyra": {
+        "ok": true,
+        "value": "0.053455"
+      },
+      "danyal_demoted_for_asma": {
+        "ok": true,
+        "value": "0.001697"
+      },
+      "danyal_demoted_for_cyra": {
+        "ok": true,
+        "value": "0.001697"
+      }
+    },
+    "after_asma_saw_bilals_post": {
+      "bilal_limited_for_asma": {
+        "ok": true,
+        "value": "0.022451"
+      },
+      "bilal_limited_for_cyra": {
+        "ok": true,
+        "value": "0.017818"
+      },
+      "bilal_seed_for_asma": {
+        "ok": true,
+        "value": "0.123968"
+      },
+      "bilal_seed_for_cyra": {
+        "ok": true,
+        "value": "0.073790"
+      },
+      "cyra_boost_for_asma": {
+        "ok": true,
+        "value": "0.029770"
+      },
+      "cyra_boost_for_cyra": {
+        "ok": true,
+        "value": "0.035724"
+      },
+      "cyra_full_for_asma": {
+        "ok": true,
+        "value": "0.044546"
+      },
+      "cyra_full_for_cyra": {
+        "ok": true,
+        "value": "0.053455"
+      },
+      "danyal_demoted_for_asma": {
+        "ok": true,
+        "value": "0.001697"
+      },
+      "danyal_demoted_for_cyra": {
+        "ok": true,
+        "value": "0.001697"
+      }
+    },
+    "after_comments": {
+      "bilal_limited_for_asma": {
+        "ok": true,
+        "value": "0.037875"
+      },
+      "bilal_limited_for_cyra": {
+        "ok": true,
+        "value": "0.030060"
+      },
+      "bilal_seed_for_asma": {
+        "ok": true,
+        "value": "0.123968"
+      },
+      "bilal_seed_for_cyra": {
+        "ok": true,
+        "value": "0.073790"
+      },
+      "cyra_boost_for_asma": {
+        "ok": true,
+        "value": "0.029770"
+      },
+      "cyra_boost_for_cyra": {
+        "ok": true,
+        "value": "0.035724"
+      },
+      "cyra_full_for_asma": {
+        "ok": true,
+        "value": "0.044546"
+      },
+      "cyra_full_for_cyra": {
+        "ok": true,
+        "value": "0.053455"
+      },
+      "danyal_demoted_for_asma": {
+        "ok": true,
+        "value": "0.001697"
+      },
+      "danyal_demoted_for_cyra": {
+        "ok": true,
+        "value": "0.001697"
+      }
+    },
+    "after_cyra_mutes_bilal": {
+      "bilal_limited_for_asma": {
+        "ok": true,
+        "value": "0.037875"
+      },
+      "bilal_limited_for_cyra": {
+        "ok": true,
+        "value": "0.000000"
+      },
+      "bilal_seed_for_asma": {
+        "ok": true,
+        "value": "0.123968"
+      },
+      "bilal_seed_for_cyra": {
+        "ok": true,
+        "value": "0.000000"
+      },
+      "cyra_boost_for_asma": {
+        "ok": true,
+        "value": "0.029770"
+      },
+      "cyra_boost_for_cyra": {
+        "ok": true,
+        "value": "0.035724"
+      },
+      "cyra_full_for_asma": {
+        "ok": true,
+        "value": "0.044546"
+      },
+      "cyra_full_for_cyra": {
+        "ok": true,
+        "value": "0.053455"
+      },
+      "danyal_demoted_for_asma": {
+        "ok": true,
+        "value": "0.001697"
+      },
+      "danyal_demoted_for_cyra": {
+        "ok": true,
+        "value": "0.001697"
+      }
+    },
+    "after_cyras_post_is_two_days_old": {
+      "bilal_limited_for_asma": {
+        "ok": true,
+        "value": "0.037875"
+      },
+      "bilal_limited_for_cyra": {
+        "ok": true,
+        "value": "0.000000"
+      },
+      "bilal_seed_for_asma": {
+        "ok": true,
+        "value": "0.123968"
+      },
+      "bilal_seed_for_cyra": {
+        "ok": true,
+        "value": "0.000000"
+      },
+      "cyra_boost_for_asma": {
+        "ok": true,
+        "value": "0.029770"
+      },
+      "cyra_boost_for_cyra": {
+        "ok": true,
+        "value": "0.035724"
+      },
+      "cyra_full_for_asma": {
+        "ok": true,
+        "value": "0.002333"
+      },
+      "cyra_full_for_cyra": {
+        "ok": true,
+        "value": "0.002800"
+      },
+      "danyal_demoted_for_asma": {
+        "ok": true,
+        "value": "0.001697"
+      },
+      "danyal_demoted_for_cyra": {
+        "ok": true,
+        "value": "0.001697"
+      }
+    },
+    "after_survey_counts_on_bilals_post": {
+      "bilal_limited_for_asma": {
+        "ok": true,
+        "value": "0.024447"
+      },
+      "bilal_limited_for_cyra": {
+        "ok": true,
+        "value": "0.019402"
+      },
+      "bilal_seed_for_asma": {
+        "ok": true,
+        "value": "0.123968"
+      },
+      "bilal_seed_for_cyra": {
+        "ok": true,
+        "value": "0.073790"
+      },
+      "cyra_boost_for_asma": {
+        "ok": true,
+        "value": "0.029770"
+      },
+      "cyra_boost_for_cyra": {
+        "ok": true,
+        "value": "0.035724"
+      },
+      "cyra_full_for_asma": {
+        "ok": true,
+        "value": "0.044546"
+      },
+      "cyra_full_for_cyra": {
+        "ok": true,
+        "value": "0.053455"
+      },
+      "danyal_demoted_for_asma": {
+        "ok": true,
+        "value": "0.001697"
+      },
+      "danyal_demoted_for_cyra": {
+        "ok": true,
+        "value": "0.001697"
+      }
+    },
+    "baseline": {
+      "bilal_limited_for_asma": {
+        "ok": true,
+        "value": "0.053455"
+      },
+      "bilal_limited_for_cyra": {
+        "ok": true,
+        "value": "0.017818"
+      },
+      "bilal_seed_for_asma": {
+        "ok": true,
+        "value": "0.088548"
+      },
+      "bilal_seed_for_cyra": {
+        "ok": true,
+        "value": "0.073790"
+      },
+      "cyra_boost_for_asma": {
+        "ok": true,
+        "value": "0.029770"
+      },
+      "cyra_boost_for_cyra": {
+        "ok": true,
+        "value": "0.035724"
+      },
+      "cyra_full_for_asma": {
+        "ok": true,
+        "value": "0.044546"
+      },
+      "cyra_full_for_cyra": {
+        "ok": true,
+        "value": "0.053455"
+      },
+      "danyal_demoted_for_asma": {
+        "ok": true,
+        "value": "0.001697"
+      },
+      "danyal_demoted_for_cyra": {
+        "ok": true,
+        "value": "0.001697"
+      }
+    },
+    "unknown_post": {
+      "ok": true,
+      "value": "0.000000"
+    }
+  }
+}

@@ -1,0 +1,1574 @@
+{
+  "add": {
+    "comment": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "post",
+              "type": "comment_received",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "A first comment",
+              "deleted": false,
+              "pinned": false,
+              "post": "Comment on me",
+              "reply": false
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me",
+              "commenter_universities": 1,
+              "commenters": 1,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:3>"
+      }
+    },
+    "commenter_blocked_the_post_author": {
+      "code": "P0002",
+      "message": "that post doesn't exist",
+      "ok": false
+    },
+    "empty": {
+      "code": "23514",
+      "message": "comments are 1 to 1,000 characters",
+      "ok": false
+    },
+    "exactly_1000": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:4>",
+              "entity_type": "post",
+              "type": "comment_received",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:4>",
+              "body": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+              "deleted": false,
+              "pinned": false,
+              "post": "Comment on me",
+              "reply": false
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me",
+              "commenter_universities": 1,
+              "commenters": 3,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me",
+              "commenter_universities": 1,
+              "commenters": 2,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:5>"
+      }
+    },
+    "global_from_other_university": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:6>",
+              "entity_type": "post",
+              "type": "comment_received",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:6>",
+              "body": "Hello from B",
+              "deleted": false,
+              "pinned": false,
+              "post": "Comment on me, global",
+              "reply": false
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me, global",
+              "commenter_universities": 1,
+              "commenters": 1,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me, global",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:7>"
+      }
+    },
+    "mention_on_global_reaches_other_university": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:8>",
+              "entity_type": "post",
+              "type": "comment_mention",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "actor_id": "<uuid:8>",
+              "entity_type": "post",
+              "type": "comment_received",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "actor_id": "<uuid:8>",
+              "entity_type": "post",
+              "type": "comment_mention",
+              "user_id": "<uuid:6>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:8>",
+              "body": "Welcome @ct_cyra and @ct_asma",
+              "deleted": false,
+              "pinned": false,
+              "post": "Comment on me, global",
+              "reply": false
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me, global",
+              "commenter_universities": 1,
+              "commenters": 2,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me, global",
+              "commenter_universities": 1,
+              "commenters": 1,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:9>"
+      }
+    },
+    "mentions": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:10>",
+              "entity_type": "post",
+              "type": "comment_mention",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "actor_id": "<uuid:10>",
+              "entity_type": "post",
+              "type": "comment_received",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "actor_id": "<uuid:10>",
+              "entity_type": "post",
+              "type": "comment_mention",
+              "user_id": "<uuid:11>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:10>",
+              "body": "Thanks @ct_danyal and @CT_ASMA, also @ct_cyra and @ct_bilal and @nobody_here",
+              "deleted": false,
+              "pinned": false,
+              "post": "Comment on me",
+              "reply": false
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me",
+              "commenter_universities": 1,
+              "commenters": 4,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me",
+              "commenter_universities": 1,
+              "commenters": 3,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:12>"
+      }
+    },
+    "null_body": {
+      "code": "23514",
+      "message": "comments are 1 to 1,000 characters",
+      "ok": false
+    },
+    "other_university": {
+      "code": "P0002",
+      "message": "that post doesn't exist",
+      "ok": false
+    },
+    "reply": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:11>",
+              "entity_type": "post",
+              "type": "comment_reply",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "actor_id": "<uuid:11>",
+              "entity_type": "post",
+              "type": "comment_received",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:11>",
+              "body": "A reply to the first",
+              "deleted": false,
+              "pinned": false,
+              "post": "Comment on me",
+              "reply": true
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me",
+              "commenter_universities": 1,
+              "commenters": 2,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Comment on me",
+              "commenter_universities": 1,
+              "commenters": 1,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:13>"
+      }
+    },
+    "reply_parent_on_other_post": {
+      "code": "P0002",
+      "message": "that comment isn't there any more",
+      "ok": false
+    },
+    "reply_to_a_reply": {
+      "code": "23514",
+      "message": "replies go one level deep",
+      "ok": false
+    },
+    "reply_to_unknown_parent": {
+      "code": "P0002",
+      "message": "that comment isn't there any more",
+      "ok": false
+    },
+    "second_within_10s": {
+      "code": "54000",
+      "message": "wait 10 seconds between comments",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function add_comment",
+      "ok": false
+    },
+    "too_long": {
+      "code": "23514",
+      "message": "comments are 1 to 1,000 characters",
+      "ok": false
+    },
+    "unknown_post": {
+      "code": "P0002",
+      "message": "that post doesn't exist",
+      "ok": false
+    }
+  },
+  "add_reply_rules": {
+    "blocked_user_replies_to_own_comment": {
+      "ok": true,
+      "value": "<uuid:1>"
+    },
+    "reply_to_blocked_author": {
+      "code": "P0002",
+      "message": "that comment isn't there any more",
+      "ok": false
+    },
+    "reply_to_deleted": {
+      "code": "P0002",
+      "message": "that comment isn't there any more",
+      "ok": false
+    },
+    "second_reply_rate_limited": {
+      "changes": {},
+      "result": {
+        "code": "54000",
+        "message": "wait 10 seconds between comments",
+        "ok": false
+      }
+    }
+  },
+  "delete": {
+    "by_author": {
+      "changes": {
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "",
+              "deleted": true,
+              "pinned": false,
+              "post": "Delete comments here",
+              "reply": false
+            }
+          ],
+          "removed": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "Asma comment to delete",
+              "deleted": false,
+              "pinned": false,
+              "post": "Delete comments here",
+              "reply": false
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "by_post_author": {
+      "changes": {
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:2>",
+              "body": "",
+              "deleted": true,
+              "pinned": false,
+              "post": "Delete comments here",
+              "reply": false
+            }
+          ],
+          "removed": [
+            {
+              "author_id": "<uuid:2>",
+              "body": "Danyal comment to delete",
+              "deleted": false,
+              "pinned": false,
+              "post": "Delete comments here",
+              "reply": false
+            }
+          ]
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Delete comments here",
+              "commenter_universities": 1,
+              "commenters": 2,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Delete comments here",
+              "commenter_universities": 1,
+              "commenters": 3,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "by_stranger": {
+      "code": "42501",
+      "message": "you can only delete your own comments, or comments on your post",
+      "ok": false
+    },
+    "pinned_loses_pin": {
+      "changes": {
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "",
+              "deleted": true,
+              "pinned": false,
+              "post": "Delete comments here",
+              "reply": false
+            }
+          ],
+          "removed": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "Pinned comment to delete",
+              "deleted": false,
+              "pinned": true,
+              "post": "Delete comments here",
+              "reply": false
+            }
+          ]
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Delete comments here",
+              "commenter_universities": 1,
+              "commenters": 1,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Delete comments here",
+              "commenter_universities": 1,
+              "commenters": 2,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function delete_comment",
+      "ok": false
+    },
+    "twice": {
+      "code": "42501",
+      "message": "you can only delete your own comments, or comments on your post",
+      "ok": false
+    },
+    "unknown": {
+      "code": "42501",
+      "message": "you can only delete your own comments, or comments on your post",
+      "ok": false
+    }
+  },
+  "hide": {
+    "author_hides_own": {
+      "changes": {
+        "public.post_hides": {
+          "added": [
+            {
+              "body": "Hide this one",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Hide this one",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 2,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Hide this one",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 1,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "held_post_of_someone_else": {
+      "code": "P0002",
+      "message": "that post doesn't exist",
+      "ok": false
+    },
+    "hide": {
+      "changes": {
+        "public.post_hides": {
+          "added": [
+            {
+              "body": "Hide this one",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Hide this one",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 1,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Hide this one",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 0,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "hide_twice": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "invisible_other_university": {
+      "code": "P0002",
+      "message": "that post doesn't exist",
+      "ok": false
+    },
+    "second_reader": {
+      "changes": {
+        "public.post_hides": {
+          "added": [
+            {
+              "body": "Hide this one",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Hide this one",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 2,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Hide this one",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 1,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function hide_post",
+      "ok": false
+    },
+    "unhide": {
+      "changes": {
+        "public.post_hides": {
+          "added": [],
+          "removed": [
+            {
+              "body": "Hide this one",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.post_stats": {
+          "added": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Hide this one",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 1,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ],
+          "removed": [
+            {
+              "answers": 0,
+              "appropriate_flags": 0,
+              "body": "Hide this one",
+              "commenter_universities": 0,
+              "commenters": 0,
+              "hides": 2,
+              "positives": 0,
+              "reports": 0,
+              "views": 0
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "unhide_when_not_hidden": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "unknown_post": {
+      "code": "P0002",
+      "message": "that post doesn't exist",
+      "ok": false
+    }
+  },
+  "list": {
+    "as_commenter": {
+      "ok": true,
+      "value": [
+        {
+          "author_avatar_path": null,
+          "author_name": "Staff Plinder",
+          "author_username": "ct_staff",
+          "body": "Third comment by Staff, pinned",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": true,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Reply by Asma to Staff",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": true,
+          "pinned": false,
+          "reply": true
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "First comment by Asma",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": true,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Danyal Vorquil",
+          "author_username": null,
+          "body": "Reply by Danyal to Asma",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": true
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Danyal Vorquil",
+          "author_username": null,
+          "body": "Second comment by Danyal",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Esha Thandor",
+          "author_username": "ct_esha",
+          "body": "Comment by Esha from B",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        }
+      ]
+    },
+    "as_hidden_comment_author": {
+      "ok": true,
+      "value": [
+        {
+          "author_avatar_path": null,
+          "author_name": "Staff Plinder",
+          "author_username": "ct_staff",
+          "body": "Third comment by Staff, pinned",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": true,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Reply by Asma to Staff",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": true
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "First comment by Asma",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Danyal Vorquil",
+          "author_username": null,
+          "body": "Reply by Danyal to Asma",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": true
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Danyal Vorquil",
+          "author_username": null,
+          "body": "Second comment by Danyal",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "Hidden by the university",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": true,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Esha Thandor",
+          "author_username": "ct_esha",
+          "body": "Comment by Esha from B",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        }
+      ]
+    },
+    "as_post_author": {
+      "ok": true,
+      "value": [
+        {
+          "author_avatar_path": null,
+          "author_name": "Staff Plinder",
+          "author_username": "ct_staff",
+          "body": "Third comment by Staff, pinned",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": true,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Reply by Asma to Staff",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": true
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "First comment by Asma",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Danyal Vorquil",
+          "author_username": null,
+          "body": "Reply by Danyal to Asma",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": true
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Danyal Vorquil",
+          "author_username": null,
+          "body": "Second comment by Danyal",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Esha Thandor",
+          "author_username": "ct_esha",
+          "body": "Comment by Esha from B",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        }
+      ]
+    },
+    "as_staff": {
+      "ok": true,
+      "value": [
+        {
+          "author_avatar_path": null,
+          "author_name": "Staff Plinder",
+          "author_username": "ct_staff",
+          "body": "Third comment by Staff, pinned",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": true,
+          "pinned": true,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Reply by Asma to Staff",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": true
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "First comment by Asma",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Danyal Vorquil",
+          "author_username": null,
+          "body": "Reply by Danyal to Asma",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": true
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Danyal Vorquil",
+          "author_username": null,
+          "body": "Second comment by Danyal",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": true,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Esha Thandor",
+          "author_username": "ct_esha",
+          "body": "Comment by Esha from B",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        }
+      ]
+    },
+    "blocked_does_not_see_blocker": {
+      "ok": true,
+      "value": [
+        {
+          "author_avatar_path": null,
+          "author_name": "Staff Plinder",
+          "author_username": "ct_staff",
+          "body": "Third comment by Staff, pinned",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": true,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Danyal Vorquil",
+          "author_username": "ct_danyal",
+          "body": "Reply by Danyal to Asma",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": true,
+          "pinned": false,
+          "reply": true
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Danyal Vorquil",
+          "author_username": "ct_danyal",
+          "body": "Second comment by Danyal",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": true,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Esha Thandor",
+          "author_username": "ct_esha",
+          "body": "Comment by Esha from B",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        }
+      ]
+    },
+    "blocker_does_not_see_blocked": {
+      "ok": true,
+      "value": [
+        {
+          "author_avatar_path": null,
+          "author_name": "Staff Plinder",
+          "author_username": "ct_staff",
+          "body": "Third comment by Staff, pinned",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": true,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "Reply by Asma to Staff",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": true,
+          "pinned": false,
+          "reply": true
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Asma Vorquil",
+          "author_username": "ct_asma",
+          "body": "First comment by Asma",
+          "can_delete": true,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": true,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": null,
+          "author_username": null,
+          "body": "",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": true,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        },
+        {
+          "author_avatar_path": null,
+          "author_name": "Esha Thandor",
+          "author_username": "ct_esha",
+          "body": "Comment by Esha from B",
+          "can_delete": false,
+          "created_at": "<time>",
+          "deleted": false,
+          "is_mine": false,
+          "pinned": false,
+          "reply": false
+        }
+      ]
+    },
+    "from_other_university_global": {
+      "ok": true,
+      "value": []
+    },
+    "other_university_post": {
+      "ok": true,
+      "value": []
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function post_comment_list",
+      "ok": false
+    },
+    "unknown_post": {
+      "ok": true,
+      "value": []
+    }
+  },
+  "pin": {
+    "pin": {
+      "changes": {
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "First top level comment",
+              "deleted": false,
+              "pinned": true,
+              "post": "Pin comments here",
+              "reply": false
+            }
+          ],
+          "removed": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "First top level comment",
+              "deleted": false,
+              "pinned": false,
+              "post": "Pin comments here",
+              "reply": false
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "pin_a_reply": {
+      "code": "22023",
+      "message": "only top-level comments can be pinned",
+      "ok": false
+    },
+    "pin_another_unpins_first": {
+      "changes": {
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "First top level comment",
+              "deleted": false,
+              "pinned": false,
+              "post": "Pin comments here",
+              "reply": false
+            },
+            {
+              "author_id": "<uuid:2>",
+              "body": "Second top level comment",
+              "deleted": false,
+              "pinned": true,
+              "post": "Pin comments here",
+              "reply": false
+            }
+          ],
+          "removed": [
+            {
+              "author_id": "<uuid:1>",
+              "body": "First top level comment",
+              "deleted": false,
+              "pinned": true,
+              "post": "Pin comments here",
+              "reply": false
+            },
+            {
+              "author_id": "<uuid:2>",
+              "body": "Second top level comment",
+              "deleted": false,
+              "pinned": false,
+              "post": "Pin comments here",
+              "reply": false
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "pin_by_commenter": {
+      "code": "42501",
+      "message": "only the post's author pins comments",
+      "ok": false
+    },
+    "pin_deleted": {
+      "code": "42501",
+      "message": "only the post's author pins comments",
+      "ok": false
+    },
+    "pin_unknown": {
+      "code": "42501",
+      "message": "only the post's author pins comments",
+      "ok": false
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function pin_comment",
+      "ok": false
+    },
+    "unpin": {
+      "changes": {
+        "public.post_comments": {
+          "added": [
+            {
+              "author_id": "<uuid:2>",
+              "body": "Second top level comment",
+              "deleted": false,
+              "pinned": false,
+              "post": "Pin comments here",
+              "reply": false
+            }
+          ],
+          "removed": [
+            {
+              "author_id": "<uuid:2>",
+              "body": "Second top level comment",
+              "deleted": false,
+              "pinned": true,
+              "post": "Pin comments here",
+              "reply": false
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "unpin_when_not_pinned": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    }
+  }
+}

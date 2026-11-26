@@ -1,0 +1,392 @@
+syntax = "proto3";
+
+package skilient.content.v1;
+
+// content: posts, comments, polls, post RSVPs, hides, link previews, the micro-survey, views and stats, the
+// ranked feed, and the post side of sharing (docs/azure/prd.md, service catalogue;
+// docs/azure/content-function-bins.md maps every ported SQL function to a method here).
+//
+// Refusals carry a short snake_case reason in the x-refusal metadata (services/content/src/refusals.ts lists
+// each with today's wording for web). Times are RFC 3339 strings; an empty string means none.
+// Post types: general | invite | announcement | event | poll | shipped. Audiences: university | global.
+// Stages: seed | limited | full | global_boost | demoted | held. Feed filters: all | ventures | events |
+// announcements | shipped | societies.
+service ContentService {
+  // ---- Posts ----
+
+  // CreatePost writes a post with its images, event or poll (create_post). Returns the new id.
+  rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
+  // EditPost changes a post's text within 15 minutes of posting.
+  rpc EditPost(EditPostRequest) returns (EditPostResponse);
+  // DeletePost removes the viewer's own post; returns its image paths for the browser's cache.
+  rpc DeletePost(DeletePostRequest) returns (DeletePostResponse);
+  // VotePoll records the viewer's one vote on an open poll.
+  rpc VotePoll(VotePollRequest) returns (VotePollResponse);
+  // RsvpEvent sets or clears the viewer's RSVP on an event post.
+  rpc RsvpEvent(RsvpEventRequest) returns (RsvpEventResponse);
+  // PostCards is everything a card needs for the ids given, in their order, skipping any the viewer can't see.
+  rpc PostCards(PostCardsRequest) returns (PostCardsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // ListPosts is the newest-first list for a profile's Activity tab (scope author) or a chronological feed.
+  rpc ListPosts(ListPostsRequest) returns (ListPostsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // PinnedAnnouncement is the platform announcement pinned above the feed, if any.
+  rpc PinnedAnnouncement(PinnedAnnouncementRequest) returns (PinnedAnnouncementResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // PinnedUniversityAnnouncement is the viewer's university's pinned announcement, if any.
+  rpc PinnedUniversityAnnouncement(PinnedUniversityAnnouncementRequest) returns (PinnedUniversityAnnouncementResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ---- Comments and hides ----
+
+  // AddComment comments on a post, or replies one level deep. Returns the new id.
+  rpc AddComment(AddCommentRequest) returns (AddCommentResponse);
+  // DeleteComment blanks a comment: its author or the post's author.
+  rpc DeleteComment(DeleteCommentRequest) returns (DeleteCommentResponse);
+  // PinComment pins (or unpins) one top-level comment; the post's author only.
+  rpc PinComment(PinCommentRequest) returns (PinCommentResponse);
+  // HidePost hides (or shows again) a post from the viewer's feed.
+  rpc HidePost(HidePostRequest) returns (HidePostResponse);
+  // PostComments is a post's comments in display order.
+  rpc PostComments(PostCommentsRequest) returns (PostCommentsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ---- Micro-survey and views ----
+
+  // SurveyForPosts assigns (once) and returns the viewer's question on each post. Assigning writes, so this
+  // is not side-effect free.
+  rpc SurveyForPosts(SurveyForPostsRequest) returns (SurveyForPostsResponse);
+  // AnswerSurvey records a tick or a cross; it can change for 10 minutes.
+  rpc AnswerSurvey(AnswerSurveyRequest) returns (AnswerSurveyResponse);
+  // RecordViews records qualified views, batched by the browser (at most 100 ids).
+  rpc RecordViews(RecordViewsRequest) returns (RecordViewsResponse);
+  // PostInsights is the author's per-dimension results (a paid feature).
+  rpc PostInsights(PostInsightsRequest) returns (PostInsightsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+
+  // ---- The ranked feed ----
+
+  // FeedPage is one page of the viewer's ranked feed and its cards. The first page builds and keeps the
+  // session's ranked list (feed_sessions), so this is not side-effect free.
+  rpc FeedPage(FeedPageRequest) returns (FeedPageResponse);
+
+  // ---- For other services ----
+
+  // VisiblePosts says which posts a user may see, with each post's author (share, notifications, reports).
+  rpc VisiblePosts(VisiblePostsRequest) returns (VisiblePostsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+}
+
+message Media {
+  string path = 1;
+  int32 width = 2;
+  int32 height = 3;
+}
+
+message EventDetails {
+  string starts_at = 1;
+  string place = 2;
+  string url = 3;
+}
+
+message PollDetails {
+  repeated string options = 1;
+  int32 days = 2;
+}
+
+message CreatePostRequest {
+  string type = 1;
+  string audience = 2;
+  string body = 3;
+  repeated Media media = 4;
+  string venture_id = 5;
+  string society_id = 6;
+  EventDetails event = 7;
+  PollDetails poll = 8;
+  int32 pin_days = 9;
+}
+
+message CreatePostResponse {
+  string post_id = 1;
+}
+
+message EditPostRequest {
+  string post_id = 1;
+  string body = 2;
+}
+
+message EditPostResponse {}
+
+message DeletePostRequest {
+  string post_id = 1;
+}
+
+message DeletePostResponse {
+  repeated string media_paths = 1;
+}
+
+message VotePollRequest {
+  string post_id = 1;
+  int32 position = 2;
+}
+
+message VotePollResponse {}
+
+message RsvpEventRequest {
+  string post_id = 1;
+  // going | interested; empty clears the RSVP.
+  string status = 2;
+}
+
+message RsvpEventResponse {}
+
+message PostCardsRequest {
+  // At most 50.
+  repeated string post_ids = 1;
+}
+
+message PostCard {
+  message Event {
+    string starts_at = 1;
+    string place = 2;
+    string url = 3;
+    int32 going = 4;
+    int32 interested = 5;
+    // going | interested | "".
+    string mine = 6;
+  }
+  message PollOption {
+    int32 position = 1;
+    string label = 2;
+    // -1 while hidden (the viewer has not voted, the poll is open and is not theirs).
+    int32 votes = 3;
+  }
+  message Poll {
+    string closes_at = 1;
+    bool closed = 2;
+    // 0 when the viewer has not voted.
+    int32 my_vote = 3;
+    int32 total = 4;
+    repeated PollOption options = 5;
+  }
+  message Link {
+    string url = 1;
+    string title = 2;
+    string description = 3;
+    string image_url = 4;
+    string site_name = 5;
+  }
+  string id = 1;
+  string type = 2;
+  string audience = 3;
+  string body = 4;
+  string created_at = 5;
+  string edited_at = 6;
+  string pinned_until = 7;
+  string stage = 8;
+  string author_id = 9;
+  string author_username = 10;
+  string author_name = 11;
+  // Empty unless the viewer may see the author's profile.
+  string author_avatar_path = 12;
+  bool is_mine = 13;
+  bool can_edit = 14;
+  repeated Media media = 15;
+  Event event = 16;
+  Poll poll = 17;
+  string venture_id = 18;
+  // The venture block as JSON, from work's batch read (empty until work serves it, W5).
+  string venture_json = 19;
+  int32 comment_count = 20;
+  Link link = 21;
+  bool author_muted = 22;
+  string society_id = 23;
+  // The society block as JSON, from community's batch read (empty until community serves it, W7).
+  string society_json = 24;
+}
+
+message PostCardsResponse {
+  repeated PostCard cards = 1;
+}
+
+message ListPostsRequest {
+  // university | global | author.
+  string scope = 1;
+  string filter = 2;
+  string before = 3;
+  string before_id = 4;
+  string author_id = 5;
+  int32 limit = 6;
+}
+
+message ListPostsResponse {
+  message Entry {
+    string id = 1;
+    string created_at = 2;
+  }
+  repeated Entry posts = 1;
+}
+
+message PinnedAnnouncementRequest {}
+
+message PinnedAnnouncementResponse {
+  string post_id = 1;
+}
+
+message PinnedUniversityAnnouncementRequest {}
+
+message PinnedUniversityAnnouncementResponse {
+  string post_id = 1;
+}
+
+message AddCommentRequest {
+  string post_id = 1;
+  string parent_id = 2;
+  string body = 3;
+}
+
+message AddCommentResponse {
+  string comment_id = 1;
+}
+
+message DeleteCommentRequest {
+  string comment_id = 1;
+}
+
+message DeleteCommentResponse {}
+
+message PinCommentRequest {
+  string comment_id = 1;
+  bool pin = 2;
+}
+
+message PinCommentResponse {}
+
+message HidePostRequest {
+  string post_id = 1;
+  bool hide = 2;
+}
+
+message HidePostResponse {}
+
+message PostCommentsRequest {
+  string post_id = 1;
+}
+
+message PostCommentsResponse {
+  message Comment {
+    string id = 1;
+    string parent_id = 2;
+    string body = 3;
+    bool pinned = 4;
+    bool deleted = 5;
+    string created_at = 6;
+    string author_username = 7;
+    string author_name = 8;
+    string author_avatar_path = 9;
+    bool is_mine = 10;
+    bool can_delete = 11;
+  }
+  repeated Comment comments = 1;
+}
+
+message SurveyForPostsRequest {
+  // At most 50.
+  repeated string post_ids = 1;
+}
+
+message SurveyForPostsResponse {
+  message PublicPart {
+    string dimension = 1;
+    int32 count = 2;
+    string phrase = 3;
+  }
+  message Entry {
+    string post_id = 1;
+    // 0 when the viewer has no question on the post.
+    int32 question_id = 2;
+    string question = 3;
+    string dimension = 4;
+    // yes | no | "" (not answered).
+    string my_answer = 5;
+    string answered_at = 6;
+    bool can_change = 7;
+    repeated PublicPart public_line = 8;
+  }
+  repeated Entry entries = 1;
+}
+
+message AnswerSurveyRequest {
+  string post_id = 1;
+  bool answer = 2;
+  int32 latency_ms = 3;
+}
+
+message AnswerSurveyResponse {}
+
+message RecordViewsRequest {
+  repeated string post_ids = 1;
+}
+
+message RecordViewsResponse {
+  int32 recorded = 1;
+}
+
+message PostInsightsRequest {
+  string post_id = 1;
+}
+
+message PostInsightsResponse {
+  message Row {
+    string dimension = 1;
+    string label = 2;
+    int32 ticks = 3;
+    int32 crosses = 4;
+    // -1 when nobody answered.
+    double weighted_rate = 5;
+    int32 views = 6;
+    int32 commenters = 7;
+  }
+  repeated Row rows = 1;
+}
+
+message FeedPageRequest {
+  string audience = 1;
+  string filter = 2;
+  string cursor = 3;
+  int32 limit = 4;
+  // Also return the cards for the page (one call for the feed's data).
+  bool with_cards = 5;
+}
+
+message FeedPageResponse {
+  message Item {
+    string post_id = 1;
+    int32 rank = 2;
+  }
+  repeated Item items = 1;
+  string next_cursor = 2;
+  repeated PostCard cards = 3;
+}
+
+message VisiblePostsRequest {
+  string viewer_id = 1;
+  // At most 100.
+  repeated string post_ids = 2;
+}
+
+message VisiblePostsResponse {
+  message Entry {
+    string post_id = 1;
+    string author_id = 2;
+    bool visible = 3;
+  }
+  repeated Entry posts = 1;
+}

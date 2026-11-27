@@ -23,9 +23,11 @@ Status values: **ticked** (evidence exists), **partial** (part ticked, the rest 
 
 ## Questions
 
-1. **University names in refusals.** "For students at <university> only." now carries the university's id in x-refusal-values and web shows its name (community keeps no names). Acceptable, or should community keep a copy of university names from people?
-2. **Walk-ins by email.** Identity's new ResolveEmails tells community whether an address belongs to a confirmed account and which universities own its domain. The stack read `auth.users` and `university_domains` directly. Fine to keep this read in identity, or should people own the domain half?
-3. **The 2 s call deadline under a seat rush.** 120 registrations for one ticket type queue on its row lock; on this laptop the last waits several seconds, past the 2 s deadline web calls with. The seat test raises the deadline (it tests correctness). Should RegisterEvent get a longer deadline in web, or is a retry on `deadline_exceeded` enough (W13, W15)?
+Answered by Ahmed on 2026-11-28 (docs/decisions.md):
+
+1. **University names in refusals.** The refusal carries the university's id and web shows the name; community keeps no copy of names.
+2. **Walk-ins by email.** ResolveEmails stays in identity.
+3. **The call deadline under a seat rush.** Web calls RegisterEvent and CancelRegistration with a 10 s deadline and no automatic retry; W15 measures the wait on Azure.
 
 ## Left for later workstreams
 
@@ -33,9 +35,9 @@ Status values: **ticked** (evidence exists), **partial** (part ticked, the rest 
 - W9 notify and media: notices from `society.*`, `induction*`, `event.*`, `payment.*` and `payment_method.changed`; reminders from `event.reminder_due`; email bodies read back from community (event messages); media records society proofs, society media and receipts (community's `Files` port, today the path rule), keeps receipts private, and deletes files on `community_file.released`.
 - W10 trust: open a report case on `payment.disputed` and read the registration's snapshot from community; the societies queue in the /ops inbox (OpsSocieties); `config.changed` for `societies.limits` and `events.ticket_limits`; analytics from community's events.
 - W11 market: university events and fairs; Openings from `event.updated` and `induction.changed`.
-- W13 web: every page; fill refusal values (the host university's name, the opening time); manage lists for events over 500 registrants (ProfileCards takes 500); the CSV's formula escaping; the receipt check (sharp, hash, dHash) before SubmitReceipt.
+- W13 web: every page; fill refusal values (the host university's name, the opening time); RegisterEvent and CancelRegistration with a 10 s deadline and no automatic retry; manage lists for events over 500 registrants (ProfileCards takes 500); the CSV's formula escaping; the receipt check (sharp, hash, dHash) before SubmitReceipt.
 - W14 cutover: import community's tables; seal each event's secret under `community-ticket-key`; fill the members and friendships copies from people.
-- Deploy: Key Vault secret `community-ticket-key` (32 random bytes, base64url).
+- Deploy: Key Vault secret `community-ticket-key` loaded 2026-11-28.
 
 ## Results (2026-11-27, local)
 

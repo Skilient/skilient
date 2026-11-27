@@ -51,6 +51,12 @@ service PeopleService {
   rpc ResolveUsernames(ResolveUsernamesRequest) returns (ResolveUsernamesResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
+  // FilterByName keeps, of the given people, those whose name contains the query or whose username starts with
+  // it, by name (at most `limit`), for community's check-in search over an event's registrants. Community only;
+  // at most 20,000 ids; one database trip.
+  rpc FilterByName(FilterByNameRequest) returns (FilterByNameResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
   // Relations says, for one user and many others, who are friends, blocked either way, or muted.
   rpc Relations(RelationsRequest) returns (RelationsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
@@ -384,6 +390,16 @@ message ProfileCardsResponse {
     string visibility = 11;
   }
   repeated Entry users = 1;
+}
+
+message FilterByNameRequest {
+  repeated string user_ids = 1;
+  string query = 2;
+  int32 limit = 3;
+}
+
+message FilterByNameResponse {
+  repeated string user_ids = 1;
 }
 
 message ResolveUsernamesRequest {

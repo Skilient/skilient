@@ -28,6 +28,8 @@ export interface HubOptions {
   canListenThread: (userId: string, threadId: string) => Promise<boolean>;
   /** Whether a user may listen to feed:{university or global} (content's CanListenFeed; the new-posts pill). */
   canListenFeed: (userId: string, feedId: string) => Promise<boolean>;
+  /** Whether a user may listen to event:{id} (community's CanListenEvent; the live headcount for event staff). */
+  canListenEvent: (userId: string, eventId: string) => Promise<boolean>;
   logger?: Logger;
   /** How long a permission answer is kept (ms). */
   cacheMs?: number;
@@ -75,12 +77,11 @@ export function createHub(options: HubOptions): Hub {
     if (!m) return { ok: false, reason: "bad_topic" };
     const [, kind, id] = m;
     if (kind === "user") return id === user.id ? { ok: true } : { ok: false, reason: "not_allowed" };
-    // event:{id} headcounts are community's (W7); until it answers, nobody listens.
-    if (kind === "event") return { ok: false, reason: "not_available" };
     const key = `${user.id}|${topic}`;
     const hit = allowed.get(key);
     if (hit && Date.now() - hit.at < cacheMs) return hit.ok ? { ok: true } : { ok: false, reason: "not_allowed" };
-    const ok = kind === "feed" ? await options.canListenFeed(user.id, id!) : await options.canListenThread(user.id, id!);
+    const ok =
+      kind === "feed" ? await options.canListenFeed(user.id, id!) : kind === "event" ? await options.canListenEvent(user.id, id!) : await options.canListenThread(user.id, id!);
     allowed.set(key, { ok, at: Date.now() });
     return ok ? { ok: true } : { ok: false, reason: "not_allowed" };
   }

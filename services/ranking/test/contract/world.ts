@@ -68,3 +68,7 @@ export async function nightly(w: RankingWorld, asOf = new Date(Date.now() + ++da
   await drain(w);
   return stage;
 }
+
+/** ranking's copy of a society's verification (the Record's 30-day hold), for community's hand-off tests (W7). */
+export const societyCopyOf = (w: RankingWorld, societyId: string) =>
+  w.ranking<{ status: string; verified: boolean }[]>`select status, verified_at is not null as verified from ranking.societies where society_id = ${societyId}`.then((r) => [...r]);

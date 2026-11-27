@@ -1,0 +1,953 @@
+{
+  "reject": {
+    "mine": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "name": "Wren Debating Club",
+          "reason": "We could not confirm it",
+          "review_days": 3,
+          "slug": "wren-debating",
+          "society_id": "<uuid:1>",
+          "status": "rejected",
+          "updated_at": "<time>"
+        }
+      ]
+    },
+    "name_free": {
+      "ok": true,
+      "value": {
+        "available": true,
+        "name": null,
+        "university": "Community Golden University A"
+      }
+    },
+    "reject": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "society",
+              "type": "society_decided",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "society.reject",
+              "after": {
+                "status": "rejected"
+              },
+              "before": {
+                "request_status": "pending",
+                "status": "pending"
+              },
+              "reason": "We could not confirm it",
+              "staff_id": "<uuid:3>",
+              "target_type": "society"
+            }
+          ],
+          "removed": []
+        },
+        "public.societies": {
+          "added": [
+            {
+              "about": "Weekly debates on campus and practice for national rounds.",
+              "category": "debating",
+              "cover_path": null,
+              "created_by": "<uuid:2>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Debating Club",
+              "name_key": "wren debating",
+              "paid_paused": false,
+              "slug": "wren-debating",
+              "status": "rejected",
+              "status_reason": "We could not confirm it",
+              "university_id": "<uuid:4>",
+              "verified": false,
+              "verified_by": null
+            }
+          ],
+          "removed": [
+            {
+              "about": "Weekly debates on campus and practice for national rounds.",
+              "category": "debating",
+              "cover_path": null,
+              "created_by": "<uuid:2>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Debating Club",
+              "name_key": "wren debating",
+              "paid_paused": false,
+              "slug": "wren-debating",
+              "status": "pending",
+              "status_reason": null,
+              "university_id": "<uuid:4>",
+              "verified": false,
+              "verified_by": null
+            }
+          ]
+        },
+        "public.society_requests": {
+          "added": [
+            {
+              "claimed_by": null,
+              "decided": true,
+              "proof_path": "<uuid:2>/<uuid:5>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:2>",
+              "society": "Wren Debating Club",
+              "staff_note": "We could not confirm it",
+              "status": "rejected"
+            }
+          ],
+          "removed": [
+            {
+              "claimed_by": null,
+              "decided": false,
+              "proof_path": "<uuid:2>/<uuid:5>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:2>",
+              "society": "Wren Debating Club",
+              "staff_note": null,
+              "status": "pending"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "request_again": {
+      "changes": {
+        "public.societies": {
+          "added": [
+            {
+              "about": "Painting and printmaking for every student on campus.",
+              "category": "arts",
+              "cover_path": null,
+              "created_by": "<uuid:2>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Debating Club",
+              "name_key": "wren debating",
+              "paid_paused": false,
+              "slug": "wren-debating-club",
+              "status": "pending",
+              "status_reason": null,
+              "university_id": "<uuid:4>",
+              "verified": false,
+              "verified_by": null
+            }
+          ],
+          "removed": []
+        },
+        "public.society_requests": {
+          "added": [
+            {
+              "claimed_by": null,
+              "decided": false,
+              "proof_path": null,
+              "proof_url": "https://comm-a.test/notices/arts",
+              "requester_id": "<uuid:2>",
+              "society": "Wren Debating Club",
+              "staff_note": null,
+              "status": "pending"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    }
+  },
+  "review": {
+    "approve": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "society",
+              "type": "society_decided",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "society.approve",
+              "after": {
+                "status": "verified"
+              },
+              "before": {
+                "request_status": "pending",
+                "status": "pending"
+              },
+              "reason": "approve society",
+              "staff_id": "<uuid:2>",
+              "target_type": "society"
+            }
+          ],
+          "removed": []
+        },
+        "public.societies": {
+          "added": [
+            {
+              "about": "Weekly debates on campus and practice for national rounds.",
+              "category": "debating",
+              "cover_path": null,
+              "created_by": "<uuid:1>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Debating Club",
+              "name_key": "wren debating",
+              "paid_paused": false,
+              "slug": "wren-debating",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:3>",
+              "verified": true,
+              "verified_by": "<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "about": "Weekly debates on campus and practice for national rounds.",
+              "category": "debating",
+              "cover_path": null,
+              "created_by": "<uuid:1>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Debating Club",
+              "name_key": "wren debating",
+              "paid_paused": false,
+              "slug": "wren-debating",
+              "status": "pending",
+              "status_reason": "Add the notice from the students office",
+              "university_id": "<uuid:3>",
+              "verified": false,
+              "verified_by": null
+            }
+          ]
+        },
+        "public.society_follows": {
+          "added": [
+            {
+              "society": "Wren Debating Club",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_members": {
+          "added": [
+            {
+              "role": "president",
+              "society": "Wren Debating Club",
+              "team_title": null,
+              "title": "President",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_requests": {
+          "added": [
+            {
+              "claimed_by": null,
+              "decided": true,
+              "proof_path": "<uuid:1>/<uuid:4>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:1>",
+              "society": "Wren Debating Club",
+              "staff_note": null,
+              "status": "approved"
+            }
+          ],
+          "removed": [
+            {
+              "claimed_by": null,
+              "decided": false,
+              "proof_path": "<uuid:1>/<uuid:4>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:1>",
+              "society": "Wren Debating Club",
+              "staff_note": "Add the notice from the students office",
+              "status": "pending"
+            }
+          ]
+        },
+        "public.society_terms": {
+          "added": [
+            {
+              "confirmed_by": null,
+              "ended": false,
+              "notified": false,
+              "role": "president",
+              "society": "Wren Debating Club",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "President",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "approve_more_info": {
+      "code": "55000",
+      "message": "this society is more_info and can't do that",
+      "ok": false
+    },
+    "case": {
+      "ok": true,
+      "value": {
+        "about": "Weekly debates on campus and practice for national rounds.",
+        "category": "debating",
+        "claimed_by": null,
+        "cover_path": null,
+        "created_at": "<time>",
+        "followers": 0,
+        "id": "<uuid:5>",
+        "logo_path": null,
+        "members": 0,
+        "membership_mode": "request",
+        "mine": null,
+        "name": "Wren Debating Club",
+        "office_bearer": true,
+        "open_rounds": 0,
+        "proof_path": "<uuid:1>/<uuid:4>.pdf",
+        "proof_url": null,
+        "request_id": "<uuid:6>",
+        "request_status": "pending",
+        "requester": {
+          "department": "Computer Science",
+          "graduation_year": 2027,
+          "name": "Nida Wren",
+          "username": "cm_nida"
+        },
+        "slug": "wren-debating",
+        "staff_note": null,
+        "status": "pending",
+        "status_reason": null,
+        "university": "Community Golden University A",
+        "university_id": "<uuid:3>",
+        "updated_at": "<time>"
+      }
+    },
+    "case_unknown": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "claim": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "society.claim",
+              "after": {
+                "claimed_by": "<uuid:2>"
+              },
+              "before": {
+                "claimed_by": null
+              },
+              "reason": "claim society request",
+              "staff_id": "<uuid:2>",
+              "target_type": "society"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_requests": {
+          "added": [
+            {
+              "claimed_by": "<uuid:2>",
+              "decided": false,
+              "proof_path": "<uuid:1>/<uuid:4>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:1>",
+              "society": "Wren Debating Club",
+              "staff_note": null,
+              "status": "pending"
+            }
+          ],
+          "removed": [
+            {
+              "claimed_by": null,
+              "decided": false,
+              "proof_path": "<uuid:1>/<uuid:4>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:1>",
+              "society": "Wren Debating Club",
+              "staff_note": null,
+              "status": "pending"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "claim_again": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "society.claim",
+              "after": {
+                "claimed_by": "<uuid:2>"
+              },
+              "before": {
+                "claimed_by": "<uuid:2>"
+              },
+              "reason": "claim society request",
+              "staff_id": "<uuid:2>",
+              "target_type": "society"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "more_info": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "society",
+              "type": "society_decided",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "society.more_info",
+              "after": {
+                "status": "more_info"
+              },
+              "before": {
+                "request_status": "pending",
+                "status": "pending"
+              },
+              "reason": "Add the notice from the students office",
+              "staff_id": "<uuid:2>",
+              "target_type": "society"
+            }
+          ],
+          "removed": []
+        },
+        "public.societies": {
+          "added": [
+            {
+              "about": "Weekly debates on campus and practice for national rounds.",
+              "category": "debating",
+              "cover_path": null,
+              "created_by": "<uuid:1>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Debating Club",
+              "name_key": "wren debating",
+              "paid_paused": false,
+              "slug": "wren-debating",
+              "status": "more_info",
+              "status_reason": "Add the notice from the students office",
+              "university_id": "<uuid:3>",
+              "verified": false,
+              "verified_by": null
+            }
+          ],
+          "removed": [
+            {
+              "about": "Weekly debates on campus and practice for national rounds.",
+              "category": "debating",
+              "cover_path": null,
+              "created_by": "<uuid:1>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Debating Club",
+              "name_key": "wren debating",
+              "paid_paused": false,
+              "slug": "wren-debating",
+              "status": "pending",
+              "status_reason": null,
+              "university_id": "<uuid:3>",
+              "verified": false,
+              "verified_by": null
+            }
+          ]
+        },
+        "public.society_requests": {
+          "added": [
+            {
+              "claimed_by": null,
+              "decided": false,
+              "proof_path": "<uuid:1>/<uuid:4>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:1>",
+              "society": "Wren Debating Club",
+              "staff_note": "Add the notice from the students office",
+              "status": "more_info"
+            }
+          ],
+          "removed": [
+            {
+              "claimed_by": null,
+              "decided": false,
+              "proof_path": "<uuid:1>/<uuid:4>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:1>",
+              "society": "Wren Debating Club",
+              "staff_note": null,
+              "status": "pending"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "more_info_no_reason": {
+      "code": "22023",
+      "message": "give a reason the society can read",
+      "ok": false
+    },
+    "page_after_approve": {
+      "ok": true,
+      "value": {
+        "about": "Weekly debates on campus and practice for national rounds.",
+        "category": "debating",
+        "checklist": {
+          "event": false,
+          "logo": false,
+          "mode": false,
+          "officers": false
+        },
+        "cover_path": null,
+        "followers": 1,
+        "following": true,
+        "former": [],
+        "id": "<uuid:5>",
+        "join_requested": false,
+        "logo_path": null,
+        "members": 1,
+        "membership_mode": "request",
+        "my_role": "president",
+        "my_team": null,
+        "name": "Wren Debating Club",
+        "officer": true,
+        "open_rounds": 0,
+        "president": true,
+        "roll_call": [
+          {
+            "avatar_path": null,
+            "name": "Nida Wren",
+            "role": "president",
+            "title": "President",
+            "user_id": "<uuid:1>",
+            "username": "cm_nida"
+          }
+        ],
+        "rounds": [],
+        "slug": "wren-debating",
+        "status": "verified",
+        "status_reason": null,
+        "university": "Community Golden University A",
+        "university_id": "<uuid:3>",
+        "updated_at": "<time>"
+      }
+    },
+    "pause_paid": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "society.pause_paid",
+              "after": {
+                "paid_paused": true
+              },
+              "before": {
+                "paid_paused": false
+              },
+              "reason": "Receipts look copied",
+              "staff_id": "<uuid:2>",
+              "target_type": "society"
+            }
+          ],
+          "removed": []
+        },
+        "public.societies": {
+          "added": [
+            {
+              "about": "We build small robots and teach first-years to solder.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:7>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": true,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:3>",
+              "verified": true,
+              "verified_by": null
+            }
+          ],
+          "removed": [
+            {
+              "about": "We build small robots and teach first-years to solder.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:7>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:3>",
+              "verified": true,
+              "verified_by": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "pause_paid_suspended": {
+      "code": "55000",
+      "message": "only a verified society sells tickets",
+      "ok": false
+    },
+    "queue": {
+      "ok": true,
+      "value": [
+        {
+          "age_hours": 24,
+          "category": "debating",
+          "claimed_by": null,
+          "created_at": "<time>",
+          "mine": null,
+          "name": "Wren Debating Club",
+          "request_status": "pending",
+          "requester": "Nida Wren",
+          "slug": "wren-debating",
+          "society_id": "<uuid:5>",
+          "status": "pending",
+          "university": "Community Golden University A"
+        }
+      ]
+    },
+    "queue_aal1": {
+      "code": "42501",
+      "message": "trust reviewers only, with two-factor on",
+      "ok": false
+    },
+    "queue_decided": {
+      "ok": true,
+      "value": []
+    },
+    "queue_student": {
+      "code": "42501",
+      "message": "trust reviewers only, with two-factor on",
+      "ok": false
+    },
+    "reinstate": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "society.reinstate",
+              "after": {
+                "status": "verified"
+              },
+              "before": {
+                "request_status": null,
+                "status": "suspended"
+              },
+              "reason": "reinstate society",
+              "staff_id": "<uuid:2>",
+              "target_type": "society"
+            }
+          ],
+          "removed": []
+        },
+        "public.societies": {
+          "added": [
+            {
+              "about": "We build small robots and teach first-years to solder.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:7>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:3>",
+              "verified": true,
+              "verified_by": null
+            }
+          ],
+          "removed": [
+            {
+              "about": "We build small robots and teach first-years to solder.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:7>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "suspended",
+              "status_reason": "Fees collected without receipts",
+              "university_id": "<uuid:3>",
+              "verified": true,
+              "verified_by": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "reject_verified": {
+      "code": "55000",
+      "message": "this society is verified and can't do that",
+      "ok": false
+    },
+    "release": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "society.release",
+              "after": {
+                "claimed_by": null
+              },
+              "before": {
+                "claimed_by": "<uuid:2>"
+              },
+              "reason": "release society request",
+              "staff_id": "<uuid:2>",
+              "target_type": "society"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_requests": {
+          "added": [
+            {
+              "claimed_by": null,
+              "decided": false,
+              "proof_path": "<uuid:1>/<uuid:4>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:1>",
+              "society": "Wren Debating Club",
+              "staff_note": null,
+              "status": "pending"
+            }
+          ],
+          "removed": [
+            {
+              "claimed_by": "<uuid:2>",
+              "decided": false,
+              "proof_path": "<uuid:1>/<uuid:4>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:1>",
+              "society": "Wren Debating Club",
+              "staff_note": null,
+              "status": "pending"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "resume_paid": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "society.resume_paid",
+              "after": {
+                "paid_paused": false
+              },
+              "before": {
+                "paid_paused": true
+              },
+              "reason": "resume_paid",
+              "staff_id": "<uuid:2>",
+              "target_type": "society"
+            }
+          ],
+          "removed": []
+        },
+        "public.societies": {
+          "added": [
+            {
+              "about": "We build small robots and teach first-years to solder.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:7>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:3>",
+              "verified": true,
+              "verified_by": null
+            }
+          ],
+          "removed": [
+            {
+              "about": "We build small robots and teach first-years to solder.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:7>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": true,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:3>",
+              "verified": true,
+              "verified_by": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "suspend": {
+      "changes": {
+        "public.ops_audit_log": {
+          "added": [
+            {
+              "action": "society.suspend",
+              "after": {
+                "status": "suspended"
+              },
+              "before": {
+                "request_status": null,
+                "status": "verified"
+              },
+              "reason": "Fees collected without receipts",
+              "staff_id": "<uuid:2>",
+              "target_type": "society"
+            }
+          ],
+          "removed": []
+        },
+        "public.societies": {
+          "added": [
+            {
+              "about": "We build small robots and teach first-years to solder.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:7>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "suspended",
+              "status_reason": "Fees collected without receipts",
+              "university_id": "<uuid:3>",
+              "verified": true,
+              "verified_by": null
+            }
+          ],
+          "removed": [
+            {
+              "about": "We build small robots and teach first-years to solder.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:7>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:3>",
+              "verified": true,
+              "verified_by": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "unknown_action": {
+      "code": "22023",
+      "message": "unknown action",
+      "ok": false
+    }
+  }
+}

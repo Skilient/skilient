@@ -112,7 +112,8 @@
         "identity",
         "people",
         "work",
-        "ranking"
+        "ranking",
+        "community"
       ],
       "consumers": [
         "trust"
@@ -148,7 +149,8 @@
         "market",
         "trust",
         "content",
-        "work"
+        "work",
+        "community"
       ],
       "payload": "ids, enums and flags of the profile (no names, no city); department_hash (sha256 of the department text, W3)"
     },
@@ -169,7 +171,8 @@
         "content",
         "messaging",
         "work",
-        "ranking"
+        "ranking",
+        "community"
       ],
       "payload": "user_a, user_b, friends"
     },
@@ -253,7 +256,6 @@
         "notify",
         "messaging",
         "work",
-        "community",
         "market"
       ],
       "consumers": [
@@ -398,9 +400,11 @@
       ],
       "consumers": [
         "content",
-        "ranking"
+        "ranking",
+        "notify",
+        "trust"
       ],
-      "payload": "society_id, university_id, status (W7): posting as a verified society; verified_at (W7 for W6: the Record hold)"
+      "payload": "society_id, university_id, status (pending | more_info | verified | rejected | suspended), previous_status, verified_at, requester_id, actor_id (W7): posting as a verified society (content), the Record hold (ranking reads verified_at), society_decided (notify), analytics (trust)"
     },
     "university_seat.changed": {
       "producers": [
@@ -706,6 +710,174 @@
         "ranking"
       ],
       "payload": "case_id (W10): an appeal overturned the decision; ranking removes its penalty (W6)"
+    },
+    "society.verified": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "trust"
+      ],
+      "payload": "society_id, university_id, category, verified_at, requester_id (W7): the society_verified analytics event (W10)"
+    },
+    "society.invite_changed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "invite_id, society_id, kind (officer | handover), invitee_id, invited_by, status (pending | accepted | declined | withdrawn) (W7): society_invite and society_invite_answered notices (W9)"
+    },
+    "society.join_changed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "society_id, user_id, status (requested | accepted), actor_id (W7): society_join_request to the officers, society_joined to the student (W9)"
+    },
+    "society.term_changed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "credentials",
+        "notify"
+      ],
+      "payload": "term_id, society_id, user_id, role (president | officer), status (ended | confirmed), term_start, term_end, confirmed_by, self_confirmed (W7): the Office bearer Record entry on confirmed (W8; its line is the term title, read back with SocietyTerms when built), term_ended to the confirming officers (W9)"
+    },
+    "induction.changed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify",
+        "market"
+      ],
+      "payload": "round_id, society_id, university_id, status (draft | open | closed), deadline, actor_id (W7): induction_published to followers and members (W9), Openings (W11)"
+    },
+    "induction_application.changed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "application_id, round_id, society_id, applicant_id, status (pending | shortlisted | accepted | declined), expired, actor_id (W7): induction_applied and induction_decided notices (W9)"
+    },
+    "event.updated": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify",
+        "trust",
+        "market"
+      ],
+      "payload": "event_id, society_id, university_id, status (draft | published | live | ended | cancelled), previous_status, change (published | details | cancelled | status), starts_at, paid, actor_id (W7): event_published, event_changed and event_cancelled notices (W9), analytics (W10), Openings (W11)"
+    },
+    "event.registered": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify",
+        "trust"
+      ],
+      "payload": "registration_id, event_id, society_id, user_id, status (confirmed | held | pending | waitlisted | cancelled | declined), previous_status, waitlist_position, reason (registered | promoted | decided | cancelled | hold_expired | walk_in), paid, actor_id (W7): event_registration, event_promoted, event_decided and hold_expired notices (W9), analytics (W10)"
+    },
+    "event.reminder_due": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "event_id, user_ids, when (24h | 1h), starts_at (W7): event_reminder (W9)"
+    },
+    "ticket.checked_in": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "trust"
+      ],
+      "payload": "checkin_id, event_id, session_id, user_id (null for a walk-in by email), method (scan | search | email | self | manual | walk_in), present (W7): analytics (W10)"
+    },
+    "event.closed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "credentials",
+        "notify"
+      ],
+      "payload": "event_id, society_id, university_id, society_verified, auto, issued_by, ends_on (PKT date), sessions, hours, team_event, record_kinds; attended [{user_id, first_at, self_added}], completed [{user_id, sessions, self_added}], results [{user_id, place, entrants, set_by_self, labelled}], volunteer [{user_id, minutes, self_logged}], walk_ins [{attendee_id, email_hash, first_at}] (W7): the Record entries (W8; role, place, entrants and minutes are the evidence ranking reads from record.sealed; a result label and walk-in addresses are read back from community when W8 is built)"
+    },
+    "event.cohost_changed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "event_id, society_id, host_society_id, status (pending | accepted | declined), actor_id (W7): event_cohost to the co-host officers (W9)"
+    },
+    "event.staff_changed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "event_id, user_id, staff, actor_id (W7): event_staff_added (W9)"
+    },
+    "event.message_sent": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "message_id, event_id, sender_id, recipients (W7): event_message to registrants; the body is read back from community (W9)"
+    },
+    "payment.changed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "payment_id, registration_id, event_id, society_id, user_id, status (awaiting | under_review | approved | rejected | released), refund_status, change (submitted | issue | approved | rejected | refund_requested | refund_sent | refund_received | refund_disputed | released), actor_id (W7): payment_review, payment_decided, refund_* notices (W9)"
+    },
+    "payment_method.changed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "method_id, society_id, action (add | replace | remove), status (proposed | active | rejected | ended), actor_id (W7): payment_details_proposed and payment_details_confirmed to the officers (W9)"
+    },
+    "payment.disputed": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "trust"
+      ],
+      "payload": "payment_id, registration_id, event_id, society_id, user_id, president_id, reason (unconfirmed_payment | refund_disputed | refund_unmarked) (W7): trust opens a report case on the registration (W10)"
+    },
+    "community_file.released": {
+      "producers": [
+        "community"
+      ],
+      "consumers": [
+        "media"
+      ],
+      "payload": "bucket (society-documents | society-media | event-receipts), path, owner_id (W7): a replaced or expired file media deletes (W9)"
     }
   }
 }

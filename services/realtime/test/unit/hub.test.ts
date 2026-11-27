@@ -45,6 +45,7 @@ beforeEach(async () => {
       return threadId === THREAD && (userId === ALICE || userId === BOB);
     },
     canListenFeed: async (_userId, feedId) => feedId === OTHER,
+    canListenEvent: async (_userId, eventId) => eventId === THREAD,
     authTimeoutMs: 500,
   });
   await hub.start();
@@ -100,19 +101,20 @@ describe("realtime hub", () => {
     expect(junk.closed()).toBe(4400);
   });
 
-  it("topics: your own user topic only; threads by the owner's answer (cached); event topics wait for community", async () => {
+  it("topics: your own user topic only; threads by the owner's answer (cached); event topics by community's answer", async () => {
     const a = await client("alice");
     expect(await a.sub(`user:${ALICE}`)).toMatchObject({ type: "subscribed" });
     expect(await a.sub(`user:${BOB}`)).toMatchObject({ type: "refused", reason: "not_allowed" });
     expect(await a.sub(`thread:${THREAD}`)).toMatchObject({ type: "subscribed" });
     expect(await a.sub(`thread:${OTHER}`)).toMatchObject({ type: "refused", reason: "not_allowed" });
-    expect(await a.sub(`event:${OTHER}`)).toMatchObject({ type: "refused", reason: "not_available" });
+    expect(await a.sub(`event:${OTHER}`)).toMatchObject({ type: "refused", reason: "not_allowed" });
     expect(await a.sub("nonsense")).toMatchObject({ type: "refused", reason: "bad_topic" });
     const before = asked;
     const again = await client("alice");
     expect(await again.sub(`thread:${THREAD}`)).toMatchObject({ type: "subscribed" });
     expect(asked).toBe(before);
     expect(hub.stats()).toMatchObject({ sockets: 2, subscriptions: 3 });
+    expect(await a.sub(`event:${THREAD}`)).toMatchObject({ type: "subscribed" });
   });
 
   it("forwards a NOTIFY to the topic's sockets once, skips hidden_from, and stops after unsubscribe", async () => {

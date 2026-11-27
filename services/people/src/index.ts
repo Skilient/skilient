@@ -7,7 +7,7 @@ import { identityPort } from "./identity";
 import { peopleJobs, peopleSchedules } from "./jobs";
 import { copiesConsumer } from "./store/copies";
 import { lifecycleConsumer } from "./store/lifecycle";
-import { noGroupLabels } from "./store/search";
+import { communityLabels } from "./store/labels";
 
 let sql: postgres.Sql | undefined;
 let worker: Worker | undefined;
@@ -35,7 +35,7 @@ export default defineService({
       consumers = [lifecycleConsumer({ sql, details: identity.signupDetails, logger: deps.logger }), copiesConsumer({ sql, logger: deps.logger })];
       for (const c of consumers) await c.start();
     }
-    return createApi({ sql, logger: deps.logger, identity, labels: noGroupLabels });
+    return createApi({ sql, logger: deps.logger, identity, labels: communityLabels(deps.clients) });
   },
   async ready() {
     if (!sql) return false;

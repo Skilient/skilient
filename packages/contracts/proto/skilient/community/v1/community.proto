@@ -1,0 +1,769 @@
+syntax = "proto3";
+
+package skilient.community.v1;
+
+// community: societies (requests, members, officers and terms, invites, join requests, follows, induction
+// rounds), society events (sessions, ticket types and the seat lock, the form, co-hosts, teams, staff,
+// registrations and the waitlist, signed tickets, check-in per session, close-out, feedback, messages) and paid
+// tickets (payment details confirmed by a second officer, receipts, holds, refunds, disputes) (docs/azure/prd.md,
+// service catalogue; docs/azure/community-function-bins.md maps every ported SQL function to a method here).
+//
+// Refusals carry a short snake_case reason in the x-refusal metadata (services/community/src/refusals.ts lists
+// each with today's wording for web); wording with a value in it carries the values in x-refusal-values. Times
+// are RFC 3339 strings and dates YYYY-MM-DD; an empty string means none. Page documents are JSON (`*_json`),
+// shaped as the current stack's functions returned them; names, usernames, avatars and university names in them
+// are filled from people's batch reads in the same call. Tiers on member and attendee lists come from ranking's
+// TiersOf (`tiers`: user id → tier). University events and fairs are market's (W11).
+service CommunityService {
+  // ---- Societies ----
+
+  // SocietyNameCheck: is a society with this name (by its name key) already listed at the reader's university?
+  rpc SocietyNameCheck(SocietyNameCheckRequest) returns (SocietyNameCheckResponse);
+  // RequestSociety lists a new society as pending, with its proof (a document in media or an official link).
+  rpc RequestSociety(RequestSocietyRequest) returns (RequestSocietyResponse);
+  // ResubmitSociety: after "more info", the requester edits and sends it back for review.
+  rpc ResubmitSociety(ResubmitSocietyRequest) returns (ResubmitSocietyResponse);
+  rpc MySocietyRequests(MySocietyRequestsRequest) returns (MySocietyRequestsResponse);
+  rpc SetSocietyImages(SetSocietyImagesRequest) returns (SetSocietyImagesResponse);
+  rpc UpdateSociety(UpdateSocietyRequest) returns (UpdateSocietyResponse);
+  rpc SetMembershipMode(SetMembershipModeRequest) returns (SetMembershipModeResponse);
+  // SocietiesDirectory: verified societies (the reader's university first), and the reader's requests.
+  rpc SocietiesDirectory(SocietiesDirectoryRequest) returns (SocietiesDirectoryResponse);
+  rpc SocietyPage(SocietyPageRequest) returns (SocietyPageResponse);
+  // SocietyManage is the officers' view: members, join requests, invites, terms.
+  rpc SocietyManage(SocietyManageRequest) returns (SocietyManageResponse);
+  rpc FollowSociety(FollowSocietyRequest) returns (FollowSocietyResponse);
+  rpc JoinSociety(JoinSocietyRequest) returns (JoinSocietyResponse);
+  rpc DecideJoinRequest(DecideJoinRequestRequest) returns (DecideJoinRequestResponse);
+  rpc LeaveSociety(LeaveSocietyRequest) returns (LeaveSocietyResponse);
+  rpc InviteOfficer(InviteOfficerRequest) returns (InviteOfficerResponse);
+  rpc OfferHandover(OfferHandoverRequest) returns (OfferHandoverResponse);
+  rpc AnswerSocietyInvite(AnswerSocietyInviteRequest) returns (AnswerSocietyInviteResponse);
+  rpc MySocietyInvites(MySocietyInvitesRequest) returns (MySocietyInvitesResponse);
+  rpc RemoveOfficer(RemoveOfficerRequest) returns (RemoveOfficerResponse);
+  // ConfirmTerm: once a term has ended, the president confirms an officer's (another officer the president's).
+  rpc ConfirmTerm(ConfirmTermRequest) returns (ConfirmTermResponse);
+  rpc MyOfficerSocieties(MyOfficerSocietiesRequest) returns (MyOfficerSocietiesResponse);
+
+  // ---- Induction rounds ----
+
+  rpc SaveInductionRound(SaveInductionRoundRequest) returns (SaveInductionRoundResponse);
+  rpc PublishInductionRound(PublishInductionRoundRequest) returns (PublishInductionRoundResponse);
+  rpc InductionRoundPage(InductionRoundPageRequest) returns (InductionRoundPageResponse);
+  rpc ApplyInduction(ApplyInductionRequest) returns (ApplyInductionResponse);
+  // DecideInductionApplication: shortlist | accept | decline. Seats are counted under the role's row lock.
+  rpc DecideInductionApplication(DecideInductionApplicationRequest) returns (DecideInductionApplicationResponse);
+
+  // ---- Staff: society review (trust reviewers, two-factor; every write audited before and after) ----
+
+  rpc OpsSocieties(OpsSocietiesRequest) returns (OpsSocietiesResponse);
+  rpc OpsSocietyCase(OpsSocietyCaseRequest) returns (OpsSocietyCaseResponse);
+  rpc ClaimSociety(ClaimSocietyRequest) returns (ClaimSocietyResponse);
+  // DecideSociety: approve | more_info | reject | suspend | reinstate | pause_paid | resume_paid.
+  rpc DecideSociety(DecideSocietyRequest) returns (DecideSocietyResponse);
+
+  // ---- Events ----
+
+  // SaveSocietyEvent creates a draft or edits one (officers of the host society).
+  rpc SaveSocietyEvent(SaveSocietyEventRequest) returns (SaveSocietyEventResponse);
+  // PublishEvent publishes a draft and makes its event post (content's CreatePost, as the officer).
+  rpc PublishEvent(PublishEventRequest) returns (PublishEventResponse);
+  rpc CancelSocietyEvent(CancelSocietyEventRequest) returns (CancelSocietyEventResponse);
+  rpc EventEditPayload(EventEditPayloadRequest) returns (EventEditPayloadResponse);
+  rpc AnswerCohost(AnswerCohostRequest) returns (AnswerCohostResponse);
+  // SocietyEvents: upcoming | past | mine, the reader's university first.
+  rpc SocietyEvents(SocietyEventsRequest) returns (SocietyEventsResponse);
+  rpc EventPage(EventPageRequest) returns (EventPageResponse);
+  rpc SocietyEventList(SocietyEventListRequest) returns (SocietyEventListResponse);
+
+  // ---- Registrations and tickets ----
+
+  // RegisterEvent takes a seat under the ticket type's row lock (confirmed, held for a paid ticket, pending for
+  // manual approval, or the waitlist), so parallel registrations never oversell.
+  rpc RegisterEvent(RegisterEventRequest) returns (RegisterEventResponse);
+  // CancelRegistration frees the seat and promotes the waitlist in order, under the same lock.
+  rpc CancelRegistration(CancelRegistrationRequest) returns (CancelRegistrationResponse);
+  rpc DecideRegistration(DecideRegistrationRequest) returns (DecideRegistrationResponse);
+  rpc MyTickets(MyTicketsRequest) returns (MyTicketsResponse);
+  // EventTicket is the reader's ticket, with its signed payload once confirmed (never stored in replies).
+  rpc EventTicket(EventTicketRequest) returns (EventTicketResponse);
+
+  // ---- Manage, check-in, close-out ----
+
+  rpc EventManage(EventManageRequest) returns (EventManageResponse);
+  rpc AddEventStaff(AddEventStaffRequest) returns (AddEventStaffResponse);
+  rpc RemoveEventStaff(RemoveEventStaffRequest) returns (RemoveEventStaffResponse);
+  rpc MessageRegistrants(MessageRegistrantsRequest) returns (MessageRegistrantsResponse);
+  rpc SubmitEventFeedback(SubmitEventFeedbackRequest) returns (SubmitEventFeedbackResponse);
+  // CheckInScan checks a signed ticket in once; a second scan answers with the first time (amber).
+  rpc CheckInScan(CheckInScanRequest) returns (CheckInScanResponse);
+  rpc CheckInSearch(CheckInSearchRequest) returns (CheckInSearchResponse);
+  // CheckInPerson checks in a registered person, or registers an eligible walk-in on a free seat.
+  rpc CheckInPerson(CheckInPersonRequest) returns (CheckInPersonResponse);
+  // CheckInEmail adds a walk-in by university email (an account is checked in; anyone else is kept for the claim).
+  rpc CheckInEmail(CheckInEmailRequest) returns (CheckInEmailResponse);
+  rpc EventHeadcount(EventHeadcountRequest) returns (EventHeadcountResponse);
+  // SocietyEventCode is the rotating self check-in code (30-second windows).
+  rpc SocietyEventCode(SocietyEventCodeRequest) returns (SocietyEventCodeResponse);
+  rpc SelfCheckIn(SelfCheckInRequest) returns (SelfCheckInResponse);
+  rpc CloseoutPage(CloseoutPageRequest) returns (CloseoutPageResponse);
+  rpc FixAttendance(FixAttendanceRequest) returns (FixAttendanceResponse);
+  rpc SetEventResult(SetEventResultRequest) returns (SetEventResultResponse);
+  rpc LogVolunteerHours(LogVolunteerHoursRequest) returns (LogVolunteerHoursResponse);
+  // IssueEventEntries stores the close-out and hands it to credentials (event.closed) in one transaction.
+  rpc IssueEventEntries(IssueEventEntriesRequest) returns (IssueEventEntriesResponse);
+  rpc EventAttendeesRows(EventAttendeesRowsRequest) returns (EventAttendeesRowsResponse);
+
+  // ---- Paid tickets ----
+
+  rpc ProposePaymentMethod(ProposePaymentMethodRequest) returns (ProposePaymentMethodResponse);
+  // ConfirmPaymentMethod: a second officer confirms (or rejects); the proposer can't.
+  rpc ConfirmPaymentMethod(ConfirmPaymentMethodRequest) returns (ConfirmPaymentMethodResponse);
+  rpc PaymentDetailsPage(PaymentDetailsPageRequest) returns (PaymentDetailsPageResponse);
+  rpc TicketPayment(TicketPaymentRequest) returns (TicketPaymentResponse);
+  rpc SubmitReceipt(SubmitReceiptRequest) returns (SubmitReceiptResponse);
+  rpc PaymentsReview(PaymentsReviewRequest) returns (PaymentsReviewResponse);
+  rpc ReviewPayment(ReviewPaymentRequest) returns (ReviewPaymentResponse);
+  rpc RaisePaymentIssue(RaisePaymentIssueRequest) returns (RaisePaymentIssueResponse);
+  rpc MarkRefundSent(MarkRefundSentRequest) returns (MarkRefundSentResponse);
+  rpc ConfirmRefund(ConfirmRefundRequest) returns (ConfirmRefundResponse);
+
+  // ---- For other services ----
+
+  // SocietyCards is the society block on post cards (content) and the society labels on suggestions (people):
+  // id, name, slug, logo. At most 200. One database trip.
+  rpc SocietyCards(SocietyCardsRequest) returns (SocietyCardsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // CanListenEvent: may this user listen to event:{id} (the live headcount)? Event officers and staff (realtime).
+  rpc CanListenEvent(CanListenEventRequest) returns (CanListenEventResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+}
+
+message SocietyNameCheckRequest {
+  string name = 1;
+}
+message SocietyNameCheckResponse {
+  string json = 1;
+}
+
+message RequestSocietyRequest {
+  string name = 1;
+  string category = 2;
+  string about = 3;
+  // society-documents/{user}/{uuid}.pdf|webp, uploaded through media.
+  string proof_path = 4;
+  string proof_url = 5;
+  bool office_bearer = 6;
+}
+message RequestSocietyResponse {
+  string society_id = 1;
+}
+
+message ResubmitSocietyRequest {
+  string society_id = 1;
+  string about = 2;
+  string category = 3;
+  string proof_path = 4;
+  string proof_url = 5;
+}
+message ResubmitSocietyResponse {}
+
+message MySocietyRequestsRequest {}
+message MySocietyRequestsResponse {
+  string json = 1;
+}
+
+message SetSocietyImagesRequest {
+  string society_id = 1;
+  string logo_path = 2;
+  string cover_path = 3;
+}
+message SetSocietyImagesResponse {}
+
+message UpdateSocietyRequest {
+  string society_id = 1;
+  string about = 2;
+  string category = 3;
+}
+message UpdateSocietyResponse {}
+
+message SetMembershipModeRequest {
+  string society_id = 1;
+  // open | request | inductions.
+  string mode = 2;
+}
+message SetMembershipModeResponse {}
+
+message SocietiesDirectoryRequest {
+  string query = 1;
+  string category = 2;
+}
+message SocietiesDirectoryResponse {
+  string json = 1;
+}
+
+message SocietyPageRequest {
+  string slug = 1;
+}
+message SocietyPageResponse {
+  string json = 1;
+  map<string, string> tiers = 2;
+}
+
+message SocietyManageRequest {
+  string society_id = 1;
+}
+message SocietyManageResponse {
+  string json = 1;
+  map<string, string> tiers = 2;
+}
+
+message FollowSocietyRequest {
+  string society_id = 1;
+  bool on = 2;
+}
+message FollowSocietyResponse {}
+
+message JoinSocietyRequest {
+  string society_id = 1;
+}
+message JoinSocietyResponse {
+  // member | requested.
+  string result = 1;
+}
+
+message DecideJoinRequestRequest {
+  string society_id = 1;
+  string user_id = 2;
+  bool accept = 3;
+}
+message DecideJoinRequestResponse {}
+
+message LeaveSocietyRequest {
+  string society_id = 1;
+}
+message LeaveSocietyResponse {}
+
+message InviteOfficerRequest {
+  string society_id = 1;
+  string username = 2;
+  string title = 3;
+  string term_start = 4;
+  string term_end = 5;
+}
+message InviteOfficerResponse {
+  string invite_id = 1;
+}
+
+message OfferHandoverRequest {
+  string society_id = 1;
+  string username = 2;
+}
+message OfferHandoverResponse {
+  string invite_id = 1;
+}
+
+message AnswerSocietyInviteRequest {
+  string invite_id = 1;
+  bool accept = 2;
+}
+message AnswerSocietyInviteResponse {}
+
+message MySocietyInvitesRequest {}
+message MySocietyInvitesResponse {
+  string json = 1;
+}
+
+message RemoveOfficerRequest {
+  string society_id = 1;
+  string user_id = 2;
+}
+message RemoveOfficerResponse {}
+
+message ConfirmTermRequest {
+  string term_id = 1;
+}
+message ConfirmTermResponse {}
+
+message MyOfficerSocietiesRequest {}
+message MyOfficerSocietiesResponse {
+  string json = 1;
+}
+
+message InductionRole {
+  string title = 1;
+  int32 seats = 2;
+  repeated string skill_ids = 3;
+}
+
+message SaveInductionRoundRequest {
+  string society_id = 1;
+  // Empty for a new round; a draft's id to change it.
+  string round_id = 2;
+  string title = 3;
+  string description = 4;
+  string deadline = 5;
+  repeated InductionRole roles = 6;
+  repeated string questions = 7;
+}
+message SaveInductionRoundResponse {
+  string round_id = 1;
+}
+
+message PublishInductionRoundRequest {
+  string round_id = 1;
+}
+message PublishInductionRoundResponse {}
+
+message InductionRoundPageRequest {
+  string round_id = 1;
+}
+message InductionRoundPageResponse {
+  string json = 1;
+}
+
+message ApplyInductionRequest {
+  string round_id = 1;
+  string role_id = 2;
+  repeated string answers = 3;
+}
+message ApplyInductionResponse {
+  string application_id = 1;
+}
+
+message DecideInductionApplicationRequest {
+  string application_id = 1;
+  string action = 2;
+  string note = 3;
+}
+message DecideInductionApplicationResponse {}
+
+message OpsSocietiesRequest {
+  // open | more_info | decided | all.
+  string status = 1;
+}
+message OpsSocietiesResponse {
+  string json = 1;
+}
+
+message OpsSocietyCaseRequest {
+  string society_id = 1;
+}
+message OpsSocietyCaseResponse {
+  string json = 1;
+}
+
+message ClaimSocietyRequest {
+  string society_id = 1;
+  bool claim = 2;
+}
+message ClaimSocietyResponse {}
+
+message DecideSocietyRequest {
+  string society_id = 1;
+  string action = 2;
+  string reason = 3;
+}
+message DecideSocietyResponse {}
+
+message EventSession {
+  string title = 1;
+  string starts_at = 2;
+  string ends_at = 3;
+}
+
+message TicketTypeInput {
+  string name = 1;
+  int32 capacity = 2;
+  // PKR; 0 for a free ticket.
+  int32 price_pkr = 3;
+}
+
+message EventQuestion {
+  string label = 1;
+  // short | long | single | multi.
+  string kind = 2;
+  repeated string options = 3;
+  bool required = 4;
+}
+
+message Eligibility {
+  // university | all | groups.
+  string scope = 1;
+  repeated string departments = 2;
+  repeated int32 batches = 3;
+}
+
+message SaveSocietyEventRequest {
+  string society_id = 1;
+  // Empty for a new draft.
+  string event_id = 2;
+  string type = 3;
+  string title = 4;
+  string description = 5;
+  string cover_path = 6;
+  string location = 7;
+  string link = 8;
+  repeated EventSession sessions = 9;
+  repeated TicketTypeInput ticket_types = 10;
+  Eligibility eligibility = 11;
+  // 0 for no teams.
+  int32 team_min = 12;
+  int32 team_max = 13;
+  // automatic | manual.
+  string approval_mode = 14;
+  string registration_opens_at = 15;
+  string registration_closes_at = 16;
+  repeated EventQuestion questions = 17;
+  repeated string record_kinds = 18;
+  int32 completed_min = 19;
+  bool volunteer_hours = 20;
+  // none | until.
+  string refund_policy = 21;
+  int32 refund_days = 22;
+  // Co-hosts by slug: verified societies, who accept.
+  repeated string cohosts = 23;
+}
+message SaveSocietyEventResponse {
+  string event_id = 1;
+}
+
+message PublishEventRequest {
+  string event_id = 1;
+}
+message PublishEventResponse {
+  string post_id = 1;
+}
+
+message CancelSocietyEventRequest {
+  string event_id = 1;
+  string reason = 2;
+}
+message CancelSocietyEventResponse {}
+
+message EventEditPayloadRequest {
+  string event_id = 1;
+}
+message EventEditPayloadResponse {
+  string json = 1;
+}
+
+message AnswerCohostRequest {
+  string event_id = 1;
+  string society_id = 2;
+  bool accept = 3;
+}
+message AnswerCohostResponse {}
+
+message SocietyEventsRequest {
+  // upcoming | past | mine.
+  string when = 1;
+  string type = 2;
+}
+message SocietyEventsResponse {
+  string json = 1;
+}
+
+message EventPageRequest {
+  string event_id = 1;
+}
+message EventPageResponse {
+  string json = 1;
+}
+
+message SocietyEventListRequest {
+  string society_id = 1;
+}
+message SocietyEventListResponse {
+  string json = 1;
+}
+
+message RegisterEventRequest {
+  string event_id = 1;
+  string ticket_type_id = 2;
+  // The form's answers as a JSON array (a string, or an array of choices, per question).
+  string answers_json = 3;
+  // Create a team (you're its captain) or join one by its code.
+  string team_create = 4;
+  string team_code = 5;
+}
+message RegisterEventResponse {
+  // confirmed | held | pending | waitlisted.
+  string status = 1;
+  int32 waitlist_position = 2;
+  string registration_id = 3;
+}
+
+message CancelRegistrationRequest {
+  string event_id = 1;
+}
+message CancelRegistrationResponse {}
+
+message DecideRegistrationRequest {
+  string event_id = 1;
+  string user_id = 2;
+  bool accept = 3;
+}
+message DecideRegistrationResponse {
+  string status = 1;
+}
+
+message MyTicketsRequest {}
+message MyTicketsResponse {
+  string json = 1;
+}
+
+message EventTicketRequest {
+  string event_id = 1;
+}
+message EventTicketResponse {
+  string json = 1;
+}
+
+message EventManageRequest {
+  string event_id = 1;
+}
+message EventManageResponse {
+  string json = 1;
+  map<string, string> tiers = 2;
+}
+
+message AddEventStaffRequest {
+  string event_id = 1;
+  string username = 2;
+}
+message AddEventStaffResponse {}
+
+message RemoveEventStaffRequest {
+  string event_id = 1;
+  string user_id = 2;
+}
+message RemoveEventStaffResponse {}
+
+message MessageRegistrantsRequest {
+  string event_id = 1;
+  string body = 2;
+}
+message MessageRegistrantsResponse {
+  int32 sent = 1;
+}
+
+message SubmitEventFeedbackRequest {
+  string event_id = 1;
+  int32 rating = 2;
+  string comment = 3;
+}
+message SubmitEventFeedbackResponse {}
+
+message CheckInScanRequest {
+  string event_id = 1;
+  // Empty: the session nearest now.
+  string session_id = 2;
+  string payload = 3;
+}
+message CheckInScanResponse {
+  // {result: green | amber | red, name, at, first_at, message}.
+  string json = 1;
+}
+
+message CheckInSearchRequest {
+  string event_id = 1;
+  string query = 2;
+}
+message CheckInSearchResponse {
+  string json = 1;
+}
+
+message CheckInPersonRequest {
+  string event_id = 1;
+  string session_id = 2;
+  string user_id = 3;
+}
+message CheckInPersonResponse {
+  string json = 1;
+}
+
+message CheckInEmailRequest {
+  string event_id = 1;
+  string session_id = 2;
+  string email = 3;
+}
+message CheckInEmailResponse {
+  string json = 1;
+}
+
+message EventHeadcountRequest {
+  string event_id = 1;
+  string session_id = 2;
+}
+message EventHeadcountResponse {
+  string json = 1;
+}
+
+message SocietyEventCodeRequest {
+  string event_id = 1;
+}
+message SocietyEventCodeResponse {
+  string token = 1;
+  string changes_at = 2;
+}
+
+message SelfCheckInRequest {
+  string event_id = 1;
+  string token = 2;
+}
+message SelfCheckInResponse {
+  string json = 1;
+}
+
+message CloseoutPageRequest {
+  string event_id = 1;
+}
+message CloseoutPageResponse {
+  string json = 1;
+  map<string, string> tiers = 2;
+}
+
+message FixAttendanceRequest {
+  string event_id = 1;
+  string session_id = 2;
+  string user_id = 3;
+  bool present = 4;
+  string reason = 5;
+}
+message FixAttendanceResponse {}
+
+message SetEventResultRequest {
+  string event_id = 1;
+  // A person or a team.
+  string user_id = 2;
+  string team_id = 3;
+  // 0 clears the result.
+  int32 place = 4;
+  string label = 5;
+}
+message SetEventResultResponse {}
+
+message LogVolunteerHoursRequest {
+  string event_id = 1;
+  string user_id = 2;
+  // 0 clears the hours.
+  double hours = 3;
+}
+message LogVolunteerHoursResponse {}
+
+message IssueEventEntriesRequest {
+  string event_id = 1;
+}
+message IssueEventEntriesResponse {
+  string json = 1;
+}
+
+message EventAttendeesRowsRequest {
+  string event_id = 1;
+}
+message EventAttendeesRowsResponse {
+  string json = 1;
+}
+
+message ProposePaymentMethodRequest {
+  string society_id = 1;
+  // add | replace | remove.
+  string action = 2;
+  string replaces_id = 3;
+  // bank | jazzcash | easypaisa.
+  string kind = 4;
+  string bank_name = 5;
+  string account_title = 6;
+  string account_number = 7;
+}
+message ProposePaymentMethodResponse {
+  string method_id = 1;
+}
+
+message ConfirmPaymentMethodRequest {
+  string method_id = 1;
+  bool accept = 2;
+}
+message ConfirmPaymentMethodResponse {}
+
+message PaymentDetailsPageRequest {
+  string society_id = 1;
+}
+message PaymentDetailsPageResponse {
+  string json = 1;
+}
+
+message TicketPaymentRequest {
+  string event_id = 1;
+}
+message TicketPaymentResponse {
+  string json = 1;
+}
+
+message SubmitReceiptRequest {
+  string registration_id = 1;
+  // event-receipts/{event}/{registration}/{uuid}.webp|pdf, checked and stored by web and media.
+  string path = 2;
+  // sha256 of the stored file and its 64-bit perceptual hash (hex).
+  string hash = 3;
+  string phash = 4;
+  string transaction_id = 5;
+}
+message SubmitReceiptResponse {}
+
+message PaymentsReviewRequest {
+  string event_id = 1;
+}
+message PaymentsReviewResponse {
+  string json = 1;
+}
+
+message ReviewPaymentRequest {
+  string payment_id = 1;
+  bool approve = 2;
+  string reason = 3;
+}
+message ReviewPaymentResponse {}
+
+message RaisePaymentIssueRequest {
+  string registration_id = 1;
+}
+message RaisePaymentIssueResponse {}
+
+message MarkRefundSentRequest {
+  string payment_id = 1;
+  string note = 2;
+}
+message MarkRefundSentResponse {}
+
+message ConfirmRefundRequest {
+  string payment_id = 1;
+  bool received = 2;
+}
+message ConfirmRefundResponse {}
+
+message SocietyCardsRequest {
+  repeated string society_ids = 1;
+}
+message SocietyCardsResponse {
+  message Card {
+    string id = 1;
+    string name = 2;
+    string slug = 3;
+    string logo_path = 4;
+    string status = 5;
+    string university_id = 6;
+  }
+  repeated Card cards = 1;
+}
+
+message CanListenEventRequest {
+  string user_id = 1;
+  string event_id = 2;
+}
+message CanListenEventResponse {
+  bool allowed = 1;
+}

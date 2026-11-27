@@ -177,3 +177,7 @@ export async function publishAs(w: PeopleWorld, role: postgres.Sql, type: string
 /** The shell facts people holds for a user (fact.value_changed keys), for the owners' tests (W6 ranking). */
 export const factKeysOf = (w: PeopleWorld, userId: string) =>
   w.people<{ key: string }[]>`select key from people.fact_values where user_id = ${userId} order by key`.then((r) => r.map((x) => x.key));
+
+/** people's copy of a group's members (suggestions, labels), for the owners' hand-off tests (W5, W7). */
+export const groupMembersOf = (w: PeopleWorld, kind: "venture" | "society", groupId: string) =>
+  w.people<{ user_id: string }[]>`select user_id::text from people.group_members where kind = ${kind} and group_id = ${groupId} order by user_id`.then((r) => r.map((x) => x.user_id));

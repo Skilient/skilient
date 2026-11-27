@@ -223,6 +223,9 @@ importers:
       '@connectrpc/connect':
         specifier: 2.3.0
         version: 2.3.0(@bufbuild/protobuf@2.17.0)
+      '@skilient/community':
+        specifier: workspace:*
+        version: link:../../services/community
       '@skilient/content':
         specifier: workspace:*
         version: link:../../services/content
@@ -339,6 +342,58 @@ importers:
       '@skilient/contracts':
         specifier: workspace:*
         version: link:../contracts
+
+  services/community:
+    dependencies:
+      '@bufbuild/protobuf':
+        specifier: 2.17.0
+        version: 2.17.0
+      '@connectrpc/connect':
+        specifier: 2.3.0
+        version: 2.3.0(@bufbuild/protobuf@2.17.0)
+      '@skilient/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@skilient/platform':
+        specifier: workspace:*
+        version: link:../../packages/platform
+      postgres:
+        specifier: 3.4.9
+        version: 3.4.9
+      zod:
+        specifier: 4.6.5
+        version: 4.6.5
+    devDependencies:
+      '@skilient/content':
+        specifier: workspace:*
+        version: link:../content
+      '@skilient/host':
+        specifier: workspace:*
+        version: link:../../packages/host
+      '@skilient/identity':
+        specifier: workspace:*
+        version: link:../identity
+      '@skilient/messaging':
+        specifier: workspace:*
+        version: link:../messaging
+      '@skilient/people':
+        specifier: workspace:*
+        version: link:../people
+      '@skilient/ranking':
+        specifier: workspace:*
+        version: link:../ranking
+      '@skilient/realtime':
+        specifier: workspace:*
+        version: link:../realtime
+      '@skilient/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      '@skilient/work':
+        specifier: workspace:*
+        version: link:../work
+      jose:
+        specifier: 6.2.18
+        version: 6.2.18
 
   services/content:
     dependencies:

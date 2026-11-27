@@ -42,3 +42,17 @@ export async function personalDomains(db: postgres.Sql | postgres.TransactionSql
     select domain from identity.personal_email_domains where domain = any(${[...domains]}::text[])`;
   return new Set(rows.map((r) => r.domain));
 }
+
+/**
+ * For each address: the confirmed account holding it, and the universities whose email domains include its domain
+ * (community's check-in by email: `check_in_email` read auth.users and university_domains). One query.
+ */
+export async function resolveEmails(db: postgres.Sql, emails: readonly string[]): Promise<{ email: string; user_id: string | null; university_ids: string[] }[]> {
+  const rows = await db<{ email: string; user_id: string | null; university_ids: string[] }[]>`
+    select e.email, u.id::text as user_id,
+           coalesce((select array_agg(distinct d.university_id::text) from identity.allowed_domains d
+                      where d.domain = lower(substring(e.email from '@([^@]+)$'))), '{}') as university_ids
+      from unnest(${[...emails]}::text[]) as e(email)
+      left join identity.users u on u.email = e.email and u.email_confirmed_at is not null`;
+  return [...rows];
+}

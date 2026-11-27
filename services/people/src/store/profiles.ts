@@ -288,6 +288,19 @@ export async function resolveUsernames(db: Db, names: readonly string[]) {
   return names.flatMap((n, i) => (byName.has(wanted[i]!) ? [{ username: n, user_id: byName.get(wanted[i]!)! }] : []));
 }
 
+/**
+ * Of the given people, those whose name contains the query or whose username starts with it, by name (community's
+ * check-in search over an event's registrants: `check_in_search`'s `full_name ilike '%q%' or username ilike 'q%'`).
+ */
+export async function filterByName(db: Db, userIds: readonly string[], query: string, limit: number): Promise<string[]> {
+  const q = query.replace(/[%_]/g, "");
+  const rows = await db<{ user_id: string }[]>`
+    select user_id::text from people.profiles
+     where user_id = any(${[...userIds]}::uuid[]) and (full_name ilike ${"%" + q + "%"} or username ilike ${q + "%"})
+     order by full_name limit ${limit}`;
+  return rows.map((r) => r.user_id);
+}
+
 /** Relations: for one user and many others, friends, a block either way, and whether the user muted them. */
 export async function relations(db: Db, userId: string, others: readonly string[]) {
   const rows = await db<{ other_id: string; friends: boolean; blocked: boolean; muted: boolean }[]>`

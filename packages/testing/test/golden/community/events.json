@@ -1,0 +1,1317 @@
+{
+  "pages": {
+    "mine": {
+      "ok": true,
+      "value": [
+        {
+          "cover_path": null,
+          "ends_at": "<time>",
+          "friends_going": 0,
+          "id": "<uuid:1>",
+          "link": null,
+          "location": "Lab 2, Block C",
+          "my_status": "confirmed",
+          "own_university": true,
+          "paid": false,
+          "seats_left": 1,
+          "society": {
+            "id": "<uuid:2>",
+            "logo_path": null,
+            "name": "Wren Robotics Society",
+            "slug": "wren-robotics"
+          },
+          "starts_at": "<time>",
+          "status": "published",
+          "title": "Soldering basics",
+          "type": "workshop",
+          "university": "Community Golden University A"
+        }
+      ]
+    },
+    "other_university": {
+      "ok": true,
+      "value": []
+    },
+    "other_university_all": {
+      "ok": true,
+      "value": [
+        {
+          "cover_path": null,
+          "ends_at": "<time>",
+          "friends_going": 0,
+          "id": "<uuid:1>",
+          "link": null,
+          "location": "Lab 2, Block C",
+          "my_status": null,
+          "own_university": false,
+          "paid": false,
+          "seats_left": 1,
+          "society": {
+            "id": "<uuid:2>",
+            "logo_path": null,
+            "name": "Wren Robotics Society",
+            "slug": "wren-robotics"
+          },
+          "starts_at": "<time>",
+          "status": "published",
+          "title": "Soldering basics",
+          "type": "workshop",
+          "university": "Community Golden University A"
+        }
+      ]
+    },
+    "page_eligible": {
+      "ok": true,
+      "value": {
+        "approval_mode": "automatic",
+        "block_reason": null,
+        "cancel_reason": null,
+        "cancelled_at": null,
+        "cohosts": [],
+        "completed_min": null,
+        "cover_path": null,
+        "description": "Bring nothing; we have irons.",
+        "eligibility": {
+          "batches": [
+            2027
+          ],
+          "departments": [
+            "Computer Science"
+          ],
+          "scope": "groups"
+        },
+        "ends_at": "<time>",
+        "feedback_open": false,
+        "friends_going": 1,
+        "id": "<uuid:1>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "my_status": null,
+        "officer": false,
+        "own_university": true,
+        "paid": false,
+        "questions": [
+          {
+            "kind": "short",
+            "label": "Have you soldered before?",
+            "options": [],
+            "position": 1,
+            "required": true
+          }
+        ],
+        "record_kinds": [
+          "attended"
+        ],
+        "refund_days": null,
+        "refund_policy": "none",
+        "registration": null,
+        "registration_closes_at": null,
+        "registration_opens_at": null,
+        "seats_left": 1,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "id": "<uuid:3>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ],
+        "society": {
+          "id": "<uuid:2>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "staff": false,
+        "starts_at": "<time>",
+        "status": "published",
+        "team": null,
+        "ticket_types": [
+          {
+            "capacity": 2,
+            "id": "<uuid:4>",
+            "left": 1,
+            "name": "Seat",
+            "price_pkr": null
+          }
+        ],
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A",
+        "volunteer_hours": false
+      }
+    },
+    "page_graduate": {
+      "ok": true,
+      "value": {
+        "approval_mode": "automatic",
+        "block_reason": "Only students register for society events.",
+        "cancel_reason": null,
+        "cancelled_at": null,
+        "cohosts": [],
+        "completed_min": null,
+        "cover_path": null,
+        "description": "Bring nothing; we have irons.",
+        "eligibility": {
+          "batches": [
+            2027
+          ],
+          "departments": [
+            "Computer Science"
+          ],
+          "scope": "groups"
+        },
+        "ends_at": "<time>",
+        "feedback_open": false,
+        "friends_going": 0,
+        "id": "<uuid:1>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "my_status": null,
+        "officer": false,
+        "own_university": true,
+        "paid": false,
+        "questions": [
+          {
+            "kind": "short",
+            "label": "Have you soldered before?",
+            "options": [],
+            "position": 1,
+            "required": true
+          }
+        ],
+        "record_kinds": [
+          "attended"
+        ],
+        "refund_days": null,
+        "refund_policy": "none",
+        "registration": null,
+        "registration_closes_at": null,
+        "registration_opens_at": null,
+        "seats_left": 1,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "id": "<uuid:3>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ],
+        "society": {
+          "id": "<uuid:2>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "staff": false,
+        "starts_at": "<time>",
+        "status": "published",
+        "team": null,
+        "ticket_types": [
+          {
+            "capacity": 2,
+            "id": "<uuid:4>",
+            "left": 1,
+            "name": "Seat",
+            "price_pkr": null
+          }
+        ],
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A",
+        "volunteer_hours": false
+      }
+    },
+    "page_officer": {
+      "ok": true,
+      "value": {
+        "approval_mode": "automatic",
+        "block_reason": null,
+        "cancel_reason": null,
+        "cancelled_at": null,
+        "cohosts": [],
+        "completed_min": null,
+        "cover_path": null,
+        "description": "Bring nothing; we have irons.",
+        "eligibility": {
+          "batches": [
+            2027
+          ],
+          "departments": [
+            "Computer Science"
+          ],
+          "scope": "groups"
+        },
+        "ends_at": "<time>",
+        "feedback_open": false,
+        "friends_going": 0,
+        "id": "<uuid:1>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "my_status": null,
+        "officer": true,
+        "own_university": true,
+        "paid": false,
+        "questions": [
+          {
+            "kind": "short",
+            "label": "Have you soldered before?",
+            "options": [],
+            "position": 1,
+            "required": true
+          }
+        ],
+        "record_kinds": [
+          "attended"
+        ],
+        "refund_days": null,
+        "refund_policy": "none",
+        "registration": null,
+        "registration_closes_at": null,
+        "registration_opens_at": null,
+        "seats_left": 1,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "id": "<uuid:3>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ],
+        "society": {
+          "id": "<uuid:2>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "staff": true,
+        "starts_at": "<time>",
+        "status": "published",
+        "team": null,
+        "ticket_types": [
+          {
+            "capacity": 2,
+            "id": "<uuid:4>",
+            "left": 1,
+            "name": "Seat",
+            "price_pkr": null
+          }
+        ],
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A",
+        "volunteer_hours": false
+      }
+    },
+    "page_other_university": {
+      "code": "P0002",
+      "message": "event not found",
+      "ok": false
+    },
+    "page_other_university_all": {
+      "ok": true,
+      "value": {
+        "approval_mode": "automatic",
+        "block_reason": null,
+        "cancel_reason": null,
+        "cancelled_at": null,
+        "cohosts": [],
+        "completed_min": null,
+        "cover_path": null,
+        "description": "Bring nothing; we have irons.",
+        "eligibility": {
+          "scope": "all"
+        },
+        "ends_at": "<time>",
+        "feedback_open": false,
+        "friends_going": 0,
+        "id": "<uuid:1>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "my_status": null,
+        "officer": false,
+        "own_university": false,
+        "paid": false,
+        "questions": [
+          {
+            "kind": "short",
+            "label": "Have you soldered before?",
+            "options": [],
+            "position": 1,
+            "required": true
+          }
+        ],
+        "record_kinds": [
+          "attended"
+        ],
+        "refund_days": null,
+        "refund_policy": "none",
+        "registration": null,
+        "registration_closes_at": null,
+        "registration_opens_at": null,
+        "seats_left": 1,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "id": "<uuid:3>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ],
+        "society": {
+          "id": "<uuid:2>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "staff": false,
+        "starts_at": "<time>",
+        "status": "published",
+        "team": null,
+        "ticket_types": [
+          {
+            "capacity": 2,
+            "id": "<uuid:4>",
+            "left": 1,
+            "name": "Seat",
+            "price_pkr": null
+          }
+        ],
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A",
+        "volunteer_hours": false
+      }
+    },
+    "page_registered": {
+      "ok": true,
+      "value": {
+        "approval_mode": "automatic",
+        "block_reason": null,
+        "cancel_reason": null,
+        "cancelled_at": null,
+        "cohosts": [],
+        "completed_min": null,
+        "cover_path": null,
+        "description": "Bring nothing; we have irons.",
+        "eligibility": {
+          "batches": [
+            2027
+          ],
+          "departments": [
+            "Computer Science"
+          ],
+          "scope": "groups"
+        },
+        "ends_at": "<time>",
+        "feedback_open": false,
+        "friends_going": 0,
+        "id": "<uuid:1>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "my_status": "confirmed",
+        "officer": false,
+        "own_university": true,
+        "paid": false,
+        "questions": [
+          {
+            "kind": "short",
+            "label": "Have you soldered before?",
+            "options": [],
+            "position": 1,
+            "required": true
+          }
+        ],
+        "record_kinds": [
+          "attended"
+        ],
+        "refund_days": null,
+        "refund_policy": "none",
+        "registration": {
+          "hold_expires_at": null,
+          "id": "<uuid:5>",
+          "status": "confirmed",
+          "team": null,
+          "ticket_type_id": "<uuid:4>",
+          "waitlist_position": null
+        },
+        "registration_closes_at": null,
+        "registration_opens_at": null,
+        "seats_left": 1,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "id": "<uuid:3>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ],
+        "society": {
+          "id": "<uuid:2>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "staff": false,
+        "starts_at": "<time>",
+        "status": "published",
+        "team": null,
+        "ticket_types": [
+          {
+            "capacity": 2,
+            "id": "<uuid:4>",
+            "left": 1,
+            "name": "Seat",
+            "price_pkr": null
+          }
+        ],
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A",
+        "volunteer_hours": false
+      }
+    },
+    "page_wrong_group": {
+      "ok": true,
+      "value": {
+        "approval_mode": "automatic",
+        "block_reason": "For Computer Science 2027 only.",
+        "cancel_reason": null,
+        "cancelled_at": null,
+        "cohosts": [],
+        "completed_min": null,
+        "cover_path": null,
+        "description": "Bring nothing; we have irons.",
+        "eligibility": {
+          "batches": [
+            2027
+          ],
+          "departments": [
+            "Computer Science"
+          ],
+          "scope": "groups"
+        },
+        "ends_at": "<time>",
+        "feedback_open": false,
+        "friends_going": 0,
+        "id": "<uuid:1>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "my_status": null,
+        "officer": false,
+        "own_university": true,
+        "paid": false,
+        "questions": [
+          {
+            "kind": "short",
+            "label": "Have you soldered before?",
+            "options": [],
+            "position": 1,
+            "required": true
+          }
+        ],
+        "record_kinds": [
+          "attended"
+        ],
+        "refund_days": null,
+        "refund_policy": "none",
+        "registration": null,
+        "registration_closes_at": null,
+        "registration_opens_at": null,
+        "seats_left": 1,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "id": "<uuid:3>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ],
+        "society": {
+          "id": "<uuid:2>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "staff": false,
+        "starts_at": "<time>",
+        "status": "published",
+        "team": null,
+        "ticket_types": [
+          {
+            "capacity": 2,
+            "id": "<uuid:4>",
+            "left": 1,
+            "name": "Seat",
+            "price_pkr": null
+          }
+        ],
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A",
+        "volunteer_hours": false
+      }
+    },
+    "past": {
+      "ok": true,
+      "value": []
+    },
+    "unknown_list": {
+      "code": "22023",
+      "message": "unknown list",
+      "ok": false
+    },
+    "upcoming": {
+      "ok": true,
+      "value": [
+        {
+          "cover_path": null,
+          "ends_at": "<time>",
+          "friends_going": 1,
+          "id": "<uuid:1>",
+          "link": null,
+          "location": "Lab 2, Block C",
+          "my_status": null,
+          "own_university": true,
+          "paid": false,
+          "seats_left": 1,
+          "society": {
+            "id": "<uuid:2>",
+            "logo_path": null,
+            "name": "Wren Robotics Society",
+            "slug": "wren-robotics"
+          },
+          "starts_at": "<time>",
+          "status": "published",
+          "title": "Soldering basics",
+          "type": "workshop",
+          "university": "Community Golden University A"
+        }
+      ]
+    },
+    "upcoming_type": {
+      "ok": true,
+      "value": []
+    }
+  },
+  "publish_refusals": {
+    "paid_no_details": {
+      "code": "55000",
+      "message": "add and confirm the society's payment details before publishing a paid ticket",
+      "ok": false
+    },
+    "paid_paused": {
+      "code": "55000",
+      "message": "Skilient has paused paid tickets for this society",
+      "ok": false
+    },
+    "started": {
+      "code": "55000",
+      "message": "move the first session into the future first",
+      "ok": false
+    }
+  },
+  "save_publish": {
+    "cancel": {
+      "changes": {
+        "public.events": {
+          "added": [
+            {
+              "approval_mode": "automatic",
+              "cancel_reason": "The hall flooded.",
+              "cancelled": true,
+              "completed_min": 2,
+              "cover_path": "<uuid:1>/<uuid:2>.webp",
+              "created_by": "<uuid:3>",
+              "description": "Build a sumo robot in a weekend.",
+              "eligibility": {
+                "batches": [
+                  2027
+                ],
+                "departments": [
+                  "Computer Science"
+                ],
+                "scope": "groups"
+              },
+              "has_post": true,
+              "link": null,
+              "location": "Hall B",
+              "published": true,
+              "record_kinds": [
+                "attended",
+                "completed",
+                "result"
+              ],
+              "refund_days": null,
+              "refund_policy": "none",
+              "scope": "university",
+              "society": "Wren Robotics Society",
+              "status": "cancelled",
+              "team_max": 3,
+              "team_min": 2,
+              "title": "Robot arena",
+              "type": "workshop",
+              "university_id": "<uuid:4>",
+              "volunteer_hours": true
+            }
+          ],
+          "removed": [
+            {
+              "approval_mode": "automatic",
+              "cancel_reason": null,
+              "cancelled": false,
+              "completed_min": 2,
+              "cover_path": "<uuid:1>/<uuid:2>.webp",
+              "created_by": "<uuid:3>",
+              "description": "Build a sumo robot in a weekend.",
+              "eligibility": {
+                "batches": [
+                  2027
+                ],
+                "departments": [
+                  "Computer Science"
+                ],
+                "scope": "groups"
+              },
+              "has_post": true,
+              "link": null,
+              "location": "Hall B",
+              "published": true,
+              "record_kinds": [
+                "attended",
+                "completed",
+                "result"
+              ],
+              "refund_days": null,
+              "refund_policy": "none",
+              "scope": "university",
+              "society": "Wren Robotics Society",
+              "status": "published",
+              "team_max": 3,
+              "team_min": 2,
+              "title": "Robot arena",
+              "type": "workshop",
+              "university_id": "<uuid:4>",
+              "volunteer_hours": true
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "cancel_again": {
+      "code": "55000",
+      "message": "this event is already cancelled",
+      "ok": false
+    },
+    "cancel_member": {
+      "code": "P0002",
+      "message": "event not found",
+      "ok": false
+    },
+    "cohost_accept": {
+      "changes": {
+        "public.event_cohosts": {
+          "added": [
+            {
+              "event": "Robot arena",
+              "society": "Wren Coders",
+              "status": "accepted"
+            }
+          ],
+          "removed": [
+            {
+              "event": "Robot arena",
+              "society": "Wren Coders",
+              "status": "pending"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "cohost_again": {
+      "code": "P0002",
+      "message": "invitation not found",
+      "ok": false
+    },
+    "cohost_stranger": {
+      "code": "P0002",
+      "message": "invitation not found",
+      "ok": false
+    },
+    "created": {
+      "changes": {
+        "public.event_cohosts": {
+          "added": [
+            {
+              "event": "Robot arena",
+              "society": "Wren Coders",
+              "status": "pending"
+            }
+          ],
+          "removed": []
+        },
+        "public.event_questions": {
+          "added": [
+            {
+              "event": "Robot arena",
+              "kind": "single",
+              "label": "Team experience?",
+              "options": [
+                "None",
+                "Some"
+              ],
+              "position": 1,
+              "required": true
+            }
+          ],
+          "removed": []
+        },
+        "public.event_sessions": {
+          "added": [
+            {
+              "event": "Robot arena",
+              "position": 1,
+              "title": null
+            },
+            {
+              "event": "Robot arena",
+              "position": 2,
+              "title": "Build day"
+            }
+          ],
+          "removed": []
+        },
+        "public.event_ticket_types": {
+          "added": [
+            {
+              "capacity": 20,
+              "event": "Robot arena",
+              "name": "Builder",
+              "position": 1,
+              "price_pkr": null
+            },
+            {
+              "capacity": 50,
+              "event": "Robot arena",
+              "name": "Spectator",
+              "position": 2,
+              "price_pkr": null
+            }
+          ],
+          "removed": []
+        },
+        "public.events": {
+          "added": [
+            {
+              "approval_mode": "automatic",
+              "cancel_reason": null,
+              "cancelled": false,
+              "completed_min": 2,
+              "cover_path": "<uuid:1>/<uuid:2>.webp",
+              "created_by": "<uuid:3>",
+              "description": "Build a sumo robot in a weekend.",
+              "eligibility": {
+                "batches": [
+                  2027
+                ],
+                "departments": [
+                  "Computer Science"
+                ],
+                "scope": "groups"
+              },
+              "has_post": false,
+              "link": null,
+              "location": "Hall A",
+              "published": false,
+              "record_kinds": [
+                "attended",
+                "completed",
+                "result"
+              ],
+              "refund_days": null,
+              "refund_policy": "none",
+              "scope": "university",
+              "society": "Wren Robotics Society",
+              "status": "draft",
+              "team_max": 3,
+              "team_min": 2,
+              "title": "Robot arena",
+              "type": "workshop",
+              "university_id": "<uuid:4>",
+              "volunteer_hours": true
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:3>",
+              "entity_type": "event",
+              "type": "event_cohost",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    },
+    "edit_cancelled": {
+      "code": "55000",
+      "message": "this event can't change any more",
+      "ok": false
+    },
+    "edit_payload": {
+      "ok": true,
+      "value": {
+        "approval_mode": "automatic",
+        "cohosts": [
+          "wren-coders"
+        ],
+        "completed_min": 2,
+        "cover_path": "<uuid:1>/<uuid:2>.webp",
+        "description": "Build a sumo robot in a weekend.",
+        "eligibility": {
+          "batches": [
+            2027
+          ],
+          "departments": [
+            "Computer Science"
+          ],
+          "scope": "groups"
+        },
+        "id": "<uuid:6>",
+        "link": null,
+        "location": "Hall A",
+        "questions": [
+          {
+            "kind": "single",
+            "label": "Team experience?",
+            "options": [
+              "None",
+              "Some"
+            ],
+            "required": true
+          }
+        ],
+        "record_kinds": [
+          "attended",
+          "completed",
+          "result"
+        ],
+        "refund_days": null,
+        "refund_policy": "none",
+        "registration_closes_at": null,
+        "registration_opens_at": null,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "starts_at": "<time>",
+            "title": null
+          },
+          {
+            "ends_at": "<time>",
+            "starts_at": "<time>",
+            "title": "Build day"
+          }
+        ],
+        "society_id": "<uuid:1>",
+        "status": "draft",
+        "team": {
+          "max": 3,
+          "min": 2
+        },
+        "ticket_types": [
+          {
+            "capacity": 20,
+            "name": "Builder",
+            "price_pkr": null
+          },
+          {
+            "capacity": 50,
+            "name": "Spectator",
+            "price_pkr": null
+          }
+        ],
+        "title": "Robot arena",
+        "type": "workshop",
+        "volunteer_hours": true
+      }
+    },
+    "edit_payload_student": {
+      "code": "P0002",
+      "message": "event not found",
+      "ok": false
+    },
+    "edited": {
+      "changes": {
+        "public.event_questions": {
+          "added": [],
+          "removed": [
+            {
+              "event": "Robot arena",
+              "kind": "single",
+              "label": "Team experience?",
+              "options": [
+                "None",
+                "Some"
+              ],
+              "position": 1,
+              "required": true
+            }
+          ]
+        },
+        "public.event_ticket_types": {
+          "added": [
+            {
+              "capacity": 25,
+              "event": "Robot arena",
+              "name": "Builder",
+              "position": 1,
+              "price_pkr": null
+            }
+          ],
+          "removed": [
+            {
+              "capacity": 20,
+              "event": "Robot arena",
+              "name": "Builder",
+              "position": 1,
+              "price_pkr": null
+            },
+            {
+              "capacity": 50,
+              "event": "Robot arena",
+              "name": "Spectator",
+              "position": 2,
+              "price_pkr": null
+            }
+          ]
+        },
+        "public.events": {
+          "added": [
+            {
+              "approval_mode": "automatic",
+              "cancel_reason": null,
+              "cancelled": false,
+              "completed_min": 2,
+              "cover_path": "<uuid:1>/<uuid:2>.webp",
+              "created_by": "<uuid:3>",
+              "description": "Build a sumo robot in a weekend.",
+              "eligibility": {
+                "batches": [
+                  2027
+                ],
+                "departments": [
+                  "Computer Science"
+                ],
+                "scope": "groups"
+              },
+              "has_post": true,
+              "link": null,
+              "location": "Hall B",
+              "published": true,
+              "record_kinds": [
+                "attended",
+                "completed",
+                "result"
+              ],
+              "refund_days": null,
+              "refund_policy": "none",
+              "scope": "university",
+              "society": "Wren Robotics Society",
+              "status": "published",
+              "team_max": 3,
+              "team_min": 2,
+              "title": "Robot arena",
+              "type": "workshop",
+              "university_id": "<uuid:4>",
+              "volunteer_hours": true
+            }
+          ],
+          "removed": [
+            {
+              "approval_mode": "automatic",
+              "cancel_reason": null,
+              "cancelled": false,
+              "completed_min": 2,
+              "cover_path": "<uuid:1>/<uuid:2>.webp",
+              "created_by": "<uuid:3>",
+              "description": "Build a sumo robot in a weekend.",
+              "eligibility": {
+                "batches": [
+                  2027
+                ],
+                "departments": [
+                  "Computer Science"
+                ],
+                "scope": "groups"
+              },
+              "has_post": true,
+              "link": null,
+              "location": "Hall A",
+              "published": true,
+              "record_kinds": [
+                "attended",
+                "completed",
+                "result"
+              ],
+              "refund_days": null,
+              "refund_policy": "none",
+              "scope": "university",
+              "society": "Wren Robotics Society",
+              "status": "published",
+              "team_max": 3,
+              "team_min": 2,
+              "title": "Robot arena",
+              "type": "workshop",
+              "university_id": "<uuid:4>",
+              "volunteer_hours": true
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    },
+    "list_cohost": {
+      "ok": true,
+      "value": [
+        {
+          "cover_path": "<uuid:1>/<uuid:2>.webp",
+          "ends_at": "<time>",
+          "friends_going": 0,
+          "id": "<uuid:6>",
+          "link": null,
+          "location": "Hall B",
+          "my_status": null,
+          "own_university": true,
+          "paid": false,
+          "seats_left": 25,
+          "society": {
+            "id": "<uuid:1>",
+            "logo_path": null,
+            "name": "Wren Robotics Society",
+            "slug": "wren-robotics"
+          },
+          "starts_at": "<time>",
+          "status": "published",
+          "title": "Robot arena",
+          "type": "workshop",
+          "university": "Community Golden University A"
+        }
+      ]
+    },
+    "list_officer": {
+      "ok": true,
+      "value": [
+        {
+          "cover_path": "<uuid:1>/<uuid:2>.webp",
+          "ends_at": "<time>",
+          "friends_going": 0,
+          "id": "<uuid:6>",
+          "link": null,
+          "location": "Hall B",
+          "my_status": null,
+          "own_university": true,
+          "paid": false,
+          "seats_left": 25,
+          "society": {
+            "id": "<uuid:1>",
+            "logo_path": null,
+            "name": "Wren Robotics Society",
+            "slug": "wren-robotics"
+          },
+          "starts_at": "<time>",
+          "status": "published",
+          "title": "Robot arena",
+          "type": "workshop",
+          "university": "Community Golden University A"
+        }
+      ]
+    },
+    "page_draft_student": {
+      "code": "P0002",
+      "message": "event not found",
+      "ok": false
+    },
+    "publish": {
+      "changes": {
+        "public.events": {
+          "added": [
+            {
+              "approval_mode": "automatic",
+              "cancel_reason": null,
+              "cancelled": false,
+              "completed_min": 2,
+              "cover_path": "<uuid:1>/<uuid:2>.webp",
+              "created_by": "<uuid:3>",
+              "description": "Build a sumo robot in a weekend.",
+              "eligibility": {
+                "batches": [
+                  2027
+                ],
+                "departments": [
+                  "Computer Science"
+                ],
+                "scope": "groups"
+              },
+              "has_post": true,
+              "link": null,
+              "location": "Hall A",
+              "published": true,
+              "record_kinds": [
+                "attended",
+                "completed",
+                "result"
+              ],
+              "refund_days": null,
+              "refund_policy": "none",
+              "scope": "university",
+              "society": "Wren Robotics Society",
+              "status": "published",
+              "team_max": 3,
+              "team_min": 2,
+              "title": "Robot arena",
+              "type": "workshop",
+              "university_id": "<uuid:4>",
+              "volunteer_hours": true
+            }
+          ],
+          "removed": [
+            {
+              "approval_mode": "automatic",
+              "cancel_reason": null,
+              "cancelled": false,
+              "completed_min": 2,
+              "cover_path": "<uuid:1>/<uuid:2>.webp",
+              "created_by": "<uuid:3>",
+              "description": "Build a sumo robot in a weekend.",
+              "eligibility": {
+                "batches": [
+                  2027
+                ],
+                "departments": [
+                  "Computer Science"
+                ],
+                "scope": "groups"
+              },
+              "has_post": false,
+              "link": null,
+              "location": "Hall A",
+              "published": false,
+              "record_kinds": [
+                "attended",
+                "completed",
+                "result"
+              ],
+              "refund_days": null,
+              "refund_policy": "none",
+              "scope": "university",
+              "society": "Wren Robotics Society",
+              "status": "draft",
+              "team_max": 3,
+              "team_min": 2,
+              "title": "Robot arena",
+              "type": "workshop",
+              "university_id": "<uuid:4>",
+              "volunteer_hours": true
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:3>",
+              "entity_type": "event",
+              "type": "event_published",
+              "user_id": "<uuid:7>"
+            },
+            {
+              "actor_id": "<uuid:3>",
+              "entity_type": "event",
+              "type": "event_published",
+              "user_id": "<uuid:8>"
+            }
+          ],
+          "removed": []
+        },
+        "public.posts": {
+          "added": [
+            {
+              "audience": "university",
+              "author_id": "<uuid:3>",
+              "body": "Robot arena\n\nBuild a sumo robot in a weekend.",
+              "society": "Wren Robotics Society",
+              "type": "event"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "publish_again": {
+      "code": "55000",
+      "message": "this event is already published",
+      "ok": false
+    },
+    "publish_cohost": {
+      "code": "42501",
+      "message": "the host society publishes its events",
+      "ok": false
+    },
+    "save_bad_cover": {
+      "code": "22023",
+      "message": "upload the cover again",
+      "ok": false
+    },
+    "save_bad_scope": {
+      "code": "22023",
+      "message": "unknown eligibility",
+      "ok": false
+    },
+    "save_cheap": {
+      "code": "22023",
+      "message": "ticket prices are PKR 100 to 10000",
+      "ok": false
+    },
+    "save_member": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "save_no_sessions": {
+      "code": "22023",
+      "message": "an event has 1 to 10 sessions",
+      "ok": false
+    },
+    "save_no_tickets": {
+      "code": "22023",
+      "message": "an event has 1 to 5 ticket types",
+      "ok": false
+    },
+    "save_pending_society": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    }
+  }
+}

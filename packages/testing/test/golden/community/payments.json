@@ -1,0 +1,1895 @@
+{
+  "details": {
+    "confirm": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "society",
+              "type": "payment_details_confirmed",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "actor_id": null,
+              "entity_type": "society",
+              "type": "payment_details_confirmed",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_audit_log": {
+          "added": [
+            {
+              "action": "payment_method.confirm",
+              "actor_id": "<uuid:2>",
+              "society": "Wren Robotics Society"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_payment_methods": {
+          "added": [
+            {
+              "account_number": "PK00WREN0000001234567890",
+              "account_title": "Wren Robotics Society",
+              "action": "add",
+              "bank_name": "Wren Bank",
+              "confirmed_by": "<uuid:2>",
+              "kind": "bank",
+              "proposed_by": "<uuid:1>",
+              "replaces": false,
+              "society": "Wren Robotics Society",
+              "status": "active"
+            }
+          ],
+          "removed": [
+            {
+              "account_number": "PK00WREN0000001234567890",
+              "account_title": "Wren Robotics Society",
+              "action": "add",
+              "bank_name": "Wren Bank",
+              "confirmed_by": null,
+              "kind": "bank",
+              "proposed_by": "<uuid:1>",
+              "replaces": false,
+              "society": "Wren Robotics Society",
+              "status": "proposed"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "confirm_again": {
+      "code": "P0002",
+      "message": "change not found",
+      "ok": false
+    },
+    "confirm_own": {
+      "code": "42501",
+      "message": "a second officer confirms this change",
+      "ok": false
+    },
+    "page": {
+      "ok": true,
+      "value": {
+        "active": [],
+        "history": [
+          {
+            "action": "payment_method.propose",
+            "actor": "Priya Wren",
+            "at": "<time>"
+          }
+        ],
+        "paid_paused": false,
+        "proposals": [
+          {
+            "account_number": "PK00WREN0000001234567890",
+            "account_title": "Wren Robotics Society",
+            "action": "add",
+            "bank_name": "Wren Bank",
+            "id": "<uuid:3>",
+            "kind": "bank",
+            "mine": false,
+            "proposed_at": "<time>",
+            "proposed_by": "Priya Wren",
+            "replaces_id": null
+          }
+        ],
+        "society": {
+          "about": "We build small robots and teach first-years to solder.",
+          "category": "technology",
+          "cover_path": null,
+          "followers": 3,
+          "id": "<uuid:4>",
+          "logo_path": null,
+          "members": 3,
+          "membership_mode": "request",
+          "name": "Wren Robotics Society",
+          "open_rounds": 0,
+          "slug": "wren-robotics",
+          "status": "verified",
+          "university": "Community Golden University A",
+          "university_id": "<uuid:5>",
+          "updated_at": "<time>"
+        }
+      }
+    },
+    "propose": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "society",
+              "type": "payment_details_proposed",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_audit_log": {
+          "added": [
+            {
+              "action": "payment_method.propose",
+              "actor_id": "<uuid:1>",
+              "society": "Wren Robotics Society"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_payment_methods": {
+          "added": [
+            {
+              "account_number": "PK00WREN0000001234567890",
+              "account_title": "Wren Robotics Society",
+              "action": "add",
+              "bank_name": "Wren Bank",
+              "confirmed_by": null,
+              "kind": "bank",
+              "proposed_by": "<uuid:1>",
+              "replaces": false,
+              "society": "Wren Robotics Society",
+              "status": "proposed"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:3>"
+      }
+    },
+    "propose_member": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "propose_pending": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "propose_remove": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "society",
+              "type": "payment_details_proposed",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_audit_log": {
+          "added": [
+            {
+              "action": "payment_method.propose",
+              "actor_id": "<uuid:2>",
+              "society": "Wren Robotics Society"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_payment_methods": {
+          "added": [
+            {
+              "account_number": null,
+              "account_title": null,
+              "action": "remove",
+              "bank_name": null,
+              "confirmed_by": null,
+              "kind": null,
+              "proposed_by": "<uuid:2>",
+              "replaces": true,
+              "society": "Wren Robotics Society",
+              "status": "proposed"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    },
+    "propose_replace": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "society",
+              "type": "payment_details_proposed",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_audit_log": {
+          "added": [
+            {
+              "action": "payment_method.propose",
+              "actor_id": "<uuid:2>",
+              "society": "Wren Robotics Society"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_payment_methods": {
+          "added": [
+            {
+              "account_number": "03001234567",
+              "account_title": "Wren Robotics",
+              "action": "replace",
+              "bank_name": null,
+              "confirmed_by": null,
+              "kind": "jazzcash",
+              "proposed_by": "<uuid:2>",
+              "replaces": true,
+              "society": "Wren Robotics Society",
+              "status": "proposed"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:7>"
+      }
+    },
+    "propose_unknown": {
+      "code": "22023",
+      "message": "unknown change",
+      "ok": false
+    },
+    "reject": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "society",
+              "type": "payment_details_confirmed",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "actor_id": null,
+              "entity_type": "society",
+              "type": "payment_details_confirmed",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_audit_log": {
+          "added": [
+            {
+              "action": "payment_method.reject",
+              "actor_id": "<uuid:1>",
+              "society": "Wren Robotics Society"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_payment_methods": {
+          "added": [
+            {
+              "account_number": "03001234567",
+              "account_title": "Wren Robotics",
+              "action": "replace",
+              "bank_name": null,
+              "confirmed_by": "<uuid:1>",
+              "kind": "jazzcash",
+              "proposed_by": "<uuid:2>",
+              "replaces": true,
+              "society": "Wren Robotics Society",
+              "status": "rejected"
+            }
+          ],
+          "removed": [
+            {
+              "account_number": "03001234567",
+              "account_title": "Wren Robotics",
+              "action": "replace",
+              "bank_name": null,
+              "confirmed_by": null,
+              "kind": "jazzcash",
+              "proposed_by": "<uuid:2>",
+              "replaces": true,
+              "society": "Wren Robotics Society",
+              "status": "proposed"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "remove": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "society",
+              "type": "payment_details_confirmed",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "actor_id": null,
+              "entity_type": "society",
+              "type": "payment_details_confirmed",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_audit_log": {
+          "added": [
+            {
+              "action": "payment_method.confirm",
+              "actor_id": "<uuid:1>",
+              "society": "Wren Robotics Society"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_payment_methods": {
+          "added": [
+            {
+              "account_number": "PK00WREN0000001234567890",
+              "account_title": "Wren Robotics Society",
+              "action": "add",
+              "bank_name": "Wren Bank",
+              "confirmed_by": "<uuid:2>",
+              "kind": "bank",
+              "proposed_by": "<uuid:1>",
+              "replaces": false,
+              "society": "Wren Robotics Society",
+              "status": "ended"
+            },
+            {
+              "account_number": null,
+              "account_title": null,
+              "action": "remove",
+              "bank_name": null,
+              "confirmed_by": "<uuid:1>",
+              "kind": null,
+              "proposed_by": "<uuid:2>",
+              "replaces": true,
+              "society": "Wren Robotics Society",
+              "status": "ended"
+            }
+          ],
+          "removed": [
+            {
+              "account_number": "PK00WREN0000001234567890",
+              "account_title": "Wren Robotics Society",
+              "action": "add",
+              "bank_name": "Wren Bank",
+              "confirmed_by": "<uuid:2>",
+              "kind": "bank",
+              "proposed_by": "<uuid:1>",
+              "replaces": false,
+              "society": "Wren Robotics Society",
+              "status": "active"
+            },
+            {
+              "account_number": null,
+              "account_title": null,
+              "action": "remove",
+              "bank_name": null,
+              "confirmed_by": null,
+              "kind": null,
+              "proposed_by": "<uuid:2>",
+              "replaces": true,
+              "society": "Wren Robotics Society",
+              "status": "proposed"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    }
+  },
+  "issues": {
+    "cancel_event": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 800,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": true,
+              "issue_raised": true,
+              "receipt_deleted": false,
+              "receipt_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "receipt_path": "<uuid:1>/<uuid:2>/<uuid:3>.webp",
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "released",
+              "transaction_id": null,
+              "user_id": "<uuid:4>"
+            },
+            {
+              "amount_pkr": 800,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": null,
+              "receipt_path": null,
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": "requested",
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": null,
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 800,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": true,
+              "issue_raised": true,
+              "receipt_deleted": false,
+              "receipt_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "receipt_path": "<uuid:1>/<uuid:2>/<uuid:3>.webp",
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "under_review",
+              "transaction_id": null,
+              "user_id": "<uuid:4>"
+            },
+            {
+              "amount_pkr": 800,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": null,
+              "receipt_path": null,
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": null,
+              "user_id": "<uuid:5>"
+            }
+          ]
+        },
+        "public.events": {
+          "added": [
+            {
+              "approval_mode": "automatic",
+              "cancel_reason": "Speaker unwell",
+              "cancelled": true,
+              "completed_min": null,
+              "cover_path": null,
+              "created_by": "<uuid:6>",
+              "description": "Bring nothing; we have irons.",
+              "eligibility": {
+                "scope": "university"
+              },
+              "has_post": false,
+              "link": null,
+              "location": "Lab 2, Block C",
+              "published": true,
+              "record_kinds": [
+                "attended"
+              ],
+              "refund_days": null,
+              "refund_policy": "none",
+              "scope": "university",
+              "society": "Wren Robotics Society",
+              "status": "cancelled",
+              "team_max": null,
+              "team_min": null,
+              "title": "Soldering basics",
+              "type": "workshop",
+              "university_id": "<uuid:7>",
+              "volunteer_hours": false
+            }
+          ],
+          "removed": [
+            {
+              "approval_mode": "automatic",
+              "cancel_reason": null,
+              "cancelled": false,
+              "completed_min": null,
+              "cover_path": null,
+              "created_by": "<uuid:6>",
+              "description": "Bring nothing; we have irons.",
+              "eligibility": {
+                "scope": "university"
+              },
+              "has_post": false,
+              "link": null,
+              "location": "Lab 2, Block C",
+              "published": true,
+              "record_kinds": [
+                "attended"
+              ],
+              "refund_days": null,
+              "refund_policy": "none",
+              "scope": "university",
+              "society": "Wren Robotics Society",
+              "status": "published",
+              "team_max": null,
+              "team_min": null,
+              "title": "Soldering basics",
+              "type": "workshop",
+              "university_id": "<uuid:7>",
+              "volunteer_hours": false
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:6>",
+              "entity_type": "event",
+              "type": "event_cancelled",
+              "user_id": "<uuid:4>"
+            },
+            {
+              "actor_id": "<uuid:6>",
+              "entity_type": "event",
+              "type": "event_cancelled",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "issue": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 800,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": true,
+              "receipt_deleted": false,
+              "receipt_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "receipt_path": "<uuid:1>/<uuid:2>/<uuid:3>.webp",
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "under_review",
+              "transaction_id": null,
+              "user_id": "<uuid:4>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 800,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "receipt_path": "<uuid:1>/<uuid:2>/<uuid:3>.webp",
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "under_review",
+              "transaction_id": null,
+              "user_id": "<uuid:4>"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:4>",
+              "entity_type": "event",
+              "type": "payment_review",
+              "user_id": "<uuid:6>"
+            },
+            {
+              "actor_id": "<uuid:4>",
+              "entity_type": "event",
+              "type": "payment_review",
+              "user_id": "<uuid:8>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "issue_case": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 800,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": true,
+              "issue_raised": true,
+              "receipt_deleted": false,
+              "receipt_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "receipt_path": "<uuid:1>/<uuid:2>/<uuid:3>.webp",
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "under_review",
+              "transaction_id": null,
+              "user_id": "<uuid:4>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 800,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": true,
+              "receipt_deleted": false,
+              "receipt_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "receipt_path": "<uuid:1>/<uuid:2>/<uuid:3>.webp",
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "under_review",
+              "transaction_id": null,
+              "user_id": "<uuid:4>"
+            }
+          ]
+        },
+        "public.report_cases": {
+          "added": [
+            {
+              "owner_id": "<uuid:6>",
+              "status": "open",
+              "target_type": "event_registration"
+            }
+          ],
+          "removed": []
+        }
+      }
+    },
+    "issue_stranger": {
+      "code": "P0002",
+      "message": "nothing to raise",
+      "ok": false
+    },
+    "refund_received": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 800,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": null,
+              "receipt_path": null,
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": "received",
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": null,
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 800,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": null,
+              "receipt_path": null,
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": "requested",
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": null,
+              "user_id": "<uuid:5>"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:5>",
+              "entity_type": "event",
+              "type": "refund_answered",
+              "user_id": "<uuid:6>"
+            },
+            {
+              "actor_id": "<uuid:5>",
+              "entity_type": "event",
+              "type": "refund_answered",
+              "user_id": "<uuid:8>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    }
+  },
+  "tickets": {
+    "approve": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "under_review",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ]
+        },
+        "public.event_registrations": {
+          "added": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "confirmed",
+              "team": null,
+              "user_id": "<uuid:5>",
+              "waitlist_position": null
+            }
+          ],
+          "removed": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "held",
+              "team": null,
+              "user_id": "<uuid:5>",
+              "waitlist_position": null
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "event",
+              "type": "payment_decided",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "approve_again": {
+      "code": "55000",
+      "message": "this payment isn't waiting for review",
+      "ok": false
+    },
+    "cancel_refund": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": null,
+              "receipt_path": null,
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "awaiting",
+              "transaction_id": null,
+              "user_id": "<uuid:6>"
+            },
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": null,
+              "refund_status": "requested",
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ]
+        },
+        "public.event_registrations": {
+          "added": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": true,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "held",
+              "team": null,
+              "user_id": "<uuid:6>",
+              "waitlist_position": null
+            },
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": true,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "cancelled",
+              "team": null,
+              "user_id": "<uuid:5>",
+              "waitlist_position": null
+            }
+          ],
+          "removed": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "waitlisted",
+              "team": null,
+              "user_id": "<uuid:6>",
+              "waitlist_position": 1
+            },
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "confirmed",
+              "team": null,
+              "user_id": "<uuid:5>",
+              "waitlist_position": null
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:5>",
+              "entity_type": "event",
+              "type": "refund_requested",
+              "user_id": "<uuid:7>"
+            },
+            {
+              "actor_id": "<uuid:5>",
+              "entity_type": "event",
+              "type": "refund_requested",
+              "user_id": "<uuid:1>"
+            },
+            {
+              "actor_id": null,
+              "entity_type": "event",
+              "type": "event_promoted",
+              "user_id": "<uuid:6>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "dispute_case": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": true,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": "Sent by bank transfer",
+              "refund_status": "disputed",
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": "Sent by bank transfer",
+              "refund_status": "disputed",
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ]
+        },
+        "public.report_cases": {
+          "added": [
+            {
+              "owner_id": "<uuid:7>",
+              "status": "open",
+              "target_type": "event_registration"
+            }
+          ],
+          "removed": []
+        }
+      }
+    },
+    "held": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": null,
+              "receipt_path": null,
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "awaiting",
+              "transaction_id": null,
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": []
+        },
+        "public.event_registrations": {
+          "added": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": true,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "held",
+              "team": null,
+              "user_id": "<uuid:5>",
+              "waitlist_position": null
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "event",
+              "type": "event_registration",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "registration_id": "<uuid:3>",
+          "status": "held",
+          "waitlist_position": null
+        }
+      }
+    },
+    "hold_expired": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "receipt_path": "<uuid:2>/<uuid:8>/<uuid:9>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0e",
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": "Amount doesn't match",
+              "status": "released",
+              "transaction_id": "txn-1001",
+              "user_id": "<uuid:10>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "receipt_path": "<uuid:2>/<uuid:8>/<uuid:9>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0e",
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": "Amount doesn't match",
+              "status": "rejected",
+              "transaction_id": "txn-1001",
+              "user_id": "<uuid:10>"
+            }
+          ]
+        },
+        "public.event_registrations": {
+          "added": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": true,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "cancelled",
+              "team": null,
+              "user_id": "<uuid:10>",
+              "waitlist_position": null
+            }
+          ],
+          "removed": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": true,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "held",
+              "team": null,
+              "user_id": "<uuid:10>",
+              "waitlist_position": null
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "event",
+              "type": "hold_expired",
+              "user_id": "<uuid:10>"
+            }
+          ],
+          "removed": []
+        }
+      }
+    },
+    "issue_not_review": {
+      "code": "P0002",
+      "message": "nothing to raise",
+      "ok": false
+    },
+    "payment": {
+      "ok": true,
+      "value": {
+        "amount_pkr": 1500,
+        "event_id": "<uuid:2>",
+        "has_receipt": false,
+        "hold_expires_at": "<time>",
+        "issue_raised_at": null,
+        "methods": [
+          {
+            "account_number": "PK00WREN0000001234567890",
+            "account_title": "Wren Robotics Society",
+            "bank_name": "Wren Bank",
+            "kind": "bank",
+            "updated_at": "<time>"
+          }
+        ],
+        "payment_id": "<uuid:11>",
+        "reference_code": "SKL-<code>",
+        "refund_days": 3,
+        "refund_note": null,
+        "refund_policy": "until",
+        "refund_status": null,
+        "registration_id": "<uuid:3>",
+        "registration_status": "held",
+        "reject_reason": null,
+        "society": {
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "status": "awaiting",
+        "uploaded_at": null
+      }
+    },
+    "payment_none": {
+      "code": "P0002",
+      "message": "no payment for this ticket",
+      "ok": false
+    },
+    "receipt": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "under_review",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": null,
+              "receipt_path": null,
+              "receipt_phash": null,
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "awaiting",
+              "transaction_id": null,
+              "user_id": "<uuid:5>"
+            }
+          ]
+        },
+        "public.event_registrations": {
+          "added": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "held",
+              "team": null,
+              "user_id": "<uuid:5>",
+              "waitlist_position": null
+            }
+          ],
+          "removed": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": true,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "held",
+              "team": null,
+              "user_id": "<uuid:5>",
+              "waitlist_position": null
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:5>",
+              "entity_type": "event",
+              "type": "payment_review",
+              "user_id": "<uuid:7>"
+            },
+            {
+              "actor_id": "<uuid:5>",
+              "entity_type": "event",
+              "type": "payment_review",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "receipt_again": {
+      "code": "55000",
+      "message": "this ticket isn't waiting for a receipt",
+      "ok": false
+    },
+    "receipt_missing": {
+      "code": "22023",
+      "message": "upload the receipt again",
+      "ok": false
+    },
+    "receipt_stranger": {
+      "code": "P0002",
+      "message": "ticket not found",
+      "ok": false
+    },
+    "refund_disputed": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": "Sent by bank transfer",
+              "refund_status": "disputed",
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": "Sent by bank transfer",
+              "refund_status": "sent",
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:5>",
+              "entity_type": "event",
+              "type": "refund_answered",
+              "user_id": "<uuid:7>"
+            },
+            {
+              "actor_id": "<uuid:5>",
+              "entity_type": "event",
+              "type": "refund_answered",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "refund_sent": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": "Sent by bank transfer",
+              "refund_status": "sent",
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0f",
+              "refund_note": null,
+              "refund_status": "requested",
+              "reject_reason": null,
+              "status": "approved",
+              "transaction_id": "TXN-1001",
+              "user_id": "<uuid:5>"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "event",
+              "type": "refund_sent",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "refund_sent_again": {
+      "code": "55000",
+      "message": "no refund is waiting",
+      "ok": false
+    },
+    "refund_stranger": {
+      "code": "P0002",
+      "message": "no refund to confirm",
+      "ok": false
+    },
+    "reject": {
+      "changes": {
+        "public.event_payments": {
+          "added": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "receipt_path": "<uuid:2>/<uuid:8>/<uuid:9>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0e",
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": "Amount doesn't match",
+              "status": "rejected",
+              "transaction_id": "txn-1001",
+              "user_id": "<uuid:10>"
+            }
+          ],
+          "removed": [
+            {
+              "amount_pkr": 1500,
+              "decided_by": null,
+              "event": "Soldering basics",
+              "has_case": false,
+              "issue_raised": false,
+              "receipt_deleted": false,
+              "receipt_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "receipt_path": "<uuid:2>/<uuid:8>/<uuid:9>.webp",
+              "receipt_phash": "0f0f0f0f0f0f0f0e",
+              "refund_note": null,
+              "refund_status": null,
+              "reject_reason": null,
+              "status": "under_review",
+              "transaction_id": "txn-1001",
+              "user_id": "<uuid:10>"
+            }
+          ]
+        },
+        "public.event_registrations": {
+          "added": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": true,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "held",
+              "team": null,
+              "user_id": "<uuid:10>",
+              "waitlist_position": null
+            }
+          ],
+          "removed": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "held",
+              "team": null,
+              "user_id": "<uuid:10>",
+              "waitlist_position": null
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "event",
+              "type": "payment_decided",
+              "user_id": "<uuid:10>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "reject_no_reason": {
+      "code": "22023",
+      "message": "say why (\"Amount doesn't match\")",
+      "ok": false
+    },
+    "review_after": {
+      "ok": true,
+      "value": [
+        {
+          "amount_pkr": 1500,
+          "duplicates": [
+            {
+              "at": "<time>",
+              "event": "Soldering basics",
+              "name": "Nida Wren",
+              "why": "transaction"
+            }
+          ],
+          "id": "<uuid:11>",
+          "issue_raised_at": null,
+          "name": "Sami Wren",
+          "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+          "reference_code": "SKL-<code>",
+          "refund_requested_at": "<time>",
+          "refund_status": "disputed",
+          "reject_reason": null,
+          "status": "approved",
+          "transaction_id": "TXN-1001",
+          "uploaded_at": "<time>",
+          "username": "cm_sami"
+        },
+        {
+          "amount_pkr": 1500,
+          "duplicates": [
+            {
+              "at": "<time>",
+              "event": "Soldering basics",
+              "name": "Sami Wren",
+              "why": "transaction"
+            }
+          ],
+          "id": "<uuid:12>",
+          "issue_raised_at": null,
+          "name": "Nida Wren",
+          "receipt_path": "<uuid:2>/<uuid:8>/<uuid:9>.webp",
+          "reference_code": "SKL-<code>",
+          "refund_requested_at": null,
+          "refund_status": null,
+          "reject_reason": "Amount doesn't match",
+          "status": "released",
+          "transaction_id": "txn-1001",
+          "uploaded_at": "<time>",
+          "username": "cm_nida"
+        },
+        {
+          "amount_pkr": 1500,
+          "duplicates": [],
+          "id": "<uuid:13>",
+          "issue_raised_at": null,
+          "name": "Mehr Wren",
+          "receipt_path": null,
+          "reference_code": "SKL-<code>",
+          "refund_requested_at": null,
+          "refund_status": null,
+          "reject_reason": null,
+          "status": "awaiting",
+          "transaction_id": null,
+          "uploaded_at": null,
+          "username": "cm_mehr"
+        }
+      ]
+    },
+    "review_list": {
+      "ok": true,
+      "value": [
+        {
+          "amount_pkr": 1500,
+          "duplicates": [
+            {
+              "at": "<time>",
+              "event": "Soldering basics",
+              "name": "Nida Wren",
+              "why": "transaction"
+            }
+          ],
+          "id": "<uuid:11>",
+          "issue_raised_at": null,
+          "name": "Sami Wren",
+          "receipt_path": "<uuid:2>/<uuid:3>/<uuid:4>.webp",
+          "reference_code": "SKL-<code>",
+          "refund_requested_at": null,
+          "refund_status": null,
+          "reject_reason": null,
+          "status": "under_review",
+          "transaction_id": "TXN-1001",
+          "uploaded_at": "<time>",
+          "username": "cm_sami"
+        },
+        {
+          "amount_pkr": 1500,
+          "duplicates": [
+            {
+              "at": "<time>",
+              "event": "Soldering basics",
+              "name": "Sami Wren",
+              "why": "transaction"
+            }
+          ],
+          "id": "<uuid:12>",
+          "issue_raised_at": null,
+          "name": "Nida Wren",
+          "receipt_path": "<uuid:2>/<uuid:8>/<uuid:9>.webp",
+          "reference_code": "SKL-<code>",
+          "refund_requested_at": null,
+          "refund_status": null,
+          "reject_reason": null,
+          "status": "under_review",
+          "transaction_id": "txn-1001",
+          "uploaded_at": "<time>",
+          "username": "cm_nida"
+        }
+      ]
+    },
+    "review_list_student": {
+      "code": "P0002",
+      "message": "event not found",
+      "ok": false
+    },
+    "ticket_held": {
+      "ok": true,
+      "value": {
+        "can_cancel": true,
+        "checked_in": [],
+        "code": "<ticket code>",
+        "cover_path": null,
+        "ends_at": "<time>",
+        "friends_going": 0,
+        "hold_expires_at": "<time>",
+        "id": "<uuid:2>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "my_status": "held",
+        "name": "Sami Wren",
+        "own_university": true,
+        "paid": true,
+        "payload": null,
+        "refund_days": 3,
+        "refund_policy": "until",
+        "registration_id": "<uuid:3>",
+        "seats_left": 1,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "id": "<uuid:14>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ],
+        "society": {
+          "id": "<uuid:15>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "starts_at": "<time>",
+        "status": "held",
+        "ticket_type": {
+          "name": "Seat",
+          "price_pkr": 1500
+        },
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A",
+        "waitlist_position": null
+      }
+    },
+    "ticket_paid": {
+      "ok": true,
+      "value": {
+        "can_cancel": true,
+        "checked_in": [],
+        "code": "<ticket code>",
+        "cover_path": null,
+        "ends_at": "<time>",
+        "friends_going": 0,
+        "hold_expires_at": null,
+        "id": "<uuid:2>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "my_status": "confirmed",
+        "name": "Sami Wren",
+        "own_university": true,
+        "paid": true,
+        "payload": "SKT1.<uuid:3>.<hmac>",
+        "refund_days": 3,
+        "refund_policy": "until",
+        "registration_id": "<uuid:3>",
+        "seats_left": 0,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "id": "<uuid:14>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ],
+        "society": {
+          "id": "<uuid:15>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "starts_at": "<time>",
+        "status": "confirmed",
+        "ticket_type": {
+          "name": "Seat",
+          "price_pkr": 1500
+        },
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A",
+        "waitlist_position": null
+      }
+    },
+    "waitlisted": {
+      "changes": {
+        "public.event_registrations": {
+          "added": [
+            {
+              "added_by": null,
+              "answers": [],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "waitlisted",
+              "team": null,
+              "user_id": "<uuid:6>",
+              "waitlist_position": 1
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "event",
+              "type": "event_registration",
+              "user_id": "<uuid:6>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "registration_id": "<uuid:16>",
+          "status": "waitlisted",
+          "waitlist_position": 1
+        }
+      }
+    }
+  }
+}

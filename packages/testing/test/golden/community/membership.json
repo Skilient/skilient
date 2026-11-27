@@ -1,0 +1,827 @@
+{
+  "join": {
+    "accept": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "society",
+              "type": "society_joined",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_follows": {
+          "added": [
+            {
+              "society": "Wren Robotics Society",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_join_requests": {
+          "added": [],
+          "removed": [
+            {
+              "society": "Wren Robotics Society",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        },
+        "public.society_members": {
+          "added": [
+            {
+              "role": "member",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": null,
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "accept_gone": {
+      "code": "P0002",
+      "message": "that request is gone",
+      "ok": false
+    },
+    "decide_member": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "follow": {
+      "changes": {
+        "public.society_follows": {
+          "added": [
+            {
+              "society": "Wren Robotics Society",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "follow_pending": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "join_again": {
+      "ok": true,
+      "value": "requested"
+    },
+    "join_inductions": {
+      "code": "55000",
+      "message": "this society takes members through induction rounds; apply to an open round",
+      "ok": false
+    },
+    "join_member": {
+      "ok": true,
+      "value": "member"
+    },
+    "join_open": {
+      "changes": {
+        "public.society_follows": {
+          "added": [
+            {
+              "society": "Wren Robotics Society",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_members": {
+          "added": [
+            {
+              "role": "member",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": null,
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "member"
+      }
+    },
+    "join_other_university": {
+      "code": "42501",
+      "message": "only students at this university can join",
+      "ok": false
+    },
+    "join_request": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "society",
+              "type": "society_join_request",
+              "user_id": "<uuid:4>"
+            },
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "society",
+              "type": "society_join_request",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_join_requests": {
+          "added": [
+            {
+              "society": "Wren Robotics Society",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "requested"
+      }
+    },
+    "leave": {
+      "changes": {
+        "public.society_members": {
+          "added": [],
+          "removed": [
+            {
+              "role": "member",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": null,
+              "user_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "leave_again": {
+      "code": "P0002",
+      "message": "you aren't a member",
+      "ok": false
+    },
+    "leave_officer": {
+      "changes": {
+        "public.society_members": {
+          "added": [],
+          "removed": [
+            {
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": "General Secretary",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.society_terms": {
+          "added": [
+            {
+              "confirmed_by": null,
+              "ended": true,
+              "notified": false,
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "General Secretary",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "confirmed_by": null,
+              "ended": false,
+              "notified": false,
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "General Secretary",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "leave_president": {
+      "code": "55000",
+      "message": "hand the presidency over before you leave",
+      "ok": false
+    },
+    "unfollow": {
+      "changes": {
+        "public.society_follows": {
+          "added": [],
+          "removed": [
+            {
+              "society": "Wren Robotics Society",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    }
+  },
+  "officers": {
+    "accept": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "society",
+              "type": "society_invite_answered",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_invites": {
+          "added": [
+            {
+              "invited_by": "<uuid:2>",
+              "invitee_id": "<uuid:1>",
+              "kind": "officer",
+              "society": "Wren Robotics Society",
+              "status": "accepted",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "Treasurer"
+            }
+          ],
+          "removed": [
+            {
+              "invited_by": "<uuid:2>",
+              "invitee_id": "<uuid:1>",
+              "kind": "officer",
+              "society": "Wren Robotics Society",
+              "status": "pending",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "Treasurer"
+            }
+          ]
+        },
+        "public.society_members": {
+          "added": [
+            {
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": "Treasurer",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "role": "member",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": null,
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.society_terms": {
+          "added": [
+            {
+              "confirmed_by": null,
+              "ended": false,
+              "notified": false,
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "Treasurer",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "answer_stranger": {
+      "code": "P0002",
+      "message": "invitation not found",
+      "ok": false
+    },
+    "answer_withdrawn": {
+      "code": "P0002",
+      "message": "invitation not found",
+      "ok": false
+    },
+    "confirm_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "confirm_by_member": {
+      "code": "P0002",
+      "message": "term not found",
+      "ok": false
+    },
+    "confirm_not_ended": {
+      "code": "P0002",
+      "message": "term not found",
+      "ok": false
+    },
+    "confirm_officer": {
+      "changes": {
+        "public.society_terms": {
+          "added": [
+            {
+              "confirmed_by": "<uuid:3>",
+              "ended": true,
+              "notified": false,
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "Treasurer",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "confirmed_by": null,
+              "ended": true,
+              "notified": false,
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "Treasurer",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "confirm_old_president": {
+      "changes": {
+        "public.society_terms": {
+          "added": [
+            {
+              "confirmed_by": "<uuid:3>",
+              "ended": true,
+              "notified": false,
+              "role": "president",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "President",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": [
+            {
+              "confirmed_by": null,
+              "ended": true,
+              "notified": false,
+              "role": "president",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "President",
+              "user_id": "<uuid:2>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "confirm_own": {
+      "code": "42501",
+      "message": "another officer confirms your own term",
+      "ok": false
+    },
+    "handover": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:3>",
+              "entity_type": "society",
+              "type": "society_invite_answered",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_invites": {
+          "added": [
+            {
+              "invited_by": "<uuid:2>",
+              "invitee_id": "<uuid:3>",
+              "kind": "handover",
+              "society": "Wren Robotics Society",
+              "status": "accepted",
+              "term_end": null,
+              "term_start": null,
+              "title": null
+            }
+          ],
+          "removed": [
+            {
+              "invited_by": "<uuid:2>",
+              "invitee_id": "<uuid:3>",
+              "kind": "handover",
+              "society": "Wren Robotics Society",
+              "status": "pending",
+              "term_end": null,
+              "term_start": null,
+              "title": null
+            }
+          ]
+        },
+        "public.society_members": {
+          "added": [
+            {
+              "role": "member",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": null,
+              "user_id": "<uuid:2>"
+            },
+            {
+              "role": "president",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": "President",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": [
+            {
+              "role": "president",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": "President",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": "General Secretary",
+              "user_id": "<uuid:3>"
+            }
+          ]
+        },
+        "public.society_terms": {
+          "added": [
+            {
+              "confirmed_by": null,
+              "ended": true,
+              "notified": false,
+              "role": "president",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "President",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "confirmed_by": null,
+              "ended": true,
+              "notified": false,
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "General Secretary",
+              "user_id": "<uuid:3>"
+            },
+            {
+              "confirmed_by": null,
+              "ended": false,
+              "notified": false,
+              "role": "president",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "President",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": [
+            {
+              "confirmed_by": null,
+              "ended": false,
+              "notified": false,
+              "role": "president",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "President",
+              "user_id": "<uuid:2>"
+            },
+            {
+              "confirmed_by": null,
+              "ended": false,
+              "notified": false,
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "General Secretary",
+              "user_id": "<uuid:3>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "handover_first": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "society",
+              "type": "society_invite",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_invites": {
+          "added": [
+            {
+              "invited_by": "<uuid:2>",
+              "invitee_id": "<uuid:1>",
+              "kind": "handover",
+              "society": "Wren Robotics Society",
+              "status": "pending",
+              "term_end": null,
+              "term_start": null,
+              "title": null
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:4>"
+      }
+    },
+    "handover_not_member": {
+      "code": "P0002",
+      "message": "pick an officer or member of this society",
+      "ok": false
+    },
+    "handover_replaced": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "society",
+              "type": "society_invite",
+              "user_id": "<uuid:3>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_invites": {
+          "added": [
+            {
+              "invited_by": "<uuid:2>",
+              "invitee_id": "<uuid:3>",
+              "kind": "handover",
+              "society": "Wren Robotics Society",
+              "status": "pending",
+              "term_end": null,
+              "term_start": null,
+              "title": null
+            },
+            {
+              "invited_by": "<uuid:2>",
+              "invitee_id": "<uuid:1>",
+              "kind": "handover",
+              "society": "Wren Robotics Society",
+              "status": "withdrawn",
+              "term_end": null,
+              "term_start": null,
+              "title": null
+            }
+          ],
+          "removed": [
+            {
+              "invited_by": "<uuid:2>",
+              "invitee_id": "<uuid:1>",
+              "kind": "handover",
+              "society": "Wren Robotics Society",
+              "status": "pending",
+              "term_end": null,
+              "term_start": null,
+              "title": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:5>"
+      }
+    },
+    "invite": {
+      "changes": {
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "society",
+              "type": "society_invite",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_invites": {
+          "added": [
+            {
+              "invited_by": "<uuid:2>",
+              "invitee_id": "<uuid:1>",
+              "kind": "officer",
+              "society": "Wren Robotics Society",
+              "status": "pending",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "Treasurer"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    },
+    "invite_long_term": {
+      "code": "22023",
+      "message": "a term runs from a start month to an end month, up to 2 years",
+      "ok": false
+    },
+    "invite_officer_again": {
+      "code": "23505",
+      "message": "they are already an officer",
+      "ok": false
+    },
+    "invite_officer_not_president": {
+      "code": "42501",
+      "message": "only the president can do that",
+      "ok": false
+    },
+    "invite_other_university": {
+      "code": "P0002",
+      "message": "no student with that username at this university",
+      "ok": false
+    },
+    "invite_unknown": {
+      "code": "P0002",
+      "message": "no student with that username at this university",
+      "ok": false
+    },
+    "my_invites": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "id": "<uuid:6>",
+          "kind": "officer",
+          "slug": "wren-robotics",
+          "society": "Wren Robotics Society",
+          "term_end": "<date>",
+          "term_start": "<date>",
+          "title": "Treasurer"
+        }
+      ]
+    },
+    "remove": {
+      "changes": {
+        "public.society_members": {
+          "added": [
+            {
+              "role": "member",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": null,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "team_title": null,
+              "title": "Treasurer",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        },
+        "public.society_terms": {
+          "added": [
+            {
+              "confirmed_by": null,
+              "ended": true,
+              "notified": false,
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "Treasurer",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": [
+            {
+              "confirmed_by": null,
+              "ended": false,
+              "notified": false,
+              "role": "officer",
+              "society": "Wren Robotics Society",
+              "term_end": "<date>",
+              "term_start": "<date>",
+              "title": "Treasurer",
+              "user_id": "<uuid:1>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "remove_again": {
+      "code": "P0002",
+      "message": "they aren't an officer",
+      "ok": false
+    },
+    "remove_not_president": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "remove_president": {
+      "code": "55000",
+      "message": "hand the presidency over instead",
+      "ok": false
+    }
+  }
+}

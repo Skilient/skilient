@@ -1075,5 +1075,305 @@
   "skilient.ranking.v1.RankingService/UniRemoveExamPeriod": {
     "p95Ms": 80,
     "dbTrips": 4
+  },
+  "skilient.community.v1.CommunityService/SocietyNameCheck": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/RequestSociety": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/ResubmitSociety": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/MySocietyRequests": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SetSocietyImages": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/UpdateSociety": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SetMembershipMode": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SocietiesDirectory": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/SocietyPage": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/SocietyManage": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/FollowSociety": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/JoinSociety": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/DecideJoinRequest": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/LeaveSociety": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/InviteOfficer": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/OfferHandover": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/AnswerSocietyInvite": {
+    "p95Ms": 200,
+    "dbTrips": 30
+  },
+  "skilient.community.v1.CommunityService/MySocietyInvites": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/RemoveOfficer": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/ConfirmTerm": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/MyOfficerSocieties": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SaveInductionRound": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/PublishInductionRound": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/InductionRoundPage": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/ApplyInduction": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/DecideInductionApplication": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/OpsSocieties": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/OpsSocietyCase": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/ClaimSociety": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/DecideSociety": {
+    "p95Ms": 200,
+    "dbTrips": 30
+  },
+  "skilient.community.v1.CommunityService/SaveSocietyEvent": {
+    "p95Ms": 200,
+    "dbTrips": 30
+  },
+  "skilient.community.v1.CommunityService/PublishEvent": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/CancelSocietyEvent": {
+    "p95Ms": 200,
+    "dbTrips": 30
+  },
+  "skilient.community.v1.CommunityService/EventEditPayload": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/AnswerCohost": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SocietyEvents": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/EventPage": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/SocietyEventList": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/RegisterEvent": {
+    "p95Ms": 200,
+    "dbTrips": 30
+  },
+  "skilient.community.v1.CommunityService/CancelRegistration": {
+    "p95Ms": 200,
+    "dbTrips": 30
+  },
+  "skilient.community.v1.CommunityService/DecideRegistration": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/MyTickets": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/EventTicket": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/EventManage": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/AddEventStaff": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/RemoveEventStaff": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/MessageRegistrants": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SubmitEventFeedback": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/CheckInScan": {
+    "p95Ms": 200,
+    "dbTrips": 30
+  },
+  "skilient.community.v1.CommunityService/CheckInSearch": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/CheckInPerson": {
+    "p95Ms": 200,
+    "dbTrips": 30
+  },
+  "skilient.community.v1.CommunityService/CheckInEmail": {
+    "p95Ms": 200,
+    "dbTrips": 30
+  },
+  "skilient.community.v1.CommunityService/EventHeadcount": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SocietyEventCode": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SelfCheckIn": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/CloseoutPage": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/FixAttendance": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SetEventResult": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/LogVolunteerHours": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/IssueEventEntries": {
+    "p95Ms": 200,
+    "dbTrips": 30
+  },
+  "skilient.community.v1.CommunityService/EventAttendeesRows": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/ProposePaymentMethod": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/ConfirmPaymentMethod": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/PaymentDetailsPage": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/TicketPayment": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SubmitReceipt": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/PaymentsReview": {
+    "p95Ms": 150,
+    "dbTrips": 10
+  },
+  "skilient.community.v1.CommunityService/ReviewPayment": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/RaisePaymentIssue": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/MarkRefundSent": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/ConfirmRefund": {
+    "p95Ms": 120,
+    "dbTrips": 15
+  },
+  "skilient.community.v1.CommunityService/SocietyCards": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.community.v1.CommunityService/CanListenEvent": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.identity.v1.IdentityService/ResolveEmails": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/FilterByName": {
+    "p95Ms": 60,
+    "dbTrips": 1
   }
 }

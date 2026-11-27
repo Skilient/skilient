@@ -80,7 +80,7 @@ export async function searchPeople(tx: Tx, me: string | null, input: SearchInput
 export interface GroupLabels {
   labels(kind: "venture" | "society", ids: readonly string[]): Promise<Map<string, string>>;
 }
-/** Until work (W5) and community (W7) exist, no labels: a suggestion simply has no "In X with you" line. */
+/** No labels (tests without community): a suggestion simply has no "In X with you" line. */
 export const noGroupLabels: GroupLabels = {
   async labels() {
     return new Map();

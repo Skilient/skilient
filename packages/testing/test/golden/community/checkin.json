@@ -1,0 +1,690 @@
+{
+  "door": {
+    "cancel_checked_in": {
+      "code": "55000",
+      "message": "you've already checked in",
+      "ok": false
+    },
+    "code": {
+      "ok": true,
+      "value": {
+        "changes_at": "<time>",
+        "token": "<token>"
+      }
+    },
+    "email_account": {
+      "changes": {
+        "public.event_checkins": {
+          "added": [
+            {
+              "checked_in_by": "<uuid:1>",
+              "email": null,
+              "event": "Soldering basics",
+              "method": "walk_in",
+              "reason": null,
+              "removed": false,
+              "removed_by": null,
+              "removed_reason": null,
+              "session": 1,
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        },
+        "public.event_registrations": {
+          "added": [
+            {
+              "added_by": "<uuid:1>",
+              "answers": [
+                "No."
+              ],
+              "cancelled": false,
+              "checked_in": true,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "confirmed",
+              "team": null,
+              "user_id": "<uuid:2>",
+              "waitlist_position": null
+            }
+          ],
+          "removed": [
+            {
+              "added_by": null,
+              "answers": [
+                "No."
+              ],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "pending",
+              "team": null,
+              "user_id": "<uuid:2>",
+              "waitlist_position": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "at": "<time>",
+          "name": "Nida Wren",
+          "result": "green"
+        }
+      }
+    },
+    "email_invalid": {
+      "code": "22023",
+      "message": "enter a valid email address",
+      "ok": false
+    },
+    "email_other_domain": {
+      "code": "22023",
+      "message": "use a university email address of the host university",
+      "ok": false
+    },
+    "email_stranger": {
+      "changes": {
+        "public.event_checkins": {
+          "added": [
+            {
+              "checked_in_by": "<uuid:1>",
+              "email": "walkin@comm-a.test",
+              "event": "Soldering basics",
+              "method": "email",
+              "reason": null,
+              "removed": false,
+              "removed_by": null,
+              "removed_reason": null,
+              "session": 1,
+              "user_id": null
+            }
+          ],
+          "removed": []
+        },
+        "public.event_email_attendees": {
+          "added": [
+            {
+              "added_by": "<uuid:1>",
+              "claimed_by": null,
+              "email": "walkin@comm-a.test",
+              "event": "Soldering basics"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "at": "<time>",
+          "claim": true,
+          "name": "walkin@comm-a.test",
+          "result": "green"
+        }
+      }
+    },
+    "email_stranger_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": {
+          "first_at": "<time>",
+          "name": "walkin@comm-a.test",
+          "result": "amber"
+        }
+      }
+    },
+    "headcount": {
+      "ok": true,
+      "value": {
+        "checked_in": 4,
+        "expected": 3,
+        "session_id": "<uuid:3>",
+        "sessions": [
+          {
+            "id": "<uuid:3>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ]
+      }
+    },
+    "headcount_student": {
+      "code": "P0002",
+      "message": "event not found",
+      "ok": false
+    },
+    "manage": {
+      "ok": true,
+      "value": {
+        "approval_mode": "automatic",
+        "cover_path": null,
+        "ends_at": "<time>",
+        "feedback": {
+          "count": 0,
+          "suppressed": true
+        },
+        "friends_going": 0,
+        "id": "<uuid:4>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "messages": [
+          {
+            "body": "Doors open at 5. Bring your ticket.",
+            "created_at": "<time>"
+          }
+        ],
+        "my_status": null,
+        "own_university": true,
+        "paid": false,
+        "questions": [
+          "Have you soldered before?"
+        ],
+        "registrations": [
+          {
+            "answers": [
+              "No."
+            ],
+            "batch": 2027,
+            "department": "Computer Science",
+            "name": "Nida Wren",
+            "registered_at": "<time>",
+            "status": "confirmed",
+            "team": null,
+            "ticket": "Seat",
+            "user_id": "<uuid:2>",
+            "username": "cm_nida",
+            "waitlist_position": null
+          },
+          {
+            "answers": [],
+            "batch": 2028,
+            "department": "Electrical Engineering",
+            "name": "Mehr Wren",
+            "registered_at": "<time>",
+            "status": "confirmed",
+            "team": null,
+            "ticket": "Seat",
+            "user_id": "<uuid:5>",
+            "username": "cm_mehr",
+            "waitlist_position": null
+          },
+          {
+            "answers": [
+              "Once, in school."
+            ],
+            "batch": 2027,
+            "department": "Computer Science",
+            "name": "Sami Wren",
+            "registered_at": "<time>",
+            "status": "confirmed",
+            "team": null,
+            "ticket": "Seat",
+            "user_id": "<uuid:6>",
+            "username": "cm_sami",
+            "waitlist_position": null
+          }
+        ],
+        "seats_left": 0,
+        "society": {
+          "id": "<uuid:7>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "staff": [],
+        "starts_at": "<time>",
+        "stats": {
+          "capacity": 3,
+          "checked_in": 3,
+          "pending": 0,
+          "registered": 3,
+          "waitlist": 0
+        },
+        "status": "published",
+        "team": null,
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A"
+      }
+    },
+    "manage_student": {
+      "code": "P0002",
+      "message": "event not found",
+      "ok": false
+    },
+    "message": {
+      "changes": {
+        "public.event_messages": {
+          "added": [
+            {
+              "body": "Doors open at 5. Bring your ticket.",
+              "event": "Soldering basics",
+              "sender_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "event",
+              "type": "event_message",
+              "user_id": "<uuid:5>"
+            },
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "event",
+              "type": "event_message",
+              "user_id": "<uuid:6>"
+            },
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "event",
+              "type": "event_message",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": 3
+      }
+    },
+    "message_short": {
+      "code": "22023",
+      "message": "messages are 3 to 1,000 characters",
+      "ok": false
+    },
+    "person_graduate": {
+      "ok": true,
+      "value": {
+        "message": "Only students register for society events.",
+        "result": "red"
+      }
+    },
+    "person_registered": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": {
+          "first_at": "<time>",
+          "name": "Sami Wren",
+          "result": "amber"
+        }
+      }
+    },
+    "person_walk_in": {
+      "changes": {
+        "public.event_checkins": {
+          "added": [
+            {
+              "checked_in_by": "<uuid:1>",
+              "email": null,
+              "event": "Soldering basics",
+              "method": "walk_in",
+              "reason": null,
+              "removed": false,
+              "removed_by": null,
+              "removed_reason": null,
+              "session": 1,
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": []
+        },
+        "public.event_registrations": {
+          "added": [
+            {
+              "added_by": "<uuid:1>",
+              "answers": [],
+              "cancelled": false,
+              "checked_in": true,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "confirmed",
+              "team": null,
+              "user_id": "<uuid:5>",
+              "waitlist_position": null
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "at": "<time>",
+          "name": "Mehr Wren",
+          "result": "green"
+        }
+      }
+    },
+    "scan": {
+      "changes": {
+        "public.event_checkins": {
+          "added": [
+            {
+              "checked_in_by": "<uuid:1>",
+              "email": null,
+              "event": "Soldering basics",
+              "method": "scan",
+              "reason": null,
+              "removed": false,
+              "removed_by": null,
+              "removed_reason": null,
+              "session": 1,
+              "user_id": "<uuid:6>"
+            }
+          ],
+          "removed": []
+        },
+        "public.event_registrations": {
+          "added": [
+            {
+              "added_by": null,
+              "answers": [
+                "Once, in school."
+              ],
+              "cancelled": false,
+              "checked_in": true,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "confirmed",
+              "team": null,
+              "user_id": "<uuid:6>",
+              "waitlist_position": null
+            }
+          ],
+          "removed": [
+            {
+              "added_by": null,
+              "answers": [
+                "Once, in school."
+              ],
+              "cancelled": false,
+              "checked_in": false,
+              "event": "Soldering basics",
+              "held_until": false,
+              "reminded": false,
+              "reminded_1h": false,
+              "status": "confirmed",
+              "team": null,
+              "user_id": "<uuid:6>",
+              "waitlist_position": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": {
+          "at": "<time>",
+          "name": "Sami Wren",
+          "result": "green"
+        }
+      }
+    },
+    "scan_again": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": {
+          "first_at": "<time>",
+          "name": "Sami Wren",
+          "result": "amber"
+        }
+      }
+    },
+    "scan_forged": {
+      "ok": true,
+      "value": {
+        "message": "Not registered for this event.",
+        "result": "red"
+      }
+    },
+    "scan_garbage": {
+      "ok": true,
+      "value": {
+        "message": "That isn't a Skilient ticket.",
+        "result": "red"
+      }
+    },
+    "scan_member": {
+      "code": "P0002",
+      "message": "event not found",
+      "ok": false
+    },
+    "scan_pending": {
+      "ok": true,
+      "value": {
+        "message": "This ticket isn't confirmed (pending).",
+        "name": "Nida Wren",
+        "result": "red"
+      }
+    },
+    "search": {
+      "ok": true,
+      "value": [
+        {
+          "checked_in": false,
+          "name": "Nida Wren",
+          "status": "pending",
+          "user_id": "<uuid:2>",
+          "username": "cm_nida"
+        },
+        {
+          "checked_in": true,
+          "name": "Sami Wren",
+          "status": "confirmed",
+          "user_id": "<uuid:6>",
+          "username": "cm_sami"
+        }
+      ]
+    },
+    "search_short": {
+      "ok": true,
+      "value": []
+    },
+    "search_username": {
+      "ok": true,
+      "value": []
+    },
+    "self": {
+      "changes": {},
+      "result": {
+        "ok": true,
+        "value": {
+          "first_at": "<time>",
+          "name": "Sami Wren",
+          "result": "amber"
+        }
+      }
+    },
+    "self_bad": {
+      "code": "22023",
+      "message": "that code has changed; scan the screen again",
+      "ok": false
+    },
+    "self_unregistered": {
+      "code": "P0002",
+      "message": "you aren't registered for this event",
+      "ok": false
+    },
+    "staff_add": {
+      "changes": {
+        "public.event_staff": {
+          "added": [
+            {
+              "added_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "user_id": "<uuid:8>"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "event",
+              "type": "event_staff_added",
+              "user_id": "<uuid:8>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "staff_remove": {
+      "changes": {
+        "public.event_staff": {
+          "added": [],
+          "removed": [
+            {
+              "added_by": "<uuid:1>",
+              "event": "Soldering basics",
+              "user_id": "<uuid:8>"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "staff_scan": {
+      "ok": true,
+      "value": {
+        "first_at": "<time>",
+        "name": "Sami Wren",
+        "result": "amber"
+      }
+    },
+    "staff_unknown": {
+      "code": "P0002",
+      "message": "no student with that username",
+      "ok": false
+    },
+    "ticket": {
+      "ok": true,
+      "value": {
+        "can_cancel": true,
+        "checked_in": [],
+        "code": "<ticket code>",
+        "cover_path": null,
+        "ends_at": "<time>",
+        "friends_going": 0,
+        "hold_expires_at": null,
+        "id": "<uuid:4>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "my_status": "confirmed",
+        "name": "Sami Wren",
+        "own_university": true,
+        "paid": false,
+        "payload": "SKT1.<uuid:9>.<hmac>",
+        "refund_days": null,
+        "refund_policy": "none",
+        "registration_id": "<uuid:9>",
+        "seats_left": 2,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "id": "<uuid:3>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ],
+        "society": {
+          "id": "<uuid:7>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "starts_at": "<time>",
+        "status": "confirmed",
+        "ticket_type": {
+          "name": "Seat",
+          "price_pkr": null
+        },
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A",
+        "waitlist_position": null
+      }
+    },
+    "ticket_none": {
+      "code": "P0002",
+      "message": "ticket not found",
+      "ok": false
+    },
+    "ticket_pending": {
+      "ok": true,
+      "value": {
+        "can_cancel": true,
+        "checked_in": [],
+        "code": "<ticket code>",
+        "cover_path": null,
+        "ends_at": "<time>",
+        "friends_going": 0,
+        "hold_expires_at": null,
+        "id": "<uuid:4>",
+        "link": null,
+        "location": "Lab 2, Block C",
+        "my_status": "pending",
+        "name": "Nida Wren",
+        "own_university": true,
+        "paid": false,
+        "payload": null,
+        "refund_days": null,
+        "refund_policy": "none",
+        "registration_id": "<uuid:10>",
+        "seats_left": 2,
+        "sessions": [
+          {
+            "ends_at": "<time>",
+            "id": "<uuid:3>",
+            "starts_at": "<time>",
+            "title": null
+          }
+        ],
+        "society": {
+          "id": "<uuid:7>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        },
+        "starts_at": "<time>",
+        "status": "pending",
+        "ticket_type": {
+          "name": "Seat",
+          "price_pkr": null
+        },
+        "title": "Soldering basics",
+        "type": "workshop",
+        "university": "Community Golden University A",
+        "waitlist_position": null
+      }
+    }
+  }
+}

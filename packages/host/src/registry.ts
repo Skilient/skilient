@@ -1,4 +1,5 @@
 import type { ServiceModule } from "@skilient/platform";
+import community from "@skilient/community";
 import content from "@skilient/content";
 import identity from "@skilient/identity";
 import messaging from "@skilient/messaging";
@@ -11,6 +12,7 @@ import work from "@skilient/work";
 
 /** Every service the image can host. A new service adds one line here. */
 export const registry: Readonly<Record<string, ServiceModule>> = {
+  [community.name]: community as unknown as ServiceModule,
   [content.name]: content as unknown as ServiceModule,
   [identity.name]: identity as unknown as ServiceModule,
   [messaging.name]: messaging as unknown as ServiceModule,

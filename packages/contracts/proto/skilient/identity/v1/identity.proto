@@ -54,6 +54,11 @@ service IdentityService {
   rpc CheckEmailDomains(CheckEmailDomainsRequest) returns (CheckEmailDomainsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
+  // ResolveEmails gives, for each address, the confirmed account that holds it and the universities owning its
+  // domain, for community's check-in by email (walk-ins). Community only; at most 50; one database trip.
+  rpc ResolveEmails(ResolveEmailsRequest) returns (ResolveEmailsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 
   // ---- Sign-up and sign-in ----
 
@@ -282,6 +287,22 @@ message CheckEmailDomainsResponse {
     bool personal = 2;
   }
   repeated Entry domains = 1;
+}
+
+message ResolveEmailsRequest {
+  // Lower case; at most 50.
+  repeated string emails = 1;
+}
+
+message ResolveEmailsResponse {
+  message Entry {
+    string email = 1;
+    // The confirmed account with this address; empty for none.
+    string user_id = 2;
+    // Universities whose email domains include this address's domain.
+    repeated string university_ids = 3;
+  }
+  repeated Entry emails = 1;
 }
 
 message SignUpRequest {

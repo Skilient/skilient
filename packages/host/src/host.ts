@@ -91,11 +91,20 @@ export async function createHost(options: HostOptions): Promise<Host> {
     for (const [contract, impl] of impls) router.service(contract, impl);
   };
 
-  const memoryTransport = (interceptors: Interceptor[], defaultTimeoutMs?: number): Transport =>
-    createRouterTransport(routes, {
-      transport: { interceptors, defaultTimeoutMs, useBinaryFormat: true },
-      router: memoryRouter,
-    });
+  // Built on first use, not when asked for: a service that makes its clients while the host is still creating
+  // services (realtime does) must reach the services created after it too (decisions 2026-11-27).
+  const memoryTransport = (interceptors: Interceptor[], defaultTimeoutMs?: number): Transport => {
+    let inner: Transport | undefined;
+    const transport = () =>
+      (inner ??= createRouterTransport(routes, {
+        transport: { interceptors, defaultTimeoutMs, useBinaryFormat: true },
+        router: memoryRouter,
+      }));
+    return {
+      unary: (...args) => transport().unary(...args),
+      stream: (...args) => transport().stream(...args),
+    };
+  };
 
   const clientsFor = (caller: string): ClientFactory =>
     createClientFactory({

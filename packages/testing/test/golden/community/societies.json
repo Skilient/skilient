@@ -1,0 +1,805 @@
+{
+  "edits": {
+    "images": {
+      "changes": {
+        "public.societies": {
+          "added": [
+            {
+              "about": "Robots, soldering and Friday build nights for everyone.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:1>",
+              "logo_path": "<uuid:2>/<uuid:3>.webp",
+              "membership_mode": "open",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:4>",
+              "verified": true,
+              "verified_by": null
+            }
+          ],
+          "removed": [
+            {
+              "about": "Robots, soldering and Friday build nights for everyone.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:1>",
+              "logo_path": null,
+              "membership_mode": "open",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:4>",
+              "verified": true,
+              "verified_by": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "images_missing": {
+      "code": "22023",
+      "message": "upload the image again",
+      "ok": false
+    },
+    "images_stranger": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "mode": {
+      "changes": {
+        "public.societies": {
+          "added": [
+            {
+              "about": "Robots, soldering and Friday build nights for everyone.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:1>",
+              "logo_path": null,
+              "membership_mode": "open",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:4>",
+              "verified": true,
+              "verified_by": null
+            }
+          ],
+          "removed": [
+            {
+              "about": "Robots, soldering and Friday build nights for everyone.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:1>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:4>",
+              "verified": true,
+              "verified_by": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "mode_unknown": {
+      "code": "22023",
+      "message": "unknown membership mode",
+      "ok": false
+    },
+    "resubmit": {
+      "changes": {
+        "public.societies": {
+          "added": [
+            {
+              "about": "Weekly debates, a novice league and practice for national rounds.",
+              "category": "debating",
+              "cover_path": null,
+              "created_by": "<uuid:5>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Debating Club",
+              "name_key": "wren debating",
+              "paid_paused": false,
+              "slug": "wren-debating",
+              "status": "pending",
+              "status_reason": null,
+              "university_id": "<uuid:4>",
+              "verified": false,
+              "verified_by": null
+            }
+          ],
+          "removed": [
+            {
+              "about": "Weekly debates on campus and practice for national rounds.",
+              "category": "debating",
+              "cover_path": null,
+              "created_by": "<uuid:5>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Debating Club",
+              "name_key": "wren debating",
+              "paid_paused": false,
+              "slug": "wren-debating",
+              "status": "more_info",
+              "status_reason": "Add the notice",
+              "university_id": "<uuid:4>",
+              "verified": false,
+              "verified_by": null
+            }
+          ]
+        },
+        "public.society_requests": {
+          "added": [
+            {
+              "claimed_by": null,
+              "decided": false,
+              "proof_path": "<uuid:5>/<uuid:6>.pdf",
+              "proof_url": "https://comm-a.test/notices/debating",
+              "requester_id": "<uuid:5>",
+              "society": "Wren Debating Club",
+              "staff_note": "Add the notice",
+              "status": "pending"
+            }
+          ],
+          "removed": [
+            {
+              "claimed_by": null,
+              "decided": false,
+              "proof_path": "<uuid:5>/<uuid:6>.pdf",
+              "proof_url": null,
+              "requester_id": "<uuid:5>",
+              "society": "Wren Debating Club",
+              "staff_note": "Add the notice",
+              "status": "more_info"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "resubmit_pending": {
+      "code": "P0002",
+      "message": "nothing to resubmit",
+      "ok": false
+    },
+    "update": {
+      "changes": {
+        "public.societies": {
+          "added": [
+            {
+              "about": "Robots, soldering and Friday build nights for everyone.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:1>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:4>",
+              "verified": true,
+              "verified_by": null
+            }
+          ],
+          "removed": [
+            {
+              "about": "We build small robots and teach first-years to solder.",
+              "category": "technology",
+              "cover_path": null,
+              "created_by": "<uuid:1>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Robotics Society",
+              "name_key": "wren robotics",
+              "paid_paused": false,
+              "slug": "wren-robotics",
+              "status": "verified",
+              "status_reason": null,
+              "university_id": "<uuid:4>",
+              "verified": true,
+              "verified_by": null
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "update_member": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "update_suspended": {
+      "code": "55000",
+      "message": "this society is suspended",
+      "ok": false
+    }
+  },
+  "pages": {
+    "directory": {
+      "ok": true,
+      "value": {
+        "items": [
+          {
+            "about": "We build small robots and teach first-years to solder.",
+            "category": "technology",
+            "cover_path": null,
+            "followers": 3,
+            "following": false,
+            "id": "<uuid:1>",
+            "logo_path": null,
+            "member": false,
+            "members": 3,
+            "membership_mode": "request",
+            "name": "Wren Robotics Society",
+            "open_rounds": 1,
+            "slug": "wren-robotics",
+            "status": "verified",
+            "university": "Community Golden University A",
+            "university_id": "<uuid:2>",
+            "updated_at": "<time>"
+          }
+        ],
+        "mine": [],
+        "university": "Community Golden University A"
+      }
+    },
+    "directory_query": {
+      "ok": true,
+      "value": {
+        "items": [
+          {
+            "about": "We build small robots and teach first-years to solder.",
+            "category": "technology",
+            "cover_path": null,
+            "followers": 3,
+            "following": false,
+            "id": "<uuid:1>",
+            "logo_path": null,
+            "member": false,
+            "members": 3,
+            "membership_mode": "request",
+            "name": "Wren Robotics Society",
+            "open_rounds": 1,
+            "slug": "wren-robotics",
+            "status": "verified",
+            "university": "Community Golden University A",
+            "university_id": "<uuid:2>",
+            "updated_at": "<time>"
+          }
+        ],
+        "mine": [],
+        "university": "Community Golden University B"
+      }
+    },
+    "directory_signed_out": {
+      "code": "42501",
+      "message": "permission denied for function societies_directory",
+      "ok": false
+    },
+    "manage_member": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "manage_officer": {
+      "ok": true,
+      "value": {
+        "about": "We build small robots and teach first-years to solder.",
+        "category": "technology",
+        "cover_path": null,
+        "followers": 3,
+        "id": "<uuid:1>",
+        "invites": [],
+        "join_requests": [
+          {
+            "created_at": "<time>",
+            "name": "Sami Wren",
+            "user_id": "<uuid:3>",
+            "username": "cm_sami"
+          }
+        ],
+        "logo_path": null,
+        "members": [
+          {
+            "joined_at": "<time>",
+            "name": "Priya Wren",
+            "role": "president",
+            "team_title": null,
+            "title": "President",
+            "user_id": "<uuid:4>",
+            "username": "cm_priya"
+          },
+          {
+            "joined_at": "<time>",
+            "name": "Osman Wren",
+            "role": "officer",
+            "team_title": null,
+            "title": "General Secretary",
+            "user_id": "<uuid:5>",
+            "username": "cm_osman"
+          },
+          {
+            "joined_at": "<time>",
+            "name": "Mehr Wren",
+            "role": "member",
+            "team_title": null,
+            "title": null,
+            "user_id": "<uuid:6>",
+            "username": "cm_mehr"
+          }
+        ],
+        "membership_mode": "request",
+        "name": "Wren Robotics Society",
+        "open_rounds": 1,
+        "paid_paused": false,
+        "president": false,
+        "slug": "wren-robotics",
+        "status": "verified",
+        "terms": [
+          {
+            "can_confirm": false,
+            "confirmed_at": null,
+            "due": true,
+            "ended_at": "<time>",
+            "id": "<uuid:7>",
+            "name": "Mehr Wren",
+            "role": "officer",
+            "term_end": "<date>",
+            "term_start": "<date>",
+            "title": "Treasurer",
+            "user_id": "<uuid:6>"
+          },
+          {
+            "can_confirm": false,
+            "confirmed_at": null,
+            "due": false,
+            "ended_at": null,
+            "id": "<uuid:8>",
+            "name": "Osman Wren",
+            "role": "officer",
+            "term_end": "<date>",
+            "term_start": "<date>",
+            "title": "General Secretary",
+            "user_id": "<uuid:5>"
+          },
+          {
+            "can_confirm": false,
+            "confirmed_at": null,
+            "due": false,
+            "ended_at": null,
+            "id": "<uuid:9>",
+            "name": "Priya Wren",
+            "role": "president",
+            "term_end": "<date>",
+            "term_start": "<date>",
+            "title": "President",
+            "user_id": "<uuid:4>"
+          }
+        ],
+        "university": "Community Golden University A",
+        "university_id": "<uuid:2>",
+        "updated_at": "<time>"
+      }
+    },
+    "officer_societies": {
+      "ok": true,
+      "value": [
+        {
+          "id": "<uuid:1>",
+          "logo_path": null,
+          "name": "Wren Robotics Society",
+          "slug": "wren-robotics"
+        }
+      ]
+    },
+    "page_member": {
+      "ok": true,
+      "value": {
+        "about": "We build small robots and teach first-years to solder.",
+        "category": "technology",
+        "checklist": null,
+        "cover_path": null,
+        "followers": 3,
+        "following": true,
+        "former": [
+          {
+            "name": "Mehr Wren",
+            "term_end": "<date>",
+            "term_start": "<date>",
+            "title": "Former Treasurer",
+            "username": "cm_mehr"
+          }
+        ],
+        "id": "<uuid:1>",
+        "join_requested": false,
+        "logo_path": null,
+        "members": 3,
+        "membership_mode": "request",
+        "my_role": "member",
+        "my_team": null,
+        "name": "Wren Robotics Society",
+        "officer": false,
+        "open_rounds": 1,
+        "president": false,
+        "roll_call": [
+          {
+            "avatar_path": null,
+            "name": "Priya Wren",
+            "role": "president",
+            "title": "President",
+            "user_id": "<uuid:4>",
+            "username": "cm_priya"
+          },
+          {
+            "avatar_path": null,
+            "name": "Osman Wren",
+            "role": "officer",
+            "title": "General Secretary",
+            "user_id": "<uuid:5>",
+            "username": "cm_osman"
+          }
+        ],
+        "rounds": [
+          {
+            "deadline": "<time>",
+            "id": "<uuid:10>",
+            "seats": 0,
+            "status": "open",
+            "title": "Spring inductions"
+          }
+        ],
+        "slug": "wren-robotics",
+        "status": "verified",
+        "status_reason": null,
+        "university": "Community Golden University A",
+        "university_id": "<uuid:2>",
+        "updated_at": "<time>"
+      }
+    },
+    "page_other_university": {
+      "ok": true,
+      "value": {
+        "about": "We build small robots and teach first-years to solder.",
+        "category": "technology",
+        "checklist": null,
+        "cover_path": null,
+        "followers": 3,
+        "following": false,
+        "former": [
+          {
+            "name": "Mehr Wren",
+            "term_end": "<date>",
+            "term_start": "<date>",
+            "title": "Former Treasurer",
+            "username": "cm_mehr"
+          }
+        ],
+        "id": "<uuid:1>",
+        "join_requested": false,
+        "logo_path": null,
+        "members": 3,
+        "membership_mode": "request",
+        "my_role": null,
+        "my_team": null,
+        "name": "Wren Robotics Society",
+        "officer": false,
+        "open_rounds": 1,
+        "president": false,
+        "roll_call": [
+          {
+            "avatar_path": null,
+            "name": "Priya Wren",
+            "role": "president",
+            "title": "President",
+            "user_id": "<uuid:4>",
+            "username": "cm_priya"
+          },
+          {
+            "avatar_path": null,
+            "name": "Osman Wren",
+            "role": "officer",
+            "title": "General Secretary",
+            "user_id": "<uuid:5>",
+            "username": "cm_osman"
+          }
+        ],
+        "rounds": [
+          {
+            "deadline": "<time>",
+            "id": "<uuid:10>",
+            "seats": 0,
+            "status": "open",
+            "title": "Spring inductions"
+          }
+        ],
+        "slug": "wren-robotics",
+        "status": "verified",
+        "status_reason": null,
+        "university": "Community Golden University A",
+        "university_id": "<uuid:2>",
+        "updated_at": "<time>"
+      }
+    },
+    "page_pending_requester": {
+      "ok": true,
+      "value": {
+        "about": "Weekly debates on campus and practice for national rounds.",
+        "category": "debating",
+        "checklist": null,
+        "cover_path": null,
+        "followers": 0,
+        "following": false,
+        "former": [],
+        "id": "<uuid:11>",
+        "join_requested": false,
+        "logo_path": null,
+        "members": 0,
+        "membership_mode": "request",
+        "my_role": null,
+        "my_team": null,
+        "name": "Wren Debating Club",
+        "officer": false,
+        "open_rounds": 0,
+        "president": false,
+        "roll_call": [],
+        "rounds": [],
+        "slug": "wren-debating",
+        "status": "pending",
+        "status_reason": null,
+        "university": "Community Golden University A",
+        "university_id": "<uuid:2>",
+        "updated_at": "<time>"
+      }
+    },
+    "page_pending_stranger": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "page_president": {
+      "ok": true,
+      "value": {
+        "about": "We build small robots and teach first-years to solder.",
+        "category": "technology",
+        "checklist": {
+          "event": false,
+          "logo": false,
+          "mode": false,
+          "officers": true
+        },
+        "cover_path": null,
+        "followers": 3,
+        "following": true,
+        "former": [
+          {
+            "name": "Mehr Wren",
+            "term_end": "<date>",
+            "term_start": "<date>",
+            "title": "Former Treasurer",
+            "username": "cm_mehr"
+          }
+        ],
+        "id": "<uuid:1>",
+        "join_requested": false,
+        "logo_path": null,
+        "members": 3,
+        "membership_mode": "request",
+        "my_role": "president",
+        "my_team": null,
+        "name": "Wren Robotics Society",
+        "officer": true,
+        "open_rounds": 1,
+        "president": true,
+        "roll_call": [
+          {
+            "avatar_path": null,
+            "name": "Priya Wren",
+            "role": "president",
+            "title": "President",
+            "user_id": "<uuid:4>",
+            "username": "cm_priya"
+          },
+          {
+            "avatar_path": null,
+            "name": "Osman Wren",
+            "role": "officer",
+            "title": "General Secretary",
+            "user_id": "<uuid:5>",
+            "username": "cm_osman"
+          }
+        ],
+        "rounds": [
+          {
+            "deadline": "<time>",
+            "id": "<uuid:10>",
+            "seats": 0,
+            "status": "open",
+            "title": "Spring inductions"
+          },
+          {
+            "deadline": "<time>",
+            "id": "<uuid:12>",
+            "seats": 0,
+            "status": "draft",
+            "title": "Draft round"
+          }
+        ],
+        "slug": "wren-robotics",
+        "status": "verified",
+        "status_reason": null,
+        "university": "Community Golden University A",
+        "university_id": "<uuid:2>",
+        "updated_at": "<time>"
+      }
+    },
+    "page_unknown": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    }
+  },
+  "request": {
+    "again": {
+      "code": "23505",
+      "message": "you already have a society request waiting for review",
+      "ok": false
+    },
+    "check_free": {
+      "ok": true,
+      "value": {
+        "available": true,
+        "name": null,
+        "university": "Community Golden University A"
+      }
+    },
+    "check_other_university": {
+      "ok": true,
+      "value": {
+        "available": true,
+        "name": null,
+        "university": "Community Golden University B"
+      }
+    },
+    "check_pending": {
+      "ok": true,
+      "value": {
+        "available": false,
+        "name": "Wren Debating Club",
+        "university": "Community Golden University A"
+      }
+    },
+    "check_taken": {
+      "ok": true,
+      "value": {
+        "available": false,
+        "name": "Wren Robotics Society",
+        "university": "Community Golden University A"
+      }
+    },
+    "duplicate_name": {
+      "code": "23505",
+      "message": "A society with this name is already on Skilient at your university",
+      "ok": false
+    },
+    "foreign_proof": {
+      "code": "22023",
+      "message": "upload the proof again",
+      "ok": false
+    },
+    "graduate": {
+      "code": "42501",
+      "message": "only students at a university on Skilient can request a society",
+      "ok": false
+    },
+    "mine": {
+      "ok": true,
+      "value": [
+        {
+          "created_at": "<time>",
+          "name": "Wren Printmakers",
+          "reason": null,
+          "review_days": 3,
+          "slug": "wren-printmakers",
+          "society_id": "<uuid:1>",
+          "status": "pending",
+          "updated_at": "<time>"
+        }
+      ]
+    },
+    "no_proof": {
+      "code": "22023",
+      "message": "add a proof document or an official link",
+      "ok": false
+    },
+    "not_bearer": {
+      "code": "22023",
+      "message": "confirm that you are an office bearer of this society",
+      "ok": false
+    },
+    "requested": {
+      "changes": {
+        "public.societies": {
+          "added": [
+            {
+              "about": "Painting and printmaking for every student on campus.",
+              "category": "arts",
+              "cover_path": null,
+              "created_by": "<uuid:2>",
+              "logo_path": null,
+              "membership_mode": "request",
+              "name": "Wren Printmakers",
+              "name_key": "wren printmakers",
+              "paid_paused": false,
+              "slug": "wren-printmakers",
+              "status": "pending",
+              "status_reason": null,
+              "university_id": "<uuid:3>",
+              "verified": false,
+              "verified_by": null
+            }
+          ],
+          "removed": []
+        },
+        "public.society_requests": {
+          "added": [
+            {
+              "claimed_by": null,
+              "decided": false,
+              "proof_path": null,
+              "proof_url": "https://comm-a.test/notices/arts",
+              "requester_id": "<uuid:2>",
+              "society": "Wren Printmakers",
+              "staff_note": null,
+              "status": "pending"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:1>"
+      }
+    },
+    "signed_out": {
+      "code": "42501",
+      "message": "permission denied for function request_society",
+      "ok": false
+    }
+  }
+}

@@ -9,7 +9,8 @@ const WEB = ["web"] as const;
  * messaging (sharing into chats, W4), notify (W9), trust (reports, W10), market (university hides, W11).
  */
 export const callers: CallerPolicy<typeof ContentService> = {
-  createPost: WEB,
+  // community makes a society event's post as the publishing officer (PublishEvent, W7).
+  createPost: ["web", "community"],
   editPost: WEB,
   deletePost: WEB,
   votePoll: WEB,

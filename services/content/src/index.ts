@@ -3,9 +3,9 @@ import { createScheduler, createWorker, defineService, type Consumer, type Sched
 import type postgres from "postgres";
 import { createApi } from "./api";
 import { callers } from "./authorize";
-import { noMediaCheck, noSocieties } from "./deps";
+import { noMediaCheck } from "./deps";
 import { contentJobs, contentSchedules } from "./jobs";
-import { identityPort, peoplePort, shippedNames, venturePort } from "./ports";
+import { identityPort, peoplePort, shippedNames, societyPort, venturePort } from "./ports";
 import { cachedConfig } from "./store/config";
 import { copiesConsumer } from "./store/copies";
 import { dnsResolver } from "./store/links";
@@ -46,7 +46,7 @@ export default defineService({
       people,
       identity: identityPort(deps.clients),
       ventures: venturePort(deps.clients),
-      societies: noSocieties,
+      societies: societyPort(deps.clients),
       media: noMediaCheck,
       config,
       pools: new PoolCache(Number(process.env["CONTENT_FEED_POOL_MS"] ?? 60_000)),

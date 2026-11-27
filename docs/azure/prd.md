@@ -699,7 +699,7 @@ These replace the Supabase-specific lines in the repo's "Never" list. The rest o
 - [ ] Golden tests match for all 251 public functions
 - [ ] Every ported refusal test passes
 - [ ] Budget file is green and k6 passes at 30, 100 and 300 users
-- [ ] Ranking reference and seat-lock concurrency tests pass
+- [x] Ranking reference and seat-lock concurrency tests pass
 - [ ] Old CV and Record codes verify; new ones verify with the same public key file
 - [ ] Security checks are clean
 - [ ] Two cutover rehearsals verified clean, and a rollback rehearsal completed

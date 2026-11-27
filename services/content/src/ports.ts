@@ -1,9 +1,10 @@
 import type { CallOptions } from "@connectrpc/connect";
+import { CommunityService } from "@skilient/contracts/community/v1/community_pb";
 import { IdentityService } from "@skilient/contracts/identity/v1/identity_pb";
 import { PeopleService } from "@skilient/contracts/people/v1/people_pb";
 import { startCall, type ClientFactory } from "@skilient/platform";
 import { WorkService } from "@skilient/contracts/work/v1/work_pb";
-import type { IdentityPort, PeoplePort, VenturePort } from "./deps";
+import type { IdentityPort, PeoplePort, SocietyPort, VenturePort } from "./deps";
 import type { ShippedNamesPort } from "./store/copies";
 
 /** Content's calls to people: one batch call each, never one per user (CLAUDE.md, "Never"). */
@@ -74,6 +75,17 @@ export function venturePort(clients: ClientFactory): VenturePort {
           },
         ]),
       );
+    },
+  };
+}
+
+/** The society block on society posts (post_cards' `society`: id, name, slug, logo), from community's SocietyCards (W7). */
+export function societyPort(clients: ClientFactory): SocietyPort {
+  return {
+    async cards(societyIds, call) {
+      // The byline is a decoration: if community can't answer, cards show the post without it.
+      const r = await (async () => clients.client(CommunityService).societyCards({ societyIds: [...societyIds] }, call as CallOptions))().catch(() => ({ cards: [] }));
+      return new Map(r.cards.map((c) => [c.id, { id: c.id, name: c.name, slug: c.slug, logo_path: c.logoPath || null }]));
     },
   };
 }

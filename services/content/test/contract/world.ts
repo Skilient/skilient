@@ -72,3 +72,8 @@ export async function student(w: ContentWorld, opts: Parameters<typeof peopleStu
 export async function publishAs(role: postgres.Sql, type: string, subjects: string[], payload: Record<string, unknown>): Promise<void> {
   await role.begin((tx) => appendEvents(tx, [{ type, subjects, payload }]));
 }
+
+/** content's copy of a society's officers and members ("post as"), for community's hand-off tests (W7). */
+export const societyRolesOf = (w: ContentWorld, societyId: string) =>
+  w.content<{ user_id: string; role: string }[]>`
+    select user_id::text, role from content.group_members where kind = 'society' and group_id = ${societyId} order by role, user_id`.then((r) => [...r]);

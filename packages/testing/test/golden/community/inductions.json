@@ -1,0 +1,694 @@
+{
+  "rounds": {
+    "accept": {
+      "changes": {
+        "public.induction_applications": {
+          "added": [
+            {
+              "answers": [
+                "A line-following robot."
+              ],
+              "applicant_id": "<uuid:1>",
+              "decided_by": "<uuid:2>",
+              "note": "Welcome aboard",
+              "role": "Hardware lead",
+              "round": "Fall inductions",
+              "status": "accepted"
+            }
+          ],
+          "removed": [
+            {
+              "answers": [
+                "A line-following robot."
+              ],
+              "applicant_id": "<uuid:1>",
+              "decided_by": null,
+              "note": null,
+              "role": "Hardware lead",
+              "round": "Fall inductions",
+              "status": "shortlisted"
+            }
+          ]
+        },
+        "public.induction_roles": {
+          "added": [
+            {
+              "filled": 1,
+              "position": 1,
+              "round": "Fall inductions",
+              "seats": 1,
+              "skill_ids": [],
+              "title": "Hardware lead"
+            }
+          ],
+          "removed": [
+            {
+              "filled": 0,
+              "position": 1,
+              "round": "Fall inductions",
+              "seats": 1,
+              "skill_ids": [],
+              "title": "Hardware lead"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "induction_round",
+              "type": "induction_decided",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_follows": {
+          "added": [
+            {
+              "society": "Wren Robotics Society",
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        },
+        "public.society_members": {
+          "added": [
+            {
+              "role": "member",
+              "society": "Wren Robotics Society",
+              "team_title": "Hardware lead",
+              "title": null,
+              "user_id": "<uuid:1>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "accept_again": {
+      "code": "55000",
+      "message": "already decided",
+      "ok": false
+    },
+    "accept_full": {
+      "code": "23514",
+      "message": "this role is full",
+      "ok": false
+    },
+    "apply": {
+      "changes": {
+        "public.induction_applications": {
+          "added": [
+            {
+              "answers": [
+                "A line-following robot."
+              ],
+              "applicant_id": "<uuid:1>",
+              "decided_by": null,
+              "note": null,
+              "role": "Hardware lead",
+              "round": "Fall inductions",
+              "status": "pending"
+            }
+          ],
+          "removed": []
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "induction_round",
+              "type": "induction_applied",
+              "user_id": "<uuid:3>"
+            },
+            {
+              "actor_id": "<uuid:1>",
+              "entity_type": "induction_round",
+              "type": "induction_applied",
+              "user_id": "<uuid:2>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:4>"
+      }
+    },
+    "apply_again": {
+      "code": "23505",
+      "message": "you've already applied to this round",
+      "ok": false
+    },
+    "apply_draft": {
+      "code": "P0002",
+      "message": "round not found",
+      "ok": false
+    },
+    "apply_no_answer": {
+      "code": "22023",
+      "message": "answer every question (up to 1,000 characters each)",
+      "ok": false
+    },
+    "apply_no_role": {
+      "code": "22023",
+      "message": "pick a role",
+      "ok": false
+    },
+    "apply_other_university": {
+      "code": "42501",
+      "message": "only students at this university can apply",
+      "ok": false
+    },
+    "decide_member": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "decide_unknown_action": {
+      "code": "22023",
+      "message": "unknown action",
+      "ok": false
+    },
+    "decline": {
+      "changes": {
+        "public.induction_applications": {
+          "added": [
+            {
+              "answers": [
+                "A solar lamp."
+              ],
+              "applicant_id": "<uuid:5>",
+              "decided_by": "<uuid:2>",
+              "note": null,
+              "role": "Hardware lead",
+              "round": "Fall inductions",
+              "status": "declined"
+            }
+          ],
+          "removed": [
+            {
+              "answers": [
+                "A solar lamp."
+              ],
+              "applicant_id": "<uuid:5>",
+              "decided_by": null,
+              "note": null,
+              "role": "Hardware lead",
+              "round": "Fall inductions",
+              "status": "pending"
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "induction_round",
+              "type": "induction_decided",
+              "user_id": "<uuid:5>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "page_applicant": {
+      "ok": true,
+      "value": {
+        "applications": null,
+        "closed": false,
+        "deadline": "<time>",
+        "description": "Join the build team.",
+        "id": "<uuid:6>",
+        "mine": {
+          "created_at": "<time>",
+          "id": "<uuid:4>",
+          "note": null,
+          "role_id": "<uuid:7>",
+          "status": "pending"
+        },
+        "officer": false,
+        "questions": [
+          "What have you built so far?"
+        ],
+        "roles": [
+          {
+            "filled": 0,
+            "id": "<uuid:7>",
+            "seats": 1,
+            "skill_ids": [],
+            "title": "Hardware lead"
+          }
+        ],
+        "society": {
+          "about": "We build small robots and teach first-years to solder.",
+          "category": "technology",
+          "cover_path": null,
+          "followers": 3,
+          "id": "<uuid:8>",
+          "logo_path": null,
+          "members": 3,
+          "membership_mode": "request",
+          "name": "Wren Robotics Society",
+          "open_rounds": 1,
+          "slug": "wren-robotics",
+          "status": "verified",
+          "university": "Community Golden University A",
+          "university_id": "<uuid:9>",
+          "updated_at": "<time>"
+        },
+        "status": "open",
+        "title": "Fall inductions"
+      }
+    },
+    "page_draft_officer": {
+      "ok": true,
+      "value": {
+        "applications": [],
+        "closed": false,
+        "deadline": "<time>",
+        "description": "Join the build team.",
+        "id": "<uuid:6>",
+        "mine": null,
+        "officer": true,
+        "questions": [
+          "What have you built so far?"
+        ],
+        "roles": [
+          {
+            "filled": 0,
+            "id": "<uuid:7>",
+            "seats": 1,
+            "skill_ids": [],
+            "title": "Hardware lead"
+          }
+        ],
+        "society": {
+          "about": "We build small robots and teach first-years to solder.",
+          "category": "technology",
+          "cover_path": null,
+          "followers": 3,
+          "id": "<uuid:8>",
+          "logo_path": null,
+          "members": 3,
+          "membership_mode": "request",
+          "name": "Wren Robotics Society",
+          "open_rounds": 0,
+          "slug": "wren-robotics",
+          "status": "verified",
+          "university": "Community Golden University A",
+          "university_id": "<uuid:9>",
+          "updated_at": "<time>"
+        },
+        "status": "draft",
+        "title": "Fall inductions"
+      }
+    },
+    "page_draft_student": {
+      "code": "P0002",
+      "message": "round not found",
+      "ok": false
+    },
+    "page_officer": {
+      "ok": true,
+      "value": {
+        "applications": [
+          {
+            "answers": [
+              "A line-following robot."
+            ],
+            "created_at": "<time>",
+            "id": "<uuid:4>",
+            "name": "Sami Wren",
+            "note": null,
+            "role_id": "<uuid:7>",
+            "status": "pending",
+            "username": "cm_sami"
+          },
+          {
+            "answers": [
+              "A solar lamp."
+            ],
+            "created_at": "<time>",
+            "id": "<uuid:10>",
+            "name": "Nida Wren",
+            "note": null,
+            "role_id": "<uuid:7>",
+            "status": "pending",
+            "username": "cm_nida"
+          },
+          {
+            "answers": [
+              "A weather station."
+            ],
+            "created_at": "<time>",
+            "id": "<uuid:11>",
+            "name": "Gul Wren",
+            "note": null,
+            "role_id": "<uuid:7>",
+            "status": "pending",
+            "username": "cm_gul"
+          }
+        ],
+        "closed": false,
+        "deadline": "<time>",
+        "description": "Join the build team.",
+        "id": "<uuid:6>",
+        "mine": null,
+        "officer": true,
+        "questions": [
+          "What have you built so far?"
+        ],
+        "roles": [
+          {
+            "filled": 0,
+            "id": "<uuid:7>",
+            "seats": 1,
+            "skill_ids": [],
+            "title": "Hardware lead"
+          }
+        ],
+        "society": {
+          "about": "We build small robots and teach first-years to solder.",
+          "category": "technology",
+          "cover_path": null,
+          "followers": 3,
+          "id": "<uuid:8>",
+          "logo_path": null,
+          "members": 3,
+          "membership_mode": "request",
+          "name": "Wren Robotics Society",
+          "open_rounds": 1,
+          "slug": "wren-robotics",
+          "status": "verified",
+          "university": "Community Golden University A",
+          "university_id": "<uuid:9>",
+          "updated_at": "<time>"
+        },
+        "status": "open",
+        "title": "Fall inductions"
+      }
+    },
+    "publish": {
+      "changes": {
+        "public.induction_rounds": {
+          "added": [
+            {
+              "created_by": "<uuid:2>",
+              "description": "Join the build team.",
+              "published": true,
+              "society": "Wren Robotics Society",
+              "status": "open",
+              "title": "Fall inductions",
+              "undecided_closed": false
+            }
+          ],
+          "removed": [
+            {
+              "created_by": "<uuid:2>",
+              "description": "Join the build team.",
+              "published": false,
+              "society": "Wren Robotics Society",
+              "status": "draft",
+              "title": "Fall inductions",
+              "undecided_closed": false
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "induction_round",
+              "type": "induction_published",
+              "user_id": "<uuid:3>"
+            },
+            {
+              "actor_id": "<uuid:2>",
+              "entity_type": "induction_round",
+              "type": "induction_published",
+              "user_id": "<uuid:12>"
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "publish_again": {
+      "code": "55000",
+      "message": "this round is already published",
+      "ok": false
+    },
+    "publish_member": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "resave_open": {
+      "code": "55000",
+      "message": "only a draft round can change",
+      "ok": false
+    },
+    "resaved": {
+      "changes": {
+        "public.induction_roles": {
+          "added": [
+            {
+              "filled": 0,
+              "position": 1,
+              "round": "Fall inductions",
+              "seats": 1,
+              "skill_ids": [],
+              "title": "Hardware lead"
+            }
+          ],
+          "removed": [
+            {
+              "filled": 0,
+              "position": 1,
+              "round": "Fall inductions",
+              "seats": 1,
+              "skill_ids": [
+                "react"
+              ],
+              "title": "Hardware lead"
+            },
+            {
+              "filled": 0,
+              "position": 2,
+              "round": "Fall inductions",
+              "seats": 2,
+              "skill_ids": [],
+              "title": "Designer"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    },
+    "save_late": {
+      "code": "22023",
+      "message": "the deadline is within the next 30 days",
+      "ok": false
+    },
+    "save_member": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "save_no_roles": {
+      "code": "22023",
+      "message": "a round has 1 to 10 roles",
+      "ok": false
+    },
+    "save_pending_society": {
+      "code": "P0002",
+      "message": "society not found",
+      "ok": false
+    },
+    "save_too_many_questions": {
+      "code": "22023",
+      "message": "up to 3 questions",
+      "ok": false
+    },
+    "saved": {
+      "changes": {
+        "public.induction_questions": {
+          "added": [
+            {
+              "body": "What have you built so far?",
+              "position": 1,
+              "round": "Fall inductions"
+            }
+          ],
+          "removed": []
+        },
+        "public.induction_roles": {
+          "added": [
+            {
+              "filled": 0,
+              "position": 1,
+              "round": "Fall inductions",
+              "seats": 1,
+              "skill_ids": [
+                "react"
+              ],
+              "title": "Hardware lead"
+            },
+            {
+              "filled": 0,
+              "position": 2,
+              "round": "Fall inductions",
+              "seats": 2,
+              "skill_ids": [],
+              "title": "Designer"
+            }
+          ],
+          "removed": []
+        },
+        "public.induction_rounds": {
+          "added": [
+            {
+              "created_by": "<uuid:2>",
+              "description": "Join the build team.",
+              "published": false,
+              "society": "Wren Robotics Society",
+              "status": "draft",
+              "title": "Fall inductions",
+              "undecided_closed": false
+            }
+          ],
+          "removed": []
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": "<uuid:6>"
+      }
+    },
+    "shortlist": {
+      "changes": {
+        "public.induction_applications": {
+          "added": [
+            {
+              "answers": [
+                "A line-following robot."
+              ],
+              "applicant_id": "<uuid:1>",
+              "decided_by": null,
+              "note": null,
+              "role": "Hardware lead",
+              "round": "Fall inductions",
+              "status": "shortlisted"
+            }
+          ],
+          "removed": [
+            {
+              "answers": [
+                "A line-following robot."
+              ],
+              "applicant_id": "<uuid:1>",
+              "decided_by": null,
+              "note": null,
+              "role": "Hardware lead",
+              "round": "Fall inductions",
+              "status": "pending"
+            }
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    "tick": {
+      "changes": {
+        "public.induction_applications": {
+          "added": [
+            {
+              "answers": [
+                "A weather station."
+              ],
+              "applicant_id": "<uuid:13>",
+              "decided_by": null,
+              "note": "The round closed before a decision.",
+              "role": "Hardware lead",
+              "round": "Fall inductions",
+              "status": "declined"
+            }
+          ],
+          "removed": [
+            {
+              "answers": [
+                "A weather station."
+              ],
+              "applicant_id": "<uuid:13>",
+              "decided_by": null,
+              "note": null,
+              "role": "Hardware lead",
+              "round": "Fall inductions",
+              "status": "pending"
+            }
+          ]
+        },
+        "public.induction_rounds": {
+          "added": [
+            {
+              "created_by": "<uuid:2>",
+              "description": "Join the build team.",
+              "published": true,
+              "society": "Wren Robotics Society",
+              "status": "closed",
+              "title": "Fall inductions",
+              "undecided_closed": true
+            }
+          ],
+          "removed": [
+            {
+              "created_by": "<uuid:2>",
+              "description": "Join the build team.",
+              "published": true,
+              "society": "Wren Robotics Society",
+              "status": "open",
+              "title": "Fall inductions",
+              "undecided_closed": false
+            }
+          ]
+        },
+        "public.notifications": {
+          "added": [
+            {
+              "actor_id": null,
+              "entity_type": "induction_round",
+              "type": "induction_decided",
+              "user_id": "<uuid:13>"
+            }
+          ],
+          "removed": []
+        }
+      }
+    },
+    "tick_again": {
+      "changes": {}
+    }
+  }
+}

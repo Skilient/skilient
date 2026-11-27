@@ -54,7 +54,7 @@ export interface MediaPort {
   missing(paths: readonly string[], call: unknown): Promise<string[]>;
 }
 
-/** Until work and community serve their batch reads (W5, W7), cards carry no venture or society block. */
+/** For tests that run without work or community: cards carry no venture or society block. */
 export const noVentures: VenturePort = { cards: async () => new Map() };
 export const noSocieties: SocietyPort = { cards: async () => new Map() };
 /** Until media records files (W9), an image path is checked against the uploader's folder only. */

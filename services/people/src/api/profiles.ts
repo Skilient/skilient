@@ -24,6 +24,7 @@ import {
   loadProfile,
   profileCards,
   relations,
+  filterByName,
   resolveUsernames,
   setLeaderboardOptOut,
   setProfileImage,
@@ -137,6 +138,11 @@ export function profilesApi(deps: ApiDeps): Partial<ServiceImpl<typeof PeopleSer
     async resolveUsernames(req) {
       const names = parse(z.array(Username).max(500), req.usernames);
       return { users: (await resolveUsernames(sql, names)).map((r) => ({ username: r.username, userId: r.user_id })) };
+    },
+
+    async filterByName(req) {
+      const r = parse(z.object({ userIds: z.array(Uuid).max(20_000), query: z.string().min(1).max(100), limit: z.number().int().min(1).max(100) }), req);
+      return { userIds: await filterByName(sql, r.userIds, r.query, r.limit) };
     },
 
     async relations(req) {

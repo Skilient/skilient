@@ -49,14 +49,14 @@ param batchCron string = '0 20 * * *'
 @description('false deploys everything except the containers and jobs (network, monitoring, database, Key Vault, storage, budget), for when the images do not exist yet. The image and GHCR parameters are then ignored.')
 param deployApps bool = true
 
-@description('Availability zone for the PostgreSQL server: \'1\', \'2\' or \'3\'. Empty lets Azure choose. Pin one when Azure refuses the size in the zone it picks (SkuNotAvailable).')
+@description('Availability zone of the PostgreSQL server. The server was created in zone 1 on 2026-11-27 (Azure refused B1ms with no zone chosen) and a server\'s zone cannot change, so keep 1.')
 @allowed([
   ''
   '1'
   '2'
   '3'
 ])
-param pgZone string = ''
+param pgZone string = '1'
 
 @description('false skips the PostgreSQL server (and its database). Use while the subscription is blocked from the size; a later deploy with true adds it. The containers need it, so deployApps=true requires it.')
 param deployDatabase bool = true

@@ -1,6 +1,6 @@
 # Azure deploy: where it stands
 
-Updated 2026-11-26. The live state of the Azure floor, what is blocked, and the next commands in order. Commands live in `deploy/README.md`; this file says which to run and when. Update it whenever a step is done.
+Updated 2026-11-27. The live state of the Azure floor, what is blocked, and the next commands in order. Commands live in `deploy/README.md`; this file says which to run and when. Update it whenever a step is done.
 
 ## Region: UAE North (decided 2026-11-26)
 
@@ -8,7 +8,9 @@ The floor moves from Central India to **UAE North** (`uaenorth`, Dubai). Measure
 
 ## What exists in `skilient-rg` now (subscription Skilient-Azure)
 
-**In UAE North since 2026-11-26** (foundation deploy with `deployApps=false deployDatabase=false`, state Succeeded): `skilient-vnet`, `skilient-logs`, `skilient-appi`, `skilient-kv-tohnfutbiqx5`, `skilientsttohnfutbiqx5a`, and the private DNS zone with its link (global). No database, no containers. Ahmed has Key Vault Secrets Officer on the vault.
+**In UAE North since 2026-11-26** (foundation deploy with `deployApps=false deployDatabase=false`, state Succeeded): `skilient-vnet`, `skilient-logs`, `skilient-appi`, `skilient-kv-tohnfutbiqx5`, `skilientsttohnfutbiqx5a`, and the private DNS zone with its link (global). Ahmed has Key Vault Secrets Officer on the vault.
+
+**Database since 2026-11-27:** `skilient-pg` (`skilient-pg.postgres.database.azure.com`), PostgreSQL 17, Standard_B1ms, **zone 1**, Premium SSD 32 GB, public access off, Entra sign-in on; databases `skilient` plus Azure's own; `azure.extensions` set (PG_TRGM, UNACCENT, BTREE_GIN, PGCRYPTO, PG_STAT_STATEMENTS). Deployment `main` Succeeded. No containers yet.
 
 Earlier the same day the same foundation was created in Central India and then deleted (Key Vault purged):
 
@@ -24,13 +26,14 @@ Kept: the budget `skilient-rg-budget` ($55 a month, alerts at about $40 and $55,
 
 Also in the group, not part of the floor: `skilient-foundry` (AI Foundry, created 2026-11-25 outside this plan). Deploys ignore it; do not delete it with the rest. If it is only for experiments, consider moving it out of the product's resource group.
 
-## Blocked: the database (in any region)
+## The database block (resolved 2026-11-27)
 
 - **Error:** `SkuNotAvailable` on `Standard_B1ms`, twice, in Central India.
 - **Cause:** the subscription is Sponsored (`quotaId` `Sponsored_2016-01-01`). `az vm list-skus` shows `NotAvailableForSubscription` for B1ms in Central India (region-wide and zones 1 to 3), South India and **UAE North**, and for D2ds_v5 in Central India. A block on the subscription, not the size, zone or storage.
 - **Fixed on the way:** storage set to classic Premium SSD (`Premium_LRS`, P4); Premium SSD v2 refuses Burstable anyway. An optional `pgZone` parameter exists but is not needed.
-- **Support request filed 2026-11-26** (Azure support, Service and subscription limits → Azure Database for PostgreSQL Flexible Server → Region access) for Central India, Burstable, 2 vCores, plus a Container Apps check. Ahmed closed it the same day and **filed a new one for UAE North**. Waiting for Microsoft.
-- **Does not block** W6 to W12 (local test containers). Blocks W14 (rehearsals), W15 and W16, and deploying web in W13.
+- **Support request filed 2026-11-26** (Azure support, Service and subscription limits → Azure Database for PostgreSQL Flexible Server → Region access) for Central India, Burstable, 2 vCores, plus a Container Apps check. Ahmed closed it the same day and filed a new one for UAE North. **Microsoft enabled UAE North** (email, 2026-11-26 evening); afterwards `az vm list-skus` showed no restriction on B1ms there.
+- **Still refused with no zone chosen** (2026-11-27 01:05 and 13:52 UTC, `SkuNotAvailable`); **succeeded with `pgZone=1`**. `deploy/main.bicep` now defaults `pgZone` to `1`: a server's zone cannot change, so every later deploy must keep it.
+- Container Apps in UAE North: not tested yet (no images). If the full deploy hits a similar block, the same kind of support request applies.
 
 ## Next, in order
 
@@ -65,6 +68,7 @@ Also in the group, not part of the floor: `skilient-foundry` (AI Foundry, create
    unset PG_PW
    ```
    The what-if must show `location: "uaenorth"` on every new resource.
+3b. ~~The database~~ Done 2026-11-27 (zone 1; see above). Reply to Microsoft's email confirming the request is fulfilled.
 4. ~~Reload the GitHub secrets~~ Done 2026-11-26 (private key PEM 1,675 characters, client secret 40, token key 43). On the App page, only the September key and production's client secret plus these new ones should remain; delete any other 2026-11-26 key or secret. Then `deploy/README.md` "Turning GitHub on", step 1, with a freshly generated private key and client secret (Key Vault cannot copy secrets between geographies). Then the rest of section 4 of the setup checklist: identity signing key(s), `identity-totp-key`, `identity-refresh-pepper`, service token and log hash keys, CV and Record signing keys and the CV export secret (export from Supabase Vault under two-person review), VAPID keys, Brevo, Turnstile, `github-webhook-secret` (W13).
 5. **Images** (later workstream): Dockerfiles for `web` and `jobs` (only `packages/host/Dockerfile` exists), and a workflow that pushes `web`, `services` and `jobs` to GHCR tagged by commit.
 6. **Database roles and migrations:** the PRD's implementation plan steps 2 and 3 (not in the Bicep).

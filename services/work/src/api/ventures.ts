@@ -1,4 +1,5 @@
 import { create } from "@bufbuild/protobuf";
+import { cvFacts } from "../store/cv-facts";
 import type { ServiceImpl } from "@connectrpc/connect";
 import * as W from "@skilient/contracts/work/v1/work_pb";
 import { z } from "zod";
@@ -394,6 +395,9 @@ export function venturesApi(deps: ApiDeps): Partial<ServiceImpl<typeof W.WorkSer
     async ventureTitles(req) {
       const rows = await R.ventureTitles(sql, parse(z.array(Uuid).max(500), req.ventureIds));
       return create(W.VentureTitlesResponseSchema, { ventures: rows.map((r) => ({ ventureId: r.venture_id, title: r.title })) });
+    },
+    async cvFacts(req) {
+      return create(W.CvFactsResponseSchema, { json: JSON.stringify(await cvFacts(sql, parse(Uuid, req.userId))) });
     },
   };
 }

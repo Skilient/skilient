@@ -131,6 +131,8 @@ export function profilesApi(deps: ApiDeps): Partial<ServiceImpl<typeof PeopleSer
           role: r.role,
           status: r.status,
           visibility: r.visibility,
+          onboardingComplete: r.onboarding_complete,
+          leaderboardOptOut: r.leaderboard_opt_out,
         })),
       };
     },

@@ -18,6 +18,7 @@
     "@bufbuild/protobuf": "2.17.0",
     "@connectrpc/connect": "2.3.0",
     "@skilient/community": "workspace:*",
+    "@skilient/credentials": "workspace:*",
     "@skilient/contracts": "workspace:*",
     "@skilient/identity": "workspace:*",
     "@skilient/content": "workspace:*",

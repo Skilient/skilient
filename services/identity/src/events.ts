@@ -18,6 +18,7 @@ export const events = {
     "user.two_factor_changed",
     "user.mfa_reset",
     "user.email_domain_changed",
+    "user.banned",
   ],
   handles: [...(Object.keys(GATE_EVENTS) as string[]), DELETION_CONFIRMED],
 } as const;

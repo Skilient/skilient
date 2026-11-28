@@ -72,3 +72,14 @@ export async function nightly(w: RankingWorld, asOf = new Date(Date.now() + ++da
 /** ranking's copy of a society's verification (the Record's 30-day hold), for community's hand-off tests (W7). */
 export const societyCopyOf = (w: RankingWorld, societyId: string) =>
   w.ranking<{ status: string; verified: boolean }[]>`select status, verified_at is not null as verified from ranking.societies where society_id = ${societyId}`.then((r) => [...r]);
+
+/** ranking's copy of a user's Record entries (record.sealed and record.revoked), for credentials' hand-off tests (W8). */
+export const recordCopyOf = (w: RankingWorld, userId: string) =>
+  w.ranking<{ kind: string; status: string; evidence: Record<string, unknown> }[]>`
+    select kind, status, evidence from ranking.record_entries where user_id = ${userId} order by kind, status`.then((r) => [...r]);
+
+/** Publishes a student's score with a tier and percentile (ranking's own row), for credentials' CV tests (W8). */
+export const publishTier = (w: RankingWorld, userId: string, tier: string, percentile: number) =>
+  w.ranking`insert into ranking.ranking_scores (user_id, formula_version, components, proof, momentum, adjustments, total, ranked, tier, percentile, computed_at, published_at)
+            values (${userId}, 2, '{}', 0, 0, 0, 120, true, ${tier}, ${percentile}, now(), now())
+            on conflict (user_id) do update set tier = excluded.tier, percentile = excluded.percentile`.then(() => undefined);

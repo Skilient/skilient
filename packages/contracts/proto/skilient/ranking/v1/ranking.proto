@@ -140,6 +140,8 @@ message PublishedTier {
   string user_id = 1;
   string tier = 2;
   bool ranked = 3;
+  // The published percentile (0 to 1) when ranked (the CV's "top N%", credentials).
+  optional double percentile = 4;
 }
 message TiersOfResponse {
   repeated PublishedTier tiers = 1;

@@ -388,6 +388,9 @@ message ProfileCardsResponse {
     string role = 9;
     string status = 10;
     string visibility = 11;
+    // Whether onboarding is complete, and the leaderboard choice (the CV's eligibility and percentile, credentials).
+    bool onboarding_complete = 12;
+    bool leaderboard_opt_out = 13;
   }
   repeated Entry users = 1;
 }

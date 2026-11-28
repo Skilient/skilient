@@ -20,7 +20,7 @@ afterAll(() => stopWorlds(worlds));
 const reason = (e: unknown) => refusalReason(e) ?? `code ${ConnectError.from(e).code}`;
 const code = (e: unknown) => ConnectError.from(e).code;
 
-const BATCH: Record<string, string> = { ventureCards: "content", ventureTitles: "messaging", skillsOf: "people", skillCatalogue: "people" };
+const BATCH: Record<string, string> = { ventureCards: "content", ventureTitles: "messaging", skillsOf: "people", skillCatalogue: "people", cvFacts: "credentials" };
 
 describeTransports(
   ["identity", "people", "content", "messaging", "realtime", "work"],

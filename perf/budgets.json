@@ -1375,5 +1375,161 @@
   "skilient.people.v1.PeopleService/FilterByName": {
     "p95Ms": 60,
     "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/MyCv": {
+    "p95Ms": 60,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/CvExportRights": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/SaveCvSettings": {
+    "p95Ms": 60,
+    "dbTrips": 4
+  },
+  "skilient.credentials.v1.CredentialsService/IssueCv": {
+    "p95Ms": 300,
+    "dbTrips": 16
+  },
+  "skilient.credentials.v1.CredentialsService/RevokeCv": {
+    "p95Ms": 60,
+    "dbTrips": 4
+  },
+  "skilient.credentials.v1.CredentialsService/CreateCvShareLink": {
+    "p95Ms": 80,
+    "dbTrips": 6
+  },
+  "skilient.credentials.v1.CredentialsService/RevokeCvShareLink": {
+    "p95Ms": 50,
+    "dbTrips": 4
+  },
+  "skilient.credentials.v1.CredentialsService/OpenSharedCv": {
+    "p95Ms": 80,
+    "dbTrips": 8
+  },
+  "skilient.credentials.v1.CredentialsService/VerifyCv": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/RecordCvExport": {
+    "p95Ms": 80,
+    "dbTrips": 9
+  },
+  "skilient.credentials.v1.CredentialsService/PublicKeys": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/RequestPdf": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.credentials.v1.CredentialsService/PdfStatus": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/OpsCvRecords": {
+    "p95Ms": 60,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/OpsRevokeCv": {
+    "p95Ms": 80,
+    "dbTrips": 8
+  },
+  "skilient.credentials.v1.CredentialsService/MyRecord": {
+    "p95Ms": 60,
+    "dbTrips": 3
+  },
+  "skilient.credentials.v1.CredentialsService/SetRecordDisplay": {
+    "p95Ms": 60,
+    "dbTrips": 7
+  },
+  "skilient.credentials.v1.CredentialsService/ReportRecordMistake": {
+    "p95Ms": 80,
+    "dbTrips": 8
+  },
+  "skilient.credentials.v1.CredentialsService/CreateRecordShareLink": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.credentials.v1.CredentialsService/RevokeRecordShareLink": {
+    "p95Ms": 50,
+    "dbTrips": 4
+  },
+  "skilient.credentials.v1.CredentialsService/OpenRecordShare": {
+    "p95Ms": 80,
+    "dbTrips": 8
+  },
+  "skilient.credentials.v1.CredentialsService/RecordHighlights": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/RecordWaiting": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/ClaimRecordEntries": {
+    "p95Ms": 120,
+    "dbTrips": 20
+  },
+  "skilient.credentials.v1.CredentialsService/SaveCvActivities": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.credentials.v1.CredentialsService/CvActivityOptions": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/MyEntries": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/RecordPdfExport": {
+    "p95Ms": 80,
+    "dbTrips": 8
+  },
+  "skilient.credentials.v1.CredentialsService/VerifyRecordEntry": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/VerifyRecordTranscript": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/SocietyRecordPage": {
+    "p95Ms": 60,
+    "dbTrips": 2
+  },
+  "skilient.credentials.v1.CredentialsService/ConfirmRecordEntry": {
+    "p95Ms": 60,
+    "dbTrips": 8
+  },
+  "skilient.credentials.v1.CredentialsService/CorrectRecordEntry": {
+    "p95Ms": 100,
+    "dbTrips": 14
+  },
+  "skilient.credentials.v1.CredentialsService/DeclineRecordMistake": {
+    "p95Ms": 60,
+    "dbTrips": 7
+  },
+  "skilient.credentials.v1.CredentialsService/RevokeRecordEntry": {
+    "p95Ms": 80,
+    "dbTrips": 10
+  },
+  "skilient.credentials.v1.CredentialsService/OpsRecordEntry": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.identity.v1.IdentityService/EmailsOf": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.work.v1.WorkService/CvFacts": {
+    "p95Ms": 80,
+    "dbTrips": 1
+  },
+  "skilient.community.v1.CommunityService/RecordFacts": {
+    "p95Ms": 30,
+    "dbTrips": 1
   }
 }

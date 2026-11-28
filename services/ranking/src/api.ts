@@ -107,7 +107,9 @@ export function createApi(deps: ApiDeps): ServiceImpl<typeof RankingService> {
     },
     async tiersOf(req) {
       const ids = parse(Ids(500), req.userIds);
-      return { tiers: (await B.tiersOf(sql, ids)).map((t) => ({ userId: t.user_id, tier: t.tier ?? "", ranked: t.ranked })) };
+      return {
+        tiers: (await B.tiersOf(sql, ids)).map((t) => ({ userId: t.user_id, tier: t.tier ?? "", ranked: t.ranked, ...(t.percentile === null ? {} : { percentile: t.percentile }) })),
+      };
     },
 
     async rankingFlagQueue(req, ctx) {

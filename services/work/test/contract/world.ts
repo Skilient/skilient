@@ -113,3 +113,11 @@ export const rankingTiersOf = (w: WorkWorld, userIds: string[]) =>
 /** work's copy of ranking's ring and swap flags (the peer-review check), for ranking's hand-off tests (W6). */
 export const rankingFlagsOf = (w: WorkWorld, members: string[]) =>
   w.work<{ flag_id: string; status: string }[]>`select flag_id::text, status from work.ranking_flags where members @> ${members}::uuid[] order by flag_id`.then((r) => [...r]);
+
+/** Gives a student a skill at a level (work's own rows), for the owners' hand-off tests (W8 credentials). */
+export const giveSkill = (w: WorkWorld, userId: string, skillId: string, level: number, repos = 0, activeDays = 0) =>
+  w.work`insert into work.user_skills (user_id, skill_id, level, repos, active_days) values (${userId}, ${skillId}, ${level}, ${repos}, ${activeDays})`.then(() => undefined);
+
+/** Moves a swap session into the past so it can be confirmed (W8 credentials' Taught entry). */
+export const pastSwapSession = (w: WorkWorld, sessionId: string) =>
+  w.work`update work.swap_sessions set starts_at = now() - interval '2 hours' where id = ${sessionId}`.then(() => undefined);

@@ -58,7 +58,7 @@ export const callers: CallerPolicy<typeof PeopleService> = {
   saveTour: WEB,
   restartTour: WEB,
   seeTip: WEB,
-  listUniversities: ["web", "community"],
+  listUniversities: ["web", "community", "credentials"],
   requestUniversity: WEB,
   confirmUniversityRequest: WEB,
   unsubscribeUniversityRequest: WEB,

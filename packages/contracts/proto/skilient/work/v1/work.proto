@@ -190,8 +190,14 @@ service WorkService {
 
   // VentureCards is the venture block on content's invite and Shipped cards, as viewer_id sees it (content).
   rpc VentureCards(VentureCardsRequest) returns (VentureCardsResponse);
-  // VentureTitles names team chats (messaging).
+  // VentureTitles names team chats (messaging) and venture Record entries (credentials).
   rpc VentureTitles(VentureTitlesRequest) returns (VentureTitlesResponse);
+  // CvFacts is a student's verified work as the CV shows it (credentials): skills (L2 and above), projects,
+  // open-source pull requests, endorsements tied to evidence (endorsers as `$name:<id>` placeholders) and approved
+  // credentials, with the counts the CV's summary uses. One database trip.
+  rpc CvFacts(CvFactsRequest) returns (CvFactsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 // ---- Ventures ----
@@ -1488,4 +1494,13 @@ message OpsClaimReviewFlagResponse {
 
 message OpsResolveReviewFlagResponse {
   bool ok = 1;
+}
+
+message CvFactsRequest {
+  string user_id = 1;
+}
+message CvFactsResponse {
+  // {skills, projects, open_source, endorsements, credentials, top_skills, projects_count, completed_count,
+  // pull_requests_count}, shaped as the stack's cv_snapshot_base built them.
+  string json = 1;
 }

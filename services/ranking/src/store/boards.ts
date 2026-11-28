@@ -135,8 +135,8 @@ export async function tiersFor(db: Db, meId: string | null, ids: readonly string
 
 /** Tiers for services that show them without a reader (the CV, talent search, /ops): one batch, no block filter. */
 export function tiersOf(db: Db, ids: readonly string[]) {
-  return db<{ user_id: string; tier: string | null; ranked: boolean }[]>`
-    select user_id::text, tier, ranked from ranking.ranking_scores where user_id = any(${[...ids]}::uuid[]) order by user_id`;
+  return db<{ user_id: string; tier: string | null; ranked: boolean; percentile: number | null }[]>`
+    select user_id::text, tier, ranked, percentile from ranking.ranking_scores where user_id = any(${[...ids]}::uuid[]) order by user_id`;
 }
 
 /** The published score row's tier inputs, for next_tier_requirements. */

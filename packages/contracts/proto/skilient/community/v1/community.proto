@@ -139,6 +139,12 @@ service CommunityService {
   rpc CanListenEvent(CanListenEventRequest) returns (CanListenEventResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
+  // RecordFacts is what the Record's entries need that event.closed and society.term_changed don't carry
+  // (credentials): event titles, term titles, result labels, walk-ins' addresses (for the account check and the
+  // claim) and society names and slugs. At most 200 of each.
+  rpc RecordFacts(RecordFactsRequest) returns (RecordFactsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 message SocietyNameCheckRequest {
@@ -766,4 +772,44 @@ message CanListenEventRequest {
 }
 message CanListenEventResponse {
   bool allowed = 1;
+}
+
+message RecordFactsRequest {
+  repeated string event_ids = 1;
+  repeated string term_ids = 2;
+  repeated string attendee_ids = 3;
+  repeated string society_ids = 4;
+}
+message RecordFactsResponse {
+  message Event {
+    string id = 1;
+    string title = 2;
+    string society_id = 3;
+  }
+  message Term {
+    string id = 1;
+    string title = 2;
+    string society_id = 3;
+  }
+  message Label {
+    string event_id = 1;
+    string user_id = 2;
+    string label = 3;
+  }
+  message WalkIn {
+    string attendee_id = 1;
+    string email = 2;
+  }
+  message Society {
+    string id = 1;
+    string name = 2;
+    string slug = 3;
+    string logo_path = 4;
+    string status = 5;
+  }
+  repeated Event events = 1;
+  repeated Term terms = 2;
+  repeated Label labels = 3;
+  repeated WalkIn walk_ins = 4;
+  repeated Society societies = 5;
 }

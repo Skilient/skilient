@@ -1,6 +1,7 @@
 import type { ServiceModule } from "@skilient/platform";
 import community from "@skilient/community";
 import content from "@skilient/content";
+import credentials from "@skilient/credentials";
 import identity from "@skilient/identity";
 import messaging from "@skilient/messaging";
 import people from "@skilient/people";
@@ -14,6 +15,7 @@ import work from "@skilient/work";
 export const registry: Readonly<Record<string, ServiceModule>> = {
   [community.name]: community as unknown as ServiceModule,
   [content.name]: content as unknown as ServiceModule,
+  [credentials.name]: credentials as unknown as ServiceModule,
   [identity.name]: identity as unknown as ServiceModule,
   [messaging.name]: messaging as unknown as ServiceModule,
   [people.name]: people as unknown as ServiceModule,

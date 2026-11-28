@@ -115,5 +115,6 @@ export const callers: CallerPolicy<typeof WorkService> = {
   opsClaimReviewFlag: WEB,
   opsResolveReviewFlag: WEB,
   ventureCards: ["content"],
-  ventureTitles: ["messaging"],
+  ventureTitles: ["messaging", "credentials"],
+  cvFacts: ["credentials"],
 };

@@ -59,6 +59,12 @@ service IdentityService {
   rpc ResolveEmails(ResolveEmailsRequest) returns (ResolveEmailsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
+  // EmailsOf gives, for each account, its address, whether it is confirmed and whether a ban is in force now, for
+  // credentials (the CV's address and eligibility, the Record's claims by email hash). At most 500; one database
+  // trip.
+  rpc EmailsOf(EmailsOfRequest) returns (EmailsOfResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 
   // ---- Sign-up and sign-in ----
 
@@ -303,6 +309,20 @@ message ResolveEmailsResponse {
     repeated string university_ids = 3;
   }
   repeated Entry emails = 1;
+}
+
+message EmailsOfRequest {
+  repeated string user_ids = 1;
+}
+
+message EmailsOfResponse {
+  message Entry {
+    string user_id = 1;
+    string email = 2;
+    bool confirmed = 3;
+    bool banned = 4;
+  }
+  repeated Entry users = 1;
 }
 
 message SignUpRequest {

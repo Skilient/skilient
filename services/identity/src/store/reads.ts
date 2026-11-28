@@ -44,6 +44,19 @@ export async function personalDomains(db: postgres.Sql | postgres.TransactionSql
 }
 
 /**
+ * For each account: its address, whether it is confirmed, and whether a ban is in force now (credentials: the CV's
+ * address and eligibility, the Record's claims by email hash; cv_eligible and record_waiting_count read auth.users).
+ * One query.
+ */
+export async function emailsOf(db: postgres.Sql, userIds: readonly string[]): Promise<{ user_id: string; email: string; confirmed: boolean; banned: boolean }[]> {
+  const rows = await db<{ user_id: string; email: string; confirmed: boolean; banned: boolean }[]>`
+    select u.id::text as user_id, u.email, u.email_confirmed_at is not null as confirmed,
+           coalesce(u.banned_until > now(), false) as banned
+      from identity.users u where u.id = any(${[...userIds]}::uuid[])`;
+  return [...rows];
+}
+
+/**
  * For each address: the confirmed account holding it, and the universities whose email domains include its domain
  * (community's check-in by email: `check_in_email` read auth.users and university_domains). One query.
  */

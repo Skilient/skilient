@@ -187,7 +187,17 @@ export async function closeSwap(tx: Tx, swapId: string, reason: "ended" | "inact
     events.push({
       type: "swap.closed",
       subjects: [s.id, s.teacher_id, s.learner_id],
-      payload: { swap_id: s.id, teacher_id: s.teacher_id, learner_id: s.learner_id, skill_id: s.skill_id, sessions: c!.sessions, minutes: c!.minutes, last_session_on: c!.last },
+      payload: {
+        swap_id: s.id,
+        teacher_id: s.teacher_id,
+        learner_id: s.learner_id,
+        skill_id: s.skill_id,
+        // The catalogue name, for the teacher's Taught entry (credentials, W8).
+        skill_label: (await tx<{ name: string }[]>`select name from work.skills where id = ${s.skill_id}`)[0]?.name ?? s.skill_id,
+        sessions: c!.sessions,
+        minutes: c!.minutes,
+        last_session_on: c!.last,
+      },
     });
   await publish(tx, events);
 }

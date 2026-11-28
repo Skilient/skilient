@@ -1,4 +1,4 @@
-import { refuse } from "@skilient/platform";
+import { appendEvents, refuse } from "@skilient/platform";
 import type postgres from "postgres";
 import { isStaff, requireAnyStaff, requireModerator, type Actor } from "../authorize";
 import { audit } from "./audit";
@@ -109,6 +109,8 @@ export async function sanctionUser(tx: Tx, actor: Actor, input: SanctionInput): 
   if (kind === "ban") {
     const done = await tx`update identity.users set banned_until = ${until ?? PERMANENT_BAN}, updated_at = now() where id = ${input.userId}`;
     if (done.count !== 1) throw refuse("not_found", "account not found");
+    // credentials revokes every CV version and share link (cv_on_ban); lifting the ban restores nothing (W8).
+    await appendEvents(tx, [{ type: "user.banned", subjects: [input.userId], payload: { user_id: input.userId, until: until?.toISOString() ?? null } }]);
   }
   await audit(tx, {
     staffId: me,

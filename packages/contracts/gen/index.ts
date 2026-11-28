@@ -2,13 +2,14 @@
 import type { DescService } from "@bufbuild/protobuf";
 import { CommunityService as CommunityService_0 } from "./skilient/community/v1/community_pb";
 import { ContentService as ContentService_1 } from "./skilient/content/v1/content_pb";
-import { IdentityService as IdentityService_2 } from "./skilient/identity/v1/identity_pb";
-import { MessagingService as MessagingService_3 } from "./skilient/messaging/v1/messaging_pb";
-import { PeopleService as PeopleService_4 } from "./skilient/people/v1/people_pb";
-import { RankingService as RankingService_5 } from "./skilient/ranking/v1/ranking_pb";
-import { RealtimeService as RealtimeService_6 } from "./skilient/realtime/v1/realtime_pb";
-import { SampleService as SampleService_7 } from "./skilient/sample/v1/sample_pb";
-import { SampleRelayService as SampleRelayService_8 } from "./skilient/sample_relay/v1/sample_relay_pb";
-import { WorkService as WorkService_9 } from "./skilient/work/v1/work_pb";
+import { CredentialsService as CredentialsService_2 } from "./skilient/credentials/v1/credentials_pb";
+import { IdentityService as IdentityService_3 } from "./skilient/identity/v1/identity_pb";
+import { MessagingService as MessagingService_4 } from "./skilient/messaging/v1/messaging_pb";
+import { PeopleService as PeopleService_5 } from "./skilient/people/v1/people_pb";
+import { RankingService as RankingService_6 } from "./skilient/ranking/v1/ranking_pb";
+import { RealtimeService as RealtimeService_7 } from "./skilient/realtime/v1/realtime_pb";
+import { SampleService as SampleService_8 } from "./skilient/sample/v1/sample_pb";
+import { SampleRelayService as SampleRelayService_9 } from "./skilient/sample_relay/v1/sample_relay_pb";
+import { WorkService as WorkService_10 } from "./skilient/work/v1/work_pb";
 
-export const allServices: readonly DescService[] = [CommunityService_0, ContentService_1, IdentityService_2, MessagingService_3, PeopleService_4, RankingService_5, RealtimeService_6, SampleService_7, SampleRelayService_8, WorkService_9];
+export const allServices: readonly DescService[] = [CommunityService_0, ContentService_1, CredentialsService_2, IdentityService_3, MessagingService_4, PeopleService_5, RankingService_6, RealtimeService_7, SampleService_8, SampleRelayService_9, WorkService_10];

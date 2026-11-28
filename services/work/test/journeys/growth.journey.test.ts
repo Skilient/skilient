@@ -176,7 +176,7 @@ describeTransports(
         expect(closed.map((c) => [c.payload.sessions, c.payload.minutes])).toEqual([[1, 60]]);
       });
 
-      it.todo("W8: the Taught entry is issued on the teacher's Record from swap.closed");
+      // W8: the Taught entry from swap.closed is held by services/credentials/test/journeys/record-cv.journey.test.ts.
       it.todo("W13: /swaps tabs, the swap page and the profile's notes, axe in both themes");
     });
   },

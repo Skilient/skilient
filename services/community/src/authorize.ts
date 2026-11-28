@@ -83,4 +83,5 @@ export const callers: CallerPolicy<typeof CommunityService> = {
   confirmRefund: WEB,
   societyCards: ["content", "people"],
   canListenEvent: ["realtime"],
+  recordFacts: ["credentials"],
 };

@@ -100,3 +100,8 @@ export async function gateProfileFacts(sql: postgres.Sql, ids: readonly string[]
 export async function createBareUser(sql: postgres.Sql, id: string, email: string): Promise<void> {
   await sql`insert into identity.users (id, email, email_confirmed_at) values (${id}, ${email.toLowerCase()}, now())`;
 }
+
+/** Gives an account another confirmed address (a test setup the owners' hand-off tests use: W8 credentials' claims). */
+export async function setConfirmedEmail(sql: postgres.Sql, userId: string, email: string): Promise<void> {
+  await sql`update identity.users set email = ${email}, email_confirmed_at = now() where id = ${userId}`;
+}

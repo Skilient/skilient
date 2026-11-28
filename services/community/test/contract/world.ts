@@ -71,3 +71,22 @@ export async function tick(w: CommunityWorld, job: "society-tick" | "event-tick"
 export const eventsOf = (w: CommunityWorld, type: string) =>
   w.community<{ payload: Record<string, unknown>; producer: string }[]>`
     select payload, producer from platform.events where type = ${type} order by seq`.then((r) => [...r]);
+
+/** Ends an event an hour ago (its sessions too), so its close-out is open (W8 credentials' hand-off tests). */
+export async function endEvent(w: CommunityWorld, eventId: string): Promise<void> {
+  await w.community`update community.event_sessions set starts_at = now() - interval '3 hours', ends_at = now() - interval '1 hour' where event_id = ${eventId}`;
+  await w.community`update community.events set starts_at = now() - interval '3 hours', ends_at = now() - interval '1 hour' where id = ${eventId}`;
+}
+
+/** Sets an event's Record kinds and adds a result (W8 credentials' hand-off tests). */
+export async function recordKindsAndResult(w: CommunityWorld, eventId: string, userId: string, place: number, label: string | null, setBy: string): Promise<void> {
+  await w.community`update community.events set record_kinds = '{attended,completed,result}' where id = ${eventId}`;
+  await w.community`insert into community.event_results (id, event_id, user_id, place, label, set_by) values (gen_random_uuid(), ${eventId}, ${userId}, ${place}, ${label}, ${setBy})`;
+}
+
+/** Ends an officer's term yesterday and returns its id (W8 credentials' Office bearer entry). */
+export async function endTerm(w: CommunityWorld, societyId: string, userId: string): Promise<string> {
+  await w.community`update community.society_terms set term_end = current_date - 1, term_start = current_date - 200 where society_id = ${societyId} and user_id = ${userId}`;
+  const [t] = await w.community<{ id: string }[]>`select id::text from community.society_terms where society_id = ${societyId} and user_id = ${userId}`;
+  return t!.id;
+}

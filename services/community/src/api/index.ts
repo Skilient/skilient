@@ -1,6 +1,7 @@
 import type { ServiceImpl } from "@connectrpc/connect";
 import type { CommunityService } from "@skilient/contracts/community/v1/community_pb";
 import { z } from "zod";
+import { recordFacts } from "../store/record-facts";
 import { eventsApi } from "./events";
 import { paymentsApi } from "./payments";
 import { societiesApi } from "./societies";
@@ -20,6 +21,10 @@ export function createApi(deps: ApiDeps): ServiceImpl<typeof CommunityService> {
       const rows = await deps.sql<{ id: string; name: string; slug: string; logo_path: string | null; status: string; university_id: string }[]>`
         select id::text, name, slug, logo_path, status, university_id::text from community.societies where id = any(${ids}::uuid[])`;
       return { cards: rows.map((r) => ({ id: r.id, name: r.name, slug: r.slug, logoPath: r.logo_path ?? "", status: r.status, universityId: r.university_id })) };
+    },
+    async recordFacts(req) {
+      const ids = (v: string[]) => parse(z.array(z.uuid()).max(200), v);
+      return recordFacts(deps.sql, { eventIds: ids(req.eventIds), termIds: ids(req.termIds), attendeeIds: ids(req.attendeeIds), societyIds: ids(req.societyIds) });
     },
   } as ServiceImpl<typeof CommunityService>;
 }

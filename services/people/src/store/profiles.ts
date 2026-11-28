@@ -271,10 +271,12 @@ export async function profileCards(db: Db, ids: readonly string[]) {
       role: string;
       status: string;
       visibility: string;
+      onboarding_complete: boolean;
+      leaderboard_opt_out: boolean;
     }[]
   >`
     select p.user_id::text, p.username, p.full_name, p.avatar_path, p.department, p.graduation_year, p.university_id::text,
-           u.name as university_name, p.role, p.status, p.visibility
+           u.name as university_name, p.role, p.status, p.visibility, p.onboarding_complete, p.leaderboard_opt_out
       from people.profiles p left join people.universities u on u.id = p.university_id
      where p.user_id = any(${[...ids]}::uuid[]) order by p.user_id`;
 }

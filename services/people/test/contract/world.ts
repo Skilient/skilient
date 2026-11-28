@@ -181,3 +181,7 @@ export const factKeysOf = (w: PeopleWorld, userId: string) =>
 /** people's copy of a group's members (suggestions, labels), for the owners' hand-off tests (W5, W7). */
 export const groupMembersOf = (w: PeopleWorld, kind: "venture" | "society", groupId: string) =>
   w.people<{ user_id: string }[]>`select user_id::text from people.group_members where kind = ${kind} and group_id = ${groupId} order by user_id`.then((r) => r.map((x) => x.user_id));
+
+/** The true-or-false shell facts people holds for a user (milestone.reached keys), for the owners' tests (W8 credentials). */
+export const milestonesOf = (w: PeopleWorld, userId: string) =>
+  w.people<{ key: string }[]>`select key from people.shell_facts where user_id = ${userId} order by key`.then((r) => r.map((x) => x.key));

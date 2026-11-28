@@ -8,9 +8,10 @@
       "consumers": [
         "people",
         "content",
-        "work"
+        "work",
+        "credentials"
       ],
-      "payload": "user_id, role, university_id, provider, visibility, onboarding defaults, status, agreement_accepted"
+      "payload": "user_id, role, university_id, provider, visibility, onboarding defaults, status, agreement_accepted; credentials (W8) matches held Record claims to the confirmed address (identity's EmailsOf)"
     },
     "user.deleted": {
       "producers": [
@@ -113,7 +114,8 @@
         "people",
         "work",
         "ranking",
-        "community"
+        "community",
+        "credentials"
       ],
       "consumers": [
         "trust"
@@ -275,8 +277,7 @@
     },
     "milestone.cleared": {
       "producers": [
-        "work",
-        "credentials"
+        "work"
       ],
       "consumers": [
         "people"
@@ -314,7 +315,8 @@
         "content",
         "messaging",
         "notify",
-        "trust"
+        "trust",
+        "credentials"
       ],
       "payload": "kind, group_id, user_id, member, role (member | officer | president; optional, societies), actor_id (optional) (ids only); notify's member left/removed notices (W9)"
     },
@@ -429,7 +431,8 @@
         "billing"
       ],
       "consumers": [
-        "content"
+        "content",
+        "credentials"
       ],
       "payload": "subject_id, key, value (null or false when it ends) (W12); every service that gates a paid action copies it"
     },
@@ -535,7 +538,6 @@
       ],
       "consumers": [
         "ranking",
-        "credentials",
         "notify"
       ],
       "payload": "endorsement_ids, endorser_id, endorsee_id, venture_id, skill_ids (W5): ranking facts (W6), notify's endorsement notice (W9)"
@@ -606,7 +608,7 @@
         "credentials",
         "notify"
       ],
-      "payload": "swap_id, teacher_id, learner_id, skill_id, sessions, minutes, last_session_on (W5): the teacher's Taught entry (W8)"
+      "payload": "swap_id, teacher_id, learner_id, skill_id, skill_label (catalogue), sessions, minutes, last_session_on (W5; skill_label W8): the teacher's Taught entry (W8; the learner's first name is read from people)"
     },
     "swap.flagged": {
       "producers": [
@@ -681,7 +683,7 @@
         "ranking",
         "notify"
       ],
-      "payload": "entry_id, user_id, kind, issuer_type, issuer_id, occurred_on, signed_at, evidence {role, place, entrants, minutes} (W8): ranking Record component (W6), notify a new-entry notice (W9)"
+      "payload": "entry_id, user_id, kind, issuer_type, issuer_id, occurred_on, signed_at, evidence {role, place, entrants, minutes}, corrected (W8): ranking Record component (W6), notify a new-entry notice (W9)"
     },
     "record.revoked": {
       "producers": [
@@ -691,7 +693,7 @@
         "ranking",
         "notify"
       ],
-      "payload": "entry_id, status (revoked | superseded) (W8): ranking drops it (W6), notify the revocation notice (W9)"
+      "payload": "entry_id, user_id, status (revoked | superseded), was_sealed, category (W8): ranking drops it (W6), notify the revocation notice when it was sealed (W9)"
     },
     "case.resolved": {
       "producers": [
@@ -878,6 +880,78 @@
         "media"
       ],
       "payload": "bucket (society-documents | society-media | event-receipts), path, owner_id (W7): a replaced or expired file media deletes (W9)"
+    },
+    "user.banned": {
+      "producers": [
+        "identity"
+      ],
+      "consumers": [
+        "credentials"
+      ],
+      "payload": "user_id, until (null for permanent) (W8): a ban revokes every CV version and share link (cv_on_ban); lifting it restores nothing"
+    },
+    "record.awaiting": {
+      "producers": [
+        "credentials"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "entry_id, society_id, user_id, officer_ids (W8): an entry naming an issuing officer waits for a second officer; notify's record_confirm notice (W9)"
+    },
+    "record.mistake_reported": {
+      "producers": [
+        "credentials"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "correction_id, entry_id, society_id, user_id, officer_ids (W8): notify's record_mistake notice to the society's officers (W9)"
+    },
+    "record.mistake_declined": {
+      "producers": [
+        "credentials"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "correction_id, entry_id, user_id (W8): notify's record_mistake_declined notice (W9; the note is read back from credentials)"
+    },
+    "record.claim_held": {
+      "producers": [
+        "credentials"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "claim_id, event_id, attendee_id (W8): one claim email per walk-in per event (W9; the address is read from community's RecordFacts)"
+    },
+    "cv.issued": {
+      "producers": [
+        "credentials"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "record_id, user_id, version, source (first | monthly | on_demand | reissue) (W8): notify's cv_refreshed notice for monthly (W9)"
+    },
+    "cv.revoked": {
+      "producers": [
+        "credentials"
+      ],
+      "consumers": [
+        "notify"
+      ],
+      "payload": "user_id, record_ids, reason (owner | staff | suspended | deleted), count (W8): notify's cv_revoked notice for staff (W9)"
+    },
+    "cv_export.released": {
+      "producers": [
+        "credentials"
+      ],
+      "consumers": [
+        "media"
+      ],
+      "payload": "bucket, path, owner_id (W8): a CV PDF's file goes after 30 days (its hash stays); media deletes it (W9)"
     }
   }
 }

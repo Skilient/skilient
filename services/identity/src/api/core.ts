@@ -11,7 +11,7 @@ import {
 import { callOf, refuse, withWrite } from "@skilient/platform";
 import { z } from "zod";
 import type { ApiDeps } from "../deps";
-import { backupCodesRemaining, currentAgreementVersion, personalDomains, recentSecurityEvents, resolveEmails, staffRolesOf, verifiedAuthenticators } from "../store/reads";
+import { backupCodesRemaining, currentAgreementVersion, personalDomains, recentSecurityEvents, resolveEmails, emailsOf, staffRolesOf, verifiedAuthenticators } from "../store/reads";
 import { logSecurityEvent, securityNotMe, signinStatus } from "../store/signin";
 
 
@@ -67,6 +67,12 @@ export function coreApi({ sql }: ApiDeps): Partial<ServiceImpl<typeof IdentitySe
       const emails = parse(z.array(z.string().trim().toLowerCase().max(254).regex(/^[^\s@]+@[^\s@]+$/)).max(50), req.emails);
       const rows = await resolveEmails(sql, emails);
       return { emails: rows.map((r) => ({ email: r.email, userId: r.user_id ?? "", universityIds: r.university_ids })) };
+    },
+
+    async emailsOf(req) {
+      const ids = parse(z.array(z.uuid()).max(500), req.userIds);
+      const rows = await emailsOf(sql, ids);
+      return { users: rows.map((r) => ({ userId: r.user_id, email: r.email, confirmed: r.confirmed, banned: r.banned })) };
     },
 
     async backupCodesRemaining(_req, ctx) {

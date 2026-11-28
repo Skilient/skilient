@@ -24,9 +24,9 @@ Status values: **ticked** (evidence exists), **partial** (part ticked, the rest 
 
 ## Questions
 
-- Q1 (pending Ahmed): the signing key's Key Vault secret is one JSON value `{key_id, private_key}`; rotation is a new secret and a restart (the new key id retires the old one). Today rotation is `select private.cv_rotate_key()`. Kept closest to today: no automatic rotation (decisions.md 2026-10-01).
-- Q2 (pending Ahmed): share-link tokens are now made by credentials (shown once, the reply not kept for retries) rather than by web, which only hashed and sent them. Web holds no rules (CLAUDE.md).
-- Q3 (pending Ahmed): RecordCvExport needs media (W9) to confirm the uploaded file's size; until then the hosted service refuses with `pdf_missing`. The render job (`RequestPdf`) is the PRD's path; its Chromium image is W13.
+- Q1 (approved 2026-11-28, Ahmed): the signing key's Key Vault secret is one JSON value `{key_id, private_key}`; rotation is a new secret and a restart (the new key id retires the old one). Today rotation is `select private.cv_rotate_key()`. Kept closest to today: no automatic rotation (decisions.md 2026-10-01).
+- Q2 (approved 2026-11-28, Ahmed): share-link tokens are now made by credentials (shown once, the reply not kept for retries) rather than by web, which only hashed and sent them. Web holds no rules (CLAUDE.md).
+- Q3 (approved 2026-11-28, Ahmed; W9 before W13, web moves to RequestPdf): RecordCvExport needs media (W9) to confirm the uploaded file's size; until then the hosted service refuses with `pdf_missing`. The render job (`RequestPdf`) is the PRD's path; its Chromium image is W13.
 
 ## Left for later workstreams
 

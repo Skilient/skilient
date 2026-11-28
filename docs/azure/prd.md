@@ -765,6 +765,14 @@ The same script runs in every rehearsal and at cutover. Any failure stops the cu
 
 The times are estimates for a beta-sized database. The rehearsals replace them with measured ones.
 
+**Credentials' secrets (during T+5 min, under two-person review).** Before the cutover, `credentials-signing-key` and `credentials-export-secret` hold placeholders made for non-production use (`docs/azure/setup-checklist.md`). At the cutover each one gets production's value as a new secret version, piped straight from Supabase Vault into Key Vault, never to disk, a file or shell history. Every CV and Record code issued before the move then verifies, and every PDF export recorded before it passes the MAC check. `PROD_DB_URL` is set in the shell only. Credentials is restarted afterwards: it checks at startup that the key matches the imported `signing_keys` row and stops if not.
+
+```bash
+export KV=skilient-kv-tohnfutbiqx5
+psql "$PROD_DB_URL" -Atc "select json_build_object('key_id', k.key_id, 'private_key', s.decrypted_secret) from public.signing_keys k join vault.decrypted_secrets s on s.name = 'cv_signing_key:' || k.key_id where k.retired_at is null" | tr -d '\n' | az keyvault secret set --vault-name "$KV" --name credentials-signing-key --file /dev/stdin --query id -o tsv
+psql "$PROD_DB_URL" -Atc "select decrypted_secret from vault.decrypted_secrets where name = 'cv_export_secret'" | tr -d '\n' | az keyvault secret set --vault-name "$KV" --name credentials-export-secret --file /dev/stdin --query id -o tsv
+```
+
 ### 6. Rollback
 
 - **Before the maintenance page comes off:** undo the freeze and leave Cloudflare on Vercel. Nothing was lost because nothing was written.

@@ -1,0 +1,28 @@
+{
+  "reads": {
+    "avatars": {
+      "other": 0,
+      "owner": 1
+    },
+    "chat-media": {
+      "other": 0,
+      "owner": 0
+    },
+    "credentials": {
+      "other": 0,
+      "owner": 1
+    },
+    "cv-exports": {
+      "other": 0,
+      "owner": 1
+    },
+    "feedback": {
+      "other": 0,
+      "owner": 1
+    },
+    "post-media": {
+      "other": 0,
+      "owner": 1
+    }
+  }
+}

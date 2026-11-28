@@ -1,0 +1,38 @@
+{
+  "name": "@skilient/notify",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./refusals": "./src/refusals.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p .",
+    "lint": "eslint --max-warnings=0 .",
+    "test": "vitest run --project unit --project refusal",
+    "test:golden": "vitest run --project golden",
+    "test:contract": "vitest run --project contract --project journeys"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.17.0",
+    "@connectrpc/connect": "2.3.0",
+    "@skilient/contracts": "workspace:*",
+    "@skilient/platform": "workspace:*",
+    "postgres": "3.4.9",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@skilient/community": "workspace:*",
+    "@skilient/content": "workspace:*",
+    "@skilient/credentials": "workspace:*",
+    "@skilient/host": "workspace:*",
+    "@skilient/identity": "workspace:*",
+    "@skilient/messaging": "workspace:*",
+    "@skilient/people": "workspace:*",
+    "@skilient/ranking": "workspace:*",
+    "@skilient/realtime": "workspace:*",
+    "@skilient/testing": "workspace:*",
+    "@skilient/work": "workspace:*"
+  }
+}

@@ -16,6 +16,7 @@ export const callers: CallerPolicy<typeof RankingService> = {
   myScore: WEB,
   tiersFor: ["web", "content", "people", "messaging", "community", "market"],
   tiersOf: ["credentials", "market", "trust", "community", "notify"],
+  scoredStudents: ["notify"],
   rankingFlagQueue: ["web", "trust"],
   rankingFlagCase: WEB,
   claimRankingFlag: WEB,

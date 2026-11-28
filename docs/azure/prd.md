@@ -25,7 +25,7 @@ The goal is the same product on a backend that is faster, cheaper at the floor, 
 ### Goals
 
 1. **Parity.** Every behaviour built in phases 0 to 18 works the same, except the faculty portal, which is ported later.
-2. **All compute and data on Azure.** Cloudflare Free, Brevo, GitHub's image registry, PostHog and Sentry stay as outside services.
+2. **All compute and data on Azure.** Cloudflare Free, GitHub's image registry, PostHog and Sentry stay as outside services; email moved from Brevo to Azure Communication Services on 2026-11-28 (decisions.md).
 3. **Speed.** Every request meets the budgets below, with no cold start on any path a user waits on.
 4. **Cost.** About $57 a month at beta size, at list price ($57.49); $7.49 above the $50 ceiling, accepted with the `realtime` container (see Decided on 2026-11-22, record 12).
 5. **Scale.** Any service can get more replicas, its own container or its own database without changing another service.
@@ -105,7 +105,7 @@ Read it top to bottom: traffic enters through Cloudflare, only `web` and `realti
 1. **One owner per table.** Only the owning service reads or writes a table. The database enforces it with a login role per service.
 2. **Calls for what the user waits on, events for the rest.** A page load is calls. A notification, a ranking update or an email is an event.
 3. **Services keep no state in memory that matters.** State lives in Postgres, Blob Storage and Key Vault, so any replica can serve any request.
-4. **One front door.** Only `web` and `realtime` accept traffic from outside. Webhooks from GitHub, Brevo and payment gateways arrive at `web`, are verified, and become jobs.
+4. **One front door.** Only `web` and `realtime` accept traffic from outside. Webhooks from GitHub and payment gateways arrive at `web`, are verified, and become jobs.
 5. **Warm where people wait, zero where they don't.** User-facing containers keep one replica running. Jobs cost nothing while idle.
 6. **Same code, hosted together or apart.** A service does not know whether its neighbour is in the same process or across the network.
 
@@ -133,7 +133,7 @@ Fourteen services replace the SQL functions, triggers and Edge Functions; the ta
 | `ranking` | Score formula, nightly runs, tiers, leaderboards, anti-gaming flags, adjustments, snapshots | 2,250 | `tier.changed`, `ranking.published` |
 | `community` | Societies, inductions, events, tickets, check-in, payment proofs, the yearbook | 6,500 | `event.registered`, `ticket.checked_in`, `event.closed`, `society.verified` |
 | `credentials` | The Record, CV snapshots and settings, signing, verification, share links, PDF exports | 3,650 | `record.sealed`, `record.revoked`, `cv.issued` |
-| `notify` | In-app notifications, preferences, email through Brevo, web push, digests | 1,000 | `notification.created` |
+| `notify` | In-app notifications, preferences, email through Azure Communication Services, web push, digests | 1,000 | `notification.created` |
 | `trust` | Reports, cases, sanctions, appeals, the audit log, the staff inbox, platform config, feedback, alerts, analytics forwarding | 4,550 | `sanction.changed`, `case.resolved`, `config.changed` |
 | `market` | Recruiter organisations, talent search, jobs and applications, the recruiter API, university portal, fairs, Openings, sales leads | 12,050 | `application.moved`, `hire.recorded` |
 | `billing` | Entitlements, plans, usage counters, checkout, invoices, gateway webhooks | 4,250 | `entitlement.changed`, `payment.settled` |
@@ -289,8 +289,8 @@ Events use the log described under Data architecture. The main flows:
 
 ### Traffic in and out
 
-- **Webhooks in** (GitHub, Brevo, payment gateways) reach `web`, have their signature checked, are stored once, and become a job.
-- **Calls out** (Brevo, GitHub, push services, PostHog, link previews) leave only from services and jobs, through the existing SSRF guard.
+- **Webhooks in** (GitHub, payment gateways) reach `web`, have their signature checked, are stored once, and become a job.
+- **Calls out** (Azure email, GitHub, push services, PostHog, link previews) leave only from services and jobs, through the existing SSRF guard.
 
 ## Performance design
 
@@ -379,7 +379,7 @@ The floor uses five kinds of Azure resource in one resource group in UAE North; 
 | Key Vault | Standard | Signing keys, gateway and API secrets |
 | Log Analytics workspace with Application Insights | Pay as you go, first 5 GB a month free | Logs and traces |
 
-Outside Azure, and free at this size: Cloudflare Free (DNS, CDN, TLS, firewall rules), GitHub's container registry for images, Brevo for email, PostHog, Sentry.
+Outside Azure, and free at this size: Cloudflare Free (DNS, CDN, TLS, firewall rules), GitHub's container registry for images, PostHog, Sentry. Email is Azure Communication Services (`skilient-comms`, data in the UAE), reached with core-a's managed identity.
 
 ### What was left out, and what replaces it
 
@@ -390,7 +390,6 @@ Outside Azure, and free at this size: Cloudflare Free (DNS, CDN, TLS, firewall r
 | Functions | Background consumers inside warm services, and Container Apps jobs |
 | Web PubSub | The `realtime` service with Postgres `NOTIFY` |
 | Entra External ID | The `identity` service |
-| Communication Services Email | Brevo |
 | Container Registry | GitHub's registry |
 | Private endpoints | Virtual network integration, which keeps Postgres off the public internet without them |
 | Redis | In-process caches cleared by events |
@@ -518,7 +517,7 @@ Rollback is step 5 run by hand: point traffic at the previous revision. It takes
 | Signing key rotation | New key in Key Vault, publish the public key, switch, keep the old public key listed |
 | Emergency ban | Works even if the staff area is down: one `identity` admin command |
 | Stuck events | Find the consumer whose cursor stopped, read its error, replay |
-| Brevo or GitHub outage | Jobs back off and retry; what users see meanwhile |
+| Azure email or GitHub outage | Jobs back off and retry; what users see meanwhile |
 
 ### Day-to-day cost of running it
 
@@ -541,8 +540,9 @@ At beta size the bill is about $57 a month and holds 30 people online comfortabl
 | Container Apps: `web` and the three service containers always on, plus jobs | $34.05 |
 | Private DNS zone and five alert rules | $1.00 |
 | Blob Storage (2 GB) and Key Vault | $0.36 |
-| Logs (0.7 GB), bandwidth, Cloudflare, image registry, Brevo | $0.00 |
-| **Total** | **$57.49** |
+| Communication Services Email (about 500 emails at $0.00025 each) | $0.13 |
+| Logs (0.7 GB), bandwidth, Cloudflare, image registry | $0.00 |
+| **Total** | **$57.62** |
 
 ### The bare-minimum usage behind it
 
@@ -553,7 +553,7 @@ At beta size the bill is about $57 a month and holds 30 people online comfortabl
 | Requests per daily active per day | 40, so 2,400 a day |
 | Time on site per daily active per day | 25 minutes |
 | Online at once | 10 on a normal evening, 30 at peak |
-| Emails | About 500 a month, inside Brevo's free plan |
+| Emails | About 500 a month through Azure Communication Services ($0.00025 each plus $0.00012 per MB) |
 | Files | 10 MB per account |
 | A socket is open somewhere | 49% of the month |
 
@@ -657,7 +657,7 @@ W0 comes first. W1 and W2 follow, because every other service needs users and pr
 | W6 | `ranking` | 2,250 | Nightly run reproduces `docs/ranking-reference.md` exactly from its own schema |
 | W7 | `community` | 6,500 | Seat-lock concurrency test passes; societies, events, tickets, check-in and yearbook specs pass |
 | W8 | `credentials` | 3,650 | A CV and a Record entry signed by the new service verify with the existing public keys, and old ones still verify |
-| W9 | `notify` and `media` | 1,300 | Email, push and digest tests pass with the fake Brevo and push services; unused files are deleted |
+| W9 | `notify` and `media` | 1,300 | Email, push and digest tests pass with the fake email (Azure Communication Services since 2026-11-28) and push services; unused files are deleted |
 | W10 | `trust` | 4,550 | Every staff method audits before and after; reports, sanctions, appeals, config and inbox specs pass |
 | W11 | `market` | 12,050 | Portal specs pass with the flag on; with it off, every portal route still returns 404 |
 | W12 | `billing` | 4,250 | Entitlement checks, the simulated gateway, invoices and the webhook concurrency tests pass; no checkout route is surfaced in the UI |
@@ -760,7 +760,7 @@ The same script runs in every rehearsal and at cutover. Any failure stops the cu
 | T+5 min | Final dump, load and transform. Final file sync. |  |
 | T+25 min | Verification script. | Any failure: abort, undo the freeze, try another day |
 | T+35 min | Smoke tests against Azure by direct address. | Any failure: abort |
-| T+45 min | Cloudflare origin switched to Azure. GitHub App webhook and callback, Brevo webhook and Turnstile hostnames updated. |  |
+| T+45 min | Cloudflare origin switched to Azure. GitHub App webhook and callback and Turnstile hostnames updated; Brevo switched off once Azure email sends. |  |
 | T+50 min | Maintenance page off. Watch errors, latency and sign-ins for two hours. | Rollback criteria below |
 
 The times are estimates for a beta-sized database. The rehearsals replace them with measured ones.
@@ -772,6 +772,15 @@ export KV=skilient-kv-tohnfutbiqx5
 psql "$PROD_DB_URL" -Atc "select json_build_object('key_id', k.key_id, 'private_key', s.decrypted_secret) from public.signing_keys k join vault.decrypted_secrets s on s.name = 'cv_signing_key:' || k.key_id where k.retired_at is null" | tr -d '\n' | az keyvault secret set --vault-name "$KV" --name credentials-signing-key --file /dev/stdin --query id -o tsv
 psql "$PROD_DB_URL" -Atc "select decrypted_secret from vault.decrypted_secrets where name = 'cv_export_secret'" | tr -d '\n' | az keyvault secret set --vault-name "$KV" --name credentials-export-secret --file /dev/stdin --query id -o tsv
 ```
+
+**Notify's push keys (during T+5 min, under two-person review).** Before the cutover `notify-vapid-keys` holds a non-production pair. At the cutover it gets production's three Vault values as one JSON secret version, piped straight from Supabase Vault into Key Vault, never to disk, a file or shell history, so every browser subscribed today keeps receiving pushes (a subscription is bound to the public key). Email needs no secret: notify sends through Azure Communication Services with core-a's managed identity. Notify is restarted afterwards (it reads the VAPID keys at startup).
+
+```bash
+export KV=skilient-kv-tohnfutbiqx5
+psql "$PROD_DB_URL" -Atc "select json_build_object('public_key', max(decrypted_secret) filter (where name = 'vapid_public_key'), 'private_key', max(decrypted_secret) filter (where name = 'vapid_private_key'), 'subject', max(decrypted_secret) filter (where name = 'vapid_subject')) from vault.decrypted_secrets where name in ('vapid_public_key', 'vapid_private_key', 'vapid_subject')" | tr -d '\n' | az keyvault secret set --vault-name "$KV" --name notify-vapid-keys --file /dev/stdin --query id -o tsv
+```
+
+**Media's files (T+5 min, the final file sync).** Every object in Supabase Storage's 13 buckets is copied into the container of the same name, and `media.files` gets one row per object (bucket, path, uploader from `owner_id`, type and size from its metadata, status `stored`); W14's tooling.
 
 ### 6. Rollback
 

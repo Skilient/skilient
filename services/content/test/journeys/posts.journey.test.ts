@@ -54,7 +54,7 @@ describeTransports(
       });
 
       it.todo("W13: the composer, its draft kept across a reload, no like/save/react buttons, share opens a dialog, axe in both themes");
-      it.todo("W9: the image is re-encoded (2,000 px at most, no EXIF) and stored under post-media; content keeps the path");
+      it.todo("W13: web re-encodes the image (2,000 px at most, no EXIF) before media stores it (stored under post-media and kept by content: images.journey.test.ts)");
     });
 
     describe("posts.spec: global poll and event across universities, filters", () => {
@@ -101,7 +101,7 @@ describeTransports(
         expect((await j.feed(voter.token, "global", "events")).items).toEqual([]);
       });
 
-      it.todo("W9 media: venture update images are re-encoded and stored under post-media");
+      it.todo("W13: web re-encodes venture update images before media stores them (stored under post-media: images.journey.test.ts)");
       it.todo("W13: the composer has no Event type for students, the poll composer defaults to Global on the Global tab, axe on the feed filters");
     });
 

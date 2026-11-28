@@ -1,6 +1,7 @@
 import type { ServiceImpl } from "@connectrpc/connect";
 import type { CommunityService } from "@skilient/contracts/community/v1/community_pb";
 import { z } from "zod";
+import { noticeFacts } from "../store/notice-facts";
 import { recordFacts } from "../store/record-facts";
 import { eventsApi } from "./events";
 import { paymentsApi } from "./payments";
@@ -25,6 +26,23 @@ export function createApi(deps: ApiDeps): ServiceImpl<typeof CommunityService> {
     async recordFacts(req) {
       const ids = (v: string[]) => parse(z.array(z.uuid()).max(200), v);
       return recordFacts(deps.sql, { eventIds: ids(req.eventIds), termIds: ids(req.termIds), attendeeIds: ids(req.attendeeIds), societyIds: ids(req.societyIds) });
+    },
+    async noticeFacts(req) {
+      const ids = (v: string[]) => parse(z.array(z.uuid()).max(200), v);
+      return noticeFacts(deps.sql, {
+        societyIds: ids(req.societyIds),
+        eventIds: ids(req.eventIds),
+        roundIds: ids(req.roundIds),
+        applicationIds: ids(req.applicationIds),
+        paymentIds: ids(req.paymentIds),
+        messageIds: ids(req.messageIds),
+        inviteIds: ids(req.inviteIds),
+        registrationIds: ids(req.registrationIds),
+        officerSocietyIds: ids(req.officerSocietyIds),
+        audienceSocietyIds: ids(req.audienceSocietyIds),
+        registrantEventIds: ids(req.registrantEventIds),
+        termIds: ids(req.termIds),
+      });
     },
   } as ServiceImpl<typeof CommunityService>;
 }

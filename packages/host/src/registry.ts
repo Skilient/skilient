@@ -3,7 +3,9 @@ import community from "@skilient/community";
 import content from "@skilient/content";
 import credentials from "@skilient/credentials";
 import identity from "@skilient/identity";
+import media from "@skilient/media";
 import messaging from "@skilient/messaging";
+import notify from "@skilient/notify";
 import people from "@skilient/people";
 import ranking from "@skilient/ranking";
 import realtime from "@skilient/realtime";
@@ -17,7 +19,9 @@ export const registry: Readonly<Record<string, ServiceModule>> = {
   [content.name]: content as unknown as ServiceModule,
   [credentials.name]: credentials as unknown as ServiceModule,
   [identity.name]: identity as unknown as ServiceModule,
+  [media.name]: media as unknown as ServiceModule,
   [messaging.name]: messaging as unknown as ServiceModule,
+  [notify.name]: notify as unknown as ServiceModule,
   [people.name]: people as unknown as ServiceModule,
   [ranking.name]: ranking as unknown as ServiceModule,
   [realtime.name]: realtime as unknown as ServiceModule,

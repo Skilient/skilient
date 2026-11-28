@@ -179,6 +179,10 @@ service PeopleService {
   rpc DeleteDepartment(DeleteDepartmentRequest) returns (DeleteDepartmentResponse);
   rpc SaveProgramme(SaveProgrammeRequest) returns (SaveProgrammeResponse);
   rpc DeleteProgramme(DeleteProgrammeRequest) returns (DeleteProgrammeResponse);
+
+  // ClaimLaunchRecipients: the requesters a newly live university's launch email goes to (consented, confirmed,
+  // not unsubscribed, not yet emailed), marked notified in the same transaction (notify, W9). At most 500 a call.
+  rpc ClaimLaunchRecipients(ClaimLaunchRecipientsRequest) returns (ClaimLaunchRecipientsResponse);
 }
 
 // ---------------------------------------------------------------------------
@@ -937,3 +941,15 @@ message DeleteProgrammeRequest {
 }
 
 message DeleteProgrammeResponse {}
+
+message ClaimLaunchRecipientsRequest {
+  string university_id = 1;
+}
+message ClaimLaunchRecipientsResponse {
+  message Recipient {
+    string request_id = 1;
+    string email = 2;
+  }
+  string university_name = 1;
+  repeated Recipient recipients = 2;
+}

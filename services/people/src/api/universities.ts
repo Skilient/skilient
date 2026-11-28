@@ -1,6 +1,8 @@
 import { create, type DescMessage, type MessageShape } from "@bufbuild/protobuf";
 import type { HandlerContext, ServiceImpl } from "@connectrpc/connect";
 import {
+  ClaimLaunchRecipientsRequestSchema,
+  ClaimLaunchRecipientsResponseSchema,
   ConfirmUniversityRequestRequestSchema,
   ConfirmUniversityRequestResponseSchema,
   DeleteDepartmentRequestSchema,
@@ -32,6 +34,7 @@ import { requireAccounts } from "../authorize";
 import type { ApiDeps } from "../deps";
 import { refused } from "../refusals";
 import {
+  claimLaunchRecipients,
   confirmUniversityRequest,
   deleteDepartment,
   deleteProgramme,
@@ -89,6 +92,19 @@ export function universitiesApi(deps: ApiDeps): Partial<ServiceImpl<typeof Peopl
       const token = parse(Token, req.token);
       return anon(ctx, UnsubscribeUniversityRequestRequestSchema, UnsubscribeUniversityRequestResponseSchema, req, async (tx) =>
         create(UnsubscribeUniversityRequestResponseSchema, { unsubscribed: await unsubscribeUniversityRequest(tx, token) }),
+      );
+    },
+
+    // notify's launch emails (queue_university_launch): marks the requests notified; the reply holds addresses.
+    async claimLaunchRecipients(req, ctx) {
+      const universityId = parse(Uuid, req.universityId);
+      return withWrite(
+        ctx,
+        sql,
+        { input: ClaimLaunchRecipientsRequestSchema, output: ClaimLaunchRecipientsResponseSchema },
+        req,
+        async (tx) => create(ClaimLaunchRecipientsResponseSchema, await claimLaunchRecipients(tx, universityId)),
+        { storeReply: false },
       );
     },
 

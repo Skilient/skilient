@@ -7,7 +7,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { foreignPattern, schemaOf, serviceNames } from "./schemas.mjs";
+import { firstForeign, foreignPattern, schemaOf, serviceNames } from "./schemas.mjs";
 
 const FILE = /^\d{4}_[a-z0-9_]+\.sql$/;
 
@@ -25,7 +25,7 @@ export function checkService(service, files, services) {
     const sql = stripComments(text);
     all.push(sql);
     for (const line of sql.split("\n")) {
-      const m = pattern?.exec(line);
+      const m = pattern ? firstForeign(pattern, line) : null;
       if (m) problems.push(`${service}/migrations/${name}: names another service's schema '${m[1]}'`);
     }
   }

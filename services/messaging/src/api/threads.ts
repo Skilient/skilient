@@ -108,6 +108,17 @@ export function threadsApi(deps: ApiDeps): Partial<ServiceImpl<typeof MessagingS
       const [row] = await sql<{ ok: boolean }[]>`select ${isMember(sql, r.userId, "t.id")} as ok from messaging.threads t where t.id = ${r.threadId}`;
       return { allowed: row?.ok ?? false };
     },
+    // notify's chat notices (W9): what notify_chat_message snapshotted, and a team chat's venture.
+    async messageExcerpts(req) {
+      const ids = parse(z.array(Uuid).max(200), req.messageIds);
+      const rows = await sql<{ id: string; thread_id: string; excerpt: string; venture_id: string | null }[]>`
+        select m.id::text, m.thread_id::text,
+               case when m.body <> '' then left(m.body, 120) when m.shared then 'Shared a post' else 'Sent an image' end as excerpt,
+               t.venture_id::text
+          from messaging.messages m join messaging.threads t on t.id = m.thread_id
+         where m.id = any(${ids}::uuid[]) and m.deleted_at is null`;
+      return { messages: rows.map((m) => ({ messageId: m.id, threadId: m.thread_id, excerpt: m.excerpt, ventureId: m.venture_id ?? "" })) };
+    },
     async openContactThread(req, ctx) {
       const r = parse(z.object({ studentId: Uuid, recruiterId: Uuid, orgId: Uuid }), req);
       if (r.studentId === r.recruiterId) throw refused("self_message");

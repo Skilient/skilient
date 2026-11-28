@@ -238,9 +238,15 @@ importers:
       '@skilient/identity':
         specifier: workspace:*
         version: link:../../services/identity
+      '@skilient/media':
+        specifier: workspace:*
+        version: link:../../services/media
       '@skilient/messaging':
         specifier: workspace:*
         version: link:../../services/messaging
+      '@skilient/notify':
+        specifier: workspace:*
+        version: link:../../services/notify
       '@skilient/people':
         specifier: workspace:*
         version: link:../../services/people
@@ -521,6 +527,61 @@ importers:
         specifier: workspace:*
         version: link:../../packages/testing
 
+  services/media:
+    dependencies:
+      '@bufbuild/protobuf':
+        specifier: 2.17.0
+        version: 2.17.0
+      '@connectrpc/connect':
+        specifier: 2.3.0
+        version: 2.3.0(@bufbuild/protobuf@2.17.0)
+      '@skilient/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@skilient/platform':
+        specifier: workspace:*
+        version: link:../../packages/platform
+      postgres:
+        specifier: 3.4.9
+        version: 3.4.9
+      zod:
+        specifier: 4.6.5
+        version: 4.6.5
+    devDependencies:
+      '@skilient/community':
+        specifier: workspace:*
+        version: link:../community
+      '@skilient/content':
+        specifier: workspace:*
+        version: link:../content
+      '@skilient/credentials':
+        specifier: workspace:*
+        version: link:../credentials
+      '@skilient/host':
+        specifier: workspace:*
+        version: link:../../packages/host
+      '@skilient/identity':
+        specifier: workspace:*
+        version: link:../identity
+      '@skilient/messaging':
+        specifier: workspace:*
+        version: link:../messaging
+      '@skilient/people':
+        specifier: workspace:*
+        version: link:../people
+      '@skilient/ranking':
+        specifier: workspace:*
+        version: link:../ranking
+      '@skilient/realtime':
+        specifier: workspace:*
+        version: link:../realtime
+      '@skilient/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      '@skilient/work':
+        specifier: workspace:*
+        version: link:../work
+
   services/messaging:
     dependencies:
       '@bufbuild/protobuf':
@@ -569,6 +630,61 @@ importers:
       ws:
         specifier: 8.22.0
         version: 8.22.0
+
+  services/notify:
+    dependencies:
+      '@bufbuild/protobuf':
+        specifier: 2.17.0
+        version: 2.17.0
+      '@connectrpc/connect':
+        specifier: 2.3.0
+        version: 2.3.0(@bufbuild/protobuf@2.17.0)
+      '@skilient/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@skilient/platform':
+        specifier: workspace:*
+        version: link:../../packages/platform
+      postgres:
+        specifier: 3.4.9
+        version: 3.4.9
+      zod:
+        specifier: 4.6.5
+        version: 4.6.5
+    devDependencies:
+      '@skilient/community':
+        specifier: workspace:*
+        version: link:../community
+      '@skilient/content':
+        specifier: workspace:*
+        version: link:../content
+      '@skilient/credentials':
+        specifier: workspace:*
+        version: link:../credentials
+      '@skilient/host':
+        specifier: workspace:*
+        version: link:../../packages/host
+      '@skilient/identity':
+        specifier: workspace:*
+        version: link:../identity
+      '@skilient/messaging':
+        specifier: workspace:*
+        version: link:../messaging
+      '@skilient/people':
+        specifier: workspace:*
+        version: link:../people
+      '@skilient/ranking':
+        specifier: workspace:*
+        version: link:../ranking
+      '@skilient/realtime':
+        specifier: workspace:*
+        version: link:../realtime
+      '@skilient/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      '@skilient/work':
+        specifier: workspace:*
+        version: link:../work
 
   services/people:
     dependencies:

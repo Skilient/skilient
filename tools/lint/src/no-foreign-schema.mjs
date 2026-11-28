@@ -1,4 +1,4 @@
-import { foreignPattern, ownerOf, schemaOf } from "./schemas.mjs";
+import { firstForeign, foreignPattern, ownerOf, schemaOf } from "./schemas.mjs";
 
 /**
  * "No query that names another service's schema" (CLAUDE.md, "Never").
@@ -21,7 +21,7 @@ export default {
     const pattern = foreignPattern(foreign);
     if (!pattern) return {};
     const check = (node, text) => {
-      const m = pattern.exec(text);
+      const m = firstForeign(pattern, text);
       if (m) context.report({ node, messageId: "foreign", data: { schema: m[1] } });
     };
     return {

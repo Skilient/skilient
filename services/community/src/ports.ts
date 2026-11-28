@@ -1,12 +1,24 @@
 import type { CallOptions } from "@connectrpc/connect";
 import { ContentService } from "@skilient/contracts/content/v1/content_pb";
 import { IdentityService, StaffRole } from "@skilient/contracts/identity/v1/identity_pb";
+import { MediaService } from "@skilient/contracts/media/v1/media_pb";
 import { PeopleService } from "@skilient/contracts/people/v1/people_pb";
 import { RankingService } from "@skilient/contracts/ranking/v1/ranking_pb";
-import { headers, type ClientFactory } from "@skilient/platform";
+import { headers, startCall, type ClientFactory } from "@skilient/platform";
 import { wanted, fill as fillDoc, type PersonFacts } from "./domain/people";
 import type { Role } from "./identity";
 import type { ResolvedEmail } from "./store/checkin";
+import type { Files } from "./store/societies";
+
+/** Society proofs, society images and receipts in media (W9): stored files only (CheckFiles). */
+export function mediaFiles(clients: ClientFactory): Files {
+  return {
+    async exists(bucket, path) {
+      const r = await clients.client(MediaService).checkFiles({ bucket, paths: [path] }, startCall() as CallOptions);
+      return r.files.some((f) => f.path === path && f.stored);
+    },
+  };
+}
 
 /**
  * Community's calls to other services: one batch call each, never one per person (CLAUDE.md, "Never"); `call`

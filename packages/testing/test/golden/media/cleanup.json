@@ -1,0 +1,46 @@
+{
+  "triggers": {
+    "afterAvatar": [
+      {
+        "message": {
+          "bucket": "avatars",
+          "path": "<uuid:1>/<uuid:2>.webp"
+        }
+      }
+    ],
+    "afterCredential": [
+      {
+        "message": {
+          "bucket": "avatars",
+          "path": "<uuid:1>/<uuid:2>.webp"
+        }
+      },
+      {
+        "message": {
+          "bucket": "post-media",
+          "path": "<uuid:1>/<uuid:3>.webp"
+        }
+      },
+      {
+        "message": {
+          "bucket": "credentials",
+          "path": "<uuid:1>/<uuid:4>.pdf"
+        }
+      }
+    ],
+    "afterPost": [
+      {
+        "message": {
+          "bucket": "avatars",
+          "path": "<uuid:1>/<uuid:2>.webp"
+        }
+      },
+      {
+        "message": {
+          "bucket": "post-media",
+          "path": "<uuid:1>/<uuid:3>.webp"
+        }
+      }
+    ]
+  }
+}

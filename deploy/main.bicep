@@ -100,6 +100,17 @@ module data 'modules/data.bicep' = {
   }
 }
 
+@description('Link skilient.com to the Communication Services resource. Needs every DNS check verified (SPF too); true once docs/azure/setup-checklist.md says so.')
+param linkEmailDomain bool = false
+
+module communication 'modules/communication.bicep' = {
+  name: 'communication'
+  params: {
+    prefix: prefix
+    linkDomain: linkEmailDomain
+  }
+}
+
 module apps 'modules/apps.bicep' = if (deployApps && deployDatabase) {
   name: 'apps'
   params: {
@@ -109,6 +120,9 @@ module apps 'modules/apps.bicep' = if (deployApps && deployDatabase) {
     workspaceName: observability.outputs.workspaceName
     keyVaultName: data.outputs.keyVaultName
     storageAccountName: data.outputs.storageAccountName
+    mediaBlobUrl: data.outputs.blobEndpoint
+    communicationName: communication.outputs.communicationName
+    emailEndpoint: communication.outputs.emailEndpoint
     postgresFqdn: data.outputs.postgresFqdn
     webImage: webImage
     serviceImage: serviceImage

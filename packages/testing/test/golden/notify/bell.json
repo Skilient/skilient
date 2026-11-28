@@ -1,0 +1,193 @@
+{
+  "marking": {
+    "again": {
+      "ok": true,
+      "value": [
+        {
+          "mark_notification_read": null
+        }
+      ]
+    },
+    "all": {
+      "ok": true,
+      "value": [
+        {
+          "n": 2
+        }
+      ]
+    },
+    "allAgain": {
+      "ok": true,
+      "value": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    "countAfterAll": {
+      "ok": true,
+      "value": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    "countAfterOne": {
+      "ok": true,
+      "value": [
+        {
+          "n": 2
+        }
+      ]
+    },
+    "mine": {
+      "ok": true,
+      "value": [
+        {
+          "mark_notification_read": null
+        }
+      ]
+    },
+    "others": {
+      "code": "P0002",
+      "message": "that notification doesn't exist",
+      "ok": false
+    },
+    "signedOut": {
+      "code": "42501",
+      "message": "permission denied for function mark_all_notifications_read",
+      "ok": false
+    },
+    "unknown": {
+      "code": "P0002",
+      "message": "that notification doesn't exist",
+      "ok": false
+    }
+  },
+  "notices": {
+    "amna": {
+      "ok": true,
+      "value": [
+        {
+          "actor_avatar_path": null,
+          "actor_name": "Dua Lapwing",
+          "actor_username": null,
+          "category": "friend_requests",
+          "created_at": "<time>",
+          "data": {},
+          "entity_id": "<uuid:1>",
+          "entity_type": "friend_request",
+          "id": "<uuid:2>",
+          "read_at": null,
+          "type": "friend_request"
+        },
+        {
+          "actor_avatar_path": "<uuid:3>/<uuid:4>.webp",
+          "actor_name": "Chen Plover",
+          "actor_username": "nt_chen",
+          "category": "comments",
+          "created_at": "<time>",
+          "data": {
+            "comment_id": "<uuid:5>",
+            "excerpt": "Count me in, and @nt_bilal is bringing the spare tripod for the long lens.",
+            "post_id": "<uuid:6>"
+          },
+          "entity_id": "<uuid:6>",
+          "entity_type": "post",
+          "id": "<uuid:7>",
+          "read_at": null,
+          "type": "comment_received"
+        },
+        {
+          "actor_avatar_path": "<uuid:8>/<uuid:9>.webp",
+          "actor_name": "Bilal Plover",
+          "actor_username": "nt_bilal",
+          "category": "friend_requests",
+          "created_at": "<time>",
+          "data": {},
+          "entity_id": "<uuid:10>",
+          "entity_type": "friend_request",
+          "id": "<uuid:11>",
+          "read_at": null,
+          "type": "friend_request"
+        }
+      ]
+    },
+    "bilal": {
+      "ok": true,
+      "value": [
+        {
+          "actor_avatar_path": "<uuid:3>/<uuid:4>.webp",
+          "actor_name": "Chen Plover",
+          "actor_username": "nt_chen",
+          "category": "mentions",
+          "created_at": "<time>",
+          "data": {
+            "comment_id": "<uuid:5>",
+            "excerpt": "Count me in, and @nt_bilal is bringing the spare tripod for the long lens.",
+            "post_id": "<uuid:6>"
+          },
+          "entity_id": "<uuid:6>",
+          "entity_type": "post",
+          "id": "<uuid:12>",
+          "read_at": null,
+          "type": "comment_mention"
+        },
+        {
+          "actor_avatar_path": "<uuid:13>/<uuid:14>.webp",
+          "actor_name": "Amna Plover",
+          "actor_username": "nt_amna",
+          "category": "friend_requests",
+          "created_at": "<time>",
+          "data": {},
+          "entity_id": "<uuid:10>",
+          "entity_type": "friend_request",
+          "id": "<uuid:15>",
+          "read_at": null,
+          "type": "friend_accepted"
+        }
+      ]
+    },
+    "chen": {
+      "ok": true,
+      "value": []
+    },
+    "counts": {
+      "amna": {
+        "ok": true,
+        "value": [
+          {
+            "n": 3
+          }
+        ]
+      },
+      "bilal": {
+        "ok": true,
+        "value": [
+          {
+            "n": 2
+          }
+        ]
+      },
+      "chen": {
+        "ok": true,
+        "value": [
+          {
+            "n": 0
+          }
+        ]
+      }
+    },
+    "page": {
+      "ok": true,
+      "value": [
+        {
+          "type": "comment_received"
+        },
+        {
+          "type": "friend_request"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package skilient.media.v1;
+
+// media: signed upload and download links, one row per file with its owner and bucket, the file checks other
+// services make before they attach a file (content's posts, messaging's chat images, community's proofs, media
+// and receipts, work's credentials and venture updates, credentials' CV exports), private buckets readable only by
+// their owner or by whoever the owning service allows, and deleting unused files (the storage-cleanup rules, one
+// per bucket) (docs/azure/prd.md, "Platform services"; docs/azure/media-function-bins.md). Image re-encoding stays
+// in web at the floor; media signs and records.
+//
+// A path is `<folder>/<uuid>.<webp|pdf>` (event receipts: `<event>/<registration>/<uuid>.<ext>`). For the buckets
+// people own, the first folder is the uploader; for chat images, receipts and the group buckets it is the group,
+// and the owning service checks the group when it attaches the file (CheckFiles returns the uploader).
+service MediaService {
+  // CreateUpload: a signed link to PUT one file (web, as the uploader). The reply is not kept for retries.
+  rpc CreateUpload(CreateUploadRequest) returns (CreateUploadResponse);
+  // PutFile: a service stores bytes it made (credentials' render job). Owner and path come from the caller.
+  rpc PutFile(PutFileRequest) returns (PutFileResponse);
+  // CheckFiles: what media knows about files (owner, type, size, stored); a file uploaded since its link was made
+  // is confirmed against the store first. Services only. At most 50 paths.
+  rpc CheckFiles(CheckFilesRequest) returns (CheckFilesResponse);
+  // DownloadLinks: signed links to read files. Web: only the caller's own files of a private bucket (public
+  // buckets: anyone). Services: any file, for readers they have authorised. At most 50 paths. One database trip.
+  rpc DownloadLinks(DownloadLinksRequest) returns (DownloadLinksResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // StorageUsage: files and bytes per bucket (staff with two-factor). One database trip.
+  rpc StorageUsage(StorageUsageRequest) returns (StorageUsageResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+}
+
+message CreateUploadRequest {
+  string bucket = 1;
+  // image/webp or application/pdf, as the bucket allows.
+  string mime = 2;
+  int64 bytes = 3;
+  // Group buckets only (a chat thread, `event/registration` for receipts, a society, an organisation or a
+  // university); the others use the uploader's folder.
+  string folder = 4;
+}
+message CreateUploadResponse {
+  string path = 1;
+  string url = 2;
+  // Headers the PUT must send.
+  map<string, string> headers = 3;
+  string expires_at = 4;
+}
+
+message PutFileRequest {
+  string bucket = 1;
+  string path = 2;
+  string owner_id = 3;
+  string mime = 4;
+  bytes data = 5;
+}
+message PutFileResponse {}
+
+message CheckFilesRequest {
+  string bucket = 1;
+  repeated string paths = 2;
+}
+message CheckFilesResponse {
+  message File {
+    string path = 1;
+    // False: no such file (never uploaded, or deleted).
+    bool stored = 2;
+    string owner_id = 3;
+    string mime = 4;
+    int64 bytes = 5;
+  }
+  repeated File files = 1;
+}
+
+message DownloadLinksRequest {
+  string bucket = 1;
+  repeated string paths = 2;
+  // 60 to 3600; 0 means 600.
+  int32 ttl_seconds = 3;
+}
+message DownloadLinksResponse {
+  message Link {
+    string path = 1;
+    string url = 2;
+  }
+  // Only the paths the caller may read that are stored.
+  repeated Link links = 1;
+}
+
+message StorageUsageRequest {}
+message StorageUsageResponse {
+  message Bucket {
+    string bucket = 1;
+    int64 objects = 2;
+    int64 bytes = 3;
+  }
+  repeated Bucket buckets = 1;
+  int64 quota_bytes = 2;
+}

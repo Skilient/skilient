@@ -81,7 +81,7 @@ describeTransports(
       });
 
       it.todo("W13: the Message button on a profile, the empty state, the composer (Enter sends, sending marks), the image picker, axe in both themes");
-      it.todo("W9: the image is re-encoded and stored in chat-media; reading it needs a signed link");
+      it.todo("W13: web re-encodes the image before media stores it, and the chat page asks messaging for signed links (storage and the link rule: images.journey.test.ts)");
     });
 
     describe("chat.spec: a DM whose other member deleted their account still loads, read-only", () => {

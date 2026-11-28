@@ -159,5 +159,12 @@ export function postsApi(deps: ApiDeps): Partial<ServiceImpl<typeof ContentServi
           from content.posts p where p.id = any(${r.postIds}::uuid[])`;
       return { posts: rows.map((x) => ({ postId: x.id, authorId: x.author_id, visible: x.visible })) };
     },
+    // notify's comment, reply and mention notices (W9): the first 120 characters, as add_comment snapshotted them.
+    async commentExcerpts(req) {
+      const ids = parse(Ids(200), req.commentIds);
+      const rows = await sql<{ id: string; post_id: string; excerpt: string }[]>`
+        select id::text, post_id::text, left(body, 120) as excerpt from content.post_comments where id = any(${ids}::uuid[]) and deleted_at is null`;
+      return { comments: rows.map((x) => ({ commentId: x.id, postId: x.post_id, excerpt: x.excerpt })) };
+    },
   };
 }

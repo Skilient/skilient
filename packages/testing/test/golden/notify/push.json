@@ -1,0 +1,187 @@
+{
+  "push": {
+    "after": {
+      "ok": true,
+      "value": [
+        {
+          "s": {
+            "categories": [
+              {
+                "category": "messages",
+                "label": "Messages",
+                "push": false
+              },
+              {
+                "category": "societies",
+                "label": "Societies and events",
+                "push": true
+              },
+              {
+                "category": "record",
+                "label": "Your Record",
+                "push": true
+              },
+              {
+                "category": "growth",
+                "label": "Paths, tasks and swaps",
+                "push": true
+              }
+            ],
+            "devices": 1
+          }
+        }
+      ]
+    },
+    "again": {
+      "ok": true,
+      "value": [
+        {
+          "save_push_subscription": null
+        }
+      ]
+    },
+    "amnaAfterMove": {
+      "ok": true,
+      "value": [
+        {
+          "s": {
+            "categories": [
+              {
+                "category": "messages",
+                "label": "Messages",
+                "push": false
+              },
+              {
+                "category": "societies",
+                "label": "Societies and events",
+                "push": true
+              },
+              {
+                "category": "record",
+                "label": "Your Record",
+                "push": true
+              },
+              {
+                "category": "growth",
+                "label": "Paths, tasks and swaps",
+                "push": true
+              }
+            ],
+            "devices": 0
+          }
+        }
+      ]
+    },
+    "badEndpoint": {
+      "code": "22023",
+      "message": "this browser's push service isn't supported",
+      "ok": false
+    },
+    "badKeys": {
+      "code": "22023",
+      "message": "that subscription isn't valid",
+      "ok": false
+    },
+    "before": {
+      "ok": true,
+      "value": [
+        {
+          "s": {
+            "categories": [
+              {
+                "category": "messages",
+                "label": "Messages",
+                "push": true
+              },
+              {
+                "category": "societies",
+                "label": "Societies and events",
+                "push": true
+              },
+              {
+                "category": "record",
+                "label": "Your Record",
+                "push": true
+              },
+              {
+                "category": "growth",
+                "label": "Paths, tasks and swaps",
+                "push": true
+              }
+            ],
+            "devices": 0
+          }
+        }
+      ]
+    },
+    "bilalAfter": {
+      "ok": true,
+      "value": [
+        {
+          "s": {
+            "categories": [
+              {
+                "category": "messages",
+                "label": "Messages",
+                "push": true
+              },
+              {
+                "category": "societies",
+                "label": "Societies and events",
+                "push": true
+              },
+              {
+                "category": "record",
+                "label": "Your Record",
+                "push": true
+              },
+              {
+                "category": "growth",
+                "label": "Paths, tasks and swaps",
+                "push": true
+              }
+            ],
+            "devices": 0
+          }
+        }
+      ]
+    },
+    "deleteAll": {
+      "ok": true,
+      "value": [
+        {
+          "delete_push_subscription": null
+        }
+      ]
+    },
+    "movedToBilal": {
+      "ok": true,
+      "value": [
+        {
+          "save_push_subscription": null
+        }
+      ]
+    },
+    "notPushed": {
+      "code": "P0002",
+      "message": "this kind of notification isn't pushed",
+      "ok": false
+    },
+    "off": {
+      "ok": true,
+      "value": [
+        {
+          "set_push_pref": null
+        }
+      ]
+    },
+    "saved": {
+      "ok": true,
+      "value": [
+        {
+          "save_push_subscription": null
+        }
+      ]
+    }
+  }
+}

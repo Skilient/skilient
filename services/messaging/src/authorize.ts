@@ -29,6 +29,7 @@ export const callers: CallerPolicy<typeof MessagingService> = {
   sharePost: WEB,
   undoShare: WEB,
   canListen: ["realtime"],
+  messageExcerpts: ["notify"],
   openContactThread: ["market"],
   closeThread: ["market"],
 };

@@ -4,7 +4,7 @@ import type postgres from "postgres";
 import { createApi } from "./api";
 import { callers } from "./authorize";
 import { communityJobs, communitySchedules } from "./jobs";
-import { ports } from "./ports";
+import { mediaFiles, ports } from "./ports";
 import { copiesConsumer } from "./store/copies";
 import { pathRuleOnly } from "./store/societies";
 import { tickets } from "./store/tickets";
@@ -39,8 +39,9 @@ export default defineService({
       worker.start();
       await scheduler.start();
     }
-    // Files are media's (W9); until media checks them, an upload path is held to its owner's folder only.
-    return createApi({ sql, logger: deps.logger, ports: ports(deps.clients), tickets: tickets(key), files: pathRuleOnly });
+    // Files are media's (W9); MEDIA_CHECKS=off keeps the path rule for tests that don't host media.
+    const files = process.env["MEDIA_CHECKS"] === "off" ? pathRuleOnly : mediaFiles(deps.clients);
+    return createApi({ sql, logger: deps.logger, ports: ports(deps.clients), tickets: tickets(key), files });
   },
   async ready() {
     if (!sql) return false;

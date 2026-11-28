@@ -33,4 +33,5 @@ export const callers: CallerPolicy<typeof ContentService> = {
   linkPreviews: ["messaging"],
   queueLinkPreviews: ["messaging"],
   canListenFeed: ["realtime"],
+  commentExcerpts: ["notify"],
 };

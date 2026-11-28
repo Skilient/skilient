@@ -78,3 +78,8 @@ Also in the group, not part of the floor: `skilient-foundry` (AI Foundry, create
 ## Loose ends on Ahmed's machine
 
 - `~/Downloads/skilientapp.2026-09-27.private-key.pem` is the older App private key in plain text. Shred it once production's copy is confirmed stored: `shred -u ~/Downloads/skilientapp.2026-09-27.private-key.pem`.
+
+## 2026-11-28: email and media (W9)
+
+- Made by hand in `skilient-rg` (and in `deploy/modules/communication.bicep`, so a deploy adopts them): provider `Microsoft.Communication` registered; `skilient-email` with domain `skilient.com` and senders notify@ and security@; `skilient-comms` (`skilient-comms.uae.communication.azure.com`), data in the UAE. DNS on Vercel: verification TXT and both DKIM verified; SPF merged with Zoho's, Azure's SPF check failed (wants `-all`), so the domain is not linked yet (`linkEmailDomain=false`). See `docs/azure/setup-checklist.md` section 4.
+- In the Bicep only (lands with the next deploy): media's 13 containers, CORS and shared-key access off on `skilientsttohnfutbiqx5a`; core-a's `AZURE_CLIENT_ID`, `MEDIA_BLOB_URL`, `NOTIFY_EMAIL_ENDPOINT`, `APP_URL`; roles Storage Blob Delegator and Contributor on `skilient-comms` for `skilient-core-a-id`. `az bicep build` clean.

@@ -3,7 +3,7 @@ import { defineService, type Consumer } from "@skilient/platform";
 import type postgres from "postgres";
 import { createApi } from "./api";
 import { callers } from "./authorize";
-import { contentPort, peoplePort, venturePort } from "./ports";
+import { contentPort, mediaPort, peoplePort, venturePort } from "./ports";
 import { copiesConsumer } from "./store/copies";
 
 let sql: postgres.Sql | undefined;
@@ -25,7 +25,15 @@ export default defineService({
       consumers = [copiesConsumer({ sql, logger: deps.logger })];
       for (const c of consumers) await c.start();
     }
-    return createApi({ sql, logger: deps.logger, people: peoplePort(deps.clients), content: contentPort(deps.clients), ventures: venturePort(deps.clients) });
+    return createApi({
+      sql,
+      logger: deps.logger,
+      people: peoplePort(deps.clients),
+      content: contentPort(deps.clients),
+      ventures: venturePort(deps.clients),
+      // Chat images are media's (W9); MEDIA_CHECKS=off keeps the path rule for tests that don't host media.
+      ...(process.env["MEDIA_CHECKS"] === "off" ? {} : { media: mediaPort(deps.clients) }),
+    });
   },
   async ready() {
     if (!sql) return false;

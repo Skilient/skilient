@@ -12,6 +12,9 @@ param pgZone string = ''
 @description('false skips the PostgreSQL server and everything on it (configurations, database). For while the subscription cannot create the size yet.')
 param deployDatabase bool = true
 
+@description('Browser origins allowed to upload to and read from media\'s storage (CORS).')
+param appOrigins array = ['https://skilient.com', 'https://www.skilient.com']
+
 @secure()
 param pgAdminPassword string
 
@@ -117,11 +120,52 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
   properties: {
     accessTier: 'Hot'
-    allowBlobPublicAccess: false
+    // Only media's five public buckets allow anonymous reads (their containers say so); the rest are private and
+    // read through links media signs. No account key is used anywhere (managed identities and user-delegation SAS).
+    allowBlobPublicAccess: true
+    allowSharedKeyAccess: false
     minimumTlsVersion: 'TLS1_2'
     supportsHttpsTrafficOnly: true
   }
 }
+
+// Media's buckets (services/media/src/domain/buckets.ts), one container each; browsers PUT uploads straight here.
+var publicBuckets = ['avatars', 'covers', 'post-media', 'society-media', 'university-media']
+var privateBuckets = ['chat-media', 'credentials', 'cv-exports', 'event-receipts', 'feedback', 'org-documents', 'society-documents', 'university-claims']
+
+resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' = {
+  parent: storage
+  name: 'default'
+  properties: {
+    cors: {
+      corsRules: [
+        {
+          allowedOrigins: appOrigins
+          allowedMethods: ['PUT', 'GET', 'HEAD']
+          allowedHeaders: ['content-type', 'x-ms-blob-type', 'x-ms-version']
+          exposedHeaders: ['etag']
+          maxAgeInSeconds: 3600
+        }
+      ]
+    }
+  }
+}
+
+resource publicContainers 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = [for b in publicBuckets: {
+  parent: blobService
+  name: b
+  properties: {
+    publicAccess: 'Blob'
+  }
+}]
+
+resource privateContainers 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = [for b in privateBuckets: {
+  parent: blobService
+  name: b
+  properties: {
+    publicAccess: 'None'
+  }
+}]
 
 resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: take('${prefix}-kv-${uniqueString(resourceGroup().id)}', 24)
@@ -141,4 +185,5 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
 
 output postgresFqdn string = deployDatabase ? pg!.properties.fullyQualifiedDomainName : ''
 output storageAccountName string = storage.name
+output blobEndpoint string = replace(storage.properties.primaryEndpoints.blob, '.net/', '.net')
 output keyVaultName string = kv.name

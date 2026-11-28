@@ -113,7 +113,7 @@ describeTransports(
         expect(audit!.action).toBe("credential.approve");
       });
 
-      it.todo("W9: the PDF is stored privately in the credentials store and only the student and reviewers can open it");
+      it.todo("W13: the reviewer's page asks work for the PDF's signed link (stored privately, opened by the student and through work: credential-files.journey.test.ts)");
       it.todo("W13: the upload form, /ops/evidence and the profile's credentials, axe in both themes");
     });
 

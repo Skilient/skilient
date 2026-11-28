@@ -9,6 +9,12 @@ param acaSubnetId string
 param workspaceName string
 param keyVaultName string
 param storageAccountName string
+@description('Media\'s storage address (https://<account>.blob.core.windows.net), core-a\'s MEDIA_BLOB_URL.')
+param mediaBlobUrl string
+@description('The Communication Services resource notify sends email through (core-a gets a role on it).')
+param communicationName string
+@description('https://<name>.<geo>.communication.azure.com, core-a\'s NOTIFY_EMAIL_ENDPOINT.')
+param emailEndpoint string
 param postgresFqdn string
 param webImage string
 param serviceImage string
@@ -48,6 +54,8 @@ param ghcrUsername string
 // Built-in role definition IDs.
 var keyVaultSecretsUser = '4633458b-17de-408a-b874-0445c86b69e6'
 var storageBlobDataContributor = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
+var storageBlobDelegator = 'db58b8e5-c6ad-4a2a-8342-4190687cbf4a'
+var contributor = 'b24988ac-6180-49ab-a8b6-81f8fe8b2f24'
 
 var cfRestrictions = [for (range, i) in cloudflareIpRanges: {
   name: 'cloudflare-${i}'
@@ -232,6 +240,23 @@ resource coreA 'Microsoft.App/containerApps@2024-03-01' = {
             {
               name: 'SERVICES'
               value: 'identity,people,content,notify,trust,media'
+            }
+            {
+              // Which user-assigned identity Azure's token endpoint signs in as (Key Vault, Blob Storage, email).
+              name: 'AZURE_CLIENT_ID'
+              value: coreAId.properties.clientId
+            }
+            {
+              name: 'MEDIA_BLOB_URL'
+              value: mediaBlobUrl
+            }
+            {
+              name: 'NOTIFY_EMAIL_ENDPOINT'
+              value: emailEndpoint
+            }
+            {
+              name: 'APP_URL'
+              value: 'https://skilient.com'
             }
             {
               name: 'DB_HOST'
@@ -755,6 +780,32 @@ resource storageJobs 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', storageBlobDataContributor)
     principalId: jobsId.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+// Media (core-a) signs user-delegation links to read and upload files: the delegation key needs this role.
+resource delegatorCoreA 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(storage.id, coreAId.id, storageBlobDelegator)
+  scope: storage
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', storageBlobDelegator)
+    principalId: coreAId.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+// Notify (core-a) sends email through Communication Services with its identity: Contributor on that one resource.
+resource comms 'Microsoft.Communication/communicationServices@2023-04-01' existing = {
+  name: communicationName
+}
+
+resource commsCoreA 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(comms.id, coreAId.id, contributor)
+  scope: comms
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', contributor)
+    principalId: coreAId.properties.principalId
     principalType: 'ServicePrincipal'
   }
 }

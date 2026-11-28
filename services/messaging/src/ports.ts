@@ -1,9 +1,21 @@
 import type { CallOptions } from "@connectrpc/connect";
 import { ContentService } from "@skilient/contracts/content/v1/content_pb";
+import { MediaService } from "@skilient/contracts/media/v1/media_pb";
 import { PeopleService } from "@skilient/contracts/people/v1/people_pb";
 import type { ClientFactory } from "@skilient/platform";
 import { WorkService } from "@skilient/contracts/work/v1/work_pb";
-import type { ContentPort, PeoplePort, VenturePort } from "./deps";
+import type { ContentPort, MediaPort, PeoplePort, VenturePort } from "./deps";
+
+/** Chat images in media (W9): who uploaded a stored file (CheckFiles), or null when it isn't stored. */
+export function mediaPort(clients: ClientFactory): MediaPort {
+  return {
+    async uploader(path, call) {
+      const r = await clients.client(MediaService).checkFiles({ bucket: "chat-media", paths: [path] }, call as CallOptions);
+      const f = r.files.find((x) => x.path === path);
+      return f?.stored ? f.ownerId || null : null;
+    },
+  };
+}
 
 /** Messaging's calls to people: one batch call each, never one per user. */
 export function peoplePort(clients: ClientFactory): PeoplePort {

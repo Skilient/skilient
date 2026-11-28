@@ -104,7 +104,7 @@ describeTransports(
         expect((await eventsOf(w, "event.registered")).filter((e) => e.payload["registration_id"] === lateReg).map((e) => e.payload["reason"])).toEqual(["registered", "hold_expired"]);
       });
 
-      it.todo("W9 media: receipts stay private (the buyer reads theirs, another student can't) and are deleted 90 days after the event");
+
       it.todo("W13: the payments page, the buy sheet (Hold my seat, the paid note), the receipt upload (sharp re-encode, hash and dHash), the review cards, axe in both themes");
     });
   },

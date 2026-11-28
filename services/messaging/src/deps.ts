@@ -11,6 +11,13 @@ export interface ApiDeps {
   people: PeoplePort;
   content: ContentPort;
   ventures: VenturePort;
+  /** Chat images (media, W9); absent where media isn't hosted (tests with MEDIA_CHECKS=off): the path rule only. */
+  media?: MediaPort;
+}
+
+/** Chat images in media's chat-media bucket: stored, and uploaded by whom. */
+export interface MediaPort {
+  uploader(path: string, call: unknown): Promise<string | null>;
 }
 
 export interface PersonCard {

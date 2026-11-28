@@ -399,8 +399,40 @@ export function venturesApi(deps: ApiDeps): Partial<ServiceImpl<typeof W.WorkSer
     async cvFacts(req) {
       return create(W.CvFactsResponseSchema, { json: JSON.stringify(await cvFacts(sql, parse(Uuid, req.userId))) });
     },
+    // notify's notices (W9): titles and catalogue names as the stack's notify calls snapshotted them. One trip.
+    async noticeFacts(req) {
+      const Ids = z.array(Uuid).max(200);
+      const q = parse(
+        z.object({ ventureIds: Ids, skillIds: z.array(z.string().max(80)).max(200), credentialIds: Ids, attemptIds: Ids, sessionIds: Ids }),
+        { ventureIds: req.ventureIds, skillIds: req.skillIds, credentialIds: req.credentialIds, attemptIds: req.attemptIds, sessionIds: req.sessionIds },
+      );
+      const [r] = await sql<{ ventures: R0[]; skills: R0[]; credentials: R0[]; attempts: R0[]; sessions: R0[] }[]>`
+        select
+          coalesce((select json_agg(json_build_object('id', v.id, 'title', v.title, 'owner_id', v.owner_id,
+                                                      'member_ids', coalesce((select json_agg(m.user_id order by m.joined_at) from work.venture_members m where m.venture_id = v.id), '[]')))
+                      from work.ventures v where v.id = any(${q.ventureIds}::uuid[])), '[]') as ventures,
+          coalesce((select json_agg(json_build_object('id', k.id, 'name', k.name)) from work.skills k where k.id = any(${q.skillIds}::text[])), '[]') as skills,
+          coalesce((select json_agg(json_build_object('id', c.id, 'title', c.title, 'review_reason', coalesce(c.review_reason, '')))
+                      from work.credentials c where c.id = any(${q.credentialIds}::uuid[])), '[]') as credentials,
+          coalesce((select json_agg(json_build_object('id', a.id, 'title', t.title, 'skill', coalesce(k.name, '')))
+                      from work.task_attempts a join work.proof_tasks t on t.id = a.task_id left join work.skills k on k.id = a.skill_id
+                     where a.id = any(${q.attemptIds}::uuid[])), '[]') as attempts,
+          coalesce((select json_agg(json_build_object('id', s.id, 'swap_id', s.swap_id, 'proposed_by', s.proposed_by, 'place', s.place,
+                                                      'when', to_char(s.starts_at at time zone 'Asia/Karachi', 'FMDy DD Mon, HH24:MI')))
+                      from work.swap_sessions s where s.id = any(${q.sessionIds}::uuid[])), '[]') as sessions`;
+      const s = (v: unknown) => String(v ?? "");
+      return create(W.NoticeFactsResponseSchema, {
+        ventures: r!.ventures.map((v) => ({ id: s(v["id"]), title: s(v["title"]), ownerId: s(v["owner_id"]), memberIds: (v["member_ids"] as string[]) ?? [] })),
+        skills: r!.skills.map((k) => ({ id: s(k["id"]), name: s(k["name"]) })),
+        credentials: r!.credentials.map((c) => ({ id: s(c["id"]), title: s(c["title"]), reviewReason: s(c["review_reason"]) })),
+        attempts: r!.attempts.map((a) => ({ id: s(a["id"]), title: s(a["title"]), skill: s(a["skill"]) })),
+        sessions: r!.sessions.map((x) => ({ id: s(x["id"]), swapId: s(x["swap_id"]), when: s(x["when"]), place: s(x["place"]), proposedBy: s(x["proposed_by"]) })),
+      });
+    },
   };
 }
+
+type R0 = Record<string, unknown>;
 
 function summary(r: R.SummaryRow) {
   return {

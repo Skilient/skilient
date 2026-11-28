@@ -1,0 +1,465 @@
+{
+  "prefs": {
+    "after": {
+      "ok": true,
+      "value": [
+        {
+          "allow_instant": true,
+          "category": "friend_requests",
+          "channel": "digest",
+          "description": "Someone asks to be your friend.",
+          "label": "Friend requests"
+        },
+        {
+          "allow_instant": true,
+          "category": "applications",
+          "channel": "instant_email",
+          "description": "Applications to your ventures, and decisions on yours.",
+          "label": "Applications"
+        },
+        {
+          "allow_instant": true,
+          "category": "invites",
+          "channel": "instant_email",
+          "description": "An owner invites you to join their team.",
+          "label": "Venture invites"
+        },
+        {
+          "allow_instant": true,
+          "category": "ownership",
+          "channel": "instant_email",
+          "description": "A venture is handed over to you.",
+          "label": "Ownership transfers"
+        },
+        {
+          "allow_instant": false,
+          "category": "team",
+          "channel": "off",
+          "description": "People joining or leaving your ventures, and ventures completing.",
+          "label": "Your teams"
+        },
+        {
+          "allow_instant": false,
+          "category": "comments",
+          "channel": "off",
+          "description": "Comments on your posts and replies to your comments.",
+          "label": "Comments"
+        },
+        {
+          "allow_instant": false,
+          "category": "mentions",
+          "channel": "digest",
+          "description": "Someone mentions you with @username.",
+          "label": "Mentions"
+        },
+        {
+          "allow_instant": false,
+          "category": "messages",
+          "channel": "digest",
+          "description": "New messages in your chats while you're away.",
+          "label": "Messages"
+        },
+        {
+          "allow_instant": true,
+          "category": "account",
+          "channel": "instant_email",
+          "description": "Moderation decisions about your content and account.",
+          "label": "Account and safety"
+        },
+        {
+          "allow_instant": false,
+          "category": "trust",
+          "channel": "off",
+          "description": "Endorsements, credential and code-check results, and your tier.",
+          "label": "Trust and ranking"
+        },
+        {
+          "allow_instant": false,
+          "category": "feedback",
+          "channel": "digest",
+          "description": "Skilient staff answer or update feedback you sent.",
+          "label": "Feedback replies"
+        },
+        {
+          "allow_instant": false,
+          "category": "faculty",
+          "channel": "off",
+          "description": "Supervisors, reviews and teacher updates. Teachers get one weekly digest instead of emails.",
+          "label": "Faculty supervision and reviews"
+        },
+        {
+          "allow_instant": true,
+          "category": "contact_requests",
+          "channel": "digest",
+          "description": "A company asks to talk to you about a role.",
+          "label": "Recruiter contact requests"
+        },
+        {
+          "allow_instant": true,
+          "category": "job_updates",
+          "channel": "digest",
+          "description": "Where your applications stand, and hires you were part of.",
+          "label": "Job applications"
+        },
+        {
+          "allow_instant": true,
+          "category": "recruiting",
+          "channel": "digest",
+          "description": "Organisation decisions, answers to your requests and hiring tasks.",
+          "label": "Recruiting"
+        },
+        {
+          "allow_instant": false,
+          "category": "university",
+          "channel": "digest",
+          "description": "Announcements, events, awards and portal news from your university.",
+          "label": "Your university"
+        },
+        {
+          "allow_instant": true,
+          "category": "societies",
+          "channel": "digest",
+          "description": "Societies you follow or belong to, their posts and events, and your tickets.",
+          "label": "Societies and events"
+        },
+        {
+          "allow_instant": true,
+          "category": "record",
+          "channel": "digest",
+          "description": "New entries on your Record, revocations, corrections and the ones you confirm as an officer.",
+          "label": "Your Record"
+        },
+        {
+          "allow_instant": true,
+          "category": "growth",
+          "channel": "digest",
+          "description": "Proof tasks done or sent back, reviews asked of you, and your skill swaps.",
+          "label": "Paths, tasks and swaps"
+        },
+        {
+          "allow_instant": true,
+          "category": "billing",
+          "channel": "instant_email",
+          "description": "Receipts, invoices, failed payments, renewals and sponsorship. Always emailed; can't be turned off.",
+          "label": "Billing"
+        }
+      ]
+    },
+    "before": {
+      "ok": true,
+      "value": [
+        {
+          "allow_instant": true,
+          "category": "friend_requests",
+          "channel": "instant_email",
+          "description": "Someone asks to be your friend.",
+          "label": "Friend requests"
+        },
+        {
+          "allow_instant": true,
+          "category": "applications",
+          "channel": "instant_email",
+          "description": "Applications to your ventures, and decisions on yours.",
+          "label": "Applications"
+        },
+        {
+          "allow_instant": true,
+          "category": "invites",
+          "channel": "instant_email",
+          "description": "An owner invites you to join their team.",
+          "label": "Venture invites"
+        },
+        {
+          "allow_instant": true,
+          "category": "ownership",
+          "channel": "instant_email",
+          "description": "A venture is handed over to you.",
+          "label": "Ownership transfers"
+        },
+        {
+          "allow_instant": false,
+          "category": "team",
+          "channel": "off",
+          "description": "People joining or leaving your ventures, and ventures completing.",
+          "label": "Your teams"
+        },
+        {
+          "allow_instant": false,
+          "category": "comments",
+          "channel": "digest",
+          "description": "Comments on your posts and replies to your comments.",
+          "label": "Comments"
+        },
+        {
+          "allow_instant": false,
+          "category": "mentions",
+          "channel": "digest",
+          "description": "Someone mentions you with @username.",
+          "label": "Mentions"
+        },
+        {
+          "allow_instant": false,
+          "category": "messages",
+          "channel": "digest",
+          "description": "New messages in your chats while you're away.",
+          "label": "Messages"
+        },
+        {
+          "allow_instant": true,
+          "category": "account",
+          "channel": "instant_email",
+          "description": "Moderation decisions about your content and account.",
+          "label": "Account and safety"
+        },
+        {
+          "allow_instant": false,
+          "category": "trust",
+          "channel": "off",
+          "description": "Endorsements, credential and code-check results, and your tier.",
+          "label": "Trust and ranking"
+        },
+        {
+          "allow_instant": false,
+          "category": "feedback",
+          "channel": "digest",
+          "description": "Skilient staff answer or update feedback you sent.",
+          "label": "Feedback replies"
+        },
+        {
+          "allow_instant": false,
+          "category": "faculty",
+          "channel": "off",
+          "description": "Supervisors, reviews and teacher updates. Teachers get one weekly digest instead of emails.",
+          "label": "Faculty supervision and reviews"
+        },
+        {
+          "allow_instant": true,
+          "category": "contact_requests",
+          "channel": "digest",
+          "description": "A company asks to talk to you about a role.",
+          "label": "Recruiter contact requests"
+        },
+        {
+          "allow_instant": true,
+          "category": "job_updates",
+          "channel": "digest",
+          "description": "Where your applications stand, and hires you were part of.",
+          "label": "Job applications"
+        },
+        {
+          "allow_instant": true,
+          "category": "recruiting",
+          "channel": "digest",
+          "description": "Organisation decisions, answers to your requests and hiring tasks.",
+          "label": "Recruiting"
+        },
+        {
+          "allow_instant": false,
+          "category": "university",
+          "channel": "digest",
+          "description": "Announcements, events, awards and portal news from your university.",
+          "label": "Your university"
+        },
+        {
+          "allow_instant": true,
+          "category": "societies",
+          "channel": "digest",
+          "description": "Societies you follow or belong to, their posts and events, and your tickets.",
+          "label": "Societies and events"
+        },
+        {
+          "allow_instant": true,
+          "category": "record",
+          "channel": "digest",
+          "description": "New entries on your Record, revocations, corrections and the ones you confirm as an officer.",
+          "label": "Your Record"
+        },
+        {
+          "allow_instant": true,
+          "category": "growth",
+          "channel": "digest",
+          "description": "Proof tasks done or sent back, reviews asked of you, and your skill swaps.",
+          "label": "Paths, tasks and swaps"
+        },
+        {
+          "allow_instant": true,
+          "category": "billing",
+          "channel": "instant_email",
+          "description": "Receipts, invoices, failed payments, renewals and sponsorship. Always emailed; can't be turned off.",
+          "label": "Billing"
+        }
+      ]
+    },
+    "instant": {
+      "ok": true,
+      "value": [
+        {
+          "set_notification_pref": null
+        }
+      ]
+    },
+    "instantRefused": {
+      "code": "22023",
+      "message": "this kind of notification can't be emailed instantly; choose the daily digest",
+      "ok": false
+    },
+    "off": {
+      "ok": true,
+      "value": [
+        {
+          "set_notification_pref": null
+        }
+      ]
+    },
+    "other": {
+      "ok": true,
+      "value": [
+        {
+          "allow_instant": true,
+          "category": "friend_requests",
+          "channel": "instant_email",
+          "description": "Someone asks to be your friend.",
+          "label": "Friend requests"
+        },
+        {
+          "allow_instant": true,
+          "category": "applications",
+          "channel": "instant_email",
+          "description": "Applications to your ventures, and decisions on yours.",
+          "label": "Applications"
+        },
+        {
+          "allow_instant": true,
+          "category": "invites",
+          "channel": "instant_email",
+          "description": "An owner invites you to join their team.",
+          "label": "Venture invites"
+        },
+        {
+          "allow_instant": true,
+          "category": "ownership",
+          "channel": "instant_email",
+          "description": "A venture is handed over to you.",
+          "label": "Ownership transfers"
+        },
+        {
+          "allow_instant": false,
+          "category": "team",
+          "channel": "off",
+          "description": "People joining or leaving your ventures, and ventures completing.",
+          "label": "Your teams"
+        },
+        {
+          "allow_instant": false,
+          "category": "comments",
+          "channel": "digest",
+          "description": "Comments on your posts and replies to your comments.",
+          "label": "Comments"
+        },
+        {
+          "allow_instant": false,
+          "category": "mentions",
+          "channel": "digest",
+          "description": "Someone mentions you with @username.",
+          "label": "Mentions"
+        },
+        {
+          "allow_instant": false,
+          "category": "messages",
+          "channel": "digest",
+          "description": "New messages in your chats while you're away.",
+          "label": "Messages"
+        },
+        {
+          "allow_instant": true,
+          "category": "account",
+          "channel": "instant_email",
+          "description": "Moderation decisions about your content and account.",
+          "label": "Account and safety"
+        },
+        {
+          "allow_instant": false,
+          "category": "trust",
+          "channel": "off",
+          "description": "Endorsements, credential and code-check results, and your tier.",
+          "label": "Trust and ranking"
+        },
+        {
+          "allow_instant": false,
+          "category": "feedback",
+          "channel": "digest",
+          "description": "Skilient staff answer or update feedback you sent.",
+          "label": "Feedback replies"
+        },
+        {
+          "allow_instant": false,
+          "category": "faculty",
+          "channel": "off",
+          "description": "Supervisors, reviews and teacher updates. Teachers get one weekly digest instead of emails.",
+          "label": "Faculty supervision and reviews"
+        },
+        {
+          "allow_instant": true,
+          "category": "contact_requests",
+          "channel": "digest",
+          "description": "A company asks to talk to you about a role.",
+          "label": "Recruiter contact requests"
+        },
+        {
+          "allow_instant": true,
+          "category": "job_updates",
+          "channel": "digest",
+          "description": "Where your applications stand, and hires you were part of.",
+          "label": "Job applications"
+        },
+        {
+          "allow_instant": true,
+          "category": "recruiting",
+          "channel": "digest",
+          "description": "Organisation decisions, answers to your requests and hiring tasks.",
+          "label": "Recruiting"
+        },
+        {
+          "allow_instant": false,
+          "category": "university",
+          "channel": "digest",
+          "description": "Announcements, events, awards and portal news from your university.",
+          "label": "Your university"
+        },
+        {
+          "allow_instant": true,
+          "category": "societies",
+          "channel": "digest",
+          "description": "Societies you follow or belong to, their posts and events, and your tickets.",
+          "label": "Societies and events"
+        },
+        {
+          "allow_instant": true,
+          "category": "record",
+          "channel": "digest",
+          "description": "New entries on your Record, revocations, corrections and the ones you confirm as an officer.",
+          "label": "Your Record"
+        },
+        {
+          "allow_instant": true,
+          "category": "growth",
+          "channel": "digest",
+          "description": "Proof tasks done or sent back, reviews asked of you, and your skill swaps.",
+          "label": "Paths, tasks and swaps"
+        },
+        {
+          "allow_instant": true,
+          "category": "billing",
+          "channel": "instant_email",
+          "description": "Receipts, invoices, failed payments, renewals and sponsorship. Always emailed; can't be turned off.",
+          "label": "Billing"
+        }
+      ]
+    },
+    "unknown": {
+      "code": "P0002",
+      "message": "unknown notification category",
+      "ok": false
+    }
+  }
+}

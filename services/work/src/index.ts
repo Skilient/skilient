@@ -3,7 +3,7 @@ import { createScheduler, createWorker, defineService, type Consumer, type Sched
 import type postgres from "postgres";
 import { createApi } from "./api";
 import { callers } from "./authorize";
-import { noMediaCheck, type GithubDeps } from "./deps";
+import { mediaFileLookup, mediaPort, noMediaCheck, type GithubDeps } from "./deps";
 import { workJobs, workSchedules } from "./jobs";
 import { identityPort } from "./identity";
 import { peoplePort } from "./ports";
@@ -53,7 +53,18 @@ export default defineService({
       worker.start();
       scheduler.start();
     }
-    return createApi({ sql, logger: deps.logger, people: peoplePort(deps.clients), identity: identityPort(deps.clients), media: noMediaCheck, recompute: recomputeUserSkills, ...(github ? { github } : {}) });
+    // Files are media's (W9); MEDIA_CHECKS=off keeps the path rule for tests that don't host media.
+    const media = process.env["MEDIA_CHECKS"] === "off" ? null : deps.clients;
+    return createApi({
+      sql,
+      logger: deps.logger,
+      people: peoplePort(deps.clients),
+      identity: identityPort(deps.clients),
+      media: media ? mediaPort(media) : noMediaCheck,
+      ...(media ? { files: mediaFileLookup(media) } : {}),
+      recompute: recomputeUserSkills,
+      ...(github ? { github } : {}),
+    });
   },
   async ready() {
     if (!sql) return false;

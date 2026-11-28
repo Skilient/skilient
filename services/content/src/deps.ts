@@ -1,4 +1,6 @@
-import type { Logger } from "@skilient/platform";
+import type { CallOptions } from "@connectrpc/connect";
+import { MediaService } from "@skilient/contracts/media/v1/media_pb";
+import type { ClientFactory, Logger } from "@skilient/platform";
 import type postgres from "postgres";
 import type { Config } from "./domain/config";
 import type { PoolCache } from "./store/pool";
@@ -57,5 +59,17 @@ export interface MediaPort {
 /** For tests that run without work or community: cards carry no venture or society block. */
 export const noVentures: VenturePort = { cards: async () => new Map() };
 export const noSocieties: SocietyPort = { cards: async () => new Map() };
-/** Until media records files (W9), an image path is checked against the uploader's folder only. */
+/** Without media (tests that don't host it, MEDIA_CHECKS=off), an image path is checked against the uploader's folder only. */
 export const noMediaCheck: MediaPort = { missing: async () => [] };
+
+/** Post images in media's post-media bucket (W9): the paths media has not stored. */
+export function mediaPort(clients: ClientFactory): MediaPort {
+  return {
+    async missing(paths, call) {
+      if (paths.length === 0) return [];
+      const r = await clients.client(MediaService).checkFiles({ bucket: "post-media", paths: [...paths] }, call as CallOptions);
+      const stored = new Set(r.files.filter((f) => f.stored).map((f) => f.path));
+      return paths.filter((p) => !stored.has(p));
+    },
+  };
+}

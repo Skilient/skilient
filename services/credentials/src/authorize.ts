@@ -46,4 +46,5 @@ export const callers: CallerPolicy<typeof CredentialsService> = {
   declineRecordMistake: WEB,
   revokeRecordEntry: WEB,
   opsRecordEntry: WEB,
+  noticeFacts: ["notify"],
 };

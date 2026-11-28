@@ -23,11 +23,30 @@ export function ownerOf(filename) {
 }
 
 /**
+ * Platform config keys that share their first part with a service's name. They are names of settings (trust's
+ * config, copied by the services that read them), never tables, so the schema rule skips them (decisions.md, W9).
+ */
+export const CONFIG_KEYS = ["ranking.formula"];
+
+/**
  * A pattern matching `schema.` for any of the given schemas, not inside a
- * longer name or path, and not a file name such as `people.json`.
+ * longer name or path, and not a file name such as `people.json`. SQL names
+ * here are lowercase and written with no space around the dot, so prose such as
+ * "this month's work. It" is not a schema reference (decisions.md, W9).
  */
 export function foreignPattern(schemas) {
   if (schemas.length === 0) return null;
   const files = "(?:json|ts|tsx|mts|mjs|cjs|js|sql|md|proto|ya?ml|txt|csv|pdf|local)\\b";
-  return new RegExp(`(?<![\\w.$/@-])"?(${schemas.join("|")})"?\\s*\\.\\s*(?!${files})"?[a-z_]`, "i");
+  return new RegExp(`(?<![\\w.$/@-])"?(${schemas.join("|")})"?\\.(?!${files})"?[a-z_]`, "g");
+}
+
+/** The first match of `pattern` in `text` that is not a known config key, or null. */
+export function firstForeign(pattern, text) {
+  pattern.lastIndex = 0;
+  for (const m of text.matchAll(pattern)) {
+    const word = /^[a-z_]+\.[a-z_]+/.exec(text.slice(m.index).replace(/"/g, ""))?.[0];
+    if (word && CONFIG_KEYS.includes(word)) continue;
+    return m;
+  }
+  return null;
 }

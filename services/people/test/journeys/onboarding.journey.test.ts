@@ -116,7 +116,7 @@ describeTransports(
         void IdentityService;
       });
 
-      it.todo("W9 media: the stored photo is re-encoded (WebP 512x512, no EXIF) and replaced files are deleted from storage");
+      it.todo("W13: web re-encodes the photo (WebP 512x512, no EXIF) before media stores it (storage and deleting replaced files: photos.journey.test.ts)");
       it.todo("W13 web: the wizard's preview, minutes left, the welcome film, axe on every step, /profile/edit redirect");
     });
   },

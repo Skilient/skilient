@@ -124,6 +124,23 @@ export async function unsubscribeUniversityRequest(tx: Tx, token: string | null)
   return done.count > 0;
 }
 
+/**
+ * `queue_university_launch(university)`: the consented, confirmed, still-subscribed requests not yet emailed, marked
+ * notified now (once per request), for notify's launch email (W9). Only for a live university; at most 500 a call.
+ */
+export async function claimLaunchRecipients(tx: Tx, universityId: string): Promise<{ universityName: string; recipients: { requestId: string; email: string }[] }> {
+  const [u] = await tx<{ name: string }[]>`select name from people.universities where id = ${universityId} and live_at is not null`;
+  if (!u) return { universityName: "", recipients: [] };
+  const rows = await tx<{ id: string; email: string }[]>`
+    update people.university_requests r set notified_at = now()
+     where r.id in (select q.id from people.university_requests q
+                     where q.university_id = ${universityId} and q.consent and q.confirmed_at is not null
+                       and q.unsubscribed_at is null and q.notified_at is null
+                     order by q.created_at limit 500 for update skip locked)
+    returning r.id::text, r.email`;
+  return { universityName: u.name, recipients: rows.map((r) => ({ requestId: r.id, email: r.email })) };
+}
+
 // ---------------------------------------------------------------------------
 // Staff (accounts or super admin with two-factor; the caller check is in authorize.ts)
 // ---------------------------------------------------------------------------

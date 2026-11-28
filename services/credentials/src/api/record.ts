@@ -32,7 +32,8 @@ import { emailHash } from "../domain/record";
 import { refused } from "../refusals";
 import { sha256Hex } from "../store/cv";
 import * as Rec from "../store/record";
-import { filled, id, json, me, meOf, onward, parse, recordStaff, restricted, write, type ApiDeps } from "./util";
+import { filled, id, json, me, meOf, onward, parse, recordStaff, restricted, Uuid, write, type ApiDeps } from "./util";
+import type { Row } from "../store/db";
 
 type Impl = ServiceImpl<typeof CredentialsService>;
 const HASH = z.string().regex(/^[0-9a-f]{64}$/);
@@ -61,6 +62,7 @@ export function recordApi(deps: ApiDeps): Pick<
   | "declineRecordMistake"
   | "revokeRecordEntry"
   | "opsRecordEntry"
+  | "noticeFacts"
 > {
   /** The hash of the reader's confirmed address (identity's EmailsOf), or null. */
   const myHash = async (ctx: HandlerContext, user: string) => {
@@ -267,6 +269,38 @@ export function recordApi(deps: ApiDeps): Pick<
       if (!meOf(ctx) || !(await recordStaff(deps, ctx))) throw refused("staff_only");
       const r = await Rec.opsRecordEntry(deps.sql, parse(z.string().max(40), req.code));
       return { json: r ? json(await filled(deps, ctx, r)) : "" };
+    },
+
+    // notify's Record and CV notices (W9): what record_sign_commit, revoke_record_entry, decline_record_mistake and
+    // ops_revoke_cv snapshotted. One trip.
+    async noticeFacts(req) {
+      const q = parse(z.object({ entryIds: z.array(Uuid).max(200), correctionIds: z.array(Uuid).max(200), recordIds: z.array(Uuid).max(200) }), req);
+      const [r] = await deps.sql<{ entries: Row[]; corrections: Row[]; records: Row[] }[]>`
+        select
+          coalesce((select json_agg(json_build_object('id', e.id, 'kind', e.kind, 'title', e.title, 'issuer', e.issuer_name, 'code', coalesce(e.code, ''),
+                                                      'date', to_char(e.occurred_on, 'FMDD Mon YYYY'), 'corrected', e.supersedes is not null,
+                                                      'revoke_reason', coalesce(btrim(e.revoked_reason), ''), 'issuer_id', coalesce(e.issuer_id::text, '')))
+                      from credentials.record_entries e where e.id = any(${q.entryIds}::uuid[])), '[]') as entries,
+          coalesce((select json_agg(json_build_object('id', c.id, 'note', coalesce(c.decision_note, '')))
+                      from credentials.record_corrections c where c.id = any(${q.correctionIds}::uuid[])), '[]') as corrections,
+          coalesce((select json_agg(json_build_object('id', v.id, 'code', v.code, 'version', v.version))
+                      from credentials.cv_records v where v.id = any(${q.recordIds}::uuid[])), '[]') as records`;
+      const s = (v: unknown) => String(v ?? "");
+      return {
+        entries: r!.entries.map((e) => ({
+          id: s(e["id"]),
+          kind: s(e["kind"]),
+          title: s(e["title"]),
+          issuer: s(e["issuer"]),
+          code: s(e["code"]),
+          date: s(e["date"]),
+          corrected: e["corrected"] === true,
+          revokeReason: s(e["revoke_reason"]),
+          issuerId: s(e["issuer_id"]),
+        })),
+        corrections: r!.corrections.map((c) => ({ id: s(c["id"]), note: s(c["note"]) })),
+        records: r!.records.map((c) => ({ id: s(c["id"]), code: s(c["code"]), version: Number(c["version"]) })),
+      };
     },
   };
 }

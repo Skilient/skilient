@@ -111,6 +111,12 @@ export function createApi(deps: ApiDeps): ServiceImpl<typeof RankingService> {
         tiers: (await B.tiersOf(sql, ids)).map((t) => ({ userId: t.user_id, tier: t.tier ?? "", ranked: t.ranked, ...(t.percentile === null ? {} : { percentile: t.percentile }) })),
       };
     },
+    // Students with a score row (ranking_scores), by id, a page at a time (notify's formula notice, W9). One trip.
+    async scoredStudents(req) {
+      const after = req.afterUserId === "" ? null : parse(z.uuid(), req.afterUserId);
+      const limit = req.limit === 0 ? 500 : parse(z.number().int().min(1).max(1000), req.limit);
+      return { userIds: await B.scoredStudents(sql, after, limit) };
+    },
 
     async rankingFlagQueue(req, ctx) {
       const me = await trust(ctx);

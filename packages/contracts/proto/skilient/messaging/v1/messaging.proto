@@ -88,6 +88,12 @@ service MessagingService {
   rpc OpenContactThread(OpenContactThreadRequest) returns (OpenContactThreadResponse);
   // CloseThread closes a contact DM: it stays readable, and no one can send (market, W11).
   rpc CloseThread(CloseThreadRequest) returns (CloseThreadResponse);
+
+  // MessageExcerpts: what a chat notice says about messages (the first 120 characters, "Shared a post" or "Sent
+  // an image") and the venture of a team chat (notify, W9). At most 200.
+  rpc MessageExcerpts(MessageExcerptsRequest) returns (MessageExcerptsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 message GetOrCreateDmRequest {
@@ -351,3 +357,17 @@ message CloseThreadRequest {
 }
 
 message CloseThreadResponse {}
+
+message MessageExcerptsRequest {
+  repeated string message_ids = 1;
+}
+message MessageExcerptsResponse {
+  message Entry {
+    string message_id = 1;
+    string thread_id = 2;
+    string excerpt = 3;
+    // A team chat's venture; empty for a DM.
+    string venture_id = 4;
+  }
+  repeated Entry messages = 1;
+}

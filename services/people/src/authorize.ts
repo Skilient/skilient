@@ -23,6 +23,7 @@ export const callers: CallerPolicy<typeof PeopleService> = {
   resolveUsernames: SERVICES,
   filterByName: ["community"],
   relations: SERVICES,
+  claimLaunchRecipients: ["notify"],
   usernameAvailable: WEB,
   updateProfile: WEB,
   setProfileImage: WEB,

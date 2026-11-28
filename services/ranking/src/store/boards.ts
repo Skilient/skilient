@@ -139,6 +139,13 @@ export function tiersOf(db: Db, ids: readonly string[]) {
     select user_id::text, tier, ranked, percentile from ranking.ranking_scores where user_id = any(${[...ids]}::uuid[]) order by user_id`;
 }
 
+/** Students with a score row, by id after `after` (the formula notice went to every ranking_scores row). */
+export async function scoredStudents(db: Db, after: string | null, limit: number): Promise<string[]> {
+  const rows = await db<{ user_id: string }[]>`
+    select user_id::text from ranking.ranking_scores where (${after}::uuid is null or user_id > ${after}::uuid) order by user_id limit ${limit}`;
+  return rows.map((r) => r.user_id);
+}
+
 /** The published score row's tier inputs, for next_tier_requirements. */
 async function tierInputs(db: Db, user: string) {
   const [s] = await db<{ ranked: boolean; tier: string | null; total: string; percentile: number | null; facts: TierFacts | null }[]>`

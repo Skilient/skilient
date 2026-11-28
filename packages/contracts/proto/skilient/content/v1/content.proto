@@ -93,6 +93,12 @@ service ContentService {
   rpc CanListenFeed(CanListenFeedRequest) returns (CanListenFeedResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
+
+  // CommentExcerpts: the first 120 characters of comments, for notify's comment, reply and mention notices (W9).
+  // At most 200.
+  rpc CommentExcerpts(CommentExcerptsRequest) returns (CommentExcerptsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 message Media {
@@ -432,4 +438,16 @@ message VisiblePostsResponse {
     bool visible = 3;
   }
   repeated Entry posts = 1;
+}
+
+message CommentExcerptsRequest {
+  repeated string comment_ids = 1;
+}
+message CommentExcerptsResponse {
+  message Entry {
+    string comment_id = 1;
+    string post_id = 2;
+    string excerpt = 3;
+  }
+  repeated Entry comments = 1;
 }

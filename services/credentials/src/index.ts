@@ -4,7 +4,7 @@ import type postgres from "postgres";
 import { createApi } from "./api";
 import { callers } from "./authorize";
 import { credentialsJobs, credentialsSchedules } from "./jobs";
-import { noFiles, noRenderer, ports } from "./ports";
+import { mediaFiles, noFiles, noRenderer, ports } from "./ports";
 import { installKey, parseSigningSecret } from "./signing/keys";
 import { copiesConsumer, issuingConsumer } from "./store/consumers";
 
@@ -32,8 +32,9 @@ export default defineService({
     const key = await installKey(sql, parseSigningSecret(await deps.secrets.get("credentials-signing-key")));
     const exportSecret = await deps.secrets.get("credentials-export-secret");
     const p = ports(deps.clients);
-    // Files are media's and the Chromium renderer is the render job's image (W9, W13); until then neither exists.
-    const files = noFiles;
+    // Files are media's (W9; MEDIA_CHECKS=off for tests that don't host media). The Chromium renderer is the render
+    // job's image (W13); until then it doesn't exist.
+    const files = process.env["MEDIA_CHECKS"] === "off" ? noFiles : mediaFiles(deps.clients);
     const renderer = noRenderer;
     if (process.env["CREDENTIALS_JOBS"] !== "off") {
       consumers = [copiesConsumer({ sql, logger: deps.logger }), issuingConsumer({ sql, ports: p, logger: deps.logger })];

@@ -145,6 +145,14 @@ service CommunityService {
   rpc RecordFacts(RecordFactsRequest) returns (RecordFactsResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
+
+  // NoticeFacts: what notify's society and event notices snapshot (W9): societies (name, slug, status reason),
+  // events (title, start, cancel reason), rounds (title, deadline), induction applications (team, note), payments
+  // (reference, reason), event messages (body, first 300 characters), invites (title), registrations (paid,
+  // waitlist position) and officers per society. At most 200 of each.
+  rpc NoticeFacts(NoticeFactsRequest) returns (NoticeFactsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 message SocietyNameCheckRequest {
@@ -812,4 +820,84 @@ message RecordFactsResponse {
   repeated Label labels = 3;
   repeated WalkIn walk_ins = 4;
   repeated Society societies = 5;
+}
+
+message NoticeFactsRequest {
+  repeated string society_ids = 1;
+  repeated string event_ids = 2;
+  repeated string round_ids = 3;
+  repeated string application_ids = 4;
+  repeated string payment_ids = 5;
+  repeated string message_ids = 6;
+  repeated string invite_ids = 7;
+  repeated string registration_ids = 8;
+  // Societies whose officers (president and officers) to list.
+  repeated string officer_society_ids = 9;
+  // Societies whose followers and members to list (society posts, events and inductions published).
+  repeated string audience_society_ids = 10;
+  // Events whose active registrants (confirmed, held, pending, waitlisted) to list.
+  repeated string registrant_event_ids = 11;
+  // Officers' terms (their titles).
+  repeated string term_ids = 12;
+}
+message NoticeFactsResponse {
+  message Society {
+    string id = 1;
+    string name = 2;
+    string slug = 3;
+    string status_reason = 4;
+  }
+  message Event {
+    string id = 1;
+    string title = 2;
+    string starts_at = 3;
+    string cancel_reason = 4;
+    string society_id = 5;
+  }
+  message Round {
+    string id = 1;
+    string title = 2;
+    string deadline = 3;
+  }
+  message Application {
+    string id = 1;
+    string team = 2;
+    string note = 3;
+  }
+  message Payment {
+    string id = 1;
+    string reference_code = 2;
+    string reject_reason = 3;
+  }
+  message Text {
+    string id = 1;
+    string text = 2;
+  }
+  message Registration {
+    string id = 1;
+    bool paid = 2;
+    int32 waitlist_position = 3;
+  }
+  message People {
+    string society_id = 1;
+    repeated string user_ids = 2;
+  }
+  repeated Society societies = 1;
+  repeated Event events = 2;
+  repeated Round rounds = 3;
+  repeated Application applications = 4;
+  repeated Payment payments = 5;
+  repeated Text messages = 6;
+  repeated Text invites = 7;
+  repeated Registration registrations = 8;
+  repeated People officers = 9;
+  repeated People audiences = 10;
+  message Registrants {
+    string event_id = 1;
+    repeated string user_ids = 2;
+    // Those holding a priced ticket.
+    repeated string paid_user_ids = 3;
+  }
+  repeated Registrants registrants = 11;
+  repeated Text terms = 12;
 }

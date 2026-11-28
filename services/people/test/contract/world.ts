@@ -37,6 +37,8 @@ export interface PeopleWorld extends StaffWorld {
 
 export function contractEnv(): void {
   process.env["PEOPLE_JOBS"] = "off";
+  // Worlds that don't host media keep the services' path rules for files; a file that sets "on" hosts media (W9).
+  process.env["MEDIA_CHECKS"] ??= "off";
 }
 
 export function peopleWorld(onWorld: (w: PeopleWorld) => void, worlds: PeopleWorld[] = []): () => Promise<TransportOptions> {
@@ -166,6 +168,12 @@ export async function student(
 export async function usernameOf(w: PeopleWorld, id: string): Promise<string> {
   const [r] = await w.people<{ username: string }[]>`select username from people.profiles where user_id = ${id}`;
   return r!.username;
+}
+
+/** The friend request's id from `sender` to `receiver` (people's own row, for other services' tests). */
+export async function friendRequestId(w: PeopleWorld, sender: string, receiver: string): Promise<string> {
+  const [r] = await w.people<{ id: string }[]>`select id::text from people.friend_requests where sender_id = ${sender} and receiver_id = ${receiver}`;
+  return r!.id;
 }
 
 /** Publishes an event as another service would (for the copies), from that service's own role. */

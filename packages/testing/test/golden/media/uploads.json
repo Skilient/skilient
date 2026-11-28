@@ -1,0 +1,97 @@
+{
+  "caps": {
+    "feedback_last_two": [
+      {
+        "ok": true
+      },
+      {
+        "code": "42501",
+        "ok": false
+      }
+    ],
+    "society_documents": [
+      {
+        "ok": true
+      },
+      {
+        "ok": true
+      },
+      {
+        "ok": true
+      },
+      {
+        "ok": true
+      },
+      {
+        "ok": true
+      },
+      {
+        "code": "42501",
+        "ok": false
+      }
+    ]
+  },
+  "own_folder": {
+    "avatars": {
+      "others": {
+        "code": "42501",
+        "ok": false
+      },
+      "own": {
+        "ok": true
+      }
+    },
+    "covers": {
+      "others": {
+        "code": "42501",
+        "ok": false
+      },
+      "own": {
+        "ok": true
+      }
+    },
+    "credentials": {
+      "others": {
+        "code": "42501",
+        "ok": false
+      },
+      "own": {
+        "ok": true
+      }
+    },
+    "credentials_pdf": {
+      "ok": true
+    },
+    "feedback": {
+      "others": {
+        "code": "42501",
+        "ok": false
+      },
+      "own": {
+        "ok": true
+      }
+    },
+    "feedback_pdf": {
+      "code": "42501",
+      "ok": false
+    },
+    "post-media": {
+      "others": {
+        "code": "42501",
+        "ok": false
+      },
+      "own": {
+        "ok": true
+      }
+    },
+    "society-documents": {
+      "others": {
+        "code": "42501",
+        "ok": false
+      },
+      "own": {
+        "ok": true
+      }
+    }
+  }
+}

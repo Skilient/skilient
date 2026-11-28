@@ -1,10 +1,11 @@
 import type { CallOptions } from "@connectrpc/connect";
 import { CommunityService } from "@skilient/contracts/community/v1/community_pb";
 import { IdentityService, StaffRole } from "@skilient/contracts/identity/v1/identity_pb";
+import { MediaService } from "@skilient/contracts/media/v1/media_pb";
 import { PeopleService } from "@skilient/contracts/people/v1/people_pb";
 import { RankingService } from "@skilient/contracts/ranking/v1/ranking_pb";
 import { WorkService } from "@skilient/contracts/work/v1/work_pb";
-import type { ClientFactory } from "@skilient/platform";
+import { startCall, type ClientFactory } from "@skilient/platform";
 import { fill as fillDoc, wanted, type PersonFacts as PlaceholderFacts } from "./domain/people";
 import type { Role } from "./identity";
 
@@ -90,6 +91,21 @@ export const noFiles: Files = {
     throw new Error("files are media's (W9)");
   },
 };
+/** CV PDFs in media's cv-exports bucket (W9): the size media confirmed, and storing a rendered PDF. */
+export function mediaFiles(clients: ClientFactory): Files {
+  const media = () => clients.client(MediaService);
+  return {
+    async size(path) {
+      const r = await media().checkFiles({ bucket: "cv-exports", paths: [path] }, startCall() as CallOptions);
+      const f = r.files.find((x) => x.path === path);
+      return f?.stored ? Number(f.bytes) : null;
+    },
+    async put(path, bytes) {
+      await media().putFile({ bucket: "cv-exports", path, ownerId: path.slice(0, 36), mime: "application/pdf", data: bytes }, startCall() as CallOptions);
+    },
+  };
+}
+
 export const noRenderer: Renderer = {
   render: async () => {
     throw new Error("the render job's Chromium image is W13");

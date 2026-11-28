@@ -67,6 +67,11 @@ service RankingService {
   // UniAddExamPeriod: at most 45 days, no overlap, at most 90 exam days a calendar year.
   rpc UniAddExamPeriod(UniAddExamPeriodRequest) returns (UniAddExamPeriodResponse);
   rpc UniRemoveExamPeriod(UniRemoveExamPeriodRequest) returns (UniRemoveExamPeriodResponse);
+
+  // ScoredStudents: students with a published score, by user id, a page at a time (notify's formula notice, W9).
+  rpc ScoredStudents(ScoredStudentsRequest) returns (ScoredStudentsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 // scope: university | global.
@@ -252,4 +257,14 @@ message UniRemoveExamPeriodRequest {
 message UniRemoveExamPeriodResponse {
   string starts_on = 1;
   string ends_on = 2;
+}
+
+message ScoredStudentsRequest {
+  // Ids after this one (empty: from the start).
+  string after_user_id = 1;
+  // 1 to 1000; 0 means 500.
+  int32 limit = 2;
+}
+message ScoredStudentsResponse {
+  repeated string user_ids = 1;
 }

@@ -195,9 +195,10 @@
         "content",
         "messaging",
         "work",
-        "ranking"
+        "ranking",
+        "notify"
       ],
-      "payload": "blocker, blocked, blocked flag"
+      "payload": "blocker, blocked, blocked flag; notify keeps a copy (no notice between the two, none shown; W9)"
     },
     "mute.changed": {
       "producers": [
@@ -442,9 +443,10 @@
       ],
       "consumers": [
         "content",
-        "ranking"
+        "ranking",
+        "notify"
       ],
-      "payload": "key, version, value (W10); content keeps feed.* and survey.*; ranking keeps ranking.formula, feed.score and teacher.limits (W6)"
+      "payload": "key, version, value (W10); content keeps feed.* and survey.*; ranking keeps ranking.formula, feed.score and teacher.limits (W6); notify sends the formula notice to every scored student when ranking.formula gains a version (W9; ranking's ScoredStudents)"
     },
     "moderation.removed": {
       "producers": [
@@ -608,7 +610,7 @@
         "credentials",
         "notify"
       ],
-      "payload": "swap_id, teacher_id, learner_id, skill_id, skill_label (catalogue), sessions, minutes, last_session_on (W5; skill_label W8): the teacher's Taught entry (W8; the learner's first name is read from people)"
+      "payload": "swap_id, teacher_id, learner_id, skill_id, skill_label (catalogue), sessions, minutes, last_session_on (W5; skill_label W8): the teacher's Taught entry (W8; the learner's first name is read from people); notify takes it only to stay in step (its swap_closed notice comes from swap.changed {closed}; W9)"
     },
     "swap.flagged": {
       "producers": [
@@ -655,7 +657,7 @@
         "notify",
         "trust"
       ],
-      "payload": "user_id, tier (or null), ranked, previous_tier (W6): work keeps paths seniors (work.ranking_tiers), notify a tier-up notice (W9), trust analytics (W10)"
+      "payload": "user_id, tier (or null), ranked, previous_tier (W6): work keeps paths seniors (work.ranking_tiers), notify a tier-up notice (W9), trust analytics (W10); notify handles it and writes nothing (the stack has no tier-up notice; docs/azure/notify-status.md Q2)"
     },
     "ranking.published": {
       "producers": [

@@ -1,0 +1,178 @@
+syntax = "proto3";
+
+package skilient.notify.v1;
+
+// notify: in-app notifications (the bell and its nav badge), email preferences per category, push preferences and
+// push subscriptions, the daily digest, instant email through Brevo (60 notification emails a UTC day; ops alerts
+// go past the cap), web push (VAPID, aes128gcm) and the one-off emails (university launch, Record claims)
+// (docs/azure/prd.md, service catalogue; docs/azure/notify-function-bins.md maps every ported SQL function and the
+// notify-worker's logic to a method, a consumer or a job here).
+//
+// Notifications are written only by notify, from other services' events. Refusals carry a short snake_case reason
+// in the x-refusal metadata (services/notify/src/refusals.ts lists each with today's wording). Times are RFC 3339
+// strings; an empty string means none. A notification's `data_json` is the snapshot its wording reads (titles and
+// excerpts as they were when it was made), as the stack stored it.
+service NotifyService {
+  // ---- The bell (the caller's own) ----
+
+  // MyNotifications: newest first, 50 a page, the actor's name (and username and photo where the reader may see
+  // the profile); notices from someone blocked either way are left out. One database trip.
+  rpc MyNotifications(MyNotificationsRequest) returns (MyNotificationsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // UnreadCount: the nav badge. One database trip.
+  rpc UnreadCount(UnreadCountRequest) returns (UnreadCountResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc MarkRead(MarkReadRequest) returns (MarkReadResponse);
+  rpc MarkAllRead(MarkAllReadRequest) returns (MarkAllReadResponse);
+  // TouchActivity: the signed-in layout's heartbeat (at most one write an hour); the digest skips active people.
+  rpc TouchActivity(TouchActivityRequest) returns (TouchActivityResponse);
+
+  // ---- Email preferences ----
+
+  // MySettings: every category with the caller's channel and whether it may be instant. One database trip.
+  rpc MySettings(MySettingsRequest) returns (MySettingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc SetPref(SetPrefRequest) returns (SetPrefResponse);
+
+  // ---- Push ----
+
+  // PushPublicKey: the VAPID public key the browser subscribes with (anyone). No database trip.
+  rpc PushPublicKey(PushPublicKeyRequest) returns (PushPublicKeyResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  // MyPushSettings: subscribed devices and each pushed category's choice. One database trip.
+  rpc MyPushSettings(MyPushSettingsRequest) returns (MyPushSettingsResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
+  rpc SetPushPref(SetPushPrefRequest) returns (SetPushPrefResponse);
+  // SavePushSubscription: only the browsers' push services; at most 10 devices; a shared device moves to whoever
+  // subscribed last. The reply is not kept for retries (the endpoint is personal data).
+  rpc SavePushSubscription(SavePushSubscriptionRequest) returns (SavePushSubscriptionResponse);
+  // DeletePushSubscription: one device (endpoint) or all of the caller's (empty endpoint).
+  rpc DeletePushSubscription(DeletePushSubscriptionRequest) returns (DeletePushSubscriptionResponse);
+
+  // ---- Operations ----
+
+  // QueueOpsAlert: an operational alert to the given addresses (trust's watchdog, W10). Never held by the cap.
+  rpc QueueOpsAlert(QueueOpsAlertRequest) returns (QueueOpsAlertResponse);
+}
+
+message Notification {
+  string id = 1;
+  string type = 2;
+  string category = 3;
+  // Empty where the reader may not see the actor's profile.
+  string actor_username = 4;
+  string actor_name = 5;
+  string actor_avatar_path = 6;
+  string entity_type = 7;
+  string entity_id = 8;
+  string data_json = 9;
+  string read_at = 10;
+  string created_at = 11;
+}
+
+message MyNotificationsRequest {
+  // Only notices made before this time (RFC 3339); empty for the newest.
+  string before = 1;
+  // 1 to 50; 0 means 50.
+  int32 limit = 2;
+}
+message MyNotificationsResponse {
+  repeated Notification notifications = 1;
+}
+
+message UnreadCountRequest {}
+message UnreadCountResponse {
+  int32 count = 1;
+}
+
+message MarkReadRequest {
+  string id = 1;
+}
+message MarkReadResponse {}
+
+message MarkAllReadRequest {}
+message MarkAllReadResponse {
+  int32 count = 1;
+}
+
+message TouchActivityRequest {}
+message TouchActivityResponse {}
+
+enum EmailChannel {
+  EMAIL_CHANNEL_UNSPECIFIED = 0;
+  EMAIL_CHANNEL_INSTANT_EMAIL = 1;
+  EMAIL_CHANNEL_DIGEST = 2;
+  EMAIL_CHANNEL_OFF = 3;
+}
+
+message MySettingsRequest {}
+message MySettingsResponse {
+  message Category {
+    string category = 1;
+    string label = 2;
+    string description = 3;
+    EmailChannel channel = 4;
+    bool allow_instant = 5;
+  }
+  repeated Category categories = 1;
+}
+
+message SetPrefRequest {
+  string category = 1;
+  EmailChannel channel = 2;
+}
+message SetPrefResponse {}
+
+message PushPublicKeyRequest {}
+message PushPublicKeyResponse {
+  // Empty until the VAPID keys are set up.
+  string public_key = 1;
+}
+
+message MyPushSettingsRequest {}
+message MyPushSettingsResponse {
+  message Category {
+    string category = 1;
+    string label = 2;
+    bool push = 3;
+  }
+  int32 devices = 1;
+  repeated Category categories = 2;
+}
+
+message SetPushPrefRequest {
+  string category = 1;
+  bool on = 2;
+}
+message SetPushPrefResponse {}
+
+message SavePushSubscriptionRequest {
+  string endpoint = 1;
+  string p256dh = 2;
+  string auth = 3;
+  string user_agent = 4;
+}
+message SavePushSubscriptionResponse {}
+
+message DeletePushSubscriptionRequest {
+  // Empty: every device of the caller's.
+  string endpoint = 1;
+}
+message DeletePushSubscriptionResponse {}
+
+message QueueOpsAlertRequest {
+  string key = 1;
+  // firing | resolved
+  string state = 2;
+  string title = 3;
+  string detail = 4;
+  string since = 5;
+  // alerts.recipients (trust's config); none: skipped and logged.
+  repeated string recipients = 6;
+}
+message QueueOpsAlertResponse {}

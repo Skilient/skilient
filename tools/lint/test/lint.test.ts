@@ -16,12 +16,22 @@ describe("no-foreign-schema", () => {
         { filename: "/r/services/people/src/x.ts", code: 'import "./identity.ts";', options: [{ services }] },
         { filename: "/r/services/sample-relay/src/x.ts", code: 'q("sample_relay.things")', options: [{ services }] },
         { filename: "/r/services/people/src/x.ts", code: 'read("identity.json")', options: [{ services }] },
+        // Prose: a sentence ending in a service's name is not a schema (no space around a SQL dot, lowercase names).
+        { filename: "/r/services/people/src/x.ts", code: 'const t = "refreshed with this month\'s content. It has a new code.";', options: [{ services: [...services, "ranking"] }] },
+        { filename: "/r/services/people/src/x.ts", code: 'const t = "Identity.Users";', options: [{ services }] },
+        // A platform config key named after a service (CONFIG_KEYS).
+        { filename: "/r/services/people/src/x.ts", code: 'if (key === "ranking.formula") go();', options: [{ services: [...services, "ranking"] }] },
       ],
       invalid: [
         { filename: "/r/services/people/src/store/q.ts", code: 'db.selectFrom("identity.users")', options: [{ services }], errors: [{ messageId: "foreign" }] },
         { filename: "/r/services/people/src/store/q.ts", code: "sql`select * from content.posts p`", options: [{ services }], errors: [{ messageId: "foreign" }] },
         { filename: "/r/services/people/src/store/q.ts", code: 'q(\'select 1 from "content"."posts"\')', options: [{ services }], errors: [{ messageId: "foreign" }] },
         { filename: "/r/packages/platform/src/x.ts", code: 'q("people.profiles")', options: [{ services }], errors: [{ messageId: "foreign" }] },
+        // The config-key allowance is for that key only: the same schema's tables are still flagged, in the same string too.
+        { filename: "/r/services/people/src/x.ts", code: 'q("select * from ranking.ranking_scores")', options: [{ services: [...services, "ranking"] }], errors: [{ messageId: "foreign" }] },
+        { filename: "/r/services/people/src/x.ts", code: 'q("ranking.formula and ranking.scores")', options: [{ services: [...services, "ranking"] }], errors: [{ messageId: "foreign" }] },
+        // Repeated use (the pattern keeps no state between strings).
+        { filename: "/r/services/people/src/x.ts", code: 'q("content.posts"); q("content.posts");', options: [{ services }], errors: [{ messageId: "foreign" }, { messageId: "foreign" }] },
       ],
     });
   });

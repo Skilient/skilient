@@ -1531,5 +1531,105 @@
   "skilient.community.v1.CommunityService/RecordFacts": {
     "p95Ms": 30,
     "dbTrips": 1
+  },
+  "skilient.notify.v1.NotifyService/MyNotifications": {
+    "p95Ms": 80,
+    "dbTrips": 1
+  },
+  "skilient.notify.v1.NotifyService/UnreadCount": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.notify.v1.NotifyService/MarkRead": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.notify.v1.NotifyService/MarkAllRead": {
+    "p95Ms": 40,
+    "dbTrips": 6
+  },
+  "skilient.notify.v1.NotifyService/TouchActivity": {
+    "p95Ms": 30,
+    "dbTrips": 4
+  },
+  "skilient.notify.v1.NotifyService/MySettings": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.notify.v1.NotifyService/SetPref": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.notify.v1.NotifyService/PushPublicKey": {
+    "p95Ms": 10,
+    "dbTrips": 0
+  },
+  "skilient.notify.v1.NotifyService/MyPushSettings": {
+    "p95Ms": 20,
+    "dbTrips": 1
+  },
+  "skilient.notify.v1.NotifyService/SetPushPref": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.notify.v1.NotifyService/SavePushSubscription": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.notify.v1.NotifyService/DeletePushSubscription": {
+    "p95Ms": 40,
+    "dbTrips": 4
+  },
+  "skilient.notify.v1.NotifyService/QueueOpsAlert": {
+    "p95Ms": 40,
+    "dbTrips": 5
+  },
+  "skilient.media.v1.MediaService/CreateUpload": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.media.v1.MediaService/PutFile": {
+    "p95Ms": 200,
+    "dbTrips": 6
+  },
+  "skilient.media.v1.MediaService/CheckFiles": {
+    "p95Ms": 120,
+    "dbTrips": 8
+  },
+  "skilient.media.v1.MediaService/DownloadLinks": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.media.v1.MediaService/StorageUsage": {
+    "p95Ms": 80,
+    "dbTrips": 1
+  },
+  "skilient.people.v1.PeopleService/ClaimLaunchRecipients": {
+    "p95Ms": 60,
+    "dbTrips": 6
+  },
+  "skilient.ranking.v1.RankingService/ScoredStudents": {
+    "p95Ms": 40,
+    "dbTrips": 1
+  },
+  "skilient.content.v1.ContentService/CommentExcerpts": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.messaging.v1.MessagingService/MessageExcerpts": {
+    "p95Ms": 30,
+    "dbTrips": 1
+  },
+  "skilient.work.v1.WorkService/NoticeFacts": {
+    "p95Ms": 60,
+    "dbTrips": 1
+  },
+  "skilient.community.v1.CommunityService/NoticeFacts": {
+    "p95Ms": 80,
+    "dbTrips": 1
+  },
+  "skilient.credentials.v1.CredentialsService/NoticeFacts": {
+    "p95Ms": 40,
+    "dbTrips": 1
   }
 }

@@ -25,10 +25,11 @@ import { fileReleased, inviteChanged, joinChanged, memberChanged, publish, termC
  * built them (jsonb_build_object), with people and university names as placeholders (src/domain/people.ts).
  */
 
-/** Whether an uploaded file exists in media (W9; until then the path rule only). */
+/** Whether an uploaded file is stored in media (W9). */
 export interface Files {
   exists(bucket: "society-documents" | "society-media" | "event-receipts", path: string): Promise<boolean>;
 }
+/** Without media (tests that don't host it, MEDIA_CHECKS=off): the path rule only. */
 export const pathRuleOnly: Files = { exists: async () => true };
 
 /** `society_card(id)`: what directories, the feed byline and pages share. */

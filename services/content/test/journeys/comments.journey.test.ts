@@ -83,7 +83,6 @@ describeTransports(
         expect((await j.cards(commenter.token, [postId]))[0]!.authorMuted).toBe(false);
       });
 
-      it.todo("W9 notify: C is notified of the mention and A of the comment (\"mentioned you in a comment\", \"commented on your post\")");
       it.todo("W13: the post page's \"No comments yet\", the reply box, the Pinned by the author label, the Undo toast and the Friends -> Blocked list, axe in both themes");
     });
   },

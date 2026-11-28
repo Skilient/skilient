@@ -3,7 +3,7 @@ import { createScheduler, createWorker, defineService, type Consumer, type Sched
 import type postgres from "postgres";
 import { createApi } from "./api";
 import { callers } from "./authorize";
-import { noMediaCheck } from "./deps";
+import { mediaPort, noMediaCheck } from "./deps";
 import { contentJobs, contentSchedules } from "./jobs";
 import { identityPort, peoplePort, shippedNames, societyPort, venturePort } from "./ports";
 import { cachedConfig } from "./store/config";
@@ -47,7 +47,8 @@ export default defineService({
       identity: identityPort(deps.clients),
       ventures: venturePort(deps.clients),
       societies: societyPort(deps.clients),
-      media: noMediaCheck,
+      // Files are media's (W9); MEDIA_CHECKS=off keeps the path rule for tests that don't host media.
+      media: process.env["MEDIA_CHECKS"] === "off" ? noMediaCheck : mediaPort(deps.clients),
       config,
       pools: new PoolCache(Number(process.env["CONTENT_FEED_POOL_MS"] ?? 60_000)),
     });

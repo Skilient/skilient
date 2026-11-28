@@ -32,9 +32,15 @@ export function messagesApi(deps: ApiDeps): Partial<ServiceImpl<typeof Messaging
   return {
     async sendMessage(req, ctx) {
       const r = parse(z.object({ threadId: Uuid, body: z.string().max(20_000), media: MediaIn.optional(), replyToId: OptionalUuid }), req);
+      // The image must be stored in media and uploaded by the sender (chat_media_member_insert checked the uploader).
+      const imageOwned = r.media && deps.media ? (await deps.media.uploader(r.media.path, onward(ctx))) === meOf(ctx) : undefined;
       const reply = await write(deps, ctx, SendMessageRequestSchema, SendMessageResponseSchema, req, async (tx) =>
         create(SendMessageResponseSchema, {
-          messageId: await sendMessage(tx, meOf(ctx), r.threadId, r.body, r.media ?? null, r.replyToId || null, null, { restricted: restrictedOf(ctx), postVisible: false }),
+          messageId: await sendMessage(tx, meOf(ctx), r.threadId, r.body, r.media ?? null, r.replyToId || null, null, {
+            restricted: restrictedOf(ctx),
+            postVisible: false,
+            ...(imageOwned === undefined ? {} : { imageOwned }),
+          }),
         }),
       );
       preview(r.body, onward(ctx));
